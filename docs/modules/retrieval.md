@@ -49,47 +49,81 @@ flowchart LR
 }
 ```
 
-输出（供 Prompt 组装器消费）：
+输出——Evidence Pack（供 Prompt 组装器消费，同时满足可调试性）：
 
 ```jsonc
 {
   "index_version": "idx-2026-07-03-001",
   "clauses": [
     {
-      "rule_id": "04-01-01/Feat-01/FR-03",   // 全局唯一条款 ID
+      "rule_id": "04-01-01/Feat-01/R-17",     // 全局唯一条款 ID
       "func_id": "04-01-01",
       "feat_id": "Feat-01",
-      "rule_type": "FR",
+      "rule_type": "RULE",
       "status": "Baselined",
       "dimension": "DIM-06",                  // 归属的评价维度
       "text": "……条款原文……",
+      "heading_path": "Feat-01 图片加载机制 > 功能规则 > 缓存策略",  // 上下文定位
+      "neighbor_rule_ids": ["…/R-16", "…/R-18"],   // 相邻条款指针，组装时按需取
       "source_path": "04-common-capability/01-image-loading/.../Feat-01-...-spec.md",
-      "score": 0.87
+      "source_anchor": "L142-L150",           // 源文件行锚点，误召回排查用
+      "score": 0.87,
+      "matched_by": ["keyword:Image", "keyword:onError", "vector"],  // 命中途径
+      "match_reason": "命中 Image 组件 + onError API，归属 DIM-06 资源维度",
+      "rank_detail": {                        // 排序过程快照
+        "keyword_rank": 2, "vector_rank": 5,
+        "rrf_score": 0.031, "status_boost": 1.2
+      }
     }
   ]
 }
 ```
 
+`matched_by` / `match_reason` / `rank_detail` / `source_anchor` 是**调试字段**：
+不进评审 Prompt（不占 token），但全量落库到评审记录，供误召回排查与
+bad case 分析使用。
+
 ## 2. 数据模型
 
 ### 2.1 条款 Chunk 结构
 
-切块原则：**每条 FR / BR / AC / ER 一个 chunk**，不做整文件或整章节切块。
-design.md 按 ADR 条目与小节切块。
+切块原则：**条款级 chunk 是检索主单元**（每条编号条款一个 chunk），但 chunk
+不是孤立文本——必须携带上下文定位字段，供组装阶段还原条款的适用背景
+（原则：**检索单元 ≠ 生成单元**）。design.md 按 ADR 条目与小节切块；
+无编号条款的段落退化为 PARAGRAPH 级 chunk。
+
+`rule_type` 取值必须覆盖知识库**真实**条款体系（对现有 28 份 spec 的全量扫描
+结果：AC 3016 条、R 1824 条、US 213 条、VM 188 条、ADR 77 条、BR 13 条、
+ER 3 条、FR 2 条、RC 1 条；且存在 `AC-1.1` 式带小数点的层级编号）：
+
+```text
+rule_type ∈ { RULE(R), AC, US, BR, FR, ER, RC, VM, ADR, SECTION, PARAGRAPH }
+rule 编号支持层级小数点：R-17、AC-9.2、VM-1 均为合法
+```
 
 | 字段 | 说明 | 来源 |
 |---|---|---|
-| `rule_id` | 全局唯一 ID：`{func_id}/{feat_id}/{rule_type}-{nn}` | 解析器生成 |
+| `rule_id` | 全局唯一 ID：`{func_id}/{feat_id}/{type}-{n[.m]}` | 解析器生成 |
 | `func_id` | L1-L2-L3 功能域 ID | registry/functions.yaml |
 | `feat_id` | 特性 ID | registry/features.yaml |
-| `rule_type` | FR / BR / AC / ER / ADR / SECTION | 解析器 |
+| `rule_type` | 见上述取值集合 | 解析器 |
 | `status` | Baselined / Draft / Deprecated | features.yaml 继承 |
 | `text` | 条款原文 | spec 文档 |
+| `heading_path` | 标题链（文档 > 章 > 节），定位适用背景 | 解析器 |
+| `parent_section` | 所属小节的引言/背景文本摘要 | 解析器 |
+| `neighbor_rule_ids` | 前后相邻条款 ID 指针（组装时按需取原文，不冗余存储） | 解析器 |
 | `scenario` | 适用场景描述（离线增强生成） | LLM 增强 |
-| `keywords` | 组件/API/装饰器关键词列表（离线增强生成） | LLM 增强 |
+| `raw_keywords` | 确定性提取的关键词：正则/代码块解析/API 白名单 | 解析器 |
+| `llm_keywords` | LLM 增强补充的关键词 | LLM 增强 |
+| `enhancer_version` | 增强器版本（升级后据此判断哪些条款需重新增强） | 增强管道 |
 | `embedding` | scenario + text 的向量 | Embedding 模型 |
 | `source_path` | 源文件路径 | 解析器 |
+| `source_anchor` | 源文件行号范围（如 `L142-L150`） | 解析器 |
 | `doc_hash` | 源文档内容哈希（增量更新判据） | 解析器 |
+
+关键词双来源的信任次序：**检索打分时 `raw_keywords`（确定性）权重高于
+`llm_keywords`（可能漏/猜/幻觉）**。不采用 LLM 自报置信度分数（校准性差），
+以关键词的 provenance（来源标记）加权代替。
 
 ### 2.2 存储 Schema（pgvector）
 
@@ -104,30 +138,37 @@ CREATE TABLE kb_clauses (
     rule_type    TEXT NOT NULL,
     status       TEXT NOT NULL,
     text         TEXT NOT NULL,
+    heading_path TEXT,
+    parent_section TEXT,
+    neighbor_rule_ids TEXT[],
     scenario     TEXT,
-    keywords     TEXT[],                -- GIN 索引，精确/前缀匹配
+    raw_keywords TEXT[],               -- 确定性提取，打分权重高
+    llm_keywords TEXT[],               -- LLM 增强补充
+    enhancer_version TEXT,
     embedding    vector(1024),          -- 维度随 embedding 模型定
     source_path  TEXT NOT NULL,
+    source_anchor TEXT,
     doc_hash     TEXT NOT NULL,
     index_version TEXT NOT NULL
 );
 
-CREATE INDEX ON kb_clauses USING gin (keywords);
+CREATE INDEX ON kb_clauses USING gin (raw_keywords);
+CREATE INDEX ON kb_clauses USING gin (llm_keywords);
 CREATE INDEX ON kb_clauses USING gin (text gin_trgm_ops);   -- 模糊兜底
 CREATE INDEX ON kb_clauses USING hnsw (embedding vector_cosine_ops);
 CREATE INDEX ON kb_clauses (func_id, status);
 ```
 
-中文分词规避策略：关键词匹配走 `keywords` 字段（离线增强产出，以英文标识符
-为主：组件名/API 名/装饰器名），配合 pg_trgm 模糊兜底，**不依赖** zhparser /
-pg_jieba 等中文分词扩展。
+中文分词规避策略：关键词匹配走 `raw_keywords` / `llm_keywords` 字段（以英文
+标识符为主：组件名/API 名/装饰器名），配合 pg_trgm 模糊兜底，**不依赖**
+zhparser / pg_jieba 等中文分词扩展。
 
 ## 3. 离线索引管道
 
 ```mermaid
 flowchart LR
     A[arkui-specs<br/>registry + specs] --> B[条款解析器<br/>Markdown → chunks]
-    B --> C[LLM 离线增强<br/>scenario + keywords]
+    B --> C[LLM 离线增强<br/>scenario + llm_keywords]
     C --> D[Embedding 计算]
     D --> E[(pgvector<br/>新 index_version)]
     E --> F[原子切换<br/>别名指向新版本]
@@ -136,8 +177,12 @@ flowchart LR
 ### 3.1 条款解析器
 
 - 输入：`registry/functions.yaml`、`registry/features.yaml`、各 `Feat-*.md` / `design.md`
-- 按 spec 文档的结构化条款（FR/BR/AC/ER 编号条目）切块；历史文档格式不完全
+- 按 spec 文档的结构化编号条款（R/AC/US/VM/ADR 等，见 §2.1 真实分布）切块，
+  支持 `AC-1.1` 式层级编号；历史文档格式不完全
   统一，解析器需容错并输出"未能解析的文档"清单供人工处理
+- 解析同时产出上下文字段（heading_path / parent_section / neighbor_rule_ids /
+  source_anchor）与 `raw_keywords`（正则提取代码块与反引号标识符 + ArkUI
+  组件/API 白名单匹配）
 - `status` 从 features.yaml 继承到条款级
 
 ### 3.2 LLM 离线增强（解决词汇鸿沟）
@@ -145,7 +190,9 @@ flowchart LR
 - 问题：条款是中文规范语言，查询是代码特征（英文标识符），直接匹配召回率低
 - 方案：离线为每条款生成
   1. `scenario`：一段"什么代码场景适用本条款"的自然语言描述
-  2. `keywords`：本条款涉及的组件 / API / 装饰器标识符列表
+  2. `llm_keywords`：本条款涉及的组件 / API / 装饰器标识符列表（作为
+     `raw_keywords` 的补充，非唯一来源）
+- 增强产出带 `enhancer_version`；增强器升级后按版本号识别需重跑的条款
 - 每条款只在首次入库或源文档变更时增强一次，在线零成本
 - 增强 Prompt 与产出 schema 待与沉淀模块 Prompt 一并设计（见待定项）
 
@@ -185,7 +232,7 @@ flowchart TB
 
 | 召回路 | 匹配对象 | 说明 |
 |---|---|---|
-| 关键词路 | `keywords` 数组精确/前缀匹配 + pg_trgm 兜底 | API/组件名命中权重高 |
+| 关键词路 | `raw_keywords`（权重高）+ `llm_keywords`（补充）精确/前缀匹配 + pg_trgm 兜底 | API/组件名命中权重高 |
 | 向量路 | `embedding` 余弦相似度（HNSW） | query = intent_summary 或特征拼接文本 |
 
 ### ③ 融合与重排
@@ -199,6 +246,8 @@ flowchart TB
 
 - 按触发维度分配 token 配额，保证每个命中维度至少有条款（避免单一维度
   垄断预算）
+- **上下文还原**：为命中条款附加 `heading_path`；条款孤立不可读时按
+  `neighbor_rule_ids` / `parent_section` 取父节背景一并注入（占对应维度配额）
 - 同一 Feat 相邻条款去重合并
 - 每条带 `rule_id`，供评审 Prompt 强制引用与机器校验
 
@@ -246,14 +295,17 @@ class Retriever(Protocol):
 
 已定（架构决策，模块对齐的基线）：
 
-- [x] 条款级切块 + 元数据（func_id / feat_id / rule_type / status）
-- [x] LLM 离线增强（scenario + keywords）解决词汇鸿沟
+- [x] 条款级切块为检索主单元 + 上下文字段（heading_path / parent_section / neighbor_rule_ids）
+- [x] rule_type 覆盖真实条款体系（R/AC/US/BR/FR/ER/RC/VM/ADR/SECTION/PARAGRAPH，支持层级编号）
+- [x] 关键词双来源：raw_keywords（确定性，权重高）+ llm_keywords（LLM 增强补充）+ enhancer_version
+- [x] LLM 离线增强（scenario + llm_keywords）解决词汇鸿沟
 - [x] 规则域路由优先、语义分类兜底，路由表配置化
 - [x] 关键词 + 向量双路召回 → RRF 融合，状态加权
 - [x] Retriever 接口抽象 + pgvector 单后端 + 契约测试
 - [x] 增量索引 + 原子版本切换 + 报告记录索引版本
 - [x] golden set 回归机制与同步增长规则
-- [x] 中文分词规避：keywords 字段 + pg_trgm，不引入中文分词扩展
+- [x] 中文分词规避：raw/llm keywords 字段 + pg_trgm，不引入中文分词扩展
+- [x] Evidence Pack 携带调试字段（matched_by / match_reason / rank_detail / source_anchor），不进 Prompt、全量落库
 
 待定（实现/调优阶段决定）：
 
