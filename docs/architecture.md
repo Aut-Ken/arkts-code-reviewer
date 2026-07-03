@@ -125,6 +125,8 @@ flowchart LR
 **决策：条款级切块 + 离线增强 + 规则域路由 + 混合检索；
 Retriever 接口抽象 + pgvector 单后端。**
 
+> 详细设计见独立模块文档：[docs/modules/retrieval.md](modules/retrieval.md)
+
 ```mermaid
 flowchart TB
     subgraph 离线索引管道
