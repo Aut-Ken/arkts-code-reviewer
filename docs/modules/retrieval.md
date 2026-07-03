@@ -318,3 +318,30 @@ class Retriever(Protocol):
 | 离线增强 Prompt 与产出字段 schema | 与沉淀模块 Prompt 一并设计 |
 | 路由映射表初版规则集 | 领域专家 + 对知识库现有 28 份 spec 归纳 |
 | golden set 首批标注 | 需领域同事投入，建议尽早排期 |
+
+## 9. 技术栈
+
+模块形态：**纯 Python 库**（`src/` 布局 package），不含服务框架；
+将来由接入层服务 import。服务框架（如 FastAPI）由接入层模块另行决策。
+
+| 层 | 选型 | 理由 |
+|---|---|---|
+| 语言 | Python 3.11+ | RAG / embedding 生态最完整，解析、检索、增强管道全覆盖 |
+| 包管理 | uv + `pyproject.toml` | 快、锁定依赖、事实标准 |
+| 数据契约 | Pydantic v2 | Clause / Query / EvidencePack 等模型，天然产出 JSON schema |
+| DB 访问 | SQLAlchemy 2.x + psycopg3 + pgvector 官方 Python 库 | 类型安全，避免裸 SQL 拼接 |
+| YAML | ruamel.yaml | 读 registry / 路由表 / dimensions，保留注释与键序 |
+| Markdown 解析 | markdown-it-py（token 流）+ 自研条款状态机 | 通用解析交给库；条款编号识别需容错正则状态机，历史文档不规整、现成库无法胜任 |
+| Embedding 推理 | sentence-transformers | 内网可部署；选型实验与生产同一套代码 |
+| LLM 调用 | OpenAI 兼容 SDK → DeepSeek 端点，外包一层自研 LLM Gateway 接口 | 与接入方式（公有云/私有化）解耦 |
+| 测试 | pytest + testcontainers（真实 pgvector 容器） | 契约测试必须打真库，mock 无意义 |
+| 质量 | ruff（lint + format）+ mypy | 单工具链，快 |
+| 配置 | pydantic-settings（`KB_PATH`、DB URL 等走环境变量） | 不硬编码机器相关路径（见 architecture.md §1.1） |
+
+**明确暂不引入**（引入前需重新评审本节）：
+
+- LangChain / LlamaIndex：本模块检索流程（规则路由 + 双路召回 + RRF）明确
+  且深度定制，编排框架的抽象层弊大于利；如确需其中某个组件，单独引入该
+  组件即可，不上全家桶。
+- 中文分词扩展（zhparser / pg_jieba）：见 §2.2 规避策略。
+- Milvus 等独立向量库：见 §5，需先过契约测试 + 影子对比。
