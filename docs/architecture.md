@@ -21,12 +21,14 @@
 arkui-specs 知识库是**外部只读数据源**，不属于本仓库：
 
 ```text
-E:\Code\ArkTS-Code-Review\
-├── arkui-specs\           # 部门知识库 clone（只读数据源，git pull 定期同步上游）
-└── arkts-code-reviewer\   # 本仓库：评审系统代码 + 文档
+<任意工作目录>/
+├── arkui-specs/           # 部门知识库 clone（只读数据源，git pull 定期同步上游）
+└── arkts-code-reviewer/   # 本仓库：评审系统代码 + 文档
 ```
 
-- 系统通过路径/配置引用知识库，离线索引管道从知识库读取 registry 与 spec 构建检索索引。
+- 系统通过**配置项**（如 `KB_PATH` 环境变量/配置文件）引用知识库本地路径，
+  各协作者自行 clone 知识库到任意位置，不硬编码任何机器相关路径。
+- 离线索引管道从知识库读取 registry 与 spec 构建检索索引。
 - 不向 arkui-specs 原仓库提交任何改动（无写权限）；知识沉淀回流产出的新 spec
   走 fork + PR 流程贡献回部门仓库。
 
