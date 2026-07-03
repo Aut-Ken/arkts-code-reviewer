@@ -33,47 +33,75 @@ flowchart LR
 
 ### 1.3 输入 / 输出契约
 
-输入（来自代码分析模块）：
+检索以 **Review Unit** 为消费单位（与 code-analysis.md §6 对齐）：一次 MR 评审
+产生一次批量检索请求，`triggered_dimensions` 与 `token_budget` 为 MR 级共享，
+`code_features` 与 `intent_summary` 为 Unit 粒度。
+
+输入（来自代码分析模块，Unit 批量请求）：
 
 ```jsonc
 {
-  "code_features": {
-    "components": ["Image", "List"],        // 使用的 UI 组件
-    "decorators": ["@State", "@Link"],      // 装饰器
-    "apis": ["getContext", "animateTo"],    // API 调用
-    "tags": ["has_image", "has_async"]      // 特征标签（与维度触发器共用）
+  "mr_context": {
+    "triggered_dimensions": ["DIM-01", "DIM-06"],  // 已触发的评价维度（MR 级共享）
+    "token_budget": 8000    // 条款上下文总预算。透传自编排配置，代码分析模块不决策其值
   },
-  "triggered_dimensions": ["DIM-01", "DIM-06"],  // 已触发的评价维度
-  "intent_summary": "图片列表懒加载页面",          // 可选：代码意图摘要
-  "token_budget": 8000                            // 条款上下文总预算
+  "units": [
+    {
+      "unit_ref": "PhotoWall.loadImages@src/pages/PhotoWall.ets",  // Unit 唯一引用
+      "code_features": {
+        "components": ["Image", "List"],        // 使用的 UI 组件
+        "decorators": ["@State", "@Link"],      // 装饰器
+        "apis": ["getContext", "animateTo"],    // API 调用（canonical 形式，见 §3.1）
+        "tags": ["has_image", "has_async"]      // 特征标签（与维度触发器共用）
+      },
+      "intent_summary": "图片列表懒加载页面"      // 可选：Unit 粒度代码意图摘要
+    }
+  ]
 }
 ```
 
-输出——Evidence Pack（供 Prompt 组装器消费，同时满足可调试性）：
+`unit_ref` 命名约定（由代码分析模块生成，检索模块原样回挂不解析）：
+
+| 场景 | 格式 | 示例 |
+|---|---|---|
+| 标准（diff 模式） | `unit_symbol@file` | `PhotoWall.loadImages@src/pages/PhotoWall.ets` |
+| 整文件模式 | `struct名@file` | `PhotoWall@src/pages/PhotoWall.ets` |
+| L0 解析降级（无符号边界） | `hunk-L{start}-L{end}@file`（与 `context_degraded` 标记联动） | `hunk-L40-L58@src/pages/PhotoWall.ets` |
+
+批量规模：典型 MR 约 1~20 个 Unit，**批量接口上限 50**；超大 MR 由编排层分批。
+
+输出——Evidence Pack（供 Prompt 组装器消费，同时满足可调试性），clauses 按
+`unit_ref` 分组回挂；同一条款命中多个 Unit 时在各组均出现，跨 Unit 去重由
+上下文组装阶段处理（见 §4 ④）：
 
 ```jsonc
 {
   "index_version": "idx-2026-07-03-001",
-  "clauses": [
+  "units": [
     {
-      "rule_id": "04-01-01/Feat-01/R-17",     // 全局唯一条款 ID
-      "func_id": "04-01-01",
-      "feat_id": "Feat-01",
-      "rule_type": "RULE",
-      "status": "Baselined",
-      "dimension": "DIM-06",                  // 归属的评价维度
-      "text": "……条款原文……",
-      "heading_path": "Feat-01 图片加载机制 > 功能规则 > 缓存策略",  // 上下文定位
-      "neighbor_rule_ids": ["…/R-16", "…/R-18"],   // 相邻条款指针，组装时按需取
-      "source_path": "04-common-capability/01-image-loading/.../Feat-01-...-spec.md",
-      "source_anchor": "L142-L150",           // 源文件行锚点，误召回排查用
-      "score": 0.87,
-      "matched_by": ["keyword:Image", "keyword:onError", "vector"],  // 命中途径
-      "match_reason": "命中 Image 组件 + onError API，归属 DIM-06 资源维度",
-      "rank_detail": {                        // 排序过程快照
-        "keyword_rank": 2, "vector_rank": 5,
-        "rrf_score": 0.031, "status_boost": 1.2
-      }
+      "unit_ref": "PhotoWall.loadImages@src/pages/PhotoWall.ets",
+      "clauses": [
+        {
+          "rule_id": "04-01-01/Feat-01/R-17",     // 全局唯一条款 ID
+          "func_id": "04-01-01",
+          "feat_id": "Feat-01",
+          "rule_type": "RULE",
+          "status": "Baselined",
+          "dimension": "DIM-06",                  // 归属的评价维度
+          "text": "……条款原文……",
+          "heading_path": "Feat-01 图片加载机制 > 功能规则 > 缓存策略",  // 上下文定位
+          "neighbor_rule_ids": ["…/R-16", "…/R-18"],   // 相邻条款指针，组装时按需取
+          "source_path": "04-common-capability/01-image-loading/.../Feat-01-...-spec.md",
+          "source_anchor": "L142-L150",           // 源文件行锚点，误召回排查用
+          "score": 0.87,
+          "matched_by": ["keyword:Image", "keyword:onError", "vector"],  // 命中途径
+          "match_reason": "命中 Image 组件 + onError API，归属 DIM-06 资源维度",
+          "rank_detail": {                        // 排序过程快照
+            "keyword_rank": 2, "vector_rank": 5,
+            "rrf_score": 0.031, "status_boost": 1.2
+          }
+        }
+      ]
     }
   ]
 }
@@ -113,9 +141,10 @@ rule 编号支持层级小数点：R-17、AC-9.2、VM-1 均为合法
 | `parent_section` | 所属小节的引言/背景文本摘要 | 解析器 |
 | `neighbor_rule_ids` | 前后相邻条款 ID 指针（组装时按需取原文，不冗余存储） | 解析器 |
 | `scenario` | 适用场景描述（离线增强生成） | LLM 增强 |
-| `raw_keywords` | 确定性提取的关键词：正则/代码块解析/API 白名单 | 解析器 |
+| `raw_keywords` | 确定性提取的关键词：正则/代码块解析/SDK 白名单匹配，按 canonical 归一存储（见 §3.1） | 解析器 |
 | `llm_keywords` | LLM 增强补充的关键词 | LLM 增强 |
 | `enhancer_version` | 增强器版本（升级后据此判断哪些条款需重新增强） | 增强管道 |
+| `whitelist_version` | 关键词归一所用 SDK 白名单版本（白名单升级后据此判断哪些条款需重跑归一） | 白名单产物 meta |
 | `embedding` | scenario + text 的向量 | Embedding 模型 |
 | `source_path` | 源文件路径 | 解析器 |
 | `source_anchor` | 源文件行号范围（如 `L142-L150`） | 解析器 |
@@ -142,9 +171,10 @@ CREATE TABLE kb_clauses (
     parent_section TEXT,
     neighbor_rule_ids TEXT[],
     scenario     TEXT,
-    raw_keywords TEXT[],               -- 确定性提取，打分权重高
+    raw_keywords TEXT[],               -- 确定性提取，打分权重高（canonical 归一后）
     llm_keywords TEXT[],               -- LLM 增强补充
     enhancer_version TEXT,
+    whitelist_version TEXT,            -- 关键词归一所用白名单版本
     embedding    vector(1024),          -- 维度随 embedding 模型定
     source_path  TEXT NOT NULL,
     source_anchor TEXT,
@@ -181,9 +211,24 @@ flowchart LR
   支持 `AC-1.1` 式层级编号；历史文档格式不完全
   统一，解析器需容错并输出"未能解析的文档"清单供人工处理
 - 解析同时产出上下文字段（heading_path / parent_section / neighbor_rule_ids /
-  source_anchor）与 `raw_keywords`（正则提取代码块与反引号标识符 + ArkUI
-  组件/API 白名单匹配）
+  source_anchor）与 `raw_keywords`（正则提取代码块与反引号标识符 + SDK
+  白名单匹配）
 - `status` 从 features.yaml 继承到条款级
+
+**白名单同源与 canonical 归一**（与 code-analysis.md §3.4 对齐，已双方确认）：
+
+- 白名单来源：**与代码分析模块共用同一份产物**——其白名单管道
+  （`tools/build_sdk_whitelist.py`）从 interface_sdk-js 官方声明文件生成，
+  带版本号进 git；本模块以数据依赖方式消费（产物文件 + 版本号），别名表
+  归代码分析模块维护
+- 归一规则：规范文本常写裸名（bare，如 `createPixelMap`），索引期按
+  bare + 别名表归一为 **canonical**（模块限定名，如 `image.createPixelMap`）
+  存储；查询侧（代码分析模块按 import 解析）天然发出 canonical，两侧词形一致
+- **bare → canonical 是一对多映射**（如 `getContext` 在多个模块均存在）。
+  别名表支持歧义映射；索引侧遇歧义裸名时将**所有候选 canonical 全部存入**
+  （召回优先，误召回交由融合/精排与状态加权去噪）
+- 每条 chunk 记录归一所用 `whitelist_version`；白名单升级后据此识别需重跑
+  归一的条款（与 `enhancer_version` 同一套增量重建机制）
 
 ### 3.2 LLM 离线增强（解决词汇鸿沟）
 
@@ -208,13 +253,16 @@ flowchart LR
 
 ## 4. 在线检索流程
 
+批量请求中的每个 Unit 独立走 ①~③（域路由与召回以 Unit 的 code_features /
+intent_summary 为输入），④ 在 MR 级统一组装与分配预算。
+
 ```mermaid
 flowchart TB
-    Q[代码特征 + 触发维度 + token 预算] --> R1[① 域路由]
-    R1 --> R2[② 域内混合召回]
-    R2 --> R3[③ 融合与重排]
-    R3 --> R4[④ 上下文组装]
-    R4 --> OUT[条款上下文包]
+    Q[Unit 批量请求<br/>特征 + 触发维度 + token 预算] --> R1[① 域路由<br/>每 Unit]
+    R1 --> R2[② 域内混合召回<br/>每 Unit]
+    R2 --> R3[③ 融合与重排<br/>每 Unit]
+    R3 --> R4[④ 上下文组装<br/>MR 级]
+    R4 --> OUT[Evidence Pack<br/>clauses 按 unit_ref 分组]
 ```
 
 ### ① 域路由（coarse）
@@ -232,7 +280,7 @@ flowchart TB
 
 | 召回路 | 匹配对象 | 说明 |
 |---|---|---|
-| 关键词路 | `raw_keywords`（权重高）+ `llm_keywords`（补充）精确/前缀匹配 + pg_trgm 兜底 | API/组件名命中权重高 |
+| 关键词路 | `raw_keywords`（权重高）+ `llm_keywords`（补充）精确/前缀匹配 + pg_trgm 兜底 | 查询侧 API 以 canonical 形式发出（见 §3.1），与索引侧归一后词形一致；API/组件名命中权重高 |
 | 向量路 | `embedding` 余弦相似度（HNSW） | query = intent_summary 或特征拼接文本 |
 
 ### ③ 融合与重排
@@ -244,17 +292,23 @@ flowchart TB
 
 ### ④ 上下文组装
 
-- 按触发维度分配 token 配额，保证每个命中维度至少有条款（避免单一维度
-  垄断预算）
+- MR 级统一分配：按触发维度分配 token 配额，保证每个命中维度至少有条款
+  （避免单一维度垄断预算）；多 Unit 间按命中分数均衡，避免单一 Unit 垄断
 - **上下文还原**：为命中条款附加 `heading_path`；条款孤立不可读时按
   `neighbor_rule_ids` / `parent_section` 取父节背景一并注入（占对应维度配额）
-- 同一 Feat 相邻条款去重合并
+- 同一 Feat 相邻条款去重合并；同一条款命中多个 Unit 时原文只注入一次，
+  各 unit_ref 分组保留引用（Evidence Pack 中仍按组回挂，供逐 Unit 评审定位）
 - 每条带 `rule_id`，供评审 Prompt 强制引用与机器校验
 
 ### 缓存
 
-`(文件内容 hash, index_version)` → 检索结果缓存。时延大头是 LLM 调用（秒级），
-检索本身不是瓶颈，不做过度优化。
+`(Unit 特征包内容 hash, index_version)` → 该 Unit 检索结果缓存。
+特征包 = `code_features` + `intent_summary` 的序列化哈希。
+
+已知代价：`intent_summary` 为 LLM 产物（provenance = `llm`）时非确定性，
+同一代码两次分析措辞不同即 cache miss——**正确性优先于命中率**，可接受
+（检索重跑 < 50ms，时延大头是 LLM 调用，检索不是瓶颈）；provenance =
+`template` 时摘要确定性生成，命中率无损。
 
 ## 5. Retriever 接口抽象
 
@@ -298,6 +352,10 @@ class Retriever(Protocol):
 - [x] 条款级切块为检索主单元 + 上下文字段（heading_path / parent_section / neighbor_rule_ids）
 - [x] rule_type 覆盖真实条款体系（R/AC/US/BR/FR/ER/RC/VM/ADR/SECTION/PARAGRAPH，支持层级编号）
 - [x] 关键词双来源：raw_keywords（确定性，权重高）+ llm_keywords（LLM 增强补充）+ enhancer_version
+- [x] 白名单同源：与代码分析模块共用 SDK 白名单产物；索引期 bare→canonical 归一（歧义全存），查询侧发 canonical；chunk 记录 whitelist_version
+- [x] Unit 级批量检索契约：输入 units 数组（unit_ref + code_features + intent_summary），triggered_dimensions / token_budget MR 级共享；输出 clauses 按 unit_ref 分组；批量上限 50
+- [x] token_budget 透传自编排配置，本模块与代码分析模块均不决策其值
+- [x] 检索缓存键 =（Unit 特征包内容 hash, index_version），正确性优先于命中率
 - [x] LLM 离线增强（scenario + llm_keywords）解决词汇鸿沟
 - [x] 规则域路由优先、语义分类兜底，路由表配置化
 - [x] 关键词 + 向量双路召回 → RRF 融合，状态加权
