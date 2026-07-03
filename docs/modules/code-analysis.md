@@ -33,6 +33,30 @@ flowchart LR
     CA -->|Review Units| P[Prompt 组装<br/>评审生成模块]
 ```
 
+端到端时序（评审一次 MR 的完整链路，注意两路输入在 Prompt 组装处**汇合**）：
+
+```mermaid
+sequenceDiagram
+    participant CA as 代码分析模块
+    participant R as 检索模块
+    participant P as Prompt 组装（评审生成模块）
+    participant LLM as DeepSeek V4
+    CA->>R: ① code_features + triggered_dimensions（特征包）
+    R->>P: ② Evidence Pack（检索到的知识库规范条款）
+    CA->>P: ③ Review Units（被评审的代码 + 宿主摘要）
+    P->>LLM: ④ Prompt = 骨架 + 维度 prompt_fragment + 条款② + 代码③
+    LLM-->>P: ⑤ 评审 JSON（每条意见强制引用条款 ID）
+```
+
+避免误读的两点说明：
+
+- **检索模块检索的是知识库条款，不是代码**。被评审的代码不经过检索模块——
+  检索只消费特征标签（①），返回条款（②）；代码本体由本模块以 Review Unit
+  形态直供 Prompt 组装（③）。③ 这条直连线是"运代码"，不是绕过检索。
+- **评审这个核心动作 100% 由大模型完成**（⑤）。本模块的定位是给大模型备料：
+  把事实、标签、扩展好上下文的代码准备到位，让 LLM 把 token 与注意力花在
+  评审推理上，而非机械的标识符提取。
+
 ### 1.2 职责边界
 
 **做什么**：
