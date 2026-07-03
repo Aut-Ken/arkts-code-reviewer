@@ -326,7 +326,7 @@ class Retriever(Protocol):
 
 | 层 | 选型 | 理由 |
 |---|---|---|
-| 语言 | Python 3.11+ | RAG / embedding 生态最完整，解析、检索、增强管道全覆盖 |
+| 语言 | Python 3.12 | RAG / embedding 生态完整，且 sentence-transformers / PyTorch 等依赖兼容性更稳；后续 `pyproject.toml` 建议约束为 `>=3.12,<3.13` |
 | 包管理 | uv + `pyproject.toml` | 快、锁定依赖、事实标准 |
 | 数据契约 | Pydantic v2 | Clause / Query / EvidencePack 等模型，天然产出 JSON schema |
 | DB 访问 | SQLAlchemy 2.x + psycopg3 + pgvector 官方 Python 库 | 类型安全，避免裸 SQL 拼接 |
