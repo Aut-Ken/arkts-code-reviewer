@@ -1,0 +1,14 @@
+{
+  "name": "arkts-parser-sidecar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ArkTS tree-sitter sidecar for arkts-code-reviewer",
+  "type": "commonjs",
+  "scripts": {
+    "parse": "node parse_arkts.js"
+  },
+  "dependencies": {
+    "tree-sitter": "0.21.1",
+    "tree-sitter-arkts": "0.2.0"
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "engine": "arkui_ace_engine",
+  "description": "Stratified ArkTS parser samples selected from the local OpenHarmony arkui_ace_engine repository.",
+  "samples": [
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/treeviewv2/source/treeviewv2.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/dialog/source/dialog.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/toolbar/source/toolbar.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/composelistitem/source/composelistitem.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/foldsplitcontainer/source/foldsplitcontainer.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/chip/source/chip.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/arcslider/source/arcslider.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets"
+    },
+    {
+      "category": "advanced_ui_component",
+      "path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/common/utils/ImageProcessUtils.ets"
+    },
+    {
+      "category": "component_examples_text_input",
+      "path": "examples/components/feature/src/main/ets/pages/TextAndInput/TextInputBootcamp.ets"
+    },
+    {
+      "category": "component_examples_text_input",
+      "path": "examples/components/feature/src/main/ets/pages/TextAndInput/TextBootcamp.ets"
+    },
+    {
+      "category": "component_examples_text_input",
+      "path": "examples/components/feature/src/main/ets/pages/TextAndInput/TextAreaBootcamp.ets"
+    },
+    {
+      "category": "component_examples_text_input",
+      "path": "examples/components/feature/src/main/ets/pages/TextAndInput/SearchBootcamp.ets"
+    },
+    {
+      "category": "component_examples_text_input",
+      "path": "examples/components/feature/src/main/ets/pages/TextAndInput/RichEditorBootcamp.ets"
+    },
+    {
+      "category": "component_examples_scroll",
+      "path": "examples/components/feature/src/main/ets/pages/ScrollAndSwipe/ListBootcamp.ets"
+    },
+    {
+      "category": "component_examples_scroll",
+      "path": "examples/components/feature/src/main/ets/pages/ScrollAndSwipe/GridBootcamp.ets"
+    },
+    {
+      "category": "component_examples_scroll",
+      "path": "examples/components/feature/src/main/ets/pages/ScrollAndSwipe/WaterFlowBootcamp.ets"
+    },
+    {
+      "category": "component_examples_scroll",
+      "path": "examples/components/feature/src/main/ets/pages/ScrollAndSwipe/SwiperBootcamp.ets"
+    },
+    {
+      "category": "component_examples_scroll",
+      "path": "examples/components/feature/src/main/ets/pages/ScrollAndSwipe/RefreshBootcamp.ets"
+    },
+    {
+      "category": "component_examples_layout",
+      "path": "examples/components/feature/src/main/ets/pages/RowsColumnsAndStacking/ColumnBootcamp.ets"
+    },
+    {
+      "category": "component_examples_layout",
+      "path": "examples/components/feature/src/main/ets/pages/RowsColumnsAndStacking/RowBootcamp.ets"
+    },
+    {
+      "category": "component_examples_layout",
+      "path": "examples/components/feature/src/main/ets/pages/RowsColumnsAndStacking/FlexBootcamp.ets"
+    },
+    {
+      "category": "component_examples_layout",
+      "path": "examples/components/feature/src/main/ets/pages/RowsColumnsAndStacking/StackBootcamp.ets"
+    },
+    {
+      "category": "component_examples_layout",
+      "path": "examples/components/feature/src/main/ets/pages/RowsColumnsAndStacking/RelativeContainerBootcamp.ets"
+    },
+    {
+      "category": "component_examples_navigation",
+      "path": "examples/components/feature/src/main/ets/pages/NavigationAndSwitching/NavigationBootcamp.ets"
+    },
+    {
+      "category": "component_examples_navigation",
+      "path": "examples/components/feature/src/main/ets/pages/NavigationAndSwitching/NavDestinationBootcamp.ets"
+    },
+    {
+      "category": "component_examples_navigation",
+      "path": "examples/components/feature/src/main/ets/pages/NavigationAndSwitching/TabsBootcamp.ets"
+    },
+    {
+      "category": "component_examples_navigation",
+      "path": "examples/components/feature/src/main/ets/pages/NavigationAndSwitching/StepperBootcamp.ets"
+    },
+    {
+      "category": "component_examples_info",
+      "path": "examples/components/feature/src/main/ets/pages/InformationDisplay/ProgressBootcamp.ets"
+    },
+    {
+      "category": "component_examples_info",
+      "path": "examples/components/feature/src/main/ets/pages/InformationDisplay/QRCodeBootcamp.ets"
+    },
+    {
+      "category": "component_examples_info",
+      "path": "examples/components/feature/src/main/ets/pages/InformationDisplay/TextTimerBootcamp.ets"
+    },
+    {
+      "category": "component_examples_info",
+      "path": "examples/components/feature/src/main/ets/pages/InformationDisplay/PatternLockBootcamp.ets"
+    },
+    {
+      "category": "component_examples_media",
+      "path": "examples/components/feature/src/main/ets/pages/ImagesAndVideos/ImageBootcamp.ets"
+    },
+    {
+      "category": "component_examples_media",
+      "path": "examples/components/feature/src/main/ets/pages/ImagesAndVideos/ImageAnimatorBootcamp.ets"
+    },
+    {
+      "category": "component_examples_grid",
+      "path": "examples/components/feature/src/main/ets/pages/GridAndColumnLayout/GridRowBootcamp.ets"
+    },
+    {
+      "category": "component_examples_grid",
+      "path": "examples/components/feature/src/main/ets/pages/GridAndColumnLayout/GridColBootcamp.ets"
+    },
+    {
+      "category": "component_examples_dialog",
+      "path": "examples/components/feature/src/main/ets/pages/DialogBoxes/CustomDialogBootcamp.ets"
+    },
+    {
+      "category": "component_examples_dialog",
+      "path": "examples/components/feature/src/main/ets/pages/DialogBoxes/AlertDialogBootcamp.ets"
+    },
+    {
+      "category": "component_examples_dialog",
+      "path": "examples/components/feature/src/main/ets/pages/DialogBoxes/BindSheetBootcamp.ets"
+    },
+    {
+      "category": "component_examples_buttons",
+      "path": "examples/components/feature/src/main/ets/pages/ButtonsAndSelections/ButtonBootcamp.ets"
+    },
+    {
+      "category": "component_examples_buttons",
+      "path": "examples/components/feature/src/main/ets/pages/ButtonsAndSelections/ToggleBootcamp.ets"
+    },
+    {
+      "category": "component_examples_buttons",
+      "path": "examples/components/feature/src/main/ets/pages/ButtonsAndSelections/SliderBootcamp.ets"
+    },
+    {
+      "category": "animation_examples",
+      "path": "examples/Animation/entry/src/main/ets/pages/animateTo.ets"
+    },
+    {
+      "category": "animation_examples",
+      "path": "examples/Animation/entry/src/main/ets/pages/animation.ets"
+    },
+    {
+      "category": "animation_examples",
+      "path": "examples/Animation/entry/src/main/ets/pages/transition.ets"
+    },
+    {
+      "category": "animation_examples",
+      "path": "examples/Animation/entry/src/main/ets/pages/pageTransition/pageTransition1.ets"
+    },
+    {
+      "category": "image_animator_examples",
+      "path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorExample001.ets"
+    },
+    {
+      "category": "image_animator_examples",
+      "path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorTest012.ets"
+    },
+    {
+      "category": "wearable_examples",
+      "path": "examples/Wearable/entry/src/main/ets/pages/Index.ets"
+    },
+    {
+      "category": "wearable_examples",
+      "path": "examples/Wearable/entry/src/main/ets/pages/ArcButton/ArcButtonExample001.ets"
+    },
+    {
+      "category": "wearable_examples",
+      "path": "examples/Wearable/entry/src/main/ets/pages/ArcSlider/ArcSliderExample001.ets"
+    },
+    {
+      "category": "state_mgmt_tests",
+      "path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v1_tests.ets"
+    },
+    {
+      "category": "state_mgmt_tests",
+      "path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_tests.ets"
+    },
+    {
+      "category": "state_mgmt_tests",
+      "path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets"
+    },
+    {
+      "category": "state_mgmt_tests",
+      "path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/repeat_tests.ets"
+    },
+    {
+      "category": "state_mgmt_tests",
+      "path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/performance_tests.ets"
+    },
+    {
+      "category": "generated_component",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/component/image.ets"
+    },
+    {
+      "category": "generated_component",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/component/text.ets"
+    },
+    {
+      "category": "generated_component",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/component/list.ets"
+    },
+    {
+      "category": "generated_component",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/component/navigation.ets"
+    },
+    {
+      "category": "generated_framework",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.multimedia.image.ets"
+    },
+    {
+      "category": "generated_framework",
+      "path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.arkui.UIContext.ets"
+    }
+  ]
+}
