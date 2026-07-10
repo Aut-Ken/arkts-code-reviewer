@@ -9,6 +9,9 @@ updated: 2026-07-10
 本文用一段代码说明各模块交换什么数据。Parser/ReviewUnit 前半段基于当前实现，
 Knowledge/Retrieval/Rules/Final LLM 部分是目标契约示例，不表示已经运行。
 
+本例引用的代码可以来自已登记代码语料，但代码来源和知识来源必须分开：代码语料用于
+构造评审请求，只有经过 curation 的知识 Clause 才能成为 Evidence。
+
 ## 1. ArkTS 代码
 
 ```ts
@@ -144,6 +147,7 @@ Dimensions:
 ```jsonc
 {
   "unit_id": "PhotoWall.ets@method:PhotoWall.loadImages:L14-L20",
+  "target_platform": {"release": "OpenHarmony-5.x", "api_level": 12},
   "code_features": {
     "apis": ["image.createPixelMap", "setInterval", "router.pushUrl"],
     "tags": ["has_image", "has_timer", "has_async", "has_navigation"]
@@ -168,11 +172,19 @@ Dimensions:
   "tags": ["has_timer", "has_lifecycle"],
   "apis": ["setInterval", "clearInterval"],
   "text": "组件创建的定时器应在不再使用时主动清理。",
-  "status": "Baselined"
+  "status": "Baselined",
+  "source_ref": {
+    "source_id": "arkui-specs",
+    "revision": "98bbe6578e0f...",
+    "relative_path": "timer/Feat-01-spec.md",
+    "anchor": "R-01",
+    "authority": "feature_spec"
+  }
 }
 ```
 
 精确检索通过 `setInterval + has_timer` 命中，Embedding 可补充生命周期语义。
+这条 Clause 是示例数据，不代表当前本地 11 个知识来源已经完成解析和发布。
 
 ## 8. Prompt 第一轮
 
@@ -235,8 +247,7 @@ await createPixelMap 是否需要错误处理
 -> 补 aboutToDisappear
 -> LLM 排除错误的泄漏结论
 -> Finding Validator
--> ReviewReport
+-> ReviewReport（记录 source_bundle/index/prompt/model versions）
 ```
 
 这个例子说明 Retrieval 找到相关规范只是提供依据，最终是否构成问题仍取决于完整代码上下文。
-

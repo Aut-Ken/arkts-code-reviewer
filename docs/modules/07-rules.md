@@ -22,7 +22,19 @@ Rules 不处理需要复杂语义推理的建议，也不替代 Final LLM。
 
 ## 2. 当前状态
 
-无代码、无 `RuleFinding` 模型、无 registry。当前只有设计建议。
+无代码、无 `RuleFinding` 模型、无运行时 Rule Registry。当前只有设计建议。
+
+已经具备的离线候选输入：
+
+| 来源 | 用途 | 不能直接做什么 |
+|---|---|---|
+| `third-party-typescript` | ArkTS Linter 实现、限制项和测试 | 不能不经确认就升级为本项目 Active Rule |
+| `arkcompiler-ets-frontend` | Checker/Linter/诊断真值参考 | 不能把编译器内部实现文本当 Prompt Evidence |
+| `interface-sdk-js` | deprecated、权限和 API level 元数据 | 不能脱离目标 SDK 版本判断 |
+| `xts-acts` | 正例、负例和边界回放 | 不能假设每个测试文件都是正确范例 |
+| 三组 Skills | 候选检查流程和 taxonomy | 不能作为规范依据或自动执行脚本 |
+
+这些来源已固定在外部 `sources.yaml`，但尚未编写 Adapter 或生成任何 Active Rule。
 
 ## 3. 适合 Rules 的问题
 
@@ -185,6 +197,18 @@ reference_rule_ids
 适用 ArkTS/SDK 版本
 误报豁免
 变更记录
+candidate_source_refs
+validated_corpus_refs
+```
+
+Rule 激活至少需要：
+
+```text
+一条规范/团队策略 reference_rule_id
+或明确编译器诊断契约
++ 正例、反例、边界 fixture
++ 适用 ArkTS/API level
++ owner 审核
 ```
 
 配置见 [配置与版本规范](../architecture/configuration.md)。
@@ -220,7 +244,7 @@ Parser degraded 样例
 ## 15. 下一步
 
 1. 定义 `RuleContext`、`RuleFinding` 和 registry loader。
-2. 从已确认知识条款选择第一批规则。
-3. 建立表驱动测试和 Draft 影子执行。
-4. 将 RuleFinding 接入统一 Finding Validator。
-
+2. 从已确认知识条款、Linter candidate 和 API catalog 选择第一批规则。
+3. 用 XTS 加合成样本建立表驱动正反例，所有新规则先进入 Draft。
+4. 固定 `rule_registry_version + source_bundle_id` 并实现影子执行。
+5. 将 RuleFinding 接入统一 Finding Validator。

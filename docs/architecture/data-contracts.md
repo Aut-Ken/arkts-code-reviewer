@@ -22,11 +22,16 @@ updated: 2026-07-10
 7. Evidence 必须带稳定 `rule_id` 和来源锚点。
 8. Final LLM 只能引用本次 Evidence Pack 或 Rules 中存在的 ID。
 9. 当前已实现字段和目标字段必须明确区分，不能把设计稿当成运行时事实。
+10. 任何外部资料都必须通过 `source_id + revision + relative_path` 定位，branch 不能作为复现依据。
+11. 原始 Skills、代码语料和工具源码不能直接转换为在线 Evidence。
 
 ## 3. 数据所有权
 
 | 数据 | 生产模块 | 主要消费模块 |
 |---|---|---|
+| `SourceRecord/SourceBundle` | Source Registry | Knowledge Build、Evaluation、Audit |
+| `NormalizedDocument/SourceRef` | Source Adapter | Clause Parser、Metadata Extractor |
+| `KnowledgeClause/ApiSymbolCatalog` | Knowledge Build | Retrieval、Rules、Parser canonicalization |
 | `ChangeSet` | Input | Parser、ReviewUnit、Output |
 | `CodeFacts/FileAnalysis` | Parser | ReviewUnit、Feature Routing、Rules |
 | `ReviewUnit` | ReviewUnit | Retrieval、Rules、Prompt |
@@ -36,6 +41,99 @@ updated: 2026-07-10
 | `ReviewRequest` | Prompt Builder | Final LLM |
 | `Finding` | Final LLM + Validator | Output、Evaluation |
 | `ReviewReport` | Output | GitCode、人工审核、Evaluation |
+
+### 3.1 当前 SourceRecord
+
+`/home/autken/Code/arkts-knowledge/registry/sources.yaml` 已登记 19 个本地仓库。当前 YAML
+记录是已落盘事实，主项目尚未实现 loader：
+
+```yaml
+- id: openharmony-docs
+  group: knowledge_source
+  kind: official_documentation
+  local_path: /home/autken/Code/arkts-knowledge/sources/official-docs/openharmony-docs
+  env_override: OPENHARMONY_DOCS_PATH
+  branch: master
+  revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+  checkout:
+    mode: sparse
+    include: [...]
+  ingestion:
+    include: [...]
+    exclude: [...]
+    execute_repository_scripts: false
+    index_as_normative_knowledge: true
+  governance:
+    authority: official_documentation
+    curation_required: true
+    raw_prompt_use_allowed: false
+```
+
+目标 `SourceRegistryLoader` 将其校验为 Pydantic `SourceRecord`，并计算：
+
+```jsonc
+{
+  "source_bundle_id": "sha256:...",
+  "sources": [
+    {
+      "source_id": "openharmony-docs",
+      "revision": "c8f5fb6c...",
+      "ingestion_profile_hash": "sha256:..."
+    }
+  ]
+}
+```
+
+### 3.2 SourceRef
+
+Clause、API 元数据、候选规则和 Golden Case 共用：
+
+```jsonc
+{
+  "source_id": "openharmony-docs",
+  "revision": "c8f5fb6c...",
+  "relative_path": "zh-cn/application-dev/.../example.md",
+  "anchor": "heading-or-lines",
+  "authority": "official_documentation",
+  "content_hash": "sha256:..."
+}
+```
+
+`relative_path` 必须相对于登记的仓库根目录，禁止保存依赖当前机器的绝对文件路径。
+
+### 3.3 NormalizedDocument 与 ApiSymbolCatalog
+
+Source Adapter 的统一文档输出：
+
+```jsonc
+{
+  "document_id": "openharmony-docs:zh-cn/.../example.md",
+  "source_ref": {},
+  "media_type": "text/markdown",
+  "title": "...",
+  "heading_tree": [],
+  "body": "...",
+  "metadata": {
+    "language": "zh-CN",
+    "api_level": null,
+    "release": null
+  }
+}
+```
+
+`interface-sdk-js` 不以普通文档段落为主要产物，而应生成结构化 API 条目：
+
+```jsonc
+{
+  "canonical_name": "image.createPixelMap",
+  "aliases": ["img.createPixelMap"],
+  "since": 9,
+  "deprecated_since": null,
+  "permissions": [],
+  "system_capabilities": [],
+  "source_ref": {}
+}
+```
 
 ## 4. 当前已实现入口
 
@@ -255,6 +353,7 @@ Dimensions 必须是 Unit 级。MR 级可以额外保存并集，用于预算和
 {
   "request_id": "review-123",
   "index_alias": "current",
+  "target_platform": {"release": "OpenHarmony-5.x", "api_level": 12},
   "token_budget": 8000,
   "units": [
     {
@@ -277,7 +376,8 @@ Dimensions 必须是 Unit 级。MR 级可以额外保存并集，用于预算和
 ```jsonc
 {
   "index_version": "idx-2026-07-10-001",
-  "embedding_version": "bge-m3@internal-v1",
+  "source_bundle_id": "sha256:...",
+  "embedding_version": "candidate-model@internal-v1",
   "units": [
     {
       "unit_id": "...",
@@ -287,8 +387,13 @@ Dimensions 必须是 Unit 级。MR 级可以额外保存并集，用于预算和
           "dimension_ids": ["DIM-05", "DIM-06"],
           "text": "组件创建的定时器应在不再使用时主动清理。",
           "status": "Baselined",
-          "source_path": "timer/Feat-01-spec.md",
-          "source_anchor": "L40-L47",
+          "source_ref": {
+            "source_id": "arkui-specs",
+            "revision": "98bbe6578e0f...",
+            "relative_path": "timer/Feat-01-spec.md",
+            "anchor": "L40-L47",
+            "authority": "feature_spec"
+          },
           "matched_by": ["api:setInterval", "tag:has_timer"],
           "match_reason": "...",
           "score": 0.91,
@@ -395,6 +500,7 @@ rule | llm | merged
   "summary": {},
   "versions": {
     "parser": "...",
+    "source_bundle": "...",
     "feature_config": "...",
     "rule_registry": "...",
     "index": "...",
@@ -415,4 +521,3 @@ rule | llm | merged
 - `suggestion` 可以无规范依据，但必须标记为建议。
 - `is_diff_related=false` 默认不回写行内评论。
 - 相同文件、行、规则和问题类型的 Finding 必须去重。
-

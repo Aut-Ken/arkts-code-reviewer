@@ -277,11 +277,23 @@ base/head 代码
 - Parser degraded。
 - 超预算上下文。
 
+当前可用语料来源：
+
+| 来源 | 适合用例 |
+|---|---|
+| `arkui-ace-engine` | 超长 struct/build、复杂 UI block、生命周期方法 |
+| `applications-app-samples` | 应用级方法、状态、网络和资源上下文 |
+| `codelabs` | 小型完整组件和教学型边界 |
+| `xts-acts` | 特殊语法、API 边界和异常/负例 |
+
+Golden fixture 必须固定 `source_id/revision/path`，并人工标注期望上下文；不能直接把
+“官方仓库中的完整声明”当成算法期望。
+
 ## 15. 下一步
 
 1. 先修复 `unit_id` 唯一性。
 2. 引入 `unit_kind/source_span/selection_reason/diagnostics`。
 3. 使用精确 ChangeSet，不再把 hunk 全范围当 changed lines。
 4. 建立 30~50 个 ReviewUnit Golden 用例。
-5. 再实现关联上下文和 token budget。
-
+5. 从已落盘四类语料分层抽取普通方法、长 build、生命周期和负例。
+6. 再实现关联上下文和 token budget。

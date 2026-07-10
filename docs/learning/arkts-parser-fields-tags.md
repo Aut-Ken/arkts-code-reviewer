@@ -26,6 +26,11 @@ tags:
 
 本文使用仓库中的真实测试样例，并以当前 `LexicalParser` 的实际输出为准。
 
+截至 2026-07-10，`LexicalParser` 已在相邻 `arkui_ace_engine` 的 63 个登记样本上全部
+解析成功；L1 sidecar 的 npm 依赖尚未安装。11 个知识来源虽然已经 clone 和登记，但
+Clause 构建、Retrieval 和正式 LLM 评审仍未实现。不要把下文的目标数据流误读为当前
+已经运行的端到端系统。
+
 ---
 
 ## 1. 先建立全局心智模型
@@ -60,6 +65,22 @@ Evidence
 Findings
     真正的代码问题、影响和修改建议
 ```
+
+外部资料在这条链路中的位置：
+
+```text
+arkui-specs / OpenHarmony docs / API metadata
+    -> 离线解析、人工治理、版本化 Clause 和 API catalog
+    -> Retrieval Evidence
+
+XTS / Samples / Codelabs / arkui_ace_engine
+    -> Parser、ReviewUnit、Rules 和最终评审的测试语料
+
+Skills
+    -> 人工审阅的规则/Prompt/工作流候选，不直接成为 Evidence
+```
+
+详细边界见 [多仓库工作区与知识来源架构](../architecture/workspace-and-sources.md)。
 
 最重要的区别：
 

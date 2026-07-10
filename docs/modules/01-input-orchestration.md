@@ -21,6 +21,10 @@ updated: 2026-07-10
 
 不负责解析 ArkTS，也不判断代码质量。
 
+这里的“外部输入”特指待评审的 repository/revision/diff。`arkts-knowledge`、
+`arkts-corpora` 和 `arkts-tools` 是系统依赖资产，不属于一次 MR 的 `ChangeSet`，由独立
+Source Registry 管理。
+
 ## 2. 当前实现
 
 当前只有 `src/arkts_code_reviewer/code_analysis/cli.py`：
@@ -218,5 +222,6 @@ GITCODE_TOKEN
 1. 定义并实现 `ChangeSet` Pydantic 模型。
 2. 实现纯函数 Git diff parser 和 Golden fixtures。
 3. 让 CLI 也走统一 `ChangeSet`，删除手工 hunk 特例。
-4. 端到端闭环稳定后再加入 Webhook、队列和持久 Job Store。
-
+4. 在 Review Job metadata 中固定 `source_bundle_id/config_bundle_version`，但不把知识源
+   内容复制进 ChangeSet。
+5. 端到端闭环稳定后再加入 Webhook、队列和持久 Job Store。

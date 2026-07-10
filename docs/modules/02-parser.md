@@ -220,6 +220,21 @@ provenance
 
 当前声明扫描复杂度不是主要瓶颈，Node 进程启动和重复解析更重要。
 
+## 12.1 外部语料和实现参考
+
+当前已落盘但不进入 Parser 生产运行时的资料：
+
+| 来源 | 用途 |
+|---|---|
+| `arkui-ace-engine` | 63 样本 manifest 和扩大 Parser 回归语料 |
+| `xts-acts` | ArkTS 边界、限制项和异常语法样本 |
+| `applications-app-samples` / `codelabs` | 更接近应用代码的语法分布 |
+| `arkcompiler-ets-frontend` | Parser/Checker/Linter 实现和诊断真值参考 |
+| `interface-sdk-js` | 目标 `ApiSymbolCatalog` 和 canonical API 白名单来源 |
+
+这些仓库的 commit 由外部 `sources.yaml` 固定。Parser 测试引用外部路径时必须记录
+`source_id + revision + relative_path`，不能只假设某个相邻目录永远是最新版本。
+
 ## 13. 配置
 
 当前环境变量：
@@ -249,11 +264,23 @@ SDK whitelist path/version
 - 63 个 `arkui_ace_engine` 样本 manifest。
 - Parser Validation 工具链。
 
-当前验证限制：
+2026-07-10 当前实测：
 
-- sidecar npm 依赖未安装，L1 测试跳过。
-- 相邻 `arkui_ace_engine` 仓库不存在，真实样本测试跳过。
-- 批测在 63 个样本全缺失时仍退出 0，可能导致假绿。
+```text
+pytest                         17 passed, 3 skipped
+L1 skip reason                 sidecar npm 依赖未安装
+LexicalParser engine batch     63 parsed / 0 missing / 0 crashed
+empty_features                 0
+files_with_declarations        63
+declarations_total             2,880
+```
+
+当前限制：
+
+- `sidecars/arkts-parser/node_modules` 不存在，三个 L1 条件测试跳过。
+- L1 尚未在这 63 个真实样本上验证，不能用 L0 结果推断 L1 正确。
+- 批测在 63 个样本全缺失时仍退出 0，换机器或路径错误时可能假绿。
+- 当前外部语料都是浅克隆快照；更新 revision 后需要重新跑基线。
 
 ## 15. 质量门槛
 
@@ -277,9 +304,9 @@ empty facts rate
 
 ## 17. 下一步
 
-1. 安装并固定 sidecar 依赖，在 63 个真实样本上运行 L1。
+1. 使用 lockfile 安装并固定 sidecar 依赖，在 63 个真实样本上运行 L1。
 2. 让缺失全部真实语料时测试和批测失败。
 3. 引入带 span 的 FactOccurrence。
 4. 修改 Analyzer，删除 ReviewUnit 二次 Parser。
-5. 明确 `tree_sitter_parser.py` 实验实现的保留或删除策略。
-
+5. 从 `interface-sdk-js` 构建共享 `ApiSymbolCatalog`，替代分散白名单。
+6. 明确 `tree_sitter_parser.py` 实验实现的保留或删除策略。

@@ -1,6 +1,8 @@
 # ArkTS Code Reviewer 文档中心
 
-本目录是项目架构、模块契约、学习材料和历史设计的统一入口。
+本目录是项目架构、模块契约、学习材料和历史设计的统一入口。当前文档基线同时覆盖
+主项目代码，以及相邻 `arkts-knowledge`、`arkts-corpora`、`arkts-tools`、
+`arkui_ace_engine` 和 `arkts-review-data` 的多仓库工作区。
 
 ## 文档规则
 
@@ -26,8 +28,31 @@
 ### 快速了解项目
 
 1. [整体架构](architecture/overview.md)
-2. [跨模块数据契约](architecture/data-contracts.md)
-3. [配置与版本规范](architecture/configuration.md)
+2. [多仓库工作区与知识来源架构](architecture/workspace-and-sources.md)
+3. [跨模块数据契约](architecture/data-contracts.md)
+4. [配置与版本规范](architecture/configuration.md)
+
+### 新开发会话基线
+
+新建 Chat 或交接开发任务时，先让执行者阅读上面四份文档，再阅读本次要实现的模块
+文档。不要以 `archive/`、聊天记录或外部仓库 README 代替 canonical 文档。
+
+截至 2026-07-10 的可验证基线：
+
+```text
+主项目测试                  17 passed, 3 skipped
+L1 跳过原因                 sidecar npm 依赖未安装
+arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
+来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
+知识构建/在线检索/正式评审   尚未实现运行闭环
+```
+
+快速复核命令：
+
+```bash
+PYTHONPATH=src python -m pytest -q -rs
+PYTHONPATH=src python tools/run_arkts_parser_batch.py --parser lexical
+```
 
 ### 按流水线阅读模块
 
@@ -37,7 +62,7 @@
 | 02 | Parser 与代码事实 | `partial` | [02-parser.md](modules/02-parser.md) |
 | 03 | ReviewUnit 上下文规划 | `partial` | [03-review-unit.md](modules/03-review-unit.md) |
 | 04 | Tags 与评审维度 | `partial` | [04-feature-routing.md](modules/04-feature-routing.md) |
-| 05 | 知识库构建 | `designed` | [05-knowledge-base.md](modules/05-knowledge-base.md) |
+| 05 | 知识库构建 | `partial` | [05-knowledge-base.md](modules/05-knowledge-base.md) |
 | 06 | Retrieval 检索 | `designed` | [06-retrieval.md](modules/06-retrieval.md) |
 | 07 | Deterministic Rules | `designed` | [07-rules.md](modules/07-rules.md) |
 | 08 | Prompt 与 Final LLM | `designed` | [08-prompt-review.md](modules/08-prompt-review.md) |
@@ -69,6 +94,9 @@
 - 对应 `modules/NN-*.md` 的当前实现和目标设计是否仍准确。
 - `architecture/data-contracts.md` 是否需要同步。
 - `architecture/configuration.md` 是否增加了新配置或环境变量。
+- `architecture/workspace-and-sources.md` 和外部 `sources.yaml` 是否需要同步。
 - `architecture/overview.md` 的模块状态是否需要更新。
 - 是否需要新增或更新 Golden Set、示例和迁移说明。
 
+外部来源变化时还必须记录新的不可变 commit，并确认 ingestion allowlist、权威度和
+Prompt 使用边界没有被上游内容改变。

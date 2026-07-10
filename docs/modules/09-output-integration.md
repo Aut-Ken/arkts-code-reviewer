@@ -44,6 +44,7 @@ CLI 当前只打印 `AnalysisResult`，不是正式评审报告。
     "suggestion": 1
   },
   "versions": {},
+  "source_bundle_id": "sha256:...",
   "diagnostics": []
 }
 ```
@@ -167,6 +168,10 @@ head revision
 置信度
 ```
 
+知识引用的内部 source of truth 是 `rule_id + SourceRef`。面向开发者的 Markdown 可以
+显示短标签和相对路径，但审计 JSON 必须保留 `source_id/revision/relative_path/anchor`，
+不能只输出一个可能随上游变化的网页链接。
+
 ## 10. GitCode Adapter
 
 接口：
@@ -243,7 +248,7 @@ GITCODE_TOKEN
 ## 15. 下一步
 
 1. 实现 Finding Validator 和 ReviewReport。
-2. 实现 Markdown Renderer，先服务 CLI。
-3. 用真实 diff fixture 验证行号。
-4. 最后接 GitCode API 和评论生命周期管理。
-
+2. 将 `source_bundle_id/index_version` 和每条 Finding 的 SourceRef 纳入 schema。
+3. 实现 Markdown Renderer，先服务 CLI。
+4. 用真实 diff fixture 验证行号。
+5. 最后接 GitCode API 和评论生命周期管理。

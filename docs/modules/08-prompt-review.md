@@ -27,6 +27,10 @@ ReviewUnit
 
 现有 `GlmJudgeClient` 只用于 Parser Validation，不属于本模块，也不能复用为生产评审结论。
 
+本地已 clone 的 `OpenHarmony_Stability_Tools`、`developtools_dfx_skills` 和
+`openharmony-skills` 只是 Prompt/工作流设计输入。当前没有任何 Skill 被生产 Prompt
+动态加载，也不允许把整份 `SKILL.md` 直接拼入评审请求。
+
 ## 3. 设计原则
 
 ```text
@@ -82,6 +86,9 @@ RuleFindings
 Output schema
 ```
 
+目标模板保存在主项目 `prompts/review/`，而不是任何外部 Skill 仓库；每次修改都需要
+`prompt_version`、Golden Set 和代码评审。
+
 ## 6. Dimension 注入
 
 不能只写 `DIM-06`，必须展开具体检查项：
@@ -109,7 +116,11 @@ Output schema
   "dimension_ids": ["DIM-05", "DIM-06"],
   "text": "组件创建的定时器应在不再使用时主动清理。",
   "status": "Baselined",
-  "source": "内部资源管理规范"
+  "source": {
+    "source_id": "arkui-specs",
+    "revision": "98bbe6578e0f...",
+    "label": "内部资源管理规范"
+  }
 }
 ```
 
@@ -264,6 +275,17 @@ LLM_GATEWAY_BASE_URL
 LLM_GATEWAY_API_KEY
 ```
 
+ReviewRequest metadata 还必须记录：
+
+```text
+source_bundle_id
+index_version
+feature_config_version
+rule_registry_version
+prompt_version
+model
+```
+
 ## 17. 评测
 
 固定 ReviewRequest Golden Set，记录：
@@ -293,8 +315,8 @@ token/latency/cost
 ## 18. 下一步
 
 1. 固定 `ReviewRequest/ReviewResponse/Finding` Pydantic schema。
-2. 用 10 个开源样例编写 Prompt v1。
-3. 实现 mock model 和 Finding Validator。
-4. 接入经过批准的 Gateway。
-5. 人工 adjudication 后再扩大样本和模型能力。
-
+2. 人工审阅候选 Skills，只提炼静态 Prompt 设计原则，不导入事实文本。
+3. 用 10 个带固定 corpus revision 的开源样例编写 Prompt v1。
+4. 实现 mock model 和 Finding Validator。
+5. 接入经过批准的 Gateway。
+6. 人工 adjudication 后再扩大样本和模型能力。

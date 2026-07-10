@@ -27,6 +27,9 @@ updated: 2026-07-10
 - Parser 和 CodeAnalyzer 单元测试。
 - 63 文件真实样本 manifest。
 - Parser Validation GLM 工具。
+- 4 个固定 revision 的代码语料来源：`arkui-ace-engine`、`xts-acts`、
+  `applications-app-samples`、`codelabs`。
+- 11 个知识来源和 4 个分析工具的来源登记，可用于后续分层评测和结果追溯。
 
 缺失：
 
@@ -67,6 +70,21 @@ tests/golden/
 ```
 
 Golden 数据应使用开源、合成或获准内部样本，并记录来源和许可范围。
+
+外部样本统一记录：
+
+```jsonc
+{
+  "source_id": "xts-acts",
+  "revision": "a616d9972cde...",
+  "relative_path": ".../Sample.ets",
+  "content_hash": "sha256:...",
+  "sample_role": "positive | negative | boundary | real_world"
+}
+```
+
+XTS 中的测试代码不能自动标记为 positive；Samples 和 Codelabs 也不能自动标记为规范
+写法。`sample_role` 必须由 fixture 设计者明确说明。
 
 ## 5. Retrieval Golden Set
 
@@ -163,6 +181,7 @@ policy_disagreement
 ChangeSet 标识
 输入/输出 hash
 各模块版本
+source_bundle_id 和 corpus revisions
 Parser warnings
 Retrieval trace
 RuleFindings
@@ -248,6 +267,6 @@ CI 质量门禁
 
 1. 先建立 ReviewUnit 和 Retrieval 两套 Golden Set。
 2. 定义统一 adjudication schema 和根因枚举。
-3. 修复 Parser 批测“全部 missing 仍退出 0”。
-4. 端到端 tracer bullet 后开始收集 Finding accepted/rejected 数据。
-
+3. 修复 Parser 批测“全部 missing 仍退出 0”，并完成 L1 真实样本基线。
+4. 从 XTS、Samples、Codelabs 分层抽取第一批可复现 fixture。
+5. 端到端 tracer bullet 后开始收集 Finding accepted/rejected 数据。

@@ -45,7 +45,19 @@ tests/fixtures/arkui_ace_engine_samples.json
 
 包含 63 个样本、16 个类别，源码来自相邻 `arkui_ace_engine` 仓库。
 
-当前环境没有该相邻仓库，因此真实样本测试全部跳过。
+当前环境已经存在 `/home/autken/Code/arkui_ace_engine`，固定 revision 由外部
+`sources.yaml` 登记。L0 真实样本测试会实际执行，不再因仓库缺失跳过。
+
+后续扩展语料来源：
+
+```text
+xts-acts                     语法限制、边界和负例
+applications-app-samples    应用级真实写法
+codelabs                    完整教学应用
+```
+
+扩展 manifest 时保存 `source_id + revision + relative_path + category`，不能把不同仓库
+版本的结果混成一个不可复现基线。
 
 ## 4. 确定性批测
 
@@ -76,6 +88,19 @@ missing == total
 ```
 
 CI 必须确认真实样本确实执行。
+
+2026-07-10 使用 `--parser lexical` 的实际结果：
+
+```text
+parsed                  63/63
+missing                 0
+crashed                 0
+empty_features          0
+files_with_declarations 63
+declarations_total      2,880
+```
+
+这只是 L0 基线。sidecar npm 依赖当前未安装，L1 结果仍未产生。
 
 ## 5. GLM Judge 数据流
 
@@ -234,6 +259,9 @@ review unit issue
 - 真实 L1 + 63 文件批测门禁。
 - 人工结果转 Golden Case 的自动流程。
 
+当前 `pytest -q -rs` 为 `17 passed, 3 skipped`；三个 skip 均来自 L1 sidecar 依赖未安装，
+不是 `arkui_ace_engine` 样本缺失。
+
 ## 13. 运行产物
 
 默认输出：
@@ -262,7 +290,7 @@ judge false positive rate
 
 1. 安装 sidecar 依赖并执行真实 L1 批测。
 2. 全部样本 missing 时让测试和 CLI 失败。
-3. 将首批人工确认问题转为 Parser Golden fixtures。
-4. 增加网络 client mock、重试和 schema fuzz 测试。
-5. 将公网 GLM 默认行为改为显式 opt-in 或批准 Gateway。
-
+3. 给 manifest 增加 source id/revision，并抽取 XTS、Samples、Codelabs 分层样本。
+4. 将首批人工确认问题转为 Parser Golden fixtures。
+5. 增加网络 client mock、重试和 schema fuzz 测试。
+6. 将公网 GLM 默认行为改为显式 opt-in 或批准 Gateway。
