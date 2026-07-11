@@ -37,12 +37,14 @@
 新建 Chat 或交接开发任务时，先让执行者阅读上面四份文档，再阅读本次要实现的模块
 文档。不要以 `archive/`、聊天记录或外部仓库 README 代替 canonical 文档。
 
-截至 2026-07-10 的可验证基线：
+截至 2026-07-11 的可验证基线：
 
 ```text
-主项目测试                  17 passed, 3 skipped
-L1 跳过原因                 sidecar npm 依赖未安装
+主项目测试（npm ci 后）     30 passed，20 subtests passed
+Python-only checkout         26 passed, 4 skipped（L1 可选测试）
+Parser Golden               12 个自包含人工标注样本，L0/L1 完整逐 case baseline
 arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
+arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 missing warning
 来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
 知识构建/在线检索/正式评审   尚未实现运行闭环
 ```
@@ -51,7 +53,16 @@ arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
 
 ```bash
 PYTHONPATH=src python -m pytest -q -rs
-PYTHONPATH=src python tools/run_arkts_parser_batch.py --parser lexical
+PYTHONPATH=src python tools/evaluate_parser_golden.py \
+  --parser lexical \
+  --baseline tests/golden/parser/baselines/lexical.json \
+  --require-layer L0
+(cd sidecars/arkts-parser && npm ci)
+PYTHONPATH=src python tools/evaluate_parser_golden.py \
+  --parser arkts-tree-sitter \
+  --baseline tests/golden/parser/baselines/arkts-tree-sitter-merged.json \
+  --require-layer L1
+PYTHONPATH=src python tools/run_arkts_parser_batch.py --parser lexical --require-layer L0
 ```
 
 ### 按流水线阅读模块

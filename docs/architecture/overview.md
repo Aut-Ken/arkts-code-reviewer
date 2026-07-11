@@ -1,7 +1,7 @@
 ---
 title: ArkTS Code Reviewer 整体架构
 status: canonical
-updated: 2026-07-10
+updated: 2026-07-11
 ---
 
 # ArkTS Code Reviewer 整体架构
@@ -34,13 +34,13 @@ ArkTS AI Code Reviewer
 
 ## 2. 当前真实状态
 
-截至 2026-07-10，代码覆盖流水线前半段和 Parser 质检旁路；外部知识、语料和工具已经
+截至 2026-07-11，代码覆盖流水线前半段和 Parser 质检旁路；外部知识、语料和工具已经
 完成分类落盘，但“资料已经 clone”不等于知识构建和在线检索已经实现。
 
 | 模块 | 状态 | 当前事实 |
 |---|---|---|
 | 输入与编排 | `partial` | CLI 可读取文件和手工 hunk；无 Git diff 解析、Webhook、队列和服务 |
-| Parser | `partial` | L0 在 63 个 `arkui_ace_engine` 样本上 63/63 成功；L1 sidecar 代码存在，但 npm 依赖未安装 |
+| Parser | `partial` | 12-case Golden 已建立 L0/merged-L1 baseline；R63 的 L0/L1 均 63/63 完成，L1 仍有 AST warning |
 | ReviewUnit | `partial` | full/diff 初版、fallback 和 hunk 合并已实现 |
 | Tags / Dimensions | `partial` | 24 Tags 和 12 Dimensions 硬编码实现，尚未配置化 |
 | 知识库构建 | `partial` | 11 个知识来源及固定 revision 已登记；无 registry loader、Clause parser、数据库或真实索引 |
@@ -49,17 +49,20 @@ ArkTS AI Code Reviewer
 | Prompt / Final LLM | `designed` | 无生产评审代码；GLM 只用于 Parser 质检 |
 | 输出与 GitCode | `planned` | 无代码 |
 | 评测闭环 | `designed` | 只有 Parser/前置链路测试，未形成最终评审 Golden Set |
-| Parser Validation | `partial` | 批测、GLM judge、dry-run 和运行计划已实现；L0 真实样本已运行，L1 和人工 adjudication 未完成 |
+| Parser Validation | `partial` | 自包含 Golden、逐 case baseline、固定 revision R63 批测、GLM judge 和 dry-run 已实现 |
 
 当前 `AnalysisResult` 能输出 ReviewUnit、RetrievalQuery 原料和 Parser metadata，不能输出正式代码评审 Finding。
 
 ### 2.1 当前可复核结果
 
 ```text
-pytest                         17 passed, 3 skipped
-L1 skip reason                 tree-sitter sidecar npm 依赖未安装
+pytest after npm ci             30 passed, 20 subtests passed
+Python-only checkout            26 passed, 4 optional L1 skips
+Parser Golden                   12 cases / L0 and merged-L1 strict baselines
 LexicalParser real samples     63 parsed / 0 missing / 0 crashed
-Declarations                   2,880
+Merged-L1 real samples          63 L1 / 0 missing / 0 crashed
+R63 L1 AST warnings             7 files with ERROR / 7 files with missing nodes
+Declarations                   L0 2,880 / merged-L1 5,351
 Source registry                19 entries / all revisions verified / clean worktrees
 ```
 

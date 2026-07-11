@@ -2,7 +2,7 @@
 title: 10 评测与反馈闭环模块
 status: canonical
 implementation: designed
-updated: 2026-07-10
+updated: 2026-07-11
 ---
 
 # 10 评测与反馈闭环模块
@@ -25,7 +25,8 @@ updated: 2026-07-10
 已有：
 
 - Parser 和 CodeAnalyzer 单元测试。
-- 63 文件真实样本 manifest。
+- 12-case Parser Golden、逐 case L0/merged-L1 baseline 和 strict CLI。
+- 63 文件固定 revision 的 Parser robustness/performance manifest。
 - Parser Validation GLM 工具。
 - 4 个固定 revision 的代码语料来源：`arkui-ace-engine`、`xts-acts`、
   `applications-app-samples`、`codelabs`。
@@ -199,6 +200,8 @@ LLM usage/latency
 
 ```text
 真实 Parser 样本必须存在，不能全部 skip
+Parser Golden baseline 必须逐 case 完整匹配
+strict L1 必须全部为 L1，不能以 optional pytest skip 代替
 ReviewUnit Golden tests 全通过
 高严重级 Rules 不允许已知误报
 Retrieval Recall@5 达到基线
@@ -267,6 +270,6 @@ CI 质量门禁
 
 1. 先建立 ReviewUnit 和 Retrieval 两套 Golden Set。
 2. 定义统一 adjudication schema 和根因枚举。
-3. 修复 Parser 批测“全部 missing 仍退出 0”，并完成 L1 真实样本基线。
-4. 从 XTS、Samples、Codelabs 分层抽取第一批可复现 fixture。
+3. 扩充 Parser Golden 的 recovery/class/generic 边界，并建立 raw-L1 diagnostics 基线。
+4. 从 XTS、Samples、Codelabs 分层抽取后续可复现 fixture。
 5. 端到端 tracer bullet 后开始收集 Finding accepted/rejected 数据。

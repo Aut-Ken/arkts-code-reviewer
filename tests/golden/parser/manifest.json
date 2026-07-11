@@ -1,0 +1,1245 @@
+{
+  "schema_version": "parser-golden-v1",
+  "suite_id": "parser-golden-v1",
+  "description": "Deterministic Parser fact accuracy cases, separate from the R63 robustness corpus.",
+  "coordinate_system": {
+    "line_base": 1,
+    "line_end": "inclusive",
+    "column_status": "not_scored_until_coordinate_contract_is_frozen"
+  },
+  "unsupported_fields": [
+    "fact_occurrences",
+    "fact_spans",
+    "fact_owners",
+    "parser_diagnostics",
+    "raw_l1_snapshot"
+  ],
+  "cases": [
+    {
+      "case_id": "synthetic-photo-wall",
+      "description": "Existing PhotoWall seed with imports, async work, timers, state, nested UI, and local calls.",
+      "logical_path": "golden/synthetic/PhotoWall.ets",
+      "source": {
+        "file": "sources/photo_wall.ets",
+        "kind": "synthetic",
+        "content_sha256": "06018e6e3cc17c590b544a9a36f01a744216b6d4b99ba068a5ecad0022bc39bd"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.multimedia.image",
+            "default_name": "img",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": ["Column", "ForEach", "Grid", "Image"],
+        "apis": ["clearInterval", "image.createPixelMap", "router.pushUrl", "setInterval"],
+        "decorators": ["@Component", "@Entry", "@State"],
+        "attributes": ["objectFit", "onClick"],
+        "symbols": [
+          "Column",
+          "ForEach",
+          "Grid",
+          "Image",
+          "PhotoWall",
+          "PhotoWall.aboutToDisappear",
+          "PhotoWall.build",
+          "PhotoWall.build.Column",
+          "PhotoWall.build.Column.Grid",
+          "PhotoWall.build.Column.Grid.ForEach",
+          "PhotoWall.build.Column.Grid.ForEach.Image",
+          "PhotoWall.loadImages",
+          "aboutToDisappear",
+          "build",
+          "loadImages"
+        ],
+        "syntax": ["arrow_fn", "async_fn", "await_expr"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "PhotoWall",
+            "qualified_name": "PhotoWall",
+            "parent_name": null,
+            "span": {"start_line": 4, "end_line": 33}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToDisappear",
+            "qualified_name": "PhotoWall.aboutToDisappear",
+            "parent_name": "PhotoWall",
+            "span": {"start_line": 10, "end_line": 12}
+          },
+          {
+            "kind": "method",
+            "name": "loadImages",
+            "qualified_name": "PhotoWall.loadImages",
+            "parent_name": "PhotoWall",
+            "span": {"start_line": 14, "end_line": 20}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "PhotoWall.build",
+            "parent_name": "PhotoWall",
+            "span": {"start_line": 22, "end_line": 32}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "PhotoWall.build.Column",
+            "parent_name": "PhotoWall.build",
+            "span": {"start_line": 23, "end_line": 31}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Grid",
+            "qualified_name": "PhotoWall.build.Column.Grid",
+            "parent_name": "PhotoWall.build.Column",
+            "span": {"start_line": 24, "end_line": 30}
+          },
+          {
+            "kind": "ui_block",
+            "name": "ForEach",
+            "qualified_name": "PhotoWall.build.Column.Grid.ForEach",
+            "parent_name": "PhotoWall.build.Column.Grid",
+            "span": {"start_line": 25, "end_line": 29}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Image",
+            "qualified_name": "PhotoWall.build.Column.Grid.ForEach.Image",
+            "parent_name": "PhotoWall.build.Column.Grid.ForEach",
+            "span": {"start_line": 26, "end_line": 28}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": ["photos.push", "this.loadImages"]
+      }
+    },
+    {
+      "case_id": "synthetic-custom-components",
+      "description": "Existing V2/Builder seed with custom leaf components and a non-UI on() method.",
+      "logical_path": "golden/synthetic/CustomComponents.ets",
+      "source": {
+        "file": "sources/custom_component.ets",
+        "kind": "synthetic",
+        "content_sha256": "e11a6f33d65fb3a8a4ab827cad0fa19a697a5a19147ea84b424f8d180c40d5ff"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@kit.ArkUI",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"window": "window"}
+          }
+        ],
+        "components": ["CanvasHome", "Navigation", "TextTouchUpComponent"],
+        "apis": null,
+        "decorators": ["@Builder", "@ComponentV2"],
+        "attributes": ["hideNavBar"],
+        "symbols": [
+          "CanvasHome",
+          "ImageGeneratorDialog",
+          "ImageGeneratorDialog.build",
+          "ImageGeneratorDialog.build.Navigation",
+          "ImageGeneratorDialog.initWinSizeChangeCallback",
+          "ImageGeneratorDialog.pageMap",
+          "ImageGeneratorDialog.pageMap.CanvasHome",
+          "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+          "Navigation",
+          "TextTouchUpComponent",
+          "build",
+          "initWinSizeChangeCallback",
+          "pageMap"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ImageGeneratorDialog",
+            "qualified_name": "ImageGeneratorDialog",
+            "parent_name": null,
+            "span": {"start_line": 3, "end_line": 25}
+          },
+          {
+            "kind": "builder",
+            "name": "pageMap",
+            "qualified_name": "ImageGeneratorDialog.pageMap",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 7, "end_line": 14}
+          },
+          {
+            "kind": "ui_block",
+            "name": "CanvasHome",
+            "qualified_name": "ImageGeneratorDialog.pageMap.CanvasHome",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {"start_line": 10, "end_line": 10}
+          },
+          {
+            "kind": "ui_block",
+            "name": "TextTouchUpComponent",
+            "qualified_name": "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {"start_line": 12, "end_line": 12}
+          },
+          {
+            "kind": "method",
+            "name": "initWinSizeChangeCallback",
+            "qualified_name": "ImageGeneratorDialog.initWinSizeChangeCallback",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 16, "end_line": 18}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ImageGeneratorDialog.build",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 20, "end_line": 24}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Navigation",
+            "qualified_name": "ImageGeneratorDialog.build.Navigation",
+            "parent_name": "ImageGeneratorDialog.build",
+            "span": {"start_line": 21, "end_line": 23}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "attributes": ["on"]
+      }
+    },
+    {
+      "case_id": "synthetic-comments-and-strings",
+      "description": "Imports, decorators, components, and calls inside comments or strings are data, not facts.",
+      "logical_path": "golden/synthetic/CommentsAndStrings.ets",
+      "source": {
+        "file": "sources/comments_and_strings.ets",
+        "kind": "synthetic",
+        "content_sha256": "603ef83bc124c626489f2927e4e8d45968cb8e1159bac09e80bdf21c020eea50"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [],
+        "apis": ["router.back"],
+        "decorators": [],
+        "attributes": [],
+        "symbols": ["navigate"],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "function",
+            "name": "navigate",
+            "qualified_name": "navigate",
+            "parent_name": null,
+            "span": {"start_line": 9, "end_line": 11}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "components": ["Column", "Image"],
+        "apis": ["fakeHttp.createHttp", "router.pushUrl"],
+        "decorators": ["@Component", "@State"]
+      }
+    },
+    {
+      "case_id": "synthetic-api-ownership",
+      "description": "Imported/global APIs must be kept while local receiver calls are excluded.",
+      "logical_path": "golden/synthetic/ApiOwnership.ets",
+      "source": {
+        "file": "sources/api_ownership.ets",
+        "kind": "synthetic",
+        "content_sha256": "57ec5eae6ee5ad7ad5f4e97e6dfd38f28fbef716372d9ccd7101c4f3ca8512a3"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.multimedia.image",
+            "default_name": "img",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [],
+        "apis": ["clearTimeout", "image.createPixelMap", "router.pushUrl", "setTimeout"],
+        "decorators": [],
+        "attributes": [],
+        "symbols": ["load"],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "function",
+            "name": "load",
+            "qualified_name": "load",
+            "parent_name": null,
+            "span": {"start_line": 4, "end_line": 10}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": ["helper.on", "items.push", "this.localHelper"]
+      }
+    },
+    {
+      "case_id": "synthetic-same-line-ui",
+      "description": "Repeated same-line UI expressions keep distinct declarations and correct nesting.",
+      "logical_path": "golden/synthetic/SameLineUi.ets",
+      "source": {
+        "file": "sources/same_line_ui.ets",
+        "kind": "synthetic",
+        "content_sha256": "8ef3e41016b548cc845e13fec634abd27dc376bde190c390ad34ca47e60d69ff"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": ["Column", "Text"],
+        "apis": [],
+        "decorators": ["@Component"],
+        "attributes": [],
+        "symbols": [
+          "Column",
+          "SameLinePage",
+          "SameLinePage.build",
+          "SameLinePage.build.Column",
+          "SameLinePage.build.Column.Text",
+          "Text",
+          "build"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "SameLinePage",
+            "qualified_name": "SameLinePage",
+            "parent_name": null,
+            "span": {"start_line": 1, "end_line": 4}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "SameLinePage.build",
+            "parent_name": "SameLinePage",
+            "span": {"start_line": 3, "end_line": 3}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "SameLinePage.build.Column",
+            "parent_name": "SameLinePage.build",
+            "span": {"start_line": 3, "end_line": 3}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "SameLinePage.build.Column.Text",
+            "parent_name": "SameLinePage.build.Column",
+            "span": {"start_line": 3, "end_line": 3}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "SameLinePage.build.Column",
+            "parent_name": "SameLinePage.build",
+            "span": {"start_line": 3, "end_line": 3}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "SameLinePage.build.Column.Text",
+            "parent_name": "SameLinePage.build.Column",
+            "span": {"start_line": 3, "end_line": 3}
+          }
+        ]
+      },
+      "must_not_emit": {}
+    },
+    {
+      "case_id": "synthetic-multiline-imports",
+      "description": "Default, named, aliased, namespace, multiline, and side-effect imports.",
+      "logical_path": "golden/synthetic/MultilineImports.ets",
+      "source": {
+        "file": "sources/multiline_imports.ets",
+        "kind": "synthetic",
+        "content_sha256": "a98afcca5c9e703df421c010d54a08ab4f2336736a46038c1cabee0c8d7c8818"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.multimedia.image",
+            "default_name": "defaultImage",
+            "namespace_name": null,
+            "named": {"LocalPixelMap": "PixelMap", "Size": "Size"}
+          },
+          {
+            "module": "@ohos.router",
+            "default_name": null,
+            "namespace_name": "routerApi",
+            "named": {}
+          },
+          {
+            "module": "@ohos.hilog",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [],
+        "apis": ["image.createPixelMap", "router.back"],
+        "decorators": [],
+        "attributes": [],
+        "symbols": ["create"],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "function",
+            "name": "create",
+            "qualified_name": "create",
+            "parent_name": null,
+            "span": {"start_line": 8, "end_line": 11}
+          }
+        ]
+      },
+      "must_not_emit": {}
+    },
+    {
+      "case_id": "grammar-lazy-import",
+      "description": "ArkTS lazy import derived from the vendored tree-sitter grammar corpus.",
+      "logical_path": "golden/grammar/LazyImport.ets",
+      "source": {
+        "file": "sources/lazy_import.ets",
+        "kind": "grammar_derived",
+        "content_sha256": "b329284afd2b114c53a19495a28cfeea70259cc3670e3029679ea502849dcd34",
+        "source_id": "tree-sitter-arkts",
+        "revision": "vendored-0.2.0",
+        "relative_path": "test/corpus/arkts.txt#Lazy import",
+        "license": "MIT"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "mod",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"Bar": "Foo"}
+          }
+        ],
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": ["useLazy"],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "function",
+            "name": "useLazy",
+            "qualified_name": "useLazy",
+            "parent_name": null,
+            "span": {"start_line": 3, "end_line": 5}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": ["value.run"]
+      }
+    },
+    {
+      "case_id": "grammar-optional-struct-method",
+      "description": "Optional struct method derived from the vendored tree-sitter grammar corpus.",
+      "logical_path": "golden/grammar/OptionalStructMethod.ets",
+      "source": {
+        "file": "sources/optional_struct_method.ets",
+        "kind": "grammar_derived",
+        "content_sha256": "e7f0ca38f928d9b38265bed5381c4ae5541b0e9055d49b0b226037a7399373d8",
+        "source_id": "tree-sitter-arkts",
+        "revision": "vendored-0.2.0",
+        "relative_path": "test/corpus/arkts.txt#Optional struct method",
+        "license": "MIT"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": [],
+        "apis": ["setTimeout"],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "OptionalLifecycle",
+          "OptionalLifecycle.aboutToAppear",
+          "aboutToAppear"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "OptionalLifecycle",
+            "qualified_name": "OptionalLifecycle",
+            "parent_name": null,
+            "span": {"start_line": 1, "end_line": 5}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "OptionalLifecycle.aboutToAppear",
+            "parent_name": "OptionalLifecycle",
+            "span": {"start_line": 2, "end_line": 4}
+          }
+        ]
+      },
+      "must_not_emit": {}
+    },
+    {
+      "case_id": "arkui-animate-to",
+      "description": "Small real ArkUI page with nested sibling UI blocks and API-looking text inside strings.",
+      "logical_path": "golden/arkui-ace-engine/animateTo.ets",
+      "source": {
+        "file": "sources/arkui_animate_to.ets",
+        "kind": "external_snapshot",
+        "content_sha256": "d11763cb2bfe397be23c2c88fb7592f69e63fab2e1792f51617472ff76d36464",
+        "upstream_content_sha256": "34f9f50a456844d1eb807ca8b2ea5f911396dfd4fa026cca4500b3622a8ef8f9",
+        "normalizations": ["ensure_trailing_newline"],
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/Animation/entry/src/main/ets/pages/animateTo.ets",
+        "origin_lines": [1, 47],
+        "license": "Apache-2.0"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": ["Button", "Column"],
+        "apis": ["router.back", "router.pushUrl"],
+        "decorators": ["@Component", "@Entry"],
+        "attributes": [
+          "backgroundColor",
+          "height",
+          "justifyContent",
+          "margin",
+          "onClick",
+          "width"
+        ],
+        "symbols": [
+          "AnimateToExample",
+          "AnimateToExample.build",
+          "AnimateToExample.build.Column",
+          "AnimateToExample.build.Column.Column",
+          "AnimateToExample.build.Column.Column.Button",
+          "Button",
+          "Column",
+          "build"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "AnimateToExample",
+            "qualified_name": "AnimateToExample",
+            "parent_name": null,
+            "span": {"start_line": 17, "end_line": 47}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "AnimateToExample.build",
+            "parent_name": "AnimateToExample",
+            "span": {"start_line": 20, "end_line": 46}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column",
+            "parent_name": "AnimateToExample.build",
+            "span": {"start_line": 21, "end_line": 45}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column.Column",
+            "parent_name": "AnimateToExample.build.Column",
+            "span": {"start_line": 22, "end_line": 31}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {"start_line": 23, "end_line": 26}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column.Column",
+            "parent_name": "AnimateToExample.build.Column",
+            "span": {"start_line": 32, "end_line": 44}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {"start_line": 33, "end_line": 36}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {"start_line": 37, "end_line": 41}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": ["this.getUIContext"]
+      }
+    },
+    {
+      "case_id": "arkui-v2-decorated-variables",
+      "description": "Real V2 test entry with timer/router APIs and decorator-looking text in comments and strings.",
+      "logical_path": "golden/arkui-ace-engine/v2_decorated_variables_tests.ets",
+      "source": {
+        "file": "sources/arkui_v2_decorated_variables.ets",
+        "kind": "external_snapshot",
+        "content_sha256": "fa796eac3e85925e1d99193724ece7c5a4b77074d86f55a7089b04b92944c1dd",
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets",
+        "origin_lines": [1, 79],
+        "license": "Apache-2.0"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "../../v2_tests/decoratedVariablesTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"DecoratedVariablesTestsV2": "DecoratedVariablesTestsV2"}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"PageController": "PageController"}
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"TestRunner": "TestRunner"}
+          },
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": ["Column", "Text"],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind",
+          "console.log",
+          "router.back",
+          "setTimeout"
+        ],
+        "decorators": ["@ComponentV2", "@Entry", "@Local"],
+        "attributes": ["fontSize", "fontWeight", "margin"],
+        "symbols": [
+          "Column",
+          "DecoratedVariablesTestsPage",
+          "DecoratedVariablesTestsPage.aboutToAppear",
+          "DecoratedVariablesTestsPage.build",
+          "DecoratedVariablesTestsPage.build.Column",
+          "DecoratedVariablesTestsPage.build.Column.Text",
+          "Text",
+          "aboutToAppear",
+          "build"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "DecoratedVariablesTestsPage",
+            "qualified_name": "DecoratedVariablesTestsPage",
+            "parent_name": null,
+            "span": {"start_line": 34, "end_line": 79}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "DecoratedVariablesTestsPage.aboutToAppear",
+            "parent_name": "DecoratedVariablesTestsPage",
+            "span": {"start_line": 41, "end_line": 61}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "DecoratedVariablesTestsPage.build",
+            "parent_name": "DecoratedVariablesTestsPage",
+            "span": {"start_line": 63, "end_line": 78}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column",
+            "parent_name": "DecoratedVariablesTestsPage.build",
+            "span": {"start_line": 64, "end_line": 77}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 65, "end_line": 65}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 66, "end_line": 66}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 68, "end_line": 68}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 69, "end_line": 69}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 70, "end_line": 70}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 71, "end_line": 71}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 72, "end_line": 72}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 73, "end_line": 73}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 75, "end_line": 75}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {"start_line": 76, "end_line": 76}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "decorators": ["@Consumer", "@Param", "@Provider"]
+      }
+    },
+    {
+      "case_id": "arkui-download-file-button",
+      "description": "Real V1 component with two builders, resource references, conditional UI, and local calls.",
+      "logical_path": "golden/arkui-ace-engine/DownloadFileButton.ets",
+      "source": {
+        "file": "sources/arkui_download_file_button.ets",
+        "kind": "external_snapshot",
+        "content_sha256": "d94e58fc711a59ec2db1ec1cac3b991743bb2bfc99701631f09ccec613cae768",
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets",
+        "origin_lines": [1, 143],
+        "license": "Apache-2.0"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": ["Column", "Image", "Row", "Text"],
+        "apis": ["$r"],
+        "decorators": ["@Builder", "@Component", "@State"],
+        "attributes": [
+          "fillColor",
+          "fontColor",
+          "fontFamily",
+          "fontSize",
+          "fontStyle",
+          "fontWeight",
+          "margin",
+          "size"
+        ],
+        "symbols": [
+          "Column",
+          "DownloadFileButton",
+          "DownloadFileButton.build",
+          "DownloadFileButton.build.Column",
+          "DownloadFileButton.build.Row",
+          "DownloadFileButton.downloadImage",
+          "DownloadFileButton.downloadImage.Image",
+          "DownloadFileButton.downloadText",
+          "DownloadFileButton.downloadText.Text",
+          "DownloadFileButton.getTextContent",
+          "Image",
+          "Row",
+          "Text",
+          "build",
+          "downloadImage",
+          "downloadText",
+          "getTextContent"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "DownloadFileButton",
+            "qualified_name": "DownloadFileButton",
+            "parent_name": null,
+            "span": {"start_line": 67, "end_line": 143}
+          },
+          {
+            "kind": "method",
+            "name": "getTextContent",
+            "qualified_name": "DownloadFileButton.getTextContent",
+            "parent_name": "DownloadFileButton",
+            "span": {"start_line": 85, "end_line": 87}
+          },
+          {
+            "kind": "builder",
+            "name": "downloadImage",
+            "qualified_name": "DownloadFileButton.downloadImage",
+            "parent_name": "DownloadFileButton",
+            "span": {"start_line": 89, "end_line": 98}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Image",
+            "qualified_name": "DownloadFileButton.downloadImage.Image",
+            "parent_name": "DownloadFileButton.downloadImage",
+            "span": {"start_line": 91, "end_line": 97}
+          },
+          {
+            "kind": "builder",
+            "name": "downloadText",
+            "qualified_name": "DownloadFileButton.downloadText",
+            "parent_name": "DownloadFileButton",
+            "span": {"start_line": 100, "end_line": 120}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DownloadFileButton.downloadText.Text",
+            "parent_name": "DownloadFileButton.downloadText",
+            "span": {"start_line": 102, "end_line": 119}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "DownloadFileButton.build",
+            "parent_name": "DownloadFileButton",
+            "span": {"start_line": 122, "end_line": 142}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "DownloadFileButton.build.Row",
+            "parent_name": "DownloadFileButton.build",
+            "span": {"start_line": 124, "end_line": 131}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "DownloadFileButton.build.Column",
+            "parent_name": "DownloadFileButton.build",
+            "span": {"start_line": 133, "end_line": 140}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": [
+          "downloadDescriptionResourceMap.get",
+          "this.downloadImage",
+          "this.downloadText",
+          "this.getTextContent"
+        ]
+      }
+    },
+    {
+      "case_id": "arkui-image-generator-complex-receivers",
+      "description": "Real V2 component with complex receivers, optional chains, lifecycle methods, and custom UI.",
+      "logical_path": "golden/arkui-ace-engine/ImageGeneratorDialogMain.ets",
+      "source": {
+        "file": "sources/arkui_image_generator_main.ets",
+        "kind": "external_snapshot",
+        "content_sha256": "7beb66f1856c7cd1f8734f12ae54a7d9484d2cb68f038da51e53d456ba2c78d3",
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets",
+        "origin_lines": [1, 149],
+        "license": "Apache-2.0",
+        "sample_role": "real_world_complex_receivers"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [
+          {
+            "module": "@ohos.arkui.intelligence.imageGeneration",
+            "default_name": "imageGeneration",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../common/CommonConstants",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"Constants": "Constants"}
+          },
+          {
+            "module": "./CanvasFramework",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"CanvasHome": "CanvasHome"}
+          },
+          {
+            "module": "./TextTouchUp",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"TextTouchUpComponent": "TextTouchUpComponent"}
+          },
+          {
+            "module": "@kit.ArkUI",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {"window": "window"}
+          },
+          {
+            "module": "../types/Declaration",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CanvasLayoutDirection": "CanvasLayoutDirection",
+              "CanvasMode": "CanvasMode",
+              "LogTag": "LogTag"
+            }
+          },
+          {
+            "module": "../utils/CallbackManagers",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "WinSizeChangeCallbackManager": "WinSizeChangeCallbackManager"
+            }
+          }
+        ],
+        "components": ["CanvasHome", "Navigation", "TextTouchUpComponent"],
+        "apis": null,
+        "decorators": [
+          "@Builder",
+          "@ComponentV2",
+          "@Local",
+          "@Param",
+          "@Provider",
+          "@Require"
+        ],
+        "attributes": [
+          "alignSelf",
+          "borderRadius",
+          "clip",
+          "height",
+          "hideNavBar",
+          "mode",
+          "navDestination",
+          "width"
+        ],
+        "symbols": [
+          "CanvasHome",
+          "ImageGeneratorDialog",
+          "ImageGeneratorDialog.aboutToAppear",
+          "ImageGeneratorDialog.aboutToDisappear",
+          "ImageGeneratorDialog.build",
+          "ImageGeneratorDialog.build.Navigation",
+          "ImageGeneratorDialog.initImageInfoArr",
+          "ImageGeneratorDialog.initLayoutProperties",
+          "ImageGeneratorDialog.initUserPrompt",
+          "ImageGeneratorDialog.initWinSizeChangeCallback",
+          "ImageGeneratorDialog.pageMap",
+          "ImageGeneratorDialog.pageMap.CanvasHome",
+          "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+          "Navigation",
+          "TextTouchUpComponent",
+          "aboutToAppear",
+          "aboutToDisappear",
+          "build",
+          "initImageInfoArr",
+          "initLayoutProperties",
+          "initUserPrompt",
+          "initWinSizeChangeCallback",
+          "pageMap"
+        ],
+        "syntax": ["arrow_fn", "try_catch"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ImageGeneratorDialog",
+            "qualified_name": "ImageGeneratorDialog",
+            "parent_name": null,
+            "span": {"start_line": 24, "end_line": 149}
+          },
+          {
+            "kind": "method",
+            "name": "initWinSizeChangeCallback",
+            "qualified_name": "ImageGeneratorDialog.initWinSizeChangeCallback",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 58, "end_line": 66}
+          },
+          {
+            "kind": "method",
+            "name": "initLayoutProperties",
+            "qualified_name": "ImageGeneratorDialog.initLayoutProperties",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 68, "end_line": 77}
+          },
+          {
+            "kind": "builder",
+            "name": "pageMap",
+            "qualified_name": "ImageGeneratorDialog.pageMap",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 79, "end_line": 90}
+          },
+          {
+            "kind": "ui_block",
+            "name": "CanvasHome",
+            "qualified_name": "ImageGeneratorDialog.pageMap.CanvasHome",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {"start_line": 82, "end_line": 86}
+          },
+          {
+            "kind": "ui_block",
+            "name": "TextTouchUpComponent",
+            "qualified_name": "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {"start_line": 88, "end_line": 88}
+          },
+          {
+            "kind": "method",
+            "name": "initImageInfoArr",
+            "qualified_name": "ImageGeneratorDialog.initImageInfoArr",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 92, "end_line": 110}
+          },
+          {
+            "kind": "method",
+            "name": "initUserPrompt",
+            "qualified_name": "ImageGeneratorDialog.initUserPrompt",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 112, "end_line": 116}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "ImageGeneratorDialog.aboutToAppear",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 118, "end_line": 129}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToDisappear",
+            "qualified_name": "ImageGeneratorDialog.aboutToDisappear",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 131, "end_line": 134}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ImageGeneratorDialog.build",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {"start_line": 136, "end_line": 148}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Navigation",
+            "qualified_name": "ImageGeneratorDialog.build.Navigation",
+            "parent_name": "ImageGeneratorDialog.build",
+            "span": {"start_line": 137, "end_line": 147}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "apis": [
+          "content.toString",
+          "imageInfoArr.push",
+          "imageInfoArr.sort",
+          "stylesArr.push",
+          "this.initImageInfoArr",
+          "this.initLayoutProperties",
+          "this.initUserPrompt",
+          "this.initWinSizeChangeCallback",
+          "this.updateCanvasLayoutProperties"
+        ]
+      }
+    }
+  ]
+}

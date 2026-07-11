@@ -1,0 +1,1440 @@
+{
+  "schema_version": "parser-golden-baseline-v2",
+  "suite_id": "parser-golden-v1",
+  "parser": "arkts-tree-sitter-merged",
+  "parser_metadata": {
+    "parser_package": "tree-sitter-arkts",
+    "parser_version": "0.2.0",
+    "node_version": "26.4.0",
+    "npm_version": "11.18.0",
+    "package_lock_sha256": "6ed6bdb956342223476f948062938f7db95d2a6f8d7901196d9a12a598c5a97d"
+  },
+  "report": {
+    "schema_version": "parser-golden-v1",
+    "suite_id": "parser-golden-v1",
+    "parser_implementation": "ArktsTreeSitterParser",
+    "manifest_sha256": "9561aa4f15135663fcfe485d045f65cbabb1d9a40f524f2952b712b37fa9d56a",
+    "case_count": 12,
+    "crashed": 0,
+    "parser_layers": {
+      "L1": 12
+    },
+    "must_not_violation_count": 4,
+    "unsupported_fields": [
+      "fact_occurrences",
+      "fact_spans",
+      "fact_owners",
+      "parser_diagnostics",
+      "raw_l1_snapshot"
+    ],
+    "fields": {
+      "imports": {
+        "case_count": 12,
+        "tp": 25,
+        "fp": 2,
+        "fn": 1,
+        "precision": 0.925926,
+        "recall": 0.961538,
+        "f1": 0.943396
+      },
+      "components": {
+        "case_count": 12,
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "apis": {
+        "case_count": 10,
+        "tp": 20,
+        "fp": 5,
+        "fn": 0,
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888889
+      },
+      "decorators": {
+        "case_count": 12,
+        "tp": 20,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "attributes": {
+        "case_count": 12,
+        "tp": 28,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "symbols": {
+        "case_count": 12,
+        "tp": 99,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.970588,
+        "recall": 1.0,
+        "f1": 0.985075
+      },
+      "syntax": {
+        "case_count": 12,
+        "tp": 10,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "declarations": {
+        "case_count": 12,
+        "tp": 65,
+        "fp": 5,
+        "fn": 5,
+        "precision": 0.928571,
+        "recall": 0.928571,
+        "f1": 0.928571
+      }
+    },
+    "cases": [
+      {
+        "case_id": "synthetic-photo-wall",
+        "source": "golden/synthetic/PhotoWall.ets",
+        "source_sha256": "06018e6e3cc17c590b544a9a36f01a744216b6d4b99ba068a5ecad0022bc39bd",
+        "provenance": {
+          "file": "sources/photo_wall.ets",
+          "kind": "synthetic",
+          "content_sha256": "06018e6e3cc17c590b544a9a36f01a744216b6d4b99ba068a5ecad0022bc39bd"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 15,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9375,
+            "recall": 1.0,
+            "f1": 0.967742,
+            "false_positives": [
+              "PhotoWall.build.Grid"
+            ],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-custom-components",
+        "source": "golden/synthetic/CustomComponents.ets",
+        "source_sha256": "e11a6f33d65fb3a8a4ab827cad0fa19a697a5a19147ea84b424f8d180c40d5ff",
+        "provenance": {
+          "file": "sources/custom_component.ets",
+          "kind": "synthetic",
+          "content_sha256": "e11a6f33d65fb3a8a4ab827cad0fa19a697a5a19147ea84b424f8d180c40d5ff"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 13,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 6,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.857143,
+            "recall": 0.857143,
+            "f1": 0.857143,
+            "false_positives": [
+              {
+                "kind": "method",
+                "name": "pageMap",
+                "parent_name": "ImageGeneratorDialog",
+                "qualified_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "end_line": 14,
+                  "start_line": 7
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "builder",
+                "name": "pageMap",
+                "parent_name": "ImageGeneratorDialog",
+                "qualified_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "end_line": 14,
+                  "start_line": 7
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-comments-and-strings",
+        "source": "golden/synthetic/CommentsAndStrings.ets",
+        "source_sha256": "603ef83bc124c626489f2927e4e8d45968cb8e1159bac09e80bdf21c020eea50",
+        "provenance": {
+          "file": "sources/comments_and_strings.ets",
+          "kind": "synthetic",
+          "content_sha256": "603ef83bc124c626489f2927e4e8d45968cb8e1159bac09e80bdf21c020eea50"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.666667,
+            "false_positives": [
+              {
+                "imported": "default",
+                "kind": "default",
+                "local": "fakeHttp",
+                "module": "@ohos.net.http"
+              }
+            ],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-api-ownership",
+        "source": "golden/synthetic/ApiOwnership.ets",
+        "source_sha256": "57ec5eae6ee5ad7ad5f4e97e6dfd38f28fbef716372d9ccd7101c4f3ca8512a3",
+        "provenance": {
+          "file": "sources/api_ownership.ets",
+          "kind": "synthetic",
+          "content_sha256": "57ec5eae6ee5ad7ad5f4e97e6dfd38f28fbef716372d9ccd7101c4f3ca8512a3"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 4,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.666667,
+            "recall": 1.0,
+            "f1": 0.8,
+            "false_positives": [
+              "helper.on",
+              "items.push"
+            ],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {
+          "apis": [
+            "helper.on",
+            "items.push"
+          ]
+        }
+      },
+      {
+        "case_id": "synthetic-same-line-ui",
+        "source": "golden/synthetic/SameLineUi.ets",
+        "source_sha256": "8ef3e41016b548cc845e13fec634abd27dc376bde190c390ad34ca47e60d69ff",
+        "provenance": {
+          "file": "sources/same_line_ui.ets",
+          "kind": "synthetic",
+          "content_sha256": "8ef3e41016b548cc845e13fec634abd27dc376bde190c390ad34ca47e60d69ff"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-multiline-imports",
+        "source": "golden/synthetic/MultilineImports.ets",
+        "source_sha256": "a98afcca5c9e703df421c010d54a08ab4f2336736a46038c1cabee0c8d7c8818",
+        "provenance": {
+          "file": "sources/multiline_imports.ets",
+          "kind": "synthetic",
+          "content_sha256": "a98afcca5c9e703df421c010d54a08ab4f2336736a46038c1cabee0c8d7c8818"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "grammar-lazy-import",
+        "source": "golden/grammar/LazyImport.ets",
+        "source_sha256": "b329284afd2b114c53a19495a28cfeea70259cc3670e3029679ea502849dcd34",
+        "provenance": {
+          "file": "sources/lazy_import.ets",
+          "kind": "grammar_derived",
+          "content_sha256": "b329284afd2b114c53a19495a28cfeea70259cc3670e3029679ea502849dcd34",
+          "source_id": "tree-sitter-arkts",
+          "revision": "vendored-0.2.0",
+          "relative_path": "test/corpus/arkts.txt#Lazy import",
+          "license": "MIT"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "false_positives": [
+              {
+                "imported": "default",
+                "kind": "default",
+                "local": "lazy { Foo as Bar }",
+                "module": "mod"
+              }
+            ],
+            "false_negatives": [
+              {
+                "imported": "Foo",
+                "kind": "named",
+                "local": "Bar",
+                "module": "mod"
+              }
+            ]
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "false_positives": [
+              "value.run"
+            ],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {
+          "apis": [
+            "value.run"
+          ]
+        }
+      },
+      {
+        "case_id": "grammar-optional-struct-method",
+        "source": "golden/grammar/OptionalStructMethod.ets",
+        "source_sha256": "e7f0ca38f928d9b38265bed5381c4ae5541b0e9055d49b0b226037a7399373d8",
+        "provenance": {
+          "file": "sources/optional_struct_method.ets",
+          "kind": "grammar_derived",
+          "content_sha256": "e7f0ca38f928d9b38265bed5381c4ae5541b0e9055d49b0b226037a7399373d8",
+          "source_id": "tree-sitter-arkts",
+          "revision": "vendored-0.2.0",
+          "relative_path": "test/corpus/arkts.txt#Optional struct method",
+          "license": "MIT"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "arkui-animate-to",
+        "source": "golden/arkui-ace-engine/animateTo.ets",
+        "source_sha256": "d11763cb2bfe397be23c2c88fb7592f69e63fab2e1792f51617472ff76d36464",
+        "provenance": {
+          "file": "sources/arkui_animate_to.ets",
+          "kind": "external_snapshot",
+          "content_sha256": "d11763cb2bfe397be23c2c88fb7592f69e63fab2e1792f51617472ff76d36464",
+          "upstream_content_sha256": "34f9f50a456844d1eb807ca8b2ea5f911396dfd4fa026cca4500b3622a8ef8f9",
+          "normalizations": [
+            "ensure_trailing_newline"
+          ],
+          "source_id": "arkui-ace-engine",
+          "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+          "relative_path": "examples/Animation/entry/src/main/ets/pages/animateTo.ets",
+          "origin_lines": [
+            1,
+            47
+          ],
+          "license": "Apache-2.0"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 7,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.875,
+            "recall": 0.875,
+            "f1": 0.875,
+            "false_positives": [
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "parent_name": "AnimateToExample.build.Column",
+                "qualified_name": "AnimateToExample.build.Column.Column",
+                "span": {
+                  "end_line": 42,
+                  "start_line": 32
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "parent_name": "AnimateToExample.build.Column",
+                "qualified_name": "AnimateToExample.build.Column.Column",
+                "span": {
+                  "end_line": 44,
+                  "start_line": 32
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "arkui-v2-decorated-variables",
+        "source": "golden/arkui-ace-engine/v2_decorated_variables_tests.ets",
+        "source_sha256": "fa796eac3e85925e1d99193724ece7c5a4b77074d86f55a7089b04b92944c1dd",
+        "provenance": {
+          "file": "sources/arkui_v2_decorated_variables.ets",
+          "kind": "external_snapshot",
+          "content_sha256": "fa796eac3e85925e1d99193724ece7c5a4b77074d86f55a7089b04b92944c1dd",
+          "source_id": "arkui-ace-engine",
+          "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+          "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets",
+          "origin_lines": [
+            1,
+            79
+          ],
+          "license": "Apache-2.0"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 5,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.833333,
+            "recall": 1.0,
+            "f1": 0.909091,
+            "false_positives": [
+              "TestRunner.bind(this)"
+            ],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 14,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "arkui-download-file-button",
+        "source": "golden/arkui-ace-engine/DownloadFileButton.ets",
+        "source_sha256": "d94e58fc711a59ec2db1ec1cac3b991743bb2bfc99701631f09ccec613cae768",
+        "provenance": {
+          "file": "sources/arkui_download_file_button.ets",
+          "kind": "external_snapshot",
+          "content_sha256": "d94e58fc711a59ec2db1ec1cac3b991743bb2bfc99701631f09ccec613cae768",
+          "source_id": "arkui-ace-engine",
+          "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+          "relative_path": "advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets",
+          "origin_lines": [
+            1,
+            143
+          ],
+          "license": "Apache-2.0"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.666667,
+            "false_positives": [
+              "downloadDescriptionResourceMap.get"
+            ],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 17,
+            "fp": 2,
+            "fn": 0,
+            "precision": 0.894737,
+            "recall": 1.0,
+            "f1": 0.944444,
+            "false_positives": [
+              "DownloadFileButton.Image",
+              "DownloadFileButton.Text"
+            ],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 7,
+            "fp": 2,
+            "fn": 2,
+            "precision": 0.777778,
+            "recall": 0.777778,
+            "f1": 0.777778,
+            "false_positives": [
+              {
+                "kind": "method",
+                "name": "downloadImage",
+                "parent_name": "DownloadFileButton",
+                "qualified_name": "DownloadFileButton.downloadImage",
+                "span": {
+                  "end_line": 98,
+                  "start_line": 89
+                }
+              },
+              {
+                "kind": "method",
+                "name": "downloadText",
+                "parent_name": "DownloadFileButton",
+                "qualified_name": "DownloadFileButton.downloadText",
+                "span": {
+                  "end_line": 120,
+                  "start_line": 100
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "builder",
+                "name": "downloadImage",
+                "parent_name": "DownloadFileButton",
+                "qualified_name": "DownloadFileButton.downloadImage",
+                "span": {
+                  "end_line": 98,
+                  "start_line": 89
+                }
+              },
+              {
+                "kind": "builder",
+                "name": "downloadText",
+                "parent_name": "DownloadFileButton",
+                "qualified_name": "DownloadFileButton.downloadText",
+                "span": {
+                  "end_line": 120,
+                  "start_line": 100
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {
+          "apis": [
+            "downloadDescriptionResourceMap.get"
+          ]
+        }
+      },
+      {
+        "case_id": "arkui-image-generator-complex-receivers",
+        "source": "golden/arkui-ace-engine/ImageGeneratorDialogMain.ets",
+        "source_sha256": "7beb66f1856c7cd1f8734f12ae54a7d9484d2cb68f038da51e53d456ba2c78d3",
+        "provenance": {
+          "file": "sources/arkui_image_generator_main.ets",
+          "kind": "external_snapshot",
+          "content_sha256": "7beb66f1856c7cd1f8734f12ae54a7d9484d2cb68f038da51e53d456ba2c78d3",
+          "source_id": "arkui-ace-engine",
+          "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+          "relative_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets",
+          "origin_lines": [
+            1,
+            149
+          ],
+          "license": "Apache-2.0",
+          "sample_role": "real_world_complex_receivers"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 6,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 23,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 11,
+            "fp": 1,
+            "fn": 1,
+            "precision": 0.916667,
+            "recall": 0.916667,
+            "f1": 0.916667,
+            "false_positives": [
+              {
+                "kind": "method",
+                "name": "pageMap",
+                "parent_name": "ImageGeneratorDialog",
+                "qualified_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "end_line": 90,
+                  "start_line": 79
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "builder",
+                "name": "pageMap",
+                "parent_name": "ImageGeneratorDialog",
+                "qualified_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "end_line": 90,
+                  "start_line": 79
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {}
+      }
+    ]
+  }
+}

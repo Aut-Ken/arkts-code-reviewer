@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from collections import Counter
@@ -20,9 +21,13 @@ from arkts_code_reviewer.code_analysis.parser_factory import (  # noqa: E402
     create_code_parser,
 )
 from arkts_code_reviewer.code_analysis.tagger import derive_tags  # noqa: E402
+from arkts_code_reviewer.parser_validation.manifest import (  # noqa: E402
+    load_corpus_manifest,
+    verify_corpus_checkout,
+)
 
 DEFAULT_MANIFEST = REPO_ROOT / "tests" / "fixtures" / "arkui_ace_engine_samples.json"
-DEFAULT_ENGINE_ROOT = REPO_ROOT.parent / "arkui_ace_engine"
+DEFAULT_ENGINE_ROOT = Path(os.getenv("ARKUI_ENGINE_PATH", REPO_ROOT.parent / "arkui_ace_engine"))
 
 
 def main() -> None:
@@ -35,17 +40,30 @@ def main() -> None:
         choices=PARSER_CHOICES,
         default="arkts-tree-sitter",
     )
+    parser.add_argument(
+        "--require-layer",
+        choices=("L0", "L1", "parse_degraded"),
+        help="Exit non-zero unless every parsed sample used this parser layer.",
+    )
     args = parser.parse_args()
 
-    report = run_batch(args.engine_root, args.manifest, parser_name=args.parser)
+    try:
+        report = run_batch(args.engine_root, args.manifest, parser_name=args.parser)
+    except ValueError as exc:
+        parser.error(str(exc))
     if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
         args.json_output.write_text(
-            json.dumps(report, ensure_ascii=False, indent=2),
+            json.dumps(report, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
 
     print(_format_report(report))
-    if report["crashed"]:
+    all_empty = report["parsed"] > 0 and len(report["empty_features"]) == report["parsed"]
+    wrong_layer = args.require_layer and report["parser_layers"] != {
+        args.require_layer: report["parsed"]
+    }
+    if report["missing"] or report["crashed"] or all_empty or wrong_layer:
         raise SystemExit(1)
 
 
@@ -54,8 +72,9 @@ def run_batch(
     manifest_path: Path,
     parser_name: ParserChoice = "arkts-tree-sitter",
 ) -> dict[str, Any]:
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    samples = manifest["samples"]
+    manifest = load_corpus_manifest(manifest_path)
+    revision = verify_corpus_checkout(engine_root, manifest)
+    samples = manifest.samples
     parser = create_code_parser(parser_name)
     started = time.perf_counter()
 
@@ -72,8 +91,8 @@ def run_batch(
     declaration_counts: list[int] = []
 
     for sample in samples:
-        rel_path = sample["path"]
-        categories[sample["category"]] += 1
+        rel_path = sample.path
+        categories[sample.category] += 1
         source_path = engine_root / Path(rel_path)
         if not source_path.exists():
             missing.append(rel_path)
@@ -105,6 +124,11 @@ def run_batch(
     return {
         "engine_root": str(engine_root),
         "manifest": str(manifest_path),
+        "schema_version": manifest.schema_version,
+        "suite_id": manifest.suite_id,
+        "suite_role": manifest.suite_role,
+        "source_id": manifest.source_id,
+        "revision": revision,
         "parser": parser_name,
         "total_samples": len(samples),
         "parsed": parsed,
@@ -127,6 +151,9 @@ def run_batch(
 def _format_report(report: dict[str, Any]) -> str:
     lines = [
         "ArkTS parser batch report",
+        f"  suite_id: {report['suite_id']}",
+        f"  suite_role: {report['suite_role']}",
+        f"  source_revision: {report['source_id']}@{report['revision']}",
         f"  engine_root: {report['engine_root']}",
         f"  parser: {report['parser']}",
         f"  samples: {report['total_samples']}",

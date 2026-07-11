@@ -2,7 +2,7 @@
 title: 11 Parser Validation 质检旁路
 status: canonical
 implementation: partial
-updated: 2026-07-10
+updated: 2026-07-11
 ---
 
 # 11 Parser Validation 质检旁路
@@ -28,25 +28,36 @@ updated: 2026-07-10
 |---|---|
 | `parser_validation/models.py` | 请求和结果模型 |
 | `parser_validation/manifest.py` | 样本加载和筛选 |
+| `parser_validation/golden.py` | Golden manifest、评分、baseline 与运行时校验 |
 | `parser_validation/packager.py` | Parser 输出和源码片段打包 |
 | `parser_validation/glm_judge.py` | dry-run、GLM client、重试和结果解析 |
 | `tools/run_arkts_parser_batch.py` | 确定性批测 |
+| `tools/evaluate_parser_golden.py` | L0/merged-L1 Golden 评测和 strict baseline 门禁 |
 | `tools/validate_parser_with_llm.py` | GLM 质检 CLI |
 | `tools/plan_parser_validation_runs.py` | 分组运行计划和人工记录模板 |
 | `tools/run_glm_l1_smoke.ps1` | Windows L1 smoke |
 
 ## 3. 样本
 
-当前 manifest：
+当前样本分成三层，不能互相替代：
 
 ```text
+tests/golden/parser/manifest.json
+  12 个自包含、人工逐字段复核的 accuracy oracle
+
 tests/fixtures/arkui_ace_engine_samples.json
+  63 个完整真实文件的 robustness/performance corpus
+
+third_party/tree-sitter-arkts/test/corpus
+  grammar source -> AST corpus，不是 CodeFacts 真值
 ```
 
-包含 63 个样本、16 个类别，源码来自相邻 `arkui_ace_engine` 仓库。
+R63 包含 63 个样本、16 个类别，源码来自相邻 `arkui_ace_engine` 仓库。它能回答是否
+missing、crash、degraded、为空和耗时情况，不能证明字段准确。
 
 当前环境已经存在 `/home/autken/Code/arkui_ace_engine`，固定 revision 由外部
-`sources.yaml` 登记。L0 真实样本测试会实际执行，不再因仓库缺失跳过。
+`sources.yaml` 登记。测试和 batch 会核对 HEAD、pinned tree 中的 63 条路径，以及这些
+选中路径是否有工作树修改；不会递归扫描整个外部仓库。
 
 后续扩展语料来源：
 
@@ -64,6 +75,7 @@ codelabs                    完整教学应用
 ```bash
 python tools/run_arkts_parser_batch.py \
   --parser arkts-tree-sitter \
+  --require-layer L1 \
   --engine-root ../arkui_ace_engine
 ```
 
@@ -80,27 +92,55 @@ top components/APIs/decorators/tags
 elapsed time
 ```
 
-当前缺陷：63 个源码全部 missing 时脚本仍退出 0。目标行为是：
+当前失败条件包括：
 
 ```text
-missing == total
+任一 missing 或 crash
+全部样本 empty
+指定 --require-layer 后任一样本不在该 layer
+revision 或 selected-path provenance 不一致
 -> 非零退出
 ```
 
 CI 必须确认真实样本确实执行。
 
-2026-07-10 使用 `--parser lexical` 的实际结果：
+2026-07-11 的实际结果：
 
 ```text
-parsed                  63/63
-missing                 0
-crashed                 0
-empty_features          0
-files_with_declarations 63
-declarations_total      2,880
+L0 parsed/L0            63/63
+L0 declarations         2,880
+merged-L1 parsed/L1     63/63
+merged-L1 declarations  5,351
+missing/crashed/empty   0/0/0
+L1 ERROR warnings       7 files
+L1 missing warnings     7 files
 ```
 
-这只是 L0 基线。sidecar npm 依赖当前未安装，L1 结果仍未产生。
+R63 的 `63/63 L1` 表示 sidecar 成功返回并完成合并；7 个 ERROR 和 7 个 missing warning
+说明它不是“AST 全干净”，更不代表字段全准确。
+
+### 4.1 Parser Golden 门禁
+
+Golden v1 评分 imports、components、APIs、decorators、attributes、symbols、syntax，以及
+当前支持的 7 种 declaration kind。未冻结的 occurrence span/owner、结构化 diagnostics
+和 raw-L1 被显式列为 unsupported。
+
+```bash
+PYTHONPATH=src python tools/evaluate_parser_golden.py \
+  --parser lexical \
+  --baseline tests/golden/parser/baselines/lexical.json \
+  --require-layer L0
+
+(cd sidecars/arkts-parser && npm ci)
+PYTHONPATH=src python tools/evaluate_parser_golden.py \
+  --parser arkts-tree-sitter \
+  --baseline tests/golden/parser/baselines/arkts-tree-sitter-merged.json \
+  --require-layer L1
+```
+
+baseline 保存完整逐 case FP/FN identity、warning、layer、provenance、manifest/source hash，
+不是只保存 aggregate 总分。L1 strict path 还核对 `.node-version`、npm、package lock 和实际
+安装的 `tree-sitter-arkts` 版本。当前分数是 merged-L1，不能标为 raw-L1。
 
 ## 5. GLM Judge 数据流
 
@@ -251,16 +291,20 @@ review unit issue
 - invalid output。
 - thinking/response format 配置。
 - manifest 筛选。
+- Golden manifest/provenance/schema fail-closed。
+- duplicate-aware 精确评分和 crash-as-FN。
+- L0 与 merged-L1 完整逐 case baseline。
+- R63 固定 revision 和 selected-path 工作树校验。
 
 未覆盖：
 
 - 真实 GLM 网络调用。
 - 重试行为的完整 mock。
-- 真实 L1 + 63 文件批测门禁。
+- raw-L1 独立评测路径和 ERROR/missing 阈值。
 - 人工结果转 Golden Case 的自动流程。
 
-当前 `pytest -q -rs` 为 `17 passed, 3 skipped`；三个 skip 均来自 L1 sidecar 依赖未安装，
-不是 `arkui_ace_engine` 样本缺失。
+当前执行 `npm ci` 后，`pytest -q -rs` 为 `30 passed, 20 subtests passed`。Python-only
+checkout 为 `26 passed, 4 skipped`；skip 仅是可选 L1 测试，strict L1 命令缺依赖时会失败。
 
 ## 13. 运行产物
 
@@ -288,9 +332,9 @@ judge false positive rate
 
 ## 15. 下一步
 
-1. 安装 sidecar 依赖并执行真实 L1 批测。
-2. 全部样本 missing 时让测试和 CLI 失败。
-3. 给 manifest 增加 source id/revision，并抽取 XTS、Samples、Codelabs 分层样本。
-4. 将首批人工确认问题转为 Parser Golden fixtures。
+1. 增加真正 recovery、class、generic/destructuring Golden cases。
+2. 为 raw-L1 snapshot 建立独立评测路径和 AST diagnostics 门槛。
+3. 在修改事实模型前，为 occurrence span/owner 扩展 Golden schema。
+4. 从 XTS、Samples、Codelabs 继续分层抽样，不把大型仓库当作全量 accuracy truth。
 5. 增加网络 client mock、重试和 schema fuzz 测试。
 6. 将公网 GLM 默认行为改为显式 opt-in 或批准 Gateway。

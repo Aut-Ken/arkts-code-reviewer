@@ -1,5 +1,10 @@
 {
+  "schema_version": "parser-corpus-v1",
+  "suite_id": "arkui-ace-engine-r63",
+  "suite_role": "robustness_performance",
   "engine": "arkui_ace_engine",
+  "source_id": "arkui-ace-engine",
+  "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
   "description": "Stratified ArkTS parser samples selected from the local OpenHarmony arkui_ace_engine repository.",
   "samples": [
     {
