@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -11,11 +12,15 @@ from arkts_code_reviewer.code_analysis.arkts_tree_sitter_parser import ArktsTree
 from arkts_code_reviewer.code_analysis.lexical import LexicalParser
 from arkts_code_reviewer.code_analysis.models import CodeFacts
 from arkts_code_reviewer.parser_validation.golden import (
+    DECLARATION_KINDS,
     EXPECTED_FIELDS,
+    SYNTAX_KINDS,
+    UNSUPPORTED_FIELDS,
     evaluate_golden_suite,
     load_golden_baseline,
     load_golden_suite,
     score_items,
+    verify_external_snapshot_provenance,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +32,7 @@ SIDECAR_NODE_MODULE = (
     REPO_ROOT / "sidecars" / "arkts-parser" / "node_modules" / "tree-sitter-arkts" / "package.json"
 )
 SIDECAR_ROOT = REPO_ROOT / "sidecars" / "arkts-parser"
+ENGINE_ROOT = Path(os.getenv("ARKUI_ENGINE_PATH", REPO_ROOT.parent / "arkui_ace_engine"))
 
 
 class CrashingParser:
@@ -39,7 +45,8 @@ class ParserGoldenTest(unittest.TestCase):
         suite = load_golden_suite(MANIFEST)
 
         self.assertEqual(suite.suite_id, "parser-golden-v1")
-        self.assertEqual(len(suite.cases), 12)
+        self.assertEqual(len(suite.cases), 15)
+        self.assertEqual(suite.unsupported_fields, UNSUPPORTED_FIELDS)
         self.assertEqual(len({case.case_id for case in suite.cases}), len(suite.cases))
         self.assertGreaterEqual(
             sum(case.source_metadata["kind"] == "external_snapshot" for case in suite.cases),
@@ -60,6 +67,23 @@ class ParserGoldenTest(unittest.TestCase):
                         case.source_metadata["revision"],
                         "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
                     )
+
+        self.assertEqual(
+            {
+                declaration["kind"]
+                for case in suite.cases
+                for declaration in (case.expected["declarations"] or [])
+            },
+            DECLARATION_KINDS,
+        )
+        self.assertEqual(
+            {
+                syntax
+                for case in suite.cases
+                for syntax in (case.expected["syntax"] or [])
+            },
+            SYNTAX_KINDS,
+        )
 
     def test_score_items_preserves_duplicate_occurrences(self) -> None:
         score = score_items(
@@ -99,6 +123,80 @@ class ParserGoldenTest(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, r"imports\[0\] fields mismatch"):
                 load_golden_suite(copied_manifest)
+
+    def test_manifest_and_baseline_reject_duplicate_json_keys(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            copied_manifest = Path(directory) / "manifest.json"
+            text = MANIFEST.read_text(encoding="utf-8")
+            copied_manifest.write_text(
+                text.replace(
+                    '"schema_version": "parser-golden-v1",',
+                    '"schema_version": "parser-golden-v1",\n'
+                    '  "schema_version": "parser-golden-v1",',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                load_golden_suite(copied_manifest)
+
+        suite = load_golden_suite(MANIFEST)
+        with tempfile.TemporaryDirectory() as directory:
+            copied_baseline = Path(directory) / "baseline.json"
+            text = LEXICAL_BASELINE.read_text(encoding="utf-8")
+            copied_baseline.write_text(
+                text.replace(
+                    '"schema_version": "parser-golden-baseline-v2",',
+                    '"schema_version": "parser-golden-baseline-v2",\n'
+                    '  "schema_version": "parser-golden-baseline-v2",',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                load_golden_baseline(
+                    copied_baseline,
+                    suite=suite,
+                    parser_id="lexical",
+                )
+
+    def test_manifest_rejects_v1_contract_coverage_drift(self) -> None:
+        mutations = {
+            "unsupported fields": lambda data: data.__setitem__(
+                "unsupported_fields", ["made_up"]
+            ),
+            "scored field shrink": lambda data: (
+                data["cases"][0]["scored_fields"].remove("symbols"),
+                data["cases"][0]["expected"].__setitem__("symbols", None),
+            ),
+            "unknown syntax": lambda data: data["cases"][0]["expected"].__setitem__(
+                "syntax", ["not_a_real_syntax_kind"]
+            ),
+            "component declaration drift": lambda data: data["cases"][0][
+                "expected"
+            ].__setitem__("components", ["Column"]),
+            "symbol declaration drift": lambda data: data["cases"][0][
+                "expected"
+            ].__setitem__("symbols", ["PhotoWall"]),
+            "missing kind and syntax coverage": lambda data: data.__setitem__(
+                "cases",
+                [
+                    case
+                    for case in data["cases"]
+                    if case["case_id"] != "synthetic-class-promise"
+                ],
+            ),
+        }
+        for label, mutate in mutations.items():
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as directory:
+                copied_root = Path(directory) / "parser"
+                shutil.copytree(GOLDEN_ROOT, copied_root)
+                copied_manifest = copied_root / "manifest.json"
+                malformed = json.loads(copied_manifest.read_text(encoding="utf-8"))
+                mutate(malformed)
+                copied_manifest.write_text(json.dumps(malformed), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    load_golden_suite(copied_manifest)
 
     def test_lexical_parser_matches_reviewed_baseline(self) -> None:
         suite = load_golden_suite(MANIFEST)
@@ -151,6 +249,26 @@ class ParserGoldenTest(unittest.TestCase):
                     parser_id="arkts-tree-sitter-merged",
                     sidecar_root=sidecar_root,
                 )
+
+    @unittest.skipUnless(
+        ENGINE_ROOT.is_dir(),
+        "pinned arkui_ace_engine checkout is unavailable",
+    )
+    def test_external_snapshots_match_pinned_upstream_sources(self) -> None:
+        suite = load_golden_suite(MANIFEST)
+
+        verified = verify_external_snapshot_provenance(suite, ENGINE_ROOT)
+
+        self.assertEqual(len(verified), 4)
+        self.assertEqual(
+            {item["case_id"] for item in verified},
+            {
+                "arkui-animate-to",
+                "arkui-download-file-button",
+                "arkui-image-generator-complex-receivers",
+                "arkui-v2-decorated-variables",
+            },
+        )
 
     @unittest.skipUnless(
         SIDECAR_NODE_MODULE.exists(),

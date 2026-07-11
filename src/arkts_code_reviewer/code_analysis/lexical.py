@@ -2,11 +2,16 @@ from __future__ import annotations
 
 import re
 
+from arkts_code_reviewer.code_analysis.api_ownership import (
+    api_call_root,
+    build_api_shadow_index,
+    canonical_api_bindings,
+    canonicalize_api_call,
+)
 from arkts_code_reviewer.code_analysis.arkts_lexicon import (
     ARKUI_ATTRIBUTES,
     DEFAULT_ARKUI_COMPONENTS,
     GLOBAL_APIS,
-    OHOS_MODULE_PREFIXES,
 )
 from arkts_code_reviewer.code_analysis.models import (
     CodeFacts,
@@ -23,6 +28,8 @@ from arkts_code_reviewer.code_analysis.text_utils import (
 )
 
 _IDENT = r"[A-Za-z_$][A-Za-z0-9_$]*"
+_TYPE_ARGUMENTS = r"(?:\s*<[^<>{};()]*>)?"
+_CALL_SUFFIX = rf"{_TYPE_ARGUMENTS}\s*(?:\?\.)?\s*\("
 _KEYWORDS = {"if", "for", "while", "switch", "catch", "function", "return"}
 
 
@@ -41,9 +48,10 @@ class LexicalParser:
         re.MULTILINE,
     )
     decorator_pattern = re.compile(r"@[A-Za-z_][A-Za-z0-9_]*")
-    call_pattern = re.compile(rf"\b(?P<name>{_IDENT})\s*\(")
-    dotted_call_pattern = re.compile(
-        rf"\b(?P<object>{_IDENT})\s*\.\s*(?P<member>{_IDENT})\s*\("
+    call_pattern = re.compile(rf"\b(?P<name>{_IDENT}){_CALL_SUFFIX}")
+    api_call_chain_pattern = re.compile(
+        rf"(?<![A-Za-z0-9_$])"
+        rf"(?P<chain>{_IDENT}(?:\s*(?:\?\.|\.)\s*{_IDENT})+){_CALL_SUFFIX}"
     )
     attribute_pattern = re.compile(rf"\.\s*(?P<name>{_IDENT})\s*\(")
     struct_pattern = re.compile(
@@ -68,7 +76,7 @@ class LexicalParser:
         facts.symbols.update(declaration.qualified_name for declaration in declarations)
         facts.symbols.update(declaration.name for declaration in declarations)
         facts.components.update(self._parse_components(masked, declarations))
-        facts.apis.update(self._parse_apis(masked, alias_prefixes))
+        facts.apis.update(self._parse_apis(masked, imports, alias_prefixes))
         facts.attributes.update(self._parse_attributes(masked))
         facts.syntax.update(self._parse_syntax(masked))
         return facts
@@ -138,22 +146,7 @@ class LexicalParser:
         return named
 
     def _alias_prefixes(self, imports: list[ImportInfo]) -> dict[str, str]:
-        aliases: dict[str, str] = {}
-        for item in imports:
-            prefix = OHOS_MODULE_PREFIXES.get(item.module)
-            if prefix is None and item.module.startswith("@ohos."):
-                prefix = item.module.rsplit(".", 1)[-1]
-            if prefix is None:
-                continue
-            if item.default_name:
-                aliases[item.default_name] = prefix
-            if item.namespace_name:
-                aliases[item.namespace_name] = prefix
-            for local, imported in item.named.items():
-                aliases[local] = OHOS_MODULE_PREFIXES.get(
-                    f"{item.module}.{imported}", imported
-                )
-        return aliases
+        return canonical_api_bindings(imports)
 
     def _parse_components(
         self, masked: str, declarations: list[Declaration]
@@ -168,22 +161,37 @@ class LexicalParser:
                 components.add(declaration.name)
         return components
 
-    def _parse_apis(self, masked: str, aliases: dict[str, str]) -> set[str]:
+    def _parse_apis(
+        self,
+        masked: str,
+        imports: list[ImportInfo],
+        aliases: dict[str, str],
+    ) -> set[str]:
         apis: set[str] = set()
-        for match in self.dotted_call_pattern.finditer(masked):
-            obj = match.group("object")
-            member = match.group("member")
-            prefix = aliases.get(obj, obj)
-            apis.add(f"{prefix}.{member}")
+        shadows = build_api_shadow_index(masked, imports, aliases)
+        for match in self.api_call_chain_pattern.finditer(masked):
+            if self._is_property_chain(masked, match.start("chain")):
+                continue
+            call = match.group("chain")
+            if shadows.is_shadowed(api_call_root(call), match.start("chain")):
+                continue
+            api = canonicalize_api_call(call, aliases)
+            if api:
+                apis.add(api)
 
         for match in self.call_pattern.finditer(masked):
             name = match.group("name")
-            if name in GLOBAL_APIS:
+            if name in GLOBAL_APIS and not self._is_property_chain(
+                masked, match.start("name")
+            ) and not shadows.is_shadowed(name, match.start("name")):
                 apis.add(name)
 
         for name in ("$r", "$rawfile"):
-            if re.search(rf"{re.escape(name)}\s*\(", masked):
-                apis.add(name)
+            for match in re.finditer(rf"{re.escape(name)}{_CALL_SUFFIX}", masked):
+                if not self._is_property_chain(
+                    masked, match.start()
+                ) and not shadows.is_shadowed(name, match.start()):
+                    apis.add(name)
         return apis
 
     def _parse_attributes(self, masked: str) -> set[str]:

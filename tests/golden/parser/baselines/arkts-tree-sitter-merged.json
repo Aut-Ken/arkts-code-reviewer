@@ -13,13 +13,13 @@
     "schema_version": "parser-golden-v1",
     "suite_id": "parser-golden-v1",
     "parser_implementation": "ArktsTreeSitterParser",
-    "manifest_sha256": "9561aa4f15135663fcfe485d045f65cbabb1d9a40f524f2952b712b37fa9d56a",
-    "case_count": 12,
+    "manifest_sha256": "1b3a1526d808e7c40c4ef85d13cc34f311dbbc1cff4e564eedb067b2683460f0",
+    "case_count": 15,
     "crashed": 0,
     "parser_layers": {
-      "L1": 12
+      "L1": 15
     },
-    "must_not_violation_count": 4,
+    "must_not_violation_count": 0,
     "unsupported_fields": [
       "fact_occurrences",
       "fact_spans",
@@ -29,7 +29,7 @@
     ],
     "fields": {
       "imports": {
-        "case_count": 12,
+        "case_count": 15,
         "tp": 26,
         "fp": 0,
         "fn": 0,
@@ -38,8 +38,8 @@
         "f1": 1.0
       },
       "components": {
-        "case_count": 12,
-        "tp": 20,
+        "case_count": 15,
+        "tp": 30,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -47,17 +47,17 @@
         "f1": 1.0
       },
       "apis": {
-        "case_count": 10,
-        "tp": 20,
-        "fp": 5,
+        "case_count": 13,
+        "tp": 17,
+        "fp": 0,
         "fn": 0,
-        "precision": 0.8,
+        "precision": 1.0,
         "recall": 1.0,
-        "f1": 0.888889
+        "f1": 1.0
       },
       "decorators": {
-        "case_count": 12,
-        "tp": 20,
+        "case_count": 15,
+        "tp": 25,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -65,8 +65,8 @@
         "f1": 1.0
       },
       "attributes": {
-        "case_count": 12,
-        "tp": 28,
+        "case_count": 15,
+        "tp": 38,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -74,17 +74,17 @@
         "f1": 1.0
       },
       "symbols": {
-        "case_count": 12,
-        "tp": 99,
-        "fp": 3,
+        "case_count": 15,
+        "tp": 138,
+        "fp": 0,
         "fn": 0,
-        "precision": 0.970588,
+        "precision": 1.0,
         "recall": 1.0,
-        "f1": 0.985075
+        "f1": 1.0
       },
       "syntax": {
-        "case_count": 12,
-        "tp": 10,
+        "case_count": 15,
+        "tp": 15,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -92,13 +92,13 @@
         "f1": 1.0
       },
       "declarations": {
-        "case_count": 12,
-        "tp": 65,
-        "fp": 5,
-        "fn": 5,
-        "precision": 0.928571,
-        "recall": 0.928571,
-        "f1": 0.928571
+        "case_count": 15,
+        "tp": 93,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
       }
     },
     "cases": [
@@ -167,14 +167,12 @@
           },
           "symbols": {
             "tp": 15,
-            "fp": 1,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.9375,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.967742,
-            "false_positives": [
-              "PhotoWall.build.Grid"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "syntax": {
@@ -274,36 +272,14 @@
             "false_negatives": []
           },
           "declarations": {
-            "tp": 6,
-            "fp": 1,
-            "fn": 1,
-            "precision": 0.857143,
-            "recall": 0.857143,
-            "f1": 0.857143,
-            "false_positives": [
-              {
-                "kind": "method",
-                "name": "pageMap",
-                "parent_name": "ImageGeneratorDialog",
-                "qualified_name": "ImageGeneratorDialog.pageMap",
-                "span": {
-                  "end_line": 14,
-                  "start_line": 7
-                }
-              }
-            ],
-            "false_negatives": [
-              {
-                "kind": "builder",
-                "name": "pageMap",
-                "parent_name": "ImageGeneratorDialog",
-                "qualified_name": "ImageGeneratorDialog.pageMap",
-                "span": {
-                  "end_line": 14,
-                  "start_line": 7
-                }
-              }
-            ]
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
           }
         },
         "must_not_violations": {}
@@ -439,15 +415,12 @@
           },
           "apis": {
             "tp": 4,
-            "fp": 2,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.666667,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.8,
-            "false_positives": [
-              "helper.on",
-              "items.push"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -501,12 +474,7 @@
             "false_negatives": []
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "helper.on",
-            "items.push"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "synthetic-same-line-ui",
@@ -739,14 +707,12 @@
           },
           "apis": {
             "tp": 0,
-            "fp": 1,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "false_positives": [
-              "value.run"
-            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -800,11 +766,7 @@
             "false_negatives": []
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "value.run"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "grammar-optional-struct-method",
@@ -1002,36 +964,14 @@
             "false_negatives": []
           },
           "declarations": {
-            "tp": 7,
-            "fp": 1,
-            "fn": 1,
-            "precision": 0.875,
-            "recall": 0.875,
-            "f1": 0.875,
-            "false_positives": [
-              {
-                "kind": "ui_block",
-                "name": "Column",
-                "parent_name": "AnimateToExample.build.Column",
-                "qualified_name": "AnimateToExample.build.Column.Column",
-                "span": {
-                  "end_line": 42,
-                  "start_line": 32
-                }
-              }
-            ],
-            "false_negatives": [
-              {
-                "kind": "ui_block",
-                "name": "Column",
-                "parent_name": "AnimateToExample.build.Column",
-                "qualified_name": "AnimateToExample.build.Column.Column",
-                "span": {
-                  "end_line": 44,
-                  "start_line": 32
-                }
-              }
-            ]
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
           }
         },
         "must_not_violations": {}
@@ -1078,15 +1018,13 @@
             "false_negatives": []
           },
           "apis": {
-            "tp": 5,
-            "fp": 1,
+            "tp": 2,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.833333,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.909091,
-            "false_positives": [
-              "TestRunner.bind(this)"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -1185,14 +1123,12 @@
           },
           "apis": {
             "tp": 1,
-            "fp": 1,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.5,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.666667,
-            "false_positives": [
-              "downloadDescriptionResourceMap.get"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -1217,15 +1153,12 @@
           },
           "symbols": {
             "tp": 17,
-            "fp": 2,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.894737,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.944444,
-            "false_positives": [
-              "DownloadFileButton.Image",
-              "DownloadFileButton.Text"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "syntax": {
@@ -1239,63 +1172,17 @@
             "false_negatives": []
           },
           "declarations": {
-            "tp": 7,
-            "fp": 2,
-            "fn": 2,
-            "precision": 0.777778,
-            "recall": 0.777778,
-            "f1": 0.777778,
-            "false_positives": [
-              {
-                "kind": "method",
-                "name": "downloadImage",
-                "parent_name": "DownloadFileButton",
-                "qualified_name": "DownloadFileButton.downloadImage",
-                "span": {
-                  "end_line": 98,
-                  "start_line": 89
-                }
-              },
-              {
-                "kind": "method",
-                "name": "downloadText",
-                "parent_name": "DownloadFileButton",
-                "qualified_name": "DownloadFileButton.downloadText",
-                "span": {
-                  "end_line": 120,
-                  "start_line": 100
-                }
-              }
-            ],
-            "false_negatives": [
-              {
-                "kind": "builder",
-                "name": "downloadImage",
-                "parent_name": "DownloadFileButton",
-                "qualified_name": "DownloadFileButton.downloadImage",
-                "span": {
-                  "end_line": 98,
-                  "start_line": 89
-                }
-              },
-              {
-                "kind": "builder",
-                "name": "downloadText",
-                "parent_name": "DownloadFileButton",
-                "qualified_name": "DownloadFileButton.downloadText",
-                "span": {
-                  "end_line": 120,
-                  "start_line": 100
-                }
-              }
-            ]
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "downloadDescriptionResourceMap.get"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "arkui-image-generator-complex-receivers",
@@ -1380,36 +1267,302 @@
             "false_negatives": []
           },
           "declarations": {
-            "tp": 11,
-            "fp": 1,
-            "fn": 1,
-            "precision": 0.916667,
-            "recall": 0.916667,
-            "f1": 0.916667,
-            "false_positives": [
-              {
-                "kind": "method",
-                "name": "pageMap",
-                "parent_name": "ImageGeneratorDialog",
-                "qualified_name": "ImageGeneratorDialog.pageMap",
-                "span": {
-                  "end_line": 90,
-                  "start_line": 79
-                }
-              }
-            ],
-            "false_negatives": [
-              {
-                "kind": "builder",
-                "name": "pageMap",
-                "parent_name": "ImageGeneratorDialog",
-                "qualified_name": "ImageGeneratorDialog.pageMap",
-                "span": {
-                  "end_line": 90,
-                  "start_line": 79
-                }
-              }
-            ]
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-parser-tail",
+        "source": "golden/synthetic/ParserTail.ets",
+        "source_sha256": "d52f5f92a8f3a63eb7c912e4dffb022ff02de5c9329490b9a99b54d0b07c5f36",
+        "provenance": {
+          "file": "sources/parser_tail.ets",
+          "kind": "synthetic",
+          "content_sha256": "d52f5f92a8f3a63eb7c912e4dffb022ff02de5c9329490b9a99b54d0b07c5f36"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 17,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-special-ui-contexts",
+        "source": "golden/synthetic/SpecialUiContexts.ets",
+        "source_sha256": "cb50eedc7d4814fd5bd6e9e32b6b6a05330c0562bcd7ef24600ae2ac2a50c493",
+        "provenance": {
+          "file": "sources/special_ui_contexts.ets",
+          "kind": "synthetic",
+          "content_sha256": "cb50eedc7d4814fd5bd6e9e32b6b6a05330c0562bcd7ef24600ae2ac2a50c493"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-class-promise",
+        "source": "golden/synthetic/ClassPromise.ets",
+        "source_sha256": "ad3ea4e37622f6804aafcd28da57d34ea157833627f71611966b12f0ccdad4b5",
+        "provenance": {
+          "file": "sources/class_promise.ets",
+          "kind": "synthetic",
+          "content_sha256": "ad3ea4e37622f6804aafcd28da57d34ea157833627f71611966b12f0ccdad4b5"
+        },
+        "parser_layer": "L1",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
           }
         },
         "must_not_violations": {}

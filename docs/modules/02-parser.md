@@ -72,7 +72,7 @@ import 解析
 局限：
 
 - 不是完整 AST。
-- 可能把 `this.loadImages`、`photos.push` 当成外部 API。
+- API owner 只能证明冻结全局调用和 SDK import 根绑定；尚不能完整表达局部 shadow occurrence。
 - 复杂嵌套、泛型、错误代码和特殊语法可能导致声明边界不准确。
 - struct 的前置装饰器不一定进入 declaration text。
 
@@ -103,6 +103,11 @@ declarations
 ```
 
 完整 AST 不落盘，也不跨进程返回。
+
+L1 成功后，`ui_block` declarations 是 `components` 的权威来源，全部 declarations 的
+`name/qualified_name` 投影是 `symbols` 的权威来源，sidecar 中绑定到真实 UI 链的 modifier
+是 `attributes` 的权威来源。这三个字段不再与 L0 结果盲目取并集；其他事实仍按各自契约
+合并。这样可以避免 L0 猜测残留污染 L1 精度。
 
 ## 6. CodeFacts
 
@@ -138,6 +143,10 @@ img.createPixelMap(buffer)
 ```text
 image.createPixelMap
 ```
+
+当前只保留两类 API：冻结的全局平台调用，以及调用根绑定能够由 `@ohos.*`、
+`@kit.*` 或 `@system.*` SDK import 证明的静态成员链。`this`/`super`、参数、
+局部变量、普通对象方法、相对路径和工程 module import 均不进入 `CodeFacts.apis`。
 
 知识库构建必须使用同一 SDK 白名单和别名规范化规则，确保两侧词形一致。
 
@@ -263,22 +272,32 @@ SDK whitelist path/version
 
 - L0 固定样例事实测试。
 - L1 sidecar 条件测试。
-- 12 个自包含、人工复核的 Parser Golden cases。
+- 15 个自包含、人工复核的 Parser Golden cases，覆盖全部 7 种 declaration kind 和 5 种
+  冻结 syntax kind。
 - L0 和 merged-L1 的逐 case 完整 baseline。
 - 63 个固定 revision 的 `arkui_ace_engine` 稳定性/性能样本。
-- Parser Validation 工具链。
+- Golden provenance、candidate evidence 和统一 release gate。
 
 2026-07-11 当前实测：
 
 ```text
-pytest after npm ci             31 passed, 20 subtests passed
-Golden L0                       12/12 L0, 0 crash
-Golden merged-L1                12/12 L1, 0 crash
-Golden imports                  TP 26 / FP 0 / FN 0（L0 与 merged-L1）
+pytest after npm ci             60 passed, 64 subtests passed
+Golden L0                       15/15 L0，完整 baseline 精确匹配
+Golden merged-L1                15/15 L1，全部评分字段 FP=0/FN=0
+Golden L1 declarations          TP 93 / FP 0 / FN 0
 LexicalParser engine batch     63 parsed / 0 missing / 0 crashed
 Merged-L1 engine batch          63 L1 / 0 missing / 0 crashed
 R63 L1 AST warnings             ERROR 7 files / missing 7 files
-declarations_total             L0 2,880 / merged-L1 5,351
+declarations_total             L0 2,880 / merged-L1 5,414
+```
+
+统一复核：
+
+```bash
+(cd sidecars/arkts-parser && npm ci)
+PYTHONPATH=src python tools/check_parser_v1.py \
+  --source-root /home/autken/Code/arkui_ace_engine \
+  --include-candidate-diagnostics
 ```
 
 当前限制：
@@ -287,6 +306,9 @@ declarations_total             L0 2,880 / merged-L1 5,351
 - 当前 L1 分数是 L0+L1 合并结果，不是 raw-L1 分数。
 - R63 只证明稳定性、layer 和警告分布，不提供字段 accuracy 真值。
 - Golden v1 尚不评分 occurrence span、owner、结构化 diagnostics 或 raw-L1 snapshot。
+- 默认 23 个 Grok candidate 仍是 provisional：集合字段与 syntax 已 exact；declarations
+  只剩 B010 两个违反冻结 decorator-span 政策的候选标注冲突。其旧 symbol evidence 有
+  441 项未使用匹配 declaration 的完整 span，不能晋级为正式 Golden。
 - 当前外部语料都是浅克隆快照；更新 revision 后需要重新跑基线。
 
 ## 15. 质量门槛
@@ -311,8 +333,10 @@ empty facts rate
 
 ## 17. 下一步
 
-1. 在 Golden 中补真正 recovery、class、generic/destructuring cases。
-2. 为 raw-L1 snapshot 增加独立公共评测路径和 diagnostics 门槛。
+1. 人工裁决 B010 两个 `@Styles` span，并按冻结政策重建 B001-B006/B010 evidence；在此
+   之前 candidate 只作诊断。
+2. 为 raw-L1 snapshot 增加独立公共评测路径、真正 ERROR/missing recovery Golden 和
+   diagnostics 门槛。
 3. 引入带 span/owner 的 FactOccurrence，并先扩展 Golden 契约。
 4. 修改 Analyzer，删除 ReviewUnit 二次 Parser。
 5. 从 `interface-sdk-js` 构建共享 `ApiSymbolCatalog`，替代分散白名单。

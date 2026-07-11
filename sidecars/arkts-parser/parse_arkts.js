@@ -6,42 +6,20 @@ const Parser = require("tree-sitter");
 const ArkTS = require("tree-sitter-arkts");
 
 const MIN_BUFFER_SIZE = 256 * 1024;
-const ARKUI_MODIFIERS = new Set([
-  "accessibilityDescription",
-  "accessibilityGroup",
-  "accessibilityLevel",
-  "accessibilityText",
-  "align",
-  "alignItems",
-  "animation",
-  "aspectRatio",
-  "backgroundColor",
-  "border",
-  "borderRadius",
-  "fontColor",
-  "fontSize",
-  "fontWeight",
-  "height",
-  "layoutWeight",
-  "margin",
-  "objectFit",
-  "onAppear",
-  "onBlur",
-  "onChange",
-  "onClick",
-  "onComplete",
-  "onDisAppear",
-  "onError",
-  "onFocus",
-  "onTouch",
-  "padding",
-  "placeholder",
-  "position",
-  "rotate",
-  "transition",
-  "visibility",
-  "width",
+const NON_COMPONENT_CALL_ROOTS = new Set([
+  "Array",
+  "Boolean",
+  "Date",
+  "Map",
+  "Number",
+  "Object",
+  "Promise",
+  "RegExp",
+  "Set",
+  "String",
 ]);
+const PAGE_TRANSITION_COMPONENTS = new Set(["PageTransitionEnter", "PageTransitionExit"]);
+const UI_STRUCT_DECORATORS = ("@Component @ComponentV2 @CustomDialog").split(" ");
 
 function parseArgs(argv) {
   const options = { path: "<stdin>" };
@@ -64,6 +42,90 @@ function span(node) {
   };
 }
 
+function firstNamedChild(node) {
+  return node && node.namedChildCount > 0 ? node.namedChild(0) : null;
+}
+
+function nextNonCommentSibling(node) {
+  let sibling = node ? node.nextNamedSibling : null;
+  while (sibling && sibling.type === "comment") {
+    sibling = sibling.nextNamedSibling;
+  }
+  return sibling;
+}
+
+function positionsTouch(left, right) {
+  return (
+    left.endPosition.row === right.startPosition.row
+    && left.endPosition.column === right.startPosition.column
+  );
+}
+
+function isArgumentsContinuation(statement) {
+  return (
+    statement?.type === "expression_statement"
+    && statement.text.trimStart().startsWith("(")
+  );
+}
+
+function leadingDotModifierName(statement) {
+  const match = /^\.([A-Za-z_$][A-Za-z0-9_$]*)$/.exec(
+    firstNamedChild(statement)?.text || "",
+  );
+  return match ? match[1] : null;
+}
+
+function componentContinuationInfo(statement) {
+  const attributes = new Set();
+  let endNode = statement;
+  while (endNode?.type === "expression_statement") {
+    const next = nextNonCommentSibling(endNode);
+    const modifierName = leadingDotModifierName(next);
+    if (modifierName) {
+      const argumentsStatement = nextNonCommentSibling(next);
+      if (
+        !isArgumentsContinuation(argumentsStatement)
+        || !positionsTouch(next, argumentsStatement)
+      ) {
+        break;
+      }
+      attributes.add(modifierName);
+      for (const attribute of expressionSpineAttributes(firstNamedChild(argumentsStatement))) {
+        attributes.add(attribute);
+      }
+      endNode = argumentsStatement;
+      continue;
+    }
+
+    if (
+      isArgumentsContinuation(next)
+      && positionsTouch(endNode, next)
+      && /\.[A-Za-z_$][A-Za-z0-9_$]*$/.test(endNode.text.trimEnd())
+    ) {
+      for (const attribute of expressionSpineAttributes(firstNamedChild(endNode))) {
+        attributes.add(attribute);
+      }
+      for (const attribute of expressionSpineAttributes(firstNamedChild(next))) {
+        attributes.add(attribute);
+      }
+      endNode = next;
+      continue;
+    }
+    break;
+  }
+  return { attributes: Array.from(attributes), endNode };
+}
+
+function arkuiComponentSpan(node) {
+  const result = span(node);
+  const { endNode } = componentContinuationInfo(node.parent);
+  if (endNode && endNode !== node.parent) {
+    result.end_line = endNode.endPosition.row + 1;
+    result.end_col = endNode.endPosition.column + 1;
+  }
+  return result;
+}
+
 function childText(node, fieldName) {
   const child = node.childForFieldName(fieldName);
   return child ? child.text : null;
@@ -81,10 +143,152 @@ function hasDecorator(node, decorator) {
       return true;
     }
   }
+
+  // tree-sitter-arkts represents decorators on class/struct methods as
+  // preceding siblings in the class body rather than children of the method.
+  let sibling = node.previousNamedSibling;
+  while (sibling && (sibling.type === "decorator" || sibling.type === "comment")) {
+    if (sibling.type === "decorator" && decoratorName(sibling.text) === decorator) {
+      return true;
+    }
+    sibling = sibling.previousNamedSibling;
+  }
   return false;
 }
 
-function addDeclaration(result, node, kind, name, stack) {
+function isComponentName(name) {
+  return (
+    /^[A-Z][A-Za-z0-9_$]*$/.test(name || "")
+    && !NON_COMPONENT_CALL_ROOTS.has(name)
+  );
+}
+
+function isCustomDialogBuilderValue(node) {
+  return node.parent?.type === "pair" && childText(node.parent, "key") === "builder";
+}
+
+function callChainInfo(node) {
+  if (node.type !== "call_expression") {
+    return null;
+  }
+
+  const attributes = [];
+  let current = node;
+  while (current?.type === "call_expression") {
+    const fn = current.childForFieldName("function");
+    if (!fn) {
+      return null;
+    }
+    if (fn.type === "identifier") {
+      return { name: fn.text, attributes };
+    }
+    if (fn.type !== "member_expression") {
+      return null;
+    }
+    const property = fn.childForFieldName("property");
+    const object = fn.childForFieldName("object");
+    if (property?.type === "property_identifier") {
+      attributes.push(property.text);
+    }
+    if (object?.type !== "call_expression") {
+      return null;
+    }
+    current = object;
+  }
+  return null;
+}
+
+function expressionSpineAttributes(node) {
+  const attributes = [];
+  let current = node;
+  while (current) {
+    if (current.type === "call_expression") {
+      current = current.childForFieldName("function");
+      continue;
+    }
+    if (current.type !== "member_expression") {
+      break;
+    }
+    const property = current.childForFieldName("property");
+    if (property?.type === "property_identifier") {
+      attributes.push(property.text);
+    }
+    current = current.childForFieldName("object");
+  }
+  return attributes;
+}
+
+function componentCallInfo(result, node, stack) {
+  const info = callChainInfo(node);
+  if (!info || !isComponentName(info.name)) {
+    return null;
+  }
+
+  const statement = node.parent;
+  const container = statement?.type === "expression_statement" ? statement.parent : null;
+  const host = stack.length > 0 ? stack[stack.length - 1] : null;
+  const inArkuiChildren = container?.type === "arkui_children";
+  const atDeclarativeRoot = (
+    container?.type === "statement_block"
+    && (host?.kind === "build_method" || host?.kind === "builder")
+  );
+  const isPageTransition = (
+    container?.type === "statement_block"
+    && PAGE_TRANSITION_COMPONENTS.has(info.name)
+  );
+  const isDialogBuilder = (
+    isCustomDialogBuilderValue(node)
+    && result.ui_structs.has(info.name)
+  );
+  if (!inArkuiChildren && !atDeclarativeRoot && !isPageTransition && !isDialogBuilder) {
+    return null;
+  }
+  return info;
+}
+
+function detachedComponentInfo(node) {
+  if (
+    node.type !== "identifier"
+    || !isComponentName(node.text)
+    || node.parent?.type !== "expression_statement"
+    || node.parent.parent?.type !== "arkui_children"
+    || node.parent.text.trim() !== node.text
+  ) {
+    return null;
+  }
+
+  const continuation = nextNonCommentSibling(node.parent);
+  if (!isArgumentsContinuation(continuation) || !positionsTouch(node.parent, continuation)) {
+    return null;
+  }
+
+  const attributes = expressionSpineAttributes(firstNamedChild(continuation));
+  const continuationInfo = componentContinuationInfo(continuation);
+  attributes.push(...continuationInfo.attributes);
+  const endNode = continuationInfo.endNode;
+
+  const declarationSpan = span(node);
+  declarationSpan.end_line = endNode.endPosition.row + 1;
+  declarationSpan.end_col = endNode.endPosition.column + 1;
+  return { name: node.text, attributes, span: declarationSpan };
+}
+
+function collectUiStructNames(node, result) {
+  if (
+    node.type === "struct_declaration"
+    && UI_STRUCT_DECORATORS.some((decorator) => hasDecorator(node, decorator))
+  ) {
+    const name = childText(node, "name");
+    if (name) {
+      result.ui_structs.add(name);
+    }
+  }
+  for (let index = 0; index < node.childCount; index += 1) {
+    collectUiStructNames(node.child(index), result);
+  }
+}
+
+function addDeclaration(result, node, kind, name, stack, declarationSpan = span(node)) {
   if (!name) {
     return null;
   }
@@ -98,7 +302,7 @@ function addDeclaration(result, node, kind, name, stack) {
     name,
     qualified_name: qualifiedName,
     parent_name: parent ? parent.qualified_name : null,
-    span: span(node),
+    span: declarationSpan,
   };
   result.declarations.push(declaration);
   result.symbols.add(name);
@@ -120,7 +324,12 @@ function declarationForNode(result, node, stack) {
   }
   if (node.type === "method_definition") {
     const name = childText(node, "name");
-    const kind = name === "build" ? "build_method" : "method";
+    let kind = "method";
+    if (name === "build") {
+      kind = "build_method";
+    } else if (hasDecorator(node, "@Builder")) {
+      kind = "builder";
+    }
     if (/^\s*async\b/.test(node.text)) {
       result.syntax.add("async_fn");
     }
@@ -128,12 +337,47 @@ function declarationForNode(result, node, stack) {
   }
   if (node.type === "arkui_component_expression") {
     const name = childText(node, "function");
-    if (name) {
+    if (isComponentName(name)) {
       result.components.add(name);
-      return addDeclaration(result, node, "ui_block", name, stack);
+      return addDeclaration(result, node, "ui_block", name, stack, arkuiComponentSpan(node));
+    }
+  }
+  if (node.type === "call_expression") {
+    const info = componentCallInfo(result, node, stack);
+    if (info) {
+      result.components.add(info.name);
+      for (const attribute of info.attributes) {
+        result.attributes.add(attribute);
+      }
+      collectTrailingModifierAttributes(result, node);
+      return addDeclaration(
+        result,
+        node,
+        "ui_block",
+        info.name,
+        stack,
+        arkuiComponentSpan(node),
+      );
+    }
+  }
+  if (node.type === "identifier") {
+    const info = detachedComponentInfo(node);
+    if (info) {
+      result.components.add(info.name);
+      for (const attribute of info.attributes) {
+        result.attributes.add(attribute);
+      }
+      return addDeclaration(result, node, "ui_block", info.name, stack, info.span);
     }
   }
   return null;
+}
+
+function collectTrailingModifierAttributes(result, node) {
+  const info = componentContinuationInfo(node.parent);
+  for (const attribute of info.attributes) {
+    result.attributes.add(attribute);
+  }
 }
 
 function collectArkuiAttributes(result, node) {
@@ -144,6 +388,7 @@ function collectArkuiAttributes(result, node) {
       result.attributes.add(child.text);
     }
   }
+  collectTrailingModifierAttributes(result, node);
 }
 
 function normalizeCallText(text) {
@@ -174,18 +419,6 @@ function normalizeCallText(text) {
   return normalized;
 }
 
-function collectCallAttribute(result, functionText) {
-  const normalized = normalizeCallText(functionText);
-  const match = /\.([A-Za-z_$][A-Za-z0-9_$]*)$/.exec(normalized);
-  if (!match) {
-    return;
-  }
-  const modifier = match[1];
-  if (ARKUI_MODIFIERS.has(modifier) || /^on[A-Z]/.test(modifier)) {
-    result.attributes.add(modifier);
-  }
-}
-
 function walk(node, result, stack) {
   result.node_count += 1;
   if (node.type === "ERROR") {
@@ -201,7 +434,6 @@ function walk(node, result, stack) {
     const fn = childText(node, "function");
     if (fn) {
       result.calls.add(normalizeCallText(fn));
-      collectCallAttribute(result, fn);
     }
   } else if (node.type === "await_expression") {
     result.syntax.add("await_expr");
@@ -213,7 +445,10 @@ function walk(node, result, stack) {
     result.syntax.add("promise");
   }
 
-  if (node.type === "arkui_component_expression") {
+  if (
+    node.type === "arkui_component_expression"
+    && isComponentName(childText(node, "function"))
+  ) {
     collectArkuiAttributes(result, node);
   }
 
@@ -262,8 +497,10 @@ function main() {
     symbols: new Set(),
     syntax: new Set(),
     declarations: [],
+    ui_structs: new Set(),
   };
 
+  collectUiStructNames(tree.rootNode, result);
   walk(tree.rootNode, result, []);
   process.stdout.write(`${JSON.stringify(toOutput(result, options.path, tree.rootNode.type))}\n`);
 }

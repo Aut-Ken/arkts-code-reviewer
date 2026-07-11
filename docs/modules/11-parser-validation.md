@@ -29,24 +29,32 @@ updated: 2026-07-11
 | `parser_validation/models.py` | 请求和结果模型 |
 | `parser_validation/manifest.py` | 样本加载和筛选 |
 | `parser_validation/golden.py` | Golden manifest、评分、baseline 与运行时校验 |
+| `parser_validation/candidates.py` | provisional candidate contract、评分、fingerprint 和 evidence 审计 |
 | `parser_validation/packager.py` | Parser 输出和源码片段打包 |
 | `parser_validation/glm_judge.py` | dry-run、GLM client、重试和结果解析 |
 | `tools/run_arkts_parser_batch.py` | 确定性批测 |
 | `tools/evaluate_parser_golden.py` | L0/merged-L1 Golden 评测和 strict baseline 门禁 |
+| `tools/evaluate_parser_candidates.py` | 默认 23 个候选样本的 provisional 诊断 |
+| `tools/audit_parser_candidate_evidence.py` | candidate evidence 冻结政策审计 |
+| `tools/verify_parser_golden_provenance.py` | 外部 snapshot 与 pinned checkout 对照 |
+| `tools/check_parser_v1.py` | 确定性 Parser v1 统一发布门禁 |
 | `tools/validate_parser_with_llm.py` | GLM 质检 CLI |
 | `tools/plan_parser_validation_runs.py` | 分组运行计划和人工记录模板 |
 | `tools/run_glm_l1_smoke.ps1` | Windows L1 smoke |
 
 ## 3. 样本
 
-当前样本分成三层，不能互相替代：
+当前样本分成四种角色，不能互相替代：
 
 ```text
 tests/golden/parser/manifest.json
-  12 个自包含、人工逐字段复核的 accuracy oracle
+  15 个自包含、人工逐字段复核的 accuracy oracle
 
 tests/fixtures/arkui_ace_engine_samples.json
   63 个完整真实文件的 robustness/performance corpus
+
+tests/Grok_Expected/*.candidate.json
+  默认 allowlist 中 23 个真实文件的 provisional accuracy diagnostics
 
 third_party/tree-sitter-arkts/test/corpus
   grammar source -> AST corpus，不是 CodeFacts 真值
@@ -96,8 +104,9 @@ elapsed time
 
 ```text
 任一 missing 或 crash
-全部样本 empty
+任一文件 empty 或没有 declaration
 指定 --require-layer 后任一样本不在该 layer
+L1 ERROR warning 超过 7 或 missing warning 超过 7
 revision 或 selected-path provenance 不一致
 -> 非零退出
 ```
@@ -110,8 +119,9 @@ CI 必须确认真实样本确实执行。
 L0 parsed/L0            63/63
 L0 declarations         2,880
 merged-L1 parsed/L1     63/63
-merged-L1 declarations  5,351
+merged-L1 declarations  5,414
 missing/crashed/empty   0/0/0
+files with declarations 63/63
 L1 ERROR warnings       7 files
 L1 missing warnings     7 files
 ```
@@ -125,6 +135,10 @@ Golden v1 评分 imports、components、APIs、decorators、attributes、symbols
 当前支持的 7 种 declaration kind。未冻结的 occurrence span/owner、结构化 diagnostics
 和 raw-L1 被显式列为 unsupported。
 
+loader 会拒绝重复 JSON key、unsupported contract 漂移、未知 syntax kind、每 case 必评分
+字段缩水，以及 components/symbols 与 declarations 投影不一致。整个 suite 还必须覆盖全部
+7 种 declaration kind 和全部 5 种冻结 syntax kind。
+
 ```bash
 PYTHONPATH=src python tools/evaluate_parser_golden.py \
   --parser lexical \
@@ -135,14 +149,67 @@ PYTHONPATH=src python tools/evaluate_parser_golden.py \
 PYTHONPATH=src python tools/evaluate_parser_golden.py \
   --parser arkts-tree-sitter \
   --baseline tests/golden/parser/baselines/arkts-tree-sitter-merged.json \
-  --require-layer L1
+  --require-layer L1 \
+  --require-perfect
 ```
 
 baseline 保存完整逐 case FP/FN identity、warning、layer、provenance、manifest/source hash，
 不是只保存 aggregate 总分。L1 strict path 还核对 `.node-version`、npm、package lock 和实际
 安装的 `tree-sitter-arkts` 版本。当前分数是 merged-L1，不能标为 raw-L1。
 
-## 5. GLM Judge 数据流
+当前 merged-L1 的 15 个正式 case 在全部评分字段上均为 `FP=0/FN=0`，包括 93 个
+declaration occurrence/span。L0 只要求完整 baseline 不漂移，不要求 perfect。
+
+### 4.2 真实源码 candidate 诊断
+
+默认 allowlist 为 B001-B006、B008、B010，共 23 个 case。candidate loader 固定 group
+manifest hash、case identity、pinned revision、truth fingerprint 和 annotation fingerprint；
+报告始终标记 `candidate_unreviewed/provisional`，不能写成 strict Golden baseline。
+B007 未进入默认范围，是因为其 `must_not` 把 `ForEach` 排除为组件，与正式 Golden 的冻结
+契约冲突；B009 尚未完成裁决，并仍有大文件边界差异。二者可以运行作调查，但不能计入
+默认准确率诊断。
+
+```bash
+PYTHONPATH=src python tools/evaluate_parser_candidates.py \
+  --source-root /home/autken/Code/arkui_ace_engine \
+  --parser arkts-tree-sitter \
+  --require-layer L1
+
+PYTHONPATH=src python tools/audit_parser_candidate_evidence.py \
+  --source-root /home/autken/Code/arkui_ace_engine
+```
+
+截至 2026-07-11，候选的 imports/components/APIs/decorators/attributes/symbols/syntax
+集合值均 exact；declarations 为 `674 TP / 2 FP / 2 FN`。剩余两对是 B010 的 `@Styles`
+起点没有包含 attached decorator，违反冻结标注政策，应修 candidate，不应让 Parser 迎合。
+
+evidence 审计当前会 fail-closed，并报告 441 个 `symbol_evidence_not_declaration_span`；主要
+来自 B001-B006 的旧 evidence，B010 也有 2 项。它们在重建和人工裁决前不能晋级为真值。
+
+### 4.3 Provenance 和统一门禁
+
+4 个引用真实源码片段的正式 Golden snapshot 通过 origin line、normalization、内容 hash 和
+pinned checkout revision 的逐项核对：
+
+```bash
+PYTHONPATH=src python tools/verify_parser_golden_provenance.py \
+  --source-root /home/autken/Code/arkui_ace_engine
+```
+
+Parser v1 的单一确定性验收入口是：
+
+```bash
+(cd sidecars/arkts-parser && npm ci)
+PYTHONPATH=src python tools/check_parser_v1.py \
+  --source-root /home/autken/Code/arkui_ace_engine \
+  --include-candidate-diagnostics
+```
+
+该命令执行 strict L0、perfect strict L1、snapshot provenance、R63 L0/L1，并可附加
+provisional candidate 分数。`--require-candidate-evidence` 是更严格的晋级门槛；在上述
+441 项修复前，它应当失败。
+
+## 5. GLM Judge 数据流（experimental）
 
 ```text
 SampleEntry
@@ -212,6 +279,10 @@ dry_run
 ```
 
 JudgeFinding 只是待人工核实线索。
+
+GLM 路径不属于 Parser v1 release gate。当前 source excerpt 默认最多 240 行，响应 schema、
+resume request fingerprint 和 revision 校验尚未达到确定性门禁标准；因此它只能提供人工
+复核线索，不能用来覆盖 Golden 或 candidate 结论。
 
 ## 8. Prompt 安全
 
@@ -294,17 +365,21 @@ review unit issue
 - Golden manifest/provenance/schema fail-closed。
 - duplicate-aware 精确评分和 crash-as-FN。
 - L0 与 merged-L1 完整逐 case baseline。
+- candidate truth/annotation fingerprint 和 evidence fail-closed 审计。
+- Golden external snapshot provenance。
+- R63 empty/declaration/layer/warning fail-closed 门禁。
+- Parser v1 统一 release gate。
 - R63 固定 revision 和 selected-path 工作树校验。
 
 未覆盖：
 
 - 真实 GLM 网络调用。
 - 重试行为的完整 mock。
-- raw-L1 独立评测路径和 ERROR/missing 阈值。
+- raw-L1 独立评测路径；merged-L1 batch 已冻结 ERROR/missing 上限。
 - 人工结果转 Golden Case 的自动流程。
 
-当前执行 `npm ci` 后，`pytest -q -rs` 为 `31 passed, 20 subtests passed`。Python-only
-checkout 为 `27 passed, 4 skipped`；skip 仅是可选 L1 测试，strict L1 命令缺依赖时会失败。
+当前执行 `npm ci` 后，`pytest -q -rs` 为 `60 passed, 64 subtests passed`。普通 pytest
+中的 L1 条件测试仍可在缺依赖时 skip；strict L1 和统一 release gate 缺依赖时会失败。
 
 ## 13. 运行产物
 
@@ -332,9 +407,9 @@ judge false positive rate
 
 ## 15. 下一步
 
-1. 增加真正 recovery、class、generic/destructuring Golden cases。
-2. 为 raw-L1 snapshot 建立独立评测路径和 AST diagnostics 门槛。
+1. 按冻结政策重建 B001-B006/B010 evidence，并人工裁决 B010 两个 `@Styles` span。
+2. 为 raw-L1 snapshot 建立独立评测路径，并增加真正 ERROR/missing recovery Golden。
 3. 在修改事实模型前，为 occurrence span/owner 扩展 Golden schema。
 4. 从 XTS、Samples、Codelabs 继续分层抽样，不把大型仓库当作全量 accuracy truth。
-5. 增加网络 client mock、重试和 schema fuzz 测试。
+5. 为 GLM 增加完整 source、严格响应 schema、request fingerprint、revision 校验和网络 mock。
 6. 将公网 GLM 默认行为改为显式 opt-in 或批准 Gateway。

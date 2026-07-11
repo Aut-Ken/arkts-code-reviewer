@@ -759,13 +759,7 @@
           }
         ],
         "components": ["Column", "Text"],
-        "apis": [
-          "PageController.notifyPageFinished",
-          "TestRunner.bind",
-          "console.log",
-          "router.back",
-          "setTimeout"
-        ],
+        "apis": ["router.back", "setTimeout"],
         "decorators": ["@ComponentV2", "@Entry", "@Local"],
         "attributes": ["fontSize", "fontWeight", "margin"],
         "symbols": [
@@ -882,6 +876,11 @@
         ]
       },
       "must_not_emit": {
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind",
+          "console.log"
+        ],
         "decorators": ["@Consumer", "@Param", "@Provider"]
       }
     },
@@ -1239,6 +1238,331 @@
           "this.initWinSizeChangeCallback",
           "this.updateCanvasLayoutProperties"
         ]
+      }
+    },
+    {
+      "case_id": "synthetic-parser-tail",
+      "description": "Leaf component call-chain recovery, UI-owned attributes, exact symbols, and decorator span boundaries.",
+      "logical_path": "golden/synthetic/ParserTail.ets",
+      "source": {
+        "file": "sources/parser_tail.ets",
+        "kind": "synthetic",
+        "content_sha256": "d52f5f92a8f3a63eb7c912e4dffb022ff02de5c9329490b9a99b54d0b07c5f36"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": ["Button", "Column", "Divider", "ImageAnimator", "Row"],
+        "apis": [],
+        "decorators": ["@Component", "@State", "@Styles"],
+        "attributes": [
+          "color",
+          "duration",
+          "images",
+          "margin",
+          "onClick",
+          "padding",
+          "state",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "Column",
+          "Divider",
+          "ImageAnimator",
+          "ParserTail",
+          "ParserTail.aboutToAppear",
+          "ParserTail.build",
+          "ParserTail.build.Column",
+          "ParserTail.build.Column.Divider",
+          "ParserTail.build.Column.ImageAnimator",
+          "ParserTail.build.Column.Row",
+          "ParserTail.build.Column.Row.Button",
+          "ParserTail.paddingStyle",
+          "Row",
+          "aboutToAppear",
+          "build",
+          "paddingStyle"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ParserTail",
+            "qualified_name": "ParserTail",
+            "parent_name": null,
+            "span": {"start_line": 1, "end_line": 30}
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "ParserTail.aboutToAppear",
+            "parent_name": "ParserTail",
+            "span": {"start_line": 5, "end_line": 7}
+          },
+          {
+            "kind": "method",
+            "name": "paddingStyle",
+            "qualified_name": "ParserTail.paddingStyle",
+            "parent_name": "ParserTail",
+            "span": {"start_line": 9, "end_line": 12}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ParserTail.build",
+            "parent_name": "ParserTail",
+            "span": {"start_line": 14, "end_line": 29}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ParserTail.build.Column",
+            "parent_name": "ParserTail.build",
+            "span": {"start_line": 15, "end_line": 28}
+          },
+          {
+            "kind": "ui_block",
+            "name": "ImageAnimator",
+            "qualified_name": "ParserTail.build.Column.ImageAnimator",
+            "parent_name": "ParserTail.build.Column",
+            "span": {"start_line": 16, "end_line": 19}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ParserTail.build.Column.Row",
+            "parent_name": "ParserTail.build.Column",
+            "span": {"start_line": 20, "end_line": 25}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ParserTail.build.Column.Row.Button",
+            "parent_name": "ParserTail.build.Column.Row",
+            "span": {"start_line": 21, "end_line": 23}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Divider",
+            "qualified_name": "ParserTail.build.Column.Divider",
+            "parent_name": "ParserTail.build.Column",
+            "span": {"start_line": 26, "end_line": 27}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "components": ["closeDialog"],
+        "symbols": ["ParserTail.build.Column.Row.closeDialog", "closeDialog"]
+      }
+    },
+    {
+      "case_id": "synthetic-special-ui-contexts",
+      "description": "PageTransition and local CustomDialog UI contexts with uppercase business-call negatives.",
+      "logical_path": "golden/synthetic/SpecialUiContexts.ets",
+      "source": {
+        "file": "sources/special_ui_contexts.ets",
+        "kind": "synthetic",
+        "content_sha256": "cb50eedc7d4814fd5bd6e9e32b6b6a05330c0562bcd7ef24600ae2ac2a50c493"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": [
+          "Column",
+          "DialogContent",
+          "PageTransitionEnter",
+          "PageTransitionExit",
+          "Text"
+        ],
+        "apis": [],
+        "decorators": ["@Component", "@CustomDialog"],
+        "attributes": ["onEnter", "onExit"],
+        "symbols": [
+          "Column",
+          "DialogContent",
+          "DialogContent.build",
+          "DialogContent.build.Text",
+          "PageTransitionEnter",
+          "PageTransitionExit",
+          "SpecialContexts",
+          "SpecialContexts.DialogContent",
+          "SpecialContexts.build",
+          "SpecialContexts.build.Column",
+          "SpecialContexts.build.Column.Text",
+          "SpecialContexts.pageTransition",
+          "SpecialContexts.pageTransition.PageTransitionEnter",
+          "SpecialContexts.pageTransition.PageTransitionExit",
+          "SpecialContexts.runBusiness",
+          "Text",
+          "build",
+          "pageTransition",
+          "runBusiness"
+        ],
+        "syntax": ["arrow_fn"],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "DialogContent",
+            "qualified_name": "DialogContent",
+            "parent_name": null,
+            "span": {"start_line": 1, "end_line": 6}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "DialogContent.build",
+            "parent_name": "DialogContent",
+            "span": {"start_line": 3, "end_line": 5}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DialogContent.build.Text",
+            "parent_name": "DialogContent.build",
+            "span": {"start_line": 4, "end_line": 4}
+          },
+          {
+            "kind": "struct",
+            "name": "SpecialContexts",
+            "qualified_name": "SpecialContexts",
+            "parent_name": null,
+            "span": {"start_line": 8, "end_line": 30}
+          },
+          {
+            "kind": "ui_block",
+            "name": "DialogContent",
+            "qualified_name": "SpecialContexts.DialogContent",
+            "parent_name": "SpecialContexts",
+            "span": {"start_line": 11, "end_line": 11}
+          },
+          {
+            "kind": "method",
+            "name": "runBusiness",
+            "qualified_name": "SpecialContexts.runBusiness",
+            "parent_name": "SpecialContexts",
+            "span": {"start_line": 14, "end_line": 17}
+          },
+          {
+            "kind": "method",
+            "name": "pageTransition",
+            "qualified_name": "SpecialContexts.pageTransition",
+            "parent_name": "SpecialContexts",
+            "span": {"start_line": 19, "end_line": 22}
+          },
+          {
+            "kind": "ui_block",
+            "name": "PageTransitionEnter",
+            "qualified_name": "SpecialContexts.pageTransition.PageTransitionEnter",
+            "parent_name": "SpecialContexts.pageTransition",
+            "span": {"start_line": 20, "end_line": 20}
+          },
+          {
+            "kind": "ui_block",
+            "name": "PageTransitionExit",
+            "qualified_name": "SpecialContexts.pageTransition.PageTransitionExit",
+            "parent_name": "SpecialContexts.pageTransition",
+            "span": {"start_line": 21, "end_line": 21}
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "SpecialContexts.build",
+            "parent_name": "SpecialContexts",
+            "span": {"start_line": 24, "end_line": 29}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "SpecialContexts.build.Column",
+            "parent_name": "SpecialContexts.build",
+            "span": {"start_line": 25, "end_line": 28}
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "SpecialContexts.build.Column.Text",
+            "parent_name": "SpecialContexts.build.Column",
+            "span": {"start_line": 27, "end_line": 27}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "attributes": ["start", "trim"],
+        "components": ["Factory", "String"],
+        "symbols": [
+          "Factory",
+          "SpecialContexts.build.Column.String",
+          "SpecialContexts.runBusiness.Factory",
+          "String"
+        ]
+      }
+    },
+    {
+      "case_id": "synthetic-class-promise",
+      "description": "Class declaration and Promise syntax coverage without UI or platform API false positives.",
+      "logical_path": "golden/synthetic/ClassPromise.ets",
+      "source": {
+        "file": "sources/class_promise.ets",
+        "kind": "synthetic",
+        "content_sha256": "ad3ea4e37622f6804aafcd28da57d34ea157833627f71611966b12f0ccdad4b5"
+      },
+      "scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "expected": {
+        "imports": [],
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": ["TaskRunner", "TaskRunner.run", "run"],
+        "syntax": ["async_fn", "await_expr", "promise"],
+        "declarations": [
+          {
+            "kind": "class",
+            "name": "TaskRunner",
+            "qualified_name": "TaskRunner",
+            "parent_name": null,
+            "span": {"start_line": 1, "end_line": 6}
+          },
+          {
+            "kind": "method",
+            "name": "run",
+            "qualified_name": "TaskRunner.run",
+            "parent_name": "TaskRunner",
+            "span": {"start_line": 2, "end_line": 5}
+          }
+        ]
+      },
+      "must_not_emit": {
+        "attributes": ["resolve"],
+        "components": ["Promise"]
       }
     }
   ]

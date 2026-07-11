@@ -1,0 +1,2938 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B006",
+    "group_manifest_sha256": "fbe0d57c658e02dfa508743af433b9a72a05aab154518a77f0c4566f5491e843",
+    "expected_case_ids": [
+      "R63-010"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b006-2026-07-11-imageprocessutils"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-010",
+      "category": "advanced_ui_component",
+      "logical_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/common/utils/ImageProcessUtils.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/common/utils/ImageProcessUtils.ets",
+        "copied_path": "sources/advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/common/utils/ImageProcessUtils.ets",
+        "content_sha256": "77b3e4514d011f050e1d1e9c00171a39906884f9ef426b9671fb9d85d2c86478",
+        "line_count": 1050
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "./ImageGeometryUtils",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ImageGeometryUtils": "ImageGeometryUtils"
+            }
+          },
+          {
+            "module": "./ImageTypes",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CompressionPlan": "CompressionPlan",
+              "HistogramChannel": "HistogramChannel",
+              "HistogramResult": "HistogramResult",
+              "HsvColor": "HsvColor",
+              "ImagePlane": "ImagePlane",
+              "RgbaColor": "RgbaColor",
+              "Size2D": "Size2D"
+            }
+          }
+        ],
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "ImageProcessUtils",
+          "ImageProcessUtils.adjustBrightness",
+          "ImageProcessUtils.adjustContrast",
+          "ImageProcessUtils.adjustGamma",
+          "ImageProcessUtils.adjustSaturation",
+          "ImageProcessUtils.alphaCoverage",
+          "ImageProcessUtils.applyColorMatrix",
+          "ImageProcessUtils.assertValidImage",
+          "ImageProcessUtils.blendMultiply",
+          "ImageProcessUtils.blendNormal",
+          "ImageProcessUtils.blendScreen",
+          "ImageProcessUtils.boxBlur",
+          "ImageProcessUtils.bytesPerImage",
+          "ImageProcessUtils.channelStats",
+          "ImageProcessUtils.clear",
+          "ImageProcessUtils.cloneImage",
+          "ImageProcessUtils.containsTransparency",
+          "ImageProcessUtils.copyRegion",
+          "ImageProcessUtils.createImage",
+          "ImageProcessUtils.crop",
+          "ImageProcessUtils.downsample2x",
+          "ImageProcessUtils.estimatePsnr",
+          "ImageProcessUtils.fill",
+          "ImageProcessUtils.flipHorizontal",
+          "ImageProcessUtils.flipVertical",
+          "ImageProcessUtils.gaussianBlur",
+          "ImageProcessUtils.gaussianKernel",
+          "ImageProcessUtils.getPixel",
+          "ImageProcessUtils.hsvToRgb",
+          "ImageProcessUtils.indexOf",
+          "ImageProcessUtils.invert",
+          "ImageProcessUtils.isValidImage",
+          "ImageProcessUtils.levels",
+          "ImageProcessUtils.lumaStats",
+          "ImageProcessUtils.meanColor",
+          "ImageProcessUtils.pad",
+          "ImageProcessUtils.premultiplyAlpha",
+          "ImageProcessUtils.resizeBilinear",
+          "ImageProcessUtils.resizeNearest",
+          "ImageProcessUtils.rgbToHsv",
+          "ImageProcessUtils.rotate180",
+          "ImageProcessUtils.rotate90CCW",
+          "ImageProcessUtils.rotate90CW",
+          "ImageProcessUtils.setPixel",
+          "ImageProcessUtils.shiftHue",
+          "ImageProcessUtils.sobelEdge",
+          "ImageProcessUtils.suggestCompressionPlan",
+          "ImageProcessUtils.thresholdLuma",
+          "ImageProcessUtils.thumbnailPlan",
+          "ImageProcessUtils.toGrayscale",
+          "ImageProcessUtils.unpremultiplyAlpha",
+          "adjustBrightness",
+          "adjustContrast",
+          "adjustGamma",
+          "adjustSaturation",
+          "alphaCoverage",
+          "applyColorMatrix",
+          "assertValidImage",
+          "blendMultiply",
+          "blendNormal",
+          "blendScreen",
+          "boxBlur",
+          "bytesPerImage",
+          "channelStats",
+          "clear",
+          "cloneImage",
+          "containsTransparency",
+          "copyRegion",
+          "createImage",
+          "crop",
+          "downsample2x",
+          "estimatePsnr",
+          "fill",
+          "flipHorizontal",
+          "flipVertical",
+          "gaussianBlur",
+          "gaussianKernel",
+          "getPixel",
+          "hsvToRgb",
+          "indexOf",
+          "invert",
+          "isValidImage",
+          "levels",
+          "lumaStats",
+          "meanColor",
+          "pad",
+          "premultiplyAlpha",
+          "resizeBilinear",
+          "resizeNearest",
+          "rgbToHsv",
+          "rotate180",
+          "rotate90CCW",
+          "rotate90CW",
+          "setPixel",
+          "shiftHue",
+          "sobelEdge",
+          "suggestCompressionPlan",
+          "thresholdLuma",
+          "thumbnailPlan",
+          "toGrayscale",
+          "unpremultiplyAlpha"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "class",
+            "name": "ImageProcessUtils",
+            "qualified_name": "ImageProcessUtils",
+            "parent_name": null,
+            "span": {
+              "start_line": 34,
+              "end_line": 1050
+            }
+          },
+          {
+            "kind": "method",
+            "name": "createImage",
+            "qualified_name": "ImageProcessUtils.createImage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 35,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "method",
+            "name": "cloneImage",
+            "qualified_name": "ImageProcessUtils.cloneImage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 48,
+              "end_line": 54
+            }
+          },
+          {
+            "kind": "method",
+            "name": "isValidImage",
+            "qualified_name": "ImageProcessUtils.isValidImage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 56,
+              "end_line": 61
+            }
+          },
+          {
+            "kind": "method",
+            "name": "assertValidImage",
+            "qualified_name": "ImageProcessUtils.assertValidImage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 63,
+              "end_line": 67
+            }
+          },
+          {
+            "kind": "method",
+            "name": "bytesPerImage",
+            "qualified_name": "ImageProcessUtils.bytesPerImage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 69,
+              "end_line": 71
+            }
+          },
+          {
+            "kind": "method",
+            "name": "indexOf",
+            "qualified_name": "ImageProcessUtils.indexOf",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 73,
+              "end_line": 77
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getPixel",
+            "qualified_name": "ImageProcessUtils.getPixel",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 79,
+              "end_line": 87
+            }
+          },
+          {
+            "kind": "method",
+            "name": "setPixel",
+            "qualified_name": "ImageProcessUtils.setPixel",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 89,
+              "end_line": 98
+            }
+          },
+          {
+            "kind": "method",
+            "name": "fill",
+            "qualified_name": "ImageProcessUtils.fill",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 100,
+              "end_line": 112
+            }
+          },
+          {
+            "kind": "method",
+            "name": "clear",
+            "qualified_name": "ImageProcessUtils.clear",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 114,
+              "end_line": 116
+            }
+          },
+          {
+            "kind": "method",
+            "name": "copyRegion",
+            "qualified_name": "ImageProcessUtils.copyRegion",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 118,
+              "end_line": 153
+            }
+          },
+          {
+            "kind": "method",
+            "name": "crop",
+            "qualified_name": "ImageProcessUtils.crop",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 155,
+              "end_line": 177
+            }
+          },
+          {
+            "kind": "method",
+            "name": "pad",
+            "qualified_name": "ImageProcessUtils.pad",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 179,
+              "end_line": 185
+            }
+          },
+          {
+            "kind": "method",
+            "name": "flipHorizontal",
+            "qualified_name": "ImageProcessUtils.flipHorizontal",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 187,
+              "end_line": 202
+            }
+          },
+          {
+            "kind": "method",
+            "name": "flipVertical",
+            "qualified_name": "ImageProcessUtils.flipVertical",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 204,
+              "end_line": 219
+            }
+          },
+          {
+            "kind": "method",
+            "name": "rotate90CW",
+            "qualified_name": "ImageProcessUtils.rotate90CW",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 221,
+              "end_line": 238
+            }
+          },
+          {
+            "kind": "method",
+            "name": "rotate90CCW",
+            "qualified_name": "ImageProcessUtils.rotate90CCW",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 240,
+              "end_line": 257
+            }
+          },
+          {
+            "kind": "method",
+            "name": "rotate180",
+            "qualified_name": "ImageProcessUtils.rotate180",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 259,
+              "end_line": 261
+            }
+          },
+          {
+            "kind": "method",
+            "name": "toGrayscale",
+            "qualified_name": "ImageProcessUtils.toGrayscale",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 263,
+              "end_line": 277
+            }
+          },
+          {
+            "kind": "method",
+            "name": "invert",
+            "qualified_name": "ImageProcessUtils.invert",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 279,
+              "end_line": 287
+            }
+          },
+          {
+            "kind": "method",
+            "name": "adjustBrightness",
+            "qualified_name": "ImageProcessUtils.adjustBrightness",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 288,
+              "end_line": 299
+            }
+          },
+          {
+            "kind": "method",
+            "name": "adjustContrast",
+            "qualified_name": "ImageProcessUtils.adjustContrast",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 301,
+              "end_line": 312
+            }
+          },
+          {
+            "kind": "method",
+            "name": "adjustGamma",
+            "qualified_name": "ImageProcessUtils.adjustGamma",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 314,
+              "end_line": 331
+            }
+          },
+          {
+            "kind": "method",
+            "name": "adjustSaturation",
+            "qualified_name": "ImageProcessUtils.adjustSaturation",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 333,
+              "end_line": 348
+            }
+          },
+          {
+            "kind": "method",
+            "name": "applyColorMatrix",
+            "qualified_name": "ImageProcessUtils.applyColorMatrix",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 350,
+              "end_line": 374
+            }
+          },
+          {
+            "kind": "method",
+            "name": "thresholdLuma",
+            "qualified_name": "ImageProcessUtils.thresholdLuma",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 376,
+              "end_line": 389
+            }
+          },
+          {
+            "kind": "method",
+            "name": "levels",
+            "qualified_name": "ImageProcessUtils.levels",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 391,
+              "end_line": 413
+            }
+          },
+          {
+            "kind": "method",
+            "name": "channelStats",
+            "qualified_name": "ImageProcessUtils.channelStats",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 415,
+              "end_line": 440
+            }
+          },
+          {
+            "kind": "method",
+            "name": "meanColor",
+            "qualified_name": "ImageProcessUtils.meanColor",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 442,
+              "end_line": 466
+            }
+          },
+          {
+            "kind": "method",
+            "name": "lumaStats",
+            "qualified_name": "ImageProcessUtils.lumaStats",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 468,
+              "end_line": 495
+            }
+          },
+          {
+            "kind": "method",
+            "name": "premultiplyAlpha",
+            "qualified_name": "ImageProcessUtils.premultiplyAlpha",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 497,
+              "end_line": 506
+            }
+          },
+          {
+            "kind": "method",
+            "name": "unpremultiplyAlpha",
+            "qualified_name": "ImageProcessUtils.unpremultiplyAlpha",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 508,
+              "end_line": 521
+            }
+          },
+          {
+            "kind": "method",
+            "name": "blendNormal",
+            "qualified_name": "ImageProcessUtils.blendNormal",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 522,
+              "end_line": 567
+            }
+          },
+          {
+            "kind": "method",
+            "name": "blendMultiply",
+            "qualified_name": "ImageProcessUtils.blendMultiply",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 569,
+              "end_line": 588
+            }
+          },
+          {
+            "kind": "method",
+            "name": "blendScreen",
+            "qualified_name": "ImageProcessUtils.blendScreen",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 590,
+              "end_line": 609
+            }
+          },
+          {
+            "kind": "method",
+            "name": "resizeNearest",
+            "qualified_name": "ImageProcessUtils.resizeNearest",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 611,
+              "end_line": 634
+            }
+          },
+          {
+            "kind": "method",
+            "name": "resizeBilinear",
+            "qualified_name": "ImageProcessUtils.resizeBilinear",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 636,
+              "end_line": 672
+            }
+          },
+          {
+            "kind": "method",
+            "name": "downsample2x",
+            "qualified_name": "ImageProcessUtils.downsample2x",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 674,
+              "end_line": 712
+            }
+          },
+          {
+            "kind": "method",
+            "name": "boxBlur",
+            "qualified_name": "ImageProcessUtils.boxBlur",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 714,
+              "end_line": 751
+            }
+          },
+          {
+            "kind": "method",
+            "name": "gaussianKernel",
+            "qualified_name": "ImageProcessUtils.gaussianKernel",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 752,
+              "end_line": 768
+            }
+          },
+          {
+            "kind": "method",
+            "name": "gaussianBlur",
+            "qualified_name": "ImageProcessUtils.gaussianBlur",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 770,
+              "end_line": 822
+            }
+          },
+          {
+            "kind": "method",
+            "name": "sobelEdge",
+            "qualified_name": "ImageProcessUtils.sobelEdge",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 824,
+              "end_line": 864
+            }
+          },
+          {
+            "kind": "method",
+            "name": "rgbToHsv",
+            "qualified_name": "ImageProcessUtils.rgbToHsv",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 866,
+              "end_line": 898
+            }
+          },
+          {
+            "kind": "method",
+            "name": "hsvToRgb",
+            "qualified_name": "ImageProcessUtils.hsvToRgb",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 900,
+              "end_line": 933
+            }
+          },
+          {
+            "kind": "method",
+            "name": "shiftHue",
+            "qualified_name": "ImageProcessUtils.shiftHue",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 935,
+              "end_line": 953
+            }
+          },
+          {
+            "kind": "method",
+            "name": "containsTransparency",
+            "qualified_name": "ImageProcessUtils.containsTransparency",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 955,
+              "end_line": 962
+            }
+          },
+          {
+            "kind": "method",
+            "name": "alphaCoverage",
+            "qualified_name": "ImageProcessUtils.alphaCoverage",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 964,
+              "end_line": 975
+            }
+          },
+          {
+            "kind": "method",
+            "name": "thumbnailPlan",
+            "qualified_name": "ImageProcessUtils.thumbnailPlan",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 977,
+              "end_line": 994
+            }
+          },
+          {
+            "kind": "method",
+            "name": "suggestCompressionPlan",
+            "qualified_name": "ImageProcessUtils.suggestCompressionPlan",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 996,
+              "end_line": 1018
+            }
+          },
+          {
+            "kind": "method",
+            "name": "estimatePsnr",
+            "qualified_name": "ImageProcessUtils.estimatePsnr",
+            "parent_name": "ImageProcessUtils",
+            "span": {
+              "start_line": 1020,
+              "end_line": 1049
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "Error",
+          "ImageProcessUtils",
+          "Uint8Array"
+        ],
+        "apis": [
+          "Error",
+          "ImageGeometryUtils.clamp",
+          "ImageProcessUtils.fill",
+          "Math.floor",
+          "Math.max",
+          "Uint8Array",
+          "data.fill"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "GeneratedTypeLiteralInterface_1"
+        ],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "./ImageTypes",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CompressionPlan": "CompressionPlan",
+                  "HistogramChannel": "HistogramChannel",
+                  "HistogramResult": "HistogramResult",
+                  "HsvColor": "HsvColor",
+                  "ImagePlane": "ImagePlane",
+                  "RgbaColor": "RgbaColor",
+                  "Size2D": "Size2D"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 24
+                }
+              ],
+              "reason": "named type imports from ./ImageTypes"
+            },
+            {
+              "value": {
+                "module": "./ImageGeometryUtils",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ImageGeometryUtils": "ImageGeometryUtils"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "named import ImageGeometryUtils"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "ImageProcessUtils",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 34
+                }
+              ],
+              "reason": "class declaration name, not a declarative UI component call"
+            },
+            {
+              "value": "Uint8Array",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "typed array constructor, not UI component"
+            },
+            {
+              "value": "Error",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "Error constructor, not UI component"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "ImageGeometryUtils.clamp",
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 75
+                }
+              ],
+              "reason": "relative project import helper ImageGeometryUtils.clamp"
+            },
+            {
+              "value": "ImageProcessUtils.fill",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "same-class static business method, not platform API"
+            },
+            {
+              "value": "Math.max",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "ECMAScript Math not in frozen global_apis"
+            },
+            {
+              "value": "Math.floor",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "ECMAScript Math not in frozen global_apis"
+            },
+            {
+              "value": "Uint8Array",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "typed array constructor/new-expression not v1 API"
+            },
+            {
+              "value": "Error",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "Error constructor throw, not frozen platform API"
+            },
+            {
+              "value": "data.fill",
+              "line_ranges": [
+                {
+                  "start_line": 115,
+                  "end_line": 115
+                }
+              ],
+              "reason": "Uint8Array instance method, collection/runtime method"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "ImageProcessUtils",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.adjustBrightness",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.adjustContrast",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.adjustGamma",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.adjustSaturation",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.alphaCoverage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.applyColorMatrix",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.assertValidImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.blendMultiply",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.blendNormal",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.blendScreen",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.boxBlur",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.bytesPerImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.channelStats",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.clear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.cloneImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.containsTransparency",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.copyRegion",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.createImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.crop",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.downsample2x",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.estimatePsnr",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.fill",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.flipHorizontal",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.flipVertical",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.gaussianBlur",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.gaussianKernel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.getPixel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.hsvToRgb",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.indexOf",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.invert",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.isValidImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.levels",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.lumaStats",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.meanColor",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.pad",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.premultiplyAlpha",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.resizeBilinear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.resizeNearest",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.rgbToHsv",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.rotate180",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.rotate90CCW",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.rotate90CW",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.setPixel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.shiftHue",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.sobelEdge",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.suggestCompressionPlan",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.thresholdLuma",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.thumbnailPlan",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.toGrayscale",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageProcessUtils.unpremultiplyAlpha",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "adjustBrightness",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "adjustContrast",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "adjustGamma",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "adjustSaturation",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "alphaCoverage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "applyColorMatrix",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "assertValidImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "blendMultiply",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "blendNormal",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "blendScreen",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "boxBlur",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "bytesPerImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "channelStats",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "clear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "cloneImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "containsTransparency",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "copyRegion",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "createImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "crop",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "downsample2x",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "estimatePsnr",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "fill",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "flipHorizontal",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "flipVertical",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "gaussianBlur",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "gaussianKernel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "getPixel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "hsvToRgb",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "indexOf",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "invert",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "isValidImage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "levels",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "lumaStats",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "meanColor",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "pad",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "premultiplyAlpha",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "resizeBilinear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "resizeNearest",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "rgbToHsv",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "rotate180",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "rotate90CCW",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "rotate90CW",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "setPixel",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "shiftHue",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "sobelEdge",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "suggestCompressionPlan",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "thresholdLuma",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "thumbnailPlan",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "toGrayscale",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "unpremultiplyAlpha",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "GeneratedTypeLiteralInterface_1",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 32
+                }
+              ],
+              "reason": "interface is not a v1 declaration symbol"
+            }
+          ],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "class",
+                "name": "ImageProcessUtils",
+                "qualified_name": "ImageProcessUtils",
+                "parent_name": null,
+                "span": {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 1050
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "createImage",
+                "qualified_name": "ImageProcessUtils.createImage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 35,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 46
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "cloneImage",
+                "qualified_name": "ImageProcessUtils.cloneImage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 48,
+                  "end_line": 54
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 48,
+                  "end_line": 54
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "isValidImage",
+                "qualified_name": "ImageProcessUtils.isValidImage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 56,
+                  "end_line": 61
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 61
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "assertValidImage",
+                "qualified_name": "ImageProcessUtils.assertValidImage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 63,
+                  "end_line": 67
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 63,
+                  "end_line": 67
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "bytesPerImage",
+                "qualified_name": "ImageProcessUtils.bytesPerImage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 69,
+                  "end_line": 71
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 71
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "indexOf",
+                "qualified_name": "ImageProcessUtils.indexOf",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 73,
+                  "end_line": 77
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 73,
+                  "end_line": 77
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getPixel",
+                "qualified_name": "ImageProcessUtils.getPixel",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 79,
+                  "end_line": 87
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 79,
+                  "end_line": 87
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "setPixel",
+                "qualified_name": "ImageProcessUtils.setPixel",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 89,
+                  "end_line": 98
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 89,
+                  "end_line": 98
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "fill",
+                "qualified_name": "ImageProcessUtils.fill",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 100,
+                  "end_line": 112
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 100,
+                  "end_line": 112
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "clear",
+                "qualified_name": "ImageProcessUtils.clear",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 114,
+                  "end_line": 116
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 114,
+                  "end_line": 116
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "copyRegion",
+                "qualified_name": "ImageProcessUtils.copyRegion",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 118,
+                  "end_line": 153
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 118,
+                  "end_line": 153
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "crop",
+                "qualified_name": "ImageProcessUtils.crop",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 155,
+                  "end_line": 177
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 155,
+                  "end_line": 177
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "pad",
+                "qualified_name": "ImageProcessUtils.pad",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 179,
+                  "end_line": 185
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 179,
+                  "end_line": 185
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "flipHorizontal",
+                "qualified_name": "ImageProcessUtils.flipHorizontal",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 187,
+                  "end_line": 202
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 187,
+                  "end_line": 202
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "flipVertical",
+                "qualified_name": "ImageProcessUtils.flipVertical",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 204,
+                  "end_line": 219
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 204,
+                  "end_line": 219
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "rotate90CW",
+                "qualified_name": "ImageProcessUtils.rotate90CW",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 221,
+                  "end_line": 238
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 221,
+                  "end_line": 238
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "rotate90CCW",
+                "qualified_name": "ImageProcessUtils.rotate90CCW",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 240,
+                  "end_line": 257
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 240,
+                  "end_line": 257
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "rotate180",
+                "qualified_name": "ImageProcessUtils.rotate180",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 259,
+                  "end_line": 261
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 259,
+                  "end_line": 261
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "toGrayscale",
+                "qualified_name": "ImageProcessUtils.toGrayscale",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 263,
+                  "end_line": 277
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 263,
+                  "end_line": 277
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "invert",
+                "qualified_name": "ImageProcessUtils.invert",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 279,
+                  "end_line": 287
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 279,
+                  "end_line": 287
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "adjustBrightness",
+                "qualified_name": "ImageProcessUtils.adjustBrightness",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 288,
+                  "end_line": 299
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 288,
+                  "end_line": 299
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "adjustContrast",
+                "qualified_name": "ImageProcessUtils.adjustContrast",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 301,
+                  "end_line": 312
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 301,
+                  "end_line": 312
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "adjustGamma",
+                "qualified_name": "ImageProcessUtils.adjustGamma",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 314,
+                  "end_line": 331
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 331
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "adjustSaturation",
+                "qualified_name": "ImageProcessUtils.adjustSaturation",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 333,
+                  "end_line": 348
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 333,
+                  "end_line": 348
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "applyColorMatrix",
+                "qualified_name": "ImageProcessUtils.applyColorMatrix",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 350,
+                  "end_line": 374
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 350,
+                  "end_line": 374
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "thresholdLuma",
+                "qualified_name": "ImageProcessUtils.thresholdLuma",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 376,
+                  "end_line": 389
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 376,
+                  "end_line": 389
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "levels",
+                "qualified_name": "ImageProcessUtils.levels",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 391,
+                  "end_line": 413
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 391,
+                  "end_line": 413
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "channelStats",
+                "qualified_name": "ImageProcessUtils.channelStats",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 415,
+                  "end_line": 440
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 415,
+                  "end_line": 440
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "meanColor",
+                "qualified_name": "ImageProcessUtils.meanColor",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 442,
+                  "end_line": 466
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 442,
+                  "end_line": 466
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "lumaStats",
+                "qualified_name": "ImageProcessUtils.lumaStats",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 468,
+                  "end_line": 495
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 468,
+                  "end_line": 495
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "premultiplyAlpha",
+                "qualified_name": "ImageProcessUtils.premultiplyAlpha",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 497,
+                  "end_line": 506
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 497,
+                  "end_line": 506
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "unpremultiplyAlpha",
+                "qualified_name": "ImageProcessUtils.unpremultiplyAlpha",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 508,
+                  "end_line": 521
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 508,
+                  "end_line": 521
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "blendNormal",
+                "qualified_name": "ImageProcessUtils.blendNormal",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 522,
+                  "end_line": 567
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 522,
+                  "end_line": 567
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "blendMultiply",
+                "qualified_name": "ImageProcessUtils.blendMultiply",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 569,
+                  "end_line": 588
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 569,
+                  "end_line": 588
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "blendScreen",
+                "qualified_name": "ImageProcessUtils.blendScreen",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 590,
+                  "end_line": 609
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 590,
+                  "end_line": 609
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "resizeNearest",
+                "qualified_name": "ImageProcessUtils.resizeNearest",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 611,
+                  "end_line": 634
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 611,
+                  "end_line": 634
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "resizeBilinear",
+                "qualified_name": "ImageProcessUtils.resizeBilinear",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 636,
+                  "end_line": 672
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 636,
+                  "end_line": 672
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "downsample2x",
+                "qualified_name": "ImageProcessUtils.downsample2x",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 674,
+                  "end_line": 712
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 674,
+                  "end_line": 712
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "boxBlur",
+                "qualified_name": "ImageProcessUtils.boxBlur",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 714,
+                  "end_line": 751
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 714,
+                  "end_line": 751
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "gaussianKernel",
+                "qualified_name": "ImageProcessUtils.gaussianKernel",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 752,
+                  "end_line": 768
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 752,
+                  "end_line": 768
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "gaussianBlur",
+                "qualified_name": "ImageProcessUtils.gaussianBlur",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 770,
+                  "end_line": 822
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 770,
+                  "end_line": 822
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "sobelEdge",
+                "qualified_name": "ImageProcessUtils.sobelEdge",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 824,
+                  "end_line": 864
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 824,
+                  "end_line": 864
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "rgbToHsv",
+                "qualified_name": "ImageProcessUtils.rgbToHsv",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 866,
+                  "end_line": 898
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 866,
+                  "end_line": 898
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "hsvToRgb",
+                "qualified_name": "ImageProcessUtils.hsvToRgb",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 900,
+                  "end_line": 933
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 900,
+                  "end_line": 933
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "shiftHue",
+                "qualified_name": "ImageProcessUtils.shiftHue",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 935,
+                  "end_line": 953
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 935,
+                  "end_line": 953
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "containsTransparency",
+                "qualified_name": "ImageProcessUtils.containsTransparency",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 955,
+                  "end_line": 962
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 955,
+                  "end_line": 962
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "alphaCoverage",
+                "qualified_name": "ImageProcessUtils.alphaCoverage",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 964,
+                  "end_line": 975
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 964,
+                  "end_line": 975
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "thumbnailPlan",
+                "qualified_name": "ImageProcessUtils.thumbnailPlan",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 977,
+                  "end_line": 994
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 977,
+                  "end_line": 994
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "suggestCompressionPlan",
+                "qualified_name": "ImageProcessUtils.suggestCompressionPlan",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 996,
+                  "end_line": 1018
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 996,
+                  "end_line": 1018
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "estimatePsnr",
+                "qualified_name": "ImageProcessUtils.estimatePsnr",
+                "parent_name": "ImageProcessUtils",
+                "span": {
+                  "start_line": 1020,
+                  "end_line": 1049
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 1020,
+                  "end_line": 1049
+                }
+              ],
+              "reason": "method span checked against source"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "GeneratedTypeLiteralInterface_1",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 32
+                }
+              ],
+              "reason": "interface is not a v1 declaration kind"
+            }
+          ],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}

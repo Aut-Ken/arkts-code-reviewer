@@ -40,7 +40,7 @@ ArkTS AI Code Reviewer
 | 模块 | 状态 | 当前事实 |
 |---|---|---|
 | 输入与编排 | `partial` | CLI 可读取文件和手工 hunk；无 Git diff 解析、Webhook、队列和服务 |
-| Parser | `partial` | 12-case Golden 已建立 L0/merged-L1 baseline；R63 的 L0/L1 均 63/63 完成，L1 仍有 AST warning |
+| Parser | `partial` | 当前 CodeFacts v1 的 15-case merged-L1 Golden 全字段 exact；R63 L0/L1 均 63/63，仍缺 occurrence owner/span 和去重解析 |
 | ReviewUnit | `partial` | full/diff 初版、fallback 和 hunk 合并已实现 |
 | Tags / Dimensions | `partial` | 24 Tags 和 12 Dimensions 硬编码实现，尚未配置化 |
 | 知识库构建 | `partial` | 11 个知识来源及固定 revision 已登记；无 registry loader、Clause parser、数据库或真实索引 |
@@ -49,22 +49,27 @@ ArkTS AI Code Reviewer
 | Prompt / Final LLM | `designed` | 无生产评审代码；GLM 只用于 Parser 质检 |
 | 输出与 GitCode | `planned` | 无代码 |
 | 评测闭环 | `designed` | 只有 Parser/前置链路测试，未形成最终评审 Golden Set |
-| Parser Validation | `partial` | 自包含 Golden、逐 case baseline、固定 revision R63 批测、GLM judge 和 dry-run 已实现 |
+| Parser Validation | `partial` | 确定性 v1 release gate 已完成；Grok candidate evidence 尚未晋级，GLM judge 仍为 experimental |
 
 当前 `AnalysisResult` 能输出 ReviewUnit、RetrievalQuery 原料和 Parser metadata，不能输出正式代码评审 Finding。
 
 ### 2.1 当前可复核结果
 
 ```text
-pytest after npm ci             31 passed, 20 subtests passed
-Python-only checkout            27 passed, 4 optional L1 skips
-Parser Golden                   12 cases / L0 and merged-L1 strict baselines
+pytest after npm ci             60 passed, 64 subtests passed
+Parser Golden                   15 cases / strict L0 baseline / perfect merged-L1
 LexicalParser real samples     63 parsed / 0 missing / 0 crashed
 Merged-L1 real samples          63 L1 / 0 missing / 0 crashed
 R63 L1 AST warnings             7 files with ERROR / 7 files with missing nodes
-Declarations                   L0 2,880 / merged-L1 5,351
+Declarations                   L0 2,880 / merged-L1 5,414
+Golden snapshot provenance      4/4 match the pinned external revision
+Provisional candidates          23 cases; value fields exact except 2 known bad annotation spans
 Source registry                19 entries / all revisions verified / clean worktrees
 ```
+
+这里的 “perfect merged-L1” 只覆盖冻结的 v1 集合字段和 declaration 行级 span。它不代表
+全 ArkTS 语法 99% 准确，也不覆盖 fact occurrence span/owner、raw-L1 diagnostics 或类型解析。
+23 个候选样本的旧 symbol evidence 仍有 441 项不满足冻结证据政策，因此不能当作正式真值。
 
 外部资产分为：
 
@@ -127,7 +132,8 @@ JSON -> Markdown -> GitCode 行内评论/总评
 accepted/rejected -> bad case -> Golden Set -> 模块修正
 ```
 
-Parser Validation 是独立旁路，只评估 Parser 质量，不进入生产评审 Prompt。
+Parser Validation 是独立旁路，只评估 Parser 质量，不进入生产评审 Prompt。确定性发布门禁
+由 strict Golden、固定 revision provenance 和 R63 robustness 组成；GLM 不参与该门禁。
 
 ## 4. 模块边界
 
@@ -270,8 +276,8 @@ PoC 可以使用单进程 CLI，但生产形态应中心化部署，统一模型
 ## 10. 推荐交付顺序
 
 ```text
-Milestone 0  多仓库来源基线 + L0 真实语料验证                 当前基本完成
-Milestone 1  L1 可复现 + 精确 ChangeSet + 带位置 FileAnalysis
+Milestone 0  多仓库来源基线 + Parser v1 确定性验证             当前基本完成
+Milestone 1  精确 ChangeSet + 带位置 FileAnalysis
              + 唯一 ReviewUnit + Unit 级 Tags/Dimensions
 Milestone 2  Source Registry Loader + 三类 Source Adapter
              + 50~100 条人工确认 Clause + 精确检索

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import os
 import unittest
 from collections import Counter
@@ -11,6 +12,7 @@ from arkts_code_reviewer.parser_validation.manifest import (
     load_corpus_manifest,
     verify_corpus_checkout,
 )
+from tools.run_arkts_parser_batch import batch_report_failures
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ENGINE_ROOT = Path(os.getenv("ARKUI_ENGINE_PATH", REPO_ROOT.parent / "arkui_ace_engine"))
@@ -25,6 +27,58 @@ class ArkuiAceEngineManifestTest(unittest.TestCase):
         self.assertEqual(manifest.suite_role, "robustness_performance")
         self.assertEqual(manifest.source_id, "arkui-ace-engine")
         self.assertEqual(len(manifest.samples), 63)
+
+    def test_parser_v1_batch_gate_fails_closed(self) -> None:
+        report = {
+            "parsed": 63,
+            "missing": [],
+            "crashed": [],
+            "empty_features": [],
+            "files_with_declarations": 63,
+            "parser_layers": {"L1": 63},
+            "warning_counts": {
+                "arkts_tree_sitter_error_nodes": 7,
+                "arkts_tree_sitter_missing_nodes": 7,
+            },
+        }
+        self.assertEqual(
+            batch_report_failures(
+                report,
+                required_layer="L1",
+                warning_limits={
+                    "arkts_tree_sitter_error_nodes": 7,
+                    "arkts_tree_sitter_missing_nodes": 7,
+                },
+            ),
+            [],
+        )
+
+        mutations = {
+            "empty": lambda value: value["empty_features"].append("empty.ets"),
+            "declarations": lambda value: value.__setitem__(
+                "files_with_declarations", 62
+            ),
+            "layer": lambda value: value.__setitem__(
+                "parser_layers", {"L1": 62, "parse_degraded": 1}
+            ),
+            "warnings": lambda value: value["warning_counts"].__setitem__(
+                "arkts_tree_sitter_error_nodes", 8
+            ),
+        }
+        for label, mutate in mutations.items():
+            with self.subTest(label=label):
+                changed = copy.deepcopy(report)
+                mutate(changed)
+                self.assertTrue(
+                    batch_report_failures(
+                        changed,
+                        required_layer="L1",
+                        warning_limits={
+                            "arkts_tree_sitter_error_nodes": 7,
+                            "arkts_tree_sitter_missing_nodes": 7,
+                        },
+                    )
+                )
 
 
 @unittest.skipUnless(ENGINE_ROOT.exists(), "arkui_ace_engine sibling repository is not available")
@@ -58,6 +112,6 @@ class ArkuiAceEngineSamplesTest(unittest.TestCase):
             ):
                 empty_features.append(path)
 
-        self.assertGreaterEqual(parsed, 60)
+        self.assertEqual(parsed, 63)
         self.assertGreaterEqual(len(categories), 10)
-        self.assertLessEqual(len(empty_features), 2, empty_features[:5])
+        self.assertEqual(empty_features, [])

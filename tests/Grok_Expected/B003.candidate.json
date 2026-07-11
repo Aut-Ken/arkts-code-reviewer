@@ -1,0 +1,2464 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B003",
+    "group_manifest_sha256": "79b16ff8b357955a4df1f0a0a5f6b4aa6ca3357a2e7d0aa30ba87d51cf0bf464",
+    "expected_case_ids": [
+      "R63-056",
+      "R63-057",
+      "R63-062",
+      "R63-063"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b003-2026-07-11-pilot"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-056",
+      "category": "state_mgmt_tests",
+      "logical_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/repeat_tests.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/repeat_tests.ets",
+        "copied_path": "sources/frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/repeat_tests.ets",
+        "content_sha256": "cf6d955b6a8ac70406a00bd6357ffbe136be3e295e3f42f98268f5ec75e4fa36",
+        "line_count": 46
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PageController": "PageController"
+            }
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TestRunner": "TestRunner"
+            }
+          },
+          {
+            "module": "../../repeat_tests/repeatNonVirtualScrollTests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "RepeatNonVirtualScrollTest1": "RepeatNonVirtualScrollTest1"
+            }
+          },
+          {
+            "module": "../../repeat_tests/repeatTests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "RepeatTest1": "RepeatTest1"
+            }
+          },
+          {
+            "module": "../../repeat_tests/repeatVirtualScrollTests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "RepeatVirtualScrollTest1": "RepeatVirtualScrollTest1"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Text"
+        ],
+        "apis": [
+          "router.back",
+          "setTimeout"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry",
+          "@State"
+        ],
+        "attributes": [
+          "fontSize"
+        ],
+        "symbols": [
+          "Column",
+          "Parent",
+          "Parent.aboutToAppear",
+          "Parent.build",
+          "Parent.build.Column",
+          "Parent.build.Column.Text",
+          "Text",
+          "aboutToAppear",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "Parent",
+            "qualified_name": "Parent",
+            "parent_name": null,
+            "span": {
+              "start_line": 23,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "Parent.aboutToAppear",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 31,
+              "end_line": 39
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "Parent.build",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 41,
+              "end_line": 45
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "Parent.build.Column",
+            "parent_name": "Parent.build",
+            "span": {
+              "start_line": 42,
+              "end_line": 44
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "Parent.build.Column.Text",
+            "parent_name": "Parent.build.Column",
+            "span": {
+              "start_line": 43,
+              "end_line": 43
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@system.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/pageController",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PageController": "PageController"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/testRunner",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TestRunner": "TestRunner"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../repeat_tests/repeatNonVirtualScrollTests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "RepeatNonVirtualScrollTest1": "RepeatNonVirtualScrollTest1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../repeat_tests/repeatTests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "RepeatTest1": "RepeatTest1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../repeat_tests/repeatVirtualScrollTests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "RepeatVirtualScrollTest1": "RepeatVirtualScrollTest1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 44
+                }
+              ],
+              "reason": "Column container in build"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "Text with fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 38
+                }
+              ],
+              "reason": "global setTimeout"
+            },
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "router.back via frozen @system.router -> router"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "TestRunner.bind",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 33
+                }
+              ],
+              "reason": "relative project helper"
+            },
+            {
+              "value": "PageController.notifyPageFinished",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "relative project helper"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "@State field"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "Text.fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 38
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "Parent",
+                "qualified_name": "Parent",
+                "parent_name": null,
+                "span": {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "Parent.aboutToAppear",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 31,
+                  "end_line": 39
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 39
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "Parent.build",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 41,
+                  "end_line": 45
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 45
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "Parent.build.Column",
+                "parent_name": "Parent.build",
+                "span": {
+                  "start_line": 42,
+                  "end_line": 44
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 44
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "Parent.build.Column.Text",
+                "parent_name": "Parent.build.Column",
+                "span": {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-057",
+      "category": "state_mgmt_tests",
+      "logical_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/performance_tests.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/performance_tests.ets",
+        "copied_path": "sources/frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/performance_tests.ets",
+        "content_sha256": "a0877866b2d471c00f9b3960b6fa922e0ad5cf8eae899bd42e1438a1d7e46d4c",
+        "line_count": 47
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PageController": "PageController"
+            }
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TestRunner": "TestRunner"
+            }
+          },
+          {
+            "module": "../../performance_tests/definePropertyTest",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "DefinePropertyTest": "DefinePropertyTest"
+            }
+          },
+          {
+            "module": "../../performance_tests/instanceofTest",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "InstanceOfTest": "InstanceOfTest"
+            }
+          },
+          {
+            "module": "../../performance_tests/valueAssignTest",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ValueAssignTest": "ValueAssignTest"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Text"
+        ],
+        "apis": [
+          "router.back",
+          "setTimeout"
+        ],
+        "decorators": [
+          "@ComponentV2",
+          "@Entry",
+          "@Local"
+        ],
+        "attributes": [
+          "fontSize"
+        ],
+        "symbols": [
+          "Column",
+          "Parent",
+          "Parent.aboutToAppear",
+          "Parent.build",
+          "Parent.build.Column",
+          "Parent.build.Column.Text",
+          "Text",
+          "aboutToAppear",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "Parent",
+            "qualified_name": "Parent",
+            "parent_name": null,
+            "span": {
+              "start_line": 24,
+              "end_line": 47
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "Parent.aboutToAppear",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 32,
+              "end_line": 40
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "Parent.build",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 42,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "Parent.build.Column",
+            "parent_name": "Parent.build",
+            "span": {
+              "start_line": 43,
+              "end_line": 45
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "Parent.build.Column.Text",
+            "parent_name": "Parent.build.Column",
+            "span": {
+              "start_line": 44,
+              "end_line": 44
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@system.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/pageController",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PageController": "PageController"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/testRunner",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TestRunner": "TestRunner"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../performance_tests/definePropertyTest",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "DefinePropertyTest": "DefinePropertyTest"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../performance_tests/instanceofTest",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "InstanceOfTest": "InstanceOfTest"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../performance_tests/valueAssignTest",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ValueAssignTest": "ValueAssignTest"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 45
+                }
+              ],
+              "reason": "Column container in build"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "Text with fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 39
+                }
+              ],
+              "reason": "global setTimeout"
+            },
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "router.back via frozen @system.router -> router"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "TestRunner.bind",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 34
+                }
+              ],
+              "reason": "relative project helper"
+            },
+            {
+              "value": "PageController.notifyPageFinished",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "relative project helper"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@ComponentV2",
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "ComponentV2 decorator"
+            },
+            {
+              "value": "@Local",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "@Local field"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "Text.fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 39
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "Parent",
+                "qualified_name": "Parent",
+                "parent_name": null,
+                "span": {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 47
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "Parent.aboutToAppear",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 32,
+                  "end_line": 40
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 40
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "Parent.build",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 42,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 46
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "Parent.build.Column",
+                "parent_name": "Parent.build",
+                "span": {
+                  "start_line": 43,
+                  "end_line": 45
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 45
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "Parent.build.Column.Text",
+                "parent_name": "Parent.build.Column",
+                "span": {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-062",
+      "category": "generated_framework",
+      "logical_path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.multimedia.image.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.multimedia.image.ets",
+        "copied_path": "sources/frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.multimedia.image.ets",
+        "content_sha256": "4f6c51a27423cf0a0eb71b38fd1edb4f94288486e0cc4b8f5d069c301bf1109e",
+        "line_count": 34
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "#handwritten",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "extractors": "extractors"
+            }
+          },
+          {
+            "module": "./../CallbackTransformer",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CallbackTransformer": "CallbackTransformer"
+            }
+          },
+          {
+            "module": "@koalaui/common",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "int32": "int32",
+              "int64": "int64",
+              "float32": "float32",
+              "unsafeCast": "unsafeCast"
+            }
+          },
+          {
+            "module": "@koalaui/interop",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "SerializerBase": "SerializerBase",
+              "DeserializerBase": "DeserializerBase",
+              "CallbackResource": "CallbackResource",
+              "InteropNativeModule": "InteropNativeModule",
+              "MaterializedBase": "MaterializedBase",
+              "Tags": "Tags",
+              "RuntimeType": "RuntimeType",
+              "toPeerPtr": "toPeerPtr",
+              "nullptr": "nullptr",
+              "KPointer": "KPointer",
+              "NativeBuffer": "NativeBuffer",
+              "KSerializerBuffer": "KSerializerBuffer",
+              "KUint8ArrayPtr": "KUint8ArrayPtr"
+            }
+          },
+          {
+            "module": "@ohos.multimedia.image",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "image": "default"
+            }
+          }
+        ],
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "image_PixelMap_serializer",
+          "image_PixelMap_serializer.read",
+          "image_PixelMap_serializer.write",
+          "read",
+          "write"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "class",
+            "name": "image_PixelMap_serializer",
+            "qualified_name": "image_PixelMap_serializer",
+            "parent_name": null,
+            "span": {
+              "start_line": 24,
+              "end_line": 34
+            }
+          },
+          {
+            "kind": "method",
+            "name": "write",
+            "qualified_name": "image_PixelMap_serializer.write",
+            "parent_name": "image_PixelMap_serializer",
+            "span": {
+              "start_line": 25,
+              "end_line": 28
+            }
+          },
+          {
+            "kind": "method",
+            "name": "read",
+            "qualified_name": "image_PixelMap_serializer.read",
+            "parent_name": "image_PixelMap_serializer",
+            "span": {
+              "start_line": 29,
+              "end_line": 33
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "image_PixelMap_serializer"
+        ],
+        "apis": [
+          "extractors.fromImagePixelMapPtr",
+          "extractors.toImagePixelMapPtr",
+          "valueDeserializer.readPointer",
+          "valueSerializer.writePointer"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "#handwritten",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "extractors": "extractors"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "./../CallbackTransformer",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CallbackTransformer": "CallbackTransformer"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@koalaui/common",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "int32": "int32",
+                  "int64": "int64",
+                  "float32": "float32",
+                  "unsafeCast": "unsafeCast"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@koalaui/interop",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "SerializerBase": "SerializerBase",
+                  "DeserializerBase": "DeserializerBase",
+                  "CallbackResource": "CallbackResource",
+                  "InteropNativeModule": "InteropNativeModule",
+                  "MaterializedBase": "MaterializedBase",
+                  "Tags": "Tags",
+                  "RuntimeType": "RuntimeType",
+                  "toPeerPtr": "toPeerPtr",
+                  "nullptr": "nullptr",
+                  "KPointer": "KPointer",
+                  "NativeBuffer": "NativeBuffer",
+                  "KSerializerBuffer": "KSerializerBuffer",
+                  "KUint8ArrayPtr": "KUint8ArrayPtr"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@ohos.multimedia.image",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "image": "default"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "image_PixelMap_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "class name, not a declarative UI component call"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "extractors.toImagePixelMapPtr",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "project #handwritten helper, not frozen SDK API"
+            },
+            {
+              "value": "extractors.fromImagePixelMapPtr",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "project #handwritten helper, not frozen SDK API"
+            },
+            {
+              "value": "valueSerializer.writePointer",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "local SerializerBase instance method"
+            },
+            {
+              "value": "valueDeserializer.readPointer",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "local DeserializerBase instance method"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "image_PixelMap_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "image_PixelMap_serializer.read",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "image_PixelMap_serializer.write",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "read",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "write",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "class",
+                "name": "image_PixelMap_serializer",
+                "qualified_name": "image_PixelMap_serializer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "write",
+                "qualified_name": "image_PixelMap_serializer.write",
+                "parent_name": "image_PixelMap_serializer",
+                "span": {
+                  "start_line": 25,
+                  "end_line": 28
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 28
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "read",
+                "qualified_name": "image_PixelMap_serializer.read",
+                "parent_name": "image_PixelMap_serializer",
+                "span": {
+                  "start_line": 29,
+                  "end_line": 33
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 33
+                }
+              ],
+              "reason": "method span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-063",
+      "category": "generated_framework",
+      "logical_path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.arkui.UIContext.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.arkui.UIContext.ets",
+        "copied_path": "sources/frameworks/bridge/arkts_frontend/koala_projects/arkoala-arkts/arkui-ohos/generated/framework/ohos.arkui.UIContext.ets",
+        "content_sha256": "34e3c2989d60c103ff4975434eaf3e2a65d9ad4123cd200a9a64a4f2a62563a7",
+        "line_count": 78
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "#handwritten",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "extractors": "extractors"
+            }
+          },
+          {
+            "module": "./../CallbackTransformer",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CallbackTransformer": "CallbackTransformer"
+            }
+          },
+          {
+            "module": "@koalaui/common",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "int32": "int32",
+              "int64": "int64",
+              "float32": "float32",
+              "unsafeCast": "unsafeCast"
+            }
+          },
+          {
+            "module": "@koalaui/interop",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "SerializerBase": "SerializerBase",
+              "DeserializerBase": "DeserializerBase",
+              "CallbackResource": "CallbackResource",
+              "InteropNativeModule": "InteropNativeModule",
+              "MaterializedBase": "MaterializedBase",
+              "Tags": "Tags",
+              "RuntimeType": "RuntimeType",
+              "toPeerPtr": "toPeerPtr",
+              "nullptr": "nullptr",
+              "KPointer": "KPointer",
+              "NativeBuffer": "NativeBuffer",
+              "KSerializerBuffer": "KSerializerBuffer",
+              "KUint8ArrayPtr": "KUint8ArrayPtr"
+            }
+          },
+          {
+            "module": "@ohos.arkui.UIContext",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ohos_arkui_UIContext_UIContext": "UIContext",
+              "TargetInfo": "TargetInfo"
+            }
+          }
+        ],
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "TargetInfo_serializer",
+          "TargetInfo_serializer.read",
+          "TargetInfo_serializer.write",
+          "ohos_arkui_UIContext_UIContext_serializer",
+          "ohos_arkui_UIContext_UIContext_serializer.read",
+          "ohos_arkui_UIContext_UIContext_serializer.write",
+          "read",
+          "write"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "class",
+            "name": "ohos_arkui_UIContext_UIContext_serializer",
+            "qualified_name": "ohos_arkui_UIContext_UIContext_serializer",
+            "parent_name": null,
+            "span": {
+              "start_line": 24,
+              "end_line": 34
+            }
+          },
+          {
+            "kind": "method",
+            "name": "write",
+            "qualified_name": "ohos_arkui_UIContext_UIContext_serializer.write",
+            "parent_name": "ohos_arkui_UIContext_UIContext_serializer",
+            "span": {
+              "start_line": 25,
+              "end_line": 28
+            }
+          },
+          {
+            "kind": "method",
+            "name": "read",
+            "qualified_name": "ohos_arkui_UIContext_UIContext_serializer.read",
+            "parent_name": "ohos_arkui_UIContext_UIContext_serializer",
+            "span": {
+              "start_line": 29,
+              "end_line": 33
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TargetInfo_serializer",
+            "qualified_name": "TargetInfo_serializer",
+            "parent_name": null,
+            "span": {
+              "start_line": 35,
+              "end_line": 78
+            }
+          },
+          {
+            "kind": "method",
+            "name": "write",
+            "qualified_name": "TargetInfo_serializer.write",
+            "parent_name": "TargetInfo_serializer",
+            "span": {
+              "start_line": 36,
+              "end_line": 56
+            }
+          },
+          {
+            "kind": "method",
+            "name": "read",
+            "qualified_name": "TargetInfo_serializer.read",
+            "parent_name": "TargetInfo_serializer",
+            "span": {
+              "start_line": 57,
+              "end_line": 77
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "TargetInfo_serializer",
+          "ohos_arkui_UIContext_UIContext_serializer"
+        ],
+        "apis": [
+          "Error",
+          "extractors.fromUIContextPtr",
+          "extractors.toUIContextPtr",
+          "valueDeserializer.readInt32",
+          "valueDeserializer.readInt8",
+          "valueDeserializer.readPointer",
+          "valueDeserializer.readString",
+          "valueSerializer.writeInt32",
+          "valueSerializer.writeInt8",
+          "valueSerializer.writePointer",
+          "valueSerializer.writeString"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "#handwritten",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "extractors": "extractors"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "./../CallbackTransformer",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CallbackTransformer": "CallbackTransformer"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@koalaui/common",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "int32": "int32",
+                  "int64": "int64",
+                  "float32": "float32",
+                  "unsafeCast": "unsafeCast"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@koalaui/interop",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "SerializerBase": "SerializerBase",
+                  "DeserializerBase": "DeserializerBase",
+                  "CallbackResource": "CallbackResource",
+                  "InteropNativeModule": "InteropNativeModule",
+                  "MaterializedBase": "MaterializedBase",
+                  "Tags": "Tags",
+                  "RuntimeType": "RuntimeType",
+                  "toPeerPtr": "toPeerPtr",
+                  "nullptr": "nullptr",
+                  "KPointer": "KPointer",
+                  "NativeBuffer": "NativeBuffer",
+                  "KSerializerBuffer": "KSerializerBuffer",
+                  "KUint8ArrayPtr": "KUint8ArrayPtr"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "@ohos.arkui.UIContext",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ohos_arkui_UIContext_UIContext": "UIContext",
+                  "TargetInfo": "TargetInfo"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "TargetInfo_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "class name, not declarative UI component"
+            },
+            {
+              "value": "ohos_arkui_UIContext_UIContext_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "class name, not declarative UI component"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "extractors.toUIContextPtr",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "project #handwritten helper"
+            },
+            {
+              "value": "extractors.fromUIContextPtr",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "project #handwritten helper"
+            },
+            {
+              "value": "valueSerializer.writePointer",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "local SerializerBase instance method"
+            },
+            {
+              "value": "valueSerializer.writeInt8",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "local SerializerBase instance method"
+            },
+            {
+              "value": "valueSerializer.writeString",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "local SerializerBase instance method"
+            },
+            {
+              "value": "valueSerializer.writeInt32",
+              "line_ranges": [
+                {
+                  "start_line": 46,
+                  "end_line": 46
+                }
+              ],
+              "reason": "local SerializerBase instance method"
+            },
+            {
+              "value": "valueDeserializer.readPointer",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "local DeserializerBase instance method"
+            },
+            {
+              "value": "valueDeserializer.readInt8",
+              "line_ranges": [
+                {
+                  "start_line": 59,
+                  "end_line": 59
+                }
+              ],
+              "reason": "local DeserializerBase instance method"
+            },
+            {
+              "value": "valueDeserializer.readString",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 62
+                }
+              ],
+              "reason": "local DeserializerBase instance method"
+            },
+            {
+              "value": "valueDeserializer.readInt32",
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 64
+                }
+              ],
+              "reason": "local DeserializerBase instance method"
+            },
+            {
+              "value": "Error",
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "Error constructor throw, not frozen platform API"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "TargetInfo_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TargetInfo_serializer.read",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TargetInfo_serializer.write",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ohos_arkui_UIContext_UIContext_serializer",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ohos_arkui_UIContext_UIContext_serializer.read",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ohos_arkui_UIContext_UIContext_serializer.write",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "read",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "write",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 78
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "class",
+                "name": "ohos_arkui_UIContext_UIContext_serializer",
+                "qualified_name": "ohos_arkui_UIContext_UIContext_serializer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 34
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "write",
+                "qualified_name": "ohos_arkui_UIContext_UIContext_serializer.write",
+                "parent_name": "ohos_arkui_UIContext_UIContext_serializer",
+                "span": {
+                  "start_line": 25,
+                  "end_line": 28
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 28
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "read",
+                "qualified_name": "ohos_arkui_UIContext_UIContext_serializer.read",
+                "parent_name": "ohos_arkui_UIContext_UIContext_serializer",
+                "span": {
+                  "start_line": 29,
+                  "end_line": 33
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 33
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TargetInfo_serializer",
+                "qualified_name": "TargetInfo_serializer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 35,
+                  "end_line": 78
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 78
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "write",
+                "qualified_name": "TargetInfo_serializer.write",
+                "parent_name": "TargetInfo_serializer",
+                "span": {
+                  "start_line": 36,
+                  "end_line": 56
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 56
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "read",
+                "qualified_name": "TargetInfo_serializer.read",
+                "parent_name": "TargetInfo_serializer",
+                "span": {
+                  "start_line": 57,
+                  "end_line": 77
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 77
+                }
+              ],
+              "reason": "method span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}

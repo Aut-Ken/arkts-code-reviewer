@@ -359,11 +359,11 @@ router.pushUrl({ url: 'pages/Detail' })
 在当前 L0 Parser 输出中，这两行会出现：
 
 ```text
-photos.push
 router.pushUrl
 ```
 
-L1 Parser 会尝试过滤 `this.xxx` 这类内部业务调用，并保留真正需要检索的外部 API。
+`this.photos.push` 是内部对象调用，不属于平台 API。L0 和 L1 现在共用 receiver
+ownership 规则，只保留冻结全局调用或能够追溯到 SDK import 根绑定的调用。
 
 ### 4.8 箭头函数和回调
 
@@ -599,10 +599,8 @@ Image 属于哪个 ReviewUnit
   "apis": [
     "clearInterval",
     "image.createPixelMap",
-    "photos.push",
     "router.pushUrl",
-    "setInterval",
-    "this.loadImages"
+    "setInterval"
   ]
 }
 ```
@@ -615,12 +613,11 @@ Image 属于哪个 ReviewUnit
 |---|---|---|
 | `clearInterval` | `clearInterval(this.timerId)` | 清理定时器 |
 | `image.createPixelMap` | `img.createPixelMap(buffer)` | 图片模块 API，已规范化别名 |
-| `photos.push` | `this.photos.push(pixelMap)` | 向数组添加元素 |
 | `router.pushUrl` | `router.pushUrl(...)` | 页面跳转 |
 | `setInterval` | `setInterval(...)` | 创建周期定时器 |
-| `this.loadImages` | `this.loadImages()` | 当前组件内部方法调用 |
 
-注意：L0 主要依赖词法匹配，因此会保留 `photos.push` 和 `this.loadImages`。L1 会利用 AST 和 import 信息过滤更多内部调用。
+注意：`photos.push`、`this.loadImages`、`console.log` 和相对路径工程 import
+上的方法不会进入 `apis`。这能避免把业务调用误当成平台 API。
 
 ### 5.5 decorators
 
@@ -888,14 +885,8 @@ arkts_tree_sitter_missing_nodes: 1
 缺点：不真正理解 AST，可能出现内部 API 误提和边界误判
 ```
 
-当前样例中的：
-
-```text
-photos.push
-this.loadImages
-```
-
-就是 L0 比较宽松的结果。
+L0 仍不理解完整 AST 和词法作用域，但 API 字段已经使用与 L1 相同的 SDK
+receiver-binding 白名单；它的主要差距集中在 UI、attribute 和 declaration 边界。
 
 ### L1
 
@@ -1005,8 +996,7 @@ components:
   Column, ForEach, Grid, Image
 
 apis:
-  clearInterval, image.createPixelMap, photos.push,
-  router.pushUrl, setInterval, this.loadImages
+  clearInterval, image.createPixelMap, router.pushUrl, setInterval
 
 decorators:
   @Component, @Entry, @State

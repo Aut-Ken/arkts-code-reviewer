@@ -155,6 +155,8 @@ GLOBAL_APIS: frozenset[str] = frozenset(
     {
         "$r",
         "$rawfile",
+        "AppStorage.get",
+        "AppStorage.setOrCreate",
         "animateTo",
         "clearInterval",
         "clearTimeout",
@@ -186,7 +188,10 @@ OHOS_MODULE_PREFIXES: dict[str, str] = {
     "@ohos.systemTimer": "systemTimer",
     "@ohos.taskpool": "taskpool",
     "@ohos.worker": "worker",
+    "@system.router": "router",
 }
+
+SDK_MODULE_PREFIXES: tuple[str, ...] = ("@ohos.", "@kit.", "@system.")
 
 IMAGE_COMPONENTS: frozenset[str] = frozenset({"Image", "ImageSpan", "ImageAnimator"})
 LAYOUT_COMPONENTS: frozenset[str] = frozenset(

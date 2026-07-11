@@ -2,18 +2,18 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
 
-from arkts_code_reviewer.code_analysis.arkts_lexicon import (
-    DEFAULT_ARKUI_COMPONENTS,
-    GLOBAL_APIS,
-    OHOS_MODULE_PREFIXES,
-)
 from arkts_code_reviewer.code_analysis.lexical import LexicalParser
-from arkts_code_reviewer.code_analysis.models import CodeFacts, Declaration, ImportInfo, SourceSpan
+from arkts_code_reviewer.code_analysis.models import CodeFacts, Declaration, SourceSpan
 from arkts_code_reviewer.code_analysis.text_utils import extract_lines
+
+ATTACHED_DECORATOR_LINE = re.compile(
+    r"^@[A-Za-z_$][A-Za-z0-9_$]*(?:\s*\(.*\))?$"
+)
 
 
 class ArktsTreeSitterParser:
@@ -87,34 +87,24 @@ class ArktsTreeSitterParser:
         return data
 
     def _merge_snapshot(self, facts: CodeFacts, source: str, snapshot: dict[str, Any]) -> None:
-        snapshot_components = self._string_set(snapshot.get("components"))
-        facts.components.update(
-            item for item in snapshot_components
-            if item in DEFAULT_ARKUI_COMPONENTS
-        )
         facts.decorators.update(self._string_set(snapshot.get("decorators")))
-        facts.attributes.update(self._string_set(snapshot.get("attributes")))
+        facts.attributes = self._string_set(snapshot.get("attributes"))
         facts.syntax.update(self._string_set(snapshot.get("syntax")))
-        facts.symbols.update(self._string_set(snapshot.get("symbols")))
 
-        declarations = self._parse_declarations(source, snapshot.get("declarations"))
-        if declarations:
+        snapshot_declarations = snapshot.get("declarations")
+        declarations = self._parse_declarations(source, snapshot_declarations)
+        if isinstance(snapshot_declarations, list):
             facts.declarations = declarations
-            facts.symbols.update(declaration.name for declaration in declarations)
-            facts.symbols.update(declaration.qualified_name for declaration in declarations)
-            facts.components.update(
+            facts.symbols = {
+                symbol
+                for declaration in declarations
+                for symbol in (declaration.name, declaration.qualified_name)
+            }
+            facts.components = {
                 declaration.name
                 for declaration in declarations
                 if declaration.kind == "ui_block"
-            )
-
-        apis = self._canonicalize_calls(
-            self._string_set(snapshot.get("calls")),
-            facts.imports,
-            facts.apis,
-        )
-        if apis:
-            facts.apis = apis
+            }
 
     def _parse_declarations(self, source: str, value: object) -> list[Declaration]:
         if not isinstance(value, list):
@@ -181,7 +171,7 @@ class ArktsTreeSitterParser:
         start_line = span.start_line
         while start_line > 1:
             previous = lines[start_line - 2].strip()
-            if not previous.startswith("@"):
+            if not ATTACHED_DECORATOR_LINE.fullmatch(previous):
                 break
             start_line -= 1
         if start_line == span.start_line:
@@ -192,71 +182,6 @@ class ArktsTreeSitterParser:
             start_col=1,
             end_col=span.end_col,
         )
-
-    def _canonicalize_calls(
-        self,
-        calls: set[str],
-        imports: list[ImportInfo],
-        fallback_apis: set[str],
-    ) -> set[str]:
-        aliases = self._alias_prefixes(imports)
-        apis: set[str] = set()
-        for call in calls:
-            normalized = call.replace("?.", ".")
-            if normalized.startswith(("this.", "super.")):
-                continue
-            if normalized in GLOBAL_APIS or normalized.startswith("$"):
-                apis.add(normalized)
-                continue
-            if "." not in normalized:
-                continue
-            head, tail = normalized.split(".", 1)
-            if not head or not tail:
-                continue
-            if self._is_arkui_component_chain(head):
-                continue
-            apis.add(f"{aliases.get(head, head)}.{tail}")
-
-        apis.update(
-            api for api in fallback_apis
-            if self._is_imported_or_global_api(api, aliases)
-        )
-        return apis
-
-    def _is_imported_or_global_api(self, api: str, aliases: dict[str, str]) -> bool:
-        if api.startswith(("this.", "super.")):
-            return False
-        if api in GLOBAL_APIS or api.startswith("$"):
-            return True
-        if "." not in api:
-            return False
-        head, tail = api.split(".", 1)
-        return bool(
-            head
-            and tail
-            and not self._is_arkui_component_chain(head)
-            and (head in aliases or head in set(aliases.values()))
-        )
-
-    def _is_arkui_component_chain(self, head: str) -> bool:
-        component = head.split("(", 1)[0]
-        return component in DEFAULT_ARKUI_COMPONENTS
-
-    def _alias_prefixes(self, imports: list[ImportInfo]) -> dict[str, str]:
-        aliases: dict[str, str] = {}
-        for item in imports:
-            prefix = OHOS_MODULE_PREFIXES.get(item.module)
-            if prefix is None and item.module.startswith("@ohos."):
-                prefix = item.module.rsplit(".", 1)[-1]
-            if prefix is None:
-                continue
-            if item.default_name:
-                aliases[item.default_name] = prefix
-            if item.namespace_name:
-                aliases[item.namespace_name] = prefix
-            for local, imported in item.named.items():
-                aliases[local] = OHOS_MODULE_PREFIXES.get(f"{item.module}.{imported}", imported)
-        return aliases
 
     def _string_set(self, value: object) -> set[str]:
         if not isinstance(value, list):

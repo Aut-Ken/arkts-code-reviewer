@@ -30,6 +30,23 @@ DECLARATION_KINDS = {
     "builder",
     "ui_block",
 }
+SYNTAX_KINDS = {"arrow_fn", "async_fn", "await_expr", "promise", "try_catch"}
+UNSUPPORTED_FIELDS = (
+    "fact_occurrences",
+    "fact_spans",
+    "fact_owners",
+    "parser_diagnostics",
+    "raw_l1_snapshot",
+)
+REQUIRED_CASE_SCORED_FIELDS = {
+    "imports",
+    "components",
+    "decorators",
+    "attributes",
+    "symbols",
+    "syntax",
+    "declarations",
+}
 MANIFEST_FIELDS = (
     "schema_version",
     "suite_id",
@@ -122,11 +139,34 @@ class ParserGoldenSuite:
     manifest_path: Path
     cases: tuple[ParserGoldenCase, ...]
     unsupported_fields: tuple[str, ...]
+    suite_fingerprint: str | None = None
+
+
+def _load_json_mapping(path: Path, context: str) -> dict[str, Any]:
+    try:
+        return _mapping(
+            json.loads(
+                path.read_text(encoding="utf-8"),
+                object_pairs_hook=_reject_duplicate_json_keys,
+            ),
+            context,
+        )
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"cannot load {context} JSON {path}: {exc}") from exc
+
+
+def _reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key!r}")
+        result[key] = value
+    return result
 
 
 def load_golden_suite(manifest_path: Path) -> ParserGoldenSuite:
     manifest_path = manifest_path.resolve()
-    data = _mapping(json.loads(manifest_path.read_text(encoding="utf-8")), "manifest")
+    data = _load_json_mapping(manifest_path, "manifest")
     _require_exact_fields(data, MANIFEST_FIELDS, "manifest")
     if data.get("schema_version") != SCHEMA_VERSION:
         raise ValueError(
@@ -155,6 +195,10 @@ def load_golden_suite(manifest_path: Path) -> ParserGoldenSuite:
     )
     if len(unsupported_fields) != len(set(unsupported_fields)):
         raise ValueError("manifest.unsupported_fields must be unique")
+    if unsupported_fields != UNSUPPORTED_FIELDS:
+        raise ValueError(
+            "manifest.unsupported_fields must exactly match the frozen Parser v1 contract"
+        )
     raw_cases = _list(data.get("cases"), "manifest.cases")
     if not raw_cases:
         raise ValueError("manifest.cases must not be empty")
@@ -169,12 +213,40 @@ def load_golden_suite(manifest_path: Path) -> ParserGoldenSuite:
         seen_ids.add(case.case_id)
         cases.append(case)
 
+    _validate_suite_coverage(cases)
+
     return ParserGoldenSuite(
         suite_id=suite_id,
         manifest_path=manifest_path,
         cases=tuple(cases),
         unsupported_fields=unsupported_fields,
     )
+
+
+def _validate_suite_coverage(cases: list[ParserGoldenCase]) -> None:
+    declaration_kinds = {
+        declaration["kind"]
+        for case in cases
+        for declaration in (case.expected["declarations"] or [])
+    }
+    missing_declaration_kinds = DECLARATION_KINDS - declaration_kinds
+    if missing_declaration_kinds:
+        raise ValueError(
+            "manifest.cases do not cover frozen declaration kinds: "
+            f"{sorted(missing_declaration_kinds)}"
+        )
+
+    syntax_kinds = {
+        syntax
+        for case in cases
+        for syntax in (case.expected["syntax"] or [])
+    }
+    missing_syntax_kinds = SYNTAX_KINDS - syntax_kinds
+    if missing_syntax_kinds:
+        raise ValueError(
+            "manifest.cases do not cover frozen syntax kinds: "
+            f"{sorted(missing_syntax_kinds)}"
+        )
 
 
 def evaluate_golden_suite(
@@ -257,7 +329,8 @@ def evaluate_golden_suite(
         "schema_version": SCHEMA_VERSION,
         "suite_id": suite.suite_id,
         "parser_implementation": type(parser).__name__,
-        "manifest_sha256": hashlib.sha256(suite.manifest_path.read_bytes()).hexdigest(),
+        "manifest_sha256": suite.suite_fingerprint
+        or hashlib.sha256(suite.manifest_path.read_bytes()).hexdigest(),
         "case_count": len(suite.cases),
         "crashed": crashed,
         "parser_layers": dict(sorted(parser_layers.items())),
@@ -266,6 +339,81 @@ def evaluate_golden_suite(
         "fields": aggregate_scores,
         "cases": case_results,
     }
+
+
+def verify_external_snapshot_provenance(
+    suite: ParserGoldenSuite,
+    source_root: Path,
+) -> list[dict[str, Any]]:
+    """Verify self-contained snapshots against their pinned upstream checkout."""
+
+    source_root = source_root.resolve()
+    revisions = {
+        case.source_metadata["revision"]
+        for case in suite.cases
+        if case.source_metadata["kind"] == "external_snapshot"
+    }
+    if len(revisions) != 1:
+        raise ValueError("external Golden snapshots must use one pinned revision")
+    expected_revision = next(iter(revisions))
+    completed = subprocess.run(
+        ["git", "-C", str(source_root), "rev-parse", "HEAD"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    actual_revision = completed.stdout.strip()
+    if completed.returncode != 0 or actual_revision != expected_revision:
+        raise ValueError(
+            f"Golden source revision mismatch: expected {expected_revision}, "
+            f"got {actual_revision or completed.stderr.strip()}"
+        )
+
+    verified: list[dict[str, Any]] = []
+    for case in suite.cases:
+        metadata = case.source_metadata
+        if metadata["kind"] != "external_snapshot":
+            continue
+        upstream_path = (source_root / metadata["relative_path"]).resolve()
+        if not upstream_path.is_relative_to(source_root) or not upstream_path.is_file():
+            raise ValueError(f"missing Golden upstream source: {metadata['relative_path']}")
+        upstream_bytes = upstream_path.read_bytes()
+        start_line, end_line = metadata["origin_lines"]
+        lines = upstream_bytes.splitlines(keepends=True)
+        snippet = b"".join(lines[start_line - 1 : end_line])
+        upstream_hash = hashlib.sha256(snippet).hexdigest()
+        expected_upstream_hash = metadata.get("upstream_content_sha256")
+        if expected_upstream_hash and upstream_hash != expected_upstream_hash:
+            raise ValueError(
+                f"Golden upstream hash mismatch for {case.case_id}: "
+                f"expected {expected_upstream_hash}, got {upstream_hash}"
+            )
+
+        normalized = snippet
+        for normalization in metadata.get("normalizations", []):
+            if normalization == "ensure_trailing_newline":
+                if not normalized.endswith(b"\n"):
+                    normalized += b"\n"
+            else:
+                raise ValueError(
+                    f"unsupported Golden normalization for {case.case_id}: {normalization}"
+                )
+        normalized_hash = hashlib.sha256(normalized).hexdigest()
+        if normalized_hash != metadata["content_sha256"]:
+            raise ValueError(
+                f"Golden snapshot provenance mismatch for {case.case_id}: "
+                f"expected {metadata['content_sha256']}, got {normalized_hash}"
+            )
+        verified.append(
+            {
+                "case_id": case.case_id,
+                "relative_path": metadata["relative_path"],
+                "revision": expected_revision,
+                "upstream_sha256": upstream_hash,
+                "snapshot_sha256": normalized_hash,
+            }
+        )
+    return verified
 
 
 def load_golden_baseline(
@@ -278,7 +426,7 @@ def load_golden_baseline(
     """Load and validate a checked-in baseline without accepting partial schemas."""
 
     baseline_path = baseline_path.resolve()
-    data = _mapping(json.loads(baseline_path.read_text(encoding="utf-8")), "baseline")
+    data = _load_json_mapping(baseline_path, "baseline")
     _require_exact_fields(data, BASELINE_FIELDS, "baseline")
     if data.get("schema_version") != BASELINE_SCHEMA_VERSION:
         raise ValueError(
@@ -706,6 +854,12 @@ def _load_case(raw: dict[str, Any], root: Path, index: int) -> ParserGoldenCase:
         raise ValueError(
             f"{context}.scored_fields contains unsupported fields: {sorted(invalid_scored_fields)}"
         )
+    missing_required_fields = REQUIRED_CASE_SCORED_FIELDS - set(scored_fields)
+    if missing_required_fields:
+        raise ValueError(
+            f"{context}.scored_fields omits frozen Parser v1 fields: "
+            f"{sorted(missing_required_fields)}"
+        )
 
     raw_expected = _mapping(raw.get("expected"), f"{context}.expected")
     if set(raw_expected) != set(EXPECTED_FIELDS):
@@ -730,6 +884,11 @@ def _load_case(raw: dict[str, Any], root: Path, index: int) -> ParserGoldenCase:
         values = [_string(item, f"{context}.expected.{field}[]") for item in raw_values]
         if values != sorted(set(values)):
             raise ValueError(f"{context}.expected.{field} must be sorted and unique")
+        if field == "syntax" and not set(values).issubset(SYNTAX_KINDS):
+            raise ValueError(
+                f"{context}.expected.syntax contains unsupported kinds: "
+                f"{sorted(set(values) - SYNTAX_KINDS)}"
+            )
         expected[field] = values
     declarations = expected["declarations"]
     if declarations is not None:
@@ -743,6 +902,7 @@ def _load_case(raw: dict[str, Any], root: Path, index: int) -> ParserGoldenCase:
         ]
         _validate_declaration_relationships(validated_declarations, context)
         expected["declarations"] = validated_declarations
+    _validate_fact_declaration_projection(expected, context)
 
     raw_must_not = _mapping(raw.get("must_not_emit", {}), f"{context}.must_not_emit")
     invalid_fields = set(raw_must_not) - set(SET_FACT_FIELDS)
@@ -758,6 +918,11 @@ def _load_case(raw: dict[str, Any], root: Path, index: int) -> ParserGoldenCase:
         ]
         if forbidden != sorted(set(forbidden)):
             raise ValueError(f"{context}.must_not_emit.{field} must be sorted and unique")
+        if field == "syntax" and not set(forbidden).issubset(SYNTAX_KINDS):
+            raise ValueError(
+                f"{context}.must_not_emit.syntax contains unsupported kinds: "
+                f"{sorted(set(forbidden) - SYNTAX_KINDS)}"
+            )
         expected_values = expected[field]
         if expected_values is not None and set(forbidden) & set(expected_values):
             raise ValueError(f"{context}.must_not_emit.{field} overlaps the scored expected truth")
@@ -915,6 +1080,43 @@ def _validate_declaration_relationships(
             raise ValueError(
                 f"{case_context}.expected.declarations parent {parent_name!r} "
                 f"does not contain {declaration['qualified_name']!r}"
+            )
+
+
+def _validate_fact_declaration_projection(
+    expected: dict[str, list[Any] | None],
+    context: str,
+) -> None:
+    declarations = expected.get("declarations")
+    if declarations is None:
+        return
+
+    components = expected.get("components")
+    if components is not None:
+        expected_components = sorted(
+            {
+                declaration["name"]
+                for declaration in declarations
+                if declaration["kind"] == "ui_block"
+            }
+        )
+        if components != expected_components:
+            raise ValueError(
+                f"{context}.expected.components must equal ui_block declaration names"
+            )
+
+    symbols = expected.get("symbols")
+    if symbols is not None:
+        expected_symbols = sorted(
+            {
+                value
+                for declaration in declarations
+                for value in (declaration["name"], declaration["qualified_name"])
+            }
+        )
+        if symbols != expected_symbols:
+            raise ValueError(
+                f"{context}.expected.symbols must equal declaration names and qualified names"
             )
 
 

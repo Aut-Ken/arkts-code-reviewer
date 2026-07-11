@@ -40,11 +40,12 @@
 截至 2026-07-11 的可验证基线：
 
 ```text
-主项目测试（npm ci 后）     31 passed，20 subtests passed
-Python-only checkout         27 passed, 4 skipped（L1 可选测试）
-Parser Golden               12 个自包含人工标注样本，L0/L1 完整逐 case baseline
+主项目测试（npm ci 后）     60 passed，64 subtests passed
+Parser Golden               15 个自包含人工标注样本；L0 strict baseline，L1 全字段 perfect
 arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
 arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 missing warning
+L1 declarations             5,414；63/63 文件均有 declaration
+Grok candidate              默认 23 例仅作 provisional 诊断；旧 evidence 尚未通过政策审计
 来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
 知识构建/在线检索/正式评审   尚未实现运行闭环
 ```
@@ -53,17 +54,15 @@ arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 mis
 
 ```bash
 PYTHONPATH=src python -m pytest -q -rs
-PYTHONPATH=src python tools/evaluate_parser_golden.py \
-  --parser lexical \
-  --baseline tests/golden/parser/baselines/lexical.json \
-  --require-layer L0
 (cd sidecars/arkts-parser && npm ci)
-PYTHONPATH=src python tools/evaluate_parser_golden.py \
-  --parser arkts-tree-sitter \
-  --baseline tests/golden/parser/baselines/arkts-tree-sitter-merged.json \
-  --require-layer L1
-PYTHONPATH=src python tools/run_arkts_parser_batch.py --parser lexical --require-layer L0
+PYTHONPATH=src python tools/check_parser_v1.py \
+  --source-root /home/autken/Code/arkui_ace_engine \
+  --include-candidate-diagnostics
 ```
+
+`check_parser_v1.py` 同时执行 L0 strict baseline、L1 perfect Golden、4 个外部 snapshot
+provenance 和 R63 L0/L1 fail-closed 批测。candidate 分数仍标记为 provisional，不属于
+Parser v1 准确率承诺。
 
 ### 按流水线阅读模块
 

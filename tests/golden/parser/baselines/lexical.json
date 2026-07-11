@@ -7,13 +7,13 @@
     "schema_version": "parser-golden-v1",
     "suite_id": "parser-golden-v1",
     "parser_implementation": "LexicalParser",
-    "manifest_sha256": "9561aa4f15135663fcfe485d045f65cbabb1d9a40f524f2952b712b37fa9d56a",
-    "case_count": 12,
+    "manifest_sha256": "1b3a1526d808e7c40c4ef85d13cc34f311dbbc1cff4e564eedb067b2683460f0",
+    "case_count": 15,
     "crashed": 0,
     "parser_layers": {
-      "L0": 12
+      "L0": 15
     },
-    "must_not_violation_count": 19,
+    "must_not_violation_count": 0,
     "unsupported_fields": [
       "fact_occurrences",
       "fact_spans",
@@ -23,7 +23,7 @@
     ],
     "fields": {
       "imports": {
-        "case_count": 12,
+        "case_count": 15,
         "tp": 26,
         "fp": 0,
         "fn": 0,
@@ -32,26 +32,26 @@
         "f1": 1.0
       },
       "components": {
-        "case_count": 12,
-        "tp": 16,
+        "case_count": 15,
+        "tp": 23,
         "fp": 0,
-        "fn": 4,
+        "fn": 7,
         "precision": 1.0,
-        "recall": 0.8,
-        "f1": 0.888889
+        "recall": 0.766667,
+        "f1": 0.867925
       },
       "apis": {
-        "case_count": 10,
-        "tp": 20,
-        "fp": 10,
+        "case_count": 13,
+        "tp": 17,
+        "fp": 0,
         "fn": 0,
-        "precision": 0.666667,
+        "precision": 1.0,
         "recall": 1.0,
-        "f1": 0.8
+        "f1": 1.0
       },
       "decorators": {
-        "case_count": 12,
-        "tp": 20,
+        "case_count": 15,
+        "tp": 25,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -59,26 +59,26 @@
         "f1": 1.0
       },
       "attributes": {
-        "case_count": 12,
-        "tp": 17,
+        "case_count": 15,
+        "tp": 23,
         "fp": 0,
-        "fn": 11,
+        "fn": 15,
         "precision": 1.0,
-        "recall": 0.607143,
-        "f1": 0.755556
+        "recall": 0.605263,
+        "f1": 0.754098
       },
       "symbols": {
-        "case_count": 12,
-        "tp": 73,
+        "case_count": 15,
+        "tp": 96,
         "fp": 3,
-        "fn": 26,
-        "precision": 0.960526,
-        "recall": 0.737374,
-        "f1": 0.834286
+        "fn": 42,
+        "precision": 0.969697,
+        "recall": 0.695652,
+        "f1": 0.810127
       },
       "syntax": {
-        "case_count": 12,
-        "tp": 10,
+        "case_count": 15,
+        "tp": 15,
         "fp": 0,
         "fn": 0,
         "precision": 1.0,
@@ -86,13 +86,13 @@
         "f1": 1.0
       },
       "declarations": {
-        "case_count": 12,
-        "tp": 32,
-        "fp": 13,
-        "fn": 38,
-        "precision": 0.711111,
-        "recall": 0.457143,
-        "f1": 0.556522
+        "case_count": 15,
+        "tp": 43,
+        "fp": 16,
+        "fn": 50,
+        "precision": 0.728814,
+        "recall": 0.462366,
+        "f1": 0.565789
       }
     },
     "cases": [
@@ -131,15 +131,12 @@
           },
           "apis": {
             "tp": 4,
-            "fp": 2,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.666667,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.8,
-            "false_positives": [
-              "photos.push",
-              "this.loadImages"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -263,12 +260,7 @@
             ]
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "photos.push",
-            "this.loadImages"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "synthetic-custom-components",
@@ -320,9 +312,9 @@
             "tp": 0,
             "fp": 0,
             "fn": 1,
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
             "false_positives": [],
             "false_negatives": [
               "hideNavBar"
@@ -559,16 +551,12 @@
           },
           "apis": {
             "tp": 4,
-            "fp": 3,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.571429,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.727273,
-            "false_positives": [
-              "helper.on",
-              "items.push",
-              "this.localHelper"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -622,13 +610,7 @@
             "false_negatives": []
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "helper.on",
-            "items.push",
-            "this.localHelper"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "synthetic-same-line-ui",
@@ -916,14 +898,12 @@
           },
           "apis": {
             "tp": 0,
-            "fp": 1,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "false_positives": [
-              "value.run"
-            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -977,11 +957,7 @@
             "false_negatives": []
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "value.run"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "grammar-optional-struct-method",
@@ -1335,7 +1311,7 @@
             "false_negatives": []
           },
           "apis": {
-            "tp": 5,
+            "tp": 2,
             "fp": 0,
             "fn": 0,
             "precision": 1.0,
@@ -1577,17 +1553,12 @@
           },
           "apis": {
             "tp": 1,
-            "fp": 4,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.2,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.333333,
-            "false_positives": [
-              "downloadDescriptionResourceMap.get",
-              "this.downloadImage",
-              "this.downloadText",
-              "this.getTextContent"
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "decorators": {
@@ -1714,14 +1685,7 @@
             ]
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "downloadDescriptionResourceMap.get",
-            "this.downloadImage",
-            "this.downloadText",
-            "this.getTextContent"
-          ]
-        }
+        "must_not_violations": {}
       },
       {
         "case_id": "arkui-image-generator-complex-receivers",
@@ -1892,19 +1856,476 @@
             ]
           }
         },
-        "must_not_violations": {
-          "apis": [
-            "content.toString",
-            "imageInfoArr.push",
-            "imageInfoArr.sort",
-            "stylesArr.push",
-            "this.initImageInfoArr",
-            "this.initLayoutProperties",
-            "this.initUserPrompt",
-            "this.initWinSizeChangeCallback",
-            "this.updateCanvasLayoutProperties"
-          ]
-        }
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-parser-tail",
+        "source": "golden/synthetic/ParserTail.ets",
+        "source_sha256": "d52f5f92a8f3a63eb7c912e4dffb022ff02de5c9329490b9a99b54d0b07c5f36",
+        "provenance": {
+          "file": "sources/parser_tail.ets",
+          "kind": "synthetic",
+          "content_sha256": "d52f5f92a8f3a63eb7c912e4dffb022ff02de5c9329490b9a99b54d0b07c5f36"
+        },
+        "parser_layer": "L0",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 4,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.666667,
+            "false_positives": [],
+            "false_negatives": [
+              "color",
+              "duration",
+              "images",
+              "state"
+            ]
+          },
+          "symbols": {
+            "tp": 9,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.529412,
+            "f1": 0.692308,
+            "false_positives": [],
+            "false_negatives": [
+              "Button",
+              "Divider",
+              "ImageAnimator",
+              "ParserTail.build.Column.Divider",
+              "ParserTail.build.Column.ImageAnimator",
+              "ParserTail.build.Column.Row",
+              "ParserTail.build.Column.Row.Button",
+              "Row"
+            ]
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 4,
+            "fp": 1,
+            "fn": 5,
+            "precision": 0.8,
+            "recall": 0.444444,
+            "f1": 0.571429,
+            "false_positives": [
+              {
+                "kind": "struct",
+                "name": "ParserTail",
+                "parent_name": null,
+                "qualified_name": "ParserTail",
+                "span": {
+                  "end_line": 30,
+                  "start_line": 2
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "struct",
+                "name": "ParserTail",
+                "parent_name": null,
+                "qualified_name": "ParserTail",
+                "span": {
+                  "end_line": 30,
+                  "start_line": 1
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Button",
+                "parent_name": "ParserTail.build.Column.Row",
+                "qualified_name": "ParserTail.build.Column.Row.Button",
+                "span": {
+                  "end_line": 23,
+                  "start_line": 21
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Divider",
+                "parent_name": "ParserTail.build.Column",
+                "qualified_name": "ParserTail.build.Column.Divider",
+                "span": {
+                  "end_line": 27,
+                  "start_line": 26
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "ImageAnimator",
+                "parent_name": "ParserTail.build.Column",
+                "qualified_name": "ParserTail.build.Column.ImageAnimator",
+                "span": {
+                  "end_line": 19,
+                  "start_line": 16
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Row",
+                "parent_name": "ParserTail.build.Column",
+                "qualified_name": "ParserTail.build.Column.Row",
+                "span": {
+                  "end_line": 25,
+                  "start_line": 20
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-special-ui-contexts",
+        "source": "golden/synthetic/SpecialUiContexts.ets",
+        "source_sha256": "cb50eedc7d4814fd5bd6e9e32b6b6a05330c0562bcd7ef24600ae2ac2a50c493",
+        "provenance": {
+          "file": "sources/special_ui_contexts.ets",
+          "kind": "synthetic",
+          "content_sha256": "cb50eedc7d4814fd5bd6e9e32b6b6a05330c0562bcd7ef24600ae2ac2a50c493"
+        },
+        "parser_layer": "L0",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 3,
+            "precision": 1.0,
+            "recall": 0.4,
+            "f1": 0.571429,
+            "false_positives": [],
+            "false_negatives": [
+              "DialogContent",
+              "PageTransitionEnter",
+              "PageTransitionExit"
+            ]
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 11,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.578947,
+            "f1": 0.733333,
+            "false_positives": [],
+            "false_negatives": [
+              "DialogContent.build.Text",
+              "PageTransitionEnter",
+              "PageTransitionExit",
+              "SpecialContexts.DialogContent",
+              "SpecialContexts.build.Column.Text",
+              "SpecialContexts.pageTransition.PageTransitionEnter",
+              "SpecialContexts.pageTransition.PageTransitionExit",
+              "Text"
+            ]
+          },
+          "syntax": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 5,
+            "fp": 2,
+            "fn": 7,
+            "precision": 0.714286,
+            "recall": 0.416667,
+            "f1": 0.526316,
+            "false_positives": [
+              {
+                "kind": "struct",
+                "name": "DialogContent",
+                "parent_name": null,
+                "qualified_name": "DialogContent",
+                "span": {
+                  "end_line": 6,
+                  "start_line": 2
+                }
+              },
+              {
+                "kind": "struct",
+                "name": "SpecialContexts",
+                "parent_name": null,
+                "qualified_name": "SpecialContexts",
+                "span": {
+                  "end_line": 30,
+                  "start_line": 9
+                }
+              }
+            ],
+            "false_negatives": [
+              {
+                "kind": "struct",
+                "name": "DialogContent",
+                "parent_name": null,
+                "qualified_name": "DialogContent",
+                "span": {
+                  "end_line": 6,
+                  "start_line": 1
+                }
+              },
+              {
+                "kind": "struct",
+                "name": "SpecialContexts",
+                "parent_name": null,
+                "qualified_name": "SpecialContexts",
+                "span": {
+                  "end_line": 30,
+                  "start_line": 8
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "DialogContent",
+                "parent_name": "SpecialContexts",
+                "qualified_name": "SpecialContexts.DialogContent",
+                "span": {
+                  "end_line": 11,
+                  "start_line": 11
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "PageTransitionEnter",
+                "parent_name": "SpecialContexts.pageTransition",
+                "qualified_name": "SpecialContexts.pageTransition.PageTransitionEnter",
+                "span": {
+                  "end_line": 20,
+                  "start_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "PageTransitionExit",
+                "parent_name": "SpecialContexts.pageTransition",
+                "qualified_name": "SpecialContexts.pageTransition.PageTransitionExit",
+                "span": {
+                  "end_line": 21,
+                  "start_line": 21
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Text",
+                "parent_name": "DialogContent.build",
+                "qualified_name": "DialogContent.build.Text",
+                "span": {
+                  "end_line": 4,
+                  "start_line": 4
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Text",
+                "parent_name": "SpecialContexts.build.Column",
+                "qualified_name": "SpecialContexts.build.Column.Text",
+                "span": {
+                  "end_line": 27,
+                  "start_line": 27
+                }
+              }
+            ]
+          }
+        },
+        "must_not_violations": {}
+      },
+      {
+        "case_id": "synthetic-class-promise",
+        "source": "golden/synthetic/ClassPromise.ets",
+        "source_sha256": "ad3ea4e37622f6804aafcd28da57d34ea157833627f71611966b12f0ccdad4b5",
+        "provenance": {
+          "file": "sources/class_promise.ets",
+          "kind": "synthetic",
+          "content_sha256": "ad3ea4e37622f6804aafcd28da57d34ea157833627f71611966b12f0ccdad4b5"
+        },
+        "parser_layer": "L0",
+        "warnings": [],
+        "error": null,
+        "field_scores": {
+          "imports": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "components": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "apis": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "decorators": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "attributes": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "symbols": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "syntax": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          },
+          "declarations": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
+          }
+        },
+        "must_not_violations": {}
       }
     ]
   }

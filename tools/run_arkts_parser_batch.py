@@ -28,6 +28,10 @@ from arkts_code_reviewer.parser_validation.manifest import (  # noqa: E402
 
 DEFAULT_MANIFEST = REPO_ROOT / "tests" / "fixtures" / "arkui_ace_engine_samples.json"
 DEFAULT_ENGINE_ROOT = Path(os.getenv("ARKUI_ENGINE_PATH", REPO_ROOT.parent / "arkui_ace_engine"))
+PARSER_V1_WARNING_LIMITS = {
+    "arkts_tree_sitter_error_nodes": 7,
+    "arkts_tree_sitter_missing_nodes": 7,
+}
 
 
 def main() -> None:
@@ -59,12 +63,43 @@ def main() -> None:
         )
 
     print(_format_report(report))
-    all_empty = report["parsed"] > 0 and len(report["empty_features"]) == report["parsed"]
-    wrong_layer = args.require_layer and report["parser_layers"] != {
-        args.require_layer: report["parsed"]
-    }
-    if report["missing"] or report["crashed"] or all_empty or wrong_layer:
+    required_layer = args.require_layer or {
+        "lexical": "L0",
+        "arkts-tree-sitter": "L1",
+    }[args.parser]
+    failures = batch_report_failures(
+        report,
+        required_layer=required_layer,
+        warning_limits=(PARSER_V1_WARNING_LIMITS if args.parser == "arkts-tree-sitter" else {}),
+    )
+    for failure in failures:
+        print(f"Parser batch gate failed: {failure}", file=sys.stderr)
+    if failures:
         raise SystemExit(1)
+
+
+def batch_report_failures(
+    report: dict[str, Any],
+    *,
+    required_layer: str,
+    warning_limits: dict[str, int],
+) -> list[str]:
+    failures: list[str] = []
+    if report["missing"]:
+        failures.append("selected source files are missing")
+    if report["crashed"]:
+        failures.append("one or more parser invocations crashed")
+    if report["empty_features"]:
+        failures.append("one or more parsed files emitted no features")
+    if report["files_with_declarations"] != report["parsed"]:
+        failures.append("every parsed file must emit at least one declaration")
+    if report["parser_layers"] != {required_layer: report["parsed"]}:
+        failures.append(f"every parsed file must use parser layer {required_layer}")
+    for warning, limit in warning_limits.items():
+        actual = int(report["warning_counts"].get(warning, 0))
+        if actual > limit:
+            failures.append(f"{warning} count {actual} exceeds frozen limit {limit}")
+    return failures
 
 
 def run_batch(
