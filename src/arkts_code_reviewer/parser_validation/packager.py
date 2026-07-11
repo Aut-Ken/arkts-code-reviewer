@@ -122,13 +122,20 @@ def _compact_facts(facts: CodeFacts) -> dict[str, Any]:
 def _compact_review_unit(unit: ReviewUnit) -> dict[str, Any]:
     return {
         "file": unit.file,
+        "unit_id": unit.unit_id,
+        "unit_kind": unit.unit_kind,
         "unit_symbol": unit.unit_symbol,
         "unit_ref": unit.unit_ref,
+        "source_span": asdict(unit.source_span),
+        "context_span": asdict(unit.context_span),
         "full_text_line_count": len(unit.full_text.splitlines()),
         "full_text_chars": len(unit.full_text),
+        "changed_new_lines": unit.changed_new_lines,
         "changed_lines": unit.changed_lines,
         "file_changed_lines": unit.file_changed_lines,
         "unit_changed_lines": unit.unit_changed_lines,
+        "selection_reason": unit.selection_reason,
+        "diagnostics": [asdict(item) for item in unit.diagnostics],
         "host_summary": asdict(unit.host_summary),
         "context_degraded": unit.context_degraded,
     }

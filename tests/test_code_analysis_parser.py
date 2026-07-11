@@ -4,7 +4,8 @@ import unittest
 from pathlib import Path
 
 from arkts_code_reviewer.code_analysis import ArktsTreeSitterParser, CodeAnalyzer, LexicalParser
-from arkts_code_reviewer.code_analysis.models import FileHunk, FileInput
+from arkts_code_reviewer.code_analysis.models import CodeFacts, FileHunk, FileInput
+from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.tagger import derive_tags
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -673,6 +674,68 @@ function exercise(info: accessibility.EventInfo) {
 
 
 class CodeAnalyzerTest(unittest.TestCase):
+    def test_rejects_normalized_path_aliases_before_parsing(self) -> None:
+        class CountingParser:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def parse(self, source: str, path: str) -> CodeFacts:
+                self.calls += 1
+                return LexicalParser().parse(source, path)
+
+        parser = CountingParser()
+        analyzer = CodeAnalyzer(parser=parser)
+        files = [
+            FileInput(path="src/A.ets", content="const value = 1\n"),
+            FileInput(path=r"src\.\A.ets", content="const value = 2\n"),
+        ]
+
+        with self.assertRaisesRegex(ValueError, "duplicate normalized ReviewUnit path"):
+            analyzer.analyze_files(files)
+        self.assertEqual(parser.calls, 0)
+
+        with self.assertRaisesRegex(ValueError, "repository-relative"):
+            analyzer.analyze_file("/tmp/A.ets", "const value = 1\n")
+        self.assertEqual(parser.calls, 0)
+
+    def test_rejects_builder_output_that_does_not_match_file_source(self) -> None:
+        class DriftedTextBuilder(ReviewUnitBuilder):
+            def build_units(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+                units = super().build_units(*args, **kwargs)
+                units[0].full_text += "\n// unrelated"
+                return units
+
+        with self.assertRaisesRegex(ValueError, "context_span source slice"):
+            CodeAnalyzer(
+                parser=LexicalParser(),
+                unit_builder=DriftedTextBuilder(),
+            ).analyze_file(
+                path="src/pages/PhotoWall.ets",
+                content=SAMPLE,
+                mode="diff",
+                hunks=[(15, 1)],
+            )
+
+        class DriftedChangedLineBuilder(ReviewUnitBuilder):
+            def build_units(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+                units = super().build_units(*args, **kwargs)
+                units[0].changed_lines = [1]
+                units[0].file_changed_lines = [1]
+                units[0].changed_new_lines = [1]
+                units[0].unit_changed_lines = [1]
+                return units
+
+        with self.assertRaisesRegex(ValueError, "must come from its FileInput hunks"):
+            CodeAnalyzer(
+                parser=LexicalParser(),
+                unit_builder=DriftedChangedLineBuilder(),
+            ).analyze_file(
+                path="src/plain.ets",
+                content="const first = 1\nconst second = 2\nconst third = 3\n",
+                mode="diff",
+                hunks=[(2, 1)],
+            )
+
     def test_builds_diff_review_unit_and_retrieval_features(self) -> None:
         result = CodeAnalyzer(parser=LexicalParser()).analyze_files(
             [
@@ -688,6 +751,15 @@ class CodeAnalyzerTest(unittest.TestCase):
         self.assertEqual(len(result.review_units), 1)
         unit = result.review_units[0]
         self.assertEqual(unit.unit_ref, "PhotoWall.loadImages@src/pages/PhotoWall.ets")
+        self.assertEqual(
+            unit.unit_id,
+            "src/pages/PhotoWall.ets@method:PhotoWall.loadImages:L14-L20",
+        )
+        self.assertEqual(unit.unit_kind, "method")
+        self.assertEqual((unit.source_span.start_line, unit.source_span.end_line), (14, 20))
+        self.assertEqual((unit.context_span.start_line, unit.context_span.end_line), (14, 20))
+        self.assertEqual(unit.changed_new_lines, [14, 15, 16])
+        self.assertEqual(unit.selection_reason, "innermost_changed_declaration")
         self.assertEqual(unit.host_summary.struct, "PhotoWall")
         self.assertIn(13, unit.file_changed_lines)
 
@@ -709,6 +781,31 @@ class CodeAnalyzerTest(unittest.TestCase):
         unit = result.review_units[0]
         self.assertTrue(unit.context_degraded)
         self.assertEqual(unit.unit_ref, "hunk-L2-L2@src/pages/plain.ets")
+        self.assertEqual(
+            unit.unit_id,
+            "src/pages/plain.ets@fallback:fallback:L2-L2:C1-L2",
+        )
+        self.assertEqual(unit.unit_kind, "fallback")
+        self.assertEqual((unit.source_span.start_line, unit.source_span.end_line), (2, 2))
+        self.assertEqual((unit.context_span.start_line, unit.context_span.end_line), (1, 2))
+        self.assertEqual(unit.changed_new_lines, [2])
+        self.assertEqual(unit.selection_reason, "fallback_window")
+        self.assertEqual([item.code for item in unit.diagnostics], ["no_matching_declaration"])
+
+    def test_unit_id_normalizes_path_without_changing_legacy_unit_ref(self) -> None:
+        result = CodeAnalyzer(parser=LexicalParser()).analyze_file(
+            path=r"src\pages\PhotoWall.ets",
+            content=SAMPLE,
+            mode="diff",
+            hunks=[(15, 1)],
+        )
+
+        unit = result.review_units[0]
+        self.assertEqual(
+            unit.unit_id,
+            "src/pages/PhotoWall.ets@method:PhotoWall.loadImages:L14-L20",
+        )
+        self.assertEqual(unit.unit_ref, r"PhotoWall.loadImages@src\pages\PhotoWall.ets")
 
     def test_default_analyzer_degrades_when_tree_sitter_is_unavailable(self) -> None:
         result = CodeAnalyzer().analyze_file(

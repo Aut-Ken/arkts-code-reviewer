@@ -11,6 +11,8 @@ from arkts_code_reviewer.code_analysis.models import (
     FileHunk,
     FileInput,
     ReviewUnit,
+    ReviewUnitDiagnostic,
+    ReviewUnitSpan,
 )
 from arkts_code_reviewer.code_analysis.tree_sitter_parser import TreeSitterParser
 
@@ -25,5 +27,7 @@ __all__ = [
     "FileHunk",
     "LexicalParser",
     "ReviewUnit",
+    "ReviewUnitDiagnostic",
+    "ReviewUnitSpan",
     "TreeSitterParser",
 ]

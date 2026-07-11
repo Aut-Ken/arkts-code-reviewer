@@ -1,7 +1,7 @@
 ---
 title: 跨模块数据契约
 status: canonical
-updated: 2026-07-10
+updated: 2026-07-12
 ---
 
 # 跨模块数据契约
@@ -148,6 +148,10 @@ class FileInput:
     hunks: list[FileHunk]
 ```
 
+当前 `path` 合同是仓库根目录相对的规范化逻辑路径。Analyzer 拒绝绝对路径、逃出根目录的
+traversal，以及同一请求中规范化后重复的路径别名；CLI 负责把 cwd 内实际文件转换为这种
+逻辑路径。这样 `unit_id` 不依赖本机 checkout 绝对位置。
+
 限制：
 
 - 只保存新文件范围，不保存精确 added/deleted lines。
@@ -209,7 +213,18 @@ class CodeFacts:
     warnings: list[str]
 ```
 
-集合字段没有 occurrence span，因此不能判断某个 API 或组件属于哪个 Unit。
+Parser v1 对 ReviewUnit 的稳定保证是：文件级事实集合，以及 declaration occurrence 的
+1-based inclusive 起止行。正式 Golden 不评分 `start_col/end_col`，所以当前对外定位不能
+依赖列坐标。
+
+具体边界：
+
+- `Declaration.kind/name/qualified_name/span/parent_name/text` 可用于声明选择和源码切片。
+- `qualified_name` 与 `parent_name` 都不是 occurrence 唯一 ID；持久 ID 必须包含 kind 和 span。
+- components/symbols 是文件级并集；Unit 内只能通过 span 内 declarations 投影。
+- APIs/decorators/attributes/syntax/imports 都没有 Unit owner，只能作为 `file_hints`。
+- `parser_layer=L1` 表示 sidecar 成功，不表示没有 ERROR/missing node；warnings 必须传播。
+- Parser fact 不是 Finding evidence，缺少某个 fact 也不能证明源码中一定不存在该事实。
 
 ## 7. 目标 FileAnalysis
 
@@ -299,7 +314,45 @@ class ReviewUnit:
     unit_changed_lines: list[int]
     host_summary: HostSummary
     context_degraded: bool
+    unit_id: str
+    unit_kind: str
+    source_span: ReviewUnitSpan
+    context_span: ReviewUnitSpan
+    changed_new_lines: list[int]
+    selection_reason: str
+    diagnostics: list[ReviewUnitDiagnostic]
 ```
+
+当前 `changed_lines` 与 `file_changed_lines` 仍作为兼容字段保留，`unit_ref` 也仍可能在同名
+UI occurrence 间重复；新的 `unit_id` 才是去重 source of truth。`full_text` 已按
+`context_span` 从文件源码切片，`changed_new_lines` 使用 1-based 文件绝对行。
+
+### 9.1 ReviewUnit v1 过渡契约
+
+RU-1 已增加以下字段，同时保留旧字段供现有调用方迁移：
+
+```text
+unit_id
+unit_kind
+source_span
+context_span
+changed_new_lines
+selection_reason
+diagnostics
+```
+
+`unit_id` 的输入至少包含：
+
+```text
+normalized path + declaration kind + qualified_name + start_line + end_line
+```
+
+identity 组件使用无歧义 percent-encoding；`@`、`:`、`%` 不能通过 path/symbol 边界注入出
+相同 ID。兼容字段仍在输出中，但旧的缺字段 `ReviewUnit(...)` 构造方式不属于兼容保证。
+
+去重现在使用 `unit_id`，不再使用旧 `unit_ref`。同一 occurrence 的多个 hunk 合并；
+同名但 span 不同的 occurrence 保持两个 Unit。第一阶段的 `deleted_old_lines`、
+`related_context`、真正 token budget 和精确 Git diff 仍可明确标记 unsupported，不能伪造。
 
 ## 10. 目标 ReviewUnit
 
@@ -346,6 +399,15 @@ class ReviewUnit:
 ```
 
 Dimensions 必须是 Unit 级。MR 级可以额外保存并集，用于预算和报告统计。
+
+在 FactOccurrence 尚未实现时，禁止把文件级 set 复制为每个 Unit 的 exact facts。删除二次
+Parser 只有两种合规路径：
+
+1. 先扩展 Parser/Golden，获得带 span/owner 的 FactOccurrence；或
+2. 明确引入双作用域：span 内 declarations/components/symbols 为 `unit_exact`，其余只作为
+   `file_hints` 扩大路由，永远不作为 Unit evidence。
+
+第一项 ReviewUnit 提交只建立 Golden harness，不同时选择上述迁移路径。
 
 ## 12. RetrievalQuery
 

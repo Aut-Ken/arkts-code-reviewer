@@ -1,7 +1,7 @@
 ---
 title: ArkTS Code Reviewer 整体架构
 status: canonical
-updated: 2026-07-11
+updated: 2026-07-12
 ---
 
 # ArkTS Code Reviewer 整体架构
@@ -34,14 +34,14 @@ ArkTS AI Code Reviewer
 
 ## 2. 当前真实状态
 
-截至 2026-07-11，代码覆盖流水线前半段和 Parser 质检旁路；外部知识、语料和工具已经
+截至 2026-07-12，代码覆盖流水线前半段和 Parser 质检旁路；外部知识、语料和工具已经
 完成分类落盘，但“资料已经 clone”不等于知识构建和在线检索已经实现。
 
 | 模块 | 状态 | 当前事实 |
 |---|---|---|
 | 输入与编排 | `partial` | CLI 可读取文件和手工 hunk；无 Git diff 解析、Webhook、队列和服务 |
-| Parser | `partial` | 当前 CodeFacts v1 的 15-case merged-L1 Golden 全字段 exact；R63 L0/L1 均 63/63，仍缺 occurrence owner/span 和去重解析 |
-| ReviewUnit | `partial` | full/diff 初版、fallback 和 hunk 合并已实现 |
+| Parser | `partial` | merged-L1 Parser v1 已在 `2c1df96` 冻结并通过确定性门禁；v2 occurrence owner/span 和独立分发仍未实现 |
+| ReviewUnit | `partial` | 16-case 独立 Golden 和 span-qualified `unit_id` 已实现；多 owner、质量传播、事实作用域和二次解析尚未解决 |
 | Tags / Dimensions | `partial` | 24 Tags 和 12 Dimensions 硬编码实现，尚未配置化 |
 | 知识库构建 | `partial` | 11 个知识来源及固定 revision 已登记；无 registry loader、Clause parser、数据库或真实索引 |
 | Retrieval | `designed` | 无代码 |
@@ -56,7 +56,7 @@ ArkTS AI Code Reviewer
 ### 2.1 当前可复核结果
 
 ```text
-pytest after npm ci             60 passed, 64 subtests passed
+pytest after npm ci             78 passed, 64 subtests passed
 Parser Golden                   15 cases / strict L0 baseline / perfect merged-L1
 LexicalParser real samples     63 parsed / 0 missing / 0 crashed
 Merged-L1 real samples          63 L1 / 0 missing / 0 crashed
@@ -64,12 +64,25 @@ R63 L1 AST warnings             7 files with ERROR / 7 files with missing nodes
 Declarations                   L0 2,880 / merged-L1 5,414
 Golden snapshot provenance      4/4 match the pinned external revision
 Provisional candidates          23 cases; value fields exact except 2 known bad annotation spans
+ReviewUnit Golden               16 cases; RU-1 target 9/9; 7 future-phase gaps visible
 Source registry                19 entries / all revisions verified / clean worktrees
 ```
 
 这里的 “perfect merged-L1” 只覆盖冻结的 v1 集合字段和 declaration 行级 span。它不代表
 全 ArkTS 语法 99% 准确，也不覆盖 fact occurrence span/owner、raw-L1 diagnostics 或类型解析。
 23 个候选样本的旧 symbol evidence 仍有 441 项不满足冻结证据政策，因此不能当作正式真值。
+
+### 2.2 当前开发边界
+
+Parser v1 足以为 ReviewUnit 提供经过验证的 declaration 行级 occurrence。当前集合字段仍是
+文件级 presence signal，不能证明某个 API、modifier、decorator 或 syntax 属于某个 Unit。
+ReviewUnit 的 RU-0/RU-1 已建立独立 Golden 并修复 span-qualified identity；下一步是 RU-2
+多 owner 和质量传播。删除 Unit 二次 Parser 仍必须在 Unit exact facts 与 file hints 的契约
+明确后单独验收。
+
+当前真实调用次数是每文件 `1 + U` 次 Parser，其中 `U` 是去重后的 ReviewUnit 数。截取声明
+并重新解析还可能把 struct method 改成顶层 function，且第二次解析的 layer/warning 没进入
+Analysis metadata；这既是性能问题，也是正确性问题。
 
 外部资产分为：
 
@@ -276,9 +289,11 @@ PoC 可以使用单进程 CLI，但生产形态应中心化部署，统一模型
 ## 10. 推荐交付顺序
 
 ```text
-Milestone 0  多仓库来源基线 + Parser v1 确定性验证             当前基本完成
-Milestone 1  精确 ChangeSet + 带位置 FileAnalysis
-             + 唯一 ReviewUnit + Unit 级 Tags/Dimensions
+Milestone 0  多仓库来源基线 + Parser v1 确定性验证             已完成
+Milestone 1a ReviewUnit Golden + 唯一 Unit identity               RU-0/RU-1 已完成
+             多 owner + Parser quality diagnostics               RU-2 当前下一项
+Milestone 1b Unit facts 作用域 + parse-once + Unit Tags/Dimensions
+Milestone 1c 精确 ChangeSet + related context + token budget
 Milestone 2  Source Registry Loader + 三类 Source Adapter
              + 50~100 条人工确认 Clause + 精确检索
 Milestone 3  10~20 条高精度 Rules + Prompt v1 + JSON Finding

@@ -2,7 +2,7 @@
 title: 02 Parser 与代码事实模块
 status: canonical
 implementation: partial
-updated: 2026-07-11
+updated: 2026-07-12
 ---
 
 # 02 Parser 与代码事实模块
@@ -129,6 +129,15 @@ warnings
 
 详细语法和字段教学见 [ArkTS 入门、Parser 字段与 Tags 详解](../learning/arkts-parser-fields-tags.md)。
 
+### 6.1 给 ReviewUnit 的冻结契约
+
+ReviewUnit 当前可以依赖 declaration 的 kind、name、qualified name、parent、1-based
+inclusive 起止行和 text。正式 Parser Golden 已验证行级 span，但没有验证列坐标。
+
+components、APIs、decorators、attributes、symbols 和 syntax 仍是文件级去重集合；除
+components/symbols 可从 span 内 declarations 重新投影外，不能声称它们属于某个 Unit。
+ReviewUnit 第一阶段不得为获得 owner 而修改 Parser v1 或重新解释 Parser Golden。
+
 ## 7. API canonicalization
 
 Parser 根据 import 别名统一 API：
@@ -186,6 +195,11 @@ ui_block
 ```
 
 默认 L1 每次会启动 Node 进程，因此 Unit 数多时存在明显重复开销。
+
+二次解析还会改变语义上下文：struct 内 method 的切片可能被解析为顶层 function，多行
+import 可能被截断，第二次解析的 layer/warning 也未进入 Analysis metadata。因此删除
+二次解析是正确性目标，但必须先定义 Unit exact facts 与 file hints，不能直接把文件级集合
+复制到每个 Unit。
 
 ## 11. 目标架构
 
@@ -278,7 +292,7 @@ SDK whitelist path/version
 - 63 个固定 revision 的 `arkui_ace_engine` 稳定性/性能样本。
 - Golden provenance、candidate evidence 和统一 release gate。
 
-2026-07-11 当前实测：
+2026-07-12 当前实测：
 
 ```text
 pytest after npm ci             60 passed, 64 subtests passed
@@ -333,11 +347,14 @@ empty facts rate
 
 ## 17. 下一步
 
+ReviewUnit RU-0/RU-1 已以当前 Parser v1 为只读依赖完成；RU-2 仍不得借质量传播重开
+Parser 行为。只有新 Parser Golden 证明必要时才允许修改 Parser。Parser 自身后续顺序：
+
 1. 人工裁决 B010 两个 `@Styles` span，并按冻结政策重建 B001-B006/B010 evidence；在此
    之前 candidate 只作诊断。
 2. 为 raw-L1 snapshot 增加独立公共评测路径、真正 ERROR/missing recovery Golden 和
    diagnostics 门槛。
 3. 引入带 span/owner 的 FactOccurrence，并先扩展 Golden 契约。
-4. 修改 Analyzer，删除 ReviewUnit 二次 Parser。
+4. 与 ReviewUnit 的 Unit fact scope 契约对齐后，修改 Analyzer 删除二次 Parser。
 5. 从 `interface-sdk-js` 构建共享 `ApiSymbolCatalog`，替代分散白名单。
 6. 明确 `tree_sitter_parser.py` 实验实现的保留或删除策略。

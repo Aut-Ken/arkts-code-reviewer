@@ -2,7 +2,7 @@
 title: 11 Parser Validation 质检旁路
 status: canonical
 implementation: partial
-updated: 2026-07-11
+updated: 2026-07-12
 ---
 
 # 11 Parser Validation 质检旁路
@@ -159,6 +159,10 @@ baseline 保存完整逐 case FP/FN identity、warning、layer、provenance、ma
 
 当前 merged-L1 的 15 个正式 case 在全部评分字段上均为 `FP=0/FN=0`，包括 93 个
 declaration occurrence/span。L0 只要求完整 baseline 不漂移，不要求 perfect。
+
+Parser Golden 只证明 Parser facts/declarations，不证明 ReviewUnit 选择正确。GLM payload 中
+虽然包含 ReviewUnit snapshot，但它不是确定性 oracle。ReviewUnit 现已建立独立 16-case
+manifest、expected、baseline 和 evaluator；它没有复用 Parser expected 或 candidate 分数。
 
 ### 4.2 真实源码 candidate 诊断
 

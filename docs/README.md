@@ -37,15 +37,16 @@
 新建 Chat 或交接开发任务时，先让执行者阅读上面四份文档，再阅读本次要实现的模块
 文档。不要以 `archive/`、聊天记录或外部仓库 README 代替 canonical 文档。
 
-截至 2026-07-11 的可验证基线：
+截至 2026-07-12 的可验证基线：
 
 ```text
-主项目测试（npm ci 后）     60 passed，64 subtests passed
+主项目测试（npm ci 后）     78 passed，64 subtests passed
 Parser Golden               15 个自包含人工标注样本；L0 strict baseline，L1 全字段 perfect
 arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
 arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 missing warning
 L1 declarations             5,414；63/63 文件均有 declaration
 Grok candidate              默认 23 例仅作 provisional 诊断；旧 evidence 尚未通过政策审计
+ReviewUnit                  16-case 独立 Golden；RU-1 target 9/9 通过，7 个后续差异保留
 来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
 知识构建/在线检索/正式评审   尚未实现运行闭环
 ```
@@ -63,6 +64,27 @@ PYTHONPATH=src python tools/check_parser_v1.py \
 `check_parser_v1.py` 同时执行 L0 strict baseline、L1 perfect Golden、4 个外部 snapshot
 provenance 和 R63 L0/L1 fail-closed 批测。candidate 分数仍标记为 provisional，不属于
 Parser v1 准确率承诺。
+
+### 当前开发交接：ReviewUnit v1
+
+Parser v1 已由提交 `2c1df96` 冻结，当前 ReviewUnit 开发可以依赖 declaration 的 kind、
+qualified name、1-based inclusive 起止行和源码切片。不能把 file-level 的 APIs、decorators、
+attributes、syntax 等集合直接当成某个 Unit 的事实，因为它们尚无 occurrence span/owner。
+
+下一条开发链路固定为：
+
+```text
+ReviewUnit Golden harness                              已完成
+-> collision-safe unit_id 和可解释选择字段             已完成
+-> 多 owner / Parser quality diagnostics               当前下一项
+-> 明确 Unit exact facts 与 file hints
+-> 再决定何时删除 Unit 二次 Parser
+-> 精确 ChangeSet / related context / token budget
+```
+
+第一项代码任务“ReviewUnit Golden harness + collision-safe unit_id”已经完成。下一项只能继续
+RU-2 多 owner 和质量传播，不能跳到 Knowledge/Retrieval、parse-once，或用文件级集合伪造
+Unit facts。新会话除四份架构文档外，还应依次阅读模块 01、02、03、04 和 11。
 
 ### 按流水线阅读模块
 

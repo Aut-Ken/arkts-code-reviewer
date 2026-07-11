@@ -14,11 +14,15 @@ from arkts_code_reviewer.code_analysis.models import (
     FileHunk,
     FileInput,
     MrContext,
+    ParserLayer,
     RetrievalQuery,
     RetrievalUnit,
+    ReviewUnit,
 )
+from arkts_code_reviewer.code_analysis.review_unit_contract import normalize_review_path
 from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.tagger import derive_tags, trigger_dimensions
+from arkts_code_reviewer.code_analysis.text_utils import extract_lines
 
 
 class CodeAnalyzer:
@@ -38,11 +42,14 @@ class CodeAnalyzer:
         mode: AnalysisMode = "full",
         token_budget: int | None = None,
     ) -> AnalysisResult:
+        self._validate_inputs(files, mode)
+
         review_units = []
         retrieval_units: list[RetrievalUnit] = []
         all_tags: set[str] = set()
         warnings: list[str] = []
         parser_layers: set[str] = set()
+        review_unit_ids: set[str] = set()
 
         for file_input in files:
             facts = self.parser.parse(file_input.content, file_input.path)
@@ -51,16 +58,21 @@ class CodeAnalyzer:
             )
             parser_layers.add(facts.parser_layer)
 
-            if mode == "diff" and file_input.hunks:
-                units = self.unit_builder.build_diff_units(
-                    file_input.path, file_input.content, facts, file_input.hunks
-                )
-            else:
-                units = self.unit_builder.build_full_units(
-                    file_input.path, file_input.content, facts
-                )
+            units = self.unit_builder.build_units(
+                file_input.path,
+                file_input.content,
+                facts,
+                mode,
+                file_input.hunks,
+            )
 
             for unit in units:
+                self._validate_unit_for_file(unit, file_input, mode)
+                if unit.unit_id in review_unit_ids:
+                    raise ValueError(
+                        f"duplicate ReviewUnit unit_id in AnalysisResult: {unit.unit_id!r}"
+                    )
+                review_unit_ids.add(unit.unit_id)
                 unit_source = self._unit_source_with_imports(
                     file_input.content, unit.full_text
                 )
@@ -125,7 +137,7 @@ class CodeAnalyzer:
             pieces.append("tags: " + ", ".join(sorted(tags)[:5]))
         return "; ".join(pieces) if pieces else "ArkTS review unit"
 
-    def _dominant_parser_layer(self, layers: set[str]) -> str:
+    def _dominant_parser_layer(self, layers: set[str]) -> ParserLayer:
         if "parse_degraded" in layers:
             return "parse_degraded"
         if "L1" in layers:
@@ -134,6 +146,68 @@ class CodeAnalyzer:
 
     def _hunk(self, start: int, lines: int) -> FileHunk:
         return FileHunk(new_start=start, new_lines=lines)
+
+    def _validate_inputs(self, files: list[FileInput], mode: AnalysisMode) -> None:
+        """Fail before parsing when a request cannot have stable file identity."""
+
+        if mode not in {"full", "diff"}:
+            raise ValueError(f"unsupported analysis mode: {mode}")
+        if not isinstance(files, list):
+            raise ValueError("files must be a list of FileInput values")
+
+        paths: dict[str, str] = {}
+        for index, file_input in enumerate(files):
+            if not isinstance(file_input, FileInput):
+                raise ValueError(f"files[{index}] must be a FileInput")
+            if not isinstance(file_input.content, str):
+                raise ValueError(f"files[{index}].content must be a string")
+            if not isinstance(file_input.hunks, list) or any(
+                not isinstance(hunk, FileHunk) for hunk in file_input.hunks
+            ):
+                raise ValueError(f"files[{index}].hunks must contain FileHunk values")
+
+            normalized_path = normalize_review_path(file_input.path)
+            previous_path = paths.get(normalized_path)
+            if previous_path is not None:
+                raise ValueError(
+                    "duplicate normalized ReviewUnit path "
+                    f"{normalized_path!r}: {previous_path!r} and {file_input.path!r}"
+                )
+            paths[normalized_path] = file_input.path
+
+    def _validate_unit_for_file(
+        self,
+        unit: ReviewUnit,
+        file_input: FileInput,
+        mode: AnalysisMode,
+    ) -> None:
+        if not isinstance(unit, ReviewUnit):
+            raise ValueError("ReviewUnitBuilder must return ReviewUnit values")
+        unit.validate()
+        if unit.file != file_input.path:
+            raise ValueError("ReviewUnit.file must match its FileInput.path")
+        source_line_count = len(file_input.content.splitlines())
+        if unit.context_span.end_line > source_line_count:
+            raise ValueError("ReviewUnit.context_span exceeds its FileInput source")
+        expected_text = extract_lines(
+            file_input.content,
+            unit.context_span.start_line,
+            unit.context_span.end_line,
+        )
+        if unit.full_text != expected_text:
+            raise ValueError("ReviewUnit.full_text must equal its context_span source slice")
+        if any(line > source_line_count for line in unit.file_changed_lines):
+            raise ValueError("ReviewUnit.file_changed_lines exceeds its FileInput source")
+        if mode == "diff" and file_input.hunks:
+            hunk_lines = {
+                line
+                for hunk in file_input.hunks
+                for line in range(hunk.new_start, hunk.new_end + 1)
+            }
+            if any(line not in hunk_lines for line in unit.file_changed_lines):
+                raise ValueError(
+                    "ReviewUnit.file_changed_lines must come from its FileInput hunks"
+                )
 
     def _unit_source_with_imports(self, file_source: str, unit_text: str) -> str:
         import_lines = [

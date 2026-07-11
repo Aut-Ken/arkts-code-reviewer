@@ -2,7 +2,7 @@
 title: 04 Tags 与评审维度模块
 status: canonical
 implementation: partial
-updated: 2026-07-10
+updated: 2026-07-12
 ---
 
 # 04 Tags 与评审维度模块
@@ -47,6 +47,20 @@ Tags 和 Dimensions 都不是代码问题。
 - Dimensions 只有 MR 级并集，没有 Unit 级输出。
 - `CodeFeatures` 缺少 attributes。
 - Unit 二次 Parser 可能丢宿主状态和装饰器。
+
+ReviewUnit RU-0/RU-1 没有改变 Tag 语义。后续删除二次 Parser 时必须区分：
+
+```text
+unit_exact
+  只能由 Unit span 内 declarations/components/symbols 推导
+
+file_hints
+  APIs/decorators/attributes/syntax 等文件级 presence signals
+```
+
+`file_hints` 可以保守扩大 MR 或 Unit 候选路由，但不能显示成“这个 Unit 精确包含该事实”，
+也不能成为 Finding evidence。若引入该双作用域，必须同步修改 CodeFeatures、Tagger 测试和
+跨模块数据契约；不能只在 Analyzer 内静默复制集合。
 
 ## 4. 当前 24 Tags
 
@@ -246,9 +260,11 @@ Skills                           只提供待人工评审的 taxonomy 候选
 
 ## 14. 下一步
 
-1. 将 Tags/Dimensions 迁移为版本化 YAML。
-2. 输出 Unit 级 Dimensions。
-3. 将 attributes 和带位置 facts 纳入 CodeFeatures。
-4. 为 24 Tags 建完整表驱动测试。
-5. 用 `interface-sdk-js` 生成共享 API catalog，替代散落的名称表。
-6. 为抽象维度补充静态度量信号，再接 Retrieval。
+1. ReviewUnit Golden 和 Unit identity 已稳定；等 RU-2 多 owner/质量传播完成后，冻结
+   Unit exact/file hints 契约。
+2. 将 Tags/Dimensions 迁移为版本化 YAML。
+3. 输出 Unit 级 Dimensions。
+4. 将 attributes 和带位置 facts 纳入 CodeFeatures。
+5. 为 24 Tags 建完整表驱动测试。
+6. 用 `interface-sdk-js` 生成共享 API catalog，替代散落的名称表。
+7. 为抽象维度补充静态度量信号，再接 Retrieval。

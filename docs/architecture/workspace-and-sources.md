@@ -1,7 +1,7 @@
 ---
 title: 多仓库工作区与知识来源架构
 status: canonical
-updated: 2026-07-10
+updated: 2026-07-12
 ---
 
 # 多仓库工作区与知识来源架构
@@ -139,6 +139,34 @@ Final Review Golden Set
 
 测试或 Golden Case 必须记录 `source_id + revision + relative_path`。需要长期稳定的最小
 片段可以复制进 `tests/golden`，但必须同时保存来源和许可信息。
+
+### 5.1 ReviewUnit 第一阶段抽样边界
+
+ReviewUnit Golden 优先使用主仓库中的小型合成 source。第一批真实边界样本只允许从
+`tests/fixtures/arkui_ace_engine_samples.json` 已登记的 R63 路径中定点读取，固定 revision：
+
+```text
+arkui-ace-engine@39f2c7cc8e25019ce5d0934980b7721614b7eaa2
+```
+
+建议第一批最多使用以下 6 个文件，不做目录递归扫描：
+
+| Case | 用途 |
+|---|---|
+| R63-008 | 普通方法、Builder、短 build |
+| R63-009 | 生命周期和 HostSummary |
+| R63-038 | 长 Builder、重复自定义组件 |
+| R63-044 | 小文件和重复 UI occurrence |
+| R63-050 | 超过当前 160 行阈值的长 build |
+| R63-055 | 状态字段、生命周期和重复 Text |
+
+外部文件只用于选择、复制和人工标注最小稳定片段；普通测试不得依赖完整外部 checkout。
+Golden 必须保存 `source_id + revision + relative_path + content hash + origin lines`。R63 源码、
+Parser 输出和 declaration 边界都不能自动变成 ReviewUnit expected。
+
+第一阶段不得扫描 `arkts-knowledge/sources`、`arkts-tools`、XTS、Codelabs 或 Samples。
+`applications-app-samples` 虽登记为 ReviewUnit corpus，也必须先建立 selected-path manifest
+再引入。`tests/Grok_Expected` 只保存 Parser candidate，不是 ReviewUnit truth。
 
 ## 6. 分析工具
 

@@ -1,0 +1,2477 @@
+{
+  "schema_version": "review-unit-golden-baseline-v1",
+  "suite_id": "review-unit-golden-v1",
+  "implementation": "ReviewUnitBuilder",
+  "report": {
+    "schema_version": "review-unit-golden-v1",
+    "suite_id": "review-unit-golden-v1",
+    "implementation": "ReviewUnitBuilder",
+    "manifest_sha256": "58c706b00812ca5040f480c5688e201b6a2f01d10c557d95f29aee0eb846c999",
+    "case_count": 16,
+    "matched_case_count": 9,
+    "mismatched_case_count": 7,
+    "phase_case_counts": {
+      "RU-1": 9,
+      "RU-2": 5,
+      "RU-4": 1,
+      "RU-5": 1
+    },
+    "phase_mismatch_counts": {
+      "RU-1": 0,
+      "RU-2": 5,
+      "RU-4": 1,
+      "RU-5": 1
+    },
+    "cases": [
+      {
+        "case_id": "RU001-ordinary-method",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L0",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9
+            ],
+            "file_changed_lines": [
+              9
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU002-short-build",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 18,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@build_method:CorePage.build:L16-L20",
+              "unit_kind": "build_method",
+              "unit_symbol": "CorePage.build",
+              "source_span": {
+                "start_line": 16,
+                "end_line": 20
+              },
+              "context_span": {
+                "start_line": 16,
+                "end_line": 20
+              },
+              "changed_new_lines": [
+                18
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@build_method:CorePage.build:L16-L20",
+              "unit_kind": "build_method",
+              "unit_symbol": "CorePage.build",
+              "source_span": {
+                "start_line": 16,
+                "end_line": 20
+              },
+              "context_span": {
+                "start_line": 16,
+                "end_line": 20
+              },
+              "changed_new_lines": [
+                18
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.build@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              18
+            ],
+            "file_changed_lines": [
+              18
+            ],
+            "unit_changed_lines": [
+              3
+            ],
+            "full_text_sha256": "d38b2d19c0aed4c8e64c314757c598275b0cb8343a39bb2521910446d91b4a37"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU003-long-build-ui-block",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/LongPage.ets",
+        "source_sha256": "97101a5a03619c1727a2f518380763d6de9b17358f61fc278ff839749cf97610",
+        "provenance": {
+          "file": "sources/long_build.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/long_build.ets",
+          "origin_lines": [
+            1,
+            164
+          ],
+          "content_sha256": "97101a5a03619c1727a2f518380763d6de9b17358f61fc278ff839749cf97610"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 161,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "LongPage",
+                "qualified_name": "LongPage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 2,
+                  "end_line": 164
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "LongPage.build",
+                "parent_name": "LongPage",
+                "span": {
+                  "start_line": 3,
+                  "end_line": 163
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "LongPage.build.Column",
+                "parent_name": "LongPage.build",
+                "span": {
+                  "start_line": 160,
+                  "end_line": 162
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/LongPage.ets@ui_block:LongPage.build.Column:L160-L162",
+              "unit_kind": "ui_block",
+              "unit_symbol": "LongPage.build.Column",
+              "source_span": {
+                "start_line": 160,
+                "end_line": 162
+              },
+              "context_span": {
+                "start_line": 160,
+                "end_line": 162
+              },
+              "changed_new_lines": [
+                161
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/LongPage.ets@ui_block:LongPage.build.Column:L160-L162",
+              "unit_kind": "ui_block",
+              "unit_symbol": "LongPage.build.Column",
+              "source_span": {
+                "start_line": 160,
+                "end_line": 162
+              },
+              "context_span": {
+                "start_line": 160,
+                "end_line": 162
+              },
+              "changed_new_lines": [
+                161
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "LongPage.build.Column@golden/review_unit/LongPage.ets",
+            "changed_lines": [
+              161
+            ],
+            "file_changed_lines": [
+              161
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "caab94c1cf5cb293577e9145e37704adab7f647f9a8b86eb8a0e9dbd929dd4bb"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU004-collision-same-name-ui",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CollisionPage.ets",
+        "source_sha256": "bc32e694d4f9542727862f05ea0d1bb85b79e634e8e0a77b56035b02ace99c4d",
+        "provenance": {
+          "file": "sources/collision_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/collision_page.ets",
+          "origin_lines": [
+            1,
+            166
+          ],
+          "content_sha256": "bc32e694d4f9542727862f05ea0d1bb85b79e634e8e0a77b56035b02ace99c4d"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 163,
+              "new_lines": 1
+            },
+            {
+              "new_start": 5,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CollisionPage",
+                "qualified_name": "CollisionPage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 2,
+                  "end_line": 166
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CollisionPage.build",
+                "parent_name": "CollisionPage",
+                "span": {
+                  "start_line": 3,
+                  "end_line": 165
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CollisionPage.build.Column",
+                "parent_name": "CollisionPage.build",
+                "span": {
+                  "start_line": 4,
+                  "end_line": 6
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CollisionPage.build.Column",
+                "parent_name": "CollisionPage.build",
+                "span": {
+                  "start_line": 162,
+                  "end_line": 164
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CollisionPage.ets@ui_block:CollisionPage.build.Column:L4-L6",
+              "unit_kind": "ui_block",
+              "unit_symbol": "CollisionPage.build.Column",
+              "source_span": {
+                "start_line": 4,
+                "end_line": 6
+              },
+              "context_span": {
+                "start_line": 4,
+                "end_line": 6
+              },
+              "changed_new_lines": [
+                5
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/CollisionPage.ets@ui_block:CollisionPage.build.Column:L162-L164",
+              "unit_kind": "ui_block",
+              "unit_symbol": "CollisionPage.build.Column",
+              "source_span": {
+                "start_line": 162,
+                "end_line": 164
+              },
+              "context_span": {
+                "start_line": 162,
+                "end_line": 164
+              },
+              "changed_new_lines": [
+                163
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CollisionPage.ets@ui_block:CollisionPage.build.Column:L4-L6",
+              "unit_kind": "ui_block",
+              "unit_symbol": "CollisionPage.build.Column",
+              "source_span": {
+                "start_line": 4,
+                "end_line": 6
+              },
+              "context_span": {
+                "start_line": 4,
+                "end_line": 6
+              },
+              "changed_new_lines": [
+                5
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/CollisionPage.ets@ui_block:CollisionPage.build.Column:L162-L164",
+              "unit_kind": "ui_block",
+              "unit_symbol": "CollisionPage.build.Column",
+              "source_span": {
+                "start_line": 162,
+                "end_line": 164
+              },
+              "context_span": {
+                "start_line": 162,
+                "end_line": 164
+              },
+              "changed_new_lines": [
+                163
+              ],
+              "selection_reason": "large_build_ui_block",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CollisionPage.build.Column@golden/review_unit/CollisionPage.ets",
+            "changed_lines": [
+              5
+            ],
+            "file_changed_lines": [
+              5
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "ce5a766a4987e607aa4f02c9529d768974b30739f46558c215de69c6e9a5cb88"
+          },
+          {
+            "unit_ref": "CollisionPage.build.Column@golden/review_unit/CollisionPage.ets",
+            "changed_lines": [
+              163
+            ],
+            "file_changed_lines": [
+              163
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "2bbb30f9b635bee401b84e735366827832828ca2b1d8caa8198127b2c5c65ebc"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU005-same-owner-multiple-hunks",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 10,
+              "new_lines": 1
+            },
+            {
+              "new_start": 8,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                8,
+                10
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                8,
+                10
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              8,
+              10
+            ],
+            "file_changed_lines": [
+              8,
+              10
+            ],
+            "unit_changed_lines": [
+              1,
+              3
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU006-cross-two-methods",
+        "target_phase": "RU-2",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 5
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9,
+                10
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.second:L12-L14",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.second",
+              "source_span": {
+                "start_line": 12,
+                "end_line": 14
+              },
+              "context_span": {
+                "start_line": 12,
+                "end_line": 14
+              },
+              "changed_new_lines": [
+                12,
+                13
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9,
+                10
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": [
+                {
+                  "code": "changed_lines_outside_context",
+                  "lines": [
+                    11,
+                    12,
+                    13
+                  ]
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "file_changed_lines": [
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "unit_changed_lines": [
+              2,
+              3
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [
+          "result.units.length: expected 2, actual 1",
+          "result.units[0].diagnostics.length: expected 0, actual 1"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      },
+      {
+        "case_id": "RU007-full-multiple-hosts",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/MultiHosts.ets",
+        "source_sha256": "4e8d2624b0cbfbffa5cba72d7d08a9289ac9e1beb0c71909fa5888965695dd67",
+        "provenance": {
+          "file": "sources/multi_hosts.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/multi_hosts.ets",
+          "origin_lines": [
+            1,
+            12
+          ],
+          "content_sha256": "4e8d2624b0cbfbffa5cba72d7d08a9289ac9e1beb0c71909fa5888965695dd67"
+        },
+        "input": {
+          "mode": "full",
+          "hunks": [],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "FirstHost",
+                "qualified_name": "FirstHost",
+                "parent_name": null,
+                "span": {
+                  "start_line": 2,
+                  "end_line": 6
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "FirstHost.build",
+                "parent_name": "FirstHost",
+                "span": {
+                  "start_line": 3,
+                  "end_line": 5
+                }
+              },
+              {
+                "kind": "class",
+                "name": "SecondHost",
+                "qualified_name": "SecondHost",
+                "parent_name": null,
+                "span": {
+                  "start_line": 8,
+                  "end_line": 12
+                }
+              },
+              {
+                "kind": "method",
+                "name": "run",
+                "qualified_name": "SecondHost.run",
+                "parent_name": "SecondHost",
+                "span": {
+                  "start_line": 9,
+                  "end_line": 11
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/MultiHosts.ets@struct:FirstHost:L2-L6",
+              "unit_kind": "struct",
+              "unit_symbol": "FirstHost",
+              "source_span": {
+                "start_line": 2,
+                "end_line": 6
+              },
+              "context_span": {
+                "start_line": 2,
+                "end_line": 6
+              },
+              "changed_new_lines": [],
+              "selection_reason": "full_top_level_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/MultiHosts.ets@class:SecondHost:L8-L12",
+              "unit_kind": "class",
+              "unit_symbol": "SecondHost",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 12
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 12
+              },
+              "changed_new_lines": [],
+              "selection_reason": "full_top_level_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/MultiHosts.ets@struct:FirstHost:L2-L6",
+              "unit_kind": "struct",
+              "unit_symbol": "FirstHost",
+              "source_span": {
+                "start_line": 2,
+                "end_line": 6
+              },
+              "context_span": {
+                "start_line": 2,
+                "end_line": 6
+              },
+              "changed_new_lines": [],
+              "selection_reason": "full_top_level_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/MultiHosts.ets@class:SecondHost:L8-L12",
+              "unit_kind": "class",
+              "unit_symbol": "SecondHost",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 12
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 12
+              },
+              "changed_new_lines": [],
+              "selection_reason": "full_top_level_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "FirstHost@golden/review_unit/MultiHosts.ets",
+            "changed_lines": [],
+            "file_changed_lines": [],
+            "unit_changed_lines": [],
+            "full_text_sha256": "fa51b7dddab851f4109c41ad3d848f77c08b7e08bf84ac5f597e6c34311d6140"
+          },
+          {
+            "unit_ref": "SecondHost@golden/review_unit/MultiHosts.ets",
+            "changed_lines": [],
+            "file_changed_lines": [],
+            "unit_changed_lines": [],
+            "full_text_sha256": "c46668190667100b5fb15250de88160a10ce109a5409017d60e9a05ffb9e1915"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU008-no-declaration-fallback",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/PlainFile.ets",
+        "source_sha256": "904711267809cdacb2ff1987098058f8c8f402eee74e7482087de904ea845e89",
+        "provenance": {
+          "file": "sources/plain_file.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/plain_file.ets",
+          "origin_lines": [
+            1,
+            4
+          ],
+          "content_sha256": "904711267809cdacb2ff1987098058f8c8f402eee74e7482087de904ea845e89"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 4,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": []
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/PlainFile.ets@fallback:fallback:L4-L4:C1-L4",
+              "unit_kind": "fallback",
+              "unit_symbol": "hunk-L4-L4",
+              "source_span": {
+                "start_line": 4,
+                "end_line": 4
+              },
+              "context_span": {
+                "start_line": 1,
+                "end_line": 4
+              },
+              "changed_new_lines": [
+                4
+              ],
+              "selection_reason": "fallback_window",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "no_matching_declaration",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/PlainFile.ets@fallback:fallback:L4-L4:C1-L4",
+              "unit_kind": "fallback",
+              "unit_symbol": "hunk-L4-L4",
+              "source_span": {
+                "start_line": 4,
+                "end_line": 4
+              },
+              "context_span": {
+                "start_line": 1,
+                "end_line": 4
+              },
+              "changed_new_lines": [
+                4
+              ],
+              "selection_reason": "fallback_window",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "no_matching_declaration",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "hunk-L4-L4@golden/review_unit/PlainFile.ets",
+            "changed_lines": [
+              4
+            ],
+            "file_changed_lines": [
+              4
+            ],
+            "unit_changed_lines": [
+              4
+            ],
+            "full_text_sha256": "2e4f8b4a493c31cfe6b7e61133607faf8e9c72d218aebe83127635076522e669"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU009-field-region",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 6,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@struct:CorePage:L5-L21",
+              "unit_kind": "struct",
+              "unit_symbol": "CorePage",
+              "source_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "context_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "changed_new_lines": [
+                6
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@struct:CorePage:L5-L21",
+              "unit_kind": "struct",
+              "unit_symbol": "CorePage",
+              "source_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "context_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "changed_new_lines": [
+                6
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              6
+            ],
+            "file_changed_lines": [
+              6
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "d5bbb81341a3bfa1545bc6774e51c372079240a9ed056ff10893965cbe4b148c"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU010-import-region",
+        "target_phase": "RU-1",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 1,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@fallback:fallback:L1-L1:C1-L21",
+              "unit_kind": "fallback",
+              "unit_symbol": "hunk-L1-L1",
+              "source_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "context_span": {
+                "start_line": 1,
+                "end_line": 21
+              },
+              "changed_new_lines": [
+                1
+              ],
+              "selection_reason": "fallback_window",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "no_matching_declaration",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@fallback:fallback:L1-L1:C1-L21",
+              "unit_kind": "fallback",
+              "unit_symbol": "hunk-L1-L1",
+              "source_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "context_span": {
+                "start_line": 1,
+                "end_line": 21
+              },
+              "changed_new_lines": [
+                1
+              ],
+              "selection_reason": "fallback_window",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "no_matching_declaration",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "hunk-L1-L1@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              1
+            ],
+            "file_changed_lines": [
+              1
+            ],
+            "unit_changed_lines": [
+              1
+            ],
+            "full_text_sha256": "b3bcfef463ef7d6e642560459e5ae633ccee485bc22f56b7b2da488763568bda"
+          }
+        ],
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RU011-diff-without-hunks",
+        "target_phase": "RU-2",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [],
+          "diagnostics": [
+            {
+              "code": "diff_file_without_hunks",
+              "lines": []
+            }
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@struct:CorePage:L5-L21",
+              "unit_kind": "struct",
+              "unit_symbol": "CorePage",
+              "source_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "context_span": {
+                "start_line": 5,
+                "end_line": 21
+              },
+              "changed_new_lines": [],
+              "selection_reason": "full_top_level_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage@golden/review_unit/CorePage.ets",
+            "changed_lines": [],
+            "file_changed_lines": [],
+            "unit_changed_lines": [],
+            "full_text_sha256": "d5bbb81341a3bfa1545bc6774e51c372079240a9ed056ff10893965cbe4b148c"
+          }
+        ],
+        "differences": [
+          "result.diagnostics.length: expected 1, actual 0",
+          "result.units.length: expected 0, actual 1"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      },
+      {
+        "case_id": "RU012-parser-degraded",
+        "target_phase": "RU-2",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "parse_degraded",
+            "warnings": [
+              "arkts_tree_sitter_failed: fixture"
+            ],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "parser_degraded",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9
+            ],
+            "file_changed_lines": [
+              9
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [
+          "result.units[0].context_degraded: expected True, actual False",
+          "result.units[0].diagnostics.length: expected 1, actual 0"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      },
+      {
+        "case_id": "RU013-l1-error-missing-warning",
+        "target_phase": "RU-2",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [
+              "arkts_tree_sitter_error_nodes: 1",
+              "arkts_tree_sitter_missing_nodes: 1"
+            ],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "parser_error_nodes",
+                  "lines": []
+                },
+                {
+                  "code": "parser_missing_nodes",
+                  "lines": []
+                }
+              ]
+            }
+          ],
+          "diagnostics": []
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9
+            ],
+            "file_changed_lines": [
+              9
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [
+          "result.units[0].context_degraded: expected True, actual False",
+          "result.units[0].diagnostics.length: expected 2, actual 0"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      },
+      {
+        "case_id": "RU014-out-of-range-hunk",
+        "target_phase": "RU-2",
+        "logical_path": "golden/review_unit/PlainFile.ets",
+        "source_sha256": "904711267809cdacb2ff1987098058f8c8f402eee74e7482087de904ea845e89",
+        "provenance": {
+          "file": "sources/plain_file.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/plain_file.ets",
+          "origin_lines": [
+            1,
+            4
+          ],
+          "content_sha256": "904711267809cdacb2ff1987098058f8c8f402eee74e7482087de904ea845e89"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 99,
+              "new_lines": 2
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": []
+          }
+        },
+        "expected": {
+          "units": [],
+          "diagnostics": [
+            {
+              "code": "hunk_out_of_range",
+              "lines": [
+                99,
+                100
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "units": [],
+          "diagnostics": []
+        },
+        "legacy_units": [],
+        "differences": [
+          "result.diagnostics.length: expected 1, actual 0"
+        ],
+        "invariant_violations": [
+          "builder execution failed: ValueError('hunk L99-L100 exceeds source line count 4')"
+        ],
+        "repeat_equal": false,
+        "reversed_hunks_equal": null,
+        "error": "ValueError('hunk L99-L100 exceeds source line count 4')",
+        "matched": false
+      },
+      {
+        "case_id": "RU015-unsupported-deletion-only",
+        "target_phase": "RU-4",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": null,
+          "unsupported": [
+            "deletion_only"
+          ],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "unsupported_deletion_only",
+              "lines": []
+            }
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9
+            ],
+            "file_changed_lines": [
+              9
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [
+          "result.diagnostics.length: expected 1, actual 0"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      },
+      {
+        "case_id": "RU016-budget-not-enforced",
+        "target_phase": "RU-5",
+        "logical_path": "golden/review_unit/CorePage.ets",
+        "source_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918",
+        "provenance": {
+          "file": "sources/core_page.ets",
+          "kind": "synthetic",
+          "source_id": "review-unit-golden",
+          "revision": "review-unit-golden-v1",
+          "relative_path": "synthetic/core_page.ets",
+          "origin_lines": [
+            1,
+            21
+          ],
+          "content_sha256": "7c4fe7d483fd8dc4cbbce2d02c23a75d6a00de508eebd1f3295a9abe1435d918"
+        },
+        "input": {
+          "mode": "diff",
+          "hunks": [
+            {
+              "new_start": 9,
+              "new_lines": 1
+            }
+          ],
+          "token_budget": 1,
+          "unsupported": [],
+          "parser_fixture": {
+            "parser_layer": "L1",
+            "warnings": [],
+            "declarations": [
+              {
+                "kind": "struct",
+                "name": "CorePage",
+                "qualified_name": "CorePage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 5,
+                  "end_line": 21
+                }
+              },
+              {
+                "kind": "method",
+                "name": "first",
+                "qualified_name": "CorePage.first",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 8,
+                  "end_line": 10
+                }
+              },
+              {
+                "kind": "method",
+                "name": "second",
+                "qualified_name": "CorePage.second",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 12,
+                  "end_line": 14
+                }
+              },
+              {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CorePage.build",
+                "parent_name": "CorePage",
+                "span": {
+                  "start_line": 16,
+                  "end_line": 20
+                }
+              },
+              {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CorePage.build.Column",
+                "parent_name": "CorePage.build",
+                "span": {
+                  "start_line": 17,
+                  "end_line": 19
+                }
+              }
+            ]
+          }
+        },
+        "expected": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "budget_not_enforced",
+              "lines": []
+            }
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.first:L8-L10",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.first",
+              "source_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "context_span": {
+                "start_line": 8,
+                "end_line": 10
+              },
+              "changed_new_lines": [
+                9
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
+            }
+          ],
+          "diagnostics": []
+        },
+        "legacy_units": [
+          {
+            "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              9
+            ],
+            "file_changed_lines": [
+              9
+            ],
+            "unit_changed_lines": [
+              2
+            ],
+            "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          }
+        ],
+        "differences": [
+          "result.diagnostics.length: expected 1, actual 0"
+        ],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "reversed_hunks_equal": null,
+        "error": null,
+        "matched": false
+      }
+    ]
+  }
+}
