@@ -271,9 +271,10 @@ SDK whitelist path/version
 2026-07-11 当前实测：
 
 ```text
-pytest after npm ci             30 passed, 20 subtests passed
+pytest after npm ci             31 passed, 20 subtests passed
 Golden L0                       12/12 L0, 0 crash
 Golden merged-L1                12/12 L1, 0 crash
+Golden imports                  TP 26 / FP 0 / FN 0（L0 与 merged-L1）
 LexicalParser engine batch     63 parsed / 0 missing / 0 crashed
 Merged-L1 engine batch          63 L1 / 0 missing / 0 crashed
 R63 L1 AST warnings             ERROR 7 files / missing 7 files

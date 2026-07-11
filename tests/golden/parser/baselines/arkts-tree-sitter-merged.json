@@ -30,12 +30,12 @@
     "fields": {
       "imports": {
         "case_count": 12,
-        "tp": 25,
-        "fp": 2,
-        "fn": 1,
-        "precision": 0.925926,
-        "recall": 0.961538,
-        "f1": 0.943396
+        "tp": 26,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
       },
       "components": {
         "case_count": 12,
@@ -323,19 +323,12 @@
         "field_scores": {
           "imports": {
             "tp": 1,
-            "fp": 1,
+            "fp": 0,
             "fn": 0,
-            "precision": 0.5,
+            "precision": 1.0,
             "recall": 1.0,
-            "f1": 0.666667,
-            "false_positives": [
-              {
-                "imported": "default",
-                "kind": "default",
-                "local": "fakeHttp",
-                "module": "@ohos.net.http"
-              }
-            ],
+            "f1": 1.0,
+            "false_positives": [],
             "false_negatives": []
           },
           "components": {
@@ -725,28 +718,14 @@
         "error": null,
         "field_scores": {
           "imports": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1,
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "false_positives": [
-              {
-                "imported": "default",
-                "kind": "default",
-                "local": "lazy { Foo as Bar }",
-                "module": "mod"
-              }
-            ],
-            "false_negatives": [
-              {
-                "imported": "Foo",
-                "kind": "named",
-                "local": "Bar",
-                "module": "mod"
-              }
-            ]
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "false_positives": [],
+            "false_negatives": []
           },
           "components": {
             "tp": 0,

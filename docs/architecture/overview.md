@@ -56,8 +56,8 @@ ArkTS AI Code Reviewer
 ### 2.1 当前可复核结果
 
 ```text
-pytest after npm ci             30 passed, 20 subtests passed
-Python-only checkout            26 passed, 4 optional L1 skips
+pytest after npm ci             31 passed, 20 subtests passed
+Python-only checkout            27 passed, 4 optional L1 skips
 Parser Golden                   12 cases / L0 and merged-L1 strict baselines
 LexicalParser real samples     63 parsed / 0 missing / 0 crashed
 Merged-L1 real samples          63 L1 / 0 missing / 0 crashed

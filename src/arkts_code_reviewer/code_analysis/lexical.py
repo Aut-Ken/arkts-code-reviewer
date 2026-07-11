@@ -30,11 +30,15 @@ class LexicalParser:
     """Deterministic L0 parser based on token-like regexes and brace matching."""
 
     import_from_pattern = re.compile(
-        r"^\s*import\s+(?P<clause>[\s\S]+?)\s+from\s+['\"](?P<module>[^'\"]+)['\"]\s*;?",
+        r"^[ \t]*(?P<keyword>import)\s+"
+        r"(?P<clause>(?:(?!^[ \t]*import\b)[\s\S])+?)\s+from\s+"
+        r"['\"](?P<module>[^'\"]+)['\"]\s*;?",
         re.MULTILINE,
     )
     import_side_effect_pattern = re.compile(
-        r"^\s*import\s+['\"](?P<module>[^'\"]+)['\"]\s*;?", re.MULTILINE
+        r"^[ \t]*(?P<keyword>import)\s+(?:lazy\s+)?"
+        r"['\"](?P<module>[^'\"]+)['\"]\s*;?",
+        re.MULTILINE,
     )
     decorator_pattern = re.compile(r"@[A-Za-z_][A-Za-z0-9_]*")
     call_pattern = re.compile(rf"\b(?P<name>{_IDENT})\s*\(")
@@ -53,7 +57,7 @@ class LexicalParser:
     def parse(self, source: str, path: str) -> CodeFacts:
         masked = mask_comments_and_strings(source)
         starts = line_starts(source)
-        imports = self._parse_imports(source)
+        imports = self._parse_imports(source, masked)
         alias_prefixes = self._alias_prefixes(imports)
         declarations = self._parse_declarations(source, masked, starts)
 
@@ -69,21 +73,30 @@ class LexicalParser:
         facts.syntax.update(self._parse_syntax(masked))
         return facts
 
-    def _parse_imports(self, source: str) -> list[ImportInfo]:
+    def _parse_imports(self, source: str, masked: str) -> list[ImportInfo]:
         imports: list[ImportInfo] = []
         for match in self.import_from_pattern.finditer(source):
+            if not self._import_starts_in_code(masked, match):
+                continue
             imports.append(
                 self._parse_import_clause(match.group("clause"), match.group("module"))
             )
         covered = {item.module for item in imports}
         for match in self.import_side_effect_pattern.finditer(source):
+            if not self._import_starts_in_code(masked, match):
+                continue
             module = match.group("module")
             if module not in covered:
                 imports.append(ImportInfo(module=module))
         return imports
 
+    def _import_starts_in_code(self, masked: str, match: re.Match[str]) -> bool:
+        return masked[match.start("keyword") : match.end("keyword")] == "import"
+
     def _parse_import_clause(self, clause: str, module: str) -> ImportInfo:
         clause = " ".join(clause.split())
+        if clause.startswith("lazy "):
+            clause = clause.removeprefix("lazy ").lstrip()
         default_name: str | None = None
         namespace_name: str | None = None
         named: dict[str, str] = {}

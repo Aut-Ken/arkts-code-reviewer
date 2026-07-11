@@ -162,6 +162,32 @@ import {
             },
         )
 
+    def test_ignores_fake_imports_and_parses_lazy_imports(self) -> None:
+        source = """import router from '@ohos.router'
+/*
+import fakeHttp from '@ohos.net.http'
+import '@ohos.fake'
+*/
+const example = `
+import fakeImage from '@ohos.multimedia.image'
+`
+import lazy { Foo as Bar } from 'mod'
+import lazy * as tools from 'toolkit'
+import lazy '@ohos.hilog'
+import lazy from 'plain'
+"""
+
+        facts = LexicalParser().parse(source, "src/pages/Imports.ets")
+        imports = {item.module: item for item in facts.imports}
+
+        self.assertEqual(set(imports), {"@ohos.router", "mod", "toolkit", "@ohos.hilog", "plain"})
+        self.assertEqual(imports["@ohos.router"].default_name, "router")
+        self.assertEqual(imports["mod"].named, {"Bar": "Foo"})
+        self.assertEqual(imports["toolkit"].namespace_name, "tools")
+        self.assertIsNone(imports["@ohos.hilog"].default_name)
+        self.assertEqual(imports["@ohos.hilog"].named, {})
+        self.assertEqual(imports["plain"].default_name, "lazy")
+
 
 @unittest.skipUnless(
     SIDECAR_NODE_MODULE.exists(),

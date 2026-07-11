@@ -40,8 +40,8 @@
 截至 2026-07-11 的可验证基线：
 
 ```text
-主项目测试（npm ci 后）     30 passed，20 subtests passed
-Python-only checkout         26 passed, 4 skipped（L1 可选测试）
+主项目测试（npm ci 后）     31 passed，20 subtests passed
+Python-only checkout         27 passed, 4 skipped（L1 可选测试）
 Parser Golden               12 个自包含人工标注样本，L0/L1 完整逐 case baseline
 arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
 arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 missing warning

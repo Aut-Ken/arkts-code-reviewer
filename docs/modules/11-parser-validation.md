@@ -303,8 +303,8 @@ review unit issue
 - raw-L1 独立评测路径和 ERROR/missing 阈值。
 - 人工结果转 Golden Case 的自动流程。
 
-当前执行 `npm ci` 后，`pytest -q -rs` 为 `30 passed, 20 subtests passed`。Python-only
-checkout 为 `26 passed, 4 skipped`；skip 仅是可选 L1 测试，strict L1 命令缺依赖时会失败。
+当前执行 `npm ci` 后，`pytest -q -rs` 为 `31 passed, 20 subtests passed`。Python-only
+checkout 为 `27 passed, 4 skipped`；skip 仅是可选 L1 测试，strict L1 命令缺依赖时会失败。
 
 ## 13. 运行产物
 
