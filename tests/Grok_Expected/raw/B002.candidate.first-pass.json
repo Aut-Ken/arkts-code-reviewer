@@ -1,0 +1,5413 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B002",
+    "group_manifest_sha256": "dc9f0c514e206623ce44ff9b4e30f9d9b0e607056ed9b7f0c29cf7a9bc11cfbc",
+    "expected_case_ids": [
+      "R63-047",
+      "R63-048",
+      "R63-053",
+      "R63-054",
+      "R63-055"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b002-2026-07-11-pilot"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-047",
+      "category": "animation_examples",
+      "logical_path": "examples/Animation/entry/src/main/ets/pages/pageTransition/pageTransition1.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/Animation/entry/src/main/ets/pages/pageTransition/pageTransition1.ets",
+        "copied_path": "sources/examples/Animation/entry/src/main/ets/pages/pageTransition/pageTransition1.ets",
+        "content_sha256": "c0a4f6a1a83a16cbc9f9a8d88fedd9b100fcff35f87a17f32fc7d2dd230cc19b",
+        "line_count": 64
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [
+          "Button",
+          "Column",
+          "Image",
+          "PageTransitionEnter",
+          "PageTransitionExit"
+        ],
+        "apis": [
+          "$r",
+          "router.back",
+          "router.pushUrl"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry",
+          "@State"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "height",
+          "justifyContent",
+          "onClick",
+          "onEnter",
+          "onExit",
+          "opacity",
+          "scale",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "Column",
+          "Image",
+          "PageTransitionEnter",
+          "PageTransitionExample1",
+          "PageTransitionExample1.build",
+          "PageTransitionExample1.build.Column",
+          "PageTransitionExample1.build.Column.Column",
+          "PageTransitionExample1.build.Column.Column.Button",
+          "PageTransitionExample1.build.Column.Column.Image",
+          "PageTransitionExample1.pageTransition",
+          "PageTransitionExample1.pageTransition.PageTransitionEnter",
+          "PageTransitionExample1.pageTransition.PageTransitionExit",
+          "PageTransitionExit",
+          "build",
+          "pageTransition"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "PageTransitionExample1",
+            "qualified_name": "PageTransitionExample1",
+            "parent_name": null,
+            "span": {
+              "start_line": 17,
+              "end_line": 64
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "PageTransitionExample1.build",
+            "parent_name": "PageTransitionExample1",
+            "span": {
+              "start_line": 23,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "PageTransitionExample1.build.Column",
+            "parent_name": "PageTransitionExample1.build",
+            "span": {
+              "start_line": 24,
+              "end_line": 45
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "PageTransitionExample1.build.Column.Column",
+            "parent_name": "PageTransitionExample1.build.Column",
+            "span": {
+              "start_line": 25,
+              "end_line": 34
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "PageTransitionExample1.build.Column.Column.Button",
+            "parent_name": "PageTransitionExample1.build.Column.Column",
+            "span": {
+              "start_line": 26,
+              "end_line": 29
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "PageTransitionExample1.build.Column.Column",
+            "parent_name": "PageTransitionExample1.build.Column",
+            "span": {
+              "start_line": 35,
+              "end_line": 44
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Image",
+            "qualified_name": "PageTransitionExample1.build.Column.Column.Image",
+            "parent_name": "PageTransitionExample1.build.Column.Column",
+            "span": {
+              "start_line": 36,
+              "end_line": 36
+            }
+          },
+          {
+            "kind": "method",
+            "name": "pageTransition",
+            "qualified_name": "PageTransitionExample1.pageTransition",
+            "parent_name": "PageTransitionExample1",
+            "span": {
+              "start_line": 48,
+              "end_line": 63
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "PageTransitionEnter",
+            "qualified_name": "PageTransitionExample1.pageTransition.PageTransitionEnter",
+            "parent_name": "PageTransitionExample1.pageTransition",
+            "span": {
+              "start_line": 49,
+              "end_line": 55
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "PageTransitionExit",
+            "qualified_name": "PageTransitionExample1.pageTransition.PageTransitionExit",
+            "parent_name": "PageTransitionExample1.pageTransition",
+            "span": {
+              "start_line": 56,
+              "end_line": 62
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "default import router from @ohos.router"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 45
+                }
+              ],
+              "reason": "outer Column in build"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 34
+                }
+              ],
+              "reason": "header Column with width/height/backgroundColor/justifyContent"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 29
+                }
+              ],
+              "reason": "back Button with onClick"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 44
+                }
+              ],
+              "reason": "body Column with scale/opacity/onClick"
+            },
+            {
+              "value": "Image",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "Image with same-line width/height modifiers"
+            },
+            {
+              "value": "PageTransitionEnter",
+              "line_ranges": [
+                {
+                  "start_line": 49,
+                  "end_line": 55
+                }
+              ],
+              "reason": "page transition enter component with onEnter"
+            },
+            {
+              "value": "PageTransitionExit",
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 62
+                }
+              ],
+              "reason": "page transition exit component with onExit"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "global $r resource in Image source"
+            },
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "router.back via @ohos.router"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "router.pushUrl via @ohos.router"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 21
+                }
+              ],
+              "reason": "@State on scale1/opacity1"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 29
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "header Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "header Column.height"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 33
+                }
+              ],
+              "reason": "header Column.backgroundColor"
+            },
+            {
+              "value": "justifyContent",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 34
+                }
+              ],
+              "reason": "header Column.justifyContent"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "Image.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "Image.height"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "body Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "body Column.height"
+            },
+            {
+              "value": "scale",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "body Column.scale"
+            },
+            {
+              "value": "opacity",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "body Column.opacity"
+            },
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 44
+                }
+              ],
+              "reason": "body Column.onClick"
+            },
+            {
+              "value": "onEnter",
+              "line_ranges": [
+                {
+                  "start_line": 50,
+                  "end_line": 55
+                }
+              ],
+              "reason": "PageTransitionEnter.onEnter"
+            },
+            {
+              "value": "onExit",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 62
+                }
+              ],
+              "reason": "PageTransitionExit.onExit"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Image",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionEnter",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.build.Column.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.build.Column.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.build.Column.Column.Image",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.pageTransition",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.pageTransition.PageTransitionEnter",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExample1.pageTransition.PageTransitionExit",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "PageTransitionExit",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "pageTransition",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 29
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 44
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 50,
+                  "end_line": 55
+                }
+              ],
+              "reason": "onEnter arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 62
+                }
+              ],
+              "reason": "onExit arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "PageTransitionExample1",
+                "qualified_name": "PageTransitionExample1",
+                "parent_name": null,
+                "span": {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 64
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "PageTransitionExample1.build",
+                "parent_name": "PageTransitionExample1",
+                "span": {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 46
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "PageTransitionExample1.build.Column",
+                "parent_name": "PageTransitionExample1.build",
+                "span": {
+                  "start_line": 24,
+                  "end_line": 45
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 45
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "PageTransitionExample1.build.Column.Column",
+                "parent_name": "PageTransitionExample1.build.Column",
+                "span": {
+                  "start_line": 25,
+                  "end_line": 34
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 34
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "PageTransitionExample1.build.Column.Column.Button",
+                "parent_name": "PageTransitionExample1.build.Column.Column",
+                "span": {
+                  "start_line": 26,
+                  "end_line": 29
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 29
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "PageTransitionExample1.build.Column.Column",
+                "parent_name": "PageTransitionExample1.build.Column",
+                "span": {
+                  "start_line": 35,
+                  "end_line": 44
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 44
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Image",
+                "qualified_name": "PageTransitionExample1.build.Column.Column.Image",
+                "parent_name": "PageTransitionExample1.build.Column.Column",
+                "span": {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "pageTransition",
+                "qualified_name": "PageTransitionExample1.pageTransition",
+                "parent_name": "PageTransitionExample1",
+                "span": {
+                  "start_line": 48,
+                  "end_line": 63
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 48,
+                  "end_line": 63
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "PageTransitionEnter",
+                "qualified_name": "PageTransitionExample1.pageTransition.PageTransitionEnter",
+                "parent_name": "PageTransitionExample1.pageTransition",
+                "span": {
+                  "start_line": 49,
+                  "end_line": 55
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 49,
+                  "end_line": 55
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "PageTransitionExit",
+                "qualified_name": "PageTransitionExample1.pageTransition.PageTransitionExit",
+                "parent_name": "PageTransitionExample1.pageTransition",
+                "span": {
+                  "start_line": 56,
+                  "end_line": 62
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 62
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-048",
+      "category": "image_animator_examples",
+      "logical_path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorExample001.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorExample001.ets",
+        "copied_path": "sources/examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorExample001.ets",
+        "content_sha256": "41430221068fe378d14127a57e0009087149452f2e4f28c67775fd91e3b1c72b",
+        "line_count": 86
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [],
+        "components": [
+          "Button",
+          "Column",
+          "ImageAnimator",
+          "Row"
+        ],
+        "apis": [
+          "$r"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry",
+          "@State"
+        ],
+        "attributes": [
+          "duration",
+          "fillMode",
+          "height",
+          "images",
+          "iterations",
+          "margin",
+          "onCancel",
+          "onClick",
+          "onFinish",
+          "onPause",
+          "onRepeat",
+          "onStart",
+          "padding",
+          "reverse",
+          "state",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "Column",
+          "ImageAnimator",
+          "ImageAnimatorExample",
+          "ImageAnimatorExample.build",
+          "ImageAnimatorExample.build.Column",
+          "ImageAnimatorExample.build.Column.ImageAnimator",
+          "ImageAnimatorExample.build.Column.Row",
+          "ImageAnimatorExample.build.Column.Row.Button",
+          "Row",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ImageAnimatorExample",
+            "qualified_name": "ImageAnimatorExample",
+            "parent_name": null,
+            "span": {
+              "start_line": 17,
+              "end_line": 86
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ImageAnimatorExample.build",
+            "parent_name": "ImageAnimatorExample",
+            "span": {
+              "start_line": 24,
+              "end_line": 85
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorExample.build.Column",
+            "parent_name": "ImageAnimatorExample.build",
+            "span": {
+              "start_line": 25,
+              "end_line": 84
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ImageAnimator",
+            "qualified_name": "ImageAnimatorExample.build.Column.ImageAnimator",
+            "parent_name": "ImageAnimatorExample.build.Column",
+            "span": {
+              "start_line": 26,
+              "end_line": 60
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row",
+            "parent_name": "ImageAnimatorExample.build.Column",
+            "span": {
+              "start_line": 61,
+              "end_line": 71
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 62,
+              "end_line": 64
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 65,
+              "end_line": 67
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 68,
+              "end_line": 70
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row",
+            "parent_name": "ImageAnimatorExample.build.Column",
+            "span": {
+              "start_line": 73,
+              "end_line": 83
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 74,
+              "end_line": 76
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 77,
+              "end_line": 79
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+            "parent_name": "ImageAnimatorExample.build.Column.Row",
+            "span": {
+              "start_line": 80,
+              "end_line": 82
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "console.info"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 84
+                }
+              ],
+              "reason": "root Column with width/height"
+            },
+            {
+              "value": "ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 60
+                }
+              ],
+              "reason": "ImageAnimator with images/duration/state/events"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 61,
+                  "end_line": 71
+                }
+              ],
+              "reason": "control Row for start/pause/stop"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 64
+                }
+              ],
+              "reason": "start Button chain"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 67
+                }
+              ],
+              "reason": "pause Button chain"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 70
+                }
+              ],
+              "reason": "stop Button chain"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 73,
+                  "end_line": 83
+                }
+              ],
+              "reason": "control Row for reverse/once/infinite"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 76
+                }
+              ],
+              "reason": "reverse Button chain"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 77,
+                  "end_line": 79
+                }
+              ],
+              "reason": "once Button chain"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 80,
+                  "end_line": 82
+                }
+              ],
+              "reason": "infinite Button chain"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "global $r in images src"
+            },
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 38
+                }
+              ],
+              "reason": "additional $r image resources"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "console.info",
+              "line_ranges": [
+                {
+                  "start_line": 46,
+                  "end_line": 46
+                }
+              ],
+              "reason": "console is not a frozen platform API"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 22
+                }
+              ],
+              "reason": "@State fields"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "images",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 40
+                }
+              ],
+              "reason": "ImageAnimator.images"
+            },
+            {
+              "value": "duration",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "ImageAnimator.duration"
+            },
+            {
+              "value": "state",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "ImageAnimator.state"
+            },
+            {
+              "value": "reverse",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "ImageAnimator.reverse"
+            },
+            {
+              "value": "fillMode",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "ImageAnimator.fillMode"
+            },
+            {
+              "value": "iterations",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "ImageAnimator.iterations"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "ImageAnimator.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "ImageAnimator.height"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "ImageAnimator.margin"
+            },
+            {
+              "value": "onStart",
+              "line_ranges": [
+                {
+                  "start_line": 45,
+                  "end_line": 47
+                }
+              ],
+              "reason": "ImageAnimator.onStart"
+            },
+            {
+              "value": "onPause",
+              "line_ranges": [
+                {
+                  "start_line": 48,
+                  "end_line": 50
+                }
+              ],
+              "reason": "ImageAnimator.onPause"
+            },
+            {
+              "value": "onRepeat",
+              "line_ranges": [
+                {
+                  "start_line": 51,
+                  "end_line": 53
+                }
+              ],
+              "reason": "ImageAnimator.onRepeat"
+            },
+            {
+              "value": "onCancel",
+              "line_ranges": [
+                {
+                  "start_line": 54,
+                  "end_line": 56
+                }
+              ],
+              "reason": "ImageAnimator.onCancel"
+            },
+            {
+              "value": "onFinish",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 60
+                }
+              ],
+              "reason": "ImageAnimator.onFinish"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 62
+                }
+              ],
+              "reason": "Button.width"
+            },
+            {
+              "value": "padding",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 62
+                }
+              ],
+              "reason": "Button.padding"
+            },
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 64
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 64
+                }
+              ],
+              "reason": "Button.margin"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 84,
+                  "end_line": 84
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 84,
+                  "end_line": 84
+                }
+              ],
+              "reason": "Column.height"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample.build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample.build.Column.ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample.build.Column.Row",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorExample.build.Column.Row.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 45,
+                  "end_line": 47
+                }
+              ],
+              "reason": "onStart arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 60
+                }
+              ],
+              "reason": "onFinish arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 64
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 76
+                }
+              ],
+              "reason": "onClick arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "ImageAnimatorExample",
+                "qualified_name": "ImageAnimatorExample",
+                "parent_name": null,
+                "span": {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 86
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "ImageAnimatorExample.build",
+                "parent_name": "ImageAnimatorExample",
+                "span": {
+                  "start_line": 24,
+                  "end_line": 85
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 85
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorExample.build.Column",
+                "parent_name": "ImageAnimatorExample.build",
+                "span": {
+                  "start_line": 25,
+                  "end_line": 84
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 84
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ImageAnimator",
+                "qualified_name": "ImageAnimatorExample.build.Column.ImageAnimator",
+                "parent_name": "ImageAnimatorExample.build.Column",
+                "span": {
+                  "start_line": 26,
+                  "end_line": 60
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 60
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row",
+                "parent_name": "ImageAnimatorExample.build.Column",
+                "span": {
+                  "start_line": 61,
+                  "end_line": 71
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 61,
+                  "end_line": 71
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 62,
+                  "end_line": 64
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 62,
+                  "end_line": 64
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 65,
+                  "end_line": 67
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 67
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 68,
+                  "end_line": 70
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 70
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row",
+                "parent_name": "ImageAnimatorExample.build.Column",
+                "span": {
+                  "start_line": 73,
+                  "end_line": 83
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 73,
+                  "end_line": 83
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 74,
+                  "end_line": 76
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 76
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 77,
+                  "end_line": 79
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 77,
+                  "end_line": 79
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorExample.build.Column.Row.Button",
+                "parent_name": "ImageAnimatorExample.build.Column.Row",
+                "span": {
+                  "start_line": 80,
+                  "end_line": 82
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 80,
+                  "end_line": 82
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-053",
+      "category": "state_mgmt_tests",
+      "logical_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v1_tests.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v1_tests.ets",
+        "copied_path": "sources/frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v1_tests.ets",
+        "content_sha256": "6666603d8bce4b3c967c7f2f5000b6256297db507dd07af0fadc09519e11ee96",
+        "line_count": 140
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PageController": "PageController"
+            }
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TestRunner": "TestRunner"
+            }
+          },
+          {
+            "module": "../../v1_tests/appStorageTestsV1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "AppStorageTestsV1": "AppStorageTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/commonTestsV1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CommonTestsV2": "CommonTestsV2"
+            }
+          },
+          {
+            "module": "../../v1_tests/environmentTestsV1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "EnvironmentTestsV1": "EnvironmentTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/localStorageTestsV1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "LocalStorageTestsV1": "LocalStorageTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/persistentStorageTestsV1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PersistentStorageTestsV1": "PersistentStorageTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/pu_observed_object_name_tests_v1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ObservedObjectNameTestsV1": "ObservedObjectNameTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/pu_observed_property_abstract_tests_v1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ObservedPropertyAbstractPUTestsV1": "ObservedPropertyAbstractPUTestsV1"
+            }
+          },
+          {
+            "module": "../../v1_tests/pu_observed_property_tests_v1",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuObservedPropertyTests": "PuObservedPropertyTests"
+            }
+          },
+          {
+            "module": "../../v1_tests/pu_synced_property_one_way_tests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuSyncedPropertyOneWayTests": "PuSyncedPropertyOneWayTests"
+            }
+          },
+          {
+            "module": "../../v1_tests/pu_synced_property_two_way_tests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuSyncedPropertyTwoWayTests": "PuSyncedPropertyTwoWayTests"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Text"
+        ],
+        "apis": [
+          "setTimeout"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry",
+          "@Observed",
+          "@State"
+        ],
+        "attributes": [
+          "fontSize"
+        ],
+        "symbols": [
+          "Column",
+          "Parent",
+          "Parent.aboutToAppear",
+          "Parent.build",
+          "Parent.build.Column",
+          "Parent.build.Column.Text",
+          "TestObservedNameA",
+          "TestObservedNameB",
+          "TestObservedNameB.constructor",
+          "TestObservedNameChild",
+          "TestObservedNameContainer",
+          "TestObservedNameContainerArray",
+          "TestObservedNameGrandChild",
+          "Text",
+          "aboutToAppear",
+          "build",
+          "constructor"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "class",
+            "name": "TestObservedNameA",
+            "qualified_name": "TestObservedNameA",
+            "parent_name": null,
+            "span": {
+              "start_line": 39,
+              "end_line": 42
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TestObservedNameB",
+            "qualified_name": "TestObservedNameB",
+            "parent_name": null,
+            "span": {
+              "start_line": 44,
+              "end_line": 52
+            }
+          },
+          {
+            "kind": "method",
+            "name": "constructor",
+            "qualified_name": "TestObservedNameB.constructor",
+            "parent_name": "TestObservedNameB",
+            "span": {
+              "start_line": 47,
+              "end_line": 51
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TestObservedNameChild",
+            "qualified_name": "TestObservedNameChild",
+            "parent_name": null,
+            "span": {
+              "start_line": 54,
+              "end_line": 57
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TestObservedNameGrandChild",
+            "qualified_name": "TestObservedNameGrandChild",
+            "parent_name": null,
+            "span": {
+              "start_line": 59,
+              "end_line": 62
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TestObservedNameContainer",
+            "qualified_name": "TestObservedNameContainer",
+            "parent_name": null,
+            "span": {
+              "start_line": 64,
+              "end_line": 68
+            }
+          },
+          {
+            "kind": "class",
+            "name": "TestObservedNameContainerArray",
+            "qualified_name": "TestObservedNameContainerArray",
+            "parent_name": null,
+            "span": {
+              "start_line": 70,
+              "end_line": 73
+            }
+          },
+          {
+            "kind": "struct",
+            "name": "Parent",
+            "qualified_name": "Parent",
+            "parent_name": null,
+            "span": {
+              "start_line": 75,
+              "end_line": 140
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "Parent.aboutToAppear",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 118,
+              "end_line": 133
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "Parent.build",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 135,
+              "end_line": 139
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "Parent.build.Column",
+            "parent_name": "Parent.build",
+            "span": {
+              "start_line": 136,
+              "end_line": 138
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "Parent.build.Column.Text",
+            "parent_name": "Parent.build.Column",
+            "span": {
+              "start_line": 137,
+              "end_line": 137
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "LocalStorage"
+        ],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind",
+          "router.back"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "MockObject1",
+          "MockObject2"
+        ],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@system.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/pageController",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PageController": "PageController"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/testRunner",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TestRunner": "TestRunner"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/appStorageTestsV1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "AppStorageTestsV1": "AppStorageTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/commonTestsV1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CommonTestsV2": "CommonTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/environmentTestsV1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "EnvironmentTestsV1": "EnvironmentTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/localStorageTestsV1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "LocalStorageTestsV1": "LocalStorageTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/persistentStorageTestsV1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PersistentStorageTestsV1": "PersistentStorageTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/pu_observed_object_name_tests_v1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ObservedObjectNameTestsV1": "ObservedObjectNameTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/pu_observed_property_abstract_tests_v1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ObservedPropertyAbstractPUTestsV1": "ObservedPropertyAbstractPUTestsV1"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/pu_observed_property_tests_v1",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuObservedPropertyTests": "PuObservedPropertyTests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 26
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/pu_synced_property_one_way_tests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuSyncedPropertyOneWayTests": "PuSyncedPropertyOneWayTests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v1_tests/pu_synced_property_two_way_tests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuSyncedPropertyTwoWayTests": "PuSyncedPropertyTwoWayTests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 136,
+                  "end_line": 138
+                }
+              ],
+              "reason": "Column container in build"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              ],
+              "reason": "Text with fontSize modifier"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "LocalStorage",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "new LocalStorage() constructor, not declarative UI component"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 119,
+                  "end_line": 132
+                }
+              ],
+              "reason": "global setTimeout in aboutToAppear"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 130,
+                  "end_line": 130
+                }
+              ],
+              "reason": "@system.router not in frozen module_prefixes; not a scorables frozen API"
+            },
+            {
+              "value": "TestRunner.bind",
+              "line_ranges": [
+                {
+                  "start_line": 120,
+                  "end_line": 120
+                }
+              ],
+              "reason": "relative project import helper method"
+            },
+            {
+              "value": "PageController.notifyPageFinished",
+              "line_ranges": [
+                {
+                  "start_line": 131,
+                  "end_line": 131
+                }
+              ],
+              "reason": "relative project import helper method"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Observed",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "class decorator"
+            },
+            {
+              "value": "@Observed",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "class decorator"
+            },
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "page entry decorator with storage arg"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 76,
+                  "end_line": 76
+                }
+              ],
+              "reason": "component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 81,
+                  "end_line": 81
+                }
+              ],
+              "reason": "@State field"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              ],
+              "reason": "Text.fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameA",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameB",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameB.constructor",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameChild",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameContainer",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameContainerArray",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "TestObservedNameGrandChild",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "constructor",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 140
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "MockObject1",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 33
+                }
+              ],
+              "reason": "interface is not a v1 declaration symbol"
+            },
+            {
+              "value": "MockObject2",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 37
+                }
+              ],
+              "reason": "interface is not a v1 declaration symbol"
+            }
+          ],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 119,
+                  "end_line": 132
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameA",
+                "qualified_name": "TestObservedNameA",
+                "parent_name": null,
+                "span": {
+                  "start_line": 39,
+                  "end_line": 42
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 42
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameB",
+                "qualified_name": "TestObservedNameB",
+                "parent_name": null,
+                "span": {
+                  "start_line": 44,
+                  "end_line": 52
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 52
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "constructor",
+                "qualified_name": "TestObservedNameB.constructor",
+                "parent_name": "TestObservedNameB",
+                "span": {
+                  "start_line": 47,
+                  "end_line": 51
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 51
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameChild",
+                "qualified_name": "TestObservedNameChild",
+                "parent_name": null,
+                "span": {
+                  "start_line": 54,
+                  "end_line": 57
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 54,
+                  "end_line": 57
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameGrandChild",
+                "qualified_name": "TestObservedNameGrandChild",
+                "parent_name": null,
+                "span": {
+                  "start_line": 59,
+                  "end_line": 62
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 59,
+                  "end_line": 62
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameContainer",
+                "qualified_name": "TestObservedNameContainer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 64,
+                  "end_line": 68
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 68
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "TestObservedNameContainerArray",
+                "qualified_name": "TestObservedNameContainerArray",
+                "parent_name": null,
+                "span": {
+                  "start_line": 70,
+                  "end_line": 73
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 73
+                }
+              ],
+              "reason": "class span checked against source"
+            },
+            {
+              "value": {
+                "kind": "struct",
+                "name": "Parent",
+                "qualified_name": "Parent",
+                "parent_name": null,
+                "span": {
+                  "start_line": 75,
+                  "end_line": 140
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 140
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "Parent.aboutToAppear",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 118,
+                  "end_line": 133
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 118,
+                  "end_line": 133
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "Parent.build",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 135,
+                  "end_line": 139
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 135,
+                  "end_line": 139
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "Parent.build.Column",
+                "parent_name": "Parent.build",
+                "span": {
+                  "start_line": 136,
+                  "end_line": 138
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 136,
+                  "end_line": 138
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "Parent.build.Column.Text",
+                "parent_name": "Parent.build.Column",
+                "span": {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "MockObject1",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 33
+                }
+              ],
+              "reason": "interface not a v1 declaration kind"
+            },
+            {
+              "value": "MockObject2",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 37
+                }
+              ],
+              "reason": "interface not a v1 declaration kind"
+            }
+          ],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-054",
+      "category": "state_mgmt_tests",
+      "logical_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_tests.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_tests.ets",
+        "copied_path": "sources/frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_tests.ets",
+        "content_sha256": "05ad5d57d76e70a94070e330999cf02d80429279a0096d00b7a64f5c9656d49f",
+        "line_count": 93
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PageController": "PageController"
+            }
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TestRunner": "TestRunner"
+            }
+          },
+          {
+            "module": "../../v2_tests/commonTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CommonTestsV2": "CommonTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/dataCoderTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "DataCoderTestsV2": "DataCoderTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/envTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "V2EnvTests": "V2EnvTests"
+            }
+          },
+          {
+            "module": "../../v2_tests/interopBuilderDeepTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "InteropBuilderDeepTestsV2": "InteropBuilderDeepTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/interopModuleDeepTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "InteropModuleDeepTestsV2": "InteropModuleDeepTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/interopStorageDeepTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "InteropStorageDeepTestsV2": "InteropStorageDeepTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/interopTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "InteropTestsV2": "InteropTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/json2TestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Json2Tests": "Json2Tests"
+            }
+          },
+          {
+            "module": "../../v2_tests/monitorTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "MonitorTestsV2": "MonitorTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/monitorTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "SyncMonitorTestsV2": "SyncMonitorTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/observeTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ObserveTestsV2": "ObserveTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/persistenceV2TestsV2.ets",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PersistenceV2TestsV2": "PersistenceV2TestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puBuilderBindingTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuBuilderBindingTestsV2": "PuBuilderBindingTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puBuilderProxyTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuBuilderProxyTestsV2": "PuBuilderProxyTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puLifecycleTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuLifecycleTestsV2": "PuLifecycleTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puRecycleManagerTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuRecycleManagerTestsV2": "PuRecycleManagerTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puUINodeRegistryProxyTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuUINodeRegistryProxyTestsV2": "PuUINodeRegistryProxyTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puViewTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PuViewTestsV2": "PuViewTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puv2ViewBaseTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Puv2ViewBaseTestsV2": "Puv2ViewBaseTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/puv2ViewBuildNodeBaseTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Puv2ViewBuildNodeBaseTestsV2": "Puv2ViewBuildNodeBaseTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/recyclePoolV2Tests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "RecyclePoolV2Tests": "RecyclePoolV2Tests"
+            }
+          },
+          {
+            "module": "../../v2_tests/recycleTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "RecycleTestsV2": "RecycleTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/v2DecoratorsTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "V2DecoratorsTestsV2": "V2DecoratorsTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/v2MakeObservedTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "V2MakeObservedTestsV2": "V2MakeObservedTestsV2"
+            }
+          },
+          {
+            "module": "../../v2_tests/v2ViewTests",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "V2ViewTests": "V2ViewTests"
+            }
+          },
+          {
+            "module": "../../v2_tests/v2ViewTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "V2ViewTestsV2": "V2ViewTestsV2"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Text"
+        ],
+        "apis": [
+          "setTimeout"
+        ],
+        "decorators": [
+          "@ComponentV2",
+          "@Entry",
+          "@Local"
+        ],
+        "attributes": [
+          "fontSize"
+        ],
+        "symbols": [
+          "Column",
+          "Parent",
+          "Parent.aboutToAppear",
+          "Parent.build",
+          "Parent.build.Column",
+          "Parent.build.Column.Text",
+          "Text",
+          "aboutToAppear",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "Parent",
+            "qualified_name": "Parent",
+            "parent_name": null,
+            "span": {
+              "start_line": 47,
+              "end_line": 93
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "Parent.aboutToAppear",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 55,
+              "end_line": 86
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "Parent.build",
+            "parent_name": "Parent",
+            "span": {
+              "start_line": 88,
+              "end_line": 92
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "Parent.build.Column",
+            "parent_name": "Parent.build",
+            "span": {
+              "start_line": 89,
+              "end_line": 91
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "Parent.build.Column.Text",
+            "parent_name": "Parent.build.Column",
+            "span": {
+              "start_line": 90,
+              "end_line": 90
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind",
+          "router.back"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@system.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 45,
+                  "end_line": 45
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/pageController",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PageController": "PageController"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 34
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/testRunner",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TestRunner": "TestRunner"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/commonTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CommonTestsV2": "CommonTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/dataCoderTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "DataCoderTestsV2": "DataCoderTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/envTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "V2EnvTests": "V2EnvTests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/interopBuilderDeepTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "InteropBuilderDeepTestsV2": "InteropBuilderDeepTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/interopModuleDeepTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "InteropModuleDeepTestsV2": "InteropModuleDeepTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/interopStorageDeepTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "InteropStorageDeepTestsV2": "InteropStorageDeepTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/interopTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "InteropTestsV2": "InteropTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/json2TestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Json2Tests": "Json2Tests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/monitorTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "MonitorTestsV2": "MonitorTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "import MonitorTestsV2"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/monitorTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "SyncMonitorTestsV2": "SyncMonitorTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "import SyncMonitorTestsV2"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/observeTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ObserveTestsV2": "ObserveTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/persistenceV2TestsV2.ets",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PersistenceV2TestsV2": "PersistenceV2TestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puBuilderBindingTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuBuilderBindingTestsV2": "PuBuilderBindingTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 33
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puBuilderProxyTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuBuilderProxyTestsV2": "PuBuilderProxyTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puLifecycleTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuLifecycleTestsV2": "PuLifecycleTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 26
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puRecycleManagerTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuRecycleManagerTestsV2": "PuRecycleManagerTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puUINodeRegistryProxyTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuUINodeRegistryProxyTestsV2": "PuUINodeRegistryProxyTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puViewTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PuViewTestsV2": "PuViewTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puv2ViewBaseTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Puv2ViewBaseTestsV2": "Puv2ViewBaseTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/puv2ViewBuildNodeBaseTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Puv2ViewBuildNodeBaseTestsV2": "Puv2ViewBuildNodeBaseTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/recyclePoolV2Tests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "RecyclePoolV2Tests": "RecyclePoolV2Tests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/recycleTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "RecycleTestsV2": "RecycleTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/v2DecoratorsTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "V2DecoratorsTestsV2": "V2DecoratorsTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/v2MakeObservedTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "V2MakeObservedTestsV2": "V2MakeObservedTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/v2ViewTests",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "V2ViewTests": "V2ViewTests"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/v2ViewTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "V2ViewTestsV2": "V2ViewTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 89,
+                  "end_line": 91
+                }
+              ],
+              "reason": "Column in build"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 90,
+                  "end_line": 90
+                }
+              ],
+              "reason": "Text with fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 85
+                }
+              ],
+              "reason": "global setTimeout"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 83,
+                  "end_line": 83
+                }
+              ],
+              "reason": "@system.router not in frozen module_prefixes"
+            },
+            {
+              "value": "TestRunner.bind",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 57
+                }
+              ],
+              "reason": "project helper"
+            },
+            {
+              "value": "PageController.notifyPageFinished",
+              "line_ranges": [
+                {
+                  "start_line": 84,
+                  "end_line": 84
+                }
+              ],
+              "reason": "project helper"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 47
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@ComponentV2",
+              "line_ranges": [
+                {
+                  "start_line": 48,
+                  "end_line": 48
+                }
+              ],
+              "reason": "ComponentV2 decorator"
+            },
+            {
+              "value": "@Local",
+              "line_ranges": [
+                {
+                  "start_line": 53,
+                  "end_line": 53
+                }
+              ],
+              "reason": "@Local field"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 90,
+                  "end_line": 90
+                }
+              ],
+              "reason": "Text.fontSize"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Parent.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 85
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "Parent",
+                "qualified_name": "Parent",
+                "parent_name": null,
+                "span": {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 47,
+                  "end_line": 93
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "Parent.aboutToAppear",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 55,
+                  "end_line": 86
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 55,
+                  "end_line": 86
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "Parent.build",
+                "parent_name": "Parent",
+                "span": {
+                  "start_line": 88,
+                  "end_line": 92
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 88,
+                  "end_line": 92
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "Parent.build.Column",
+                "parent_name": "Parent.build",
+                "span": {
+                  "start_line": 89,
+                  "end_line": 91
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 89,
+                  "end_line": 91
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "Parent.build.Column.Text",
+                "parent_name": "Parent.build.Column",
+                "span": {
+                  "start_line": 90,
+                  "end_line": 90
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 90,
+                  "end_line": 90
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-055",
+      "category": "state_mgmt_tests",
+      "logical_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets",
+        "copied_path": "sources/frameworks/bridge/declarative_frontend/state_mgmt/test/unittest/entry/src/main/ets/pages/v2_decorated_variables_tests.ets",
+        "content_sha256": "fa796eac3e85925e1d99193724ece7c5a4b77074d86f55a7089b04b92944c1dd",
+        "line_count": 79
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@system.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../../lib/pageController",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "PageController": "PageController"
+            }
+          },
+          {
+            "module": "../../lib/testRunner",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TestRunner": "TestRunner"
+            }
+          },
+          {
+            "module": "../../v2_tests/decoratedVariablesTestsV2",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "DecoratedVariablesTestsV2": "DecoratedVariablesTestsV2"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Text"
+        ],
+        "apis": [
+          "setTimeout"
+        ],
+        "decorators": [
+          "@ComponentV2",
+          "@Entry",
+          "@Local"
+        ],
+        "attributes": [
+          "fontSize",
+          "fontWeight",
+          "margin"
+        ],
+        "symbols": [
+          "Column",
+          "DecoratedVariablesTestsPage",
+          "DecoratedVariablesTestsPage.aboutToAppear",
+          "DecoratedVariablesTestsPage.build",
+          "DecoratedVariablesTestsPage.build.Column",
+          "DecoratedVariablesTestsPage.build.Column.Text",
+          "Text",
+          "aboutToAppear",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "DecoratedVariablesTestsPage",
+            "qualified_name": "DecoratedVariablesTestsPage",
+            "parent_name": null,
+            "span": {
+              "start_line": 34,
+              "end_line": 79
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "DecoratedVariablesTestsPage.aboutToAppear",
+            "parent_name": "DecoratedVariablesTestsPage",
+            "span": {
+              "start_line": 41,
+              "end_line": 61
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "DecoratedVariablesTestsPage.build",
+            "parent_name": "DecoratedVariablesTestsPage",
+            "span": {
+              "start_line": 63,
+              "end_line": 78
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column",
+            "parent_name": "DecoratedVariablesTestsPage.build",
+            "span": {
+              "start_line": 64,
+              "end_line": 77
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 65,
+              "end_line": 65
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 66,
+              "end_line": 66
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 68,
+              "end_line": 68
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 69,
+              "end_line": 69
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 70,
+              "end_line": 70
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 71,
+              "end_line": 71
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 72,
+              "end_line": 72
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 73,
+              "end_line": 73
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 75,
+              "end_line": 75
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+            "parent_name": "DecoratedVariablesTestsPage.build.Column",
+            "span": {
+              "start_line": 76,
+              "end_line": 76
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "PageController.notifyPageFinished",
+          "TestRunner.bind",
+          "console.log",
+          "router.back"
+        ],
+        "decorators": [
+          "@Consumer",
+          "@Param",
+          "@Provider"
+        ],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@system.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/pageController",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "PageController": "PageController"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../lib/testRunner",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TestRunner": "TestRunner"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "../../v2_tests/decoratedVariablesTestsV2",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "DecoratedVariablesTestsV2": "DecoratedVariablesTestsV2"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 77
+                }
+              ],
+              "reason": "Column container"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "title Text"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "status Text"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 76
+                }
+              ],
+              "reason": "description Text blocks"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 60
+                }
+              ],
+              "reason": "global setTimeout"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 52,
+                  "end_line": 52
+                }
+              ],
+              "reason": "@system.router not in frozen module_prefixes"
+            },
+            {
+              "value": "console.log",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "console is not a frozen platform API"
+            },
+            {
+              "value": "TestRunner.bind",
+              "line_ranges": [
+                {
+                  "start_line": 49,
+                  "end_line": 49
+                }
+              ],
+              "reason": "project helper"
+            },
+            {
+              "value": "PageController.notifyPageFinished",
+              "line_ranges": [
+                {
+                  "start_line": 55,
+                  "end_line": 55
+                }
+              ],
+              "reason": "project helper"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 34
+                }
+              ],
+              "reason": "page entry decorator"
+            },
+            {
+              "value": "@ComponentV2",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "ComponentV2 decorator"
+            },
+            {
+              "value": "@Local",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "@Local field"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "@Param",
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              ],
+              "reason": "appears only inside string literal, not executable decorator"
+            },
+            {
+              "value": "@Provider",
+              "line_ranges": [
+                {
+                  "start_line": 71,
+                  "end_line": 71
+                }
+              ],
+              "reason": "appears only inside string literal, not executable decorator"
+            },
+            {
+              "value": "@Consumer",
+              "line_ranges": [
+                {
+                  "start_line": 71,
+                  "end_line": 71
+                }
+              ],
+              "reason": "appears only inside string literal, not executable decorator"
+            }
+          ],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "fontWeight",
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "Text.fontWeight"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "Text.margin"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 68
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 68
+                }
+              ],
+              "reason": "Text.margin"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              ],
+              "reason": "Text.margin"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "Text.margin"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "DecoratedVariablesTestsPage",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "DecoratedVariablesTestsPage.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "DecoratedVariablesTestsPage.build",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "DecoratedVariablesTestsPage.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "DecoratedVariablesTestsPage.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "symbol leaf from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 60
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "DecoratedVariablesTestsPage",
+                "qualified_name": "DecoratedVariablesTestsPage",
+                "parent_name": null,
+                "span": {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 79
+                }
+              ],
+              "reason": "struct span checked against source"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "DecoratedVariablesTestsPage.aboutToAppear",
+                "parent_name": "DecoratedVariablesTestsPage",
+                "span": {
+                  "start_line": 41,
+                  "end_line": 61
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 61
+                }
+              ],
+              "reason": "method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "DecoratedVariablesTestsPage.build",
+                "parent_name": "DecoratedVariablesTestsPage",
+                "span": {
+                  "start_line": 63,
+                  "end_line": 78
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 63,
+                  "end_line": 78
+                }
+              ],
+              "reason": "build_method span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column",
+                "parent_name": "DecoratedVariablesTestsPage.build",
+                "span": {
+                  "start_line": 64,
+                  "end_line": 77
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 77
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 65
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 68,
+                  "end_line": 68
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 68
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 71,
+                  "end_line": 71
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 71,
+                  "end_line": 71
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 72,
+                  "end_line": 72
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 72,
+                  "end_line": 72
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 73,
+                  "end_line": 73
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 73,
+                  "end_line": 73
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DecoratedVariablesTestsPage.build.Column.Text",
+                "parent_name": "DecoratedVariablesTestsPage.build.Column",
+                "span": {
+                  "start_line": 76,
+                  "end_line": 76
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 76,
+                  "end_line": 76
+                }
+              ],
+              "reason": "ui_block span checked against source"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}

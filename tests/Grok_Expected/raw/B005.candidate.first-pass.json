@@ -1,0 +1,5587 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B005",
+    "group_manifest_sha256": "167d1f3578f4d2f65ff47744502b53c92970e6f4177080acf83cab5553fa5097",
+    "expected_case_ids": [
+      "R63-040",
+      "R63-049"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b005-2026-07-11-pilot"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-040",
+      "category": "component_examples_dialog",
+      "logical_path": "examples/components/feature/src/main/ets/pages/DialogBoxes/BindSheetBootcamp.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/components/feature/src/main/ets/pages/DialogBoxes/BindSheetBootcamp.ets",
+        "copied_path": "sources/examples/components/feature/src/main/ets/pages/DialogBoxes/BindSheetBootcamp.ets",
+        "content_sha256": "5102d2fdc70971178854b2e632e1c7cc5728b963036ee8eaab428e60ba907a5b",
+        "line_count": 381
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "common",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ColorBlock": "ColorBlock",
+              "RadioBlock": "RadioBlock",
+              "SliderBlock": "SliderBlock",
+              "useEnabled": "useEnabled"
+            }
+          },
+          {
+            "module": "common/src/main/ets/components/Drawer",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Drawer": "Drawer"
+            }
+          },
+          {
+            "module": "common/src/main/ets/model/BlockTag",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "BlockTag": "BlockTag"
+            }
+          },
+          {
+            "module": "common/src/main/ets/utils/timeUtil",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "formatDate": "formatDate"
+            }
+          }
+        ],
+        "components": [
+          "BindSheetBootcamp",
+          "Button",
+          "ColorBlock",
+          "Column",
+          "Drawer",
+          "NavDestination",
+          "RadioBlock",
+          "Scroll",
+          "SliderBlock",
+          "Text"
+        ],
+        "apis": [
+          "$r",
+          "setTimeout"
+        ],
+        "decorators": [
+          "@Builder",
+          "@Component",
+          "@Preview",
+          "@Prop",
+          "@Require",
+          "@State",
+          "@StorageLink"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "bindSheet",
+          "height",
+          "hideTitleBar",
+          "id",
+          "onClick",
+          "width"
+        ],
+        "symbols": [
+          "BindSheetBootcamp",
+          "BindSheetBootcamp.Content",
+          "BindSheetBootcamp.Content.Column",
+          "BindSheetBootcamp.Content.Column.Button",
+          "BindSheetBootcamp.Generic",
+          "BindSheetBootcamp.Parameters",
+          "BindSheetBootcamp.Parameters.Scroll",
+          "BindSheetBootcamp.Parameters.Scroll.Column",
+          "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+          "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+          "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+          "BindSheetBootcamp.aboutToAppear",
+          "BindSheetBootcamp.bindSheetBuilder",
+          "BindSheetBootcamp.bindSheetBuilder.Text",
+          "BindSheetBootcamp.build",
+          "BindSheetBootcamp.build.NavDestination",
+          "BindSheetBootcamp.build.NavDestination.Drawer",
+          "BindSheetBootcamp.compEventTriggeredLog",
+          "BindSheetBootcampPreviewer",
+          "BindSheetBootcampPreviewer.build",
+          "BindSheetBootcampPreviewer.build.BindSheetBootcamp",
+          "Button",
+          "ColorBlock",
+          "Column",
+          "Content",
+          "Drawer",
+          "Generic",
+          "NavDestination",
+          "Parameters",
+          "RadioBlock",
+          "Scroll",
+          "SliderBlock",
+          "Text",
+          "aboutToAppear",
+          "bindSheetBuilder",
+          "build",
+          "compEventTriggeredLog"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "BindSheetBootcamp",
+            "qualified_name": "BindSheetBootcamp",
+            "parent_name": null,
+            "span": {
+              "start_line": 21,
+              "end_line": 371
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "BindSheetBootcamp.aboutToAppear",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 65,
+              "end_line": 67
+            }
+          },
+          {
+            "kind": "method",
+            "name": "compEventTriggeredLog",
+            "qualified_name": "BindSheetBootcamp.compEventTriggeredLog",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 69,
+              "end_line": 91
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "BindSheetBootcamp.build",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 93,
+              "end_line": 111
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "NavDestination",
+            "qualified_name": "BindSheetBootcamp.build.NavDestination",
+            "parent_name": "BindSheetBootcamp.build",
+            "span": {
+              "start_line": 94,
+              "end_line": 110
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Drawer",
+            "qualified_name": "BindSheetBootcamp.build.NavDestination.Drawer",
+            "parent_name": "BindSheetBootcamp.build.NavDestination",
+            "span": {
+              "start_line": 95,
+              "end_line": 107
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "bindSheetBuilder",
+            "qualified_name": "BindSheetBootcamp.bindSheetBuilder",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 113,
+              "end_line": 116
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "BindSheetBootcamp.bindSheetBuilder.Text",
+            "parent_name": "BindSheetBootcamp.bindSheetBuilder",
+            "span": {
+              "start_line": 115,
+              "end_line": 115
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Content",
+            "qualified_name": "BindSheetBootcamp.Content",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 118,
+              "end_line": 179
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "BindSheetBootcamp.Content.Column",
+            "parent_name": "BindSheetBootcamp.Content",
+            "span": {
+              "start_line": 120,
+              "end_line": 178
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "BindSheetBootcamp.Content.Column.Button",
+            "parent_name": "BindSheetBootcamp.Content.Column",
+            "span": {
+              "start_line": 121,
+              "end_line": 177
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Parameters",
+            "qualified_name": "BindSheetBootcamp.Parameters",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 181,
+              "end_line": 365
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Scroll",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll",
+            "parent_name": "BindSheetBootcamp.Parameters",
+            "span": {
+              "start_line": 183,
+              "end_line": 364
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll",
+            "span": {
+              "start_line": 184,
+              "end_line": 363
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 186,
+              "end_line": 195
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 197,
+              "end_line": 206
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 208,
+              "end_line": 217
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 219,
+              "end_line": 227
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 229,
+              "end_line": 237
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 239,
+              "end_line": 258
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ColorBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 260,
+              "end_line": 264
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 266,
+              "end_line": 274
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 276,
+              "end_line": 284
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 286,
+              "end_line": 294
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 296,
+              "end_line": 302
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ColorBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 304,
+              "end_line": 308
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 310,
+              "end_line": 319
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 321,
+              "end_line": 327
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 329,
+              "end_line": 341
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 343,
+              "end_line": 351
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 353,
+              "end_line": 361
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Generic",
+            "qualified_name": "BindSheetBootcamp.Generic",
+            "parent_name": "BindSheetBootcamp",
+            "span": {
+              "start_line": 367,
+              "end_line": 370
+            }
+          },
+          {
+            "kind": "struct",
+            "name": "BindSheetBootcampPreviewer",
+            "qualified_name": "BindSheetBootcampPreviewer",
+            "parent_name": null,
+            "span": {
+              "start_line": 373,
+              "end_line": 381
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "BindSheetBootcampPreviewer.build",
+            "parent_name": "BindSheetBootcampPreviewer",
+            "span": {
+              "start_line": 376,
+              "end_line": 380
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "BindSheetBootcamp",
+            "qualified_name": "BindSheetBootcampPreviewer.build.BindSheetBootcamp",
+            "parent_name": "BindSheetBootcampPreviewer.build",
+            "span": {
+              "start_line": 377,
+              "end_line": 379
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "BlockTag",
+          "Scroller"
+        ],
+        "apis": [
+          "AppStorage.get",
+          "AppStorage.setOrCreate",
+          "Date.now",
+          "compEventTriggeredLog",
+          "formatDate",
+          "listEventTriggeredTags.concat",
+          "listEventTriggeredTagsTemp.push",
+          "useEnabled"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "common",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ColorBlock": "ColorBlock",
+                  "RadioBlock": "RadioBlock",
+                  "SliderBlock": "SliderBlock",
+                  "useEnabled": "useEnabled"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "common/src/main/ets/components/Drawer",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Drawer": "Drawer"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "common/src/main/ets/model/BlockTag",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "BlockTag": "BlockTag"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "import statement"
+            },
+            {
+              "value": {
+                "module": "common/src/main/ets/utils/timeUtil",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "formatDate": "formatDate"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 94,
+                  "end_line": 110
+                }
+              ],
+              "reason": "NavDestination with backgroundColor/hideTitleBar"
+            },
+            {
+              "value": "Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 95,
+                  "end_line": 107
+                }
+              ],
+              "reason": "custom Drawer component"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 115,
+                  "end_line": 115
+                }
+              ],
+              "reason": "bindSheetBuilder Text"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 120,
+                  "end_line": 178
+                }
+              ],
+              "reason": "Content Column"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 121,
+                  "end_line": 177
+                }
+              ],
+              "reason": "Button with onClick and bindSheet"
+            },
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 183,
+                  "end_line": 364
+                }
+              ],
+              "reason": "Parameters Scroll"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 184,
+                  "end_line": 363
+                }
+              ],
+              "reason": "parameters Column with width"
+            },
+            {
+              "value": "RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 186,
+                  "end_line": 195
+                }
+              ],
+              "reason": "RadioBlock parameter control"
+            },
+            {
+              "value": "ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 260,
+                  "end_line": 264
+                }
+              ],
+              "reason": "ColorBlock parameter control"
+            },
+            {
+              "value": "SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 296,
+                  "end_line": 302
+                }
+              ],
+              "reason": "SliderBlock parameter control"
+            },
+            {
+              "value": "BindSheetBootcamp",
+              "line_ranges": [
+                {
+                  "start_line": 377,
+                  "end_line": 379
+                }
+              ],
+              "reason": "preview host uses BindSheetBootcamp"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "Scroller",
+              "line_ranges": [
+                {
+                  "start_line": 63,
+                  "end_line": 63
+                }
+              ],
+              "reason": "new Scroller() constructor, not UI component"
+            },
+            {
+              "value": "BlockTag",
+              "line_ranges": [
+                {
+                  "start_line": 72,
+                  "end_line": 72
+                }
+              ],
+              "reason": "new BlockTag constructor, not UI component"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 109,
+                  "end_line": 109
+                }
+              ],
+              "reason": "global $r resource color"
+            },
+            {
+              "value": "setTimeout",
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 90
+                }
+              ],
+              "reason": "global setTimeout"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "AppStorage.setOrCreate",
+              "line_ranges": [
+                {
+                  "start_line": 66,
+                  "end_line": 66
+                }
+              ],
+              "reason": "AppStorage global helper not in frozen API list"
+            },
+            {
+              "value": "AppStorage.get",
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "AppStorage global helper not in frozen API list"
+            },
+            {
+              "value": "formatDate",
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              ],
+              "reason": "relative project import helper"
+            },
+            {
+              "value": "useEnabled",
+              "line_ranges": [
+                {
+                  "start_line": 132,
+                  "end_line": 132
+                }
+              ],
+              "reason": "relative project import helper"
+            },
+            {
+              "value": "listEventTriggeredTagsTemp.push",
+              "line_ranges": [
+                {
+                  "start_line": 71,
+                  "end_line": 73
+                }
+              ],
+              "reason": "array collection method"
+            },
+            {
+              "value": "listEventTriggeredTags.concat",
+              "line_ranges": [
+                {
+                  "start_line": 76,
+                  "end_line": 78
+                }
+              ],
+              "reason": "array collection method"
+            },
+            {
+              "value": "Date.now",
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 70
+                }
+              ],
+              "reason": "Date global not in frozen APIs"
+            },
+            {
+              "value": "compEventTriggeredLog",
+              "line_ranges": [
+                {
+                  "start_line": 130,
+                  "end_line": 130
+                }
+              ],
+              "reason": "this.compEventTriggeredLog business method"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "struct decorator"
+            },
+            {
+              "value": "@Require",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "@Require on title"
+            },
+            {
+              "value": "@Prop",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 23
+                }
+              ],
+              "reason": "@Prop on title"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "@State field"
+            },
+            {
+              "value": "@StorageLink",
+              "line_ranges": [
+                {
+                  "start_line": 61,
+                  "end_line": 61
+                }
+              ],
+              "reason": "@StorageLink field"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 113,
+                  "end_line": 113
+                }
+              ],
+              "reason": "@Builder bindSheetBuilder"
+            },
+            {
+              "value": "@Preview",
+              "line_ranges": [
+                {
+                  "start_line": 373,
+                  "end_line": 373
+                }
+              ],
+              "reason": "@Preview on previewer struct"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 374,
+                  "end_line": 374
+                }
+              ],
+              "reason": "previewer @Component"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 109,
+                  "end_line": 109
+                }
+              ],
+              "reason": "NavDestination.backgroundColor"
+            },
+            {
+              "value": "hideTitleBar",
+              "line_ranges": [
+                {
+                  "start_line": 110,
+                  "end_line": 110
+                }
+              ],
+              "reason": "NavDestination.hideTitleBar"
+            },
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 122,
+                  "end_line": 124
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "bindSheet",
+              "line_ranges": [
+                {
+                  "start_line": 125,
+                  "end_line": 177
+                }
+              ],
+              "reason": "Button.bindSheet modifier chain"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 363,
+                  "end_line": 363
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 364,
+                  "end_line": 364
+                }
+              ],
+              "reason": "Scroll.height"
+            },
+            {
+              "value": "id",
+              "line_ranges": [
+                {
+                  "start_line": 364,
+                  "end_line": 364
+                }
+              ],
+              "reason": "Scroll.id"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "BindSheetBootcamp",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Content",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Content.Column",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Content.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Generic",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters.Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters.Scroll.Column",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.bindSheetBuilder",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.bindSheetBuilder.Text",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.build",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.build.NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.build.NavDestination.Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcamp.compEventTriggeredLog",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcampPreviewer",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcampPreviewer.build",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "BindSheetBootcampPreviewer.build.BindSheetBootcamp",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Content",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Generic",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Parameters",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "bindSheetBuilder",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "compEventTriggeredLog",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 381
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 74,
+                  "end_line": 90
+                }
+              ],
+              "reason": "setTimeout callback arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 98,
+                  "end_line": 100
+                }
+              ],
+              "reason": "content builder arrow property"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 122,
+                  "end_line": 124
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 128,
+                  "end_line": 131
+                }
+              ],
+              "reason": "shouldDismiss arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 158,
+                  "end_line": 160
+                }
+              ],
+              "reason": "onWillDismiss arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "BindSheetBootcamp",
+                "qualified_name": "BindSheetBootcamp",
+                "parent_name": null,
+                "span": {
+                  "start_line": 21,
+                  "end_line": 371
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 371
+                }
+              ],
+              "reason": "struct span checked"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "BindSheetBootcamp.aboutToAppear",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 65,
+                  "end_line": 67
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 65,
+                  "end_line": 67
+                }
+              ],
+              "reason": "method span checked"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "compEventTriggeredLog",
+                "qualified_name": "BindSheetBootcamp.compEventTriggeredLog",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 69,
+                  "end_line": 91
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 91
+                }
+              ],
+              "reason": "method span checked"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "BindSheetBootcamp.build",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 93,
+                  "end_line": 111
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 93,
+                  "end_line": 111
+                }
+              ],
+              "reason": "build_method span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "NavDestination",
+                "qualified_name": "BindSheetBootcamp.build.NavDestination",
+                "parent_name": "BindSheetBootcamp.build",
+                "span": {
+                  "start_line": 94,
+                  "end_line": 110
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 94,
+                  "end_line": 110
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Drawer",
+                "qualified_name": "BindSheetBootcamp.build.NavDestination.Drawer",
+                "parent_name": "BindSheetBootcamp.build.NavDestination",
+                "span": {
+                  "start_line": 95,
+                  "end_line": 107
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 95,
+                  "end_line": 107
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "bindSheetBuilder",
+                "qualified_name": "BindSheetBootcamp.bindSheetBuilder",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 113,
+                  "end_line": 116
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 113,
+                  "end_line": 116
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "BindSheetBootcamp.bindSheetBuilder.Text",
+                "parent_name": "BindSheetBootcamp.bindSheetBuilder",
+                "span": {
+                  "start_line": 115,
+                  "end_line": 115
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 115,
+                  "end_line": 115
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Content",
+                "qualified_name": "BindSheetBootcamp.Content",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 118,
+                  "end_line": 179
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 118,
+                  "end_line": 179
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "BindSheetBootcamp.Content.Column",
+                "parent_name": "BindSheetBootcamp.Content",
+                "span": {
+                  "start_line": 120,
+                  "end_line": 178
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 120,
+                  "end_line": 178
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "BindSheetBootcamp.Content.Column.Button",
+                "parent_name": "BindSheetBootcamp.Content.Column",
+                "span": {
+                  "start_line": 121,
+                  "end_line": 177
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 121,
+                  "end_line": 177
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Parameters",
+                "qualified_name": "BindSheetBootcamp.Parameters",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 181,
+                  "end_line": 365
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 181,
+                  "end_line": 365
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Scroll",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll",
+                "parent_name": "BindSheetBootcamp.Parameters",
+                "span": {
+                  "start_line": 183,
+                  "end_line": 364
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 183,
+                  "end_line": 364
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll",
+                "span": {
+                  "start_line": 184,
+                  "end_line": 363
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 184,
+                  "end_line": 363
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 186,
+                  "end_line": 195
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 186,
+                  "end_line": 195
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 197,
+                  "end_line": 206
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 197,
+                  "end_line": 206
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 208,
+                  "end_line": 217
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 208,
+                  "end_line": 217
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 219,
+                  "end_line": 227
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 219,
+                  "end_line": 227
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 229,
+                  "end_line": 237
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 229,
+                  "end_line": 237
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 239,
+                  "end_line": 258
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 239,
+                  "end_line": 258
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ColorBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 260,
+                  "end_line": 264
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 260,
+                  "end_line": 264
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 266,
+                  "end_line": 274
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 266,
+                  "end_line": 274
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 276,
+                  "end_line": 284
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 276,
+                  "end_line": 284
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 286,
+                  "end_line": 294
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 286,
+                  "end_line": 294
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 296,
+                  "end_line": 302
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 296,
+                  "end_line": 302
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ColorBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.ColorBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 304,
+                  "end_line": 308
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 304,
+                  "end_line": 308
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 310,
+                  "end_line": 319
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 310,
+                  "end_line": 319
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 321,
+                  "end_line": 327
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 321,
+                  "end_line": 327
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 329,
+                  "end_line": 341
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 329,
+                  "end_line": 341
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 343,
+                  "end_line": 351
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 343,
+                  "end_line": 351
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "BindSheetBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "BindSheetBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 353,
+                  "end_line": 361
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 353,
+                  "end_line": 361
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Generic",
+                "qualified_name": "BindSheetBootcamp.Generic",
+                "parent_name": "BindSheetBootcamp",
+                "span": {
+                  "start_line": 367,
+                  "end_line": 370
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 367,
+                  "end_line": 370
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "struct",
+                "name": "BindSheetBootcampPreviewer",
+                "qualified_name": "BindSheetBootcampPreviewer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 373,
+                  "end_line": 381
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 373,
+                  "end_line": 381
+                }
+              ],
+              "reason": "struct span checked"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "BindSheetBootcampPreviewer.build",
+                "parent_name": "BindSheetBootcampPreviewer",
+                "span": {
+                  "start_line": 376,
+                  "end_line": 380
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 376,
+                  "end_line": 380
+                }
+              ],
+              "reason": "build_method span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "BindSheetBootcamp",
+                "qualified_name": "BindSheetBootcampPreviewer.build.BindSheetBootcamp",
+                "parent_name": "BindSheetBootcampPreviewer.build",
+                "span": {
+                  "start_line": 377,
+                  "end_line": 379
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 377,
+                  "end_line": 379
+                }
+              ],
+              "reason": "ui_block span checked"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-049",
+      "category": "image_animator_examples",
+      "logical_path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorTest012.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorTest012.ets",
+        "copied_path": "sources/examples/ImageAnimator/entry/src/main/ets/pages/example/ImageAnimatorTest012.ets",
+        "content_sha256": "ba312c383b477ac4ef0acf831567b47f731f3da6146ec01fad66f4267a9c002b",
+        "line_count": 442
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [],
+        "components": [
+          "Button",
+          "Column",
+          "ForEach",
+          "Grid",
+          "GridItem",
+          "ImageAnimator",
+          "Row",
+          "Scroll",
+          "Text",
+          "Toggle"
+        ],
+        "apis": [
+          "$r"
+        ],
+        "decorators": [
+          "@Builder",
+          "@Component",
+          "@Entry",
+          "@State"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "border",
+          "borderRadius",
+          "columnsGap",
+          "columnsTemplate",
+          "duration",
+          "fillMode",
+          "fontColor",
+          "fontSize",
+          "fontWeight",
+          "height",
+          "images",
+          "iterations",
+          "justifyContent",
+          "layoutWeight",
+          "margin",
+          "onChange",
+          "onClick",
+          "onFinish",
+          "onPause",
+          "onStart",
+          "padding",
+          "reverse",
+          "rowsGap",
+          "state",
+          "textAlign",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "Column",
+          "ForEach",
+          "Grid",
+          "GridItem",
+          "ImageAnimator",
+          "ImageAnimatorTest012",
+          "ImageAnimatorTest012.build",
+          "ImageAnimatorTest012.build.Scroll",
+          "ImageAnimatorTest012.build.Scroll.Column",
+          "ImageAnimatorTest012.build.Scroll.Column.Text",
+          "ImageAnimatorTest012.buildControlPanel",
+          "ImageAnimatorTest012.buildControlPanel.Column",
+          "ImageAnimatorTest012.buildControlPanel.Column.Row",
+          "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+          "ImageAnimatorTest012.buildControlPanel.Column.Text",
+          "ImageAnimatorTest012.buildFillModeComparison",
+          "ImageAnimatorTest012.buildFillModeComparison.Column",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.ImageAnimator",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+          "ImageAnimatorTest012.buildFillModeComparison.Column.Text",
+          "ImageAnimatorTest012.buildTestArea",
+          "ImageAnimatorTest012.buildTestArea.Column",
+          "ImageAnimatorTest012.buildTestArea.Column.ImageAnimator",
+          "ImageAnimatorTest012.buildTestArea.Column.Row",
+          "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+          "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+          "ImageAnimatorTest012.buildTestArea.Column.Text",
+          "ImageAnimatorTest012.buildTestCases",
+          "ImageAnimatorTest012.buildTestCases.Column",
+          "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+          "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+          "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Button",
+          "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Text",
+          "ImageAnimatorTest012.buildTestCases.Column.Text",
+          "ImageAnimatorTest012.buildTestCases.Column.Toggle",
+          "ImageAnimatorTest012.buildTestInfo",
+          "ImageAnimatorTest012.buildTestInfo.Column",
+          "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+          "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+          "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+          "ImageAnimatorTest012.buildTestInfo.Column.Row",
+          "ImageAnimatorTest012.buildTestInfo.Column.Row.Text",
+          "ImageAnimatorTest012.buildTestInfo.Column.Text",
+          "ImageAnimatorTest012.getFillModeColor",
+          "ImageAnimatorTest012.getFillModeDesc",
+          "ImageAnimatorTest012.getFillModeName",
+          "Row",
+          "Scroll",
+          "Text",
+          "Toggle",
+          "build",
+          "buildControlPanel",
+          "buildFillModeComparison",
+          "buildTestArea",
+          "buildTestCases",
+          "buildTestInfo",
+          "getFillModeColor",
+          "getFillModeDesc",
+          "getFillModeName"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ImageAnimatorTest012",
+            "qualified_name": "ImageAnimatorTest012",
+            "parent_name": null,
+            "span": {
+              "start_line": 57,
+              "end_line": 442
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ImageAnimatorTest012.build",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 79,
+              "end_line": 100
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Scroll",
+            "qualified_name": "ImageAnimatorTest012.build.Scroll",
+            "parent_name": "ImageAnimatorTest012.build",
+            "span": {
+              "start_line": 80,
+              "end_line": 99
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.build.Scroll.Column",
+            "parent_name": "ImageAnimatorTest012.build.Scroll",
+            "span": {
+              "start_line": 81,
+              "end_line": 95
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.build.Scroll.Column.Text",
+            "parent_name": "ImageAnimatorTest012.build.Scroll.Column",
+            "span": {
+              "start_line": 82,
+              "end_line": 86
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "buildTestInfo",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 102,
+              "end_line": 181
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo",
+            "span": {
+              "start_line": 104,
+              "end_line": 180
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 105,
+              "end_line": 108
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 110,
+              "end_line": 112
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 114,
+              "end_line": 116
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 118,
+              "end_line": 120
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 122,
+              "end_line": 124
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 126,
+              "end_line": 128
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Row",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 130,
+              "end_line": 136
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Row.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Row",
+            "span": {
+              "start_line": 131,
+              "end_line": 134
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Grid",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+            "span": {
+              "start_line": 138,
+              "end_line": 175
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "GridItem",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+            "span": {
+              "start_line": 139,
+              "end_line": 146
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "span": {
+              "start_line": 140,
+              "end_line": 145
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "GridItem",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+            "span": {
+              "start_line": 147,
+              "end_line": 154
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "span": {
+              "start_line": 148,
+              "end_line": 153
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "GridItem",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+            "span": {
+              "start_line": 155,
+              "end_line": 162
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "span": {
+              "start_line": 156,
+              "end_line": 161
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "GridItem",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+            "span": {
+              "start_line": 163,
+              "end_line": 170
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+            "span": {
+              "start_line": 164,
+              "end_line": 169
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "buildTestArea",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 183,
+              "end_line": 256
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column",
+            "parent_name": "ImageAnimatorTest012.buildTestArea",
+            "span": {
+              "start_line": 185,
+              "end_line": 255
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+            "span": {
+              "start_line": 186,
+              "end_line": 189
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ImageAnimator",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.ImageAnimator",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+            "span": {
+              "start_line": 191,
+              "end_line": 221
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+            "span": {
+              "start_line": 223,
+              "end_line": 246
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+            "span": {
+              "start_line": 224,
+              "end_line": 232
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "span": {
+              "start_line": 225,
+              "end_line": 227
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "span": {
+              "start_line": 228,
+              "end_line": 231
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+            "span": {
+              "start_line": 234,
+              "end_line": 242
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "span": {
+              "start_line": 235,
+              "end_line": 237
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+            "span": {
+              "start_line": 238,
+              "end_line": 241
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+            "span": {
+              "start_line": 248,
+              "end_line": 250
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "buildFillModeComparison",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 258,
+              "end_line": 312
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison",
+            "span": {
+              "start_line": 260,
+              "end_line": 311
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+            "span": {
+              "start_line": 261,
+              "end_line": 264
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Grid",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+            "span": {
+              "start_line": 266,
+              "end_line": 306
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ForEach",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+            "span": {
+              "start_line": 267,
+              "end_line": 301
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "GridItem",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+            "span": {
+              "start_line": 268,
+              "end_line": 300
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+            "span": {
+              "start_line": 269,
+              "end_line": 299
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+            "span": {
+              "start_line": 270,
+              "end_line": 278
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ImageAnimator",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.ImageAnimator",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+            "span": {
+              "start_line": 280,
+              "end_line": 289
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+            "span": {
+              "start_line": 291,
+              "end_line": 294
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "buildTestCases",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 314,
+              "end_line": 361
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column",
+            "parent_name": "ImageAnimatorTest012.buildTestCases",
+            "span": {
+              "start_line": 316,
+              "end_line": 360
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+            "span": {
+              "start_line": 317,
+              "end_line": 320
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ForEach",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+            "span": {
+              "start_line": 322,
+              "end_line": 344
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+            "span": {
+              "start_line": 323,
+              "end_line": 343
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Button",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+            "span": {
+              "start_line": 324,
+              "end_line": 333
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+            "span": {
+              "start_line": 335,
+              "end_line": 338
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Toggle",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Toggle",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+            "span": {
+              "start_line": 346,
+              "end_line": 351
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+            "span": {
+              "start_line": 353,
+              "end_line": 355
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "buildControlPanel",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 363,
+              "end_line": 411
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel",
+            "span": {
+              "start_line": 365,
+              "end_line": 410
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+            "span": {
+              "start_line": 366,
+              "end_line": 369
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+            "span": {
+              "start_line": 371,
+              "end_line": 397
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+            "span": {
+              "start_line": 372,
+              "end_line": 378
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+            "span": {
+              "start_line": 380,
+              "end_line": 386
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+            "span": {
+              "start_line": 388,
+              "end_line": 394
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Text",
+            "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+            "span": {
+              "start_line": 399,
+              "end_line": 405
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getFillModeName",
+            "qualified_name": "ImageAnimatorTest012.getFillModeName",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 413,
+              "end_line": 421
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getFillModeColor",
+            "qualified_name": "ImageAnimatorTest012.getFillModeColor",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 423,
+              "end_line": 431
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getFillModeDesc",
+            "qualified_name": "ImageAnimatorTest012.getFillModeDesc",
+            "parent_name": "ImageAnimatorTest012",
+            "span": {
+              "start_line": 433,
+              "end_line": 441
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "getFillModeColor",
+          "getFillModeDesc",
+          "getFillModeName"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 80,
+                  "end_line": 99
+                }
+              ],
+              "reason": "root Scroll"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 81,
+                  "end_line": 95
+                }
+              ],
+              "reason": "main Column"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              ],
+              "reason": "title Text"
+            },
+            {
+              "value": "Grid",
+              "line_ranges": [
+                {
+                  "start_line": 138,
+                  "end_line": 175
+                }
+              ],
+              "reason": "FillMode enum Grid"
+            },
+            {
+              "value": "GridItem",
+              "line_ranges": [
+                {
+                  "start_line": 139,
+                  "end_line": 146
+                }
+              ],
+              "reason": "GridItem with label"
+            },
+            {
+              "value": "ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 191,
+                  "end_line": 221
+                }
+              ],
+              "reason": "main ImageAnimator under test"
+            },
+            {
+              "value": "ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 280,
+                  "end_line": 289
+                }
+              ],
+              "reason": "comparison ImageAnimator"
+            },
+            {
+              "value": "ForEach",
+              "line_ranges": [
+                {
+                  "start_line": 267,
+                  "end_line": 301
+                }
+              ],
+              "reason": "ForEach over FillMode values"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 324,
+                  "end_line": 333
+                }
+              ],
+              "reason": "test case Button"
+            },
+            {
+              "value": "Toggle",
+              "line_ranges": [
+                {
+                  "start_line": 346,
+                  "end_line": 351
+                }
+              ],
+              "reason": "reverse Toggle"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 372,
+                  "end_line": 378
+                }
+              ],
+              "reason": "start Button"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 223,
+                  "end_line": 246
+                }
+              ],
+              "reason": "status Row"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 193,
+                  "end_line": 196
+                }
+              ],
+              "reason": "global $r image resources"
+            },
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 282,
+                  "end_line": 283
+                }
+              ],
+              "reason": "global $r in comparison ImageAnimator"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "getFillModeName",
+              "line_ranges": [
+                {
+                  "start_line": 186,
+                  "end_line": 186
+                }
+              ],
+              "reason": "this.getFillModeName business method"
+            },
+            {
+              "value": "getFillModeColor",
+              "line_ranges": [
+                {
+                  "start_line": 275,
+                  "end_line": 275
+                }
+              ],
+              "reason": "this.getFillModeColor business method"
+            },
+            {
+              "value": "getFillModeDesc",
+              "line_ranges": [
+                {
+                  "start_line": 291,
+                  "end_line": 291
+                }
+              ],
+              "reason": "this.getFillModeDesc business method"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 57
+                }
+              ],
+              "reason": "page entry"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 58,
+                  "end_line": 58
+                }
+              ],
+              "reason": "component"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 60,
+                  "end_line": 60
+                }
+              ],
+              "reason": "@State field"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 102
+                }
+              ],
+              "reason": "@Builder buildTestInfo"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 183,
+                  "end_line": 183
+                }
+              ],
+              "reason": "@Builder buildTestArea"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 258,
+                  "end_line": 258
+                }
+              ],
+              "reason": "@Builder buildFillModeComparison"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 314
+                }
+              ],
+              "reason": "@Builder buildTestCases"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 363,
+                  "end_line": 363
+                }
+              ],
+              "reason": "@Builder buildControlPanel"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 83,
+                  "end_line": 83
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "fontWeight",
+              "line_ranges": [
+                {
+                  "start_line": 84,
+                  "end_line": 84
+                }
+              ],
+              "reason": "Text.fontWeight"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 85,
+                  "end_line": 85
+                }
+              ],
+              "reason": "Text.margin"
+            },
+            {
+              "value": "fontColor",
+              "line_ranges": [
+                {
+                  "start_line": 86,
+                  "end_line": 86
+                }
+              ],
+              "reason": "Text.fontColor"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 94,
+                  "end_line": 94
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "padding",
+              "line_ranges": [
+                {
+                  "start_line": 95,
+                  "end_line": 95
+                }
+              ],
+              "reason": "Column.padding"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 97,
+                  "end_line": 97
+                }
+              ],
+              "reason": "Scroll.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 98,
+                  "end_line": 98
+                }
+              ],
+              "reason": "Scroll.height"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 99,
+                  "end_line": 99
+                }
+              ],
+              "reason": "Scroll.backgroundColor"
+            },
+            {
+              "value": "images",
+              "line_ranges": [
+                {
+                  "start_line": 192,
+                  "end_line": 197
+                }
+              ],
+              "reason": "ImageAnimator.images"
+            },
+            {
+              "value": "duration",
+              "line_ranges": [
+                {
+                  "start_line": 198,
+                  "end_line": 198
+                }
+              ],
+              "reason": "ImageAnimator.duration"
+            },
+            {
+              "value": "state",
+              "line_ranges": [
+                {
+                  "start_line": 199,
+                  "end_line": 199
+                }
+              ],
+              "reason": "ImageAnimator.state"
+            },
+            {
+              "value": "fillMode",
+              "line_ranges": [
+                {
+                  "start_line": 200,
+                  "end_line": 200
+                }
+              ],
+              "reason": "ImageAnimator.fillMode"
+            },
+            {
+              "value": "reverse",
+              "line_ranges": [
+                {
+                  "start_line": 201,
+                  "end_line": 201
+                }
+              ],
+              "reason": "ImageAnimator.reverse"
+            },
+            {
+              "value": "iterations",
+              "line_ranges": [
+                {
+                  "start_line": 202,
+                  "end_line": 202
+                }
+              ],
+              "reason": "ImageAnimator.iterations"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 203,
+                  "end_line": 203
+                }
+              ],
+              "reason": "ImageAnimator.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 204,
+                  "end_line": 204
+                }
+              ],
+              "reason": "ImageAnimator.height"
+            },
+            {
+              "value": "border",
+              "line_ranges": [
+                {
+                  "start_line": 205,
+                  "end_line": 205
+                }
+              ],
+              "reason": "ImageAnimator.border"
+            },
+            {
+              "value": "onStart",
+              "line_ranges": [
+                {
+                  "start_line": 206,
+                  "end_line": 210
+                }
+              ],
+              "reason": "ImageAnimator.onStart"
+            },
+            {
+              "value": "onPause",
+              "line_ranges": [
+                {
+                  "start_line": 211,
+                  "end_line": 215
+                }
+              ],
+              "reason": "ImageAnimator.onPause"
+            },
+            {
+              "value": "onFinish",
+              "line_ranges": [
+                {
+                  "start_line": 216,
+                  "end_line": 221
+                }
+              ],
+              "reason": "ImageAnimator.onFinish"
+            },
+            {
+              "value": "columnsTemplate",
+              "line_ranges": [
+                {
+                  "start_line": 172,
+                  "end_line": 172
+                }
+              ],
+              "reason": "Grid.columnsTemplate"
+            },
+            {
+              "value": "rowsGap",
+              "line_ranges": [
+                {
+                  "start_line": 173,
+                  "end_line": 173
+                }
+              ],
+              "reason": "Grid.rowsGap"
+            },
+            {
+              "value": "columnsGap",
+              "line_ranges": [
+                {
+                  "start_line": 174,
+                  "end_line": 174
+                }
+              ],
+              "reason": "Grid.columnsGap"
+            },
+            {
+              "value": "borderRadius",
+              "line_ranges": [
+                {
+                  "start_line": 145,
+                  "end_line": 145
+                }
+              ],
+              "reason": "Text.borderRadius"
+            },
+            {
+              "value": "padding",
+              "line_ranges": [
+                {
+                  "start_line": 143,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Text.padding"
+            },
+            {
+              "value": "textAlign",
+              "line_ranges": [
+                {
+                  "start_line": 278,
+                  "end_line": 278
+                }
+              ],
+              "reason": "Text.textAlign"
+            },
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 327,
+                  "end_line": 333
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "layoutWeight",
+              "line_ranges": [
+                {
+                  "start_line": 338,
+                  "end_line": 338
+                }
+              ],
+              "reason": "Text.layoutWeight"
+            },
+            {
+              "value": "onChange",
+              "line_ranges": [
+                {
+                  "start_line": 347,
+                  "end_line": 350
+                }
+              ],
+              "reason": "Toggle.onChange"
+            },
+            {
+              "value": "justifyContent",
+              "line_ranges": [
+                {
+                  "start_line": 397,
+                  "end_line": 397
+                }
+              ],
+              "reason": "Row.justifyContent"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 326,
+                  "end_line": 326
+                }
+              ],
+              "reason": "Button.backgroundColor"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ForEach",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Grid",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "GridItem",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.build",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.build.Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.build.Scroll.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.build.Scroll.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildControlPanel",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildControlPanel.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildControlPanel.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildFillModeComparison.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column.ImageAnimator",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column.Row",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestArea.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Button",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestCases.Column.Toggle",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Row",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Row.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.getFillModeColor",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.getFillModeDesc",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "ImageAnimatorTest012.getFillModeName",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "Toggle",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "buildControlPanel",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "buildFillModeComparison",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "buildTestArea",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "buildTestCases",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "buildTestInfo",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "getFillModeColor",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "getFillModeDesc",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            },
+            {
+              "value": "getFillModeName",
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "symbol from declaration name/qname"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 206,
+                  "end_line": 210
+                }
+              ],
+              "reason": "onStart arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 216,
+                  "end_line": 221
+                }
+              ],
+              "reason": "onFinish arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 267,
+                  "end_line": 301
+                }
+              ],
+              "reason": "ForEach arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 322,
+                  "end_line": 344
+                }
+              ],
+              "reason": "ForEach test case arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 327,
+                  "end_line": 333
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 347,
+                  "end_line": 350
+                }
+              ],
+              "reason": "onChange arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 375,
+                  "end_line": 378
+                }
+              ],
+              "reason": "start Button onClick"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "ImageAnimatorTest012",
+                "qualified_name": "ImageAnimatorTest012",
+                "parent_name": null,
+                "span": {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 57,
+                  "end_line": 442
+                }
+              ],
+              "reason": "struct span checked"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "ImageAnimatorTest012.build",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 79,
+                  "end_line": 100
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 79,
+                  "end_line": 100
+                }
+              ],
+              "reason": "build_method span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Scroll",
+                "qualified_name": "ImageAnimatorTest012.build.Scroll",
+                "parent_name": "ImageAnimatorTest012.build",
+                "span": {
+                  "start_line": 80,
+                  "end_line": 99
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 80,
+                  "end_line": 99
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.build.Scroll.Column",
+                "parent_name": "ImageAnimatorTest012.build.Scroll",
+                "span": {
+                  "start_line": 81,
+                  "end_line": 95
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 81,
+                  "end_line": 95
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.build.Scroll.Column.Text",
+                "parent_name": "ImageAnimatorTest012.build.Scroll.Column",
+                "span": {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "buildTestInfo",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 102,
+                  "end_line": 181
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 181
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo",
+                "span": {
+                  "start_line": 104,
+                  "end_line": 180
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 104,
+                  "end_line": 180
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 105,
+                  "end_line": 108
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 105,
+                  "end_line": 108
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 110,
+                  "end_line": 112
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 110,
+                  "end_line": 112
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 114,
+                  "end_line": 116
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 114,
+                  "end_line": 116
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 118,
+                  "end_line": 120
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 118,
+                  "end_line": 120
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 122,
+                  "end_line": 124
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 122,
+                  "end_line": 124
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 126,
+                  "end_line": 128
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 126,
+                  "end_line": 128
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Row",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 130,
+                  "end_line": 136
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 130,
+                  "end_line": 136
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Row.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Row",
+                "span": {
+                  "start_line": 131,
+                  "end_line": 134
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 131,
+                  "end_line": 134
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Grid",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column",
+                "span": {
+                  "start_line": 138,
+                  "end_line": 175
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 138,
+                  "end_line": 175
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "GridItem",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+                "span": {
+                  "start_line": 139,
+                  "end_line": 146
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 139,
+                  "end_line": 146
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "span": {
+                  "start_line": 140,
+                  "end_line": 145
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 140,
+                  "end_line": 145
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "GridItem",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+                "span": {
+                  "start_line": 147,
+                  "end_line": 154
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 147,
+                  "end_line": 154
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "span": {
+                  "start_line": 148,
+                  "end_line": 153
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 148,
+                  "end_line": 153
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "GridItem",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+                "span": {
+                  "start_line": 155,
+                  "end_line": 162
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 155,
+                  "end_line": 162
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "span": {
+                  "start_line": 156,
+                  "end_line": 161
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 156,
+                  "end_line": 161
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "GridItem",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid",
+                "span": {
+                  "start_line": 163,
+                  "end_line": 170
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 163,
+                  "end_line": 170
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestInfo.Column.Grid.GridItem",
+                "span": {
+                  "start_line": 164,
+                  "end_line": 169
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 164,
+                  "end_line": 169
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "buildTestArea",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 183,
+                  "end_line": 256
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 183,
+                  "end_line": 256
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column",
+                "parent_name": "ImageAnimatorTest012.buildTestArea",
+                "span": {
+                  "start_line": 185,
+                  "end_line": 255
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 185,
+                  "end_line": 255
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+                "span": {
+                  "start_line": 186,
+                  "end_line": 189
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 186,
+                  "end_line": 189
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ImageAnimator",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.ImageAnimator",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+                "span": {
+                  "start_line": 191,
+                  "end_line": 221
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 191,
+                  "end_line": 221
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+                "span": {
+                  "start_line": 223,
+                  "end_line": 246
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 223,
+                  "end_line": 246
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+                "span": {
+                  "start_line": 224,
+                  "end_line": 232
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 224,
+                  "end_line": 232
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "span": {
+                  "start_line": 225,
+                  "end_line": 227
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 225,
+                  "end_line": 227
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "span": {
+                  "start_line": 228,
+                  "end_line": 231
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 228,
+                  "end_line": 231
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row",
+                "span": {
+                  "start_line": 234,
+                  "end_line": 242
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 234,
+                  "end_line": 242
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "span": {
+                  "start_line": 235,
+                  "end_line": 237
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 235,
+                  "end_line": 237
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column.Row.Column",
+                "span": {
+                  "start_line": 238,
+                  "end_line": 241
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 238,
+                  "end_line": 241
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestArea.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestArea.Column",
+                "span": {
+                  "start_line": 248,
+                  "end_line": 250
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 248,
+                  "end_line": 250
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "buildFillModeComparison",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 258,
+                  "end_line": 312
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 258,
+                  "end_line": 312
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison",
+                "span": {
+                  "start_line": 260,
+                  "end_line": 311
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 260,
+                  "end_line": 311
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+                "span": {
+                  "start_line": 261,
+                  "end_line": 264
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 261,
+                  "end_line": 264
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Grid",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column",
+                "span": {
+                  "start_line": 266,
+                  "end_line": 306
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 266,
+                  "end_line": 306
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ForEach",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid",
+                "span": {
+                  "start_line": 267,
+                  "end_line": 301
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 267,
+                  "end_line": 301
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "GridItem",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach",
+                "span": {
+                  "start_line": 268,
+                  "end_line": 300
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 268,
+                  "end_line": 300
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem",
+                "span": {
+                  "start_line": 269,
+                  "end_line": 299
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 269,
+                  "end_line": 299
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+                "span": {
+                  "start_line": 270,
+                  "end_line": 278
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 270,
+                  "end_line": 278
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ImageAnimator",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.ImageAnimator",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+                "span": {
+                  "start_line": 280,
+                  "end_line": 289
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 280,
+                  "end_line": 289
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildFillModeComparison.Column.Grid.ForEach.GridItem.Column",
+                "span": {
+                  "start_line": 291,
+                  "end_line": 294
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 291,
+                  "end_line": 294
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "buildTestCases",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 314,
+                  "end_line": 361
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 361
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column",
+                "parent_name": "ImageAnimatorTest012.buildTestCases",
+                "span": {
+                  "start_line": 316,
+                  "end_line": 360
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 316,
+                  "end_line": 360
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+                "span": {
+                  "start_line": 317,
+                  "end_line": 320
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 317,
+                  "end_line": 320
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ForEach",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+                "span": {
+                  "start_line": 322,
+                  "end_line": 344
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 322,
+                  "end_line": 344
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach",
+                "span": {
+                  "start_line": 323,
+                  "end_line": 343
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 323,
+                  "end_line": 343
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Button",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+                "span": {
+                  "start_line": 324,
+                  "end_line": 333
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 324,
+                  "end_line": 333
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column.ForEach.Row",
+                "span": {
+                  "start_line": 335,
+                  "end_line": 338
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 335,
+                  "end_line": 338
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Toggle",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Toggle",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+                "span": {
+                  "start_line": 346,
+                  "end_line": 351
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 346,
+                  "end_line": 351
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildTestCases.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildTestCases.Column",
+                "span": {
+                  "start_line": 353,
+                  "end_line": 355
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 353,
+                  "end_line": 355
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "buildControlPanel",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 363,
+                  "end_line": 411
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 363,
+                  "end_line": 411
+                }
+              ],
+              "reason": "builder span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel",
+                "span": {
+                  "start_line": 365,
+                  "end_line": 410
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 365,
+                  "end_line": 410
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+                "span": {
+                  "start_line": 366,
+                  "end_line": 369
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 366,
+                  "end_line": 369
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+                "span": {
+                  "start_line": 371,
+                  "end_line": 397
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 371,
+                  "end_line": 397
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+                "span": {
+                  "start_line": 372,
+                  "end_line": 378
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 372,
+                  "end_line": 378
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+                "span": {
+                  "start_line": 380,
+                  "end_line": 386
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 380,
+                  "end_line": 386
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Row.Button",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column.Row",
+                "span": {
+                  "start_line": 388,
+                  "end_line": 394
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 388,
+                  "end_line": 394
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "ImageAnimatorTest012.buildControlPanel.Column.Text",
+                "parent_name": "ImageAnimatorTest012.buildControlPanel.Column",
+                "span": {
+                  "start_line": 399,
+                  "end_line": 405
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 399,
+                  "end_line": 405
+                }
+              ],
+              "reason": "ui_block span checked"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getFillModeName",
+                "qualified_name": "ImageAnimatorTest012.getFillModeName",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 413,
+                  "end_line": 421
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 413,
+                  "end_line": 421
+                }
+              ],
+              "reason": "method span checked"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getFillModeColor",
+                "qualified_name": "ImageAnimatorTest012.getFillModeColor",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 423,
+                  "end_line": 431
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 423,
+                  "end_line": 431
+                }
+              ],
+              "reason": "method span checked"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getFillModeDesc",
+                "qualified_name": "ImageAnimatorTest012.getFillModeDesc",
+                "parent_name": "ImageAnimatorTest012",
+                "span": {
+                  "start_line": 433,
+                  "end_line": 441
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 433,
+                  "end_line": 441
+                }
+              ],
+              "reason": "method span checked"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,4524 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B008",
+    "group_manifest_sha256": "c001b21fc0b7bf54358ab36cd3865f23fcf0c16faba1772961112e3b812d411d",
+    "expected_case_ids": [
+      "R63-005",
+      "R63-038"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b008-r63-20260711-1"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-005",
+      "category": "advanced_ui_component",
+      "logical_path": "advanced_ui_component/foldsplitcontainer/source/foldsplitcontainer.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/foldsplitcontainer/source/foldsplitcontainer.ets",
+        "copied_path": "sources/advanced_ui_component/foldsplitcontainer/source/foldsplitcontainer.ets",
+        "content_sha256": "79c35e91925eb705c41dc1d839305866b33ad0031e068902ff90b7de505f20ee",
+        "line_count": 823
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.curves",
+            "default_name": "curves",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.display",
+            "default_name": "display",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.hilog",
+            "default_name": "hilog",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.mediaquery",
+            "default_name": "mediaQuery",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.window",
+            "default_name": "window",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "@ohos.arkui.node",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "LengthMetrics": "LengthMetrics",
+              "Position": "Position",
+              "Size": "Size"
+            }
+          },
+          {
+            "module": "@ohos.base",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Callback": "Callback"
+            }
+          }
+        ],
+        "components": [
+          "Column",
+          "Stack"
+        ],
+        "apis": null,
+        "decorators": [
+          "@BuilderParam",
+          "@Component",
+          "@Prop",
+          "@State",
+          "@Watch"
+        ],
+        "attributes": [
+          "animation",
+          "clip",
+          "height",
+          "id",
+          "onSizeChange",
+          "opacity",
+          "position",
+          "size",
+          "width"
+        ],
+        "symbols": [
+          "Column",
+          "FoldSplitContainer",
+          "FoldSplitContainer.aboutToAppear",
+          "FoldSplitContainer.aboutToDisappear",
+          "FoldSplitContainer.build",
+          "FoldSplitContainer.build.Stack",
+          "FoldSplitContainer.build.Stack.Column",
+          "FoldSplitContainer.dispatchHoverStatusChange",
+          "FoldSplitContainer.getCreaseRegionRect",
+          "FoldSplitContainer.getExpandedRegionLayouts",
+          "FoldSplitContainer.getFoldedRegionLayouts",
+          "FoldSplitContainer.getHoverModeRegionLayouts",
+          "FoldSplitContainer.hasExtraRegion",
+          "FoldSplitContainer.isPortraitOrientation",
+          "FoldSplitContainer.updateContainerPosition",
+          "FoldSplitContainer.updateContainerSize",
+          "FoldSplitContainer.updateLayout",
+          "FoldSplitContainer.updatePreferredOrientation",
+          "Logger",
+          "Logger.debug",
+          "Logger.error",
+          "Logger.info",
+          "Stack",
+          "aboutToAppear",
+          "aboutToDisappear",
+          "build",
+          "debug",
+          "dispatchHoverStatusChange",
+          "error",
+          "getCreaseRegionRect",
+          "getExpandedRegionLayouts",
+          "getFoldedRegionLayouts",
+          "getHoverModeRegionLayouts",
+          "getSplitRatio",
+          "hasExtraRegion",
+          "info",
+          "initLayout",
+          "isPortraitOrientation",
+          "updateContainerPosition",
+          "updateContainerSize",
+          "updateLayout",
+          "updatePreferredOrientation",
+          "withDefaultValue"
+        ],
+        "syntax": [
+          "arrow_fn",
+          "async_fn",
+          "await_expr",
+          "try_catch"
+        ],
+        "declarations": [
+          {
+            "kind": "function",
+            "name": "withDefaultValue",
+            "qualified_name": "withDefaultValue",
+            "parent_name": null,
+            "span": {
+              "start_line": 296,
+              "end_line": 301
+            }
+          },
+          {
+            "kind": "function",
+            "name": "getSplitRatio",
+            "qualified_name": "getSplitRatio",
+            "parent_name": null,
+            "span": {
+              "start_line": 303,
+              "end_line": 311
+            }
+          },
+          {
+            "kind": "class",
+            "name": "Logger",
+            "qualified_name": "Logger",
+            "parent_name": null,
+            "span": {
+              "start_line": 313,
+              "end_line": 325
+            }
+          },
+          {
+            "kind": "method",
+            "name": "debug",
+            "qualified_name": "Logger.debug",
+            "parent_name": "Logger",
+            "span": {
+              "start_line": 314,
+              "end_line": 316
+            }
+          },
+          {
+            "kind": "method",
+            "name": "info",
+            "qualified_name": "Logger.info",
+            "parent_name": "Logger",
+            "span": {
+              "start_line": 318,
+              "end_line": 320
+            }
+          },
+          {
+            "kind": "method",
+            "name": "error",
+            "qualified_name": "Logger.error",
+            "parent_name": "Logger",
+            "span": {
+              "start_line": 322,
+              "end_line": 324
+            }
+          },
+          {
+            "kind": "function",
+            "name": "initLayout",
+            "qualified_name": "initLayout",
+            "parent_name": null,
+            "span": {
+              "start_line": 327,
+              "end_line": 332
+            }
+          },
+          {
+            "kind": "struct",
+            "name": "FoldSplitContainer",
+            "qualified_name": "FoldSplitContainer",
+            "parent_name": null,
+            "span": {
+              "start_line": 343,
+              "end_line": 823
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "FoldSplitContainer.aboutToAppear",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 461,
+              "end_line": 495
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToDisappear",
+            "qualified_name": "FoldSplitContainer.aboutToDisappear",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 497,
+              "end_line": 506
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "FoldSplitContainer.build",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 508,
+              "end_line": 556
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Stack",
+            "qualified_name": "FoldSplitContainer.build.Stack",
+            "parent_name": "FoldSplitContainer.build",
+            "span": {
+              "start_line": 509,
+              "end_line": 555
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "FoldSplitContainer.build.Stack.Column",
+            "parent_name": "FoldSplitContainer.build.Stack",
+            "span": {
+              "start_line": 510,
+              "end_line": 520
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "FoldSplitContainer.build.Stack.Column",
+            "parent_name": "FoldSplitContainer.build.Stack",
+            "span": {
+              "start_line": 522,
+              "end_line": 532
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "FoldSplitContainer.build.Stack.Column",
+            "parent_name": "FoldSplitContainer.build.Stack",
+            "span": {
+              "start_line": 535,
+              "end_line": 545
+            }
+          },
+          {
+            "kind": "method",
+            "name": "dispatchHoverStatusChange",
+            "qualified_name": "FoldSplitContainer.dispatchHoverStatusChange",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 558,
+              "end_line": 567
+            }
+          },
+          {
+            "kind": "method",
+            "name": "hasExtraRegion",
+            "qualified_name": "FoldSplitContainer.hasExtraRegion",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 569,
+              "end_line": 571
+            }
+          },
+          {
+            "kind": "method",
+            "name": "updatePreferredOrientation",
+            "qualified_name": "FoldSplitContainer.updatePreferredOrientation",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 573,
+              "end_line": 585
+            }
+          },
+          {
+            "kind": "method",
+            "name": "updateContainerSize",
+            "qualified_name": "FoldSplitContainer.updateContainerSize",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 587,
+              "end_line": 590
+            }
+          },
+          {
+            "kind": "method",
+            "name": "updateContainerPosition",
+            "qualified_name": "FoldSplitContainer.updateContainerPosition",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 592,
+              "end_line": 598
+            }
+          },
+          {
+            "kind": "method",
+            "name": "updateLayout",
+            "qualified_name": "FoldSplitContainer.updateLayout",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 600,
+              "end_line": 650
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getExpandedRegionLayouts",
+            "qualified_name": "FoldSplitContainer.getExpandedRegionLayouts",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 652,
+              "end_line": 702
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getHoverModeRegionLayouts",
+            "qualified_name": "FoldSplitContainer.getHoverModeRegionLayouts",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 704,
+              "end_line": 765
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getFoldedRegionLayouts",
+            "qualified_name": "FoldSplitContainer.getFoldedRegionLayouts",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 767,
+              "end_line": 791
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getCreaseRegionRect",
+            "qualified_name": "FoldSplitContainer.getCreaseRegionRect",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 793,
+              "end_line": 809
+            }
+          },
+          {
+            "kind": "method",
+            "name": "isPortraitOrientation",
+            "qualified_name": "FoldSplitContainer.isPortraitOrientation",
+            "parent_name": "FoldSplitContainer",
+            "span": {
+              "start_line": 811,
+              "end_line": 822
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "primary",
+          "secondary"
+        ],
+        "apis": [
+          "Logger.error",
+          "px2vp"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.curves",
+                "default_name": "curves",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.display",
+                "default_name": "display",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.hilog",
+                "default_name": "hilog",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.mediaquery",
+                "default_name": "mediaQuery",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 22
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.window",
+                "default_name": "window",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.arkui.node",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "LengthMetrics": "LengthMetrics",
+                  "Position": "Position",
+                  "Size": "Size"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "@ohos.base",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Callback": "Callback"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 21
+                }
+              ],
+              "reason": "static import declaration"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 510,
+                  "end_line": 510
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "Stack",
+              "line_ranges": [
+                {
+                  "start_line": 509,
+                  "end_line": 509
+                }
+              ],
+              "reason": "declarative UI component call"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "primary",
+              "line_ranges": [
+                {
+                  "start_line": 512,
+                  "end_line": 512
+                }
+              ],
+              "reason": "this.primary() is BuilderParam callback invocation, not a ui_block"
+            },
+            {
+              "value": "secondary",
+              "line_ranges": [
+                {
+                  "start_line": 524,
+                  "end_line": 524
+                }
+              ],
+              "reason": "this.secondary() is BuilderParam callback invocation, not a ui_block"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "medium",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "Logger.error",
+              "line_ranges": [
+                {
+                  "start_line": 479,
+                  "end_line": 479
+                }
+              ],
+              "reason": "project Logger wrapper around hilog, not a frozen platform root"
+            },
+            {
+              "value": "px2vp",
+              "line_ranges": [
+                {
+                  "start_line": 802,
+                  "end_line": 802
+                }
+              ],
+              "reason": "runtime helper not in frozen global_apis"
+            }
+          ],
+          "uncertainties": [
+            {
+              "line_ranges": [
+                {
+                  "start_line": 462,
+                  "end_line": 494
+                },
+                {
+                  "start_line": 502,
+                  "end_line": 502
+                },
+                {
+                  "start_line": 563,
+                  "end_line": 563
+                },
+                {
+                  "start_line": 576,
+                  "end_line": 579
+                },
+                {
+                  "start_line": 627,
+                  "end_line": 627
+                },
+                {
+                  "start_line": 794,
+                  "end_line": 794
+                },
+                {
+                  "start_line": 812,
+                  "end_line": 812
+                }
+              ],
+              "question": "Receivers display/window/mediaQuery/curves come from @ohos.* modules absent from frozen module_prefixes, so canonical API ownership is incomplete and the whole APIs field must stay null.",
+              "candidate_values": [
+                "curves.springMotion",
+                "display.getCurrentFoldCreaseRegion",
+                "display.getDefaultDisplaySync",
+                "display.getFoldStatus",
+                "display.off",
+                "display.on",
+                "mediaQuery.matchMediaSync",
+                "window.getLastWindow",
+                "LengthMetrics.vp",
+                "hilog.debug",
+                "hilog.info",
+                "hilog.error",
+                "animateTo"
+              ],
+              "recommended_action": "human_review"
+            }
+          ]
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@BuilderParam",
+              "line_ranges": [
+                {
+                  "start_line": 354,
+                  "end_line": 354
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 343,
+                  "end_line": 343
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Prop",
+              "line_ranges": [
+                {
+                  "start_line": 387,
+                  "end_line": 387
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 448,
+                  "end_line": 448
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Watch",
+              "line_ranges": [
+                {
+                  "start_line": 388,
+                  "end_line": 388
+                }
+              ],
+              "reason": "decorator in executable code"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "animation",
+              "line_ranges": [
+                {
+                  "start_line": 539,
+                  "end_line": 539
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "clip",
+              "line_ranges": [
+                {
+                  "start_line": 520,
+                  "end_line": 520
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 550,
+                  "end_line": 550
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "id",
+              "line_ranges": [
+                {
+                  "start_line": 548,
+                  "end_line": 548
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "onSizeChange",
+              "line_ranges": [
+                {
+                  "start_line": 551,
+                  "end_line": 551
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "opacity",
+              "line_ranges": [
+                {
+                  "start_line": 538,
+                  "end_line": 538
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "position",
+              "line_ranges": [
+                {
+                  "start_line": 516,
+                  "end_line": 516
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "size",
+              "line_ranges": [
+                {
+                  "start_line": 515,
+                  "end_line": 515
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 549,
+                  "end_line": 549
+                }
+              ],
+              "reason": "UI component modifier/event"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 510,
+                  "end_line": 510
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer",
+              "line_ranges": [
+                {
+                  "start_line": 315,
+                  "end_line": 315
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 461,
+                  "end_line": 461
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 497,
+                  "end_line": 497
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.build",
+              "line_ranges": [
+                {
+                  "start_line": 508,
+                  "end_line": 508
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.build.Stack",
+              "line_ranges": [
+                {
+                  "start_line": 509,
+                  "end_line": 509
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.build.Stack.Column",
+              "line_ranges": [
+                {
+                  "start_line": 510,
+                  "end_line": 510
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.dispatchHoverStatusChange",
+              "line_ranges": [
+                {
+                  "start_line": 558,
+                  "end_line": 558
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.getCreaseRegionRect",
+              "line_ranges": [
+                {
+                  "start_line": 710,
+                  "end_line": 710
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.getExpandedRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 607,
+                  "end_line": 607
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.getFoldedRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 604,
+                  "end_line": 604
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.getHoverModeRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 612,
+                  "end_line": 612
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.hasExtraRegion",
+              "line_ranges": [
+                {
+                  "start_line": 569,
+                  "end_line": 569
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.isPortraitOrientation",
+              "line_ranges": [
+                {
+                  "start_line": 609,
+                  "end_line": 609
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.updateContainerPosition",
+              "line_ranges": [
+                {
+                  "start_line": 553,
+                  "end_line": 553
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.updateContainerSize",
+              "line_ranges": [
+                {
+                  "start_line": 552,
+                  "end_line": 552
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.updateLayout",
+              "line_ranges": [
+                {
+                  "start_line": 388,
+                  "end_line": 388
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "FoldSplitContainer.updatePreferredOrientation",
+              "line_ranges": [
+                {
+                  "start_line": 473,
+                  "end_line": 473
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Logger",
+              "line_ranges": [
+                {
+                  "start_line": 313,
+                  "end_line": 313
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Logger.debug",
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 314
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Logger.error",
+              "line_ranges": [
+                {
+                  "start_line": 322,
+                  "end_line": 322
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Logger.info",
+              "line_ranges": [
+                {
+                  "start_line": 318,
+                  "end_line": 318
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Stack",
+              "line_ranges": [
+                {
+                  "start_line": 509,
+                  "end_line": 509
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 461,
+                  "end_line": 461
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 497,
+                  "end_line": 497
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 508,
+                  "end_line": 508
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "debug",
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 314
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "dispatchHoverStatusChange",
+              "line_ranges": [
+                {
+                  "start_line": 558,
+                  "end_line": 558
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "error",
+              "line_ranges": [
+                {
+                  "start_line": 322,
+                  "end_line": 322
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "getCreaseRegionRect",
+              "line_ranges": [
+                {
+                  "start_line": 710,
+                  "end_line": 710
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "getExpandedRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 607,
+                  "end_line": 607
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "getFoldedRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 604,
+                  "end_line": 604
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "getHoverModeRegionLayouts",
+              "line_ranges": [
+                {
+                  "start_line": 612,
+                  "end_line": 612
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "getSplitRatio",
+              "line_ranges": [
+                {
+                  "start_line": 303,
+                  "end_line": 303
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "hasExtraRegion",
+              "line_ranges": [
+                {
+                  "start_line": 569,
+                  "end_line": 569
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "info",
+              "line_ranges": [
+                {
+                  "start_line": 318,
+                  "end_line": 318
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "initLayout",
+              "line_ranges": [
+                {
+                  "start_line": 327,
+                  "end_line": 327
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "isPortraitOrientation",
+              "line_ranges": [
+                {
+                  "start_line": 609,
+                  "end_line": 609
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "updateContainerPosition",
+              "line_ranges": [
+                {
+                  "start_line": 553,
+                  "end_line": 553
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "updateContainerSize",
+              "line_ranges": [
+                {
+                  "start_line": 552,
+                  "end_line": 552
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "updateLayout",
+              "line_ranges": [
+                {
+                  "start_line": 388,
+                  "end_line": 388
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "updatePreferredOrientation",
+              "line_ranges": [
+                {
+                  "start_line": 473,
+                  "end_line": 473
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "withDefaultValue",
+              "line_ranges": [
+                {
+                  "start_line": 296,
+                  "end_line": 296
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 294,
+                  "end_line": 294
+                }
+              ],
+              "reason": "arrow functions"
+            },
+            {
+              "value": "async_fn",
+              "line_ranges": [
+                {
+                  "start_line": 573,
+                  "end_line": 573
+                }
+              ],
+              "reason": "async updatePreferredOrientation"
+            },
+            {
+              "value": "await_expr",
+              "line_ranges": [
+                {
+                  "start_line": 577,
+                  "end_line": 577
+                }
+              ],
+              "reason": "await window orientation call"
+            },
+            {
+              "value": "try_catch",
+              "line_ranges": [
+                {
+                  "start_line": 575,
+                  "end_line": 581
+                }
+              ],
+              "reason": "try/catch around orientation update"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "function",
+                "name": "withDefaultValue",
+                "qualified_name": "withDefaultValue",
+                "parent_name": null,
+                "span": {
+                  "start_line": 296,
+                  "end_line": 301
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 296,
+                  "end_line": 301
+                }
+              ],
+              "reason": "function declaration span"
+            },
+            {
+              "value": {
+                "kind": "function",
+                "name": "getSplitRatio",
+                "qualified_name": "getSplitRatio",
+                "parent_name": null,
+                "span": {
+                  "start_line": 303,
+                  "end_line": 311
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 303,
+                  "end_line": 311
+                }
+              ],
+              "reason": "function declaration span"
+            },
+            {
+              "value": {
+                "kind": "class",
+                "name": "Logger",
+                "qualified_name": "Logger",
+                "parent_name": null,
+                "span": {
+                  "start_line": 313,
+                  "end_line": 325
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 313,
+                  "end_line": 325
+                }
+              ],
+              "reason": "class declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "debug",
+                "qualified_name": "Logger.debug",
+                "parent_name": "Logger",
+                "span": {
+                  "start_line": 314,
+                  "end_line": 316
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 314,
+                  "end_line": 316
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "info",
+                "qualified_name": "Logger.info",
+                "parent_name": "Logger",
+                "span": {
+                  "start_line": 318,
+                  "end_line": 320
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 318,
+                  "end_line": 320
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "error",
+                "qualified_name": "Logger.error",
+                "parent_name": "Logger",
+                "span": {
+                  "start_line": 322,
+                  "end_line": 324
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 322,
+                  "end_line": 324
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "function",
+                "name": "initLayout",
+                "qualified_name": "initLayout",
+                "parent_name": null,
+                "span": {
+                  "start_line": 327,
+                  "end_line": 332
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 327,
+                  "end_line": 332
+                }
+              ],
+              "reason": "function declaration span"
+            },
+            {
+              "value": {
+                "kind": "struct",
+                "name": "FoldSplitContainer",
+                "qualified_name": "FoldSplitContainer",
+                "parent_name": null,
+                "span": {
+                  "start_line": 343,
+                  "end_line": 823
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 343,
+                  "end_line": 823
+                }
+              ],
+              "reason": "struct declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "FoldSplitContainer.aboutToAppear",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 461,
+                  "end_line": 495
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 461,
+                  "end_line": 495
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToDisappear",
+                "qualified_name": "FoldSplitContainer.aboutToDisappear",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 497,
+                  "end_line": 506
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 497,
+                  "end_line": 506
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "FoldSplitContainer.build",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 508,
+                  "end_line": 556
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 508,
+                  "end_line": 556
+                }
+              ],
+              "reason": "build_method declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Stack",
+                "qualified_name": "FoldSplitContainer.build.Stack",
+                "parent_name": "FoldSplitContainer.build",
+                "span": {
+                  "start_line": 509,
+                  "end_line": 555
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 509,
+                  "end_line": 555
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "FoldSplitContainer.build.Stack.Column",
+                "parent_name": "FoldSplitContainer.build.Stack",
+                "span": {
+                  "start_line": 510,
+                  "end_line": 520
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 510,
+                  "end_line": 520
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "FoldSplitContainer.build.Stack.Column",
+                "parent_name": "FoldSplitContainer.build.Stack",
+                "span": {
+                  "start_line": 522,
+                  "end_line": 532
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 522,
+                  "end_line": 532
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "FoldSplitContainer.build.Stack.Column",
+                "parent_name": "FoldSplitContainer.build.Stack",
+                "span": {
+                  "start_line": 535,
+                  "end_line": 545
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 535,
+                  "end_line": 545
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "dispatchHoverStatusChange",
+                "qualified_name": "FoldSplitContainer.dispatchHoverStatusChange",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 558,
+                  "end_line": 567
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 558,
+                  "end_line": 567
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "hasExtraRegion",
+                "qualified_name": "FoldSplitContainer.hasExtraRegion",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 569,
+                  "end_line": 571
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 569,
+                  "end_line": 571
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "updatePreferredOrientation",
+                "qualified_name": "FoldSplitContainer.updatePreferredOrientation",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 573,
+                  "end_line": 585
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 573,
+                  "end_line": 585
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "updateContainerSize",
+                "qualified_name": "FoldSplitContainer.updateContainerSize",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 587,
+                  "end_line": 590
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 587,
+                  "end_line": 590
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "updateContainerPosition",
+                "qualified_name": "FoldSplitContainer.updateContainerPosition",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 592,
+                  "end_line": 598
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 592,
+                  "end_line": 598
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "updateLayout",
+                "qualified_name": "FoldSplitContainer.updateLayout",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 600,
+                  "end_line": 650
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 600,
+                  "end_line": 650
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getExpandedRegionLayouts",
+                "qualified_name": "FoldSplitContainer.getExpandedRegionLayouts",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 652,
+                  "end_line": 702
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 652,
+                  "end_line": 702
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getHoverModeRegionLayouts",
+                "qualified_name": "FoldSplitContainer.getHoverModeRegionLayouts",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 704,
+                  "end_line": 765
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 704,
+                  "end_line": 765
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getFoldedRegionLayouts",
+                "qualified_name": "FoldSplitContainer.getFoldedRegionLayouts",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 767,
+                  "end_line": 791
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 767,
+                  "end_line": 791
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getCreaseRegionRect",
+                "qualified_name": "FoldSplitContainer.getCreaseRegionRect",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 793,
+                  "end_line": 809
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 793,
+                  "end_line": 809
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "isPortraitOrientation",
+                "qualified_name": "FoldSplitContainer.isPortraitOrientation",
+                "parent_name": "FoldSplitContainer",
+                "span": {
+                  "start_line": 811,
+                  "end_line": 822
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 811,
+                  "end_line": 822
+                }
+              ],
+              "reason": "method declaration span"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-038",
+      "category": "component_examples_dialog",
+      "logical_path": "examples/components/feature/src/main/ets/pages/DialogBoxes/CustomDialogBootcamp.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/components/feature/src/main/ets/pages/DialogBoxes/CustomDialogBootcamp.ets",
+        "copied_path": "sources/examples/components/feature/src/main/ets/pages/DialogBoxes/CustomDialogBootcamp.ets",
+        "content_sha256": "afb461d53729b2fddff3c1e3e373ace2dcf59f3b0fb355d252ab41da59989ae8",
+        "line_count": 631
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.arkui.UIContext",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "KeyboardAvoidMode": "KeyboardAvoidMode"
+            }
+          },
+          {
+            "module": "common",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "ColorBlock": "ColorBlock",
+              "Drawer": "Drawer",
+              "IconBlock": "IconBlock",
+              "RadioBlock": "RadioBlock",
+              "SliderBlock": "SliderBlock",
+              "useEnabled": "useEnabled",
+              "useEnabledBase": "useEnabledBase",
+              "useEnabledNumber": "useEnabledNumber"
+            }
+          }
+        ],
+        "components": [
+          "Button",
+          "ColorBlock",
+          "Column",
+          "CustomDialogExample",
+          "Drawer",
+          "NavDestination",
+          "RadioBlock",
+          "Scroll",
+          "SliderBlock",
+          "Text"
+        ],
+        "apis": [
+          "$r",
+          "AppStorage.setOrCreate"
+        ],
+        "decorators": [
+          "@Builder",
+          "@Component",
+          "@CustomDialog",
+          "@Entry",
+          "@Prop",
+          "@Require",
+          "@State"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "fontSize",
+          "height",
+          "hideTitleBar",
+          "id",
+          "margin",
+          "onClick",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "ColorBlock",
+          "Column",
+          "Content",
+          "CustomDialogBootcamp",
+          "CustomDialogBootcamp.Content",
+          "CustomDialogBootcamp.Content.Column",
+          "CustomDialogBootcamp.Content.Column.Button",
+          "CustomDialogBootcamp.CustomDialogExample",
+          "CustomDialogBootcamp.Generic",
+          "CustomDialogBootcamp.Parameters",
+          "CustomDialogBootcamp.Parameters.Scroll",
+          "CustomDialogBootcamp.Parameters.Scroll.Column",
+          "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+          "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+          "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+          "CustomDialogBootcamp.aboutToAppear",
+          "CustomDialogBootcamp.aboutToDisappear",
+          "CustomDialogBootcamp.build",
+          "CustomDialogBootcamp.build.NavDestination",
+          "CustomDialogBootcamp.build.NavDestination.Drawer",
+          "CustomDialogBootcamp.existApp",
+          "CustomDialogBootcamp.onAccept",
+          "CustomDialogBootcamp.onCancel",
+          "CustomDialogExample",
+          "CustomDialogExample.build",
+          "CustomDialogExample.build.Column",
+          "CustomDialogExample.build.Column.Button",
+          "CustomDialogExample.build.Column.Text",
+          "Drawer",
+          "Generic",
+          "NavDestination",
+          "Parameters",
+          "RadioBlock",
+          "Scroll",
+          "SliderBlock",
+          "Text",
+          "aboutToAppear",
+          "aboutToDisappear",
+          "build",
+          "existApp",
+          "onAccept",
+          "onCancel"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "CustomDialogExample",
+            "qualified_name": "CustomDialogExample",
+            "parent_name": null,
+            "span": {
+              "start_line": 27,
+              "end_line": 49
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "CustomDialogExample.build",
+            "parent_name": "CustomDialogExample",
+            "span": {
+              "start_line": 35,
+              "end_line": 48
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "CustomDialogExample.build.Column",
+            "parent_name": "CustomDialogExample.build",
+            "span": {
+              "start_line": 36,
+              "end_line": 47
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "CustomDialogExample.build.Column.Text",
+            "parent_name": "CustomDialogExample.build.Column",
+            "span": {
+              "start_line": 37,
+              "end_line": 39
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "CustomDialogExample.build.Column.Button",
+            "parent_name": "CustomDialogExample.build.Column",
+            "span": {
+              "start_line": 40,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "struct",
+            "name": "CustomDialogBootcamp",
+            "qualified_name": "CustomDialogBootcamp",
+            "parent_name": null,
+            "span": {
+              "start_line": 52,
+              "end_line": 631
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "CustomDialogBootcamp.aboutToAppear",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 127,
+              "end_line": 129
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "CustomDialogExample",
+            "qualified_name": "CustomDialogBootcamp.CustomDialogExample",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 132,
+              "end_line": 139
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToDisappear",
+            "qualified_name": "CustomDialogBootcamp.aboutToDisappear",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 237,
+              "end_line": 239
+            }
+          },
+          {
+            "kind": "method",
+            "name": "onCancel",
+            "qualified_name": "CustomDialogBootcamp.onCancel",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 241,
+              "end_line": 243
+            }
+          },
+          {
+            "kind": "method",
+            "name": "onAccept",
+            "qualified_name": "CustomDialogBootcamp.onAccept",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 245,
+              "end_line": 247
+            }
+          },
+          {
+            "kind": "method",
+            "name": "existApp",
+            "qualified_name": "CustomDialogBootcamp.existApp",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 249,
+              "end_line": 251
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "CustomDialogBootcamp.build",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 253,
+              "end_line": 271
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "NavDestination",
+            "qualified_name": "CustomDialogBootcamp.build.NavDestination",
+            "parent_name": "CustomDialogBootcamp.build",
+            "span": {
+              "start_line": 254,
+              "end_line": 270
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Drawer",
+            "qualified_name": "CustomDialogBootcamp.build.NavDestination.Drawer",
+            "parent_name": "CustomDialogBootcamp.build.NavDestination",
+            "span": {
+              "start_line": 255,
+              "end_line": 267
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Content",
+            "qualified_name": "CustomDialogBootcamp.Content",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 273,
+              "end_line": 284
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "CustomDialogBootcamp.Content.Column",
+            "parent_name": "CustomDialogBootcamp.Content",
+            "span": {
+              "start_line": 275,
+              "end_line": 283
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "CustomDialogBootcamp.Content.Column.Button",
+            "parent_name": "CustomDialogBootcamp.Content.Column",
+            "span": {
+              "start_line": 276,
+              "end_line": 281
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Parameters",
+            "qualified_name": "CustomDialogBootcamp.Parameters",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 286,
+              "end_line": 625
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Scroll",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll",
+            "parent_name": "CustomDialogBootcamp.Parameters",
+            "span": {
+              "start_line": 288,
+              "end_line": 624
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll",
+            "span": {
+              "start_line": 289,
+              "end_line": 621
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 290,
+              "end_line": 298
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 300,
+              "end_line": 307
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 309,
+              "end_line": 315
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 317,
+              "end_line": 324
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 326,
+              "end_line": 332
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 334,
+              "end_line": 344
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 346,
+              "end_line": 354
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 356,
+              "end_line": 362
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 364,
+              "end_line": 370
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 372,
+              "end_line": 378
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 380,
+              "end_line": 396
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 398,
+              "end_line": 404
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 406,
+              "end_line": 412
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 415,
+              "end_line": 423
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 425,
+              "end_line": 433
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ColorBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 435,
+              "end_line": 439
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 441,
+              "end_line": 460
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 462,
+              "end_line": 468
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 470,
+              "end_line": 476
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 478,
+              "end_line": 484
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 486,
+              "end_line": 492
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 494,
+              "end_line": 506
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 508,
+              "end_line": 514
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ColorBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 516,
+              "end_line": 520
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "ColorBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 522,
+              "end_line": 526
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 528,
+              "end_line": 537
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 539,
+              "end_line": 545
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 547,
+              "end_line": 553
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 555,
+              "end_line": 561
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 563,
+              "end_line": 569
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "SliderBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 571,
+              "end_line": 577
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 579,
+              "end_line": 588
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 590,
+              "end_line": 599
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "RadioBlock",
+            "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+            "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+            "span": {
+              "start_line": 601,
+              "end_line": 620
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "Generic",
+            "qualified_name": "CustomDialogBootcamp.Generic",
+            "parent_name": "CustomDialogBootcamp",
+            "span": {
+              "start_line": 627,
+              "end_line": 630
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "Content",
+          "Generic",
+          "Parameters"
+        ],
+        "apis": [
+          "close",
+          "console.info",
+          "open"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.arkui.UIContext",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "KeyboardAvoidMode": "KeyboardAvoidMode"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "static import declaration"
+            },
+            {
+              "value": {
+                "module": "common",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "ColorBlock": "ColorBlock",
+                  "Drawer": "Drawer",
+                  "IconBlock": "IconBlock",
+                  "RadioBlock": "RadioBlock",
+                  "SliderBlock": "SliderBlock",
+                  "useEnabled": "useEnabled",
+                  "useEnabledBase": "useEnabledBase",
+                  "useEnabledNumber": "useEnabledNumber"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 15,
+                  "end_line": 24
+                }
+              ],
+              "reason": "static import declaration"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 435,
+                  "end_line": 435
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "CustomDialogExample",
+              "line_ranges": [
+                {
+                  "start_line": 132,
+                  "end_line": 132
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 255,
+                  "end_line": 255
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 254,
+                  "end_line": 254
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 290,
+                  "end_line": 290
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 288,
+                  "end_line": 288
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 300,
+                  "end_line": 300
+                }
+              ],
+              "reason": "declarative UI component call"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "declarative UI component call"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "Content",
+              "line_ranges": [
+                {
+                  "start_line": 259,
+                  "end_line": 259
+                }
+              ],
+              "reason": "this.Content() is builder helper invocation"
+            },
+            {
+              "value": "Generic",
+              "line_ranges": [
+                {
+                  "start_line": 262,
+                  "end_line": 262
+                }
+              ],
+              "reason": "this.Generic() is builder helper invocation"
+            },
+            {
+              "value": "Parameters",
+              "line_ranges": [
+                {
+                  "start_line": 265,
+                  "end_line": 265
+                }
+              ],
+              "reason": "this.Parameters() is builder helper invocation"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 269,
+                  "end_line": 269
+                }
+              ],
+              "reason": "frozen platform/global API call"
+            },
+            {
+              "value": "AppStorage.setOrCreate",
+              "line_ranges": [
+                {
+                  "start_line": 128,
+                  "end_line": 128
+                }
+              ],
+              "reason": "frozen platform/global API call"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "console.info",
+              "line_ranges": [
+                {
+                  "start_line": 242,
+                  "end_line": 242
+                }
+              ],
+              "reason": "console runtime logging is not a frozen platform API"
+            },
+            {
+              "value": "open",
+              "line_ranges": [
+                {
+                  "start_line": 279,
+                  "end_line": 279
+                }
+              ],
+              "reason": "CustomDialogController.open is instance method, not frozen platform API"
+            },
+            {
+              "value": "close",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 43
+                }
+              ],
+              "reason": "CustomDialogController.close is instance method, not frozen platform API"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 273,
+                  "end_line": 273
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 53,
+                  "end_line": 53
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@CustomDialog",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 52,
+                  "end_line": 52
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Prop",
+              "line_ranges": [
+                {
+                  "start_line": 55,
+                  "end_line": 55
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@Require",
+              "line_ranges": [
+                {
+                  "start_line": 55,
+                  "end_line": 55
+                }
+              ],
+              "reason": "decorator in executable code"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 56,
+                  "end_line": 56
+                }
+              ],
+              "reason": "decorator in executable code"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 269,
+                  "end_line": 269
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "hideTitleBar",
+              "line_ranges": [
+                {
+                  "start_line": 270,
+                  "end_line": 270
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "id",
+              "line_ranges": [
+                {
+                  "start_line": 624,
+                  "end_line": 624
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 46,
+                  "end_line": 46
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "UI component modifier/event"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 283,
+                  "end_line": 283
+                }
+              ],
+              "reason": "UI component modifier/event"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Content",
+              "line_ranges": [
+                {
+                  "start_line": 259,
+                  "end_line": 259
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp",
+              "line_ranges": [
+                {
+                  "start_line": 54,
+                  "end_line": 54
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Content",
+              "line_ranges": [
+                {
+                  "start_line": 259,
+                  "end_line": 259
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Content.Column",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Content.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.CustomDialogExample",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Generic",
+              "line_ranges": [
+                {
+                  "start_line": 262,
+                  "end_line": 262
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters",
+              "line_ranges": [
+                {
+                  "start_line": 265,
+                  "end_line": 265
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters.Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 288,
+                  "end_line": 288
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters.Scroll.Column",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 127,
+                  "end_line": 127
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 237,
+                  "end_line": 237
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.build",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.build.NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 254,
+                  "end_line": 254
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.build.NavDestination.Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.existApp",
+              "line_ranges": [
+                {
+                  "start_line": 140,
+                  "end_line": 140
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.onAccept",
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogBootcamp.onCancel",
+              "line_ranges": [
+                {
+                  "start_line": 134,
+                  "end_line": 134
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogExample",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogExample.build",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogExample.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogExample.build.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "CustomDialogExample.build.Column.Text",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Drawer",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Generic",
+              "line_ranges": [
+                {
+                  "start_line": 262,
+                  "end_line": 262
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "NavDestination",
+              "line_ranges": [
+                {
+                  "start_line": 254,
+                  "end_line": 254
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Parameters",
+              "line_ranges": [
+                {
+                  "start_line": 265,
+                  "end_line": 265
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "RadioBlock",
+              "line_ranges": [
+                {
+                  "start_line": 19,
+                  "end_line": 19
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Scroll",
+              "line_ranges": [
+                {
+                  "start_line": 288,
+                  "end_line": 288
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "SliderBlock",
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 127,
+                  "end_line": 127
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 237,
+                  "end_line": 237
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "existApp",
+              "line_ranges": [
+                {
+                  "start_line": 140,
+                  "end_line": 140
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "onAccept",
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 137
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            },
+            {
+              "value": "onCancel",
+              "line_ranges": [
+                {
+                  "start_line": 134,
+                  "end_line": 134
+                }
+              ],
+              "reason": "declaration name/qualified_name"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "arrow functions"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "CustomDialogExample",
+                "qualified_name": "CustomDialogExample",
+                "parent_name": null,
+                "span": {
+                  "start_line": 27,
+                  "end_line": 49
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 49
+                }
+              ],
+              "reason": "struct declaration span"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CustomDialogExample.build",
+                "parent_name": "CustomDialogExample",
+                "span": {
+                  "start_line": 35,
+                  "end_line": 48
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 48
+                }
+              ],
+              "reason": "build_method declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CustomDialogExample.build.Column",
+                "parent_name": "CustomDialogExample.build",
+                "span": {
+                  "start_line": 36,
+                  "end_line": 47
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 47
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "CustomDialogExample.build.Column.Text",
+                "parent_name": "CustomDialogExample.build.Column",
+                "span": {
+                  "start_line": 37,
+                  "end_line": 39
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 39
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "CustomDialogExample.build.Column.Button",
+                "parent_name": "CustomDialogExample.build.Column",
+                "span": {
+                  "start_line": 40,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 46
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "struct",
+                "name": "CustomDialogBootcamp",
+                "qualified_name": "CustomDialogBootcamp",
+                "parent_name": null,
+                "span": {
+                  "start_line": 52,
+                  "end_line": 631
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 52,
+                  "end_line": 631
+                }
+              ],
+              "reason": "struct declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "CustomDialogBootcamp.aboutToAppear",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 127,
+                  "end_line": 129
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 127,
+                  "end_line": 129
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "CustomDialogExample",
+                "qualified_name": "CustomDialogBootcamp.CustomDialogExample",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 132,
+                  "end_line": 139
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 132,
+                  "end_line": 139
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToDisappear",
+                "qualified_name": "CustomDialogBootcamp.aboutToDisappear",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 237,
+                  "end_line": 239
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 237,
+                  "end_line": 239
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "onCancel",
+                "qualified_name": "CustomDialogBootcamp.onCancel",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 241,
+                  "end_line": 243
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 241,
+                  "end_line": 243
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "onAccept",
+                "qualified_name": "CustomDialogBootcamp.onAccept",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 245,
+                  "end_line": 247
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 245,
+                  "end_line": 247
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "existApp",
+                "qualified_name": "CustomDialogBootcamp.existApp",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 249,
+                  "end_line": 251
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 249,
+                  "end_line": 251
+                }
+              ],
+              "reason": "method declaration span"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "CustomDialogBootcamp.build",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 253,
+                  "end_line": 271
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 253,
+                  "end_line": 271
+                }
+              ],
+              "reason": "build_method declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "NavDestination",
+                "qualified_name": "CustomDialogBootcamp.build.NavDestination",
+                "parent_name": "CustomDialogBootcamp.build",
+                "span": {
+                  "start_line": 254,
+                  "end_line": 270
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 254,
+                  "end_line": 270
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Drawer",
+                "qualified_name": "CustomDialogBootcamp.build.NavDestination.Drawer",
+                "parent_name": "CustomDialogBootcamp.build.NavDestination",
+                "span": {
+                  "start_line": 255,
+                  "end_line": 267
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 255,
+                  "end_line": 267
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Content",
+                "qualified_name": "CustomDialogBootcamp.Content",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 273,
+                  "end_line": 284
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 273,
+                  "end_line": 284
+                }
+              ],
+              "reason": "builder declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CustomDialogBootcamp.Content.Column",
+                "parent_name": "CustomDialogBootcamp.Content",
+                "span": {
+                  "start_line": 275,
+                  "end_line": 283
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 275,
+                  "end_line": 283
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "CustomDialogBootcamp.Content.Column.Button",
+                "parent_name": "CustomDialogBootcamp.Content.Column",
+                "span": {
+                  "start_line": 276,
+                  "end_line": 281
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 276,
+                  "end_line": 281
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Parameters",
+                "qualified_name": "CustomDialogBootcamp.Parameters",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 286,
+                  "end_line": 625
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 286,
+                  "end_line": 625
+                }
+              ],
+              "reason": "builder declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Scroll",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll",
+                "parent_name": "CustomDialogBootcamp.Parameters",
+                "span": {
+                  "start_line": 288,
+                  "end_line": 624
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 288,
+                  "end_line": 624
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll",
+                "span": {
+                  "start_line": 289,
+                  "end_line": 621
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 289,
+                  "end_line": 621
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 290,
+                  "end_line": 298
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 290,
+                  "end_line": 298
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 300,
+                  "end_line": 307
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 300,
+                  "end_line": 307
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 309,
+                  "end_line": 315
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 309,
+                  "end_line": 315
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 317,
+                  "end_line": 324
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 317,
+                  "end_line": 324
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 326,
+                  "end_line": 332
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 326,
+                  "end_line": 332
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 334,
+                  "end_line": 344
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 334,
+                  "end_line": 344
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 346,
+                  "end_line": 354
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 346,
+                  "end_line": 354
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 356,
+                  "end_line": 362
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 356,
+                  "end_line": 362
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 364,
+                  "end_line": 370
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 364,
+                  "end_line": 370
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 372,
+                  "end_line": 378
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 372,
+                  "end_line": 378
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 380,
+                  "end_line": 396
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 380,
+                  "end_line": 396
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 398,
+                  "end_line": 404
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 398,
+                  "end_line": 404
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 406,
+                  "end_line": 412
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 406,
+                  "end_line": 412
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 415,
+                  "end_line": 423
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 415,
+                  "end_line": 423
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 425,
+                  "end_line": 433
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 425,
+                  "end_line": 433
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ColorBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 435,
+                  "end_line": 439
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 435,
+                  "end_line": 439
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 441,
+                  "end_line": 460
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 441,
+                  "end_line": 460
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 462,
+                  "end_line": 468
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 462,
+                  "end_line": 468
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 470,
+                  "end_line": 476
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 470,
+                  "end_line": 476
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 478,
+                  "end_line": 484
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 478,
+                  "end_line": 484
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 486,
+                  "end_line": 492
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 486,
+                  "end_line": 492
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 494,
+                  "end_line": 506
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 494,
+                  "end_line": 506
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 508,
+                  "end_line": 514
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 508,
+                  "end_line": 514
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ColorBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 516,
+                  "end_line": 520
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 516,
+                  "end_line": 520
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "ColorBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.ColorBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 522,
+                  "end_line": 526
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 522,
+                  "end_line": 526
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 528,
+                  "end_line": 537
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 528,
+                  "end_line": 537
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 539,
+                  "end_line": 545
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 539,
+                  "end_line": 545
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 547,
+                  "end_line": 553
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 547,
+                  "end_line": 553
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 555,
+                  "end_line": 561
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 555,
+                  "end_line": 561
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 563,
+                  "end_line": 569
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 563,
+                  "end_line": 569
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "SliderBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.SliderBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 571,
+                  "end_line": 577
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 571,
+                  "end_line": 577
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 579,
+                  "end_line": 588
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 579,
+                  "end_line": 588
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 590,
+                  "end_line": 599
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 590,
+                  "end_line": 599
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "RadioBlock",
+                "qualified_name": "CustomDialogBootcamp.Parameters.Scroll.Column.RadioBlock",
+                "parent_name": "CustomDialogBootcamp.Parameters.Scroll.Column",
+                "span": {
+                  "start_line": 601,
+                  "end_line": 620
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 601,
+                  "end_line": 620
+                }
+              ],
+              "reason": "ui_block declaration span"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "Generic",
+                "qualified_name": "CustomDialogBootcamp.Generic",
+                "parent_name": "CustomDialogBootcamp",
+                "span": {
+                  "start_line": 627,
+                  "end_line": 630
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 627,
+                  "end_line": 630
+                }
+              ],
+              "reason": "builder declaration span"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}

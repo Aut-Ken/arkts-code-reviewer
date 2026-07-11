@@ -1,0 +1,4594 @@
+{
+  "schema_version": "parser-golden-candidate-v1",
+  "target_schema_version": "parser-golden-v1",
+  "truth_status": "candidate_unreviewed",
+  "prompt_version": "r63-grok-annotation-v1",
+  "corpus": {
+    "suite_id": "arkui-ace-engine-r63",
+    "source_id": "arkui-ace-engine",
+    "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2"
+  },
+  "group": {
+    "group_id": "B001",
+    "group_manifest_sha256": "d4f12682cff537d653f1b02fb231a9cfbcc455db2ce43f0348118b129fba901f",
+    "expected_case_ids": [
+      "R63-008",
+      "R63-009",
+      "R63-044",
+      "R63-045",
+      "R63-046"
+    ]
+  },
+  "annotator": {
+    "provider": "xai",
+    "model": "grok-4.5",
+    "run_id": "b001-2026-07-11-pilot"
+  },
+  "independence_attestation": {
+    "only_allowlisted_inputs_read": true,
+    "parser_source_read": false,
+    "parser_output_read": false,
+    "baseline_read": false,
+    "prior_expected_read": false,
+    "parser_executed": false
+  },
+  "cases": [
+    {
+      "case_id": "R63-008",
+      "category": "advanced_ui_component",
+      "logical_path": "advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets",
+        "copied_path": "sources/advanced_ui_component/downloadfilebutton/source/DownloadFileButton.ets",
+        "content_sha256": "d94e58fc711a59ec2db1ec1cac3b991743bb2bfc99701631f09ccec613cae768",
+        "line_count": 143
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [],
+        "components": [
+          "Column",
+          "Image",
+          "Row",
+          "Text"
+        ],
+        "apis": [
+          "$r"
+        ],
+        "decorators": [
+          "@Builder",
+          "@Component",
+          "@State"
+        ],
+        "attributes": [
+          "fillColor",
+          "fontColor",
+          "fontFamily",
+          "fontSize",
+          "fontStyle",
+          "fontWeight",
+          "margin",
+          "size"
+        ],
+        "symbols": [
+          "Column",
+          "DownloadFileButton",
+          "DownloadFileButton.build",
+          "DownloadFileButton.build.Column",
+          "DownloadFileButton.build.Row",
+          "DownloadFileButton.downloadImage",
+          "DownloadFileButton.downloadImage.Image",
+          "DownloadFileButton.downloadText",
+          "DownloadFileButton.downloadText.Text",
+          "DownloadFileButton.getTextContent",
+          "Image",
+          "Row",
+          "Text",
+          "build",
+          "downloadImage",
+          "downloadText",
+          "getTextContent"
+        ],
+        "syntax": [],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "DownloadFileButton",
+            "qualified_name": "DownloadFileButton",
+            "parent_name": null,
+            "span": {
+              "start_line": 67,
+              "end_line": 143
+            }
+          },
+          {
+            "kind": "method",
+            "name": "getTextContent",
+            "qualified_name": "DownloadFileButton.getTextContent",
+            "parent_name": "DownloadFileButton",
+            "span": {
+              "start_line": 85,
+              "end_line": 87
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "downloadImage",
+            "qualified_name": "DownloadFileButton.downloadImage",
+            "parent_name": "DownloadFileButton",
+            "span": {
+              "start_line": 89,
+              "end_line": 98
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Image",
+            "qualified_name": "DownloadFileButton.downloadImage.Image",
+            "parent_name": "DownloadFileButton.downloadImage",
+            "span": {
+              "start_line": 91,
+              "end_line": 98
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "downloadText",
+            "qualified_name": "DownloadFileButton.downloadText",
+            "parent_name": "DownloadFileButton",
+            "span": {
+              "start_line": 100,
+              "end_line": 120
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Text",
+            "qualified_name": "DownloadFileButton.downloadText.Text",
+            "parent_name": "DownloadFileButton.downloadText",
+            "span": {
+              "start_line": 102,
+              "end_line": 119
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "DownloadFileButton.build",
+            "parent_name": "DownloadFileButton",
+            "span": {
+              "start_line": 122,
+              "end_line": 142
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "DownloadFileButton.build.Row",
+            "parent_name": "DownloadFileButton.build",
+            "span": {
+              "start_line": 124,
+              "end_line": 131
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "DownloadFileButton.build.Column",
+            "parent_name": "DownloadFileButton.build",
+            "span": {
+              "start_line": 133,
+              "end_line": 140
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "downloadImage",
+          "downloadText"
+        ],
+        "apis": [
+          "Map.get",
+          "getTextContent"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "DownloadContentOptions",
+          "DownloadDescription",
+          "DownloadIconStyle",
+          "DownloadLayoutDirection",
+          "DownloadStyleOptions"
+        ],
+        "syntax": [
+          "async_fn",
+          "await_expr",
+          "promise",
+          "try_catch"
+        ]
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "no_import_statements",
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "File has no import statements after the license header"
+            }
+          ],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Image",
+              "line_ranges": [
+                {
+                  "start_line": 91,
+                  "end_line": 98
+                }
+              ],
+              "reason": "Image component with size/fillColor modifiers"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 119
+                }
+              ],
+              "reason": "Text component with font/margin modifiers"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 124,
+                  "end_line": 131
+                }
+              ],
+              "reason": "Row UI block in horizontal layout branch"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 133,
+                  "end_line": 140
+                }
+              ],
+              "reason": "Column UI block in vertical layout branch"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "downloadImage",
+              "line_ranges": [
+                {
+                  "start_line": 126,
+                  "end_line": 126
+                }
+              ],
+              "reason": "Builder invocation this.downloadImage(), not a UI component call"
+            },
+            {
+              "value": "downloadText",
+              "line_ranges": [
+                {
+                  "start_line": 129,
+                  "end_line": 129
+                }
+              ],
+              "reason": "Builder invocation this.downloadText(), not a UI component call"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 45
+                }
+              ],
+              "reason": "Global $r resource calls in description map"
+            },
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 93,
+                  "end_line": 94
+                }
+              ],
+              "reason": "Global $r in Image source"
+            },
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 104,
+                  "end_line": 104
+                }
+              ],
+              "reason": "Global $r default text resource"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "Map.get",
+              "line_ranges": [
+                {
+                  "start_line": 86,
+                  "end_line": 86
+                }
+              ],
+              "reason": "Collection method on local Map, not platform API"
+            },
+            {
+              "value": "getTextContent",
+              "line_ranges": [
+                {
+                  "start_line": 104,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Local private method call via this"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 67
+                }
+              ],
+              "reason": "Struct component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              ],
+              "reason": "State decorator on contentOptions"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 73,
+                  "end_line": 73
+                }
+              ],
+              "reason": "State decorator on styleOptions"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 89,
+                  "end_line": 89
+                }
+              ],
+              "reason": "Builder decorator on downloadImage"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 100,
+                  "end_line": 100
+                }
+              ],
+              "reason": "Builder decorator on downloadText"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "size",
+              "line_ranges": [
+                {
+                  "start_line": 97,
+                  "end_line": 97
+                }
+              ],
+              "reason": "Image.size modifier"
+            },
+            {
+              "value": "fillColor",
+              "line_ranges": [
+                {
+                  "start_line": 98,
+                  "end_line": 98
+                }
+              ],
+              "reason": "Image.fillColor modifier"
+            },
+            {
+              "value": "fontSize",
+              "line_ranges": [
+                {
+                  "start_line": 108,
+                  "end_line": 108
+                }
+              ],
+              "reason": "Text.fontSize"
+            },
+            {
+              "value": "fontColor",
+              "line_ranges": [
+                {
+                  "start_line": 109,
+                  "end_line": 109
+                }
+              ],
+              "reason": "Text.fontColor"
+            },
+            {
+              "value": "fontStyle",
+              "line_ranges": [
+                {
+                  "start_line": 110,
+                  "end_line": 110
+                }
+              ],
+              "reason": "Text.fontStyle"
+            },
+            {
+              "value": "fontWeight",
+              "line_ranges": [
+                {
+                  "start_line": 111,
+                  "end_line": 111
+                }
+              ],
+              "reason": "Text.fontWeight"
+            },
+            {
+              "value": "fontFamily",
+              "line_ranges": [
+                {
+                  "start_line": 112,
+                  "end_line": 112
+                }
+              ],
+              "reason": "Text.fontFamily"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 112,
+                  "end_line": 119
+                }
+              ],
+              "reason": "Text.margin with layout-dependent insets"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.build",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.build.Row",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.downloadImage",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.downloadImage.Image",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.downloadText",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.downloadText.Text",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "DownloadFileButton.getTextContent",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Image",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Text",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "downloadImage",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "downloadText",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "getTextContent",
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Derived from declarations"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [],
+          "excluded": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 85,
+                  "end_line": 87
+                }
+              ],
+              "reason": "getTextContent is a method declaration, not an arrow function expression"
+            }
+          ],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "DownloadFileButton",
+                "qualified_name": "DownloadFileButton",
+                "parent_name": null,
+                "span": {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 67,
+                  "end_line": 143
+                }
+              ],
+              "reason": "struct declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "getTextContent",
+                "qualified_name": "DownloadFileButton.getTextContent",
+                "parent_name": "DownloadFileButton",
+                "span": {
+                  "start_line": 85,
+                  "end_line": 87
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 85,
+                  "end_line": 87
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "downloadImage",
+                "qualified_name": "DownloadFileButton.downloadImage",
+                "parent_name": "DownloadFileButton",
+                "span": {
+                  "start_line": 89,
+                  "end_line": 98
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 89,
+                  "end_line": 98
+                }
+              ],
+              "reason": "builder declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Image",
+                "qualified_name": "DownloadFileButton.downloadImage.Image",
+                "parent_name": "DownloadFileButton.downloadImage",
+                "span": {
+                  "start_line": 91,
+                  "end_line": 98
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 91,
+                  "end_line": 98
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "downloadText",
+                "qualified_name": "DownloadFileButton.downloadText",
+                "parent_name": "DownloadFileButton",
+                "span": {
+                  "start_line": 100,
+                  "end_line": 120
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 100,
+                  "end_line": 120
+                }
+              ],
+              "reason": "builder declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Text",
+                "qualified_name": "DownloadFileButton.downloadText.Text",
+                "parent_name": "DownloadFileButton.downloadText",
+                "span": {
+                  "start_line": 102,
+                  "end_line": 119
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 119
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "DownloadFileButton.build",
+                "parent_name": "DownloadFileButton",
+                "span": {
+                  "start_line": 122,
+                  "end_line": 142
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 122,
+                  "end_line": 142
+                }
+              ],
+              "reason": "build_method declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "DownloadFileButton.build.Row",
+                "parent_name": "DownloadFileButton.build",
+                "span": {
+                  "start_line": 124,
+                  "end_line": 131
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 124,
+                  "end_line": 131
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "DownloadFileButton.build.Column",
+                "parent_name": "DownloadFileButton.build",
+                "span": {
+                  "start_line": 133,
+                  "end_line": 140
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 133,
+                  "end_line": 140
+                }
+              ],
+              "reason": "ui_block declaration"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "enum DownloadIconStyle",
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 19
+                }
+              ],
+              "reason": "enum is not a v1 declaration kind"
+            },
+            {
+              "value": "interface DownloadContentOptions",
+              "line_ranges": [
+                {
+                  "start_line": 48,
+                  "end_line": 51
+                }
+              ],
+              "reason": "interface is not a v1 declaration kind"
+            },
+            {
+              "value": "const downloadDescriptionResourceMap",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 46
+                }
+              ],
+              "reason": "const field is not a v1 declaration kind"
+            }
+          ],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-009",
+      "category": "advanced_ui_component",
+      "logical_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets",
+        "copied_path": "sources/advanced_ui_component/imageGeneratorDialog/source/image_generator_dialog_project/image_generator_dialog/src/main/ets/general/components/Main.ets",
+        "content_sha256": "7beb66f1856c7cd1f8734f12ae54a7d9484d2cb68f038da51e53d456ba2c78d3",
+        "line_count": 149
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.arkui.intelligence.imageGeneration",
+            "default_name": "imageGeneration",
+            "namespace_name": null,
+            "named": {}
+          },
+          {
+            "module": "../common/CommonConstants",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "Constants": "Constants"
+            }
+          },
+          {
+            "module": "../types/Declaration",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CanvasLayoutDirection": "CanvasLayoutDirection",
+              "CanvasMode": "CanvasMode",
+              "LogTag": "LogTag"
+            }
+          },
+          {
+            "module": "../utils/CallbackManagers",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "WinSizeChangeCallbackManager": "WinSizeChangeCallbackManager"
+            }
+          },
+          {
+            "module": "./CanvasFramework",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "CanvasHome": "CanvasHome"
+            }
+          },
+          {
+            "module": "./TextTouchUp",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "TextTouchUpComponent": "TextTouchUpComponent"
+            }
+          },
+          {
+            "module": "@kit.ArkUI",
+            "default_name": null,
+            "namespace_name": null,
+            "named": {
+              "window": "window"
+            }
+          }
+        ],
+        "components": [
+          "CanvasHome",
+          "Navigation",
+          "TextTouchUpComponent"
+        ],
+        "apis": [
+          "$r"
+        ],
+        "decorators": [
+          "@Builder",
+          "@ComponentV2",
+          "@Local",
+          "@Param",
+          "@Provider",
+          "@Require"
+        ],
+        "attributes": [
+          "alignSelf",
+          "borderRadius",
+          "clip",
+          "height",
+          "hideNavBar",
+          "mode",
+          "navDestination",
+          "width"
+        ],
+        "symbols": [
+          "CanvasHome",
+          "ImageGeneratorDialog",
+          "ImageGeneratorDialog.aboutToAppear",
+          "ImageGeneratorDialog.aboutToDisappear",
+          "ImageGeneratorDialog.build",
+          "ImageGeneratorDialog.build.Navigation",
+          "ImageGeneratorDialog.initImageInfoArr",
+          "ImageGeneratorDialog.initLayoutProperties",
+          "ImageGeneratorDialog.initUserPrompt",
+          "ImageGeneratorDialog.initWinSizeChangeCallback",
+          "ImageGeneratorDialog.pageMap",
+          "ImageGeneratorDialog.pageMap.CanvasHome",
+          "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+          "Navigation",
+          "TextTouchUpComponent",
+          "aboutToAppear",
+          "aboutToDisappear",
+          "build",
+          "initImageInfoArr",
+          "initLayoutProperties",
+          "initUserPrompt",
+          "initWinSizeChangeCallback",
+          "pageMap"
+        ],
+        "syntax": [
+          "arrow_fn",
+          "try_catch"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "ImageGeneratorDialog",
+            "qualified_name": "ImageGeneratorDialog",
+            "parent_name": null,
+            "span": {
+              "start_line": 24,
+              "end_line": 149
+            }
+          },
+          {
+            "kind": "method",
+            "name": "initWinSizeChangeCallback",
+            "qualified_name": "ImageGeneratorDialog.initWinSizeChangeCallback",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 58,
+              "end_line": 66
+            }
+          },
+          {
+            "kind": "method",
+            "name": "initLayoutProperties",
+            "qualified_name": "ImageGeneratorDialog.initLayoutProperties",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 68,
+              "end_line": 77
+            }
+          },
+          {
+            "kind": "builder",
+            "name": "pageMap",
+            "qualified_name": "ImageGeneratorDialog.pageMap",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 79,
+              "end_line": 90
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "CanvasHome",
+            "qualified_name": "ImageGeneratorDialog.pageMap.CanvasHome",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {
+              "start_line": 82,
+              "end_line": 86
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "TextTouchUpComponent",
+            "qualified_name": "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+            "parent_name": "ImageGeneratorDialog.pageMap",
+            "span": {
+              "start_line": 88,
+              "end_line": 88
+            }
+          },
+          {
+            "kind": "method",
+            "name": "initImageInfoArr",
+            "qualified_name": "ImageGeneratorDialog.initImageInfoArr",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 92,
+              "end_line": 110
+            }
+          },
+          {
+            "kind": "method",
+            "name": "initUserPrompt",
+            "qualified_name": "ImageGeneratorDialog.initUserPrompt",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 112,
+              "end_line": 116
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToAppear",
+            "qualified_name": "ImageGeneratorDialog.aboutToAppear",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 118,
+              "end_line": 129
+            }
+          },
+          {
+            "kind": "method",
+            "name": "aboutToDisappear",
+            "qualified_name": "ImageGeneratorDialog.aboutToDisappear",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 131,
+              "end_line": 134
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "ImageGeneratorDialog.build",
+            "parent_name": "ImageGeneratorDialog",
+            "span": {
+              "start_line": 136,
+              "end_line": 148
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Navigation",
+            "qualified_name": "ImageGeneratorDialog.build.Navigation",
+            "parent_name": "ImageGeneratorDialog.build",
+            "span": {
+              "start_line": 137,
+              "end_line": 148
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [
+          "NavPathStack",
+          "SheetType"
+        ],
+        "apis": [
+          "JSON.stringify",
+          "console.info",
+          "console.warn",
+          "getUIContext",
+          "window.findWindow"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [
+          "onWinSizeChangForAll",
+          "updateCanvasLayoutProperties"
+        ],
+        "syntax": [
+          "async_fn",
+          "await_expr",
+          "promise"
+        ]
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.arkui.intelligence.imageGeneration",
+                "default_name": "imageGeneration",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "../common/CommonConstants",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "Constants": "Constants"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "../types/Declaration",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CanvasLayoutDirection": "CanvasLayoutDirection",
+                  "CanvasMode": "CanvasMode",
+                  "LogTag": "LogTag"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "../utils/CallbackManagers",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "WinSizeChangeCallbackManager": "WinSizeChangeCallbackManager"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "./CanvasFramework",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "CanvasHome": "CanvasHome"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "./TextTouchUp",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "TextTouchUpComponent": "TextTouchUpComponent"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            },
+            {
+              "value": {
+                "module": "@kit.ArkUI",
+                "default_name": null,
+                "namespace_name": null,
+                "named": {
+                  "window": "window"
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 22
+                }
+              ],
+              "reason": "Import statement"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "CanvasHome",
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              ],
+              "reason": "Custom component in pageMap"
+            },
+            {
+              "value": "TextTouchUpComponent",
+              "line_ranges": [
+                {
+                  "start_line": 88,
+                  "end_line": 88
+                }
+              ],
+              "reason": "Custom component in pageMap"
+            },
+            {
+              "value": "Navigation",
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 148
+                }
+              ],
+              "reason": "Built-in Navigation with modifier chain"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "NavPathStack",
+              "line_ranges": [
+                {
+                  "start_line": 26,
+                  "end_line": 26
+                }
+              ],
+              "reason": "Constructor/type usage, not declarative UI component call"
+            },
+            {
+              "value": "SheetType",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "Enum/type reference, not UI component"
+            }
+          ],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "$r",
+              "line_ranges": [
+                {
+                  "start_line": 122,
+                  "end_line": 122
+                }
+              ],
+              "reason": "Global $r for style symbol resource"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "window.findWindow",
+              "line_ranges": [
+                {
+                  "start_line": 60,
+                  "end_line": 60
+                }
+              ],
+              "reason": "@kit.ArkUI not in frozen module_prefixes; cannot canonicalize owner"
+            },
+            {
+              "value": "console.info",
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 64
+                }
+              ],
+              "reason": "console is not a frozen platform API"
+            },
+            {
+              "value": "console.warn",
+              "line_ranges": [
+                {
+                  "start_line": 75,
+                  "end_line": 75
+                }
+              ],
+              "reason": "console is not a frozen platform API"
+            },
+            {
+              "value": "JSON.stringify",
+              "line_ranges": [
+                {
+                  "start_line": 64,
+                  "end_line": 64
+                }
+              ],
+              "reason": "JSON is not a frozen platform API"
+            },
+            {
+              "value": "getUIContext",
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 40
+                }
+              ],
+              "reason": "this.getUIContext method call excluded"
+            },
+            {
+              "value": "WinSizeChangeCallbackManager.getOrCreateInstance",
+              "line_ranges": [
+                {
+                  "start_line": 54,
+                  "end_line": 54
+                }
+              ],
+              "reason": "Relative project import business helper, not SDK API"
+            },
+            {
+              "value": "imageInfoArr.push",
+              "line_ranges": [
+                {
+                  "start_line": 100,
+                  "end_line": 100
+                }
+              ],
+              "reason": "Collection method on local array"
+            },
+            {
+              "value": "imageInfoArr.sort",
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 104
+                }
+              ],
+              "reason": "Collection method on local array"
+            },
+            {
+              "value": "stack.pushPath",
+              "line_ranges": [
+                {
+                  "start_line": 128,
+                  "end_line": 128
+                }
+              ],
+              "reason": "NavPathStack instance method, not frozen API"
+            },
+            {
+              "value": "curWindow.on",
+              "line_ranges": [
+                {
+                  "start_line": 61,
+                  "end_line": 61
+                }
+              ],
+              "reason": "Instance event registration on window object"
+            },
+            {
+              "value": "curWindow.off",
+              "line_ranges": [
+                {
+                  "start_line": 132,
+                  "end_line": 132
+                }
+              ],
+              "reason": "Instance event unregistration"
+            }
+          ],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@ComponentV2",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 24
+                }
+              ],
+              "reason": "Struct decorator"
+            },
+            {
+              "value": "@Param",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "Param decorator"
+            },
+            {
+              "value": "@Require",
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 27
+                }
+              ],
+              "reason": "Require decorator"
+            },
+            {
+              "value": "@Local",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "Local decorator"
+            },
+            {
+              "value": "@Provider",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "Provider decorator"
+            },
+            {
+              "value": "@Builder",
+              "line_ranges": [
+                {
+                  "start_line": 79,
+                  "end_line": 79
+                }
+              ],
+              "reason": "Builder decorator on pageMap"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "navDestination",
+              "line_ranges": [
+                {
+                  "start_line": 140,
+                  "end_line": 140
+                }
+              ],
+              "reason": "Navigation.navDestination"
+            },
+            {
+              "value": "hideNavBar",
+              "line_ranges": [
+                {
+                  "start_line": 141,
+                  "end_line": 141
+                }
+              ],
+              "reason": "Navigation.hideNavBar"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 142,
+                  "end_line": 142
+                }
+              ],
+              "reason": "Navigation.height"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 143,
+                  "end_line": 143
+                }
+              ],
+              "reason": "Navigation.width"
+            },
+            {
+              "value": "borderRadius",
+              "line_ranges": [
+                {
+                  "start_line": 144,
+                  "end_line": 144
+                }
+              ],
+              "reason": "Navigation.borderRadius"
+            },
+            {
+              "value": "mode",
+              "line_ranges": [
+                {
+                  "start_line": 145,
+                  "end_line": 145
+                }
+              ],
+              "reason": "Navigation.mode"
+            },
+            {
+              "value": "clip",
+              "line_ranges": [
+                {
+                  "start_line": 146,
+                  "end_line": 146
+                }
+              ],
+              "reason": "Navigation.clip"
+            },
+            {
+              "value": "alignSelf",
+              "line_ranges": [
+                {
+                  "start_line": 147,
+                  "end_line": 147
+                }
+              ],
+              "reason": "Navigation.alignSelf"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "CanvasHome",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.build",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.build.Navigation",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.initImageInfoArr",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.initLayoutProperties",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.initUserPrompt",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.initWinSizeChangeCallback",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.pageMap",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.pageMap.CanvasHome",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Navigation",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TextTouchUpComponent",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "aboutToAppear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "aboutToDisappear",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "initImageInfoArr",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "initLayoutProperties",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "initUserPrompt",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "initWinSizeChangeCallback",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "pageMap",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "Derived from declarations"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Field initializer arrow function updateCanvasLayoutProperties"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 53,
+                  "end_line": 55
+                }
+              ],
+              "reason": "Field initializer arrow function onWinSizeChangForAll"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 102,
+                  "end_line": 104
+                }
+              ],
+              "reason": "sort comparator arrow function"
+            },
+            {
+              "value": "try_catch",
+              "line_ranges": [
+                {
+                  "start_line": 59,
+                  "end_line": 65
+                }
+              ],
+              "reason": "try/catch in initWinSizeChangeCallback"
+            },
+            {
+              "value": "try_catch",
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 76
+                }
+              ],
+              "reason": "try/catch in initLayoutProperties"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "ImageGeneratorDialog",
+                "qualified_name": "ImageGeneratorDialog",
+                "parent_name": null,
+                "span": {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 149
+                }
+              ],
+              "reason": "struct declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "initWinSizeChangeCallback",
+                "qualified_name": "ImageGeneratorDialog.initWinSizeChangeCallback",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 58,
+                  "end_line": 66
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 58,
+                  "end_line": 66
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "initLayoutProperties",
+                "qualified_name": "ImageGeneratorDialog.initLayoutProperties",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 68,
+                  "end_line": 77
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 68,
+                  "end_line": 77
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "builder",
+                "name": "pageMap",
+                "qualified_name": "ImageGeneratorDialog.pageMap",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 79,
+                  "end_line": 90
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 79,
+                  "end_line": 90
+                }
+              ],
+              "reason": "builder declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "CanvasHome",
+                "qualified_name": "ImageGeneratorDialog.pageMap.CanvasHome",
+                "parent_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 86
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "TextTouchUpComponent",
+                "qualified_name": "ImageGeneratorDialog.pageMap.TextTouchUpComponent",
+                "parent_name": "ImageGeneratorDialog.pageMap",
+                "span": {
+                  "start_line": 88,
+                  "end_line": 88
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 88,
+                  "end_line": 88
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "initImageInfoArr",
+                "qualified_name": "ImageGeneratorDialog.initImageInfoArr",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 92,
+                  "end_line": 110
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 92,
+                  "end_line": 110
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "initUserPrompt",
+                "qualified_name": "ImageGeneratorDialog.initUserPrompt",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 112,
+                  "end_line": 116
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 112,
+                  "end_line": 116
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToAppear",
+                "qualified_name": "ImageGeneratorDialog.aboutToAppear",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 118,
+                  "end_line": 129
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 118,
+                  "end_line": 129
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "method",
+                "name": "aboutToDisappear",
+                "qualified_name": "ImageGeneratorDialog.aboutToDisappear",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 131,
+                  "end_line": 134
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 131,
+                  "end_line": 134
+                }
+              ],
+              "reason": "method declaration"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "ImageGeneratorDialog.build",
+                "parent_name": "ImageGeneratorDialog",
+                "span": {
+                  "start_line": 136,
+                  "end_line": 148
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 136,
+                  "end_line": 148
+                }
+              ],
+              "reason": "build_method declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Navigation",
+                "qualified_name": "ImageGeneratorDialog.build.Navigation",
+                "parent_name": "ImageGeneratorDialog.build",
+                "span": {
+                  "start_line": 137,
+                  "end_line": 148
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 137,
+                  "end_line": 148
+                }
+              ],
+              "reason": "ui_block declaration"
+            }
+          ],
+          "excluded": [
+            {
+              "value": "updateCanvasLayoutProperties field",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Arrow field property is not a v1 method declaration"
+            },
+            {
+              "value": "onWinSizeChangForAll field",
+              "line_ranges": [
+                {
+                  "start_line": 53,
+                  "end_line": 55
+                }
+              ],
+              "reason": "Arrow field property is not a v1 method declaration"
+            }
+          ],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-044",
+      "category": "animation_examples",
+      "logical_path": "examples/Animation/entry/src/main/ets/pages/animateTo.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/Animation/entry/src/main/ets/pages/animateTo.ets",
+        "copied_path": "sources/examples/Animation/entry/src/main/ets/pages/animateTo.ets",
+        "content_sha256": "34f9f50a456844d1eb807ca8b2ea5f911396dfd4fa026cca4500b3622a8ef8f9",
+        "line_count": 47
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [
+          "Button",
+          "Column"
+        ],
+        "apis": [
+          "router.back",
+          "router.pushUrl"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "height",
+          "justifyContent",
+          "margin",
+          "onClick",
+          "width"
+        ],
+        "symbols": [
+          "AnimateToExample",
+          "AnimateToExample.build",
+          "AnimateToExample.build.Column",
+          "AnimateToExample.build.Column.Column",
+          "AnimateToExample.build.Column.Column.Button",
+          "Button",
+          "Column",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "AnimateToExample",
+            "qualified_name": "AnimateToExample",
+            "parent_name": null,
+            "span": {
+              "start_line": 17,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "AnimateToExample.build",
+            "parent_name": "AnimateToExample",
+            "span": {
+              "start_line": 20,
+              "end_line": 46
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column",
+            "parent_name": "AnimateToExample.build",
+            "span": {
+              "start_line": 21,
+              "end_line": 45
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column.Column",
+            "parent_name": "AnimateToExample.build.Column",
+            "span": {
+              "start_line": 22,
+              "end_line": 31
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {
+              "start_line": 23,
+              "end_line": 26
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimateToExample.build.Column.Column",
+            "parent_name": "AnimateToExample.build.Column",
+            "span": {
+              "start_line": 32,
+              "end_line": 44
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {
+              "start_line": 33,
+              "end_line": 36
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimateToExample.build.Column.Column.Button",
+            "parent_name": "AnimateToExample.build.Column.Column",
+            "span": {
+              "start_line": 37,
+              "end_line": 41
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "router.RouterMode"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": [
+          "async_fn",
+          "await_expr",
+          "promise",
+          "try_catch"
+        ]
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "Default import router from @ohos.router"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 45
+                }
+              ],
+              "reason": "Outer Column container"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 31
+                }
+              ],
+              "reason": "Header Column"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              ],
+              "reason": "Back button"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 44
+                }
+              ],
+              "reason": "Body Column"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              ],
+              "reason": "First navigation button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              ],
+              "reason": "Second navigation button"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "router.back from @ohos.router import"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "router.pushUrl call"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "router.pushUrl call"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "Entry page decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "Component decorator"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 26
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "Column.height"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "Column.backgroundColor"
+            },
+            {
+              "value": "justifyContent",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "Column.justifyContent"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "Button.margin"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "AnimateToExample",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimateToExample.build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimateToExample.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimateToExample.build.Column.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimateToExample.build.Column.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "Derived from declarations"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 26
+                }
+              ],
+              "reason": "onClick arrow callback"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 36
+                }
+              ],
+              "reason": "onClick arrow callback"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 40
+                }
+              ],
+              "reason": "onClick arrow callback"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "AnimateToExample",
+                "qualified_name": "AnimateToExample",
+                "parent_name": null,
+                "span": {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 46
+                }
+              ],
+              "reason": "struct declaration"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "AnimateToExample.build",
+                "parent_name": "AnimateToExample",
+                "span": {
+                  "start_line": 20,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 46
+                }
+              ],
+              "reason": "build_method declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimateToExample.build.Column",
+                "parent_name": "AnimateToExample.build",
+                "span": {
+                  "start_line": 21,
+                  "end_line": 45
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 45
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimateToExample.build.Column.Column",
+                "parent_name": "AnimateToExample.build.Column",
+                "span": {
+                  "start_line": 22,
+                  "end_line": 31
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 31
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimateToExample.build.Column.Column.Button",
+                "parent_name": "AnimateToExample.build.Column.Column",
+                "span": {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimateToExample.build.Column.Column",
+                "parent_name": "AnimateToExample.build.Column",
+                "span": {
+                  "start_line": 32,
+                  "end_line": 44
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 44
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimateToExample.build.Column.Column.Button",
+                "parent_name": "AnimateToExample.build.Column.Column",
+                "span": {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimateToExample.build.Column.Column.Button",
+                "parent_name": "AnimateToExample.build.Column.Column",
+                "span": {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              ],
+              "reason": "ui_block declaration"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-045",
+      "category": "animation_examples",
+      "logical_path": "examples/Animation/entry/src/main/ets/pages/animation.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/Animation/entry/src/main/ets/pages/animation.ets",
+        "copied_path": "sources/examples/Animation/entry/src/main/ets/pages/animation.ets",
+        "content_sha256": "fa35caa1d67f90655d48b675117347d04b430b31a036e6d2faf15c5448f96f27",
+        "line_count": 105
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [
+          "Button",
+          "Column",
+          "Row"
+        ],
+        "apis": [
+          "router.back"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry",
+          "@State"
+        ],
+        "attributes": [
+          "animation",
+          "backgroundColor",
+          "height",
+          "justifyContent",
+          "margin",
+          "onClick",
+          "rotate",
+          "width"
+        ],
+        "symbols": [
+          "AnimationExample",
+          "AnimationExample.build",
+          "AnimationExample.build.Column",
+          "AnimationExample.build.Column.Column",
+          "AnimationExample.build.Column.Column.Button",
+          "AnimationExample.build.Column.Column.Column",
+          "AnimationExample.build.Column.Column.Column.Button",
+          "AnimationExample.build.Column.Column.Column.Row",
+          "AnimationExample.build.Column.Column.Column.Row.Button",
+          "Button",
+          "Column",
+          "Row",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "AnimationExample",
+            "qualified_name": "AnimationExample",
+            "parent_name": null,
+            "span": {
+              "start_line": 17,
+              "end_line": 105
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "AnimationExample.build",
+            "parent_name": "AnimationExample",
+            "span": {
+              "start_line": 27,
+              "end_line": 104
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimationExample.build.Column",
+            "parent_name": "AnimationExample.build",
+            "span": {
+              "start_line": 28,
+              "end_line": 103
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimationExample.build.Column.Column",
+            "parent_name": "AnimationExample.build.Column",
+            "span": {
+              "start_line": 29,
+              "end_line": 38
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimationExample.build.Column.Column.Button",
+            "parent_name": "AnimationExample.build.Column.Column",
+            "span": {
+              "start_line": 30,
+              "end_line": 33
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimationExample.build.Column.Column",
+            "parent_name": "AnimationExample.build.Column",
+            "span": {
+              "start_line": 39,
+              "end_line": 102
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimationExample.build.Column.Column.Column",
+            "parent_name": "AnimationExample.build.Column.Column",
+            "span": {
+              "start_line": 40,
+              "end_line": 80
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimationExample.build.Column.Column.Column.Button",
+            "parent_name": "AnimationExample.build.Column.Column.Column",
+            "span": {
+              "start_line": 41,
+              "end_line": 57
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Row",
+            "qualified_name": "AnimationExample.build.Column.Column.Column.Row",
+            "parent_name": "AnimationExample.build.Column.Column.Column",
+            "span": {
+              "start_line": 58,
+              "end_line": 78
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimationExample.build.Column.Column.Column.Row.Button",
+            "parent_name": "AnimationExample.build.Column.Column.Column.Row",
+            "span": {
+              "start_line": 59,
+              "end_line": 68
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimationExample.build.Column.Column.Column.Row.Button",
+            "parent_name": "AnimationExample.build.Column.Column.Column.Row",
+            "span": {
+              "start_line": 69,
+              "end_line": 77
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "AnimationExample.build.Column.Column.Column",
+            "parent_name": "AnimationExample.build.Column.Column",
+            "span": {
+              "start_line": 81,
+              "end_line": 101
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "AnimationExample.build.Column.Column.Column.Button",
+            "parent_name": "AnimationExample.build.Column.Column.Column",
+            "span": {
+              "start_line": 82,
+              "end_line": 99
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "router.RouterMode"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": [
+          "async_fn",
+          "await_expr",
+          "promise",
+          "try_catch"
+        ]
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "Default import router from @ohos.router"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 103
+                }
+              ],
+              "reason": "Root Column"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 33
+                }
+              ],
+              "reason": "Back Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 57
+                }
+              ],
+              "reason": "Animated height Button"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 58,
+                  "end_line": 78
+                }
+              ],
+              "reason": "Control Row"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 59,
+                  "end_line": 68
+                }
+              ],
+              "reason": "Height control Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 77
+                }
+              ],
+              "reason": "Width control Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 99
+                }
+              ],
+              "reason": "Rotate animated Button"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 32
+                }
+              ],
+              "reason": "router.back from @ohos.router import"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "Entry page decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "Component decorator"
+            },
+            {
+              "value": "@State",
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 20
+                }
+              ],
+              "reason": "State decorator"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 33
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 36,
+                  "end_line": 36
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 37
+                }
+              ],
+              "reason": "Column.height"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 38
+                }
+              ],
+              "reason": "Column.backgroundColor"
+            },
+            {
+              "value": "justifyContent",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "Column.justifyContent"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 42
+                }
+              ],
+              "reason": "Button.margin"
+            },
+            {
+              "value": "animation",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 55
+                }
+              ],
+              "reason": "Button.animation modifier"
+            },
+            {
+              "value": "rotate",
+              "line_ranges": [
+                {
+                  "start_line": 87,
+                  "end_line": 87
+                }
+              ],
+              "reason": "Button.rotate modifier"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "AnimationExample",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column.Column.Row",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "AnimationExample.build.Column.Column.Column.Row.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Row",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "Derived from declarations"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 33
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 49,
+                  "end_line": 54
+                }
+              ],
+              "reason": "animation onFinish arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 60,
+                  "end_line": 68
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 70,
+                  "end_line": 77
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 83,
+                  "end_line": 85
+                }
+              ],
+              "reason": "onClick arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "AnimationExample",
+                "qualified_name": "AnimationExample",
+                "parent_name": null,
+                "span": {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 105
+                }
+              ],
+              "reason": "struct declaration"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "AnimationExample.build",
+                "parent_name": "AnimationExample",
+                "span": {
+                  "start_line": 27,
+                  "end_line": 104
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 27,
+                  "end_line": 104
+                }
+              ],
+              "reason": "build_method declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimationExample.build.Column",
+                "parent_name": "AnimationExample.build",
+                "span": {
+                  "start_line": 28,
+                  "end_line": 103
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 103
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimationExample.build.Column.Column",
+                "parent_name": "AnimationExample.build.Column",
+                "span": {
+                  "start_line": 29,
+                  "end_line": 38
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 38
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimationExample.build.Column.Column.Button",
+                "parent_name": "AnimationExample.build.Column.Column",
+                "span": {
+                  "start_line": 30,
+                  "end_line": 33
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 33
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimationExample.build.Column.Column",
+                "parent_name": "AnimationExample.build.Column",
+                "span": {
+                  "start_line": 39,
+                  "end_line": 102
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 102
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimationExample.build.Column.Column.Column",
+                "parent_name": "AnimationExample.build.Column.Column",
+                "span": {
+                  "start_line": 40,
+                  "end_line": 80
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 40,
+                  "end_line": 80
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimationExample.build.Column.Column.Column.Button",
+                "parent_name": "AnimationExample.build.Column.Column.Column",
+                "span": {
+                  "start_line": 41,
+                  "end_line": 57
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 57
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Row",
+                "qualified_name": "AnimationExample.build.Column.Column.Column.Row",
+                "parent_name": "AnimationExample.build.Column.Column.Column",
+                "span": {
+                  "start_line": 58,
+                  "end_line": 78
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 58,
+                  "end_line": 78
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimationExample.build.Column.Column.Column.Row.Button",
+                "parent_name": "AnimationExample.build.Column.Column.Column.Row",
+                "span": {
+                  "start_line": 59,
+                  "end_line": 68
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 59,
+                  "end_line": 68
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimationExample.build.Column.Column.Column.Row.Button",
+                "parent_name": "AnimationExample.build.Column.Column.Column.Row",
+                "span": {
+                  "start_line": 69,
+                  "end_line": 77
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 69,
+                  "end_line": 77
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "AnimationExample.build.Column.Column.Column",
+                "parent_name": "AnimationExample.build.Column.Column",
+                "span": {
+                  "start_line": 81,
+                  "end_line": 101
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 81,
+                  "end_line": 101
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "AnimationExample.build.Column.Column.Column.Button",
+                "parent_name": "AnimationExample.build.Column.Column.Column",
+                "span": {
+                  "start_line": 82,
+                  "end_line": 99
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 82,
+                  "end_line": 99
+                }
+              ],
+              "reason": "ui_block declaration"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    },
+    {
+      "case_id": "R63-046",
+      "category": "animation_examples",
+      "logical_path": "examples/Animation/entry/src/main/ets/pages/transition.ets",
+      "source": {
+        "source_id": "arkui-ace-engine",
+        "revision": "39f2c7cc8e25019ce5d0934980b7721614b7eaa2",
+        "relative_path": "examples/Animation/entry/src/main/ets/pages/transition.ets",
+        "copied_path": "sources/examples/Animation/entry/src/main/ets/pages/transition.ets",
+        "content_sha256": "bec1f161d40ebd7ed13aca9bee9b9d84777b1eb03de1688cb3a2c0f433f783b9",
+        "line_count": 52
+      },
+      "annotation_status": "complete",
+      "adjudication_status": "unreviewed",
+      "proposed_scored_fields": [
+        "imports",
+        "components",
+        "apis",
+        "decorators",
+        "attributes",
+        "symbols",
+        "syntax",
+        "declarations"
+      ],
+      "candidate_expected": {
+        "imports": [
+          {
+            "module": "@ohos.router",
+            "default_name": "router",
+            "namespace_name": null,
+            "named": {}
+          }
+        ],
+        "components": [
+          "Button",
+          "Column"
+        ],
+        "apis": [
+          "router.back",
+          "router.pushUrl"
+        ],
+        "decorators": [
+          "@Component",
+          "@Entry"
+        ],
+        "attributes": [
+          "backgroundColor",
+          "height",
+          "justifyContent",
+          "margin",
+          "onClick",
+          "width"
+        ],
+        "symbols": [
+          "Button",
+          "Column",
+          "TransitionExample",
+          "TransitionExample.build",
+          "TransitionExample.build.Column",
+          "TransitionExample.build.Column.Column",
+          "TransitionExample.build.Column.Column.Button",
+          "build"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ],
+        "declarations": [
+          {
+            "kind": "struct",
+            "name": "TransitionExample",
+            "qualified_name": "TransitionExample",
+            "parent_name": null,
+            "span": {
+              "start_line": 17,
+              "end_line": 52
+            }
+          },
+          {
+            "kind": "build_method",
+            "name": "build",
+            "qualified_name": "TransitionExample.build",
+            "parent_name": "TransitionExample",
+            "span": {
+              "start_line": 20,
+              "end_line": 51
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "TransitionExample.build.Column",
+            "parent_name": "TransitionExample.build",
+            "span": {
+              "start_line": 21,
+              "end_line": 50
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "TransitionExample.build.Column.Column",
+            "parent_name": "TransitionExample.build.Column",
+            "span": {
+              "start_line": 22,
+              "end_line": 31
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "TransitionExample.build.Column.Column.Button",
+            "parent_name": "TransitionExample.build.Column.Column",
+            "span": {
+              "start_line": 23,
+              "end_line": 26
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Column",
+            "qualified_name": "TransitionExample.build.Column.Column",
+            "parent_name": "TransitionExample.build.Column",
+            "span": {
+              "start_line": 32,
+              "end_line": 49
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "TransitionExample.build.Column.Column.Button",
+            "parent_name": "TransitionExample.build.Column.Column",
+            "span": {
+              "start_line": 33,
+              "end_line": 36
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "TransitionExample.build.Column.Column.Button",
+            "parent_name": "TransitionExample.build.Column.Column",
+            "span": {
+              "start_line": 37,
+              "end_line": 41
+            }
+          },
+          {
+            "kind": "ui_block",
+            "name": "Button",
+            "qualified_name": "TransitionExample.build.Column.Column.Button",
+            "parent_name": "TransitionExample.build.Column.Column",
+            "span": {
+              "start_line": 42,
+              "end_line": 46
+            }
+          }
+        ]
+      },
+      "candidate_must_not_emit": {
+        "components": [],
+        "apis": [
+          "router.RouterMode"
+        ],
+        "decorators": [],
+        "attributes": [],
+        "symbols": [],
+        "syntax": [
+          "async_fn",
+          "await_expr",
+          "promise",
+          "try_catch"
+        ]
+      },
+      "field_reviews": {
+        "imports": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "module": "@ohos.router",
+                "default_name": "router",
+                "namespace_name": null,
+                "named": {}
+              },
+              "line_ranges": [
+                {
+                  "start_line": 16,
+                  "end_line": 16
+                }
+              ],
+              "reason": "Default import router from @ohos.router"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "components": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 50
+                }
+              ],
+              "reason": "Root Column"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              ],
+              "reason": "Back Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              ],
+              "reason": "demo1 Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              ],
+              "reason": "demo2 Button"
+            },
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 46
+                }
+              ],
+              "reason": "demo3 Button"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "apis": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "router.back",
+              "line_ranges": [
+                {
+                  "start_line": 25,
+                  "end_line": 25
+                }
+              ],
+              "reason": "router.back"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 35,
+                  "end_line": 35
+                }
+              ],
+              "reason": "router.pushUrl"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 39,
+                  "end_line": 39
+                }
+              ],
+              "reason": "router.pushUrl"
+            },
+            {
+              "value": "router.pushUrl",
+              "line_ranges": [
+                {
+                  "start_line": 44,
+                  "end_line": 44
+                }
+              ],
+              "reason": "router.pushUrl"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "decorators": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "@Entry",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 17
+                }
+              ],
+              "reason": "Entry page decorator"
+            },
+            {
+              "value": "@Component",
+              "line_ranges": [
+                {
+                  "start_line": 18,
+                  "end_line": 18
+                }
+              ],
+              "reason": "Component decorator"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "attributes": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "onClick",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 26
+                }
+              ],
+              "reason": "Button.onClick"
+            },
+            {
+              "value": "width",
+              "line_ranges": [
+                {
+                  "start_line": 28,
+                  "end_line": 28
+                }
+              ],
+              "reason": "Column.width"
+            },
+            {
+              "value": "height",
+              "line_ranges": [
+                {
+                  "start_line": 29,
+                  "end_line": 29
+                }
+              ],
+              "reason": "Column.height"
+            },
+            {
+              "value": "backgroundColor",
+              "line_ranges": [
+                {
+                  "start_line": 30,
+                  "end_line": 30
+                }
+              ],
+              "reason": "Column.backgroundColor"
+            },
+            {
+              "value": "justifyContent",
+              "line_ranges": [
+                {
+                  "start_line": 31,
+                  "end_line": 31
+                }
+              ],
+              "reason": "Column.justifyContent"
+            },
+            {
+              "value": "margin",
+              "line_ranges": [
+                {
+                  "start_line": 41,
+                  "end_line": 41
+                }
+              ],
+              "reason": "Button.margin"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "symbols": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TransitionExample",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TransitionExample.build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TransitionExample.build.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TransitionExample.build.Column.Column",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "TransitionExample.build.Column.Column.Button",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            },
+            {
+              "value": "build",
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "Derived from declarations"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "syntax": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 24,
+                  "end_line": 26
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 34,
+                  "end_line": 36
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 38,
+                  "end_line": 40
+                }
+              ],
+              "reason": "onClick arrow"
+            },
+            {
+              "value": "arrow_fn",
+              "line_ranges": [
+                {
+                  "start_line": 43,
+                  "end_line": 45
+                }
+              ],
+              "reason": "onClick arrow"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        },
+        "declarations": {
+          "coverage": "complete",
+          "confidence": "high",
+          "evidence": [
+            {
+              "value": {
+                "kind": "struct",
+                "name": "TransitionExample",
+                "qualified_name": "TransitionExample",
+                "parent_name": null,
+                "span": {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 17,
+                  "end_line": 52
+                }
+              ],
+              "reason": "struct declaration"
+            },
+            {
+              "value": {
+                "kind": "build_method",
+                "name": "build",
+                "qualified_name": "TransitionExample.build",
+                "parent_name": "TransitionExample",
+                "span": {
+                  "start_line": 20,
+                  "end_line": 51
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 20,
+                  "end_line": 51
+                }
+              ],
+              "reason": "build_method declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "TransitionExample.build.Column",
+                "parent_name": "TransitionExample.build",
+                "span": {
+                  "start_line": 21,
+                  "end_line": 50
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 21,
+                  "end_line": 50
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "TransitionExample.build.Column.Column",
+                "parent_name": "TransitionExample.build.Column",
+                "span": {
+                  "start_line": 22,
+                  "end_line": 31
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 22,
+                  "end_line": 31
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "TransitionExample.build.Column.Column.Button",
+                "parent_name": "TransitionExample.build.Column.Column",
+                "span": {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 23,
+                  "end_line": 26
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Column",
+                "qualified_name": "TransitionExample.build.Column.Column",
+                "parent_name": "TransitionExample.build.Column",
+                "span": {
+                  "start_line": 32,
+                  "end_line": 49
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 32,
+                  "end_line": 49
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "TransitionExample.build.Column.Column.Button",
+                "parent_name": "TransitionExample.build.Column.Column",
+                "span": {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 33,
+                  "end_line": 36
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "TransitionExample.build.Column.Column.Button",
+                "parent_name": "TransitionExample.build.Column.Column",
+                "span": {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 37,
+                  "end_line": 41
+                }
+              ],
+              "reason": "ui_block declaration"
+            },
+            {
+              "value": {
+                "kind": "ui_block",
+                "name": "Button",
+                "qualified_name": "TransitionExample.build.Column.Column.Button",
+                "parent_name": "TransitionExample.build.Column.Column",
+                "span": {
+                  "start_line": 42,
+                  "end_line": 46
+                }
+              },
+              "line_ranges": [
+                {
+                  "start_line": 42,
+                  "end_line": 46
+                }
+              ],
+              "reason": "ui_block declaration"
+            }
+          ],
+          "excluded": [],
+          "uncertainties": []
+        }
+      },
+      "self_checks": {
+        "source_fully_read": true,
+        "comments_and_strings_excluded": true,
+        "components_equal_ui_block_names": true,
+        "symbols_equal_declaration_names": true,
+        "declaration_parents_and_spans_checked": true,
+        "lists_sorted_unique": true
+      }
+    }
+  ]
+}
