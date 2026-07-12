@@ -272,7 +272,7 @@ class CodeAnalyzer:
         self,
         analysis_result: AnalysisResult,
         *,
-        primary_question_bindings: Sequence[QuestionBinding],
+        primary_question_bindings: Sequence[QuestionBinding] | None = None,
         source_snapshots: Mapping[str, CodeSourceSnapshot]
         | Sequence[CodeSourceSnapshot],
         supporting_file_analyses: Sequence[FileAnalysis] = (),
@@ -282,9 +282,12 @@ class CodeAnalyzer:
     ) -> ContextPlanResult:
         """Build the RU-5 context plan from one complete RU-4 result.
 
-        This entry point deliberately forwards every ReviewUnit from the validated
-        change analysis. Callers may rank or omit Supporting candidates, but cannot
-        silently turn a direct change owner into an optional context segment.
+        This entry point deliberately forwards every ReviewUnit and every Active
+        review question selected by Feature Routing. Callers may rank or omit
+        Supporting candidates, but cannot override applicability or silently turn a
+        direct change owner into an optional context segment. The explicit binding
+        parameter is retained only as a compatibility assertion: when supplied, it
+        must equal the Feature Routing result.
         """
 
         if not isinstance(analysis_result, AnalysisResult):
@@ -302,6 +305,35 @@ class CodeAnalyzer:
         change_set_id = analysis_result.change_set.change_set_id
         if analysis_result.review_unit_build_result.change_set_id != change_set_id:
             raise ValueError("AnalysisResult ChangeSet and ReviewUnit build disagree")
+        routed_bindings = tuple(
+            QuestionBinding(
+                binding.primary_unit_id,
+                binding.review_question_id,
+            )
+            for binding in analysis_result.feature_routing_result.question_bindings
+        )
+        if primary_question_bindings is not None:
+            supplied_bindings = tuple(primary_question_bindings)
+            if any(
+                not isinstance(binding, QuestionBinding)
+                for binding in supplied_bindings
+            ):
+                raise ValueError(
+                    "primary_question_bindings must contain QuestionBinding values"
+                )
+            supplied_bindings = tuple(
+                sorted(
+                    supplied_bindings,
+                    key=lambda item: (
+                        item.primary_unit_id,
+                        item.review_question_id,
+                    ),
+                )
+            )
+            if supplied_bindings != routed_bindings:
+                raise ValueError(
+                    "primary_question_bindings must match FeatureRoutingResult"
+                )
         self._validate_context_candidate_boundaries(
             analysis_result,
             candidates,
@@ -323,7 +355,7 @@ class CodeAnalyzer:
         return ContextPlanner().plan(
             change_set_id=change_set_id,
             primary_units=analysis_result.review_units,
-            primary_question_bindings=primary_question_bindings,
+            primary_question_bindings=routed_bindings,
             source_snapshots=source_snapshots,
             candidates=candidates,
             relation_edges=relation_edges,

@@ -421,15 +421,12 @@ def test_change_set_analysis_keeps_unit_exact_separate_from_file_hints() -> None
         ),
     }
 
-    result = CodeAnalyzer(
-        file_parser=FixtureFileParser(parse_results)
-    ).analyze_change_set(
-        change_set,
-        {
-            base.source_ref.source_ref_id: base,
-            head.source_ref.source_ref_id: head,
-        },
-    )
+    analyzer = CodeAnalyzer(file_parser=FixtureFileParser(parse_results))
+    snapshots = {
+        base.source_ref.source_ref_id: base,
+        head.source_ref.source_ref_id: head,
+    }
+    result = analyzer.analyze_change_set(change_set, snapshots)
 
     base_retrieval, head_retrieval = result.retrieval_query.units
     assert base_retrieval.code_features.apis == ["router.pushUrl"]
@@ -478,6 +475,25 @@ def test_change_set_analysis_keeps_unit_exact_separate_from_file_hints() -> None
         result.feature_routing_result.to_dict()
     )
     assert result.to_dict()["schema_version"] == "analysis-result-v1"
+
+    plan = analyzer.plan_context(
+        result,
+        source_snapshots=snapshots,
+        code_context_budget=10_000,
+    )
+    assert plan.primary_question_bindings == tuple(
+        QuestionBinding(
+            binding.primary_unit_id,
+            binding.review_question_id,
+        )
+        for binding in result.feature_routing_result.question_bindings
+    )
+    assert {
+        binding.review_question_id for binding in plan.primary_question_bindings
+    } == {"RQ-correctness", "RQ-navigation", "RQ-resource"}
+    assert "RQ-network" not in {
+        binding.review_question_id for binding in plan.primary_question_bindings
+    }
 
     with pytest.raises(ValueError, match="unregistered Tag"):
         replace(
@@ -578,7 +594,7 @@ def test_plan_context_uses_every_unit_from_complete_change_analysis() -> None:
         analyzer.plan_context(
             analysis,
             primary_question_bindings=tuple(
-                QuestionBinding(unit.unit_id, "correctness")
+                QuestionBinding(unit.unit_id, "RQ-correctness")
                 for unit in analysis.review_units
             ),
             source_snapshots=snapshots,
@@ -586,12 +602,19 @@ def test_plan_context_uses_every_unit_from_complete_change_analysis() -> None:
             code_context_budget=1000,
         )
 
+    with pytest.raises(ValueError, match="must match FeatureRoutingResult"):
+        analyzer.plan_context(
+            analysis,
+            primary_question_bindings=tuple(
+                QuestionBinding(unit.unit_id, "correctness")
+                for unit in analysis.review_units
+            ),
+            source_snapshots=snapshots,
+            code_context_budget=1000,
+        )
+
     plan = analyzer.plan_context(
         analysis,
-        primary_question_bindings=tuple(
-            QuestionBinding(unit.unit_id, "correctness")
-            for unit in analysis.review_units
-        ),
         source_snapshots=snapshots,
         code_context_budget=1000,
     )
@@ -606,6 +629,10 @@ def test_plan_context_uses_every_unit_from_complete_change_analysis() -> None:
         for bundle in plan.bundles
         for unit_id in bundle.primary_unit_ids
     } == {unit.unit_id for unit in analysis.review_units}
+    assert plan.primary_question_bindings == tuple(
+        QuestionBinding(unit.unit_id, "RQ-correctness")
+        for unit in sorted(analysis.review_units, key=lambda item: item.unit_id)
+    )
 
 
 def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
@@ -678,7 +705,7 @@ def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
     helper_text = support.content.splitlines(keepends=True)[0]
     candidate = ContextCandidate.create(
         primary_unit_id=primary.unit_id,
-        review_question_id="correctness",
+        review_question_id="RQ-correctness",
         relation_edge_id=edge.edge_id,
         relation_type="direct_call",
         target_source_ref_id=support.source_ref.source_ref_id,
@@ -691,7 +718,7 @@ def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
     plan = analyzer.plan_context(
         analysis,
         primary_question_bindings=tuple(
-            QuestionBinding(unit.unit_id, "correctness")
+            QuestionBinding(unit.unit_id, "RQ-correctness")
             for unit in analysis.review_units
         ),
         source_snapshots=context_snapshots,
@@ -725,7 +752,7 @@ def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
     unsafe_text = "helper() { return 2 "
     unsafe_candidate = ContextCandidate.create(
         primary_unit_id=primary.unit_id,
-        review_question_id="correctness",
+        review_question_id="RQ-correctness",
         relation_edge_id=unsafe_edge.edge_id,
         relation_type="direct_call",
         target_source_ref_id=support.source_ref.source_ref_id,
@@ -738,7 +765,7 @@ def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
         analyzer.plan_context(
             analysis,
             primary_question_bindings=tuple(
-                QuestionBinding(unit.unit_id, "correctness")
+                QuestionBinding(unit.unit_id, "RQ-correctness")
                 for unit in analysis.review_units
             ),
             source_snapshots=context_snapshots,
@@ -761,7 +788,7 @@ def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
         analyzer.plan_context(
             analysis,
             primary_question_bindings=tuple(
-                QuestionBinding(unit.unit_id, "correctness")
+                QuestionBinding(unit.unit_id, "RQ-correctness")
                 for unit in analysis.review_units
             ),
             source_snapshots=context_snapshots,
@@ -814,7 +841,7 @@ def test_plan_context_rejects_legacy_analysis_result() -> None:
         analyzer.plan_context(
             analysis,
             primary_question_bindings=tuple(
-                QuestionBinding(unit.unit_id, "correctness")
+                QuestionBinding(unit.unit_id, "RQ-correctness")
                 for unit in analysis.review_units
             ),
             source_snapshots=(),
