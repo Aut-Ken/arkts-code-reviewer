@@ -8,18 +8,18 @@
     "implementation": "legacy-hardcoded-feature-routing",
     "manifest_sha256": "d7aca20881e20de54352052f01604b23df31df945da74c36f26dec0e9cb86819",
     "case_count": 16,
-    "matched_case_count": 14,
-    "mismatched_case_count": 2,
+    "matched_case_count": 16,
+    "mismatched_case_count": 0,
     "metrics": {
-      "exact_tag_precision": 0.9393939393939394,
-      "exact_tag_recall": 0.96875,
-      "routing_tag_precision": 0.925,
-      "routing_tag_recall": 0.9487179487179487,
-      "dimension_precision": 0.9855072463768116,
-      "dimension_recall": 0.9927007299270073,
+      "exact_tag_precision": 1.0,
+      "exact_tag_recall": 1.0,
+      "routing_tag_precision": 1.0,
+      "routing_tag_recall": 1.0,
+      "dimension_precision": 1.0,
+      "dimension_recall": 1.0,
       "mr_dimension_precision": 1.0,
       "mr_dimension_recall": 1.0,
-      "case_exact_accuracy": 0.875,
+      "case_exact_accuracy": 1.0,
       "input_order_stability": 1.0
     },
     "cases": [
@@ -1341,7 +1341,7 @@
       },
       {
         "case_id": "FR013",
-        "matched": false,
+        "matched": true,
         "repeat_equal": true,
         "permutation_equal": true,
         "source_provenance": [
@@ -1411,11 +1411,27 @@
             {
               "unit_id": "fr-unit:FR013:sdk",
               "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+              "exact_tags": [],
+              "routing_tags": [
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR013:stop",
+              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
               "exact_tags": [
-                "has_subscription"
+                "has_timer"
               ],
               "routing_tags": [
-                "has_subscription"
+                "has_timer"
               ],
               "dimensions": [
                 "DIM-01",
@@ -1424,22 +1440,6 @@
                 "DIM-04",
                 "DIM-05",
                 "DIM-06",
-                "DIM-12"
-              ]
-            },
-            {
-              "unit_id": "fr-unit:FR013:stop",
-              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
-              "exact_tags": [],
-              "routing_tags": [
-                "has_subscription"
-              ],
-              "dimensions": [
-                "DIM-01",
-                "DIM-02",
-                "DIM-03",
-                "DIM-04",
-                "DIM-05",
                 "DIM-12"
               ]
             }
@@ -1454,27 +1454,18 @@
             "DIM-12"
           ]
         },
-        "differences": [
-          "result.units[0].dimensions.length: expected 6, actual 7",
-          "result.units[0].dimensions[5]: expected 'DIM-12', actual 'DIM-06'",
-          "result.units[0].exact_tags.length: expected 0, actual 1",
-          "result.units[0].routing_tags[0]: expected 'has_timer', actual 'has_subscription'",
-          "result.units[1].dimensions.length: expected 7, actual 6",
-          "result.units[1].dimensions[5]: expected 'DIM-06', actual 'DIM-12'",
-          "result.units[1].exact_tags.length: expected 1, actual 0",
-          "result.units[1].routing_tags[0]: expected 'has_timer', actual 'has_subscription'"
-        ],
+        "differences": [],
         "error": null,
         "metric_counts": {
           "exact_tag_true": 1,
           "exact_tag_actual": 1,
-          "exact_tag_hit": 0,
+          "exact_tag_hit": 1,
           "routing_tag_true": 2,
           "routing_tag_actual": 2,
-          "routing_tag_hit": 0,
+          "routing_tag_hit": 2,
           "dimension_true": 13,
           "dimension_actual": 13,
-          "dimension_hit": 12,
+          "dimension_hit": 13,
           "mr_dimension_true": 7,
           "mr_dimension_actual": 7,
           "mr_dimension_hit": 7
@@ -1482,7 +1473,7 @@
       },
       {
         "case_id": "FR014",
-        "matched": false,
+        "matched": true,
         "repeat_equal": true,
         "permutation_equal": true,
         "source_provenance": [
@@ -1588,12 +1579,10 @@
               "unit_id": "fr-unit:FR014:lifecycle",
               "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
               "exact_tags": [
-                "has_image",
-                "has_interactive_component"
+                "has_image"
               ],
               "routing_tags": [
-                "has_image",
-                "has_interactive_component"
+                "has_image"
               ],
               "dimensions": [
                 "DIM-01",
@@ -1602,7 +1591,6 @@
                 "DIM-04",
                 "DIM-05",
                 "DIM-06",
-                "DIM-08",
                 "DIM-12"
               ]
             }
@@ -1618,22 +1606,17 @@
             "DIM-12"
           ]
         },
-        "differences": [
-          "result.units[1].dimensions.length: expected 7, actual 8",
-          "result.units[1].dimensions[6]: expected 'DIM-12', actual 'DIM-08'",
-          "result.units[1].exact_tags.length: expected 1, actual 2",
-          "result.units[1].routing_tags.length: expected 1, actual 2"
-        ],
+        "differences": [],
         "error": null,
         "metric_counts": {
           "exact_tag_true": 2,
-          "exact_tag_actual": 3,
+          "exact_tag_actual": 2,
           "exact_tag_hit": 2,
           "routing_tag_true": 2,
-          "routing_tag_actual": 3,
+          "routing_tag_actual": 2,
           "routing_tag_hit": 2,
           "dimension_true": 14,
-          "dimension_actual": 15,
+          "dimension_actual": 14,
           "dimension_hit": 14,
           "mr_dimension_true": 8,
           "mr_dimension_actual": 8,

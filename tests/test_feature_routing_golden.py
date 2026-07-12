@@ -39,18 +39,15 @@ def _mutate_manifest(tmp_path: Path, mutate: object) -> Path:
     return manifest
 
 
-def test_current_baseline_exposes_reviewed_feature_routing_defects() -> None:
+def test_feature_routing_matches_reviewed_truth_after_config_migration() -> None:
     suite = load_golden_suite(MANIFEST)
     report = evaluate_golden_suite(suite)
 
     assert len(suite.cases) == 16
-    assert report["matched_case_count"] == 14
-    assert report["mismatched_case_count"] == 2
-    assert [
-        row["case_id"] for row in report["cases"] if row["matched"] is not True
-    ] == ["FR013", "FR014"]
+    assert report["matched_case_count"] == 16
+    assert report["mismatched_case_count"] == 0
     assert report["metrics"]["input_order_stability"] == 1.0
-    assert is_perfect(report, suite) is False
+    assert is_perfect(report, suite) is True
     assert_strict_baseline(report, suite, BASELINE)
 
 
@@ -61,15 +58,7 @@ def test_evaluator_is_repeatable_and_rejects_forged_perfect_report() -> None:
     assert first == second
 
     forged = copy.deepcopy(first)
-    forged["matched_case_count"] = 16
-    forged["mismatched_case_count"] = 0
-    forged["metrics"] = {
-        key: 1.0 for key in forged["metrics"]
-    }
-    for row in forged["cases"]:
-        row["matched"] = True
-        row["actual"] = copy.deepcopy(row["expected"])
-        row["differences"] = []
+    forged["cases"][0]["metric_counts"]["exact_tag_true"] += 1
     assert is_perfect(forged, suite) is False
 
 

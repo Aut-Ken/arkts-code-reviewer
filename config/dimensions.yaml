@@ -1,0 +1,176 @@
+schema_version: dimension-config-v1
+version: dimensions-v1
+review_questions:
+  - id: RQ-accessibility
+    title: 无障碍行为是否完整且可用
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_interactive_component]
+
+  - id: RQ-adaptability
+    title: 布局是否适配目标设备和窗口变化
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_layout, has_responsive_api]
+
+  - id: RQ-concurrency
+    title: 并发与异步行为是否正确且可控
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_async, has_taskpool, has_worker]
+
+  - id: RQ-correctness
+    title: 改动是否正确且不会引入直接回归
+    status: Active
+    always_bind: true
+    triggers: {}
+
+  - id: RQ-dfx
+    title: 诊断、日志和可测试性是否充分
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_logging]
+
+  - id: RQ-internationalization
+    title: 文本和资源使用是否满足国际化要求
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_resource_ref, has_text_display]
+
+  - id: RQ-lifecycle
+    title: 生命周期相关行为是否正确配对
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_lifecycle]
+
+  - id: RQ-navigation
+    title: 导航行为和目标状态是否正确
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_navigation]
+
+  - id: RQ-network
+    title: 网络访问和失败处理是否正确
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_network]
+
+  - id: RQ-resource
+    title: 资源是否正确创建、持有和释放
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_file_io, has_image, has_media, has_subscription, has_timer]
+
+  - id: RQ-security
+    title: 权限、输入和数据访问是否安全
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_network, has_permission_request, has_storage, has_user_input]
+
+  - id: RQ-state
+    title: 状态管理和状态传播是否正确
+    status: Active
+    always_bind: false
+    triggers:
+      any_tag: [has_state_management]
+
+dimensions:
+  - id: DIM-01
+    title: 规范符合度
+    status: Active
+    always_check: true
+    retrieval_policy: disabled
+    triggers: {}
+
+  - id: DIM-02
+    title: ArkTS 语言特性
+    status: Active
+    always_check: true
+    retrieval_policy: signal_required
+    triggers: {}
+
+  - id: DIM-03
+    title: 性能
+    status: Active
+    always_check: true
+    retrieval_policy: signal_required
+    triggers: {}
+
+  - id: DIM-04
+    title: 可维护性
+    status: Active
+    always_check: true
+    retrieval_policy: signal_required
+    triggers: {}
+
+  - id: DIM-05
+    title: 健壮性
+    status: Active
+    always_check: true
+    retrieval_policy: signal_required
+    triggers: {}
+
+  - id: DIM-06
+    title: 资源与内存管理
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_file_io, has_image, has_media, has_subscription, has_timer]
+
+  - id: DIM-07
+    title: 并发与异步
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_async, has_taskpool, has_worker]
+
+  - id: DIM-08
+    title: 无障碍
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_interactive_component]
+
+  - id: DIM-09
+    title: 多设备适配
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_layout, has_responsive_api]
+
+  - id: DIM-10
+    title: 国际化
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_resource_ref, has_text_display]
+
+  - id: DIM-11
+    title: 安全
+    status: Active
+    always_check: false
+    retrieval_policy: signal_required
+    triggers:
+      any_tag: [has_network, has_permission_request, has_storage, has_user_input]
+
+  - id: DIM-12
+    title: DFX 与可测性
+    status: Active
+    always_check: true
+    retrieval_policy: signal_required
+    triggers: {}

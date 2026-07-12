@@ -26,7 +26,7 @@ tests/golden/feature_routing/
 ```
 
 `manifest.json` contains manually reviewed `expected` values.
-`baselines/current.json` records the pre-FR implementation behavior. A baseline
+`baselines/current.json` records the current implementation behavior. A baseline
 must never overwrite or generate the expected truth. Parser output must not be
 used to synthesize expected routing results.
 
@@ -124,11 +124,11 @@ identity even when the input Units are deliberately permuted.
 
 Together these cases exercise all 24 frozen Tag IDs and all 12 Dimensions.
 
-## Intentional FR-0 red lights
+## FR-0 red lights and FR-1 resolution
 
-The first evaluator run against the pre-FR implementation is expected to expose
-three semantic defects. Expected truth must not be weakened to make the current
-baseline green:
+The first evaluator run against the pre-FR implementation exposed three semantic
+defects. The FR-0 baseline preserved them at `14/16`; expected truth was not
+weakened:
 
 - `clearInterval` is timer lifecycle behavior and must trigger `has_timer`.
 - `onAppear` and `onError` do not by themselves trigger
@@ -138,7 +138,8 @@ baseline green:
 
 FR014 retains `onClick` as a positive control so excluding lifecycle/error
 callbacks cannot be implemented by disabling attribute-based interaction
-routing entirely.
+routing entirely. FR-1 moved these triggers into validated `tags-v1` config and
+the current strict baseline is now `16/16`.
 
 ## Loader requirements
 
