@@ -39,16 +39,91 @@ def _mutate_manifest(tmp_path: Path, mutate: object) -> Path:
     return manifest
 
 
-def test_feature_routing_matches_reviewed_truth_after_config_migration() -> None:
+def test_feature_routing_matches_complete_reviewed_formal_contract() -> None:
     suite = load_golden_suite(MANIFEST)
     report = evaluate_golden_suite(suite)
 
     assert len(suite.cases) == 16
+    assert len(suite.review_question_ids) == 12
     assert report["matched_case_count"] == 16
     assert report["mismatched_case_count"] == 0
     assert report["metrics"]["input_order_stability"] == 1.0
     assert is_perfect(report, suite) is True
     assert_strict_baseline(report, suite, BASELINE)
+
+    expected_units = [
+        unit
+        for row in report["cases"]
+        for unit in row["expected"]["units"]
+    ]
+    assert len(expected_units) == 20
+    assert {
+        tag
+        for unit in expected_units
+        for field in ("exact_tags", "routing_tags")
+        for tag in unit[field]
+    } == set(suite.tag_ids)
+    assert {
+        dimension
+        for unit in expected_units
+        for field in ("dimensions", "routing_dimensions")
+        for dimension in unit[field]
+    } == set(suite.dimension_ids)
+    assert {
+        question
+        for unit in expected_units
+        for question in unit["review_question_ids"]
+    } == set(suite.review_question_ids)
+    activation_signals = {
+        (
+            match["tag_id"],
+            match["scope"],
+            signal["kind"],
+            signal["value"],
+        )
+        for unit in expected_units
+        for match in unit["tag_matches"]
+        for signal in match["signals"]
+    }
+    assert len(activation_signals) == 69
+    assert sum(
+        len(match["signals"])
+        for unit in expected_units
+        for match in unit["tag_matches"]
+    ) == 86
+    assert sum(
+        len(row["expected"]["question_bindings"])
+        for row in report["cases"]
+    ) == 44
+
+    expected = report["cases"][0]["expected"]
+    assert set(expected) == {
+        "schema_version",
+        "feature_config_version",
+        "tags_config_version",
+        "dimensions_config_version",
+        "units",
+        "mr_dimensions",
+        "question_bindings",
+        "diagnostics",
+    }
+    assert set(expected["units"][0]) == {
+        "unit_id",
+        "source_ref_id",
+        "exact_tags",
+        "routing_tags",
+        "shadow_exact_tags",
+        "shadow_routing_tags",
+        "tag_matches",
+        "dimensions",
+        "always_check_dimensions",
+        "retrieval_dimensions",
+        "routing_dimensions",
+        "shadow_dimensions",
+        "review_question_ids",
+        "shadow_review_question_ids",
+        "diagnostics",
+    }
 
 
 def test_evaluator_is_repeatable_and_rejects_forged_perfect_report() -> None:
@@ -68,15 +143,11 @@ def test_evaluator_is_repeatable_and_rejects_forged_perfect_report() -> None:
         (lambda data: data.__setitem__("unknown", True), "fields mismatch"),
         (lambda data: data.pop("description"), "fields mismatch"),
         (
-            lambda data: data["cases"][1].__setitem__(
-                "case_id", data["cases"][0]["case_id"]
-            ),
+            lambda data: data["cases"][1].__setitem__("case_id", data["cases"][0]["case_id"]),
             "FR001 through FR016",
         ),
         (
-            lambda data: data["cases"][0]["sources"][0].__setitem__(
-                "content_sha256", "0" * 64
-            ),
+            lambda data: data["cases"][0]["sources"][0].__setitem__("content_sha256", "0" * 64),
             "source hash/provenance drift",
         ),
         (
@@ -86,9 +157,7 @@ def test_evaluator_is_repeatable_and_rejects_forged_perfect_report() -> None:
             "source_ref_id provenance drift",
         ),
         (
-            lambda data: data["cases"][0]["sources"][0].__setitem__(
-                "origin_lines", [0, 1]
-            ),
+            lambda data: data["cases"][0]["sources"][0].__setitem__("origin_lines", [0, 1]),
             "1-based integers",
         ),
         (
@@ -98,10 +167,58 @@ def test_evaluator_is_repeatable_and_rejects_forged_perfect_report() -> None:
             "sorted and unique",
         ),
         (
-            lambda data: data["cases"][0]["expected"]["units"][0][
-                "exact_tags"
-            ].append("not_registered"),
+            lambda data: data["cases"][0]["expected"]["units"][0]["exact_tags"].append(
+                "not_registered"
+            ),
             "sorted and unique|unregistered",
+        ),
+        (
+            lambda data: data["review_question_ids"].append("RQ-unknown"),
+            "freeze the 12 review questions",
+        ),
+        (
+            lambda data: data.__setitem__(
+                "feature_config_version", "feature-config:sha256:" + "0" * 64
+            ),
+            "feature_config_version drift",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"].__setitem__(
+                "schema_version", "feature-routing-v999"
+            ),
+            "schema_version disagrees with frozen truth",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["units"][0].pop("tag_matches"),
+            "fields mismatch",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["units"][0]["tag_matches"].reverse(),
+            "tag_matches must be sorted and unique",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["units"][0]["tag_matches"][0][
+                "signals"
+            ].append({"kind": "unknown_kind", "value": "forged"}),
+            "kind is unsupported",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["units"][0]["retrieval_dimensions"].append(
+                "DIM-07"
+            ),
+            "retrieval_dimensions disagree with frozen truth",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["units"][0]["diagnostics"].append(
+                "unit_owner_unresolved"
+            ),
+            "diagnostics disagree with frozen truth",
+        ),
+        (
+            lambda data: data["cases"][0]["expected"]["question_bindings"][0].__setitem__(
+                "review_question_id", "RQ-accessibility"
+            ),
+            "question_bindings disagree with frozen truth",
         ),
     ],
 )

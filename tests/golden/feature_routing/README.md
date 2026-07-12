@@ -3,14 +3,17 @@
 This directory freezes the human-reviewed Feature Routing truth independently of
 Parser, FileAnalysis, ReviewUnit, Retrieval, Rules, and Prompt evaluation.
 
-The suite answers only these questions:
+The suite answers these questions through the production `FeatureRouter`:
 
 1. Which frozen Tags follow from one Unit's occurrence-scoped `unit_exact` facts?
 2. Which conservative routing Tags follow from that Unit's source-scoped
    `file_hints`?
 3. Which Dimensions follow from the Unit's exact Tags?
-4. Which Dimensions form the MR union after exact and routing-only signals are
-   combined?
+4. Which Dimensions are review checks, exact-retrieval routes, or conservative
+   file-hint routes?
+5. Which Active review questions bind to each Primary Unit?
+6. Which activation signals, config versions, diagnostics, and MR Dimensions
+   make the result explainable and replayable?
 
 Tags and Dimensions are routing metadata. They are neither Finding evidence nor
 proof that a defect exists.
@@ -46,6 +49,10 @@ suite_id       = feature-routing-fr0
 description
 tag_ids        = the 24 frozen Tag IDs
 dimension_ids  = DIM-01 through DIM-12
+review_question_ids = the 12 frozen RQ IDs
+feature_config_version
+tags_config_version
+dimensions_config_version
 cases
 ```
 
@@ -83,10 +90,15 @@ import_bindings, import_uses, field_reads, field_writes, calls,
 string_literals, resource_references
 ```
 
-Each expected Unit has `unit_id`, `source_ref_id`, `exact_tags`, `routing_tags`,
-and `dimensions`. `expected.mr_dimensions` is the conservative MR union. All
-output lists are sorted and unique, and expected Units are ordered by stable
-identity even when the input Units are deliberately permuted.
+Each expected result freezes `feature-routing-v1`, all three config versions,
+Units, MR Dimensions, review-question bindings, and diagnostics. Each expected
+Unit freezes exact/routing/shadow Tags, the complete `TagMatch` activation trace,
+review/always-check/retrieval/routing/shadow Dimensions, Active/shadow review
+questions, and diagnostics. `profile_id`, `feature_routing_id`, and the expanded
+`dimension_routes` graph remain in the strict current baseline; the independent
+FR-3 policy matrix tests the route graph itself. All output lists are sorted and
+unique, and expected Units are ordered by stable identity even when input Units
+are deliberately permuted.
 
 ## Scope rules
 
@@ -96,8 +108,12 @@ identity even when the input Units are deliberately permuted.
 - File hints may widen retrieval, but may not become Unit-exact facts or Finding
   evidence.
 - Unit `dimensions` derive only from `exact_tags`.
-- `mr_dimensions` derives from the union of exact and routing Tags across the
-  case.
+- `retrieval_dimensions` require exact signals under the current
+  `signal_required` policy; `routing_dimensions` may conservatively use file
+  hints.
+- Review questions bind only from `unit_exact`; hint-only matches never become
+  Unit-specific questions.
+- `mr_dimensions` is the union of review and conservative routing Dimensions.
 - DIM-01 through DIM-05 and DIM-12 are always active.
 - One file's hints must never reach a Unit from another file.
 
@@ -122,7 +138,13 @@ identity even when the input Units are deliberately permuted.
 | FR015 | Input permutation and deterministic output order |
 | FR016 | Neutral facts do not fabricate Tags |
 
-Together these cases exercise all 24 frozen Tag IDs and all 12 Dimensions.
+Together these cases exercise all 24 frozen Tag IDs, all 12 Dimensions, all 12
+review questions, 20 Unit profiles, 69 unique scoped signal variants across 86
+Unit-level activation occurrences, and 44 question bindings.
+
+The evaluator reports precision/recall separately for exact/routing Tags,
+review/retrieval/routing/MR Dimensions, review questions, activation signals,
+and question bindings, plus case exact accuracy and input-order stability.
 
 ## FR-0 red lights and FR-1 resolution
 
@@ -145,6 +167,16 @@ the current strict baseline is now `16/16`.
 
 The FR-0 loader is expected to fail closed on duplicate JSON keys, duplicate case
 or identity values, unknown/missing fields, invalid aliases, malformed or
-unsorted arrays, unknown Tag/Dimension IDs, provenance/hash/source-ref drift,
+unsorted arrays, unknown Tag/Dimension/RQ IDs, config version drift, malformed
+activation signals, question-binding drift, provenance/hash/source-ref drift,
 invalid origin lines, symlink/path escape, expected/input identity mismatch, and
 nondeterministic output order.
+
+Run both formal gates with:
+
+```bash
+PYTHONPATH=src .venv/bin/python tools/evaluate_feature_routing_golden.py \
+  --baseline tests/golden/feature_routing/baselines/current.json
+PYTHONPATH=src .venv/bin/python tools/evaluate_feature_routing_golden.py \
+  --require-perfect
+```

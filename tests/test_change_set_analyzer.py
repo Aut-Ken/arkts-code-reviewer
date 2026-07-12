@@ -381,6 +381,8 @@ def test_binary_change_propagates_diagnostic_without_parser_or_fake_unit() -> No
         diagnostic.code
         for diagnostic in result.review_unit_build_result.diagnostics
     ] == ["binary_change_unsupported"]
+    assert result.feature_routing_result.units == ()
+    assert result.feature_routing_result.question_bindings == ()
     assert result.to_dict()["change_set"] == change_set.to_dict()
 
 

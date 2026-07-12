@@ -39,8 +39,8 @@ Golden 和 ContextPlan Golden 继续保持独立。
 | `review_units.py` | full/diff declaration 选择、fallback、HostSummary 和去重 |
 | `unit_facts.py` | 按 owner/span 从 FileAnalysis 投影 `unit_exact/file_hints` |
 | `context_planning.py` | typed relation、ChangeGroup、Supporting、multi-bundle 和 `arkts-code-token-v1` |
-| `analyzer.py` | parse-once、完整 Primary 生产门禁、safe boundary 校验和兼容 RetrievalUnit 组装 |
-| `tagger.py` | 从 Unit exact facts 派生 Tags，再合并保守 routing signals |
+| `analyzer.py` | parse-once、完整 Primary 生产门禁、Feature binding 转接、safe boundary 校验和兼容视图组装 |
+| `feature_routing/` | 从 UnitFactScope 生成正式 profile、Dimensions 和 Review Questions；属于模块 04 |
 | `parser_validation/packager.py` | GLM 质检 snapshot；不是 ReviewUnit accuracy oracle |
 | `review_unit_validation/golden.py` | 独立 Golden schema、loader、evaluator 和 baseline 校验 |
 | `change_set_validation/golden.py` | 独立 ChangeSet Golden、完整比较和 fail-closed loader |
@@ -60,11 +60,11 @@ CLI / CodeAnalyzer.analyze_file(s)
 -> ReviewUnitBuilder.build_full/build_diff
 -> 对每个去重 Unit：
    -> 按 owner/span 投影 UnitFactScope
-   -> unit_exact -> derive_tags / CodeFeatures / Unit Dimensions
-   -> file_hints -> routing_tags / MR 保守路由
-   -> CodeFeatures / RetrievalUnit
--> 合并 Unit tags
--> MR-level triggered_dimensions
+-> FeatureRouter.route(all UnitFactScope)
+   -> unit_exact -> exact Tags / review + retrieval Dimensions / 专项 RQ
+   -> file_hints -> routing Tags / routing + MR 保守 Dimensions
+   -> UnitFeatureProfile / FeatureRoutingResult
+-> 组装 compatibility-only CodeFeatures / RetrievalUnit
 -> AnalysisResult
 ```
 
@@ -79,6 +79,7 @@ ChangedFileInput / ChangeAtomInput / CodeSourceSnapshot
 -> FileAnalysisParser.parse_file(base/head source)   每个 source_ref_id 一次
 -> ChangeSetReviewUnitBuilder                        old/new lines -> region/declaration owner
 -> ReviewUnitBuildResult                             review-unit-build-v3
+-> UnitFactScope -> FeatureRoutingResult              选择 Active review questions
 -> CodeAnalyzer.plan_context(完整 AnalysisResult)
 -> exact relation + declaration/region provenance
 -> ChangeGroup -> 按 review question 分 ReviewContextBundle
@@ -131,9 +132,11 @@ CodeFacts.parser_layer / warnings
 以下硬约束必须保持：
 
 1. `qualified_name` 和 `parent_name` 不是 occurrence 唯一 ID。
-2. components、APIs、decorators、attributes、symbols、syntax 是文件级去重集合。
+2. 兼容 `CodeFacts` 中的 components、APIs、decorators、attributes、symbols、syntax 是文件级
+   去重集合；不能把它们当作 occurrence truth。
 3. Unit components/symbols 只能从 Unit span 内 declarations 投影。
-4. APIs/decorators/attributes/syntax/imports 没有 owner，只能称为 `file_hints`。
+4. 兼容 `CodeFacts` 的 APIs/decorators/attributes/syntax/imports 没有 owner，只能称为
+   `file_hints`；正式 FileAnalysis occurrence 可以有 owner。
 5. file hints 可以扩大候选路由，不能成为 Unit evidence。
 6. `parser_layer=L1` 不代表没有 ERROR/missing node；warnings 必须可见。
 7. Parser facts 只描述检测结果，不判断代码质量。
@@ -510,7 +513,8 @@ Primary 子集。它可以消费已注入、固定 revision、带 provenance 的
 基本规划规则：
 
 1. 全部直接改动 Primary 都必须保留；不是只交给后续模块“最相关的一块”。
-2. 按 `(Primary, review question)` 生成有界 ContextCandidate，并记录来源、目标 span 和质量。
+2. Feature Routing 根据 Primary 的 exact facts 选择 review questions；Planner 按
+   `(Primary, review question)` 生成有界 ContextCandidate，并记录来源、目标 span 和质量。
 3. 生命周期配对、状态读写、直接 helper/caller 等只有在 typed RelationEdge 支持时才能成为
    SupportingSegment；无界递归调用图不在范围内。
 4. 只用 strong、exact 的 Primary-to-Primary edge 构建 ChangeGroup；`same_host` 之类弱关系
@@ -551,6 +555,11 @@ fail-closed。额外文件也必须显式注入固定 source 和 FileAnalysis，
 每个可调度 bundle 中重复；helpful supporting 按稳定 candidate 顺序 first-fit 分箱。这样多个
 片段合计超过单次预算时仍可分别送往后续模型，而不是退化成 Top-1；若 required 自身无法和
 Primary 一起容纳，则只返回不可调度 bundle，不把残缺上下文伪装成充分。
+
+问题 registry 和适用性选择属于 Feature Routing；ReviewUnit 只拥有二字段 `QuestionBinding`
+在 ContextPlan 中的承载、分组和预算语义。`CodeAnalyzer.plan_context(...)` 默认从
+`AnalysisResult.feature_routing_result.question_bindings` 转换 bindings；旧显式参数仅作兼容
+相等性断言，不能覆盖 Feature Routing 或删掉某个 Primary 的问题。
 
 token 口径冻结为 `arkts-code-token-v1`：ArkTS syntax 和 trivia chunk 均按
 `max(1, ceil(UTF-8 bytes / 4))` 计费。它是确定、可复放的 code token 单位，不冒充某个未来
@@ -701,8 +710,9 @@ interval tree 和调用图优化都必须在事实正确性门禁之后按测量
 - RU-3 的 `unit_exact/file_hints` 必须继续由 occurrence 合同投影，不能退化为复制文件级集合。
 - RU-4 只消费标准化 ChangeSet，不自行连接 Git 平台或解析任意外部仓库。
 - RU-5 不生成 EvidencePack、PromptPacket、Finding 或 ReviewReport。
-- Tag/Dimension 配置化。
-- 递归扫描外部仓库。
+- Feature Routing 不属于 RU-5；ReviewUnit 只能消费其 QuestionBinding，不能修改 Tag、Dimension
+  或 retrieval policy。
+- 不递归扫描外部仓库。
 
 ## 17. 阶段门禁与提交策略
 

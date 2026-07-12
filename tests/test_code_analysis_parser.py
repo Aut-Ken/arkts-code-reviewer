@@ -817,6 +817,14 @@ struct Second {
 
                 self.assertEqual(len(parser.calls), 1)
                 self.assertEqual(len(result.review_units), expected_units)
+                self.assertEqual(
+                    len(result.feature_routing_result.units),
+                    expected_units,
+                )
+                self.assertEqual(
+                    {profile.unit_id for profile in result.feature_routing_result.units},
+                    {unit.unit_id for unit in result.review_units},
+                )
 
     def test_parses_each_unique_source_revision_once(self) -> None:
         files = [

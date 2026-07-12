@@ -1,7 +1,7 @@
 {
   "schema_version": "feature-routing-golden-v1",
   "suite_id": "feature-routing-fr0",
-  "description": "Human-reviewed FR-0 truth for occurrence-exact tags, source-scoped routing hints, Unit dimensions, and MR dimension union.",
+  "description": "Human-reviewed Feature Routing v1 truth for scoped activation signals, Tags, review/retrieval/routing Dimensions, Review Questions, bindings, and deterministic output.",
   "tag_ids": [
     "has_animation",
     "has_async",
@@ -42,6 +42,23 @@
     "DIM-11",
     "DIM-12"
   ],
+  "review_question_ids": [
+    "RQ-accessibility",
+    "RQ-adaptability",
+    "RQ-concurrency",
+    "RQ-correctness",
+    "RQ-dfx",
+    "RQ-internationalization",
+    "RQ-lifecycle",
+    "RQ-navigation",
+    "RQ-network",
+    "RQ-resource",
+    "RQ-security",
+    "RQ-state"
+  ],
+  "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "tags_config_version": "tags-v1",
+  "dimensions_config_version": "dimensions-v1",
   "cases": [
     {
       "case_id": "FR001",
@@ -109,6 +126,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR001:timer",
@@ -121,6 +142,58 @@
               "has_resource_ref",
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_image",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Image"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_resource_ref",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "$r"
+                  },
+                  {
+                    "kind": "resource_references",
+                    "value": "app.media.icon"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setInterval"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setInterval"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -129,7 +202,29 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06",
+              "DIM-10"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -141,7 +236,18 @@
           "DIM-06",
           "DIM-10",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR001:timer",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR001:timer",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -213,6 +319,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR002:subscribe",
@@ -223,6 +333,32 @@
             "routing_tags": [
               "has_subscription"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_subscription",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "emitter.on"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_subscription",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "emitter.on"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -231,7 +367,28 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -242,7 +399,18 @@
           "DIM-05",
           "DIM-06",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR002:subscribe",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR002:subscribe",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -320,6 +488,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR003:persist",
@@ -332,6 +504,54 @@
               "has_file_io",
               "has_media"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_file_io",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "fs.openSync"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_file_io",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "fs.openSync"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_media",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "media.createAVPlayer"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_media",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "media.createAVPlayer"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -340,7 +560,28 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -351,7 +592,18 @@
           "DIM-05",
           "DIM-06",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR003:persist",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR003:persist",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -443,6 +695,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR004:dispatch",
@@ -457,6 +713,100 @@
               "has_taskpool",
               "has_worker"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_async",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "syntax",
+                    "value": "async_fn"
+                  },
+                  {
+                    "kind": "syntax",
+                    "value": "await_expr"
+                  },
+                  {
+                    "kind": "syntax",
+                    "value": "promise"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_async",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "syntax",
+                    "value": "async_fn"
+                  },
+                  {
+                    "kind": "syntax",
+                    "value": "await_expr"
+                  },
+                  {
+                    "kind": "syntax",
+                    "value": "promise"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_taskpool",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "taskpool.execute"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_taskpool",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "taskpool.execute"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_worker",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "worker.ThreadWorker"
+                  },
+                  {
+                    "kind": "symbols",
+                    "value": "ThreadWorker"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_worker",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "worker.ThreadWorker"
+                  },
+                  {
+                    "kind": "symbols",
+                    "value": "ThreadWorker"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -465,7 +815,28 @@
               "DIM-05",
               "DIM-07",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-07"
+            ],
+            "routing_dimensions": [
+              "DIM-07"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-concurrency",
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -476,7 +847,18 @@
           "DIM-05",
           "DIM-07",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR004:dispatch",
+            "review_question_id": "RQ-concurrency"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR004:dispatch",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -550,6 +932,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR005:controls",
@@ -564,6 +950,84 @@
               "has_layout",
               "has_responsive_api"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "attributes",
+                    "value": "onClick"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Button"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "attributes",
+                    "value": "onClick"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Button"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_layout",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "GridRow"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_layout",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "GridRow"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_responsive_api",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "GridRow"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_responsive_api",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "GridRow"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -573,7 +1037,31 @@
               "DIM-08",
               "DIM-09",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-08",
+              "DIM-09"
+            ],
+            "routing_dimensions": [
+              "DIM-08",
+              "DIM-09"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-accessibility",
+              "RQ-adaptability",
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -585,7 +1073,22 @@
           "DIM-08",
           "DIM-09",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR005:controls",
+            "review_question_id": "RQ-accessibility"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR005:controls",
+            "review_question_id": "RQ-adaptability"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR005:controls",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -661,6 +1164,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR006:title",
@@ -673,6 +1180,62 @@
               "has_resource_ref",
               "has_text_display"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_resource_ref",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "$r"
+                  },
+                  {
+                    "kind": "resource_references",
+                    "value": "app.string.title"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_resource_ref",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "$r"
+                  },
+                  {
+                    "kind": "resource_references",
+                    "value": "app.string.title"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_text_display",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Text"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_text_display",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Text"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -681,7 +1244,28 @@
               "DIM-05",
               "DIM-10",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-10"
+            ],
+            "routing_dimensions": [
+              "DIM-10"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-internationalization"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -692,7 +1276,18 @@
           "DIM-05",
           "DIM-10",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR006:title",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR006:title",
+            "review_question_id": "RQ-internationalization"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -780,6 +1375,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR007:submit",
@@ -800,6 +1399,142 @@
               "has_text_display",
               "has_user_input"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_permission_request",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "abilityAccessCtrl.requestPermissionsFromUser"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_permission_request",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "abilityAccessCtrl.requestPermissionsFromUser"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_storage",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "preferences.getPreferences"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_storage",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "preferences.getPreferences"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_text_display",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_text_display",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_user_input",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_user_input",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "TextInput"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -810,7 +1545,35 @@
               "DIM-10",
               "DIM-11",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-08",
+              "DIM-10",
+              "DIM-11"
+            ],
+            "routing_dimensions": [
+              "DIM-08",
+              "DIM-10",
+              "DIM-11"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-accessibility",
+              "RQ-correctness",
+              "RQ-internationalization",
+              "RQ-network",
+              "RQ-security"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -823,7 +1586,30 @@
           "DIM-10",
           "DIM-11",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR007:submit",
+            "review_question_id": "RQ-accessibility"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR007:submit",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR007:submit",
+            "review_question_id": "RQ-internationalization"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR007:submit",
+            "review_question_id": "RQ-network"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR007:submit",
+            "review_question_id": "RQ-security"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -901,6 +1687,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR008:lifecycle",
@@ -913,6 +1703,54 @@
               "has_lifecycle",
               "has_state_management"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_lifecycle",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "symbols",
+                    "value": "aboutToAppear"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_lifecycle",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "symbols",
+                    "value": "aboutToAppear"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_state_management",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "decorators",
+                    "value": "@State"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_state_management",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "decorators",
+                    "value": "@State"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -920,7 +1758,25 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-lifecycle",
+              "RQ-state"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -930,7 +1786,22 @@
           "DIM-04",
           "DIM-05",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR008:lifecycle",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR008:lifecycle",
+            "review_question_id": "RQ-lifecycle"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR008:lifecycle",
+            "review_question_id": "RQ-state"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1059,6 +1930,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR009:image",
@@ -1069,6 +1944,32 @@
             "routing_tags": [
               "has_image"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_image",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Image"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_image",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Image"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1077,7 +1978,28 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           },
           {
             "unit_id": "fr-unit:FR009:network",
@@ -1088,6 +2010,32 @@
             "routing_tags": [
               "has_network"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1096,7 +2044,29 @@
               "DIM-05",
               "DIM-11",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-11"
+            ],
+            "routing_dimensions": [
+              "DIM-11"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-network",
+              "RQ-security"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1108,7 +2078,30 @@
           "DIM-06",
           "DIM-11",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR009:image",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR009:image",
+            "review_question_id": "RQ-resource"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR009:network",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR009:network",
+            "review_question_id": "RQ-network"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR009:network",
+            "review_question_id": "RQ-security"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1180,6 +2173,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR010:list",
@@ -1192,6 +2189,54 @@
               "has_animation",
               "has_list_render"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_animation",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "animateTo"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_animation",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "animateTo"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_list_render",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "List"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_list_render",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "List"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1199,7 +2244,23 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1209,7 +2270,14 @@
           "DIM-04",
           "DIM-05",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR010:list",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1299,6 +2367,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR011:destination",
@@ -1313,6 +2385,84 @@
               "has_logging",
               "has_navigation"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_builder",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "decorators",
+                    "value": "@Builder"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_builder",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "decorators",
+                    "value": "@Builder"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_logging",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "hilog.info"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_logging",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "hilog.info"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_navigation",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "router.pushUrl"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Navigation"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_navigation",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "router.pushUrl"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Navigation"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1320,7 +2470,25 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-dfx",
+              "RQ-navigation"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1330,7 +2498,22 @@
           "DIM-04",
           "DIM-05",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR011:destination",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR011:destination",
+            "review_question_id": "RQ-dfx"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR011:destination",
+            "review_question_id": "RQ-navigation"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1397,6 +2580,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR012:fallback",
@@ -1406,6 +2593,32 @@
               "has_network",
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setTimeout"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1413,7 +2626,26 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [
+              "DIM-06",
+              "DIM-11"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1425,7 +2657,14 @@
           "DIM-06",
           "DIM-11",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR012:fallback",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1541,6 +2780,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR013:sdk",
@@ -1549,6 +2792,21 @@
             "routing_tags": [
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "clearInterval"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1556,7 +2814,25 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           },
           {
             "unit_id": "fr-unit:FR013:stop",
@@ -1567,6 +2843,32 @@
             "routing_tags": [
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "clearInterval"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "clearInterval"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1575,7 +2877,28 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1586,7 +2909,22 @@
           "DIM-05",
           "DIM-06",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR013:sdk",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR013:stop",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR013:stop",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1713,6 +3051,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR014:click",
@@ -1723,6 +3065,40 @@
             "routing_tags": [
               "has_interactive_component"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "attributes",
+                    "value": "onClick"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Button"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_interactive_component",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "attributes",
+                    "value": "onClick"
+                  },
+                  {
+                    "kind": "components",
+                    "value": "Button"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1731,7 +3107,28 @@
               "DIM-05",
               "DIM-08",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-08"
+            ],
+            "routing_dimensions": [
+              "DIM-08"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-accessibility",
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           },
           {
             "unit_id": "fr-unit:FR014:lifecycle",
@@ -1742,6 +3139,32 @@
             "routing_tags": [
               "has_image"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_image",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Image"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_image",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "components",
+                    "value": "Image"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1750,7 +3173,28 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1762,7 +3206,26 @@
           "DIM-06",
           "DIM-08",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR014:click",
+            "review_question_id": "RQ-accessibility"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR014:click",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR014:lifecycle",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR014:lifecycle",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1878,6 +3341,10 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR015:a-timer",
@@ -1889,6 +3356,43 @@
               "has_network",
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setTimeout"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setTimeout"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1897,7 +3401,29 @@
               "DIM-05",
               "DIM-06",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-06"
+            ],
+            "routing_dimensions": [
+              "DIM-06",
+              "DIM-11"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-resource"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           },
           {
             "unit_id": "fr-unit:FR015:z-network",
@@ -1909,6 +3435,43 @@
               "has_network",
               "has_timer"
             ],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_network",
+                "status": "Active",
+                "scope": "unit_exact",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "http.createHttp"
+                  }
+                ]
+              },
+              {
+                "tag_id": "has_timer",
+                "status": "Active",
+                "scope": "file_hint",
+                "signals": [
+                  {
+                    "kind": "apis",
+                    "value": "setTimeout"
+                  }
+                ]
+              }
+            ],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -1917,7 +3480,30 @@
               "DIM-05",
               "DIM-11",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [
+              "DIM-11"
+            ],
+            "routing_dimensions": [
+              "DIM-06",
+              "DIM-11"
+            ],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness",
+              "RQ-network",
+              "RQ-security"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -1929,7 +3515,30 @@
           "DIM-06",
           "DIM-11",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR015:a-timer",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR015:a-timer",
+            "review_question_id": "RQ-resource"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR015:z-network",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR015:z-network",
+            "review_question_id": "RQ-network"
+          },
+          {
+            "primary_unit_id": "fr-unit:FR015:z-network",
+            "review_question_id": "RQ-security"
+          }
+        ],
+        "diagnostics": []
       }
     },
     {
@@ -1997,12 +3606,19 @@
         }
       ],
       "expected": {
+        "schema_version": "feature-routing-v1",
+        "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+        "tags_config_version": "tags-v1",
+        "dimensions_config_version": "dimensions-v1",
         "units": [
           {
             "unit_id": "fr-unit:FR016:neutral",
             "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
             "exact_tags": [],
             "routing_tags": [],
+            "shadow_exact_tags": [],
+            "shadow_routing_tags": [],
+            "tag_matches": [],
             "dimensions": [
               "DIM-01",
               "DIM-02",
@@ -2010,7 +3626,23 @@
               "DIM-04",
               "DIM-05",
               "DIM-12"
-            ]
+            ],
+            "always_check_dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ],
+            "retrieval_dimensions": [],
+            "routing_dimensions": [],
+            "shadow_dimensions": [],
+            "review_question_ids": [
+              "RQ-correctness"
+            ],
+            "shadow_review_question_ids": [],
+            "diagnostics": []
           }
         ],
         "mr_dimensions": [
@@ -2020,7 +3652,14 @@
           "DIM-04",
           "DIM-05",
           "DIM-12"
-        ]
+        ],
+        "question_bindings": [
+          {
+            "primary_unit_id": "fr-unit:FR016:neutral",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "diagnostics": []
       }
     }
   ]

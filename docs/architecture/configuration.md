@@ -1,7 +1,7 @@
 ---
 title: 配置与版本规范
 status: canonical
-updated: 2026-07-10
+updated: 2026-07-12
 ---
 
 # 配置与版本规范
@@ -15,7 +15,7 @@ updated: 2026-07-10
 5. 配置必须在服务启动和 CI 中做 schema 及交叉引用校验。
 6. 当前未实现的配置在本文标记为“目标”，不能假装运行时已经读取。
 
-## 2. 目标配置目录
+## 2. 配置目录与当前状态
 
 ```text
 config/
@@ -29,7 +29,16 @@ config/
 └── evaluation.yaml
 ```
 
-当前仓库尚未创建这些运行时配置；Tags 和 Dimensions 仍硬编码在 `tagger.py`。
+当前已实现并由生产 FeatureRouter 读取：
+
+```text
+config/tags.yaml          tag-config-v1 / tags-v1
+config/dimensions.yaml    dimension-config-v1 / dimensions-v1
+```
+
+`routing.yaml` 及其后的 Retrieval、Rules、Reviewer、Output、Evaluation 配置仍是目标设计，
+当前仓库没有对应运行时 loader。`tagger.py` 只保留调用配置引擎的兼容函数，不再维护第二份
+硬编码 Tag/Dimension 语义。
 
 外部仓库不写进这个 `config/`。它们由
 `/home/autken/Code/arkts-knowledge/registry/sources.yaml` 登记，具体契约见
@@ -45,16 +54,18 @@ prompts/
 └── parser-validation/        # 与正式评审 Prompt 分开版本化
 ```
 
-## 3. 配置优先级
+## 3. 配置选择与优先级
 
 ```text
-显式函数参数
-> 环境变量
-> 项目 YAML
-> 代码默认值
+显式传入 FeatureConfig
+> wheel 内 packaged defaults
+> source checkout 的项目 YAML
 ```
 
-评审策略字段不允许通过普通环境变量任意覆盖；生产变更必须走 Git 评审和版本升级。
+当前 `FeatureRouter(config=...)` 支持显式注入已校验 `FeatureConfig`，便于单独测试和影子运行；
+`CodeAnalyzer` v1 仍固定使用默认配置，并用同一默认配置重放结果，尚未提供生产运行时切换入口。
+默认 loader 在安装环境优先读取 packaged defaults，在源码 checkout 读取仓库 `config/`。
+Tags/Dimensions 语义不支持环境变量逐字段覆盖；生产变更必须走 Git 评审和版本升级。
 
 ## 4. 当前已使用环境变量
 
@@ -128,41 +139,59 @@ SourceRecord.env_override 对应环境变量
 
 完整变量名以 `sources.yaml` 为准，业务代码不能自行维护第二份来源路径清单。
 
-## 6. tags.yaml
+## 6. 已实现的 tags.yaml
 
-目标结构：
+当前结构：
 
 ```yaml
+schema_version: tag-config-v1
 version: tags-v1
 
 tags:
   - id: has_timer
     status: Active
-    description: 代码使用定时器 API
+    description: 代码创建或清理定时器
     triggers:
-      any_api:
-        - setInterval
-        - setTimeout
-        - systemTimer.setInterval
+      any_api: [clearInterval, clearTimeout, setInterval, setTimeout, systemTimer.setInterval]
 
   - id: has_image
     status: Active
     description: 代码使用图片组件或 image API
     triggers:
-      any_component:
-        - Image
-        - ImageSpan
-        - ImageAnimator
-      any_api_prefix:
-        - image.
+      any_component: [Image, ImageAnimator, ImageSpan]
+      any_api_prefix: [image.]
 ```
 
-Tag 是代码场景，不包含 severity 和最终问题描述。
+支持的 trigger operator 当前冻结为：
 
-## 7. dimensions.yaml
+```text
+any_component
+any_api
+any_api_prefix
+any_api_suffix
+any_decorator
+any_attribute
+any_symbol
+any_syntax
+has_resource_reference
+```
+
+Tag 是代码场景，不包含 severity 和最终问题描述。`has_resource_reference` 直接消费结构化
+resource occurrence，不需要把资源引用伪装为 `$r` API。全部触发数组必须排序去重；空规则、
+未知 operator、重复 YAML key 和未知字段都会失败。
+
+## 7. 已实现的 dimensions.yaml
 
 ```yaml
+schema_version: dimension-config-v1
 version: dimensions-v1
+
+review_questions:
+  - id: RQ-correctness
+    title: 改动是否正确且不会引入直接回归
+    status: Active
+    always_bind: true
+    triggers: {}
 
 dimensions:
   - id: DIM-06
@@ -172,21 +201,16 @@ dimensions:
     retrieval_policy: signal_required
     triggers:
       any_tag:
-        - has_image
-        - has_timer
-        - has_subscription
-        - has_media
         - has_file_io
-    retrieval:
-      func_scopes:
-        - resource-management
-      top_k: 5
-      token_weight: 1.5
-    prompt_checks:
-      - 检查资源是否重复创建
-      - 检查资源是否在适当生命周期释放
-    severity_weight: high
+        - has_image
+        - has_media
+        - has_subscription
+        - has_timer
 ```
+
+当前 Feature Routing 配置只拥有适用性：Tag 触发、`always_check`、`retrieval_policy` 和 Review
+Question binding。知识 `func_scope/top_k/token_weight`、Prompt 文本和 severity 属于下游模块，
+尚未由这份配置执行，也不能伪装成已实现字段。
 
 `retrieval_policy`：
 
@@ -196,7 +220,55 @@ always           始终检索，原则上不建议用于抽象维度
 disabled         不参与知识检索，只进入 Prompt 检查项
 ```
 
-## 8. routing.yaml
+实际执行还区分：
+
+```text
+review_enabled      always_check 或有 exact Tag
+retrieval_enabled   policy 允许且有 exact Tag（或 policy=always）
+routing_enabled     policy 允许且有 exact/file-hint Tag（或 policy=always）
+```
+
+hint-only signal 只能扩大 `routing_dimensions`，不能进入正式 `retrieval_dimensions`。当前
+DIM-02/03/04/05/12 都是 `always_check=true + signal_required`，但 trigger 列表为空，因此会进入
+评审方向，却不会启动知识检索。DIM-01 是 `always_check=true + disabled`。
+
+`dimensions.yaml` 还冻结 12 个 Review Questions。`RQ-correctness` 始终绑定，其余问题只由
+`unit_exact` Active Tags 触发；file hint 不绑定专项问题。
+
+### 7.1 状态治理
+
+Tag、Dimension 和 Review Question 都支持：
+
+```text
+Active      正式生效
+Draft       只进入 shadow 输出
+Deprecated  运行时不匹配、不输出
+```
+
+Active Dimension/Question 不得引用 Draft 或 Deprecated Tag。历史 ID 不得删除后复用；迁移应先
+Deprecated，并通过新配置版本完成。
+
+### 7.2 组合 fingerprint 与 wheel
+
+Loader 对按 ID 排序规范化后的两份配置计算：
+
+```text
+feature-config:sha256:<digest>
+```
+
+`FeatureRoutingResult` 和每个 `UnitFeatureProfile` 同时记录该 fingerprint、`tags-v1` 和
+`dimensions-v1`。声明顺序变化不改变语义 fingerprint，内容或声明版本变化会改变它。
+
+`pyproject.toml` 使用 wheel `force-include` 将仓库两份 YAML 安装为：
+
+```text
+arkts_code_reviewer/feature_routing/defaults/tags.yaml
+arkts_code_reviewer/feature_routing/defaults/dimensions.yaml
+```
+
+安装环境优先读取 packaged defaults；这避免 wheel 离开仓库根目录后退回另一套隐式规则。
+
+## 8. routing.yaml（目标，未实现）
 
 ```yaml
 version: routing-v1
@@ -218,7 +290,7 @@ routes:
       - image-loading
 ```
 
-## 9. retrieval.yaml
+## 9. retrieval.yaml（目标，未实现）
 
 ```yaml
 version: retrieval-v1
@@ -252,7 +324,7 @@ assembly:
 
 上述数值是初始候选，必须通过 Golden Set 调优后才能成为生产默认值。
 
-## 10. rules.yaml
+## 10. rules.yaml（目标，未实现）
 
 ```yaml
 version: rules-v1
@@ -269,7 +341,7 @@ rules:
 
 YAML 保存元数据和治理状态，复杂检测逻辑由 Python 实现并通过注册表引用。
 
-## 11. reviewer.yaml
+## 11. reviewer.yaml（目标，未实现）
 
 ```yaml
 version: reviewer-v1
@@ -290,7 +362,7 @@ limits:
   max_findings_per_mr: 10
 ```
 
-## 12. output.yaml
+## 12. output.yaml（目标，未实现）
 
 ```yaml
 version: output-v1
@@ -306,7 +378,7 @@ filtering:
   minimum_confidence: medium
 ```
 
-## 13. evaluation.yaml
+## 13. evaluation.yaml（目标，未实现）
 
 ```yaml
 version: evaluation-v1
@@ -333,6 +405,7 @@ gates:
   "versions": {
     "tags": "tags-v1",
     "dimensions": "dimensions-v1",
+    "feature_config": "feature-config:sha256:...",
     "routing": "routing-v1",
     "source_bundle": "src-bundle-sha256",
     "retrieval": "retrieval-v1",
@@ -346,15 +419,21 @@ gates:
 
 ## 15. CI 校验
 
-配置 CI 至少检查：
+Feature Routing 当前 loader、测试和发布门禁已经检查：
 
-- ID 全局唯一。
-- Dimension 引用的 Tag 存在且 Active。
+- YAML duplicate key、未知字段和未知 enum fail-closed。
+- Tag/Dimension/Question ID 唯一且格式正确。
+- trigger 数组去重、排序并使用已登记 operator。
+- Dimension/Question 引用的 Tag 存在。
+- Active Dimension/Question 不依赖非 Active Tag。
+- 配置 fingerprint、结果 identity、输出顺序和 replay 可复现。
+- `tools/check_feature_routing_package.py` 构建并解包 wheel，再用隔离导入验证 packaged defaults。
+
+完整系统 CI 后续还至少检查：
+
 - Rule 引用的 Dimension 和知识 `rule_id` 存在。
 - Routing 引用的 func_id 存在。
-- Deprecated 项不会被 Active 配置强依赖。
 - 配置版本变更与内容变更一致。
-- YAML 能通过 Pydantic schema 验证。
 - SourceRecord 的本地 Git remote、branch、revision 与登记一致。
 - ingestion include/exclude 不越过来源仓库根目录。
 - `raw_prompt_use_allowed` 和 `execute_repository_scripts` 不得被无审核开启。

@@ -212,6 +212,71 @@ def test_active_definition_cannot_depend_on_non_active_tag(tmp_path: Path) -> No
         load_feature_config(tags_path, dimensions_path)
 
 
+@pytest.mark.parametrize(
+    ("old", "new", "message"),
+    [
+        (
+            "    title: 无障碍行为是否完整且可用\n",
+            "",
+            "title",
+        ),
+        (
+            "    title: 无障碍行为是否完整且可用\n",
+            "    title: 无障碍行为是否完整且可用\n    unknown: true\n",
+            "unknown",
+        ),
+        (
+            "  - id: RQ-adaptability\n",
+            "  - id: RQ-accessibility\n",
+            "duplicate IDs",
+        ),
+        (
+            "  - id: DIM-02\n",
+            "  - id: DIM-01\n",
+            "duplicate IDs",
+        ),
+        (
+            "    status: Active\n    always_bind: false\n",
+            "    status: Retired\n    always_bind: false\n",
+            "status",
+        ),
+        (
+            "    status: Active\n    always_check: true\n"
+            "    retrieval_policy: disabled\n",
+            "    status: Retired\n    always_check: true\n"
+            "    retrieval_policy: disabled\n",
+            "status",
+        ),
+        (
+            "    retrieval_policy: disabled\n",
+            "    retrieval_policy: sometimes\n",
+            "retrieval_policy",
+        ),
+        (
+            "    always_bind: true\n    triggers: {}\n",
+            "    always_bind: true\n    triggers:\n      any_tag: [has_timer]\n",
+            "always-bound",
+        ),
+        (
+            "    always_bind: false\n    triggers:\n      any_tag: [has_interactive_component]\n",
+            "    always_bind: false\n    triggers: {}\n",
+            "conditional review questions",
+        ),
+    ],
+)
+def test_dimension_and_question_config_fail_closed(
+    tmp_path: Path,
+    old: str,
+    new: str,
+    message: str,
+) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _replace(dimensions_path, old, new)
+
+    with pytest.raises(ValueError, match=message):
+        load_feature_config(tags_path, dimensions_path)
+
+
 @pytest.mark.parametrize("key", ["tags", "review_questions", "dimensions"])
 def test_empty_definition_sets_are_rejected(tmp_path: Path, key: str) -> None:
     tags_path, dimensions_path = _copy_default_configs(tmp_path)

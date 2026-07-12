@@ -92,8 +92,6 @@ class CodeAnalyzer:
         file_results: list[ReviewUnitFileResult] = []
         file_parse_results: list[FileParseResult] = []
         unit_fact_scopes: list[UnitFactScope] = []
-        exact_tags: set[str] = set()
-        routing_tags: set[str] = set()
         warnings: list[str] = []
         parser_layers: set[str] = set()
         review_unit_ids: set[str] = set()
@@ -129,8 +127,6 @@ class CodeAnalyzer:
                     parser_layer=facts.parser_layer,
                 ),
             )
-            routing_tags.update(file_routing_tags)
-
             file_result = self.unit_builder.build_file_result(
                 file_input.path,
                 file_input.content,
@@ -165,7 +161,6 @@ class CodeAnalyzer:
                     unit_scope.unit_exact,
                     unit_facts,
                 )
-                exact_tags.update(unit_tags)
                 retrieval_units.append(
                     RetrievalUnit(
                         unit_ref=unit.unit_ref,
@@ -549,7 +544,6 @@ class CodeAnalyzer:
         )
 
         routing_tags_by_source: dict[str, set[str]] = {}
-        routing_tags: set[str] = set()
         parser_layers: set[str] = set()
         warnings: list[str] = []
         for parse_result in parse_results:
@@ -564,14 +558,12 @@ class CodeAnalyzer:
                 ),
             )
             routing_tags_by_source[source_ref.source_ref_id] = source_routing_tags
-            routing_tags.update(source_routing_tags)
             parser_layers.add(facts.parser_layer)
             warnings.extend(
                 f"{source_ref.path}@{source_ref.revision}: {warning}"
                 for warning in facts.warnings
             )
 
-        exact_tags: set[str] = set()
         unit_fact_scopes: list[UnitFactScope] = []
         retrieval_units: list[RetrievalUnit] = []
         for unit in review_units:
@@ -592,7 +584,6 @@ class CodeAnalyzer:
                 unit_scope.unit_exact,
                 unit_facts,
             )
-            exact_tags.update(unit_tags)
             unit_routing_tags = routing_tags_by_source[unit.source_ref_id]
             retrieval_units.append(
                 RetrievalUnit(

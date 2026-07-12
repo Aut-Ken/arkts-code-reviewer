@@ -18,6 +18,7 @@
 
 | 状态 | 含义 |
 |---|---|
+| `complete` | 当前冻结交付边界、正式合同和模块 Golden 已完成 |
 | `implemented` | 主路径已有代码并有测试覆盖 |
 | `partial` | 已有可运行初版，但契约、边界或验证尚未稳定 |
 | `designed` | 架构与契约已对齐，尚未编码 |
@@ -45,11 +46,13 @@ Parser Golden               15 个自包含人工标注样本；L0 strict baseli
 FileAnalysis Golden          15 个自包含人工标注样本；完整 occurrence truth perfect
 ChangeSet Golden             14 个自包含人工标注样本；change-set-v1 全字段 perfect
 ContextPlan Golden           16 个自包含人工标注样本；关系、分组和预算全字段 perfect
+Feature Routing Golden       16 个自包含人工标注样本；正式 FeatureRouter 路由语义 perfect
 arkui_ace_engine L0 批测    63/63 成功，0 missing，0 crash
 arkui_ace_engine L1 批测    63/63 为 L1；7 文件有 ERROR、7 文件有 missing warning
 L1 declarations             5,414；63/63 文件均有 declaration
 Grok candidate              默认 23 例仅作 provisional 诊断；旧 evidence 尚未通过政策审计
 ReviewUnit                  RU-0～RU-5 已完成；ContextPlan 是模块最终交付边界
+Feature Routing             24 Tags、12 Dimensions、12 Review Questions 已完成并配置化
 来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
 知识构建/在线检索/正式评审   尚未实现运行闭环
 ```
@@ -63,6 +66,8 @@ PYTHONPATH=src python tools/evaluate_file_analysis_golden.py --require-perfect
 PYTHONPATH=src python tools/evaluate_change_set_golden.py --require-perfect
 PYTHONPATH=src python tools/evaluate_review_unit_v2_golden.py --require-perfect
 PYTHONPATH=src python tools/evaluate_context_plan_golden.py --require-perfect
+PYTHONPATH=src python tools/evaluate_feature_routing_golden.py --require-perfect
+PYTHONPATH=src python tools/check_feature_routing_package.py
 PYTHONPATH=src python tools/check_parser_v1.py \
   --source-root /home/autken/Code/arkui_ace_engine \
   --include-candidate-diagnostics
@@ -72,7 +77,7 @@ PYTHONPATH=src python tools/check_parser_v1.py \
 provenance 和 R63 L0/L1 fail-closed 批测。candidate 分数仍标记为 provisional，不属于
 Parser v1 准确率承诺。
 
-### 当前开发交接：ReviewUnit
+### 当前开发交接：ReviewUnit 与 Feature Routing
 
 Parser v1 已由提交 `2c1df96` 冻结。RU-3 在不改变其默认输出和 Golden 的前提下，增加了
 显式选择的 `file-analysis-v1` sidecar schema：`CodeSourceRef`、`FileAnalysis`、带 UTF-16
@@ -120,8 +125,28 @@ ReviewUnit 完成时只交付 `ContextPlanResult`，即“本次改动的全部 
 declaration/region occurrence，不能传任意字符串中段。`arkts-code-token-v1` 对每个 bundle
 实际执行源码预算：按 review question 拆分，全部 Primary 在每个 bundle 中保留，required
 上下文重复携带，helpful 上下文确定性分箱；共享 ChangeAtom 的 base/head Primary 通过自动
-`change_correspondence` 同组，模型不会分开看改前和改后。RU-5 没有接入 Git/GitCode、知识检索或 Prompt，
-也没有改变 Parser、Tagger 或 Retrieval 的事实语义。
+`change_correspondence` 同组，模型不会分开看改前和改后。RU-5 没有接入 Git/GitCode、知识检索或 Prompt。
+
+ReviewUnit 完成后，Feature Routing 已把 `unit_exact/file_hints` 转换成正式
+`feature-routing-v1`：每个 Unit 都有可重放的 `UnitFeatureProfile`，顶层
+`FeatureRoutingResult` 保存配置 fingerprint、Unit/MR Dimensions 和稳定
+`ReviewQuestionBinding`。24 Tags 来自 `tags-v1`，12 Dimensions 与 12 Review Questions 来自
+`dimensions-v1`；`CodeAnalyzer.plan_context(...)` 只能消费这份正式问题绑定，调用方不能自行
+覆盖适用性。
+
+`unit_exact` 只生成 exact Tags、正式检索维度和专项问题；`file_hints` 只生成 routing Tags 与
+保守 routing/MR Dimensions。hint-only signal 不绑定专项 RQ，也不能成为 Finding evidence。
+Active 配置进入正式输出，Draft 只进入 `shadow_*`，Deprecated 不参与运行时匹配。旧
+`RetrievalQuery` 仍保留为兼容视图，后续 Retrieval 必须使用 profile 中分离的
+`retrieval_dimensions/routing_dimensions`，不能绕过 `retrieval_policy`。
+
+Feature Routing 的独立 16-case Golden 已使用正式引擎通过 strict baseline 和
+`--require-perfect`。配置 loader 拒绝重复 YAML key、未知字段、悬空引用和 Active 对非 Active
+Tag 的依赖；`AnalysisResult` 会从原始 UnitFactScopes 重放 Feature 结果。两份 YAML 同时通过
+wheel `force-include` 打包，source checkout 与安装环境共享相同配置语义。
+
+当前下一阶段是 relation discovery 与 Knowledge/Retrieval，而不是继续扩张 ReviewUnit 或
+Feature Routing。Knowledge、Retrieval、Rules、Prompt、最终 Finding 和 GitCode 仍未形成运行闭环。
 新会话除四份架构文档外，还应依次阅读模块 01、02、03、04、10 和 11。
 
 ### 按流水线阅读模块
@@ -131,7 +156,7 @@ declaration/region occurrence，不能传任意字符串中段。`arkts-code-tok
 | 01 | 输入与编排 | `partial` | [01-input-orchestration.md](modules/01-input-orchestration.md) |
 | 02 | Parser 与代码事实 | `partial` | [02-parser.md](modules/02-parser.md) |
 | 03 | ReviewUnit 上下文规划 | `complete` | [03-review-unit.md](modules/03-review-unit.md) |
-| 04 | Tags 与评审维度 | `partial` | [04-feature-routing.md](modules/04-feature-routing.md) |
+| 04 | Tags、评审维度与问题路由 | `complete` | [04-feature-routing.md](modules/04-feature-routing.md) |
 | 05 | 知识库构建 | `partial` | [05-knowledge-base.md](modules/05-knowledge-base.md) |
 | 06 | Retrieval 检索 | `designed` | [06-retrieval.md](modules/06-retrieval.md) |
 | 07 | Deterministic Rules | `designed` | [07-rules.md](modules/07-rules.md) |

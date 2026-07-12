@@ -1,68 +1,109 @@
 ---
-title: 04 Tags 与评审维度模块
+title: 04 Tags、评审维度与问题路由模块
 status: canonical
-implementation: partial
+implementation: complete
 updated: 2026-07-12
 ---
 
-# 04 Tags 与评审维度模块
+# 04 Tags、评审维度与问题路由模块
 
 ## 1. 模块职责
 
-将 Parser Facts 转换为稳定场景和评审策略：
+Feature Routing 把 occurrence-scoped 代码事实转换为稳定、可重放的评审策略：
 
 ```text
-CodeFacts / Unit Facts
--> Tags
--> Unit Dimensions
--> Retrieval 路由、Rules 选择和 Prompt 检查项
+FileAnalysis / UnitFactScope
+-> FeatureRouter(tags-v1 + dimensions-v1)
+-> UnitFeatureProfile / FeatureRoutingResult
+-> ReviewQuestionBinding
+-> ContextPlanner
 ```
 
-Tags 和 Dimensions 都不是代码问题。
+它回答三个问题：
+
+1. 当前 Unit 精确属于哪些代码场景。
+2. 本次评审应检查哪些维度和问题。
+3. 哪些文件级弱信号只允许保守扩大后续路由。
+
+Tags、Dimensions 和 Review Questions 都不是代码问题，也不是 Finding evidence。Feature
+Routing 不检索知识、不运行 Rules、不拼 Prompt，也不判断代码是否违规。
 
 ## 2. 概念区别
 
-| 层 | 问题 | 示例 |
+| 层 | 回答的问题 | 示例 |
 |---|---|---|
-| Fact | 代码里有什么 | `setInterval` |
-| Tag | 属于什么场景 | `has_timer` |
-| Dimension | 从什么角度检查 | DIM-06 资源管理 |
-| Finding | 是否真的有问题 | 定时器未清理 |
+| Fact | 代码里出现了什么 | API occurrence `setInterval` |
+| Tag | Unit 属于什么场景 | `has_timer` |
+| Dimension | 从什么方向检查 | `DIM-06` 资源与内存管理 |
+| Review Question | 这次应回答什么问题 | `RQ-resource` |
+| Evidence | 规范如何要求 | 定时器应在不再使用时清理 |
+| Finding | 当前代码是否有问题 | 定时器创建后没有释放 |
 
-## 3. 当前实现
+前三层只做适用性和路由。后两层分别属于 Retrieval/Rules 和最终评审。
 
-`tagger.py` 硬编码：
+## 3. 当前实现与调用链
 
-- 24 个 Tags。
-- DIM-01~05 始终触发。
-- DIM-06~11 按部分 Tags 条件触发。
-- DIM-12 始终触发。
+当前主实现位于：
 
-`CodeAnalyzer` 对每个 ReviewUnit 二次 Parser 后生成 Tags，将所有 Unit Tags 合并，
-再计算一个 MR 级 `triggered_dimensions` 并集。
+| 文件 | 当前职责 |
+|---|---|
+| `feature_routing/config.py` | YAML schema、交叉引用、配置 fingerprint 和 fail-closed loader |
+| `feature_routing/matcher.py` | Facts 到 Tag signal 的确定性匹配 |
+| `feature_routing/engine.py` | `FeatureRouter`、Dimension policy 和 Review Question 选择 |
+| `feature_routing/models.py` | `UnitFeatureProfile/FeatureRoutingResult` 及图重放校验 |
+| `config/tags.yaml` | `tags-v1`：24 个 Tag 及触发器 |
+| `config/dimensions.yaml` | `dimensions-v1`：12 个 Dimension 和 12 个 Review Question |
+| `code_analysis/tagger.py` | 旧 `derive_tags/trigger_dimensions` 的配置驱动兼容包装 |
+| `code_analysis/analyzer.py` | 组装正式 Feature 产物和兼容 `RetrievalQuery` 视图 |
 
-当前问题：
+真实生产链为：
 
-- Tags/Dimensions 不是配置驱动。
-- Dimensions 只有 MR 级并集，没有 Unit 级输出。
-- `CodeFeatures` 缺少 attributes。
-- Unit 二次 Parser 可能丢宿主状态和装饰器。
+```text
+完整源码 parse-once
+-> FileAnalysis
+-> ReviewUnit owner/span 投影
+-> UnitFactScope(unit_exact, file_hints)
+-> FeatureRouter.route(all UnitFactScope)
+-> UnitFeatureProfile[]
+-> FeatureRoutingResult
+   ├── question_bindings -> ContextPlanner
+   └── tags/dimension routes -> 后续 Retrieval/Rules/Prompt
+```
 
-ReviewUnit RU-0/RU-1 没有改变 Tag 语义。后续删除二次 Parser 时必须区分：
+`AnalysisResult.validate()` 会使用相同 UnitFactScopes 和生效配置重放整个
+`FeatureRoutingResult`，并检查旧 `RetrievalUnit` 兼容视图与正式 profile 一致。调用方不能
+伪造 Tag、Dimension、MR 并集或 QuestionBinding 后仍通过结果校验。
+
+## 4. `unit_exact` 与 `file_hints`
+
+每个 Unit 的唯一事实入口是 RU-3 产出的 `UnitFactScope`：
 
 ```text
 unit_exact
-  只能由 Unit span 内 declarations/components/symbols 推导
+  owner 为当前 Unit 或其后代
+  occurrence 完整落在 Unit source span
+  质量为 exact 或 recovered
 
 file_hints
-  APIs/decorators/attributes/syntax 等文件级 presence signals
+  同一个不可变 source_ref_id 的文件级存在信号
+  不能声称属于当前 Unit
 ```
 
-`file_hints` 可以保守扩大 MR 或 Unit 候选路由，但不能显示成“这个 Unit 精确包含该事实”，
-也不能成为 Finding evidence。若引入该双作用域，必须同步修改 CodeFeatures、Tagger 测试和
-跨模块数据契约；不能只在 Analyzer 内静默复制集合。
+硬边界：
 
-## 4. 当前 24 Tags
+- `exact_tags` 只从 `unit_exact` 生成。
+- `routing_tags` 只从当前 source 的 `file_hints` 生成。
+- 一个 Unit 的 exact Tags 不会传播给同文件或其他文件的 Unit。
+- 同文件 Unit 可以看到相同 routing Tags，但必须保留 `file_hint` scope。
+- hint-only signal 不能生成 Unit 精确 Dimension、专项 Review Question 或 Finding evidence。
+- `TagMatch` 保存 `tag_id/status/scope/signals`，每个 signal 记录 fact kind 和 value。
+- fallback 或 owner 未解析时，exact facts 可以为空；不得按 span 猜测 owner。
+
+当前 `UnitFactScope` 只携带 `unit_owner_unresolved` 这一 Unit 级 diagnostic，不携带完整
+`FileParserQuality`。Parser layer、ERROR/missing node 和文件 warning 仍从 `FileAnalysis`、
+`AnalysisMetadata` 与 ReviewUnit diagnostics 获取，不能从 Feature profile 是否有 Tag 推断。
+
+## 5. 当前 24 Tags
 
 | 类别 | Tags |
 |---|---|
@@ -72,199 +113,215 @@ file_hints
 | 安全/数据 | `has_permission_request`, `has_user_input`, `has_network`, `has_storage` |
 | ArkTS/ArkUI | `has_state_management`, `has_lifecycle`, `has_list_render`, `has_animation`, `has_builder`, `has_navigation`, `has_logging` |
 
-逐项语法和触发条件见 [教学文档](../learning/arkts-parser-fields-tags.md)。
+精确触发条件以 `config/tags.yaml` 为唯一运行时真值。当前 v1 已特别冻结：
 
-## 5. 当前 12 Dimensions
+- `clearInterval/clearTimeout` 与创建 API 一样属于 `has_timer`。
+- subscription 只接受配置登记的 `emitter/sensor` API，不接受任意 `*.on`。
+- `onAppear/onError` 不单独触发交互 Tag；`onClick/onTouch/onFocus/onBlur/onChange` 是受控信号。
+- `resource_references` 可以直接触发 `has_resource_ref`，不要求伪造 `$r` API。
 
-| ID | 名称 | 触发策略 |
+新增或修改触发器必须升级 Git 中的配置、重跑 Golden，并记录新的组合 fingerprint；外部文档、
+Skills 或代码语料不能在运行时自行创建 Tag。
+
+## 6. 当前 12 Dimensions 与四种集合
+
+| ID | 名称 | v1 review policy |
 |---|---|---|
-| DIM-01 | 规范符合度 | 始终 |
-| DIM-02 | ArkTS 语言特性 | 始终 |
-| DIM-03 | 性能 | 始终 |
-| DIM-04 | 可维护性 | 始终 |
-| DIM-05 | 健壮性 | 始终 |
-| DIM-06 | 资源与内存管理 | image/subscription/timer/media/file_io |
-| DIM-07 | 并发与异步 | async/taskpool/worker |
-| DIM-08 | 无障碍 | interactive_component |
-| DIM-09 | 多设备适配 | layout/responsive_api |
-| DIM-10 | 国际化 | text_display/resource_ref |
-| DIM-11 | 安全 | permission/user_input/network/storage |
-| DIM-12 | DFX 与可测性 | 始终 |
+| DIM-01 | 规范符合度 | always check，retrieval disabled |
+| DIM-02 | ArkTS 语言特性 | always check，signal required |
+| DIM-03 | 性能 | always check，signal required |
+| DIM-04 | 可维护性 | always check，signal required |
+| DIM-05 | 健壮性 | always check，signal required |
+| DIM-06 | 资源与内存管理 | resource Tags |
+| DIM-07 | 并发与异步 | async/taskpool/worker Tags |
+| DIM-08 | 无障碍 | interactive Tag |
+| DIM-09 | 多设备适配 | layout/responsive Tags |
+| DIM-10 | 国际化 | text/resource Tags |
+| DIM-11 | 安全 | permission/input/network/storage Tags |
+| DIM-12 | DFX 与可测性 | always check，signal required |
 
-## 6. 目标架构
+`UnitFeatureProfile` 不把所有 Dimension 混成一个列表：
 
-```text
-FileAnalysis facts with spans
-        |
-        v
-Unit Fact Filter
-        |
-        v
-TagEngine(tags.yaml)
-        |
-        v
-DimensionEngine(dimensions.yaml)
-        |
-        +--> Unit Retrieval Policy
-        +--> Rule Registry Selection
-        +--> Prompt Checks
-       +--> Report Classification
-```
-
-`TagEngine` 的 API/组件触发器最终来自版本化配置和共享 `ApiSymbolCatalog`。外部文档、
-Skills 或代码语料不能在运行时自行新增 Tag；新触发条件必须进入主项目配置、测试和
-`feature_config_version`。
-
-## 7. Unit 级维度
-
-目标输出：
-
-```json
-{
-  "unit_id": "...",
-  "tags": ["has_timer", "has_async"],
-  "dimensions": ["DIM-05", "DIM-06", "DIM-07"],
-  "feature_config_version": "features-v1"
-}
-```
-
-MR 级维度并集只用于：
-
-```text
-总体报告分类
-全局 token budget
-统计
-```
-
-不能把一个 Unit 的 `has_network` 传播到其他 Unit 的 Retrieval 和 Prompt。
-
-## 8. always_check 与 retrieval_policy
-
-必须分离：
-
-```text
-always_check
-  是否始终把该维度的检查项加入 Prompt
-
-retrieval_policy
-  是否有具体 Facts/Tags 时才检索知识
-```
-
-例如 DIM-04：
-
-```yaml
-always_check: true
-retrieval_policy: signal_required
-```
-
-AI 始终关注可维护性，但只有检测到长方法、深嵌套、重复代码等信号时才检索相关知识。
-
-## 9. 各维度检索策略
-
-### 精确检索优先
-
-```text
-DIM-02 ArkTS 语言特性
-DIM-06 资源与内存管理
-DIM-07 并发与异步
-```
-
-这些维度有明确 API、组件或装饰器。
-
-### 混合检索
-
-```text
-DIM-03 性能
-DIM-05 健壮性
-DIM-08 无障碍
-DIM-09 多设备适配
-DIM-10 国际化
-DIM-11 安全
-```
-
-需要结构化信号、关键词、Embedding 和适用性重排。
-
-### 不直接作为检索入口
-
-```text
-DIM-01 规范符合度
-DIM-04 可维护性
-DIM-12 可测试性部分
-```
-
-它们应先转化为具体度量和场景，或作为 Prompt 检查原则。
-
-## 10. 需要补充的静态信号
-
-| 维度 | 目标信号 |
+| 字段 | 语义 |
 |---|---|
-| 性能 | build 长度、UI 深度、列表构造、循环内对象创建 |
-| 可维护性 | 方法长度、职责数量、重复子树、依赖数量 |
-| 健壮性 | try/catch、错误回调、nullable、返回路径 |
-| 无障碍 | 可见标签、accessibility 属性 occurrence |
-| 多设备 | mediaquery/display、固定尺寸、断点 API |
-| 国际化 | 字符串字面量与 `$r` occurrence |
-| 安全 | permission/network/storage occurrence 和配置交叉信息 |
-| 可测试性 | 全局状态、静态依赖、不可替换外部调用 |
+| `dimensions` | 本 Unit 实际需要评审：`always_check` 或有 exact Tag |
+| `always_check_dimensions` | 配置要求每个 Unit 都检查的方向 |
+| `retrieval_dimensions` | 满足 retrieval policy 且有 exact signal 的正式检索维度 |
+| `routing_dimensions` | exact 或 hint signal 支持的保守检索候选维度 |
+| `shadow_dimensions` | Draft 配置的影子结果，不进入正式执行 |
+| `mr_dimensions` | 所有 Unit `dimensions + routing_dimensions` 的稳定并集 |
 
-## 11. 配置
-
-配置 schema 见 [配置与版本规范](../architecture/configuration.md)：
+每个 Active Dimension 都有一个 `DimensionRoute`，记录 `always_check`、
+`retrieval_policy`、`review_enabled/retrieval_enabled/routing_enabled`、signal scope 和命中的 exact/
+routing Tags。规则为：
 
 ```text
-config/tags.yaml
-config/dimensions.yaml
+review_enabled
+  always_check OR exact tag matched
+
+retrieval_enabled
+  policy=always OR (policy=signal_required AND exact tag matched)
+
+routing_enabled
+  policy=always OR (policy=signal_required AND exact/hint tag matched)
 ```
 
-每次输出必须记录配置版本。
+因此 hint-only signal 只能进入 `routing_dimensions`，不能进入 `retrieval_dimensions`。
+DIM-02/03/04/05/12 当前虽 `always_check=true`，但其 `signal_required` trigger 列表为空，所以
+v1 会检查这些方向，却不会据此发起知识检索。为这些抽象维度补静态信号属于后续配置版本，
+不能把“始终检查”偷换成“始终检索”。
 
-## 12. 治理
+## 7. 当前 12 Review Questions
 
-Tag 和 Dimension 状态：
+`dimensions-v1` 同时冻结 12 个问题：
 
 ```text
-Draft -> Active -> Deprecated
+RQ-correctness             始终绑定
+RQ-accessibility           has_interactive_component
+RQ-adaptability            has_layout / has_responsive_api
+RQ-concurrency             has_async / has_taskpool / has_worker
+RQ-dfx                     has_logging
+RQ-internationalization    has_resource_ref / has_text_display
+RQ-lifecycle               has_lifecycle
+RQ-navigation              has_navigation
+RQ-network                 has_network
+RQ-resource                resource Tags
+RQ-security                permission/input/network/storage Tags
+RQ-state                   has_state_management
 ```
 
-Draft 维度可以影子运行，但不影响正式结论。删除旧 ID 会破坏历史报告，必须 Deprecated 而非物理删除。
+Active 专项问题只消费 `exact_tags`；hint-only signal 不绑定专项 RQ。Draft 问题进入
+`shadow_review_question_ids`，Deprecated 问题不进入输出。
 
-外部来源的角色：
+职责边界必须保持：
+
+- Feature Routing 拥有问题 registry 和“哪些 Primary 适用哪些问题”的选择。
+- ReviewUnit 拥有 `QuestionBinding` 的承载形状、ChangeGroup、按问题分 bundle 和预算语义。
+- `CodeAnalyzer.plan_context(...)` 把 `FeatureRoutingResult.question_bindings` 转换为 ContextPlanner
+  的既有 `QuestionBinding`；兼容参数若显式提供，只能作为相等性断言，不能覆盖路由结果。
+- Retrieval、Rules 和 Prompt 只能消费问题选择，不能反向修改 Primary 的适用性。
+
+## 8. 版本化配置与 fingerprint
+
+当前运行时配置已经落盘：
 
 ```text
-interface-sdk-js                 提供 canonical API、版本、权限和 SystemCapability
-arkui-specs / openharmony-docs   提供场景与检查方向候选
-Skills                           只提供待人工评审的 taxonomy 候选
-四类代码语料                    提供 Tag 正例、反例和串扰测试
+config/tags.yaml             tag-config-v1 / tags-v1
+config/dimensions.yaml       dimension-config-v1 / dimensions-v1
 ```
 
-来源变化不会自动修改线上 Tags/Dimensions；必须经过配置版本升级。
+Loader 使用 `ruamel.yaml` safe mode 拒绝重复 key，再由 Pydantic strict model 校验：
 
-## 13. 测试
+- `extra=forbid`，未知字段直接失败。
+- ID、版本和文本必须非空且满足固定格式。
+- trigger 数组必须去重、升序且非空语义合法。
+- Tag、Dimension、Question ID 不得重复。
+- 引用的 Tag 必须存在；Active Dimension/Question 不得依赖非 Active Tag。
+- 未知 status、retrieval policy 或 trigger operator 不得静默忽略。
 
-### Tag 表驱动测试
+`FeatureConfig.fingerprint` 对排序规范化后的 tags、dimensions、questions 和两个声明版本做
+SHA-256，输出格式为 `feature-config:sha256:...`。每个 profile 和顶层 result 都携带该值以及
+`tags-v1/dimensions-v1`，配置内容或版本变化会改变所有相关 identity。
+
+源码运行时优先读取仓库 `config/`；wheel 构建通过 `pyproject.toml` 的 `force-include` 把两份
+YAML 安装到 `arkts_code_reviewer/feature_routing/defaults/`，安装环境优先读取 packaged defaults。
+因此 editable/source checkout 和 wheel 使用同一份受版本控制的语义，不依赖调用者当前目录。
+
+## 9. Active、Draft、Deprecated
+
+治理状态不只是文档标签：
 
 ```text
-构造 CodeFacts
--> 断言精确 Tags 集合
+Active      进入正式 exact/routing Tags、Dimensions、Questions
+Draft       只进入 shadow_*，不影响正式路由和 ContextPlanner binding
+Deprecated  保留配置历史语义，但运行时不匹配、不输出
 ```
 
-每个 Tag 至少包含正例、反例和易混淆例。
+Active Dimension 或 Question 不能引用 Draft/Deprecated Tag。删除既有 ID 会破坏历史报告，应先
+Deprecated 并通过新配置版本迁移；不能直接物理删除后复用同一个 ID。
 
-### Dimension 配置测试
+## 10. 稳定性与 fail-closed 重放
 
-- Tag 引用存在。
-- trigger 表达式可解析。
-- Unit 之间不串扰。
-- always_check 与 retrieval_policy 独立生效。
-- Draft/Deprecated 行为正确。
+`UnitFeatureProfile` 和 `FeatureRoutingResult` 是不可变、稳定排序的正式产物：
 
-## 14. 下一步
+- `profile_id` 和 `feature_routing_id` 由完整语义字段确定性计算。
+- Tag activation trace 必须与 exact/routing/shadow Tag 集合完全一致。
+- Dimension 集合必须能从 `dimension_routes` 完整重放。
+- Question bindings 必须严格等于各 profile 的 Active question IDs。
+- `mr_dimensions` 必须严格等于 Unit review/routing Dimension 并集。
+- Unit、TagMatch、DimensionRoute、QuestionBinding 和所有 ID 列表均排序去重。
+- `validate_replay(scopes, config)` 必须得到与当前结果完全相同的对象。
 
-1. ReviewUnit Golden 和 Unit identity 已稳定；等 RU-2 多 owner/质量传播完成后，冻结
-   Unit exact/file hints 契约。
-2. 将 Tags/Dimensions 迁移为版本化 YAML。
-3. 输出 Unit 级 Dimensions。
-4. 将 attributes 和带位置 facts 纳入 CodeFeatures。
-5. 为 24 Tags 建完整表驱动测试。
-6. 用 `interface-sdk-js` 生成共享 API catalog，替代散落的名称表。
-7. 为抽象维度补充静态度量信号，再接 Retrieval。
+模型构造器只证明图内部一致；`AnalysisResult.validate()` 和显式
+`validate_replay(scopes, config)` 才能证明结果来自指定 facts/config。来自存储或网络的独立
+artifact 未重放前不应被信任。
+
+## 11. 兼容输出边界
+
+旧 `CodeFeatures`、`RetrievalUnit`、`RetrievalQuery/MrContext` 仍保留，供现有 CLI 和测试迁移。
+它们现在必须与正式 `FeatureRoutingResult` 对齐，但仍是 compatibility-only 视图：
+
+- `RetrievalUnit.code_features.tags == UnitFeatureProfile.exact_tags`
+- `RetrievalUnit.dimensions == UnitFeatureProfile.dimensions`
+- `RetrievalUnit.routing_tags == UnitFeatureProfile.routing_tags`
+- `MrContext.triggered_dimensions == FeatureRoutingResult.mr_dimensions`
+
+后续 Retrieval 不得直接读取旧 `RetrievalQuery.dimensions` 或 MR 并集后自行决定检索，否则会
+绕过 `retrieval_policy`、exact/hint scope、Draft 隔离和 QuestionBinding。正式入口必须消费
+`UnitFeatureProfile.retrieval_dimensions/routing_dimensions` 及 activation trace。
+
+## 12. Feature Routing Golden
+
+独立 Golden 位于 `tests/golden/feature_routing/`：
+
+- 16 个自包含、hash-pinned、人工 expected case。
+- 覆盖全部 24 Tags、12 Dimensions、12 Review Questions、20 Unit profiles、69 种 scoped
+  signal（共 86 个 Unit-level occurrence）和 44 question bindings，以及 exact/hint 隔离、跨文件隔离、fallback、
+  timer cleanup、subscription/interaction 反例、资源 occurrence 和输入排列稳定性。
+- expected 与 `baselines/current.json` 分离；baseline 不能生成或覆盖 expected。
+- loader 拒绝重复 key/case/identity、未知或缺失字段、未排序列表、非法 Tag/Dimension/RQ、
+  activation signal、配置版本或 question binding 漂移、source hash/ref 漂移、路径逃逸和 symlink。
+- evaluator 使用正式 `FeatureRouter`，当前 strict baseline 与 `--require-perfect` 均为 `16/16`。
+
+当前指标为：exact/routing Tag、review/retrieval/routing/MR Dimension、Review Question、
+activation signal、question binding 的 precision/recall，以及 case exact accuracy 和
+input-order stability 均为 `1.0`。这表示冻结 16-case truth 全匹配，不等于任意
+ArkTS 仓库总体准确率为 100%。新增 trigger 或真实场景必须扩充分母，而不是只更新 baseline。
+
+发布包另运行：
+
+```bash
+PYTHONPATH=src .venv/bin/python tools/check_feature_routing_package.py
+```
+
+## 13. 当前明确限制
+
+Feature Routing v1 已完成，但没有实现以下下游或扩展能力：
+
+- `ApiSymbolCatalog` builder 和版本/权限感知的 API taxonomy。
+- relation/call graph discovery；caller、state access、lifecycle pair 等仍需显式关系来源。
+- Knowledge Clause、在线 Retrieval、Rules、Prompt、LLM、Finding 和 GitCode。
+- 抽象维度 DIM-02/03/04/05/12 的可检索静态信号。
+- hint-only 专项 Review Question；v1 有意不绑定，避免把文件级信号冒充 Unit 适用性。
+- Tag 级 Parser quality；当前 profile 只能保留 `UnitFactScope` 的
+  `unit_owner_unresolved` diagnostic。
+- `CodeAnalyzer` 的运行时配置注入；v1 Analyzer 固定使用默认配置，显式自定义配置目前只支持
+  直接 `FeatureRouter` 测试/影子运行。
+
+这些限制必须由对应模块或新的配置/数据合同版本解决，不能在 FeatureRouter 内递归扫描仓库、
+复制文件级事实或生成 Finding。
+
+## 14. 后续消费顺序
+
+Feature Routing 的当前交付边界已冻结为：
+
+```text
+FeatureRoutingResult
+├── UnitFeatureProfile[]
+├── MR conservative dimensions
+└── ReviewQuestionBinding[]
+```
+
+后续应分别建立 relation discovery、Knowledge/Retrieval、Rules 和 Prompt/Final Review Golden。
+它们可以使用本模块给出的适用性和路由，但不能反向改变 `unit_exact/file_hints`、Tag activation
+trace、retrieval policy 或 QuestionBinding truth。

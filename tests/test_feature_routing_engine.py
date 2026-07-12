@@ -132,6 +132,65 @@ def test_exact_and_file_hint_routes_remain_physically_separate() -> None:
     )
 
 
+def test_same_source_units_keep_distinct_exact_facts_and_shared_file_hints() -> None:
+    shared_hints = ScopedFacts(
+        components=("Image",),
+        apis=("http.request", "setInterval"),
+    )
+    result = FeatureRouter().route(
+        [
+            _scope(
+                "unit:image",
+                exact=ScopedFacts(components=("Image",)),
+                hints=shared_hints,
+            ),
+            _scope(
+                "unit:timer",
+                exact=ScopedFacts(apis=("setInterval",)),
+                hints=shared_hints,
+            ),
+        ]
+    )
+    profiles = {profile.unit_id: profile for profile in result.units}
+
+    assert profiles["unit:image"].exact_tags == ("has_image",)
+    assert profiles["unit:timer"].exact_tags == ("has_timer",)
+    assert profiles["unit:image"].routing_tags == (
+        "has_image",
+        "has_network",
+        "has_timer",
+    )
+    assert profiles["unit:image"].routing_tags == profiles["unit:timer"].routing_tags
+    assert all(
+        "RQ-network" not in profile.review_question_ids
+        for profile in profiles.values()
+    )
+
+
+def test_distinct_sources_never_share_file_hints() -> None:
+    result = FeatureRouter().route(
+        [
+            _scope(
+                "unit:network",
+                exact=ScopedFacts(apis=("http.request",)),
+                hints=ScopedFacts(apis=("http.request",)),
+            ),
+            _scope(
+                "unit:image",
+                source_suffix="b",
+                exact=ScopedFacts(components=("Image",)),
+                hints=ScopedFacts(components=("Image",)),
+            ),
+        ]
+    )
+    profiles = {profile.unit_id: profile for profile in result.units}
+
+    assert profiles["unit:network"].routing_tags == ("has_network",)
+    assert profiles["unit:image"].routing_tags == ("has_image",)
+    assert "has_image" not in profiles["unit:network"].routing_tags
+    assert "has_network" not in profiles["unit:image"].routing_tags
+
+
 def test_resource_reference_has_an_explainable_activation_trace() -> None:
     result = FeatureRouter().route(
         [
@@ -213,6 +272,19 @@ def test_router_rejects_duplicate_unit_id() -> None:
         FeatureRouter().route([scope, scope])
 
 
+def test_empty_route_is_a_versioned_result_and_invalid_containers_fail_closed() -> None:
+    result = FeatureRouter().route([])
+
+    assert result.units == ()
+    assert result.mr_dimensions == ()
+    assert result.question_bindings == ()
+    assert result.feature_config_version.startswith("feature-config:sha256:")
+    with pytest.raises(ValueError, match="must be a sequence"):
+        FeatureRouter().route(iter(()))  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="must use FeatureConfig"):
+        FeatureRouter(object())  # type: ignore[arg-type]
+
+
 def test_result_replay_rejects_a_self_consistent_result_from_other_facts() -> None:
     timer = _scope("unit:replay", exact=ScopedFacts(apis=("setInterval",)))
     image = _scope("unit:replay", exact=ScopedFacts(components=("Image",)))
@@ -266,3 +338,18 @@ def test_profile_rejects_malformed_graph_elements() -> None:
         replace(profile, tag_matches=(object(),))
     with pytest.raises(ValueError, match="DimensionRoute values"):
         replace(profile, dimension_routes=(object(),))
+
+
+def test_profile_and_result_identities_and_diagnostics_fail_closed() -> None:
+    result = FeatureRouter().route([_scope("unit:identity")])
+    profile = result.units[0]
+
+    with pytest.raises(ValueError, match="profile_id"):
+        replace(profile, profile_id="feature-profile:sha256:" + ("0" * 64))
+    with pytest.raises(ValueError, match="identity"):
+        replace(
+            result,
+            feature_routing_id="feature-routing:sha256:" + ("0" * 64),
+        )
+    with pytest.raises(ValueError, match="unknown codes"):
+        replace(result, diagnostics=("forged_result_diagnostic",))

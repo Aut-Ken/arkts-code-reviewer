@@ -56,8 +56,33 @@ def main() -> int:
         f"{metrics['routing_tag_precision']:.3f}/{metrics['routing_tag_recall']:.3f}"
     )
     print(
-        "  dimension precision/recall: "
+        "  review dimension precision/recall: "
         f"{metrics['dimension_precision']:.3f}/{metrics['dimension_recall']:.3f}"
+    )
+    print(
+        "  retrieval dimension precision/recall: "
+        f"{metrics['retrieval_dimension_precision']:.3f}/"
+        f"{metrics['retrieval_dimension_recall']:.3f}"
+    )
+    print(
+        "  routing dimension precision/recall: "
+        f"{metrics['routing_dimension_precision']:.3f}/"
+        f"{metrics['routing_dimension_recall']:.3f}"
+    )
+    print(
+        "  review question precision/recall: "
+        f"{metrics['review_question_precision']:.3f}/"
+        f"{metrics['review_question_recall']:.3f}"
+    )
+    print(
+        "  activation signal precision/recall: "
+        f"{metrics['activation_signal_precision']:.3f}/"
+        f"{metrics['activation_signal_recall']:.3f}"
+    )
+    print(
+        "  question binding precision/recall: "
+        f"{metrics['question_binding_precision']:.3f}/"
+        f"{metrics['question_binding_recall']:.3f}"
     )
     print(f"  input-order stability: {metrics['input_order_stability']:.3f}")
     for row in report["cases"]:

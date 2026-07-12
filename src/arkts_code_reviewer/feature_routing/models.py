@@ -52,6 +52,7 @@ _ROUTE_SCOPES = {"unit_exact", "file_hint", "mixed", "none"}
 _RETRIEVAL_POLICIES = {"signal_required", "always", "disabled"}
 _STATUSES = {"Active", "Draft"}
 _PROFILE_DIAGNOSTICS = {"unit_owner_unresolved"}
+_RESULT_DIAGNOSTICS: set[str] = set()
 
 
 def _stable_id(prefix: str, payload: object) -> str:
@@ -572,6 +573,8 @@ class FeatureRoutingResult:
             raise ValueError("FeatureRoutingResult profile config versions disagree")
         _sorted_unique(self.mr_dimensions, "FeatureRoutingResult.mr_dimensions")
         _sorted_unique(self.diagnostics, "FeatureRoutingResult.diagnostics")
+        if not set(self.diagnostics).issubset(_RESULT_DIAGNOSTICS):
+            raise ValueError("FeatureRoutingResult.diagnostics contains unknown codes")
         if not isinstance(self.question_bindings, tuple) or any(
             not isinstance(binding, ReviewQuestionBinding)
             for binding in self.question_bindings
