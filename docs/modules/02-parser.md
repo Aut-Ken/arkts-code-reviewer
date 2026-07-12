@@ -211,27 +211,41 @@ import 可能被截断，第二次解析的 layer/warning 也未进入 Analysis 
 -> 不再二次 Parser
 ```
 
-目标 `FactOccurrence`：
+目标 schema 的唯一字段定义见
+[FileAnalysis / FactOccurrence / ReviewRegion](../architecture/data-contracts.md#7-目标-fileanalysis)。
+Parser 模块在这里只冻结产生语义：
+
+- `FileAnalysis` 必须绑定一个不可变 `CodeSourceRef`，并显式记录 parser/grammar
+  版本、ERROR/missing node 和 warnings。
+- `FactOccurrence` 必须带文件绝对 span、tagged owner reference 和 provenance；API、
+  decorator、attribute、syntax 等不再只是无位置的集合。
+- `ReviewRegion` 第一版只用于 `field_region` 和 `import_region`，不在 ReviewUnit
+  中用正则补一套隐形 Parser。
+- 位置判断继续使用 1-based、end-inclusive 文件绝对行；列坐标不是阶段
+  门禁依赖。
+- owner 无法解析时必须保留结构化 diagnostic，不得猜测 owner 或把 file hint
+  伪装成 Unit exact fact。
+
+目标还需要提取字符串与 `$r` 资源引用、组件参数、调用 occurrence、字段读写、
+import use、声明唯一 ID、更精确的父子关系，以及必要的类型/引用信号。
+
+### 11.1 Parser v1 冻结与 Parser v2 授权门
+
+Parser v1 是 RU-2 的只读依赖。在开始 Parser v2 前必须停下来获得用户明确授权；
+未授权时不得修改：
 
 ```text
-kind
-name
-canonical_name
-span
-owner_ref
-provenance
+sidecars/arkts-parser/parse_arkts.js
+code_analysis/lexical.py 的 Parser 行为
+code_analysis/arkts_tree_sitter_parser.py 的 Parser 行为
+tests/golden/parser/manifest.json
+Parser v1 expected / baseline
 ```
 
-目标还需要提取：
-
-```text
-字符串字面量与 $r 资源引用
-组件参数
-调用 occurrence
-声明唯一 ID
-更精确的父子关系
-必要的类型和引用信号
-```
+Parser v2 必须新建独立的 `tests/golden/file_analysis/`，人工审阅 occurrence span、
+owner、ReviewRegion 和结构化 diagnostics。expected 不得从 Parser v1 output、R63
+stability corpus 或当前 baseline 自动生成。Parser v2 通过自己的 Golden 后，仍必须运行
+Parser v1 release gate 证明旧合同无漂移。
 
 ## 12. 性能演进
 
@@ -342,19 +356,22 @@ empty facts rate
 
 - 生产主 Parser 使用 ArkTS tree-sitter sidecar，L0 作为 fallback。
 - Parser 不直接产生 Finding。
-- FileAnalysis 是文件级 source of truth。
+- Parser v1 继续冻结；Parser v2 需要独立授权和独立 Golden。
+- Parser v2 `FileAnalysis` 是单个 `CodeSourceRef` 的文件级 source of truth。
 - API 与知识库关键词共用 canonical whitelist。
 
 ## 17. 下一步
 
 ReviewUnit RU-0/RU-1 已以当前 Parser v1 为只读依赖完成；RU-2 仍不得借质量传播重开
-Parser 行为。只有新 Parser Golden 证明必要时才允许修改 Parser。Parser 自身后续顺序：
+Parser 行为。授权后的 Parser v2 开发顺序：
 
 1. 人工裁决 B010 两个 `@Styles` span，并按冻结政策重建 B001-B006/B010 evidence；在此
    之前 candidate 只作诊断。
 2. 为 raw-L1 snapshot 增加独立公共评测路径、真正 ERROR/missing recovery Golden 和
    diagnostics 门槛。
-3. 引入带 span/owner 的 FactOccurrence，并先扩展 Golden 契约。
-4. 与 ReviewUnit 的 Unit fact scope 契约对齐后，修改 Analyzer 删除二次 Parser。
-5. 从 `interface-sdk-js` 构建共享 `ApiSymbolCatalog`，替代分散白名单。
-6. 明确 `tree_sitter_parser.py` 实验实现的保留或删除策略。
+3. 新建 FileAnalysis Golden，先冻结 FactOccurrence/ReviewRegion 的 span、owner 和
+   diagnostics。
+4. 实现 Parser v2 `FileAnalysis`，通过新 Golden 且保持 Parser v1 release gate 无漂移。
+5. 与 ReviewUnit 的 Unit fact scope 契约对齐后，修改 Analyzer 删除二次 Parser。
+6. 从 `interface-sdk-js` 构建共享 `ApiSymbolCatalog`，替代分散白名单。
+7. 明确 `tree_sitter_parser.py` 实验实现的保留或删除策略。

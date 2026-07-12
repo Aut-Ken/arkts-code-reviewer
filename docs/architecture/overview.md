@@ -77,8 +77,10 @@ Source registry                19 entries / all revisions verified / clean workt
 Parser v1 足以为 ReviewUnit 提供经过验证的 declaration 行级 occurrence。当前集合字段仍是
 文件级 presence signal，不能证明某个 API、modifier、decorator 或 syntax 属于某个 Unit。
 ReviewUnit 的 RU-0/RU-1 已建立独立 Golden 并修复 span-qualified identity；下一步是 RU-2
-多 owner 和质量传播。删除 Unit 二次 Parser 仍必须在 Unit exact facts 与 file hints 的契约
-明确后单独验收。
+多 owner 和质量传播，阶段门禁为现有 16-case v1 Golden 达到 14/16。该 v1 Golden 继续作为
+兼容回归集，不会被后续 ChangeSet 或 Context Planner schema 反向覆盖。删除 Unit 二次
+Parser 属于 RU-3，必须先有可追溯的 FactOccurrence 和 Unit exact facts，并保持 Parser v1
+及其 Golden 无漂移。
 
 当前真实调用次数是每文件 `1 + U` 次 Parser，其中 `U` 是去重后的 ReviewUnit 数。截取声明
 并重新解析还可能把 struct method 改成顶层 function，且第二次解析的 layer/warning 没进入
@@ -116,7 +118,8 @@ GitCode MR / CLI / API
         |                             |
         v                             v
 03 ReviewUnit                    04 Feature Routing
-选择语义完整上下文              Facts -> Tags -> Unit Dimensions
+Primary + Supporting            Facts -> Tags -> Unit Dimensions
+-> ContextPlanResult
         |                             |
         +--------------+--------------+
                        |
@@ -162,6 +165,29 @@ Parser Validation 是独立旁路，只评估 Parser 质量，不进入生产评
 | Prompt / LLM | 在约束内做语义判断和建议 | 编造条款、自由扩大评审范围 |
 | Output | 校验、去重、渲染和回写 | 重新判断代码语义 |
 | Evaluation | 度量、归因和回流 | 直接改变线上结论 |
+
+### 4.1 ReviewUnit 的完成边界
+
+ReviewUnit 不是“从 diff 中只挑最相关的一段”，而是保留全部直接改动 owner，再在明确问题和
+预算下选择必要的关联代码。其内部开发顺序为：
+
+```text
+RU-2  找全直接改动 owner，并传播 Parser 质量
+RU-3  建立 FactOccurrence/owner，按完整文件 parse-once 投影精确事实
+RU-4  消费精确 ChangeSet，支持 base/head、删除和 rename
+RU-5  生成关系、Supporting、ChangeGroup，执行真实上下文预算
+      -> ContextPlanResult
+```
+
+`ContextPlanResult` 是本模块的最终交付边界。它描述后续评审应该看到哪些代码、各段代码
+为何相关、哪些上下文因预算或上游质量而缺失；它不包含知识 Evidence、RuleFinding、Prompt、
+LLM 结论或发布结果。完整字段只在[跨模块数据契约](data-contracts.md)维护，本总览不复制
+schema。
+
+阶段评测也保持分层：RU-2 继续使用现有 16-case ReviewUnit v1 Golden；RU-4 新建
+ChangeSet Golden 和 ReviewUnit v2 Golden；RU-5 先新建 12～16 个 Context Golden case，
+再实现 Planner。这样身份和兼容行为、精确 diff 语义、上下文充分性不会混成一个无法归因
+的分数。
 
 ## 5. 核心架构原则
 
@@ -291,9 +317,11 @@ PoC 可以使用单进程 CLI，但生产形态应中心化部署，统一模型
 ```text
 Milestone 0  多仓库来源基线 + Parser v1 确定性验证             已完成
 Milestone 1a ReviewUnit Golden + 唯一 Unit identity               RU-0/RU-1 已完成
-             多 owner + Parser quality diagnostics               RU-2 当前下一项
-Milestone 1b Unit facts 作用域 + parse-once + Unit Tags/Dimensions
-Milestone 1c 精确 ChangeSet + related context + token budget
+Milestone 1b 多 owner + Parser quality diagnostics               RU-2 当前下一项；14/16 门禁
+Milestone 1c FactOccurrence + Unit exact facts + parse-once       RU-3
+Milestone 1d 精确 ChangeSet + base/head ReviewUnit                RU-4；独立 v2 Golden
+Milestone 1e related context + ChangeGroup + token budget         RU-5；Context Golden
+             -> ContextPlanResult                                ReviewUnit 完成边界
 Milestone 2  Source Registry Loader + 三类 Source Adapter
              + 50~100 条人工确认 Clause + 精确检索
 Milestone 3  10~20 条高精度 Rules + Prompt v1 + JSON Finding

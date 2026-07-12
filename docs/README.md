@@ -71,20 +71,29 @@ Parser v1 已由提交 `2c1df96` 冻结，当前 ReviewUnit 开发可以依赖 d
 qualified name、1-based inclusive 起止行和源码切片。不能把 file-level 的 APIs、decorators、
 attributes、syntax 等集合直接当成某个 Unit 的事实，因为它们尚无 occurrence span/owner。
 
-下一条开发链路固定为：
+ReviewUnit 模块的完成路线固定为：
 
 ```text
-ReviewUnit Golden harness                              已完成
--> collision-safe unit_id 和可解释选择字段             已完成
--> 多 owner / Parser quality diagnostics               当前下一项
--> 明确 Unit exact facts 与 file hints
--> 再决定何时删除 Unit 二次 Parser
--> 精确 ChangeSet / related context / token budget
+RU-0  ReviewUnit Golden harness                         已完成
+RU-1  collision-safe unit_id 和可解释选择字段            已完成（9/9）
+RU-2  多 owner + Parser quality diagnostics              当前下一项（目标 14/16）
+RU-3  FactOccurrence + Unit exact facts + parse-once
+RU-4  精确 ChangeSet + base/head ReviewUnit
+RU-5  related context + ChangeGroup + token budget
+      -> ContextPlanResult                              模块边界
 ```
 
-第一项代码任务“ReviewUnit Golden harness + collision-safe unit_id”已经完成。下一项只能继续
-RU-2 多 owner 和质量传播，不能跳到 Knowledge/Retrieval、parse-once，或用文件级集合伪造
-Unit facts。新会话除四份架构文档外，还应依次阅读模块 01、02、03、04 和 11。
+现有 `tests/golden/review_unit/` 16-case v1 Golden 必须保留，继续作为 RU-1/RU-2 的兼容
+回归集；baseline 只能记录当前行为，不能覆盖人工 expected。RU-2 的阶段目标是其中 14/16
+匹配，剩余 ChangeSet 和真实 budget 场景由后续阶段接管。RU-4 另建 ChangeSet Golden 和
+ReviewUnit v2 Golden；RU-5 先建立 12～16 个 Context Golden case，再实现关系、分组和预算。
+
+ReviewUnit 完成时只交付 `ContextPlanResult`，即“本次改动的全部 Primary、必要 Supporting、
+关系、分组、预算结果和降级诊断”。Knowledge、Retrieval、Rules、Prompt、模型调用、Finding
+和 GitCode 回写均是下游模块，不得为了完成 RU-2～RU-5 提前混入。下一项只做 RU-2 多
+owner 和质量传播；RU-3 必须通过另行授权的 Parser v2 提供 occurrence，同时保持 Parser v1
+及其 Golden 不变并单独验收。
+新会话除四份架构文档外，还应依次阅读模块 01、02、03、04、10 和 11。
 
 ### 按流水线阅读模块
 

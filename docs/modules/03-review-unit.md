@@ -302,31 +302,153 @@ budget_not_enforced
 
 ### RU-2：多 owner 和质量传播
 
-- 一个 change region 可以产生多个 owner。
-- diff 模式无 hunk 的文件不再静默进入 full review。
-- Parser layer/warnings 转为 file/Unit diagnostics。
-- HostSummary 只从对应 host declaration 提取，避免多 struct 串扰。
+- 一个 change region 可以产生多个 Primary owner，不再强制 Top1。hunk 横跨两个方法时，
+  两个方法都必须产出；同一 owner 的多个 hunk 仍按 `unit_id` 合并。
+- 只选择覆盖 changed line 的最内层 declaration，不能同时把其外层 struct/class 重复当作
+  Primary。无法归属的输入行必须进入 `unassigned_hunk_lines`，不得静默丢弃。
+- diff 模式无 hunk 的文件返回零 Unit，并记录 `diff_file_without_hunks`，不再退化为 full。
+- 越界或非法 hunk fail-closed，或返回结构化 diagnostic；不得把无效行塞进 Unit。
+- Parser layer、warnings、ERROR/missing 状态传播到 file result 和相关 Unit。L0 本身不是
+  Parser 错误，但必须如实保留质量层级。
+- HostSummary 的 decorators、state 和 lifecycle 只从当前 host declaration 范围内提取；
+  imports 继续是 file hint，不能声称属于某个 Unit。
+
+RU-2 增加最小批次结果信封，避免只有扁平 Unit 列表而无法表达文件级质量与未归属输入：
+
+```text
+ReviewUnitBuildResult
+├── schema_version
+├── mode
+├── diagnostics[]
+└── file_results[]
+    ├── path
+    ├── units[]
+    ├── parser_quality
+    ├── diagnostics[]
+    └── unassigned_hunk_lines[]
+```
+
+RU-3 为 file result 增加 head `source_ref_id`；RU-4 再为顶层结果增加 `change_set_id` 和
+`unassigned_change_atom_ids`。RU-2 不提前发明匿名 revision 或精确 diff 身份。
+
+此阶段仍只使用 Parser v1 已冻结的 declaration。`field_region/import_region` 没有可靠的
+Parser v1 occurrence，继续明确 fallback/unsupported；不得在 ReviewUnit 内新增一套正则
+RegionResolver 假装精确 owner。
+
+RU-2 验收：
+
+- 多 owner、同 owner 多 hunk、hunk 顺序扰动都有确定输出。
+- 每个有效 changed line 要么进入至少一个 Primary，要么有结构化未归属原因。
+- `diff + hunks=[]`、Parser degraded、ERROR/missing 和 HostSummary 多 host 串扰都有回归测试。
+- ReviewUnit Golden 的 RU-2 target 通过；RU-4/RU-5 未实现 case 继续保持显式差异。
 
 ### RU-3：Unit fact scope 与 parse-once
 
-删除二次 Parser 前必须先冻结二选一的事实契约：
+RU-3 的唯一正式路线冻结为：**独立 Parser v2 Golden + occurrence 数据合同 + 完整文件
+parse-once**。`unit_exact + file_hints` 只能作为迁移或降级展示方式，不能替代 occurrence，
+也不能据此宣称 RU-3 完成。
 
-1. Parser v2 提供 FactOccurrence span/owner；或
-2. 引入 `unit_exact` 与 `file_hints` 双作用域。
+RU-3 会改变 Parser 对外合同，开始前必须取得用户对 Parser v2 的单独授权。在授权前不得
+修改 Parser v1 行为、sidecar、Parser v1 Golden expected/baseline；如果 declaration 冻结
+合同不足以继续，应停止并给出最小复现，而不是把解析逻辑藏进 ReviewUnit。
 
-双作用域方案中，Unit span 内 declarations/components/symbols 是 exact；API、decorator、
-attribute、syntax 仍只是 file hints。file hints 不得显示为 Unit evidence。此阶段要增加
-CountingParser 测试，保证每文件严格 Parser 一次，并同步 CodeFeatures/Tagger 契约。
+Parser v2 先建立与 Parser v1 完全独立的 Golden，例如 `tests/golden/file_analysis/`，并冻结：
+
+```text
+FileAnalysis
+FactOccurrence(span, fact_kind, owner_ref, quality)
+ReviewRegion(kind=field_region|import_region, span, owner_ref, quality)
+CodeSourceRef(revision, path, content_hash)
+```
+
+至少使 API、component、decorator、attribute、syntax、field 和 import 的每个可用事实能回到
+文件绝对 span 及 owner；无法精确解析时必须保留 unresolved/degraded 状态，不能伪造 exact。
+
+完成 occurrence 合同后再改调用链：每个固定 `CodeSourceRef` 只解析完整文件一次，Unit facts
+从 `FileAnalysis` 按 owner/span 投影，并删除 `imports + unit.full_text` 的二次 Parser。对外
+同时区分：
+
+- `unit_exact`：可回到 FactOccurrence/ReviewRegion 的 Unit 级事实，可以作为代码证据候选。
+- `file_hints`：只有文件级或降级来源，只能保守扩大后续问题路由，不能成为 Finding evidence。
+
+RU-3 验收：
+
+- CountingParser 证明 `N` 个唯一 source revision 恰好解析 `N` 次，调用次数与 Unit 数无关。
+- method 不会因切片重解析变成顶层 function；owner、qualified name 和绝对行号保持文件语义。
+- 每个 exact fact 都有 occurrence/region provenance；file hint 不会伪装为 Unit exact。
+- Parser v1 release gate 无任何漂移，Parser v2 Golden 独立通过。
 
 ### RU-4：精确 ChangeSet
 
-由 Input 模块提供 added/deleted lines、old/new source、rename 和 diff position。ReviewUnit
-只消费标准化 ChangeSet，不自行解析 Git diff。
+Input 模块提供标准化 `ChangeSet`；ReviewUnit 只消费它，不自行解析原始 Git diff，也不在
+本阶段接入 GitCode。最小合同包含：
+
+```text
+ChangeSet
+└── ChangedFile[]
+    ├── base_source_ref / head_source_ref
+    └── ChangeAtom[]
+        ├── kind
+        ├── base_span
+        ├── head_span
+        └── changed old/new lines
+```
+
+RU-4 支持 added、modified/replacement、deleted/deletion-only、pure rename、rename+edit、空文件
+和多 hunk；binary 等无法提供源码的输入必须结构化降级。Git hunk context line 不得算作
+changed line。head 改动映射 head owner，删除内容映射 base owner；deletion-only Unit 正文
+来自 base source，不能用 head 行号或虚拟文本代替。base/head source 分别以 `CodeSourceRef`
+绑定 revision 和 content hash，并继续满足每个 source revision parse-once。
+
+RU-4 验收：所有支持的 ChangeAtom 都被至少一个 Unit 覆盖，或有明确未归属 diagnostic；
+old/new 坐标、source hash、rename 和 deletion-only provenance 可被 Golden 精确验证。
 
 ### RU-5：related context 和 token budget
 
-最后实现生命周期配对、状态/helper 受限扩展和真正 token budget。不能无界递归调用图，
-也不能静默截断大括号结构。
+RU-5 把全部 Primary ReviewUnit 扩展成有界、可解释的上下文计划，产出边界到此为止：
+
+```text
+ContextCandidate
+SupportingSegment
+RelationEdge
+ChangeGroup
+ReviewContextBundle
+ContextPlanResult
+```
+
+它可以消费已注入、固定 revision、带 provenance 的有界关系查询结果，但不负责构建或递归
+扫描仓库索引。没有精确关系来源时应降级，不能靠同名、同文件或词法相似伪造联系。
+
+基本规划规则：
+
+1. 全部直接改动 Primary 都必须保留；不是只交给后续模块“最相关的一块”。
+2. 按 `(Primary, review question)` 生成有界 ContextCandidate，并记录来源、目标 span 和质量。
+3. 生命周期配对、状态读写、直接 helper/caller 等只有在 typed RelationEdge 支持时才能成为
+   SupportingSegment；无界递归调用图不在范围内。
+4. 只用 strong、exact 的 Primary-to-Primary edge 构建 ChangeGroup；`same_host` 之类弱关系
+   不能单独把两个 Primary 合并。
+5. 每个 SupportingSegment 必须能回到 Primary、问题和 RelationEdge。被省略的候选也必须
+   记录稳定 reason，不能无声消失。
+6. 同一组 Primary 和必要 supporting 按预算拆成一个或多个 ReviewContextBundle，最终由
+   ContextPlanResult 汇总完整选择、遗漏、预算和降级信息。
+
+`code_context_budget` 是本模块在 RU-5 真正执行的源码预算，只计算 Primary/Supporting 的原始
+源码 token；关系元数据、提示模板和模型输出预算属于后续模块，不得混算。裁剪顺序必须
+确定，并遵守：
+
+- 不因预算静默删除 Primary 或 changed lines。
+- 不在不安全的语法结构中间截断源码。
+- 优先满足回答问题所需的最小充分 supporting，再考虑 helpful 上下文。
+- 单个 Primary 已超限且无法安全切分时，返回 `primary_exceeds_budget/context_insufficient`，
+  并令该 bundle 不可调度；不能谎报预算满足。
+
+RU-5 先建立独立 Context Golden，再实现 Planner。Golden 至少测量 Primary coverage、关系
+precision/recall、required context recall at budget、distractor rejection、预算利用率和输入
+顺序稳定性。完成条件是所有支持 case require-perfect，且每个可调度 bundle 不超预算。
+
+RU-5 明确不实现 Knowledge/Retrieval、Rules、Prompt、LLM 调用、Output/Report、GitCode 或
+RepositoryCodeIndexBuilder。这些后续模块只能消费 `ContextPlanResult`，不能反向改变本模块
+对 owner、source span、关系 provenance 和预算的事实。
 
 ## 12. ReviewUnit Golden Set
 
@@ -356,7 +478,7 @@ R63-044、R63-050、R63-055；固定来源和 revision 见
 外部源码应复制最小稳定片段并保存 provenance。R63、Parser output、Grok candidate 和当前
 ReviewUnit baseline 都不是 expected 真值，expected 必须人工标注。
 
-## 13. 目标算法
+## 13. 目标算法概览
 
 ### 13.1 Change owner
 
@@ -372,18 +494,18 @@ import_region
 fallback_window
 ```
 
-### 13.2 基础上下文
+### 13.2 Primary 基础上下文
 
 | owner | 基础上下文 |
 |---|---|
 | method | 完整方法 |
 | build | 改动 UI 节点及必要父链 |
 | builder | 完整 Builder + 宿主签名 |
-| field region | 字段声明 + 相关改动方法 |
-| import | import + 与该符号有关的改动声明 |
+| field region | 精确字段 region；相关方法由 RU-5 relation 决定 |
+| import | 精确 import region；使用方由 RU-5 relation 决定 |
 | deletion-only | base declaration + head anchor context |
 
-### 13.3 关联上下文
+### 13.3 Supporting 关联上下文
 
 只在预算内受限扩展：
 
@@ -393,7 +515,10 @@ state management         -> 相关状态字段和装饰器
 local helper             -> 最多一层直接依赖
 ```
 
-### 13.4 Token budget
+这些只是受限关系类别，不代表“同文件就全部加入”。每段 Supporting 必须有 RU-3 occurrence
+或外部有界关系 provenance，并在 Context Golden 中验证其必要性。
+
+### 13.4 Code context budget
 
 优先级：
 
@@ -405,7 +530,8 @@ local helper             -> 最多一层直接依赖
 > 低相关上下文
 ```
 
-超预算必须记录裁剪原因和 diagnostics。
+该优先级只作用于 supporting 选择；Primary 不能按优先级静默删除。超预算必须记录裁剪原因
+和 diagnostics，无法安全容纳 Primary 时输出不可调度的 ContextPlanResult。
 
 ## 14. 行号与质量约定
 
@@ -420,33 +546,36 @@ local helper             -> 最多一层直接依赖
 declaration 选择本身约为 `O(H * D)`，当前不是主要瓶颈。主要成本来自每文件 `1 + U`
 次 Parser，尤其每次 L1 都启动 Node 进程。
 
-第一阶段不需要 interval tree、调用图或常驻 worker。正确顺序是先用 Golden 锁定行为，再
-修 identity/multi-owner，最后在事实作用域契约下实现 parse-once。
+RU-2 不需要 interval tree、调用图或常驻 worker。正确顺序是先用 Golden 锁定 multi-owner，
+再经单独授权建立 Parser v2 occurrence，随后实现 parse-once、ChangeSet 和有界 Context
+Planner。性能优化不能越过事实正确性和 provenance 门禁。
 
-## 16. 第一阶段非目标
+## 16. 跨阶段保护边界
 
-以下内容不得混入第一个 ReviewUnit 提交：
+整个 ReviewUnit 模块开发期间保持以下边界：
 
-- Knowledge、Retrieval、Rules、Prompt、GitCode。
-- Parser v1 行为、Parser Golden expected 或 baseline 修改。
-- deletion-only/base source。
-- related-context 调用扩展。
-- 真正 token budget。
-- FactOccurrence/owner Parser v2。
+- Knowledge、Retrieval、Rules、Prompt、LLM 调用、Output/Report 和 GitCode 不属于本模块。
+- RepositoryCodeIndexBuilder、全仓调用图构建和外部仓库递归扫描不属于 RU-5。
+- Parser v1 行为、Parser v1 Golden expected/baseline 永久冻结；Parser v2 使用独立合同和
+  Golden，且必须先取得用户单独授权。
+- RU-2 不得提前实现 FactOccurrence、field/import 精确 region 或 parse-once。
+- RU-3 不得用 `unit_exact/file_hints` 规避 occurrence 合同。
+- RU-4 只消费标准化 ChangeSet，不自行连接 Git 平台或解析任意外部仓库。
+- RU-5 不生成 EvidencePack、PromptPacket、Finding 或 ReviewReport。
 - Tag/Dimension 配置化。
 - 递归扫描外部仓库。
 
-## 17. 第一阶段完成条件
+## 17. 阶段门禁与提交策略
 
 ```text
-ReviewUnit Golden harness 存在且 fail-closed
-12～16 cases 有人工 expected
-collision-safe unit_id 通过 Golden
-同名 occurrence 不再错误合并
-兼容字段和当前调用方仍工作
-所有对外行号为 1-based 文件绝对行
-全量 pytest 通过
-Parser v1 release gate 无漂移
+RU-0/RU-1  已完成：Golden harness + collision-safe identity
+RU-2        multi-owner + quality + HostSummary target 通过
+RU-3        Parser v2 occurrence Golden + parse-once target 通过
+RU-4        ChangeSet/base/head target 通过
+RU-5        Context Golden require-perfect + 预算门禁通过
 ```
 
-完成 RU-1 后先停下来复核 Golden 差异，再决定 RU-2 和 parse-once 的具体范围。
+每阶段分别实现、运行该阶段 Golden、全量 pytest、Parser v1 release gate、ruff 与
+`git diff --check`，然后形成一个独立 commit。RU-3 开始前另设用户授权 checkpoint；任何
+阶段都不得通过修改 expected 来掩盖实现差异。所有对外行号始终保持 1-based、end-inclusive
+的文件绝对坐标。
