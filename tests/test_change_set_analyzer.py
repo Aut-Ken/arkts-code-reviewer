@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from dataclasses import replace
 
 import pytest
 
@@ -11,6 +12,13 @@ from arkts_code_reviewer.code_analysis.change_set import (
     ChangeSet,
     CodeSourceSnapshot,
     normalize_change_set,
+)
+from arkts_code_reviewer.code_analysis.context_planning import (
+    ContextCandidate,
+    QuestionBinding,
+    RelationEdge,
+    estimate_code_tokens,
+    source_span_ref_id,
 )
 from arkts_code_reviewer.code_analysis.file_analysis_models import (
     CodeSourceRef,
@@ -143,6 +151,45 @@ def _scoped_parse_result(
         fact_occurrences=(occurrence,),
     )
     return FileParseResult(analysis=analysis, compatibility_facts=facts)
+
+
+def _two_declaration_parse_result(
+    snapshot: CodeSourceSnapshot,
+) -> tuple[FileParseResult, DeclarationOccurrence, DeclarationOccurrence]:
+    lines = snapshot.content.splitlines(keepends=True)
+    if len(lines) != 2:
+        raise ValueError("fixture requires exactly two lines")
+    first_end = len(lines[0].encode("utf-16-le")) // 2
+    total_end = first_end + len(lines[1].encode("utf-16-le")) // 2
+    first = DeclarationOccurrence.create(
+        source_ref_id=snapshot.source_ref.source_ref_id,
+        kind="function",
+        name="changed",
+        qualified_name="changed",
+        span=SourceSpan(1, 1),
+        exact_range=ExactRange(1, 1, 0, first_end),
+    )
+    second = DeclarationOccurrence.create(
+        source_ref_id=snapshot.source_ref.source_ref_id,
+        kind="function",
+        name="helper",
+        qualified_name="helper",
+        span=SourceSpan(2, 2),
+        exact_range=ExactRange(2, 2, first_end, total_end),
+    )
+    facts = CodeFacts(path=snapshot.source_ref.path, parser_layer="L1")
+    analysis = FileAnalysis.create(
+        source_ref=snapshot.source_ref,
+        parser_version="fixture-file-analysis-v1",
+        parser_quality=FileParserQuality(
+            layer="L1",
+            error_nodes=0,
+            missing_nodes=0,
+        ),
+        file_hints=ScopedFacts(),
+        declarations=(first, second),
+    )
+    return FileParseResult(analysis=analysis, compatibility_facts=facts), first, second
 
 
 def test_analyze_change_set_parses_each_base_head_source_once() -> None:
@@ -415,3 +462,299 @@ def test_change_set_analysis_keeps_unit_exact_separate_from_file_hints() -> None
             .declaration_id,
         ),
     ]
+
+
+def test_plan_context_uses_every_unit_from_complete_change_analysis() -> None:
+    base = _snapshot(
+        "src/A.ets",
+        "struct A {\n  first() { return 1 }\n  second() { return 2 }\n}\n",
+        "base",
+    )
+    head = _snapshot(
+        "src/A.ets",
+        "struct A {\n  first() { return 3 }\n  second() { return 4 }\n}\n",
+        "head",
+    )
+    change_set = _replacement_change(
+        base,
+        head,
+        atoms=(
+            ChangeAtomInput(
+                kind="replacement",
+                old_span=ReviewUnitSpan(2, 2),
+                new_span=ReviewUnitSpan(2, 2),
+                added_new_lines=(2,),
+                deleted_old_lines=(2,),
+            ),
+            ChangeAtomInput(
+                kind="replacement",
+                old_span=ReviewUnitSpan(3, 3),
+                new_span=ReviewUnitSpan(3, 3),
+                added_new_lines=(3,),
+                deleted_old_lines=(3,),
+            ),
+        ),
+    )
+    analyzer = CodeAnalyzer(file_parser=CountingFileParser())
+    snapshots = {
+        base.source_ref.source_ref_id: base,
+        head.source_ref.source_ref_id: head,
+    }
+    analysis = analyzer.analyze_change_set(change_set, snapshots)
+
+    correspondence_units = analysis.review_units
+    forged_correspondence = RelationEdge.create(
+        source_ref=correspondence_units[0].unit_id,
+        target_ref=correspondence_units[1].unit_id,
+        relation_type="change_correspondence",
+        strength="strong",
+        quality="exact",
+        evidence_refs=(f"change-atom:sha256:{'f' * 64}",),
+        provenance_ref=change_set.change_set_id,
+    )
+    with pytest.raises(ValueError, match="planner-derived only"):
+        analyzer.plan_context(
+            analysis,
+            primary_question_bindings=tuple(
+                QuestionBinding(unit.unit_id, "correctness")
+                for unit in analysis.review_units
+            ),
+            source_snapshots=snapshots,
+            relation_edges=(forged_correspondence,),
+            code_context_budget=1000,
+        )
+
+    plan = analyzer.plan_context(
+        analysis,
+        primary_question_bindings=tuple(
+            QuestionBinding(unit.unit_id, "correctness")
+            for unit in analysis.review_units
+        ),
+        source_snapshots=snapshots,
+        code_context_budget=1000,
+    )
+
+    assert {
+        unit_id
+        for group in plan.change_groups
+        for unit_id in group.primary_unit_ids
+    } == {unit.unit_id for unit in analysis.review_units}
+    assert {
+        unit_id
+        for bundle in plan.bundles
+        for unit_id in bundle.primary_unit_ids
+    } == {unit.unit_id for unit in analysis.review_units}
+
+
+def test_plan_context_accepts_only_exact_parser_occurrence_boundaries() -> None:
+    base = _snapshot(
+        "src/A.ets",
+        "function changed() { return 0 }\nfunction helper() { return 2 }\n",
+        "base",
+    )
+    head = _snapshot(
+        "src/A.ets",
+        "function changed() { return 1 }\nfunction helper() { return 2 }\n",
+        "head",
+    )
+    support = _snapshot(
+        "src/Support.ets",
+        "function changed() { return 9 }\nfunction helper() { return 2 }\n",
+        "support-revision",
+    )
+    base_parse_result, _, _ = _two_declaration_parse_result(base)
+    head_parse_result, _, _ = _two_declaration_parse_result(head)
+    support_parse_result, helper, _ = _two_declaration_parse_result(support)
+    change_set = _replacement_change(
+        base,
+        head,
+        atoms=(
+            ChangeAtomInput(
+                kind="replacement",
+                old_span=ReviewUnitSpan(1, 1),
+                new_span=ReviewUnitSpan(1, 1),
+                added_new_lines=(1,),
+                deleted_old_lines=(1,),
+            ),
+        ),
+    )
+    analyzer = CodeAnalyzer(
+        file_parser=FixtureFileParser(
+            {
+                base.source_ref.source_ref_id: base_parse_result,
+                head.source_ref.source_ref_id: head_parse_result,
+            }
+        )
+    )
+    change_snapshots = {
+        base.source_ref.source_ref_id: base,
+        head.source_ref.source_ref_id: head,
+    }
+    analysis = analyzer.analyze_change_set(
+        change_set,
+        change_snapshots,
+    )
+    context_snapshots = {
+        **change_snapshots,
+        support.source_ref.source_ref_id: support,
+    }
+    primary = next(
+        unit for unit in analysis.review_units if unit.source_role == "head"
+    )
+    edge = RelationEdge.create(
+        source_ref=primary.unit_id,
+        target_ref=source_span_ref_id(
+            support.source_ref.source_ref_id,
+            helper.exact_range,
+        ),
+        relation_type="direct_call",
+        strength="strong",
+        quality="exact",
+        evidence_refs=(helper.declaration_id, "fixture:call-occurrence"),
+        provenance_ref="fixture:bounded-relation-query",
+    )
+    helper_text = support.content.splitlines(keepends=True)[0]
+    candidate = ContextCandidate.create(
+        primary_unit_id=primary.unit_id,
+        review_question_id="correctness",
+        relation_edge_id=edge.edge_id,
+        relation_type="direct_call",
+        target_source_ref_id=support.source_ref.source_ref_id,
+        target_span=helper.exact_range,
+        estimated_tokens=estimate_code_tokens(helper_text),
+        necessity="required",
+        provenance_ref=helper.declaration_id,
+    )
+
+    plan = analyzer.plan_context(
+        analysis,
+        primary_question_bindings=tuple(
+            QuestionBinding(unit.unit_id, "correctness")
+            for unit in analysis.review_units
+        ),
+        source_snapshots=context_snapshots,
+        supporting_file_analyses=(support_parse_result.analysis,),
+        candidates=(candidate,),
+        relation_edges=(edge,),
+        code_context_budget=1000,
+    )
+
+    assert len(plan.supporting_segments) == 1
+    assert plan.supporting_segments[0].source_text == helper_text
+
+    unsafe_span = ExactRange(
+        2,
+        2,
+        helper.exact_range.start_offset_utf16 + 9,
+        helper.exact_range.end_offset_utf16 - 2,
+    )
+    unsafe_edge = RelationEdge.create(
+        source_ref=primary.unit_id,
+        target_ref=source_span_ref_id(
+            support.source_ref.source_ref_id,
+            unsafe_span,
+        ),
+        relation_type="direct_call",
+        strength="strong",
+        quality="exact",
+        evidence_refs=(helper.declaration_id, "fixture:call-occurrence"),
+        provenance_ref="fixture:bounded-relation-query",
+    )
+    unsafe_text = "helper() { return 2 "
+    unsafe_candidate = ContextCandidate.create(
+        primary_unit_id=primary.unit_id,
+        review_question_id="correctness",
+        relation_edge_id=unsafe_edge.edge_id,
+        relation_type="direct_call",
+        target_source_ref_id=support.source_ref.source_ref_id,
+        target_span=unsafe_span,
+        estimated_tokens=estimate_code_tokens(unsafe_text),
+        necessity="required",
+        provenance_ref=helper.declaration_id,
+    )
+    with pytest.raises(ValueError, match="does not equal its occurrence boundary"):
+        analyzer.plan_context(
+            analysis,
+            primary_question_bindings=tuple(
+                QuestionBinding(unit.unit_id, "correctness")
+                for unit in analysis.review_units
+            ),
+            source_snapshots=context_snapshots,
+            supporting_file_analyses=(support_parse_result.analysis,),
+            candidates=(unsafe_candidate,),
+            relation_edges=(unsafe_edge,),
+            code_context_budget=1000,
+        )
+
+    warning_analysis = replace(
+        support_parse_result.analysis,
+        parser_quality=FileParserQuality(
+            layer="L1",
+            error_nodes=1,
+            missing_nodes=0,
+            warnings=("parser_error_nodes",),
+        ),
+    )
+    with pytest.raises(ValueError, match="requires a degraded relation"):
+        analyzer.plan_context(
+            analysis,
+            primary_question_bindings=tuple(
+                QuestionBinding(unit.unit_id, "correctness")
+                for unit in analysis.review_units
+            ),
+            source_snapshots=context_snapshots,
+            supporting_file_analyses=(warning_analysis,),
+            candidates=(candidate,),
+            relation_edges=(edge,),
+            code_context_budget=1000,
+        )
+
+
+def test_binary_change_blocks_empty_context_plan() -> None:
+    change_set = normalize_change_set(
+        repository="repo",
+        base_revision="base",
+        head_revision="head",
+        files=(
+            ChangedFileInput(
+                status="modified",
+                old_path="assets/a.bin",
+                new_path="assets/a.bin",
+                is_binary=True,
+            ),
+        ),
+    )
+    analyzer = CodeAnalyzer(file_parser=CountingFileParser())
+    analysis = analyzer.analyze_change_set(change_set, {})
+
+    plan = analyzer.plan_context(
+        analysis,
+        primary_question_bindings=(),
+        source_snapshots=(),
+        code_context_budget=100,
+    )
+
+    assert plan.bundles == ()
+    assert [item.code for item in plan.diagnostics] == ["context_insufficient"]
+    assert plan.diagnostics[0].subject_ids == (
+        change_set.files[0].changed_file_id,
+    )
+
+
+def test_plan_context_rejects_legacy_analysis_result() -> None:
+    analyzer = CodeAnalyzer(parser=LexicalParser())
+    analysis = analyzer.analyze_file(
+        "src/A.ets",
+        "function changed() {}\n",
+    )
+
+    with pytest.raises(ValueError, match="review-unit-build-v3"):
+        analyzer.plan_context(
+            analysis,
+            primary_question_bindings=tuple(
+                QuestionBinding(unit.unit_id, "correctness")
+                for unit in analysis.review_units
+            ),
+            source_snapshots=(),
+            code_context_budget=100,
+        )

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 from arkts_code_reviewer.code_analysis.change_review import (
     build_change_review_units,
@@ -9,9 +9,19 @@ from arkts_code_reviewer.code_analysis.change_set import (
     ChangeSet,
     CodeSourceSnapshot,
 )
+from arkts_code_reviewer.code_analysis.context_planning import (
+    ContextCandidate,
+    ContextPlanner,
+    ContextPlanResult,
+    QuestionBinding,
+    RelationEdge,
+)
 from arkts_code_reviewer.code_analysis.file_analysis_models import (
     CodeSourceRef,
+    ExactRange,
+    FileAnalysis,
     FileParseResult,
+    FileParserQuality,
     ScopedFacts,
     UnitFactScope,
 )
@@ -253,6 +263,199 @@ class CodeAnalyzer:
             parse_results_by_source_ref=parse_results_by_source_ref,
             token_budget=token_budget,
         )
+
+    def plan_context(
+        self,
+        analysis_result: AnalysisResult,
+        *,
+        primary_question_bindings: Sequence[QuestionBinding],
+        source_snapshots: Mapping[str, CodeSourceSnapshot]
+        | Sequence[CodeSourceSnapshot],
+        supporting_file_analyses: Sequence[FileAnalysis] = (),
+        candidates: Sequence[ContextCandidate] = (),
+        relation_edges: Sequence[RelationEdge] = (),
+        code_context_budget: int,
+    ) -> ContextPlanResult:
+        """Build the RU-5 context plan from one complete RU-4 result.
+
+        This entry point deliberately forwards every ReviewUnit from the validated
+        change analysis. Callers may rank or omit Supporting candidates, but cannot
+        silently turn a direct change owner into an optional context segment.
+        """
+
+        if not isinstance(analysis_result, AnalysisResult):
+            raise ValueError("analysis_result must use AnalysisResult")
+        analysis_result.validate()
+        if (
+            analysis_result.change_set is None
+            or analysis_result.review_unit_build_result is None
+            or analysis_result.review_unit_build_result.schema_version
+            != "review-unit-build-v3"
+        ):
+            raise ValueError(
+                "plan_context requires a complete review-unit-build-v3 AnalysisResult"
+            )
+        change_set_id = analysis_result.change_set.change_set_id
+        if analysis_result.review_unit_build_result.change_set_id != change_set_id:
+            raise ValueError("AnalysisResult ChangeSet and ReviewUnit build disagree")
+        self._validate_context_candidate_boundaries(
+            analysis_result,
+            candidates,
+            relation_edges,
+            source_snapshots,
+            supporting_file_analyses,
+        )
+        blocking_change_ids = tuple(
+            sorted(
+                set(
+                    analysis_result.review_unit_build_result.unassigned_change_atom_ids
+                ).union(
+                    changed_file.changed_file_id
+                    for changed_file in analysis_result.change_set.files
+                    if changed_file.is_binary
+                )
+            )
+        )
+        return ContextPlanner().plan(
+            change_set_id=change_set_id,
+            primary_units=analysis_result.review_units,
+            primary_question_bindings=primary_question_bindings,
+            source_snapshots=source_snapshots,
+            candidates=candidates,
+            relation_edges=relation_edges,
+            blocking_change_ids=blocking_change_ids,
+            code_context_budget=code_context_budget,
+        )
+
+    def _validate_context_candidate_boundaries(
+        self,
+        analysis_result: AnalysisResult,
+        candidates: Sequence[ContextCandidate],
+        relation_edges: Sequence[RelationEdge],
+        source_snapshots: Mapping[str, CodeSourceSnapshot]
+        | Sequence[CodeSourceSnapshot],
+        supporting_file_analyses: Sequence[FileAnalysis],
+    ) -> None:
+        """Require every Supporting target to equal one exact Parser v2 boundary."""
+
+        boundaries: dict[
+            str,
+            tuple[str, ExactRange, str, FileParserQuality],
+        ] = {}
+        changed_analyses = tuple(
+            parse_result.analysis
+            for parse_result in analysis_result.file_parse_results
+        )
+        if any(
+            not isinstance(analysis, FileAnalysis)
+            for analysis in supporting_file_analyses
+        ):
+            raise ValueError(
+                "supporting_file_analyses must contain FileAnalysis values"
+            )
+        extra_analyses = tuple(supporting_file_analyses)
+        changed_source_ids = {
+            analysis.source_ref.source_ref_id for analysis in changed_analyses
+        }
+        extra_source_ids = [
+            analysis.source_ref.source_ref_id for analysis in extra_analyses
+        ]
+        if len(extra_source_ids) != len(set(extra_source_ids)) or set(
+            extra_source_ids
+        ).intersection(changed_source_ids):
+            raise ValueError(
+                "supporting_file_analyses must use unique external source revisions"
+            )
+        candidate_source_ids = {
+            candidate.target_source_ref_id for candidate in candidates
+        }
+        if set(extra_source_ids) != candidate_source_ids - changed_source_ids:
+            raise ValueError(
+                "supporting_file_analyses must exactly cover external candidate sources"
+            )
+
+        if isinstance(source_snapshots, Mapping):
+            snapshots = dict(source_snapshots)
+        elif isinstance(source_snapshots, Sequence) and not isinstance(
+            source_snapshots,
+            str | bytes,
+        ):
+            snapshot_sequence = tuple(source_snapshots)
+            snapshots = {
+                snapshot.source_ref.source_ref_id: snapshot
+                for snapshot in snapshot_sequence
+            }
+            if len(snapshots) != len(snapshot_sequence):
+                raise ValueError("source_snapshots contains duplicate source identities")
+        else:
+            raise ValueError("source_snapshots must be a mapping or sequence")
+        for analysis in extra_analyses:
+            snapshot = snapshots.get(analysis.source_ref.source_ref_id)
+            if snapshot is None or snapshot.source_ref != analysis.source_ref:
+                raise ValueError(
+                    "external FileAnalysis must match its immutable source snapshot"
+                )
+
+        for analysis in (*changed_analyses, *extra_analyses):
+            analysis.validate()
+            source_ref_id = analysis.source_ref.source_ref_id
+            for declaration in analysis.declarations:
+                if declaration.declaration_id in boundaries:
+                    raise ValueError("duplicate declaration boundary in AnalysisResult")
+                boundaries[declaration.declaration_id] = (
+                    source_ref_id,
+                    declaration.exact_range,
+                    declaration.quality,
+                    analysis.parser_quality,
+                )
+            for region in analysis.review_regions:
+                if region.region_id in boundaries:
+                    raise ValueError("duplicate review region boundary in AnalysisResult")
+                boundaries[region.region_id] = (
+                    source_ref_id,
+                    region.exact_range,
+                    region.quality,
+                    analysis.parser_quality,
+                )
+
+        edge_by_id = {
+            edge.edge_id: edge
+            for edge in relation_edges
+            if isinstance(edge, RelationEdge)
+        }
+        for candidate in candidates:
+            if not isinstance(candidate, ContextCandidate):
+                raise ValueError("candidates must contain ContextCandidate values")
+            boundary = boundaries.get(candidate.provenance_ref)
+            if boundary is None:
+                raise ValueError(
+                    "Supporting candidate provenance is not a parsed declaration/region boundary"
+                )
+            source_ref_id, exact_range, quality, parser_quality = boundary
+            if (
+                source_ref_id != candidate.target_source_ref_id
+                or exact_range != candidate.target_span
+            ):
+                raise ValueError(
+                    "Supporting candidate target does not equal its occurrence boundary"
+                )
+            edge = edge_by_id.get(candidate.relation_edge_id)
+            if edge is None:
+                raise ValueError(
+                    "Supporting candidate references an unavailable RelationEdge"
+                )
+            parser_is_clean = (
+                parser_quality.layer == "L1"
+                and parser_quality.error_nodes == 0
+                and parser_quality.missing_nodes == 0
+                and not parser_quality.warnings
+            )
+            if (
+                quality != "exact" or not parser_is_clean
+            ) and edge.quality != "degraded":
+                raise ValueError(
+                    "non-exact Supporting boundary quality requires a degraded relation"
+                )
 
     def to_json_ready(self, result: AnalysisResult) -> dict[str, object]:
         return result.to_dict()

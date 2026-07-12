@@ -419,6 +419,10 @@ review unit issue
   fail-closed。
 - ReviewUnit v2 16-case base/head、old/new lines、ChangeAtom assignment、declaration/region owner、
   source-scoped identity、diagnostics、atom coverage 和稳定输出 truth。
+- ContextPlan 16-case Primary coverage、typed relation、safe occurrence boundary、按问题 multi-bundle、
+  required/helpful/distractor、真实 code token budget、遗漏诊断和独立输入排列 truth。
+- ContextPlan loader 对 expected selection/omission/budget 独立重放；require-perfect 同时校验完整
+  report schema、repeat、各维度 permutation、used-edge precision/recall 和 strict baseline。
 - candidate truth/annotation fingerprint 和 evidence fail-closed 审计。
 - Golden external snapshot provenance。
 - R63 empty/declaration/layer/warning fail-closed 门禁。

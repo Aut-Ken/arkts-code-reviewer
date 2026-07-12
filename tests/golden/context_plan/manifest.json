@@ -1,0 +1,3857 @@
+{
+  "schema_version": "context-plan-golden-v1",
+  "suite_id": "context-plan-ru5",
+  "description": "Human-reviewed RU-5 Primary, boundary-proven relation, grouping, supporting-context, and executed-budget truth.",
+  "coordinate_system": {
+    "line_base": 1,
+    "line_end": "inclusive",
+    "offset_encoding": "UTF-16",
+    "offset_base": 0,
+    "offset_end": "exclusive"
+  },
+  "frozen_contract": {
+    "planner_version": "context-planner-v1",
+    "token_estimator_version": "arkts-code-token-v1",
+    "relation_types": [
+      "change_correspondence",
+      "direct_call",
+      "direct_caller",
+      "lifecycle_pair",
+      "same_file",
+      "same_host",
+      "state_access"
+    ],
+    "relation_strengths": [
+      "strong",
+      "weak"
+    ],
+    "relation_qualities": [
+      "degraded",
+      "exact"
+    ],
+    "candidate_necessities": [
+      "distractor",
+      "helpful",
+      "required"
+    ],
+    "selection_reasons": [
+      "helpful_context",
+      "required_context"
+    ],
+    "omission_reasons": [
+      "budget_exceeded",
+      "context_blocked",
+      "distractor_rejected",
+      "relation_degraded"
+    ],
+    "diagnostic_codes": [
+      "context_insufficient",
+      "primary_exceeds_budget",
+      "relation_degraded"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "CP001",
+      "description": "A fallback Primary is retained without fabricated supporting context.",
+      "change_set_id": "change-set:sha256:4198d6ec86a49d77ebf43b6da7d7b95b23c879c08fac50e3cb79efc7c7d371fe",
+      "code_context_budget": 20,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP001_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp001",
+          "logical_path": "src/CP001_head.ets",
+          "origin_lines": [
+            1,
+            2
+          ],
+          "content_sha256": "ff1b38dbd58328929d53dd5149a80bea70c2a3b4367b00b0c08773ed41ceef90",
+          "source_ref_id": "code-source:sha256:c5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP001_head.ets@fallback:fallback:L1-L2:C1-L2:Rhead:Sc5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "fallback",
+          "unit_symbol": "hunk-L1-L2",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 2
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 2
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:e3572a20aea9b8f64c55d3ac7ec305369f28a251665532bb13e71f3e8ce5f23f"
+          ],
+          "owner_kind": null,
+          "owner_ref_id": null,
+          "full_text_sha256": "2d54dcb1318621b208d5506d3fdbcec4989022a1d3a7b13326d6af458add0cbc",
+          "review_question_ids": [
+            "RQ-maintainability"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:25a3fed68aac60e9055806410bbda06455066a384d2dac4dd56d3a9454da4d71",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:4198d6ec86a49d77ebf43b6da7d7b95b23c879c08fac50e3cb79efc7c7d371fe",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP001_head.ets@fallback:fallback:L1-L2:C1-L2:Rhead:Sc5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb",
+            "review_question_id": "RQ-maintainability"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:6fcbceca1819c6872106c6b9b96b20c7827224272057b880d73bcfd5177ae91c",
+            "primary_unit_ids": [
+              "src/CP001_head.ets@fallback:fallback:L1-L2:C1-L2:Rhead:Sc5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:924604694892becbd62160edb3bc0137ff04cfdd6d4452041280f6eda063be99",
+            "group_id": "change-group:sha256:6fcbceca1819c6872106c6b9b96b20c7827224272057b880d73bcfd5177ae91c",
+            "primary_unit_ids": [
+              "src/CP001_head.ets@fallback:fallback:L1-L2:C1-L2:Rhead:Sc5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP001_head.ets@fallback:fallback:L1-L2:C1-L2:Rhead:Sc5ae1488fca6d7bea0e4eae4bd9ff354831279eb924d7679908ff25ce5b8cbdb",
+                "review_question_id": "RQ-maintainability"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 20,
+              "primary_tokens": 16,
+              "supporting_tokens": 0,
+              "total_tokens": 16
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 20,
+          "total_primary_tokens": 16,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 16,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP002",
+      "description": "Unrelated field-region and function Primaries form independent bundles.",
+      "change_set_id": "change-set:sha256:b8fcc0a6f824211f86e2e3a66dc6921bc9519607ceffd33ba4bba90634abec6c",
+      "code_context_budget": 25,
+      "sources": [
+        {
+          "alias": "alpha",
+          "file": "sources/CP002_alpha.ets",
+          "repository": "context-golden",
+          "revision": "head-cp002",
+          "logical_path": "src/CP002_alpha.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "c6534caa5b0d0ff47ee687b73724e0123ee8c5f91f50a999578f3c97c1dfb60e",
+          "source_ref_id": "code-source:sha256:56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a"
+        },
+        {
+          "alias": "beta",
+          "file": "sources/CP002_beta.ets",
+          "repository": "context-golden",
+          "revision": "head-cp002",
+          "logical_path": "src/CP002_beta.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "cf49403bd3b37eb744cf7a3b841cf9a204446872aea49f3dde6c426a6e3c2aaf",
+          "source_ref_id": "code-source:sha256:d2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "alpha",
+          "unit_id": "src/CP002_alpha.ets@field_region:count:L1-L1:Rhead:S56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a",
+          "source_alias": "alpha",
+          "source_role": "head",
+          "unit_kind": "field_region",
+          "unit_symbol": "count",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 1
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 1
+          },
+          "changed_lines": [
+            1
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:eab3a5fe699a99d0f4d78503e1e7f35f47e795b09bc5a6a09fa90ce932595394"
+          ],
+          "owner_kind": "region",
+          "owner_ref_id": "region:sha256:a958f44fbdd47fa5e376e7aa6265250905e14ba553db273626b78f972e391187",
+          "full_text_sha256": "02c5d330db597d1d55484bff7d630506f0c5e2da7a589baeb1f13f61e96af3b1",
+          "review_question_ids": [
+            "RQ-state"
+          ]
+        },
+        {
+          "alias": "beta",
+          "unit_id": "src/CP002_beta.ets@function:beta:L1-L3:Rhead:Sd2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40",
+          "source_alias": "beta",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "beta",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:b015684daf684c7482595476b16a8d3b80345866a25bed39a176d7efc29dc93a"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:26916cc4ad1029aa65e12936bc53872ce7c9d12840d2ae7742a617061e703c95",
+          "full_text_sha256": "6c690771de608514c34328c559a11ea59002e6bdaa43896407c6cb42350c30d2",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:7ef46d1dd912e8d991666a69458406473bf4a230d17fcbbebdc9a298a86a5b73",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:b8fcc0a6f824211f86e2e3a66dc6921bc9519607ceffd33ba4bba90634abec6c",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP002_alpha.ets@field_region:count:L1-L1:Rhead:S56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a",
+            "review_question_id": "RQ-state"
+          },
+          {
+            "primary_unit_id": "src/CP002_beta.ets@function:beta:L1-L3:Rhead:Sd2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:142f0219a25b7f25ddfc7f9720159ed85b19ef4c1cd7f017f3cf3fba7be92948",
+            "primary_unit_ids": [
+              "src/CP002_beta.ets@function:beta:L1-L3:Rhead:Sd2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          },
+          {
+            "group_id": "change-group:sha256:33f6da4e227506c8147098aecdf2c44cd00a6af9bd9fe2c263b4ad60b5090517",
+            "primary_unit_ids": [
+              "src/CP002_alpha.ets@field_region:count:L1-L1:Rhead:S56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:56cf4ff998a4c9df8875dd6e0b21f205e3f63e053cec2e30374f46be828d8b8e",
+            "group_id": "change-group:sha256:142f0219a25b7f25ddfc7f9720159ed85b19ef4c1cd7f017f3cf3fba7be92948",
+            "primary_unit_ids": [
+              "src/CP002_beta.ets@function:beta:L1-L3:Rhead:Sd2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP002_beta.ets@function:beta:L1-L3:Rhead:Sd2666470d0db2526a90f881cde95ea0203d0f7cad5acf517d95c113a67a14a40",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 20,
+              "supporting_tokens": 0,
+              "total_tokens": 20
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:5d7639e1ebbb19725720ac06d8347b7c48dbc41dc567e2e34e92baa36896af55",
+            "group_id": "change-group:sha256:33f6da4e227506c8147098aecdf2c44cd00a6af9bd9fe2c263b4ad60b5090517",
+            "primary_unit_ids": [
+              "src/CP002_alpha.ets@field_region:count:L1-L1:Rhead:S56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP002_alpha.ets@field_region:count:L1-L1:Rhead:S56f08ef218ab49f5b94913caaefdc402522c0341a44f88032a3cff6f40fd063a",
+                "review_question_id": "RQ-state"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 18,
+              "supporting_tokens": 0,
+              "total_tokens": 18
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 25,
+          "total_primary_tokens": 38,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 20,
+          "dispatchable_bundles": 2,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP003",
+      "description": "A strong exact direct-call edge groups two changed Primaries.",
+      "change_set_id": "change-set:sha256:03b95d16e8eb69bffc20bdafeb5d8ae3ae784bdc53f8a05f2fd6185a9cb3617d",
+      "code_context_budget": 50,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP003_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp003",
+          "logical_path": "src/CP003_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "6f1fe57fc8b623b4ec16a7db3f57e404fcca24eda53fd0567bc55082eb3f12dd",
+          "source_ref_id": "code-source:sha256:f35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "first",
+          "unit_id": "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "first",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:61dcce186e4115a6d8d566cd9708adf9cb9f2e5745fef4c6b2199db25a9e00d4"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:3c177d65c2011336ce7b4553495d688e414838308eae7e5f3ff604af9c411198",
+          "full_text_sha256": "57a318b2fd40fa4c90ced13c7107740c6367c0cd4447de80bd0a347b27ad80bb",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        },
+        {
+          "alias": "second",
+          "unit_id": "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "second",
+          "source_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "context_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "changed_lines": [
+            5
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:8391bf9c3307301e6e08d71876bc1516bbbe14b06332d98740bcfa99e52261be"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:dcf52aa0780404fce75a3098b9fee8ec3052e66822e017fd010186e5ccc853de",
+          "full_text_sha256": "f7a9a9fb1f81e99bbe32202eaeb7f73a81d1ac6d90cefc3214b2daf7d46f7fc0",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [
+        {
+          "alias": "primary_call",
+          "edge_id": "relation-edge:sha256:0742c25d7e10160609ad7edf23874b49f9bda5036daf23c2c0d89971deb940eb",
+          "source_primary_alias": "first",
+          "target_primary_alias": "second",
+          "target_candidate_alias": null,
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "evidence:CP003:primary_call"
+          ],
+          "provenance_ref": "fixture:CP003:primary_call"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:b62f3144785a2800c9ef19d13f47c5e5fe7064a5ab16cce56db004be8a1cfc37",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:03b95d16e8eb69bffc20bdafeb5d8ae3ae784bdc53f8a05f2fd6185a9cb3617d",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:0742c25d7e10160609ad7edf23874b49f9bda5036daf23c2c0d89971deb940eb",
+            "source_ref": "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+            "target_ref": "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "evidence:CP003:primary_call"
+            ],
+            "provenance_ref": "fixture:CP003:primary_call"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:d5cc2a0149736ca30d5aebe10fafbcb59de3cc5ae3b618004705758e6beb3926",
+            "primary_unit_ids": [
+              "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+              "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254"
+            ],
+            "strong_edge_ids": [
+              "relation-edge:sha256:0742c25d7e10160609ad7edf23874b49f9bda5036daf23c2c0d89971deb940eb"
+            ],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:c12424c5489d1601f8ac2fc09941e6f4defb481786371127892b53ff70282089",
+            "group_id": "change-group:sha256:d5cc2a0149736ca30d5aebe10fafbcb59de3cc5ae3b618004705758e6beb3926",
+            "primary_unit_ids": [
+              "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+              "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP003_head.ets@function:first:L1-L3:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+                "review_question_id": "RQ-correctness"
+              },
+              {
+                "primary_unit_id": "src/CP003_head.ets@function:second:L4-L6:Rhead:Sf35896fad10652fad03f5a45f57791e9a6c66c9e37b8040037837e42c6996254",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [
+              "relation-edge:sha256:0742c25d7e10160609ad7edf23874b49f9bda5036daf23c2c0d89971deb940eb"
+            ],
+            "budget": {
+              "limit": 50,
+              "primary_tokens": 45,
+              "supporting_tokens": 0,
+              "total_tokens": 45
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 50,
+          "total_primary_tokens": 45,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 45,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP004",
+      "description": "A weak Primary edge does not group, while required degraded context blocks only its question.",
+      "change_set_id": "change-set:sha256:5a2bbfa405cd6355a62e1adf2710e7f8a96116ae5b77f2a3a4981736021bc325",
+      "code_context_budget": 25,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP004_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp004",
+          "logical_path": "src/CP004_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "f3f1aa080e21e0bbabb1f14bab5eff90039de3a2bcae357d811841e43e6ae19c",
+          "source_ref_id": "code-source:sha256:1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "source",
+          "unit_id": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "weakSource",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:a66b4cc94670934f58acb4bd43257b340b21b08ea90195885e8ccdc617004ed0"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:652779f2e9f6662a03cd1500d9c1d9a1f158e361073c4f0e2df3dfecd2092ccf",
+          "full_text_sha256": "ada21863f91250228acf4c93bb9d86790e5bce1a4c679d2b67783172bc17e37f",
+          "review_question_ids": [
+            "RQ-maintainability"
+          ]
+        },
+        {
+          "alias": "target",
+          "unit_id": "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "weakTarget",
+          "source_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "context_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "changed_lines": [
+            5
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:3b5c81be0c2f10530f4c763d4ff995f341a8beae1511d181c9706f4af2ab0157"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:332eedda04a68f5856cee2b281f4db4366944163ae25094ba5e1b5667bc10c69",
+          "full_text_sha256": "76ce1f49383e4614ef4fef062bb6cb71f450e2ffa82a3e0651890870140f26e5",
+          "review_question_ids": [
+            "RQ-maintainability"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "degraded",
+          "candidate_id": "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3",
+          "primary_alias": "source",
+          "review_question_id": "RQ-maintainability",
+          "relation_edge_alias": "degraded_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 46,
+            "end_offset_utf16": 92
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "weakTarget",
+          "target_owner_ref_id": "declaration:sha256:14cdcce8c18de73191f8f582b54e7f1c584d7a49d25c20c0b631513b1a54bff2",
+          "estimated_tokens": 23,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:14cdcce8c18de73191f8f582b54e7f1c584d7a49d25c20c0b631513b1a54bff2"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "degraded_edge",
+          "edge_id": "relation-edge:sha256:6bb3b995cea259e130085ed485d66ce7f1aff5fa7d0ebe52299749ec3507fa94",
+          "source_primary_alias": "source",
+          "target_primary_alias": null,
+          "target_candidate_alias": "degraded",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "degraded",
+          "evidence_refs": [
+            "declaration:sha256:14cdcce8c18de73191f8f582b54e7f1c584d7a49d25c20c0b631513b1a54bff2",
+            "evidence:CP004:degraded"
+          ],
+          "provenance_ref": "fixture:CP004:degraded"
+        },
+        {
+          "alias": "weak_call",
+          "edge_id": "relation-edge:sha256:7a86fb84cdb125815e99987ebec3c981bdffd2a48d0fc920b3c89b063710c93f",
+          "source_primary_alias": "source",
+          "target_primary_alias": "target",
+          "target_candidate_alias": null,
+          "relation_type": "direct_call",
+          "strength": "weak",
+          "quality": "exact",
+          "evidence_refs": [
+            "evidence:CP004:weak_call"
+          ],
+          "provenance_ref": "fixture:CP004:weak_call"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:9953cb16e1861b9f77a0445e91115448d3689146e4340ed917eccdd189dd5d1b",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:5a2bbfa405cd6355a62e1adf2710e7f8a96116ae5b77f2a3a4981736021bc325",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "review_question_id": "RQ-maintainability"
+          },
+          {
+            "primary_unit_id": "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "review_question_id": "RQ-maintainability"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3",
+            "primary_unit_id": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "review_question_id": "RQ-maintainability",
+            "relation_edge_id": "relation-edge:sha256:6bb3b995cea259e130085ed485d66ce7f1aff5fa7d0ebe52299749ec3507fa94",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 46,
+              "end_offset_utf16": 92
+            },
+            "estimated_tokens": 23,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:14cdcce8c18de73191f8f582b54e7f1c584d7a49d25c20c0b631513b1a54bff2"
+          }
+        ],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:6bb3b995cea259e130085ed485d66ce7f1aff5fa7d0ebe52299749ec3507fa94",
+            "source_ref": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "target_ref": "source-span:sha256:f260a3fb0aa017a6ba5b5884ebb7abd4d2d9fbee7cbff5cd7255b144e61ce95d",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "degraded",
+            "evidence_refs": [
+              "declaration:sha256:14cdcce8c18de73191f8f582b54e7f1c584d7a49d25c20c0b631513b1a54bff2",
+              "evidence:CP004:degraded"
+            ],
+            "provenance_ref": "fixture:CP004:degraded"
+          },
+          {
+            "edge_id": "relation-edge:sha256:7a86fb84cdb125815e99987ebec3c981bdffd2a48d0fc920b3c89b063710c93f",
+            "source_ref": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "target_ref": "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+            "relation_type": "direct_call",
+            "strength": "weak",
+            "quality": "exact",
+            "evidence_refs": [
+              "evidence:CP004:weak_call"
+            ],
+            "provenance_ref": "fixture:CP004:weak_call"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:4af2766de40895ca89b3018794352d26893f0faee0391d89ea3873858e596819",
+            "primary_unit_ids": [
+              "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          },
+          {
+            "group_id": "change-group:sha256:a6714ff2d45f360a12b2213ea0daa4c4788bf875190f6f5db2cc93c7e7c58ac1",
+            "primary_unit_ids": [
+              "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:5145760f1d625805a732863c3e0821842ca610230c8e5db80bbb867b9f2ce673",
+            "group_id": "change-group:sha256:4af2766de40895ca89b3018794352d26893f0faee0391d89ea3873858e596819",
+            "primary_unit_ids": [
+              "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP004_head.ets@function:weakTarget:L4-L6:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+                "review_question_id": "RQ-maintainability"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 22,
+              "supporting_tokens": 0,
+              "total_tokens": 22
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:7ac8187185ebc8c3b6ed4bf3628f36f88b38b256a908b67ab918a1f5d54c44d9",
+            "group_id": "change-group:sha256:a6714ff2d45f360a12b2213ea0daa4c4788bf875190f6f5db2cc93c7e7c58ac1",
+            "primary_unit_ids": [
+              "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP004_head.ets@function:weakSource:L1-L3:Rhead:S1124d41531f2899c9eb274c22fa98b0191ee616012d5c803ae8675f489f9c0eb",
+                "review_question_id": "RQ-maintainability"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 22,
+              "supporting_tokens": 0,
+              "total_tokens": 22
+            },
+            "dispatch_allowed": false,
+            "diagnostics": [
+              {
+                "code": "context_insufficient",
+                "subject_ids": [
+                  "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3"
+                ]
+              },
+              {
+                "code": "relation_degraded",
+                "subject_ids": [
+                  "relation-edge:sha256:6bb3b995cea259e130085ed485d66ce7f1aff5fa7d0ebe52299749ec3507fa94"
+                ]
+              }
+            ]
+          }
+        ],
+        "omitted_candidate_ids": [
+          "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3"
+        ],
+        "omitted_candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3",
+            "reason": "relation_degraded"
+          }
+        ],
+        "budget_summary": {
+          "limit": 25,
+          "total_primary_tokens": 44,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 23,
+          "max_bundle_tokens": 22,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 1
+        },
+        "diagnostics": [
+          {
+            "code": "context_insufficient",
+            "subject_ids": [
+              "context-candidate:sha256:d9140b4fdfd4cf9790c2ae9f25536779bf3d2cfbca714f931dd6e82ba04245e3"
+            ]
+          },
+          {
+            "code": "relation_degraded",
+            "subject_ids": [
+              "relation-edge:sha256:6bb3b995cea259e130085ed485d66ce7f1aff5fa7d0ebe52299749ec3507fa94"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "CP005",
+      "description": "Required lifecycle support fits and is selected.",
+      "change_set_id": "change-set:sha256:ca3e8c7684c62a294f419177fd2337c26751b21c282588c2fea55534b599bbf4",
+      "code_context_budget": 60,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP005_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp005",
+          "logical_path": "src/CP005_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "52239ff1d50837ef602f3f7eefb10484e106c0171b736d35faaceb2ab91b38be",
+          "source_ref_id": "code-source:sha256:45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "startTimer",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:356e6f0885df847e633b5d2254272e808f396b87f0c06c2d4e98d440755dcd9b"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:285c465efaecdfccf5a168c11cdc331b85a92c76b245e6ac972342171cb8d41b",
+          "full_text_sha256": "2af06bc049ff7765a68d1970872a37485763a7532b7a6ced81272788ab8c8677",
+          "review_question_ids": [
+            "RQ-lifecycle"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "cleanup",
+          "candidate_id": "context-candidate:sha256:447710cbf2c700547f2398920f15443c99329cd23280e36ec7b3de241dcb9e6d",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "cleanup_edge",
+          "relation_type": "lifecycle_pair",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 63,
+            "end_offset_utf16": 114
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "stopTimer",
+          "target_owner_ref_id": "declaration:sha256:7542bcec78bc83fcbaa6fb552d15c69457100ebc2701b0d38892114a38ef50f1",
+          "estimated_tokens": 25,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:7542bcec78bc83fcbaa6fb552d15c69457100ebc2701b0d38892114a38ef50f1"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "cleanup_edge",
+          "edge_id": "relation-edge:sha256:95c6b50ceecf05e2a58049e637ba82120759de74d40d5c967665f9d8fda7d078",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "cleanup",
+          "relation_type": "lifecycle_pair",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:7542bcec78bc83fcbaa6fb552d15c69457100ebc2701b0d38892114a38ef50f1",
+            "evidence:CP005:cleanup"
+          ],
+          "provenance_ref": "fixture:CP005:cleanup"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:b61f5bba3e16796d30a37a4a7e9429fb9f8a69874fcc8b6e19ca9a7d16edabf9",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:ca3e8c7684c62a294f419177fd2337c26751b21c282588c2fea55534b599bbf4",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+            "review_question_id": "RQ-lifecycle"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:447710cbf2c700547f2398920f15443c99329cd23280e36ec7b3de241dcb9e6d",
+            "primary_unit_id": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:95c6b50ceecf05e2a58049e637ba82120759de74d40d5c967665f9d8fda7d078",
+            "relation_type": "lifecycle_pair",
+            "target_source_ref_id": "code-source:sha256:45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 63,
+              "end_offset_utf16": 114
+            },
+            "estimated_tokens": 25,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:7542bcec78bc83fcbaa6fb552d15c69457100ebc2701b0d38892114a38ef50f1"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:4786e0458789d42a440d3317fbf238957677458fb89a3aba4780e6944a7bb332",
+            "candidate_id": "context-candidate:sha256:447710cbf2c700547f2398920f15443c99329cd23280e36ec7b3de241dcb9e6d",
+            "source_ref_id": "code-source:sha256:45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 63,
+              "end_offset_utf16": 114
+            },
+            "source_text": "function stopTimer(): void {\n  clearInterval(1);\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+              "review_question_id": "RQ-lifecycle"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 25,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:95c6b50ceecf05e2a58049e637ba82120759de74d40d5c967665f9d8fda7d078",
+            "source_ref": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+            "target_ref": "source-span:sha256:8eb95a45b4127a6d07949a66757b3e3f35be0a5fdd1b4ac7827d49ac2885c717",
+            "relation_type": "lifecycle_pair",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:7542bcec78bc83fcbaa6fb552d15c69457100ebc2701b0d38892114a38ef50f1",
+              "evidence:CP005:cleanup"
+            ],
+            "provenance_ref": "fixture:CP005:cleanup"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:0120248ed6c0b2c443aa8d65a0e6935a51bf2bbdfe0855f12a96c62cc940336e",
+            "primary_unit_ids": [
+              "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:1e2c4b1d329961652659886a84a5552e1ba06f381cf9502fa29aac55d2493b8d",
+            "group_id": "change-group:sha256:0120248ed6c0b2c443aa8d65a0e6935a51bf2bbdfe0855f12a96c62cc940336e",
+            "primary_unit_ids": [
+              "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP005_head.ets@function:startTimer:L1-L3:Rhead:S45c7c373399178b0e702a55ac7b57828436dea9e497d08dfde43d27edaac5448",
+                "review_question_id": "RQ-lifecycle"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:4786e0458789d42a440d3317fbf238957677458fb89a3aba4780e6944a7bb332"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:95c6b50ceecf05e2a58049e637ba82120759de74d40d5c967665f9d8fda7d078"
+            ],
+            "budget": {
+              "limit": 60,
+              "primary_tokens": 32,
+              "supporting_tokens": 25,
+              "total_tokens": 57
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 60,
+          "total_primary_tokens": 32,
+          "total_supporting_tokens": 25,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 57,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP006",
+      "description": "Required support wins while an individually oversized helpful candidate is omitted.",
+      "change_set_id": "change-set:sha256:557968723c54a3d5fc97d8e3a232cfd6d02fbb5469774a6585b86731cb3b337a",
+      "code_context_budget": 60,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP006_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp006",
+          "logical_path": "src/CP006_head.ets",
+          "origin_lines": [
+            1,
+            9
+          ],
+          "content_sha256": "a028a53c0bfb331aa4cc4833106be0b4b1060de4f4015b710c221af593aa9481",
+          "source_ref_id": "code-source:sha256:a183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "changedTimer",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:a646f99b5ba3b74967f19bc3c8bbb58d89dcd55a59ee08cab332a89a25249231"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:d79916062724fad4bad54f4b4fa9996692a8dc2657ce42b0fefba3b51b8bc158",
+          "full_text_sha256": "c7dba9610a70032e641883528ec4623f32758da322c8d03cc956f737a019f6fd",
+          "review_question_ids": [
+            "RQ-lifecycle"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "helpful",
+          "candidate_id": "context-candidate:sha256:864918fed742617de0d6ddf06642a85ef23d6931d858c9d412f05e0539498d40",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "helpful_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 7,
+            "end_line": 9,
+            "start_offset_utf16": 122,
+            "end_offset_utf16": 182
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "helpfulLogger",
+          "target_owner_ref_id": "declaration:sha256:b6a33f41b2daeca14777ff2a49087b9fab163a1896a138bc9cb1a3526d467343",
+          "estimated_tokens": 27,
+          "necessity": "helpful",
+          "provenance_ref": "declaration:sha256:b6a33f41b2daeca14777ff2a49087b9fab163a1896a138bc9cb1a3526d467343"
+        },
+        {
+          "alias": "required",
+          "candidate_id": "context-candidate:sha256:69643d5c30ddc24e617a236018fc305418f232a4f7da197847ac1c27f4862f6d",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "required_edge",
+          "relation_type": "lifecycle_pair",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 65,
+            "end_offset_utf16": 122
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "requiredCleanup",
+          "target_owner_ref_id": "declaration:sha256:a5efa3f91b20abe6a5d383546405ef9f538cab0e1e84313bce5d6a548fa85675",
+          "estimated_tokens": 26,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:a5efa3f91b20abe6a5d383546405ef9f538cab0e1e84313bce5d6a548fa85675"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "helpful_edge",
+          "edge_id": "relation-edge:sha256:4b063666f7a9ec1b43b8cfaa048274f3aa969f9db1e78a6bdbe8f36dee203220",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "helpful",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:b6a33f41b2daeca14777ff2a49087b9fab163a1896a138bc9cb1a3526d467343",
+            "evidence:CP006:helpful"
+          ],
+          "provenance_ref": "fixture:CP006:helpful"
+        },
+        {
+          "alias": "required_edge",
+          "edge_id": "relation-edge:sha256:8fb789bff75669a0a992fd9f1fa7d583687182f30c1f63a112632b46214b7724",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "required",
+          "relation_type": "lifecycle_pair",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:a5efa3f91b20abe6a5d383546405ef9f538cab0e1e84313bce5d6a548fa85675",
+            "evidence:CP006:required"
+          ],
+          "provenance_ref": "fixture:CP006:required"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:49bfa75bf4e1a425894ae0e372bdfbba377ed52237a59c6875afda868d35a1d2",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:557968723c54a3d5fc97d8e3a232cfd6d02fbb5469774a6585b86731cb3b337a",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "review_question_id": "RQ-lifecycle"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:69643d5c30ddc24e617a236018fc305418f232a4f7da197847ac1c27f4862f6d",
+            "primary_unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:8fb789bff75669a0a992fd9f1fa7d583687182f30c1f63a112632b46214b7724",
+            "relation_type": "lifecycle_pair",
+            "target_source_ref_id": "code-source:sha256:a183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 65,
+              "end_offset_utf16": 122
+            },
+            "estimated_tokens": 26,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:a5efa3f91b20abe6a5d383546405ef9f538cab0e1e84313bce5d6a548fa85675"
+          },
+          {
+            "candidate_id": "context-candidate:sha256:864918fed742617de0d6ddf06642a85ef23d6931d858c9d412f05e0539498d40",
+            "primary_unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:4b063666f7a9ec1b43b8cfaa048274f3aa969f9db1e78a6bdbe8f36dee203220",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:a183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "target_span": {
+              "start_line": 7,
+              "end_line": 9,
+              "start_offset_utf16": 122,
+              "end_offset_utf16": 182
+            },
+            "estimated_tokens": 27,
+            "necessity": "helpful",
+            "provenance_ref": "declaration:sha256:b6a33f41b2daeca14777ff2a49087b9fab163a1896a138bc9cb1a3526d467343"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:f7e5b5a1d3dc3cf2303e158c5d8fcb7584576f5f07cd256ea00e012c9b80d682",
+            "candidate_id": "context-candidate:sha256:69643d5c30ddc24e617a236018fc305418f232a4f7da197847ac1c27f4862f6d",
+            "source_ref_id": "code-source:sha256:a183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 65,
+              "end_offset_utf16": 122
+            },
+            "source_text": "function requiredCleanup(): void {\n  clearInterval(1);\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+              "review_question_id": "RQ-lifecycle"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 26,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:4b063666f7a9ec1b43b8cfaa048274f3aa969f9db1e78a6bdbe8f36dee203220",
+            "source_ref": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "target_ref": "source-span:sha256:59580e716b5d882f82e41c44310b1b735750d74617005381354f47d49adeb81b",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:b6a33f41b2daeca14777ff2a49087b9fab163a1896a138bc9cb1a3526d467343",
+              "evidence:CP006:helpful"
+            ],
+            "provenance_ref": "fixture:CP006:helpful"
+          },
+          {
+            "edge_id": "relation-edge:sha256:8fb789bff75669a0a992fd9f1fa7d583687182f30c1f63a112632b46214b7724",
+            "source_ref": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+            "target_ref": "source-span:sha256:b79b517499c6b76ee4e68b82acefed412d545dd271be0890a47d0fa243634dbc",
+            "relation_type": "lifecycle_pair",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:a5efa3f91b20abe6a5d383546405ef9f538cab0e1e84313bce5d6a548fa85675",
+              "evidence:CP006:required"
+            ],
+            "provenance_ref": "fixture:CP006:required"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:3b0424f50fa8122efa5872e4a6d06e444407c1382e31f76afc15639cc4d96d02",
+            "primary_unit_ids": [
+              "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:9a550fa42e2682681db3b2af401c9eb97489457db865eaeee3941fbe7a69e271",
+            "group_id": "change-group:sha256:3b0424f50fa8122efa5872e4a6d06e444407c1382e31f76afc15639cc4d96d02",
+            "primary_unit_ids": [
+              "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP006_head.ets@function:changedTimer:L1-L3:Rhead:Sa183b03a589109254bb599179e7d1009b6f3475679c71d4c9389f840fe7c9c45",
+                "review_question_id": "RQ-lifecycle"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:f7e5b5a1d3dc3cf2303e158c5d8fcb7584576f5f07cd256ea00e012c9b80d682"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:8fb789bff75669a0a992fd9f1fa7d583687182f30c1f63a112632b46214b7724"
+            ],
+            "budget": {
+              "limit": 60,
+              "primary_tokens": 32,
+              "supporting_tokens": 26,
+              "total_tokens": 58
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [
+          "context-candidate:sha256:864918fed742617de0d6ddf06642a85ef23d6931d858c9d412f05e0539498d40"
+        ],
+        "omitted_candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:864918fed742617de0d6ddf06642a85ef23d6931d858c9d412f05e0539498d40",
+            "reason": "budget_exceeded"
+          }
+        ],
+        "budget_summary": {
+          "limit": 60,
+          "total_primary_tokens": 32,
+          "total_supporting_tokens": 26,
+          "total_omitted_tokens": 27,
+          "max_bundle_tokens": 58,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP007",
+      "description": "A same-file distractor is rejected even with spare budget.",
+      "change_set_id": "change-set:sha256:8b62dca8cb3812d78b62a7a8391cf8cfc2eb4c21fff8630289cc5340034bde33",
+      "code_context_budget": 100,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP007_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp007",
+          "logical_path": "src/CP007_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "97efd54cf55a94a28395bc71211e5e7b0a73671e217bbfe53bca5c5154dfbc3c",
+          "source_ref_id": "code-source:sha256:331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "changedNetwork",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:d014710c11ff9de2f3520b3e776e44bb25363755e012aa3fc36c85856346b3c8"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:faeb5dadee1f4e18cc8b9ff04e05c374c3fe0766ee77900292fc23e5d24f704a",
+          "full_text_sha256": "d0ec1662ab0cdaa5960dbc61a448c4b99979397e51c39df92b811182478bf065",
+          "review_question_ids": [
+            "RQ-network"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "distractor",
+          "candidate_id": "context-candidate:sha256:8f773043d8b092177a767af45286cce40a4b896bc7f1850a8c1a39c059eb4ac6",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-network",
+          "relation_edge_alias": "distractor_edge",
+          "relation_type": "same_file",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 53,
+            "end_offset_utf16": 120
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "unrelatedAnimation",
+          "target_owner_ref_id": "declaration:sha256:e825cf632f601c810b42adf395dad5816465889115cfadafedfd25f34cee5bdb",
+          "estimated_tokens": 36,
+          "necessity": "distractor",
+          "provenance_ref": "declaration:sha256:e825cf632f601c810b42adf395dad5816465889115cfadafedfd25f34cee5bdb"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "distractor_edge",
+          "edge_id": "relation-edge:sha256:95549d517ece9eb699a7f16ea2400aa9525411902b2031768f6e86ccd3b2b09f",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "distractor",
+          "relation_type": "same_file",
+          "strength": "weak",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:e825cf632f601c810b42adf395dad5816465889115cfadafedfd25f34cee5bdb",
+            "evidence:CP007:distractor"
+          ],
+          "provenance_ref": "fixture:CP007:distractor"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:f90a6138ac23793aa3c3efef26fb4015af59c641e6454be1ed906517353fa0f8",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:8b62dca8cb3812d78b62a7a8391cf8cfc2eb4c21fff8630289cc5340034bde33",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+            "review_question_id": "RQ-network"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:8f773043d8b092177a767af45286cce40a4b896bc7f1850a8c1a39c059eb4ac6",
+            "primary_unit_id": "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+            "review_question_id": "RQ-network",
+            "relation_edge_id": "relation-edge:sha256:95549d517ece9eb699a7f16ea2400aa9525411902b2031768f6e86ccd3b2b09f",
+            "relation_type": "same_file",
+            "target_source_ref_id": "code-source:sha256:331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 53,
+              "end_offset_utf16": 120
+            },
+            "estimated_tokens": 36,
+            "necessity": "distractor",
+            "provenance_ref": "declaration:sha256:e825cf632f601c810b42adf395dad5816465889115cfadafedfd25f34cee5bdb"
+          }
+        ],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:95549d517ece9eb699a7f16ea2400aa9525411902b2031768f6e86ccd3b2b09f",
+            "source_ref": "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+            "target_ref": "source-span:sha256:289844a878c51478be7b23cf4a45a5a93067eea4ec6e42de2dcadcbbddd27035",
+            "relation_type": "same_file",
+            "strength": "weak",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:e825cf632f601c810b42adf395dad5816465889115cfadafedfd25f34cee5bdb",
+              "evidence:CP007:distractor"
+            ],
+            "provenance_ref": "fixture:CP007:distractor"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:948aa5ed172f9ccc470efe317e83fe91e41ea0bf77dcceb265dbeb3d69828ac3",
+            "primary_unit_ids": [
+              "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:59fddf982baf7a5dec76e59f8e7a93fd4b6a3482385665f9a00a9874767a363f",
+            "group_id": "change-group:sha256:948aa5ed172f9ccc470efe317e83fe91e41ea0bf77dcceb265dbeb3d69828ac3",
+            "primary_unit_ids": [
+              "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP007_head.ets@function:changedNetwork:L1-L3:Rhead:S331fd9763cc6871c287a3f385e80f8b38f63825063a5b7dce353ea1b40ddc18d",
+                "review_question_id": "RQ-network"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 100,
+              "primary_tokens": 23,
+              "supporting_tokens": 0,
+              "total_tokens": 23
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [
+          "context-candidate:sha256:8f773043d8b092177a767af45286cce40a4b896bc7f1850a8c1a39c059eb4ac6"
+        ],
+        "omitted_candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:8f773043d8b092177a767af45286cce40a4b896bc7f1850a8c1a39c059eb4ac6",
+            "reason": "distractor_rejected"
+          }
+        ],
+        "budget_summary": {
+          "limit": 100,
+          "total_primary_tokens": 23,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 36,
+          "max_bundle_tokens": 23,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP008",
+      "description": "Long comment, string, and Unicode chunks land exactly on the token boundary.",
+      "change_set_id": "change-set:sha256:57fdce26608f10033646bf4ae7ccfc7035e739b9b72fec8649e9e89c76eae946",
+      "code_context_budget": 86,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP008_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp008",
+          "logical_path": "src/CP008_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "a6d4af06cc992bd174a9d4e7dfd16661c8b19338acb5bfc96b30887e86e0454e",
+          "source_ref_id": "code-source:sha256:807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "unicodeChanged",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:cf405afbde05b24327f8c61c1ad5745638c27a76efe39206835cd71dff10342f"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:0f3e9967b12ee7f6b28a170e775f892d57b8e9bf0c9c6384536a78877fcde24a",
+          "full_text_sha256": "11c6906d717673103bd5d4a74d4b5ba14d39441a394adc7f4529c9039b06b716",
+          "review_question_ids": [
+            "RQ-lifecycle"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "unicode_support",
+          "candidate_id": "context-candidate:sha256:a249fefa492518937432f6fd5cd2b5288e0badd23f8c7ec2d2e383f2aad1fd5b",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "unicode_support_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 132,
+            "end_offset_utf16": 238
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "unicodeSupport",
+          "target_owner_ref_id": "declaration:sha256:8bf874c7cc0c6b4fcd3295d880e8dac8f92eb1ea4386729713b72871525aad0b",
+          "estimated_tokens": 41,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:8bf874c7cc0c6b4fcd3295d880e8dac8f92eb1ea4386729713b72871525aad0b"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "unicode_support_edge",
+          "edge_id": "relation-edge:sha256:cfb13f09c26c75fe816732e1419861f0924f5803358e7e43ed786add309f2391",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "unicode_support",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:8bf874c7cc0c6b4fcd3295d880e8dac8f92eb1ea4386729713b72871525aad0b",
+            "evidence:CP008:unicode_support"
+          ],
+          "provenance_ref": "fixture:CP008:unicode_support"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:e57417ab9fd9c6a6697f0a256b0222a5945311a66e4f31416913f2047b61dd52",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:57fdce26608f10033646bf4ae7ccfc7035e739b9b72fec8649e9e89c76eae946",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+            "review_question_id": "RQ-lifecycle"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:a249fefa492518937432f6fd5cd2b5288e0badd23f8c7ec2d2e383f2aad1fd5b",
+            "primary_unit_id": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:cfb13f09c26c75fe816732e1419861f0924f5803358e7e43ed786add309f2391",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 132,
+              "end_offset_utf16": 238
+            },
+            "estimated_tokens": 41,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:8bf874c7cc0c6b4fcd3295d880e8dac8f92eb1ea4386729713b72871525aad0b"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:13ef34d0e8de9d757c4d6b8d7049b0f8c0ffc6473b671844ab97fd437cb9b0b3",
+            "candidate_id": "context-candidate:sha256:a249fefa492518937432f6fd5cd2b5288e0badd23f8c7ec2d2e383f2aad1fd5b",
+            "source_ref_id": "code-source:sha256:807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 132,
+              "end_offset_utf16": 238
+            },
+            "source_text": "function unicodeSupport(): string {\n  return \"生命周期清理✅ and a long string literal remain one code token\";\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+              "review_question_id": "RQ-lifecycle"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 41,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:cfb13f09c26c75fe816732e1419861f0924f5803358e7e43ed786add309f2391",
+            "source_ref": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+            "target_ref": "source-span:sha256:46a1523d43373f2c86d83118012815f3b7c610175bef454632614877c8aaaea3",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:8bf874c7cc0c6b4fcd3295d880e8dac8f92eb1ea4386729713b72871525aad0b",
+              "evidence:CP008:unicode_support"
+            ],
+            "provenance_ref": "fixture:CP008:unicode_support"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:a6b7cc32260f9a6a5e01e115fe97aad31cff395daab6b60c2af447b1cb63639f",
+            "primary_unit_ids": [
+              "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:1af349fff87dfbf081bcedeed1d1927ece2259374aa12fb04902e833f3abd5a5",
+            "group_id": "change-group:sha256:a6b7cc32260f9a6a5e01e115fe97aad31cff395daab6b60c2af447b1cb63639f",
+            "primary_unit_ids": [
+              "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP008_head.ets@function:unicodeChanged:L1-L3:Rhead:S807c36c6c6018473ade872e59bbc1700609fee468281d30cb98d7b60c6fc713e",
+                "review_question_id": "RQ-lifecycle"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:13ef34d0e8de9d757c4d6b8d7049b0f8c0ffc6473b671844ab97fd437cb9b0b3"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:cfb13f09c26c75fe816732e1419861f0924f5803358e7e43ed786add309f2391"
+            ],
+            "budget": {
+              "limit": 86,
+              "primary_tokens": 45,
+              "supporting_tokens": 41,
+              "total_tokens": 86
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 86,
+          "total_primary_tokens": 45,
+          "total_supporting_tokens": 41,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 86,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP009",
+      "description": "An oversized Primary is retained but blocked without truncation.",
+      "change_set_id": "change-set:sha256:254c0e86d33b50c34852f22be6196feba1c4be441c4f8484f5940e04867e95d4",
+      "code_context_budget": 40,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP009_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp009",
+          "logical_path": "src/CP009_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "fa6378eaf23fde8b3339bb06e68d33d88e9af4ab0369c1881f5844dea11ee0ee",
+          "source_ref_id": "code-source:sha256:b736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "oversizedPrimary",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 6
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 6
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:9d83ca06600aaccd67116c932fdbd0ca1ffc4b12d06546074343918457a88387"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:4a8e5aa20358235cbd8a9b8d13a0e2175e3a6409eb3b9eb3da9de7667e256579",
+          "full_text_sha256": "612ab6b340c0cc3488536ad465d2720a8881ee7112aea30424b3a10ed30c0fd0",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:0cab5c1506a2bc32612e8fc0a2cb4473e2a9c92de47896d61adfb831ec6decc5",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:254c0e86d33b50c34852f22be6196feba1c4be441c4f8484f5940e04867e95d4",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:8c5092e45ff8c608165385d4ae527f488930b15f9f4ba5916e7e13a0619ad1db",
+            "primary_unit_ids": [
+              "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:2a86c7fa5e5143b164a8d0fa9575d84026768f2ce481b86a4348357277144356",
+            "group_id": "change-group:sha256:8c5092e45ff8c608165385d4ae527f488930b15f9f4ba5916e7e13a0619ad1db",
+            "primary_unit_ids": [
+              "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 40,
+              "primary_tokens": 65,
+              "supporting_tokens": 0,
+              "total_tokens": 65
+            },
+            "dispatch_allowed": false,
+            "diagnostics": [
+              {
+                "code": "context_insufficient",
+                "subject_ids": [
+                  "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+                ]
+              },
+              {
+                "code": "primary_exceeds_budget",
+                "subject_ids": [
+                  "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+                ]
+              }
+            ]
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 40,
+          "total_primary_tokens": 65,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 65,
+          "dispatchable_bundles": 0,
+          "blocked_bundles": 1
+        },
+        "diagnostics": [
+          {
+            "code": "context_insufficient",
+            "subject_ids": [
+              "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+            ]
+          },
+          {
+            "code": "primary_exceeds_budget",
+            "subject_ids": [
+              "src/CP009_head.ets@function:oversizedPrimary:L1-L6:Rhead:Sb736a42bad98e360dbeea31704c1991737f7b6d6ddab8c970eed9572c3ea3343"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "CP010",
+      "description": "Required support that cannot fit is omitted and blocks dispatch.",
+      "change_set_id": "change-set:sha256:52934c76e33458fca66df846edf50a8fff1ab1c7b7c98845bf4ee9b6ccff3576",
+      "code_context_budget": 50,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP010_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp010",
+          "logical_path": "src/CP010_head.ets",
+          "origin_lines": [
+            1,
+            10
+          ],
+          "content_sha256": "68dc6d9209622004bcd673d86b3c842241ceb452742b343d820b83e216ccaeab",
+          "source_ref_id": "code-source:sha256:fa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "smallPrimary",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:c4dbbfd2d39bd5487d2a7e9b35d5d61bcc04fec21da0e8ce605d6116c77dec2f"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:09dab3c9cd36711e386efed584cadda0f9c35a566342f30e7eb88950d3c03572",
+          "full_text_sha256": "c5892e7a4c57ff3708f7ea52359bc1dbf5870e3bce10972ce76072946b91c1d9",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "oversized",
+          "candidate_id": "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-correctness",
+          "relation_edge_alias": "oversized_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 10,
+            "start_offset_utf16": 48,
+            "end_offset_utf16": 194
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "oversizedSupport",
+          "target_owner_ref_id": "declaration:sha256:05367e84754f40c9e16def480b6fd287671a5775034e00d7115cc0dd22c3fbc4",
+          "estimated_tokens": 78,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:05367e84754f40c9e16def480b6fd287671a5775034e00d7115cc0dd22c3fbc4"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "oversized_edge",
+          "edge_id": "relation-edge:sha256:bf2ab495714d4bf63454bb50d85afea498f64bc7b76606256a1731293bc17508",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "oversized",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:05367e84754f40c9e16def480b6fd287671a5775034e00d7115cc0dd22c3fbc4",
+            "evidence:CP010:oversized"
+          ],
+          "provenance_ref": "fixture:CP010:oversized"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:dd0913e9650ccfa3981b30eb503496f3a3e00c838e207e5023fabd0227fe95ca",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:52934c76e33458fca66df846edf50a8fff1ab1c7b7c98845bf4ee9b6ccff3576",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9",
+            "primary_unit_id": "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+            "review_question_id": "RQ-correctness",
+            "relation_edge_id": "relation-edge:sha256:bf2ab495714d4bf63454bb50d85afea498f64bc7b76606256a1731293bc17508",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:fa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 10,
+              "start_offset_utf16": 48,
+              "end_offset_utf16": 194
+            },
+            "estimated_tokens": 78,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:05367e84754f40c9e16def480b6fd287671a5775034e00d7115cc0dd22c3fbc4"
+          }
+        ],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:bf2ab495714d4bf63454bb50d85afea498f64bc7b76606256a1731293bc17508",
+            "source_ref": "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+            "target_ref": "source-span:sha256:7fce664f98da23fc7ebf1efa855648c9dfad139519e5bdc8c81e64de221f316f",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:05367e84754f40c9e16def480b6fd287671a5775034e00d7115cc0dd22c3fbc4",
+              "evidence:CP010:oversized"
+            ],
+            "provenance_ref": "fixture:CP010:oversized"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:8ef2ae456f996711229d9e953b31e516430b43989380f36312f9f5d61f67a174",
+            "primary_unit_ids": [
+              "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:59f3335adc08526be181a19a2c767d29c9bc565b78ce6578200393358663f366",
+            "group_id": "change-group:sha256:8ef2ae456f996711229d9e953b31e516430b43989380f36312f9f5d61f67a174",
+            "primary_unit_ids": [
+              "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP010_head.ets@function:smallPrimary:L1-L3:Rhead:Sfa5701363011924c2f2a42097a7c14a9aab7a0b9daef3bb4123871822d06d1d3",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 50,
+              "primary_tokens": 22,
+              "supporting_tokens": 0,
+              "total_tokens": 22
+            },
+            "dispatch_allowed": false,
+            "diagnostics": [
+              {
+                "code": "context_insufficient",
+                "subject_ids": [
+                  "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9"
+                ]
+              }
+            ]
+          }
+        ],
+        "omitted_candidate_ids": [
+          "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9"
+        ],
+        "omitted_candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9",
+            "reason": "budget_exceeded"
+          }
+        ],
+        "budget_summary": {
+          "limit": 50,
+          "total_primary_tokens": 22,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 78,
+          "max_bundle_tokens": 22,
+          "dispatchable_bundles": 0,
+          "blocked_bundles": 1
+        },
+        "diagnostics": [
+          {
+            "code": "context_insufficient",
+            "subject_ids": [
+              "context-candidate:sha256:c259facb7baf6cf63e79405e5765cf843fbed48f02146849f7b7608eae9e0df9"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "CP011",
+      "description": "Multiple questions split bundles and a multi-atom Primary remains intact.",
+      "change_set_id": "change-set:sha256:2104e4993dbd41bd7ce07afc3f14d600192d1e688e0a5755bd1992f41e8dbfea",
+      "code_context_budget": 80,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP011_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp011",
+          "logical_path": "src/CP011_head.ets",
+          "origin_lines": [
+            1,
+            9
+          ],
+          "content_sha256": "6a2a3f09d900841cbe9d56312b5cc9150dedd4e03136c615e5113d22102e3af0",
+          "source_ref_id": "code-source:sha256:c69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "changedResource",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:3079515155f46bb4e3ce6cd2d2ea8ca832cf482caba37e72ea1c80282413f92f",
+            "change-atom:sha256:c0814a64e8688637b837eb337ebc39ff5455169a6ae11ed6aa8dd1ed37788b8e"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:eb365f6ee728e5ebdb6c7e7442a6209c50db81a9835053f63ee8ad38e0239d0e",
+          "full_text_sha256": "0d8cfa7d1484d0cdb6e8c70958b43a30ea13da0dd9061e30cdf629c213aee72e",
+          "review_question_ids": [
+            "RQ-lifecycle",
+            "RQ-robustness"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "cleanup",
+          "candidate_id": "context-candidate:sha256:64e13b2c70c55379829dd3b875e8f1f227fc79cad1a9b30732cc3e041ef34f95",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "cleanup_edge",
+          "relation_type": "lifecycle_pair",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 55,
+            "end_offset_utf16": 115
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "closeResource",
+          "target_owner_ref_id": "declaration:sha256:950debdd12ddc367986ee518e56e3270bf31a9cd56d4ac46c8ff1a7d69e17677",
+          "estimated_tokens": 26,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:950debdd12ddc367986ee518e56e3270bf31a9cd56d4ac46c8ff1a7d69e17677"
+        },
+        {
+          "alias": "failure",
+          "candidate_id": "context-candidate:sha256:3f3ef0db73360d10e268492a43696583abb33aef015e9f91d605ea240396065a",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-robustness",
+          "relation_edge_alias": "failure_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 7,
+            "end_line": 9,
+            "start_offset_utf16": 115,
+            "end_offset_utf16": 169
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "handleFailure",
+          "target_owner_ref_id": "declaration:sha256:b83ac5c6bef584b2e90730e202a3bc1852acbbd782e90645daed4bcdbf6fb546",
+          "estimated_tokens": 25,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:b83ac5c6bef584b2e90730e202a3bc1852acbbd782e90645daed4bcdbf6fb546"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "cleanup_edge",
+          "edge_id": "relation-edge:sha256:cd08876339f1f42de14bbae017004d238f8d3a1aed726eee8f087243b1ce849f",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "cleanup",
+          "relation_type": "lifecycle_pair",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:950debdd12ddc367986ee518e56e3270bf31a9cd56d4ac46c8ff1a7d69e17677",
+            "evidence:CP011:cleanup"
+          ],
+          "provenance_ref": "fixture:CP011:cleanup"
+        },
+        {
+          "alias": "failure_edge",
+          "edge_id": "relation-edge:sha256:c748727d40bffd7f51dd3a7b4ef51196fc046807dc7821097db88e7285bf3b71",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "failure",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:b83ac5c6bef584b2e90730e202a3bc1852acbbd782e90645daed4bcdbf6fb546",
+            "evidence:CP011:failure"
+          ],
+          "provenance_ref": "fixture:CP011:failure"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:c2356cdc19b92884cefccfa2163774cf2c0d88779b6eabbd1e94716ebfe1ee27",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:2104e4993dbd41bd7ce07afc3f14d600192d1e688e0a5755bd1992f41e8dbfea",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "review_question_id": "RQ-lifecycle"
+          },
+          {
+            "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "review_question_id": "RQ-robustness"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:3f3ef0db73360d10e268492a43696583abb33aef015e9f91d605ea240396065a",
+            "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "review_question_id": "RQ-robustness",
+            "relation_edge_id": "relation-edge:sha256:c748727d40bffd7f51dd3a7b4ef51196fc046807dc7821097db88e7285bf3b71",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:c69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "target_span": {
+              "start_line": 7,
+              "end_line": 9,
+              "start_offset_utf16": 115,
+              "end_offset_utf16": 169
+            },
+            "estimated_tokens": 25,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:b83ac5c6bef584b2e90730e202a3bc1852acbbd782e90645daed4bcdbf6fb546"
+          },
+          {
+            "candidate_id": "context-candidate:sha256:64e13b2c70c55379829dd3b875e8f1f227fc79cad1a9b30732cc3e041ef34f95",
+            "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:cd08876339f1f42de14bbae017004d238f8d3a1aed726eee8f087243b1ce849f",
+            "relation_type": "lifecycle_pair",
+            "target_source_ref_id": "code-source:sha256:c69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 55,
+              "end_offset_utf16": 115
+            },
+            "estimated_tokens": 26,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:950debdd12ddc367986ee518e56e3270bf31a9cd56d4ac46c8ff1a7d69e17677"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:d975dc3fd232a032bb14af88d23e8c0d99214b0f705b4f1e1ffaecd07ee816ee",
+            "candidate_id": "context-candidate:sha256:64e13b2c70c55379829dd3b875e8f1f227fc79cad1a9b30732cc3e041ef34f95",
+            "source_ref_id": "code-source:sha256:c69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 55,
+              "end_offset_utf16": 115
+            },
+            "source_text": "function closeResource(): void {\n  closeResourceHandle();\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+              "review_question_id": "RQ-lifecycle"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 26,
+            "diagnostics": []
+          },
+          {
+            "segment_id": "supporting-segment:sha256:fd7a897b0aa0465fd4565631d7393f80d7cfa0f5d1fa4f37682817e15be1f0db",
+            "candidate_id": "context-candidate:sha256:3f3ef0db73360d10e268492a43696583abb33aef015e9f91d605ea240396065a",
+            "source_ref_id": "code-source:sha256:c69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "source_span": {
+              "start_line": 7,
+              "end_line": 9,
+              "start_offset_utf16": 115,
+              "end_offset_utf16": 169
+            },
+            "source_text": "function handleFailure(): void {\n  reportFailure();\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+              "review_question_id": "RQ-robustness"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 25,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:c748727d40bffd7f51dd3a7b4ef51196fc046807dc7821097db88e7285bf3b71",
+            "source_ref": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "target_ref": "source-span:sha256:ddc5f6b59acea5eb9747f572355c5a239413d6da47a3ca7b17cec69cc8e30a9c",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:b83ac5c6bef584b2e90730e202a3bc1852acbbd782e90645daed4bcdbf6fb546",
+              "evidence:CP011:failure"
+            ],
+            "provenance_ref": "fixture:CP011:failure"
+          },
+          {
+            "edge_id": "relation-edge:sha256:cd08876339f1f42de14bbae017004d238f8d3a1aed726eee8f087243b1ce849f",
+            "source_ref": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+            "target_ref": "source-span:sha256:77858f37eeaf5376c1405a178e120ebc6d16137034daada4c8e21e941464c9d8",
+            "relation_type": "lifecycle_pair",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:950debdd12ddc367986ee518e56e3270bf31a9cd56d4ac46c8ff1a7d69e17677",
+              "evidence:CP011:cleanup"
+            ],
+            "provenance_ref": "fixture:CP011:cleanup"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:53951c97e92b207b9076fd645912a768d96edba4310f6c650eaf58770efefd30",
+            "primary_unit_ids": [
+              "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:06054207f3e59a21a0ddb67bfa42dcb78c4c4a786858e4513902d7d8b8396324",
+            "group_id": "change-group:sha256:53951c97e92b207b9076fd645912a768d96edba4310f6c650eaf58770efefd30",
+            "primary_unit_ids": [
+              "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+                "review_question_id": "RQ-lifecycle"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:d975dc3fd232a032bb14af88d23e8c0d99214b0f705b4f1e1ffaecd07ee816ee"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:cd08876339f1f42de14bbae017004d238f8d3a1aed726eee8f087243b1ce849f"
+            ],
+            "budget": {
+              "limit": 80,
+              "primary_tokens": 23,
+              "supporting_tokens": 26,
+              "total_tokens": 49
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:0b1249a34813502d6b2daa0e7af02639bef0d71b2d818e4d422021bbc659bcdf",
+            "group_id": "change-group:sha256:53951c97e92b207b9076fd645912a768d96edba4310f6c650eaf58770efefd30",
+            "primary_unit_ids": [
+              "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP011_head.ets@function:changedResource:L1-L3:Rhead:Sc69fb18bd1f02a3f966e1095b96848401f3c90383028ca23b00d021da3b1efcc",
+                "review_question_id": "RQ-robustness"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:fd7a897b0aa0465fd4565631d7393f80d7cfa0f5d1fa4f37682817e15be1f0db"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:c748727d40bffd7f51dd3a7b4ef51196fc046807dc7821097db88e7285bf3b71"
+            ],
+            "budget": {
+              "limit": 80,
+              "primary_tokens": 23,
+              "supporting_tokens": 25,
+              "total_tokens": 48
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 80,
+          "total_primary_tokens": 46,
+          "total_supporting_tokens": 51,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 49,
+          "dispatchable_bundles": 2,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP012",
+      "description": "Base/head Primaries sharing one replacement atom derive exact correspondence and one group.",
+      "change_set_id": "change-set:sha256:d5159422d3aae7b9e910ca6714a1595b61fa79312dca012aeb1fcaf805e5fe45",
+      "code_context_budget": 50,
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/CP012_base.ets",
+          "repository": "context-golden",
+          "revision": "base-cp012",
+          "logical_path": "src/CP012.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "47e07d63e9ef420cbbb57a323e0280c594b152e23478f3da62a75d63aa8e993b",
+          "source_ref_id": "code-source:sha256:dba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb"
+        },
+        {
+          "alias": "head",
+          "file": "sources/CP012_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp012",
+          "logical_path": "src/CP012.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "2b214a470383eef2ffb681ef78c3a5156eb31a5f24ebe84754f69dca183bb1d6",
+          "source_ref_id": "code-source:sha256:f37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "base",
+          "unit_id": "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+          "source_alias": "base",
+          "source_role": "base",
+          "unit_kind": "function",
+          "unit_symbol": "calculate",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:35e68af5233fca6df623cb9016605cc0f0333148824f4c0e4550c2b9520e7b2a"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:c4666a1db00aba629f437e73f4e3495e2047cf13ea00c81e7eb77a53b5e5bc9e",
+          "full_text_sha256": "575a3515e494ba22e2584ebd3d985a28adbbfc455fc016c4663de2bce387ddda",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        },
+        {
+          "alias": "head",
+          "unit_id": "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "calculate",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:35e68af5233fca6df623cb9016605cc0f0333148824f4c0e4550c2b9520e7b2a"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:ab582df905b11d4f0cd71647fde358a7715cbe4efc398a3b61f15234e784a8a8",
+          "full_text_sha256": "30439776003417a9e47b319d9c6aeed274aa51fb789594aed92fa1b1e5e60199",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:776c1fa912877e548b049c1a63bd643380a71ae65477562d2ed528402cb76423",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:d5159422d3aae7b9e910ca6714a1595b61fa79312dca012aeb1fcaf805e5fe45",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:a86c86f901b89673c79edd390e1526989d998bd5fc9905fa80a4593853343b29",
+            "source_ref": "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+            "target_ref": "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430",
+            "relation_type": "change_correspondence",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "change-atom:sha256:35e68af5233fca6df623cb9016605cc0f0333148824f4c0e4550c2b9520e7b2a"
+            ],
+            "provenance_ref": "change-set:sha256:d5159422d3aae7b9e910ca6714a1595b61fa79312dca012aeb1fcaf805e5fe45"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:32a4e358dd72d5381a923a58b4d975c8f8d221a5774835ddb16c51da9c1f97f0",
+            "primary_unit_ids": [
+              "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+              "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430"
+            ],
+            "strong_edge_ids": [
+              "relation-edge:sha256:a86c86f901b89673c79edd390e1526989d998bd5fc9905fa80a4593853343b29"
+            ],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:85f104e7c1417080114dbaa21ecaf657f2222f539db6e2c23482b9895a65adc7",
+            "group_id": "change-group:sha256:32a4e358dd72d5381a923a58b4d975c8f8d221a5774835ddb16c51da9c1f97f0",
+            "primary_unit_ids": [
+              "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+              "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP012.ets@function:calculate:L1-L3:Rbase:Sdba3615e124c99d415f30cf335ad797727a1dfdfb886971156fc9b38c3653fdb",
+                "review_question_id": "RQ-correctness"
+              },
+              {
+                "primary_unit_id": "src/CP012.ets@function:calculate:L1-L3:Rhead:Sf37626687344118eedf8c5e4f107406e616f5507c1fa3085ac0c43b1290b4430",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [
+              "relation-edge:sha256:a86c86f901b89673c79edd390e1526989d998bd5fc9905fa80a4593853343b29"
+            ],
+            "budget": {
+              "limit": 50,
+              "primary_tokens": 44,
+              "supporting_tokens": 0,
+              "total_tokens": 44
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 50,
+          "total_primary_tokens": 44,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 44,
+          "dispatchable_bundles": 1,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP013",
+      "description": "A strong exact same-file edge cannot manufacture a semantic group.",
+      "change_set_id": "change-set:sha256:d29a7aef8993989aa1d31c79f89859250bfef2c3b41ce7c0a192ba8cb075e177",
+      "code_context_budget": 25,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP013_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp013",
+          "logical_path": "src/CP013_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "3270c81716c01342f160d9315513e68d1e97e388c30d55e7563ac3194cb08f6e",
+          "source_ref_id": "code-source:sha256:c077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "first",
+          "unit_id": "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "sameFileFirst",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:dd410bc220646baf0c2b8928a90c3132af004a8d157f4b821a2cc8e80d016df7"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:d4df8d6ecb88ebdf6addc4c4279304f4bb6db272198ee189e3f50215d287d05a",
+          "full_text_sha256": "ae370267e1d6ceeb94b5eae7ef61b5863e658d73fc0c7784579d0435ffa0657b",
+          "review_question_ids": [
+            "RQ-maintainability"
+          ]
+        },
+        {
+          "alias": "second",
+          "unit_id": "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "sameFileSecond",
+          "source_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "context_span": {
+            "start_line": 4,
+            "end_line": 6
+          },
+          "changed_lines": [
+            5
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:8b1b4147fb533f660833d63c1811724ed08a679db42d9019103f84d93559e885"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:36e27aaea19ff89d961dddaa13016ec6be7a2b4eec1d168ce43dbe5f3c6089fc",
+          "full_text_sha256": "3609a7b577fd554f104e00d79116d31a15ea5a3ef1dbc7230d377ea70adf3c24",
+          "review_question_ids": [
+            "RQ-maintainability"
+          ]
+        }
+      ],
+      "candidates": [],
+      "relation_edges": [
+        {
+          "alias": "same_file",
+          "edge_id": "relation-edge:sha256:8e63891b5fdfa51ea0746ea6f7367dee2153a5bac026c4dc369c55d39d922f59",
+          "source_primary_alias": "first",
+          "target_primary_alias": "second",
+          "target_candidate_alias": null,
+          "relation_type": "same_file",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "evidence:CP013:same_file"
+          ],
+          "provenance_ref": "fixture:CP013:same_file"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:deb7175a26346ef45dc4b0389008d733a9c7dd332d33e61c7feee2a7518ec19f",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:d29a7aef8993989aa1d31c79f89859250bfef2c3b41ce7c0a192ba8cb075e177",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+            "review_question_id": "RQ-maintainability"
+          },
+          {
+            "primary_unit_id": "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+            "review_question_id": "RQ-maintainability"
+          }
+        ],
+        "candidates": [],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:8e63891b5fdfa51ea0746ea6f7367dee2153a5bac026c4dc369c55d39d922f59",
+            "source_ref": "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+            "target_ref": "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+            "relation_type": "same_file",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "evidence:CP013:same_file"
+            ],
+            "provenance_ref": "fixture:CP013:same_file"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:13812d1285902aa8959b11e93024a08e974eecc1d03e424fd1a87a5c1af19cae",
+            "primary_unit_ids": [
+              "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          },
+          {
+            "group_id": "change-group:sha256:fda45a61eb5048ba27250f6112219615256171729b00be353e7c2306098542da",
+            "primary_unit_ids": [
+              "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:195649f40d1a4827fc3c5fd752f40999734f8107e734a67333d84f9ced2f05e6",
+            "group_id": "change-group:sha256:fda45a61eb5048ba27250f6112219615256171729b00be353e7c2306098542da",
+            "primary_unit_ids": [
+              "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP013_head.ets@function:sameFileFirst:L1-L3:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+                "review_question_id": "RQ-maintainability"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 23,
+              "supporting_tokens": 0,
+              "total_tokens": 23
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:734b2f695f39920724337b2f3729bcd43e7313203e1230ce3cfe57c27aaeacb8",
+            "group_id": "change-group:sha256:13812d1285902aa8959b11e93024a08e974eecc1d03e424fd1a87a5c1af19cae",
+            "primary_unit_ids": [
+              "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP013_head.ets@function:sameFileSecond:L4-L6:Rhead:Sc077750cdeb50aff84034a628db9443887657303571a81720ad538e3da8808b2",
+                "review_question_id": "RQ-maintainability"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 25,
+              "primary_tokens": 23,
+              "supporting_tokens": 0,
+              "total_tokens": 23
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 25,
+          "total_primary_tokens": 46,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 23,
+          "dispatchable_bundles": 2,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP014",
+      "description": "Multiple source, Primary, candidate, and edge input orders remain stable.",
+      "change_set_id": "change-set:sha256:124a6387d057214e768d55d0f999dc06ce5edc1bc998aed00df5c878e914946e",
+      "code_context_budget": 50,
+      "sources": [
+        {
+          "alias": "alpha",
+          "file": "sources/CP014_alpha.ets",
+          "repository": "context-golden",
+          "revision": "head-cp014",
+          "logical_path": "src/CP014_alpha.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "d40ec93189062650a7cd2e8412a3e2236f2ad47733e94edaedf3f6b92cbcd37f",
+          "source_ref_id": "code-source:sha256:642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f"
+        },
+        {
+          "alias": "zeta",
+          "file": "sources/CP014_zeta.ets",
+          "repository": "context-golden",
+          "revision": "head-cp014",
+          "logical_path": "src/CP014_zeta.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "e44e4d45c0c8084552d33fd16545419e8d03e04ba03f0c88f0a3d0ae2a8c5d66",
+          "source_ref_id": "code-source:sha256:0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "alpha",
+          "unit_id": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+          "source_alias": "alpha",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "alphaPrimary",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:22ddcfd97642b0ae7f77f0c3b2ca71272a23aaf505b33b39d54e9670231dafc2"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:fb05631759e7c65cd76d3d747e0ad7f2ebdb1af6af3e8dd6f026c2ee4c8d0adf",
+          "full_text_sha256": "5718ca291e7e598375a8aa4b68732ed08ccb3ea88720582c71b274b6f02fc71a",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        },
+        {
+          "alias": "zeta",
+          "unit_id": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+          "source_alias": "zeta",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "zetaPrimary",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:578002ef82d6fbfe1d2f8bf80728de5ac8a86a78ecbef840480f900b39591007"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:cc4ac292b41e2456a5a7d22335334f1d7e1d94e83955353d28b531bea50cba5e",
+          "full_text_sha256": "d116472c843e769f4200ad6549d6303a707435a6f3ac2bbdc600e240baec6c8c",
+          "review_question_ids": [
+            "RQ-correctness"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "alpha_support",
+          "candidate_id": "context-candidate:sha256:b5f49dcdfa271cb5e859253a222116fce67a2e43be9e5faa6f177dc83a235f5e",
+          "primary_alias": "alpha",
+          "review_question_id": "RQ-correctness",
+          "relation_edge_alias": "alpha_support_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "alpha",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 60,
+            "end_offset_utf16": 108
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "alphaHelper",
+          "target_owner_ref_id": "declaration:sha256:03cac5e469f751b305ad58e39162aea408e363cadaf12640e6aa4182616c9b88",
+          "estimated_tokens": 23,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:03cac5e469f751b305ad58e39162aea408e363cadaf12640e6aa4182616c9b88"
+        },
+        {
+          "alias": "zeta_support",
+          "candidate_id": "context-candidate:sha256:dd7124bb89920763168511b44f3174f08ed14996397e24238a4381c9b1df612f",
+          "primary_alias": "zeta",
+          "review_question_id": "RQ-correctness",
+          "relation_edge_alias": "zeta_support_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "zeta",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 58,
+            "end_offset_utf16": 105
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "zetaHelper",
+          "target_owner_ref_id": "declaration:sha256:84ecfd6404572427232a83b3c8ddb46cad289c0fce01d0b64effa4bc92488ff0",
+          "estimated_tokens": 23,
+          "necessity": "helpful",
+          "provenance_ref": "declaration:sha256:84ecfd6404572427232a83b3c8ddb46cad289c0fce01d0b64effa4bc92488ff0"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "alpha_support_edge",
+          "edge_id": "relation-edge:sha256:3047471b9f25eca03de6c0060cdf318704ad6d389461781121659b0dd165f572",
+          "source_primary_alias": "alpha",
+          "target_primary_alias": null,
+          "target_candidate_alias": "alpha_support",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:03cac5e469f751b305ad58e39162aea408e363cadaf12640e6aa4182616c9b88",
+            "evidence:CP014:alpha_support"
+          ],
+          "provenance_ref": "fixture:CP014:alpha_support"
+        },
+        {
+          "alias": "zeta_support_edge",
+          "edge_id": "relation-edge:sha256:9d9a3e69c4a49da4ff1ee81e81c2a8087fd311186726a512ef1ebe94942ad408",
+          "source_primary_alias": "zeta",
+          "target_primary_alias": null,
+          "target_candidate_alias": "zeta_support",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:84ecfd6404572427232a83b3c8ddb46cad289c0fce01d0b64effa4bc92488ff0",
+            "evidence:CP014:zeta_support"
+          ],
+          "provenance_ref": "fixture:CP014:zeta_support"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:59a5eec789c7c4030b67b545815fe3d52488e2737d5596337c16fd8120081c4f",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:124a6387d057214e768d55d0f999dc06ce5edc1bc998aed00df5c878e914946e",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+            "review_question_id": "RQ-correctness"
+          },
+          {
+            "primary_unit_id": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+            "review_question_id": "RQ-correctness"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:b5f49dcdfa271cb5e859253a222116fce67a2e43be9e5faa6f177dc83a235f5e",
+            "primary_unit_id": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+            "review_question_id": "RQ-correctness",
+            "relation_edge_id": "relation-edge:sha256:3047471b9f25eca03de6c0060cdf318704ad6d389461781121659b0dd165f572",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 60,
+              "end_offset_utf16": 108
+            },
+            "estimated_tokens": 23,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:03cac5e469f751b305ad58e39162aea408e363cadaf12640e6aa4182616c9b88"
+          },
+          {
+            "candidate_id": "context-candidate:sha256:dd7124bb89920763168511b44f3174f08ed14996397e24238a4381c9b1df612f",
+            "primary_unit_id": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+            "review_question_id": "RQ-correctness",
+            "relation_edge_id": "relation-edge:sha256:9d9a3e69c4a49da4ff1ee81e81c2a8087fd311186726a512ef1ebe94942ad408",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 58,
+              "end_offset_utf16": 105
+            },
+            "estimated_tokens": 23,
+            "necessity": "helpful",
+            "provenance_ref": "declaration:sha256:84ecfd6404572427232a83b3c8ddb46cad289c0fce01d0b64effa4bc92488ff0"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:1876369c3358e8d4c88365d4ffccb89afa24e0f7654a7ff577b837b5379fffa1",
+            "candidate_id": "context-candidate:sha256:dd7124bb89920763168511b44f3174f08ed14996397e24238a4381c9b1df612f",
+            "source_ref_id": "code-source:sha256:0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 58,
+              "end_offset_utf16": 105
+            },
+            "source_text": "function zetaHelper(): number {\n  return 20;\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+              "review_question_id": "RQ-correctness"
+            },
+            "selection_reason": "helpful_context",
+            "estimated_tokens": 23,
+            "diagnostics": []
+          },
+          {
+            "segment_id": "supporting-segment:sha256:7750e993f5c05182ba03719208a243102adef60ae74f0622ebae9e0a2db1a960",
+            "candidate_id": "context-candidate:sha256:b5f49dcdfa271cb5e859253a222116fce67a2e43be9e5faa6f177dc83a235f5e",
+            "source_ref_id": "code-source:sha256:642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 60,
+              "end_offset_utf16": 108
+            },
+            "source_text": "function alphaHelper(): number {\n  return 10;\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+              "review_question_id": "RQ-correctness"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 23,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:3047471b9f25eca03de6c0060cdf318704ad6d389461781121659b0dd165f572",
+            "source_ref": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+            "target_ref": "source-span:sha256:a2069953579c445ba4a1abc62872e911fb10fc31bb54504fa95ef0027f06fdbe",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:03cac5e469f751b305ad58e39162aea408e363cadaf12640e6aa4182616c9b88",
+              "evidence:CP014:alpha_support"
+            ],
+            "provenance_ref": "fixture:CP014:alpha_support"
+          },
+          {
+            "edge_id": "relation-edge:sha256:9d9a3e69c4a49da4ff1ee81e81c2a8087fd311186726a512ef1ebe94942ad408",
+            "source_ref": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+            "target_ref": "source-span:sha256:24ba860735b9417a35cfe3f01185a2e1fb968679475167be086ab1212ed9c048",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:84ecfd6404572427232a83b3c8ddb46cad289c0fce01d0b64effa4bc92488ff0",
+              "evidence:CP014:zeta_support"
+            ],
+            "provenance_ref": "fixture:CP014:zeta_support"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:1ceefab15d166e5129672728ffa6f48718f4cd93398571f8bc5a5d4e37a701df",
+            "primary_unit_ids": [
+              "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          },
+          {
+            "group_id": "change-group:sha256:2d83546b77b5a5fa1e7bbedb2fc78a76d29feb3bcddc739d5db9c9cd68d72a73",
+            "primary_unit_ids": [
+              "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:831bb74f898f6c0bd92120c17cd59a01a2ce76c2631f6c02c95f18530b2768c7",
+            "group_id": "change-group:sha256:2d83546b77b5a5fa1e7bbedb2fc78a76d29feb3bcddc739d5db9c9cd68d72a73",
+            "primary_unit_ids": [
+              "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP014_zeta.ets@function:zetaPrimary:L1-L3:Rhead:S0ae963182378c3cdc5999d2580c324097605aac5df4ddb3f20523fb2322cf058",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:1876369c3358e8d4c88365d4ffccb89afa24e0f7654a7ff577b837b5379fffa1"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:9d9a3e69c4a49da4ff1ee81e81c2a8087fd311186726a512ef1ebe94942ad408"
+            ],
+            "budget": {
+              "limit": 50,
+              "primary_tokens": 26,
+              "supporting_tokens": 23,
+              "total_tokens": 49
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:f5e396e0fb3b2f38ea5367b5aa93ddc8e2ae8c271f18618fa623a005ab5c780a",
+            "group_id": "change-group:sha256:1ceefab15d166e5129672728ffa6f48718f4cd93398571f8bc5a5d4e37a701df",
+            "primary_unit_ids": [
+              "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP014_alpha.ets@function:alphaPrimary:L1-L3:Rhead:S642b36f30f40747b89b5ff7ee073b3f3b73f43cec109e60873a83e960fd0655f",
+                "review_question_id": "RQ-correctness"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:7750e993f5c05182ba03719208a243102adef60ae74f0622ebae9e0a2db1a960"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:3047471b9f25eca03de6c0060cdf318704ad6d389461781121659b0dd165f572"
+            ],
+            "budget": {
+              "limit": 50,
+              "primary_tokens": 26,
+              "supporting_tokens": 23,
+              "total_tokens": 49
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 50,
+          "total_primary_tokens": 52,
+          "total_supporting_tokens": 46,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 49,
+          "dispatchable_bundles": 2,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CP015",
+      "description": "A required degraded relation is omitted with exact diagnostics and blocks dispatch.",
+      "change_set_id": "change-set:sha256:7cd06ea8e3ee82e6959e8fc42e5fc329549ee345df2014573e44b5d7b4411982",
+      "code_context_budget": 60,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP015_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp015",
+          "logical_path": "src/CP015_head.ets",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "content_sha256": "1418358f022690232c70ce9a8300dbc412ca8cf4b990389d3f046fcc020e5b99",
+          "source_ref_id": "code-source:sha256:bf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "changedSubscription",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:2f4688556ca693ae5fce87a2796b9129472487d131c516472f8c09a025fa808a"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:4c888bc2941da3ad85c78c978cac6b5f898a914aa3c24e1bfdb56f77c02ca4d3",
+          "full_text_sha256": "bead23b75bb4864d18bb55ab4badf1d9badf52bf63bb1dff1f85021fc08f4c0c",
+          "review_question_ids": [
+            "RQ-lifecycle"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "cleanup",
+          "candidate_id": "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-lifecycle",
+          "relation_edge_alias": "cleanup_edge",
+          "relation_type": "lifecycle_pair",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 56,
+            "end_offset_utf16": 111
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "recoveredCleanup",
+          "target_owner_ref_id": "declaration:sha256:f8f57f1f04123d2c97e2f219fc06d4369698ecceb2aeea85ff8586c4f5af244a",
+          "estimated_tokens": 24,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:f8f57f1f04123d2c97e2f219fc06d4369698ecceb2aeea85ff8586c4f5af244a"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "cleanup_edge",
+          "edge_id": "relation-edge:sha256:376d867a110c94b7ea8c9e1d63e93df4b5889c89565f1344ebbc589f6344a479",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "cleanup",
+          "relation_type": "lifecycle_pair",
+          "strength": "strong",
+          "quality": "degraded",
+          "evidence_refs": [
+            "declaration:sha256:f8f57f1f04123d2c97e2f219fc06d4369698ecceb2aeea85ff8586c4f5af244a",
+            "evidence:CP015:cleanup"
+          ],
+          "provenance_ref": "fixture:CP015:cleanup"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:24bb6933bef040494d33e79efa5cb031186da10a17d294f087b21116e655e150",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:7cd06ea8e3ee82e6959e8fc42e5fc329549ee345df2014573e44b5d7b4411982",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+            "review_question_id": "RQ-lifecycle"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271",
+            "primary_unit_id": "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+            "review_question_id": "RQ-lifecycle",
+            "relation_edge_id": "relation-edge:sha256:376d867a110c94b7ea8c9e1d63e93df4b5889c89565f1344ebbc589f6344a479",
+            "relation_type": "lifecycle_pair",
+            "target_source_ref_id": "code-source:sha256:bf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 56,
+              "end_offset_utf16": 111
+            },
+            "estimated_tokens": 24,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:f8f57f1f04123d2c97e2f219fc06d4369698ecceb2aeea85ff8586c4f5af244a"
+          }
+        ],
+        "supporting_segments": [],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:376d867a110c94b7ea8c9e1d63e93df4b5889c89565f1344ebbc589f6344a479",
+            "source_ref": "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+            "target_ref": "source-span:sha256:ad99d14bb1d549ea65aeadf275a991380792bd283ce640ff7023693420bb0b01",
+            "relation_type": "lifecycle_pair",
+            "strength": "strong",
+            "quality": "degraded",
+            "evidence_refs": [
+              "declaration:sha256:f8f57f1f04123d2c97e2f219fc06d4369698ecceb2aeea85ff8586c4f5af244a",
+              "evidence:CP015:cleanup"
+            ],
+            "provenance_ref": "fixture:CP015:cleanup"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:7b01c1e8016380296746656b7343d2c07f82ff17816cd2c01dfb9babe25515d7",
+            "primary_unit_ids": [
+              "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:4395db724479956ead9e98794d0af277e97dace553ff4464c78707c94056b266",
+            "group_id": "change-group:sha256:7b01c1e8016380296746656b7343d2c07f82ff17816cd2c01dfb9babe25515d7",
+            "primary_unit_ids": [
+              "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP015_head.ets@function:changedSubscription:L1-L3:Rhead:Sbf1ca5d868b571ef4a18adff1baeec48f23800a63ee71ce51bea8d8cb217993e",
+                "review_question_id": "RQ-lifecycle"
+              }
+            ],
+            "supporting_segment_ids": [],
+            "relation_edge_ids": [],
+            "budget": {
+              "limit": 60,
+              "primary_tokens": 24,
+              "supporting_tokens": 0,
+              "total_tokens": 24
+            },
+            "dispatch_allowed": false,
+            "diagnostics": [
+              {
+                "code": "context_insufficient",
+                "subject_ids": [
+                  "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271"
+                ]
+              },
+              {
+                "code": "relation_degraded",
+                "subject_ids": [
+                  "relation-edge:sha256:376d867a110c94b7ea8c9e1d63e93df4b5889c89565f1344ebbc589f6344a479"
+                ]
+              }
+            ]
+          }
+        ],
+        "omitted_candidate_ids": [
+          "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271"
+        ],
+        "omitted_candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271",
+            "reason": "relation_degraded"
+          }
+        ],
+        "budget_summary": {
+          "limit": 60,
+          "total_primary_tokens": 24,
+          "total_supporting_tokens": 0,
+          "total_omitted_tokens": 24,
+          "max_bundle_tokens": 24,
+          "dispatchable_bundles": 0,
+          "blocked_bundles": 1
+        },
+        "diagnostics": [
+          {
+            "code": "context_insufficient",
+            "subject_ids": [
+              "context-candidate:sha256:afaa47043d1a1886dc796f695dfe016d3d762aabcf2364b827c1e9becdf94271"
+            ]
+          },
+          {
+            "code": "relation_degraded",
+            "subject_ids": [
+              "relation-edge:sha256:376d867a110c94b7ea8c9e1d63e93df4b5889c89565f1344ebbc589f6344a479"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "CP016",
+      "description": "Required context is repeated while helpful candidates first-fit into two bundles.",
+      "change_set_id": "change-set:sha256:113983fef2c992770e8e4c3cc41c8669c7ce6edd29b7f9b11a7d46e7d104d4a0",
+      "code_context_budget": 74,
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/CP016_head.ets",
+          "repository": "context-golden",
+          "revision": "head-cp016",
+          "logical_path": "src/CP016_head.ets",
+          "origin_lines": [
+            1,
+            12
+          ],
+          "content_sha256": "c9cde11282d6db071a5ca8ccfcb6b68dcb28eb83dad098bc8133f5af8710a04b",
+          "source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2"
+        }
+      ],
+      "primaries": [
+        {
+          "alias": "primary",
+          "unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+          "source_alias": "head",
+          "source_role": "head",
+          "unit_kind": "function",
+          "unit_symbol": "changedResource",
+          "source_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "context_span": {
+            "start_line": 1,
+            "end_line": 3
+          },
+          "changed_lines": [
+            2
+          ],
+          "change_atom_ids": [
+            "change-atom:sha256:8e0b4d230b5f7f5f415870933e5ff6b75e2d0c0c6f8c676d337ec6fdf2f60e95"
+          ],
+          "owner_kind": "declaration",
+          "owner_ref_id": "declaration:sha256:7478e3d7810df492f308207ce50b4ff410c083b28822448ed66ab90214254385",
+          "full_text_sha256": "0d8cfa7d1484d0cdb6e8c70958b43a30ea13da0dd9061e30cdf629c213aee72e",
+          "review_question_ids": [
+            "RQ-resource"
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "alias": "audit",
+          "candidate_id": "context-candidate:sha256:1d0b60d78633f9a93a84646c24f1164fbe9b6e09844fa9684460f0399e3f3c9c",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-resource",
+          "relation_edge_alias": "audit_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 10,
+            "end_line": 12,
+            "start_offset_utf16": 174,
+            "end_offset_utf16": 233
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "auditResource",
+          "target_owner_ref_id": "declaration:sha256:99b9c48ab88687752c2a2bff103ed19d5542752daff7fb3cf5a4f86abf8c6b38",
+          "estimated_tokens": 26,
+          "necessity": "helpful",
+          "provenance_ref": "declaration:sha256:99b9c48ab88687752c2a2bff103ed19d5542752daff7fb3cf5a4f86abf8c6b38"
+        },
+        {
+          "alias": "cleanup",
+          "candidate_id": "context-candidate:sha256:29dde30daf8d0240044615e4053d38e5d249f2675f80b7a9647968bfc0f13ae1",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-resource",
+          "relation_edge_alias": "cleanup_edge",
+          "relation_type": "lifecycle_pair",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 4,
+            "end_line": 6,
+            "start_offset_utf16": 55,
+            "end_offset_utf16": 111
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "cleanupResource",
+          "target_owner_ref_id": "declaration:sha256:daf5db6e6c5ad8e1adf29483f8572f15ff506c3b497ef2424b38ead3b7b8efcc",
+          "estimated_tokens": 25,
+          "necessity": "required",
+          "provenance_ref": "declaration:sha256:daf5db6e6c5ad8e1adf29483f8572f15ff506c3b497ef2424b38ead3b7b8efcc"
+        },
+        {
+          "alias": "recover",
+          "candidate_id": "context-candidate:sha256:52ea7c1ce1590cd31abb618cb1680ea46b96e1de8daf52c95cf4a8002cef5f80",
+          "primary_alias": "primary",
+          "review_question_id": "RQ-resource",
+          "relation_edge_alias": "recover_edge",
+          "relation_type": "direct_call",
+          "target_source_alias": "head",
+          "target_span": {
+            "start_line": 7,
+            "end_line": 9,
+            "start_offset_utf16": 111,
+            "end_offset_utf16": 174
+          },
+          "target_owner_kind": "declaration",
+          "target_owner_unit_kind": "function",
+          "target_owner_symbol": "recoverResource",
+          "target_owner_ref_id": "declaration:sha256:965dea549d8ceecd9245e7b1ba01364a06193fa0183dd144fae40029e4a50a4b",
+          "estimated_tokens": 26,
+          "necessity": "helpful",
+          "provenance_ref": "declaration:sha256:965dea549d8ceecd9245e7b1ba01364a06193fa0183dd144fae40029e4a50a4b"
+        }
+      ],
+      "relation_edges": [
+        {
+          "alias": "audit_edge",
+          "edge_id": "relation-edge:sha256:105c6301e5d28b60e401fede3cfe170c70452adc15a62980e5b64b2657540cb0",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "audit",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:99b9c48ab88687752c2a2bff103ed19d5542752daff7fb3cf5a4f86abf8c6b38",
+            "evidence:CP016:audit"
+          ],
+          "provenance_ref": "fixture:CP016:audit"
+        },
+        {
+          "alias": "cleanup_edge",
+          "edge_id": "relation-edge:sha256:543f660d235e02f97cebaa9d994eacf1f68a0b8705ccd7dcb30908ea2f4416bd",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "cleanup",
+          "relation_type": "lifecycle_pair",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:daf5db6e6c5ad8e1adf29483f8572f15ff506c3b497ef2424b38ead3b7b8efcc",
+            "evidence:CP016:cleanup"
+          ],
+          "provenance_ref": "fixture:CP016:cleanup"
+        },
+        {
+          "alias": "recover_edge",
+          "edge_id": "relation-edge:sha256:327579e0106aa0ab3a76675a709e93cc30734065659546501cfd57fc19267fc8",
+          "source_primary_alias": "primary",
+          "target_primary_alias": null,
+          "target_candidate_alias": "recover",
+          "relation_type": "direct_call",
+          "strength": "strong",
+          "quality": "exact",
+          "evidence_refs": [
+            "declaration:sha256:965dea549d8ceecd9245e7b1ba01364a06193fa0183dd144fae40029e4a50a4b",
+            "evidence:CP016:recover"
+          ],
+          "provenance_ref": "fixture:CP016:recover"
+        }
+      ],
+      "expected": {
+        "schema_version": "context-plan-v1",
+        "context_plan_id": "context-plan:sha256:94d478683eb65b2440503118e4158f0c9b03c36f87b00a013e51606956e1a1a0",
+        "planner_version": "context-planner-v1",
+        "token_estimator_version": "arkts-code-token-v1",
+        "change_set_id": "change-set:sha256:113983fef2c992770e8e4c3cc41c8669c7ce6edd29b7f9b11a7d46e7d104d4a0",
+        "blocking_change_ids": [],
+        "primary_question_bindings": [
+          {
+            "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "review_question_id": "RQ-resource"
+          }
+        ],
+        "candidates": [
+          {
+            "candidate_id": "context-candidate:sha256:1d0b60d78633f9a93a84646c24f1164fbe9b6e09844fa9684460f0399e3f3c9c",
+            "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "review_question_id": "RQ-resource",
+            "relation_edge_id": "relation-edge:sha256:105c6301e5d28b60e401fede3cfe170c70452adc15a62980e5b64b2657540cb0",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_span": {
+              "start_line": 10,
+              "end_line": 12,
+              "start_offset_utf16": 174,
+              "end_offset_utf16": 233
+            },
+            "estimated_tokens": 26,
+            "necessity": "helpful",
+            "provenance_ref": "declaration:sha256:99b9c48ab88687752c2a2bff103ed19d5542752daff7fb3cf5a4f86abf8c6b38"
+          },
+          {
+            "candidate_id": "context-candidate:sha256:29dde30daf8d0240044615e4053d38e5d249f2675f80b7a9647968bfc0f13ae1",
+            "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "review_question_id": "RQ-resource",
+            "relation_edge_id": "relation-edge:sha256:543f660d235e02f97cebaa9d994eacf1f68a0b8705ccd7dcb30908ea2f4416bd",
+            "relation_type": "lifecycle_pair",
+            "target_source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 55,
+              "end_offset_utf16": 111
+            },
+            "estimated_tokens": 25,
+            "necessity": "required",
+            "provenance_ref": "declaration:sha256:daf5db6e6c5ad8e1adf29483f8572f15ff506c3b497ef2424b38ead3b7b8efcc"
+          },
+          {
+            "candidate_id": "context-candidate:sha256:52ea7c1ce1590cd31abb618cb1680ea46b96e1de8daf52c95cf4a8002cef5f80",
+            "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "review_question_id": "RQ-resource",
+            "relation_edge_id": "relation-edge:sha256:327579e0106aa0ab3a76675a709e93cc30734065659546501cfd57fc19267fc8",
+            "relation_type": "direct_call",
+            "target_source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_span": {
+              "start_line": 7,
+              "end_line": 9,
+              "start_offset_utf16": 111,
+              "end_offset_utf16": 174
+            },
+            "estimated_tokens": 26,
+            "necessity": "helpful",
+            "provenance_ref": "declaration:sha256:965dea549d8ceecd9245e7b1ba01364a06193fa0183dd144fae40029e4a50a4b"
+          }
+        ],
+        "supporting_segments": [
+          {
+            "segment_id": "supporting-segment:sha256:235db4c38b1d9a9df8e83dbaf620f954eb1913aa43e8621d7741ae2ba6a93986",
+            "candidate_id": "context-candidate:sha256:29dde30daf8d0240044615e4053d38e5d249f2675f80b7a9647968bfc0f13ae1",
+            "source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "source_span": {
+              "start_line": 4,
+              "end_line": 6,
+              "start_offset_utf16": 55,
+              "end_offset_utf16": 111
+            },
+            "source_text": "function cleanupResource(): void {\n  closeResource();\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+              "review_question_id": "RQ-resource"
+            },
+            "selection_reason": "required_context",
+            "estimated_tokens": 25,
+            "diagnostics": []
+          },
+          {
+            "segment_id": "supporting-segment:sha256:28e9bc4c7f9ff809900ff569c3628d0d4f9955cb8b59fb823701ecf896e7030e",
+            "candidate_id": "context-candidate:sha256:52ea7c1ce1590cd31abb618cb1680ea46b96e1de8daf52c95cf4a8002cef5f80",
+            "source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "source_span": {
+              "start_line": 7,
+              "end_line": 9,
+              "start_offset_utf16": 111,
+              "end_offset_utf16": 174
+            },
+            "source_text": "function recoverResource(): void {\n  recoverResourceState();\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+              "review_question_id": "RQ-resource"
+            },
+            "selection_reason": "helpful_context",
+            "estimated_tokens": 26,
+            "diagnostics": []
+          },
+          {
+            "segment_id": "supporting-segment:sha256:d4a8558a62d5a8f0186a91c4866c72c8eafc032abe5d9fd92028168ce4f91c04",
+            "candidate_id": "context-candidate:sha256:1d0b60d78633f9a93a84646c24f1164fbe9b6e09844fa9684460f0399e3f3c9c",
+            "source_ref_id": "code-source:sha256:89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "source_span": {
+              "start_line": 10,
+              "end_line": 12,
+              "start_offset_utf16": 174,
+              "end_offset_utf16": 233
+            },
+            "source_text": "function auditResource(): void {\n  auditResourceState();\n}\n",
+            "question_binding": {
+              "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+              "review_question_id": "RQ-resource"
+            },
+            "selection_reason": "helpful_context",
+            "estimated_tokens": 26,
+            "diagnostics": []
+          }
+        ],
+        "relation_edges": [
+          {
+            "edge_id": "relation-edge:sha256:105c6301e5d28b60e401fede3cfe170c70452adc15a62980e5b64b2657540cb0",
+            "source_ref": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_ref": "source-span:sha256:6156827985439f9d954aac2a4e1ac11e2a2c5fdc21744c1e647168482d93ced6",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:99b9c48ab88687752c2a2bff103ed19d5542752daff7fb3cf5a4f86abf8c6b38",
+              "evidence:CP016:audit"
+            ],
+            "provenance_ref": "fixture:CP016:audit"
+          },
+          {
+            "edge_id": "relation-edge:sha256:327579e0106aa0ab3a76675a709e93cc30734065659546501cfd57fc19267fc8",
+            "source_ref": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_ref": "source-span:sha256:d5fc49b286017dc7ac8bcd27d49f4958ade4185476059666f82fa349bcfb7a23",
+            "relation_type": "direct_call",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:965dea549d8ceecd9245e7b1ba01364a06193fa0183dd144fae40029e4a50a4b",
+              "evidence:CP016:recover"
+            ],
+            "provenance_ref": "fixture:CP016:recover"
+          },
+          {
+            "edge_id": "relation-edge:sha256:543f660d235e02f97cebaa9d994eacf1f68a0b8705ccd7dcb30908ea2f4416bd",
+            "source_ref": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+            "target_ref": "source-span:sha256:88c6b0abff78e8512cc7d041a2c362a3132a9e6fb97b69ed7a0dc5e01afa0025",
+            "relation_type": "lifecycle_pair",
+            "strength": "strong",
+            "quality": "exact",
+            "evidence_refs": [
+              "declaration:sha256:daf5db6e6c5ad8e1adf29483f8572f15ff506c3b497ef2424b38ead3b7b8efcc",
+              "evidence:CP016:cleanup"
+            ],
+            "provenance_ref": "fixture:CP016:cleanup"
+          }
+        ],
+        "change_groups": [
+          {
+            "group_id": "change-group:sha256:c462172fe56dbc2c4d1769652f5f0d7fce9363269c9cc107cbfcbf87bf4c368c",
+            "primary_unit_ids": [
+              "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2"
+            ],
+            "strong_edge_ids": [],
+            "diagnostics": []
+          }
+        ],
+        "bundles": [
+          {
+            "bundle_id": "review-context-bundle:sha256:5dc7cb33b371e0831c44c3199ddbd7f499c16c0c63735e9af717c5ad88685de0",
+            "group_id": "change-group:sha256:c462172fe56dbc2c4d1769652f5f0d7fce9363269c9cc107cbfcbf87bf4c368c",
+            "primary_unit_ids": [
+              "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+                "review_question_id": "RQ-resource"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:235db4c38b1d9a9df8e83dbaf620f954eb1913aa43e8621d7741ae2ba6a93986",
+              "supporting-segment:sha256:28e9bc4c7f9ff809900ff569c3628d0d4f9955cb8b59fb823701ecf896e7030e"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:327579e0106aa0ab3a76675a709e93cc30734065659546501cfd57fc19267fc8",
+              "relation-edge:sha256:543f660d235e02f97cebaa9d994eacf1f68a0b8705ccd7dcb30908ea2f4416bd"
+            ],
+            "budget": {
+              "limit": 74,
+              "primary_tokens": 23,
+              "supporting_tokens": 51,
+              "total_tokens": 74
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          },
+          {
+            "bundle_id": "review-context-bundle:sha256:6421a9c7c121ca3be46f12d9b237bac90918a580bfa09964ac45fbb3701a6a7c",
+            "group_id": "change-group:sha256:c462172fe56dbc2c4d1769652f5f0d7fce9363269c9cc107cbfcbf87bf4c368c",
+            "primary_unit_ids": [
+              "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2"
+            ],
+            "primary_question_bindings": [
+              {
+                "primary_unit_id": "src/CP016_head.ets@function:changedResource:L1-L3:Rhead:S89b9be0e40ac02a6b65a86f8a6d3f2961a328d6bbf686ecf339317681d7dd6f2",
+                "review_question_id": "RQ-resource"
+              }
+            ],
+            "supporting_segment_ids": [
+              "supporting-segment:sha256:235db4c38b1d9a9df8e83dbaf620f954eb1913aa43e8621d7741ae2ba6a93986",
+              "supporting-segment:sha256:d4a8558a62d5a8f0186a91c4866c72c8eafc032abe5d9fd92028168ce4f91c04"
+            ],
+            "relation_edge_ids": [
+              "relation-edge:sha256:105c6301e5d28b60e401fede3cfe170c70452adc15a62980e5b64b2657540cb0",
+              "relation-edge:sha256:543f660d235e02f97cebaa9d994eacf1f68a0b8705ccd7dcb30908ea2f4416bd"
+            ],
+            "budget": {
+              "limit": 74,
+              "primary_tokens": 23,
+              "supporting_tokens": 51,
+              "total_tokens": 74
+            },
+            "dispatch_allowed": true,
+            "diagnostics": []
+          }
+        ],
+        "omitted_candidate_ids": [],
+        "omitted_candidates": [],
+        "budget_summary": {
+          "limit": 74,
+          "total_primary_tokens": 46,
+          "total_supporting_tokens": 102,
+          "total_omitted_tokens": 0,
+          "max_bundle_tokens": 74,
+          "dispatchable_bundles": 2,
+          "blocked_bundles": 0
+        },
+        "diagnostics": []
+      }
+    }
+  ]
+}

@@ -103,15 +103,15 @@ ReviewUnit 的准确性不能只看“切出的代码读起来是否合理”，
 | RU-2 | 保留现有 16-case ReviewUnit v1；目标 `14/16` | owner precision/recall、changed-line coverage、Parser diagnostics recall、输入乱序确定性 |
 | RU-3 | FileAnalysis/FactOccurrence 与 CountingParser 测试 | 每个 source revision Parser 调用次数 `= 1`、exact fact provenance 完整率 |
 | RU-4 | 新建 ChangeSet Golden 和 ReviewUnit v2 Golden | supported ChangeAtom coverage、changed-line coverage、base/head source fidelity 均为 `100%` |
-| RU-5 | 先建 12～16 个 Context Golden case，再写 Planner | Primary coverage `100%`、required-context recall at budget、relation precision/recall、distractor rejection、budget compliance |
+| RU-5 | 16-case ContextPlan Golden + Planner 已完成 | Primary multiset coverage、feasible-required recall、used-edge precision/recall、distractor rejection、dispatchable budget compliance 均为 `100%` |
 
 现有 v1 expected 是人工目标真值，后续阶段不得用 current baseline 或 Parser output 覆盖它。
 RU-4 之所以另建 v2 Golden，是因为 base/head、deletion-only、rename 和精确 ChangeAtom 改变
 了输入契约；这些语义不能偷塞进只表达新文件 hunk 的 v1 manifest。
 
-RU-5 的 12～16 个自包含 case 至少覆盖生命周期配对、状态写入与 UI 读取、直接 helper、
-caller/signature 影响、同名干扰项、强弱关系分组、无关 Primary 隔离、替代证据、低中高预算、
-超大 Primary、full review、deletion/base context 和 Parser/index degraded。每个 case 至少冻结：
+RU-5 的 16 个自包含 case 覆盖单/多 Primary、直接 helper/caller 类型、同名干扰项、强弱关系
+分组、无关 Primary 隔离、低中高预算、超大 Primary、base/head、degraded relation、safe owner
+boundary、多问题和 multi-bundle。每个 case 至少冻结：
 
 ```text
 全部 Primary
@@ -242,7 +242,7 @@ LLM usage/latency
 Parser Golden baseline 必须逐 case 完整匹配
 strict L1 必须全部为 L1，不能以 optional pytest skip 代替
 ReviewUnit Golden harness、schema 和 strict current baseline 测试全通过
-RU-2 phase target 达到 14/16，RU-4/RU-5 未实现 case 不得伪装通过
+RU-2 phase target 保持 14/16；冻结的 v1 deletion/budget 红灯不得被后续 expected 反向覆盖
 RU-3 每个 source revision 严格只调用一次 Parser
 RU-4 supported ChangeAtom、changed line 和 base/head fidelity 均为 100%
 RU-5 Primary coverage 为 100%，所有可调度 Bundle 不超过 code context budget
@@ -313,7 +313,7 @@ CI 质量门禁
 ## 16. 下一步
 
 1. RU-2 已达到现有 ReviewUnit v1 Golden 的 `14/16` phase target，并保留两个后续阶段红灯。
-2. 取得单独授权后，为 RU-3 建立 Parser v2 FactOccurrence 和 parse-once 的独立门禁，保持 Parser v1 Golden 无漂移。
-3. 为 RU-4 新建 ChangeSet Golden 与 ReviewUnit v2 Golden。
-4. 为 RU-5 先建立 12～16 个 Context Golden case，再实现 Planner 并通过 require-perfect。
-5. `ContextPlanResult` 稳定后，再分别建立 Retrieval、Rules 和 Final Review Golden。
+2. RU-3 已建立 Parser v2 FactOccurrence 和 parse-once 独立门禁，Parser v1 Golden 无漂移。
+3. RU-4 已建立 ChangeSet Golden 与 ReviewUnit v2 Golden。
+4. RU-5 已建立 16-case Context Golden，Planner 已通过 require-perfect、strict baseline 和预算门禁。
+5. 下一阶段分别建立 Retrieval、Rules 和 Final Review Golden；不得反向改变 `ContextPlanResult` truth。

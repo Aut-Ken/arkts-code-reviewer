@@ -1,7 +1,7 @@
 ---
 title: 03 ReviewUnit 上下文规划模块
 status: canonical
-implementation: partial
+implementation: complete
 updated: 2026-07-12
 ---
 
@@ -16,15 +16,16 @@ ChangeSet / 当前 FileHunk
 + Parser File Facts
 -> 找到改动所属语义 owner
 -> 生成稳定、唯一、可解释的 ReviewUnit
--> 在后续阶段扩展相关上下文和预算裁剪
+-> 扩展 typed related context、按问题分 bundle 并执行源码预算
 ```
 
 它负责上下文选择和坐标，不负责判断代码好坏、检索知识或生成 Finding。
 
-当前实现已经完成 RU-0～RU-4：独立 ReviewUnit Golden、collision-safe identity、多 owner、
+当前实现已经完成 RU-0～RU-5：独立 ReviewUnit Golden、collision-safe identity、多 owner、
 质量传播、基于 Parser v2 occurrence 的 parse-once/Unit fact scope，以及精确 ChangeSet 的
-base/head Unit 映射。它仍不是完整上下文规划器；有界关联上下文和预算留给 RU-5。Parser v1、
-FileAnalysis、ChangeSet 和两代 ReviewUnit Golden 继续保持独立。
+base/head Unit 映射、safe related context、ChangeGroup、多 bundle 和真实源码预算。
+`ContextPlanResult` 是模块完成边界；Parser v1、FileAnalysis、ChangeSet、两代 ReviewUnit
+Golden 和 ContextPlan Golden 继续保持独立。
 
 ## 2. 当前文件和调用链
 
@@ -37,15 +38,18 @@ FileAnalysis、ChangeSet 和两代 ReviewUnit Golden 继续保持独立。
 | `change_review.py` | ChangeAtom 到 base/head declaration/region owner 的 build-v3 映射 |
 | `review_units.py` | full/diff declaration 选择、fallback、HostSummary 和去重 |
 | `unit_facts.py` | 按 owner/span 从 FileAnalysis 投影 `unit_exact/file_hints` |
-| `analyzer.py` | 按 source revision parse-once、调用 Unit Builder 和兼容 RetrievalUnit 组装 |
+| `context_planning.py` | typed relation、ChangeGroup、Supporting、multi-bundle 和 `arkts-code-token-v1` |
+| `analyzer.py` | parse-once、完整 Primary 生产门禁、safe boundary 校验和兼容 RetrievalUnit 组装 |
 | `tagger.py` | 从 Unit exact facts 派生 Tags，再合并保守 routing signals |
 | `parser_validation/packager.py` | GLM 质检 snapshot；不是 ReviewUnit accuracy oracle |
 | `review_unit_validation/golden.py` | 独立 Golden schema、loader、evaluator 和 baseline 校验 |
 | `change_set_validation/golden.py` | 独立 ChangeSet Golden、完整比较和 fail-closed loader |
 | `review_unit_v2_validation/golden.py` | 独立 base/head ReviewUnit v2 Golden 与 fail-closed loader |
+| `context_validation/golden.py` | 独立 16-case ContextPlan truth、选择重放、指标和 baseline 校验 |
 | `tools/evaluate_review_unit_golden.py` | strict baseline、phase target 和 full target 门禁 |
 | `tools/evaluate_change_set_golden.py` | ChangeSet strict baseline 与 require-perfect 门禁 |
 | `tools/evaluate_review_unit_v2_golden.py` | ReviewUnit v2 strict baseline 与 require-perfect 门禁 |
+| `tools/evaluate_context_plan_golden.py` | ContextPlan strict baseline 与 require-perfect 门禁 |
 
 真实调用链：
 
@@ -75,6 +79,10 @@ ChangedFileInput / ChangeAtomInput / CodeSourceSnapshot
 -> FileAnalysisParser.parse_file(base/head source)   每个 source_ref_id 一次
 -> ChangeSetReviewUnitBuilder                        old/new lines -> region/declaration owner
 -> ReviewUnitBuildResult                             review-unit-build-v3
+-> CodeAnalyzer.plan_context(完整 AnalysisResult)
+-> exact relation + declaration/region provenance
+-> ChangeGroup -> 按 review question 分 ReviewContextBundle
+-> ContextPlanResult                                context-plan-v1
 ```
 
 ## 3. 当前输入
@@ -238,8 +246,8 @@ ReviewUnit(
 | high | diff 文件无 hunk 时走 full | RU-2 已修复 | 现在返回零 Unit 和文件级 diagnostic |
 | medium | 多行 import 被逐行重建 | RU-3 已修复 | import region/binding 从完整文件解析，不再合成源码 |
 | medium | Parser degraded 不进入 Unit diagnostics | RU-2 已修复 | 质量 diagnostic 与 `context_degraded` 强绑定 |
-| medium | 固定 160/20 行阈值 | RU-5 待解决 | 不是 token/context budget |
-| medium | token budget 只写入输出 | RU-5 待解决 | 不执行裁剪；传入 0 还会回退默认值 |
+| medium | 固定 160/20 行阈值 | 边界明确 | 只用于 Primary UI 选择；不再冒充 token/context budget |
+| medium | 兼容 token budget 只写入旧输出 | RU-5 已隔离修复 | 新 `code_context_budget` 真正执行；0 会 fail-closed，不回退默认值 |
 | medium | hunk 缺少精确 changed/deleted lines | RU-4 已修复 | ChangeSet 路径区分 base deleted/head added；旧 FileHunk 保持兼容语义 |
 
 ## 10. ReviewUnit v1 过渡输出
@@ -480,7 +488,7 @@ position、multiline replacement 和 normalizer version identity。16-case Revie
 `CodeAnalyzer.analyze_change_set(...)` 对每个 base/head `CodeSourceRef` 恰好解析一次。RU-4 未修改
 Parser v1/v2 行为、Tagger 事实语义或 RetrievalUnit 跨模块合同。
 
-### RU-5：related context 和 token budget
+### RU-5：related context 和 token budget（已完成）
 
 RU-5 把全部 Primary ReviewUnit 扩展成有界、可解释的上下文计划，产出边界到此为止：
 
@@ -493,8 +501,11 @@ ReviewContextBundle
 ContextPlanResult
 ```
 
-它可以消费已注入、固定 revision、带 provenance 的有界关系查询结果，但不负责构建或递归
-扫描仓库索引。没有精确关系来源时应降级，不能靠同名、同文件或词法相似伪造联系。
+生产入口是 `CodeAnalyzer.plan_context(...)`。它只接受完整的 RU-4 `AnalysisResult`，先执行
+build-v3/ChangeSet 图校验，再把其中所有 ReviewUnit 作为 Primary；调用方不能自行传一个
+Primary 子集。它可以消费已注入、固定 revision、带 provenance 的有界关系查询结果和额外
+`CodeSourceSnapshot + FileAnalysis`，但不负责构建或递归扫描仓库索引。没有精确关系来源时
+应降级，不能靠同名、同文件或词法相似伪造联系。
 
 基本规划规则：
 
@@ -509,7 +520,23 @@ ContextPlanResult
 6. 同一组 Primary 和必要 supporting 按预算拆成一个或多个 ReviewContextBundle，最终由
    ContextPlanResult 汇总完整选择、遗漏、预算和降级信息。
 
-`code_context_budget` 是本模块在 RU-5 真正执行的源码预算，只计算 Primary/Supporting 的原始
+replacement 的 base/head 是上述规则的内建精确关系：只要两个 Primary 共享同一个
+`ChangeAtom`，Planner 就生成 strong + exact `change_correspondence`，evidence 是共享 atom ID，
+并把改前/改后 owner 放入同一个 ChangeGroup。它不使用 qualified name 或文本相似度，因此
+不会把无 provenance 的同名代码错误配对。该 relation type 只能由 Planner 内部派生；生产
+调用方注入同名 edge 或让 Supporting candidate 使用它都会 fail-closed。
+
+RU-4 若仍有未归属 `ChangeAtom`，或 ChangeSet 中包含无法解析为文本 owner 的 binary
+`ChangedFile`，其稳定 ID 必须进入 `ContextPlanResult.blocking_change_ids`。Planner 会输出
+`context_insufficient` 并阻止相关计划调度；不能因为当前没有可见 Primary 就把计划当成完整。
+
+Supporting 的安全边界不是调用方口头声明。`ContextCandidate.provenance_ref` 必须指向目标
+`DeclarationOccurrence` 或 `ReviewRegion`，RelationEdge evidence 必须包含这个 owner；生产入口
+再把 owner、source revision、UTF-16 range 和 structural quality 与 FileAnalysis 逐项交叉
+验证。任意字符串/表达式中段、悬空 owner、recovered boundary 伪装成 exact relation 都会
+fail-closed。额外文件也必须显式注入固定 source 和 FileAnalysis，不会触发仓库扫描。
+
+`code_context_budget` 是本模块在 RU-5 真正执行的 per-bundle 源码预算，只计算 Primary/Supporting 的原始
 源码 token；关系元数据、提示模板和模型输出预算属于后续模块，不得混算。裁剪顺序必须
 确定，并遵守：
 
@@ -519,9 +546,20 @@ ContextPlanResult
 - 单个 Primary 已超限且无法安全切分时，返回 `primary_exceeds_budget/context_insufficient`，
   并令该 bundle 不可调度；不能谎报预算满足。
 
-RU-5 先建立独立 Context Golden，再实现 Planner。Golden 至少测量 Primary coverage、关系
-precision/recall、required context recall at budget、distractor rejection、预算利用率和输入
-顺序稳定性。完成条件是所有支持 case require-perfect，且每个可调度 bundle 不超预算。
+实际分配按 `review_question_id` 进行：同一个 ChangeGroup 可形成多个 bundle，每个 bundle
+仍携带该组全部 Primary，但只激活一个问题的 bindings。required supporting 必须在该问题的
+每个可调度 bundle 中重复；helpful supporting 按稳定 candidate 顺序 first-fit 分箱。这样多个
+片段合计超过单次预算时仍可分别送往后续模型，而不是退化成 Top-1；若 required 自身无法和
+Primary 一起容纳，则只返回不可调度 bundle，不把残缺上下文伪装成充分。
+
+token 口径冻结为 `arkts-code-token-v1`：ArkTS syntax 和 trivia chunk 均按
+`max(1, ceil(UTF-8 bytes / 4))` 计费。它是确定、可复放的 code token 单位，不冒充某个未来
+LLM 的 prompt tokenizer；Prompt 模板、Evidence 和输出 token 仍由后续模块单独预算。
+
+RU-5 的独立 16-case Context Golden 测量 Primary multiset coverage、实际使用 relation 的
+precision/recall、feasible required context recall、insufficient 数量、distractor rejection、
+可调度 bundle 预算利用率和各输入维度排列稳定性。完成条件是 require-perfect、strict baseline
+均通过，且每个可调度 bundle 不超预算。
 
 RU-5 明确不实现 Knowledge/Retrieval、Rules、Prompt、LLM 调用、Output/Report、GitCode 或
 RepositoryCodeIndexBuilder。这些后续模块只能消费 `ContextPlanResult`，不能反向改变本模块
@@ -565,7 +603,21 @@ ReviewUnit baseline 都不是 expected 真值，expected 必须人工标注。
 expected 来自人工审阅的 ChangeSet/source/FileAnalysis 组合，不由当前实现或旧 baseline 自动
 生成。
 
-## 13. 目标算法概览
+### 12.3 RU-5 ContextPlan 集
+
+`tests/golden/context_plan/` 与前三套 Golden 独立，16 个 self-contained case 覆盖：单 Primary、
+无关 Primary、strong exact 分组、weak/same-file 不分组、required/helpful 选择、distractor、
+长字符串/注释/Unicode token 边界、Primary 超限、required 超限、多问题、base/head、各输入
+维度独立排列、required+degraded 和 multi-bundle 分箱。fixture 同时包含 declaration、region、
+fallback 和同 Unit 多 atom 形态；expected 与 current baseline 分离。
+
+loader 独立重放 typed relation、necessity 优先级、遗漏原因、required 原子性、first-fit 分箱、
+diagnostic subjects、bundle 图和预算汇总。它拒绝重复 key/case/alias、未知或缺失字段、source
+hash/revision/span/UTF-16 漂移、不安全 owner provenance、悬空图、非稳定顺序、路径逃逸和
+manifest/source/baseline symlink；`is_perfect` 还必须验证完整报告 schema、计数、repeat 和所有
+permutation 结果，不能只伪造 `matched=true`。
+
+## 13. 已实现算法概览
 
 ### 13.1 Change owner
 
@@ -659,7 +711,7 @@ RU-0/RU-1  已完成：Golden harness + collision-safe identity
 RU-2        multi-owner + quality + HostSummary target 通过
 RU-3        已完成：Parser v2 occurrence Golden + parse-once target 通过
 RU-4        已完成：ChangeSet 14-case + ReviewUnit v2 16-case target
-RU-5        待实现：Context Golden require-perfect + 预算门禁
+RU-5        已完成：16-case Context Golden require-perfect + strict baseline + 预算门禁
 ```
 
 每阶段分别实现、运行该阶段 Golden、全量 pytest、Parser v1 release gate、ruff 与
