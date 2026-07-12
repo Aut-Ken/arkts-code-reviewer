@@ -27,6 +27,10 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/arkts_code_reviewer"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"config/tags.yaml" = "arkts_code_reviewer/feature_routing/defaults/tags.yaml"
+"config/dimensions.yaml" = "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"

@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from types import MappingProxyType
 from typing import Literal, Protocol, Self
@@ -16,8 +17,18 @@ type FeatureStatus = Literal["Active", "Draft", "Deprecated"]
 type RetrievalPolicy = Literal["signal_required", "always", "disabled"]
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_TAGS_PATH = _REPO_ROOT / "config" / "tags.yaml"
-DEFAULT_DIMENSIONS_PATH = _REPO_ROOT / "config" / "dimensions.yaml"
+_PACKAGED_DEFAULTS = Path(__file__).resolve().parent / "defaults"
+
+
+def _default_config_path(filename: str) -> Path:
+    packaged = _PACKAGED_DEFAULTS / filename
+    if packaged.is_file():
+        return packaged
+    return _REPO_ROOT / "config" / filename
+
+
+DEFAULT_TAGS_PATH = _default_config_path("tags.yaml")
+DEFAULT_DIMENSIONS_PATH = _default_config_path("dimensions.yaml")
 _TAG_ID_RE = re.compile(r"has_[a-z0-9_]+\Z")
 _DIMENSION_ID_RE = re.compile(r"DIM-[0-9]{2}\Z")
 _QUESTION_ID_RE = re.compile(r"RQ-[a-z0-9]+(?:-[a-z0-9]+)*\Z")
@@ -265,6 +276,29 @@ class FeatureConfig:
     review_questions_by_id: MappingProxyType[str, ReviewQuestionDefinition]
     fingerprint: str
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.tag_config, TagConfig):
+            raise ValueError("FeatureConfig.tag_config must use TagConfig")
+        if not isinstance(self.dimension_config, DimensionConfig):
+            raise ValueError("FeatureConfig.dimension_config must use DimensionConfig")
+        expected_tags = _sorted_mapping(self.tag_config.tags)
+        expected_dimensions = _sorted_mapping(self.dimension_config.dimensions)
+        expected_questions = _sorted_mapping(self.dimension_config.review_questions)
+        for actual, expected, context in (
+            (self.tags_by_id, expected_tags, "tags_by_id"),
+            (self.dimensions_by_id, expected_dimensions, "dimensions_by_id"),
+            (self.review_questions_by_id, expected_questions, "review_questions_by_id"),
+        ):
+            if not isinstance(actual, MappingProxyType) or dict(actual) != dict(expected):
+                raise ValueError(f"FeatureConfig.{context} does not match definitions")
+        _validate_references(expected_tags, expected_dimensions, expected_questions)
+        expected_fingerprint = _feature_fingerprint(
+            self.tag_config,
+            self.dimension_config,
+        )
+        if self.fingerprint != expected_fingerprint:
+            raise ValueError("FeatureConfig.fingerprint does not match definitions")
+
 
 def load_feature_config(
     tags_path: str | Path | None = None,
@@ -293,6 +327,11 @@ def load_feature_config(
         review_questions_by_id=questions_by_id,
         fingerprint=fingerprint,
     )
+
+
+@lru_cache(maxsize=1)
+def load_default_feature_config() -> FeatureConfig:
+    return load_feature_config(DEFAULT_TAGS_PATH, DEFAULT_DIMENSIONS_PATH)
 
 
 def _load_model[ModelT: BaseModel](
@@ -410,5 +449,6 @@ __all__ = [
     "TagConfig",
     "TagDefinition",
     "TagTriggers",
+    "load_default_feature_config",
     "load_feature_config",
 ]

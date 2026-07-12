@@ -53,6 +53,7 @@ from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.tagger import derive_tags, trigger_dimensions
 from arkts_code_reviewer.code_analysis.text_utils import extract_lines
 from arkts_code_reviewer.code_analysis.unit_facts import project
+from arkts_code_reviewer.feature_routing.engine import FeatureRouter
 
 
 class CodeAnalyzer:
@@ -77,6 +78,7 @@ class CodeAnalyzer:
         )
         self.unit_builder = unit_builder or ReviewUnitBuilder()
         self.token_budget = token_budget
+        self.feature_router = FeatureRouter()
 
     def analyze_files(
         self,
@@ -185,9 +187,10 @@ class CodeAnalyzer:
             file_results=file_results,
         )
         review_units = review_unit_build_result.flatten_units()
+        feature_routing_result = self.feature_router.route(unit_fact_scopes)
 
         mr_context = MrContext(
-            triggered_dimensions=trigger_dimensions(exact_tags | routing_tags),
+            triggered_dimensions=list(feature_routing_result.mr_dimensions),
             token_budget=token_budget or self.token_budget,
         )
         return AnalysisResult(
@@ -202,6 +205,7 @@ class CodeAnalyzer:
             review_unit_build_result=review_unit_build_result,
             file_parse_results=file_parse_results,
             unit_fact_scopes=unit_fact_scopes,
+            feature_routing_result=feature_routing_result,
         )
 
     def analyze_file(
@@ -571,12 +575,11 @@ class CodeAnalyzer:
                 )
             )
 
+        feature_routing_result = self.feature_router.route(unit_fact_scopes)
         result = AnalysisResult(
             retrieval_query=RetrievalQuery(
                 mr_context=MrContext(
-                    triggered_dimensions=trigger_dimensions(
-                        exact_tags | routing_tags
-                    ),
+                    triggered_dimensions=list(feature_routing_result.mr_dimensions),
                     token_budget=token_budget or self.token_budget,
                 ),
                 units=retrieval_units,
@@ -590,6 +593,7 @@ class CodeAnalyzer:
             file_parse_results=parse_results,
             unit_fact_scopes=unit_fact_scopes,
             change_set=change_set,
+            feature_routing_result=feature_routing_result,
         )
         result.validate()
         return result

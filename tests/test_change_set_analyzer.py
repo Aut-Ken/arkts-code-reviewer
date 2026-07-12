@@ -438,6 +438,18 @@ def test_change_set_analysis_keeps_unit_exact_separate_from_file_hints() -> None
     assert "has_network" not in head_retrieval.code_features.tags
     assert "has_network" in base_retrieval.routing_tags
     assert "has_network" in head_retrieval.routing_tags
+    assert result.feature_routing_result is not None
+    profiles = {
+        profile.unit_id: profile for profile in result.feature_routing_result.units
+    }
+    assert profiles[base_retrieval.unit_id or ""].exact_tags == ("has_navigation",)
+    assert profiles[head_retrieval.unit_id or ""].exact_tags == ("has_timer",)
+    assert profiles[base_retrieval.unit_id or ""].routing_tags == (
+        "has_navigation",
+        "has_network",
+    )
+    assert "RQ-network" not in profiles[base_retrieval.unit_id or ""].review_question_ids
+    assert "RQ-resource" in profiles[head_retrieval.unit_id or ""].review_question_ids
     assert result.unit_fact_scopes[0].unit_exact.apis == ("router.pushUrl",)
     assert result.unit_fact_scopes[1].unit_exact.apis == ("setInterval",)
     assert result.unit_fact_scopes[0].file_hints.apis == (
@@ -462,6 +474,56 @@ def test_change_set_analysis_keeps_unit_exact_separate_from_file_hints() -> None
             .declaration_id,
         ),
     ]
+    assert result.to_dict()["feature_routing_result"] == (
+        result.feature_routing_result.to_dict()
+    )
+    assert result.to_dict()["schema_version"] == "analysis-result-v1"
+
+    with pytest.raises(ValueError, match="unregistered Tag"):
+        replace(
+            base_retrieval.code_features,
+            tags=["fabricated_tag"],
+        )
+    with pytest.raises(ValueError, match="unregistered IDs"):
+        replace(base_retrieval, dimensions=["DIM-99"])
+    with pytest.raises(ValueError, match="integer >= 1"):
+        replace(result.retrieval_query.mr_context, token_budget=-1)
+    with pytest.raises(ValueError, match="unregistered Dimension"):
+        replace(
+            result.retrieval_query.mr_context,
+            triggered_dimensions=["DIM-99"],
+        )
+    forged_retrieval = replace(
+        base_retrieval,
+        code_features=replace(
+            base_retrieval.code_features,
+            tags=["has_image"],
+        ),
+    )
+    forged_query = replace(
+        result.retrieval_query,
+        units=[forged_retrieval, head_retrieval],
+    )
+    with pytest.raises(ValueError, match="compatibility view"):
+        replace(result, retrieval_query=forged_query)
+    with pytest.raises(ValueError, match="must use FeatureRoutingResult"):
+        replace(result, feature_routing_result=None)
+    with pytest.raises(ValueError, match="schema_version"):
+        replace(result, schema_version="analysis-result-legacy")
+    detached_retrieval = replace(base_retrieval, unit_fact_scope=None)
+    detached_query = replace(
+        result.retrieval_query,
+        units=[detached_retrieval, head_retrieval],
+    )
+    with pytest.raises(ValueError, match="retain their UnitFactScope"):
+        replace(result, retrieval_query=detached_query)
+    renamed_retrieval = replace(base_retrieval, unit_ref="forged@unit")
+    renamed_query = replace(
+        result.retrieval_query,
+        units=[renamed_retrieval, head_retrieval],
+    )
+    with pytest.raises(ValueError, match="align by unit_ref"):
+        replace(result, retrieval_query=renamed_query)
 
 
 def test_plan_context_uses_every_unit_from_complete_change_analysis() -> None:

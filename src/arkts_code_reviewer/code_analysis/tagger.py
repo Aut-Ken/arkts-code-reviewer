@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from arkts_code_reviewer.code_analysis.models import CodeFacts
-from arkts_code_reviewer.feature_routing.config import load_feature_config
+from arkts_code_reviewer.feature_routing.config import load_default_feature_config
 from arkts_code_reviewer.feature_routing.matcher import (
     active_dimension_ids,
     active_tag_ids,
 )
 
-_FEATURE_CONFIG = load_feature_config()
+_FEATURE_CONFIG = load_default_feature_config()
 
 
 def derive_tags(facts: CodeFacts) -> set[str]:

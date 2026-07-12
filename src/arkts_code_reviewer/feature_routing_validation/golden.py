@@ -10,8 +10,9 @@ from typing import Any
 from arkts_code_reviewer.code_analysis.file_analysis_models import (
     CodeSourceRef,
     ScopedFacts,
+    UnitFactScope,
 )
-from arkts_code_reviewer.code_analysis.tagger import derive_tags, trigger_dimensions
+from arkts_code_reviewer.feature_routing.engine import FeatureRouter
 
 MANIFEST_SCHEMA_VERSION = "feature-routing-golden-v1"
 REPORT_SCHEMA_VERSION = "feature-routing-report-v1"
@@ -188,25 +189,30 @@ class FeatureGoldenCase:
 
     def evaluate(self, *, reverse_units: bool = False) -> dict[str, Any]:
         units: Sequence[GoldenUnit] = self.units[::-1] if reverse_units else self.units
-        actual_units: list[dict[str, object]] = []
-        all_tags: set[str] = set()
-        for unit in units:
-            exact_tags = _current_tags(unit.unit_exact)
-            routing_tags = _current_tags(unit.file_hints)
-            all_tags.update(exact_tags)
-            all_tags.update(routing_tags)
-            actual_units.append(
-                {
-                    "unit_id": unit.unit_id,
-                    "source_ref_id": unit.source_ref_id,
-                    "exact_tags": sorted(exact_tags),
-                    "routing_tags": sorted(routing_tags),
-                    "dimensions": trigger_dimensions(exact_tags),
-                }
-            )
+        result = FeatureRouter().route(
+            [
+                UnitFactScope(
+                    unit_id=unit.unit_id,
+                    source_ref_id=unit.source_ref_id,
+                    unit_exact=unit.unit_exact,
+                    file_hints=unit.file_hints,
+                    diagnostics=unit.scope_diagnostics,  # type: ignore[arg-type]
+                )
+                for unit in units
+            ]
+        )
         return {
-            "units": sorted(actual_units, key=lambda item: str(item["unit_id"])),
-            "mr_dimensions": trigger_dimensions(all_tags),
+            "units": [
+                {
+                    "unit_id": profile.unit_id,
+                    "source_ref_id": profile.source_ref_id,
+                    "exact_tags": list(profile.exact_tags),
+                    "routing_tags": list(profile.routing_tags),
+                    "dimensions": list(profile.dimensions),
+                }
+                for profile in result.units
+            ],
+            "mr_dimensions": list(result.mr_dimensions),
         }
 
 
@@ -471,13 +477,6 @@ def _scoped_facts(value: object, context: str) -> ScopedFacts:
     return ScopedFacts(**payload)
 
 
-def _current_tags(facts: ScopedFacts) -> set[str]:
-    tags = derive_tags(facts.to_code_facts("feature-routing-golden.ets"))
-    if facts.resource_references:
-        tags.add("has_resource_ref")
-    return tags
-
-
 def _target_tags(facts: ScopedFacts) -> set[str]:
     components = set(facts.components)
     apis = set(facts.apis)
@@ -575,7 +574,7 @@ def evaluate_golden_suite(suite: FeatureGoldenSuite) -> dict[str, Any]:
     return {
         "schema_version": REPORT_SCHEMA_VERSION,
         "suite_id": suite.suite_id,
-        "implementation": "legacy-hardcoded-feature-routing",
+        "implementation": "formal-feature-router-v1",
         "manifest_sha256": suite.manifest_sha256,
         "case_count": len(rows),
         "matched_case_count": matched,

@@ -11,6 +11,7 @@ from arkts_code_reviewer.feature_routing.config import (
     TagConfig,
     TagDefinition,
     TagTriggers,
+    load_default_feature_config,
     load_feature_config,
 )
 
@@ -27,5 +28,6 @@ __all__ = [
     "TagConfig",
     "TagDefinition",
     "TagTriggers",
+    "load_default_feature_config",
     "load_feature_config",
 ]

@@ -249,20 +249,33 @@ def _analysis_fixture() -> tuple[AnalysisResult, ChangeSet]:
         )
         for unit in units
     ]
+    from arkts_code_reviewer.feature_routing.engine import FeatureRouter
+
+    feature_routing_result = FeatureRouter().route(scopes)
+    profiles_by_unit = {
+        profile.unit_id: profile for profile in feature_routing_result.units
+    }
     retrieval_units = [
         RetrievalUnit(
             unit_ref=unit.unit_ref,
-            code_features=CodeFeatures(),
+            code_features=CodeFeatures(
+                tags=list(profiles_by_unit[unit.unit_id].exact_tags)
+            ),
             intent_summary="fixture",
             unit_id=unit.unit_id,
             source_ref_id=unit.source_ref_id,
             unit_fact_scope=scope,
+            dimensions=list(profiles_by_unit[unit.unit_id].dimensions),
+            routing_tags=list(profiles_by_unit[unit.unit_id].routing_tags),
         )
         for unit, scope in zip(units, scopes, strict=True)
     ]
     result = AnalysisResult(
         retrieval_query=RetrievalQuery(
-            mr_context=MrContext(triggered_dimensions=[], token_budget=1024),
+            mr_context=MrContext(
+                triggered_dimensions=list(feature_routing_result.mr_dimensions),
+                token_budget=1024,
+            ),
             units=retrieval_units,
         ),
         review_units=units,
@@ -274,6 +287,7 @@ def _analysis_fixture() -> tuple[AnalysisResult, ChangeSet]:
         ],
         unit_fact_scopes=scopes,
         change_set=change_set,
+        feature_routing_result=feature_routing_result,
     )
     return result, change_set
 

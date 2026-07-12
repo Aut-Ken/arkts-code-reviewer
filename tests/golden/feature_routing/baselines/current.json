@@ -5,7 +5,7 @@
   "report": {
     "schema_version": "feature-routing-report-v1",
     "suite_id": "feature-routing-fr0",
-    "implementation": "legacy-hardcoded-feature-routing",
+    "implementation": "formal-feature-router-v1",
     "manifest_sha256": "d7aca20881e20de54352052f01604b23df31df945da74c36f26dec0e9cb86819",
     "case_count": 16,
     "matched_case_count": 16,

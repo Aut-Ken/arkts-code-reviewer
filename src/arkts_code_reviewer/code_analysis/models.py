@@ -23,6 +23,7 @@ if TYPE_CHECKING:
         OwnerRef,
         UnitFactScope,
     )
+    from arkts_code_reviewer.feature_routing.models import FeatureRoutingResult
 
 ParserLayer = Literal["L0", "L1", "parse_degraded"]
 AnalysisMode = Literal["full", "diff"]
@@ -37,6 +38,7 @@ DeclarationKind = Literal[
     "ui_block",
 ]
 REVIEW_UNIT_BUILD_SCHEMA_VERSION = "review-unit-build-v1"
+ANALYSIS_RESULT_SCHEMA_VERSION = "analysis-result-v1"
 
 
 @dataclass(frozen=True)
@@ -129,6 +131,27 @@ class CodeFeatures:
     decorators: list[str] = field(default_factory=list)
     apis: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        for values, context in (
+            (self.components, "components"),
+            (self.decorators, "decorators"),
+            (self.apis, "apis"),
+            (self.tags, "tags"),
+        ):
+            if not isinstance(values, list) or any(
+                not isinstance(value, str) or not value for value in values
+            ):
+                raise ValueError(f"CodeFeatures.{context} must contain strings")
+            if values != sorted(set(values)):
+                raise ValueError(f"CodeFeatures.{context} must be sorted and unique")
+        from arkts_code_reviewer.feature_routing.config import (
+            load_default_feature_config,
+        )
+
+        registered_tags = set(load_default_feature_config().tags_by_id)
+        if not set(self.tags).issubset(registered_tags):
+            raise ValueError("CodeFeatures.tags contains unregistered Tag IDs")
 
     @classmethod
     def from_facts(cls, facts: CodeFacts, tags: set[str]) -> CodeFeatures:
@@ -987,6 +1010,15 @@ class RetrievalUnit:
                 raise ValueError(
                     f"RetrievalUnit.{name} must be sorted and unique"
                 )
+        from arkts_code_reviewer.feature_routing.config import (
+            load_default_feature_config,
+        )
+
+        feature_config = load_default_feature_config()
+        if not set(self.dimensions).issubset(feature_config.dimensions_by_id):
+            raise ValueError("RetrievalUnit.dimensions contains unregistered IDs")
+        if not set(self.routing_tags).issubset(feature_config.tags_by_id):
+            raise ValueError("RetrievalUnit.routing_tags contains unregistered IDs")
         if self.unit_fact_scope is not None:
             from arkts_code_reviewer.code_analysis.file_analysis_models import (
                 UnitFactScope,
@@ -1022,11 +1054,44 @@ class MrContext:
     triggered_dimensions: list[str]
     token_budget: int
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.triggered_dimensions, list) or any(
+            not isinstance(value, str) or not value
+            for value in self.triggered_dimensions
+        ):
+            raise ValueError("MrContext.triggered_dimensions must contain strings")
+        if self.triggered_dimensions != sorted(set(self.triggered_dimensions)):
+            raise ValueError(
+                "MrContext.triggered_dimensions must be sorted and unique"
+            )
+        if (
+            not isinstance(self.token_budget, int)
+            or isinstance(self.token_budget, bool)
+            or self.token_budget < 1
+        ):
+            raise ValueError("MrContext.token_budget must be an integer >= 1")
+        from arkts_code_reviewer.feature_routing.config import (
+            load_default_feature_config,
+        )
+
+        if not set(self.triggered_dimensions).issubset(
+            load_default_feature_config().dimensions_by_id
+        ):
+            raise ValueError("MrContext contains unregistered Dimension IDs")
+
 
 @dataclass(frozen=True)
 class RetrievalQuery:
     mr_context: MrContext
     units: list[RetrievalUnit]
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.mr_context, MrContext):
+            raise ValueError("RetrievalQuery.mr_context must use MrContext")
+        if not isinstance(self.units, list) or any(
+            not isinstance(unit, RetrievalUnit) for unit in self.units
+        ):
+            raise ValueError("RetrievalQuery.units must contain RetrievalUnit values")
 
 
 @dataclass
@@ -1055,11 +1120,21 @@ class AnalysisResult:
         kw_only=True,
     )
     change_set: ChangeSet | None = field(default=None, kw_only=True)
+    feature_routing_result: FeatureRoutingResult = field(kw_only=True)
+    schema_version: str = field(
+        default=ANALYSIS_RESULT_SCHEMA_VERSION,
+        kw_only=True,
+    )
 
     def __post_init__(self) -> None:
         self.validate()
 
     def validate(self) -> None:
+        if self.schema_version != ANALYSIS_RESULT_SCHEMA_VERSION:
+            raise ValueError(
+                f"AnalysisResult.schema_version must be "
+                f"{ANALYSIS_RESULT_SCHEMA_VERSION!r}"
+            )
         if not isinstance(self.review_units, list) or any(
             not isinstance(unit, ReviewUnit) for unit in self.review_units
         ):
@@ -1135,6 +1210,14 @@ class AnalysisResult:
                     raise ValueError(
                         "AnalysisResult Unit scopes must align by source_ref_id"
                     )
+                if retrieval_unit.unit_ref != unit.unit_ref:
+                    raise ValueError(
+                        "AnalysisResult RetrievalUnits must align by unit_ref"
+                    )
+                if retrieval_unit.unit_fact_scope != scope:
+                    raise ValueError(
+                        "AnalysisResult RetrievalUnits must retain their UnitFactScope"
+                    )
             from arkts_code_reviewer.code_analysis.unit_facts import project
 
             parse_results_by_source = {
@@ -1159,6 +1242,45 @@ class AnalysisResult:
                     raise ValueError(
                         "AnalysisResult UnitFactScope must equal occurrence projection"
                     )
+        from arkts_code_reviewer.feature_routing.models import FeatureRoutingResult
+
+        if not isinstance(self.feature_routing_result, FeatureRoutingResult):
+            raise ValueError(
+                "AnalysisResult.feature_routing_result must use FeatureRoutingResult"
+            )
+        self.feature_routing_result.validate_replay(self.unit_fact_scopes)
+        profiles_by_unit = {
+            profile.unit_id: profile
+            for profile in self.feature_routing_result.units
+        }
+        if set(profiles_by_unit) != set(scope_ids):
+            raise ValueError(
+                "AnalysisResult FeatureRoutingResult must cover every UnitFactScope"
+            )
+        for retrieval_unit in self.retrieval_query.units:
+            if retrieval_unit.unit_id is None:
+                raise ValueError(
+                    "Feature-routed RetrievalUnit requires unit_id"
+                )
+            profile = profiles_by_unit.get(retrieval_unit.unit_id)
+            if profile is None:
+                raise ValueError(
+                    "Feature-routed RetrievalUnit has no UnitFeatureProfile"
+                )
+            if (
+                retrieval_unit.code_features.tags != list(profile.exact_tags)
+                or retrieval_unit.dimensions != list(profile.dimensions)
+                or retrieval_unit.routing_tags != list(profile.routing_tags)
+            ):
+                raise ValueError(
+                    "RetrievalUnit compatibility view must match FeatureRoutingResult"
+                )
+        if self.retrieval_query.mr_context.triggered_dimensions != list(
+            self.feature_routing_result.mr_dimensions
+        ):
+            raise ValueError(
+                "MR dimensions must match FeatureRoutingResult"
+            )
         if (
             self.review_unit_build_result is not None
             and self.review_unit_build_result.schema_version
@@ -1201,6 +1323,7 @@ class AnalysisResult:
     def to_dict(self) -> dict[str, object]:
         self.validate()
         payload: dict[str, object] = {
+            "schema_version": self.schema_version,
             "retrieval_query": asdict(self.retrieval_query),
             "review_units": [asdict(unit) for unit in self.review_units],
             "metadata": asdict(self.metadata),
@@ -1214,6 +1337,7 @@ class AnalysisResult:
                 for result in self.file_parse_results
             ],
             "unit_fact_scopes": [scope.to_dict() for scope in self.unit_fact_scopes],
+            "feature_routing_result": self.feature_routing_result.to_dict(),
         }
         if self.change_set is not None:
             payload["change_set"] = self.change_set.to_dict()

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import io
 import re
+import tomllib
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -265,3 +267,33 @@ def test_fingerprint_changes_when_canonical_content_changes(tmp_path: Path) -> N
     changed = load_feature_config(tags_path, dimensions_path)
 
     assert changed.fingerprint != default.fingerprint
+
+
+def test_feature_config_rejects_forged_fingerprint() -> None:
+    config = load_feature_config()
+
+    with pytest.raises(ValueError, match="fingerprint does not match"):
+        replace(
+            config,
+            fingerprint="feature-config:sha256:" + ("0" * 64),
+        )
+
+
+def test_default_configs_are_mapped_into_the_wheel() -> None:
+    pyproject = tomllib.loads(
+        (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(
+            encoding="utf-8"
+        )
+    )
+    force_include = pyproject["tool"]["hatch"]["build"]["targets"]["wheel"][
+        "force-include"
+    ]
+
+    assert force_include == {
+        "config/dimensions.yaml": (
+            "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
+        ),
+        "config/tags.yaml": "arkts_code_reviewer/feature_routing/defaults/tags.yaml",
+    }
+    assert DEFAULT_TAGS_PATH.is_file()
+    assert DEFAULT_DIMENSIONS_PATH.is_file()
