@@ -2,18 +2,25 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from arkts_code_reviewer.code_analysis.arkts_lexicon import (
+    LIFECYCLE_SYMBOLS,
+    STATE_DECORATORS,
+)
 from arkts_code_reviewer.code_analysis.models import (
     CodeFacts,
     Declaration,
     FileHunk,
     HostSummary,
+    ParserQuality,
     ReviewUnit,
     ReviewUnitDiagnostic,
+    ReviewUnitFileResult,
     ReviewUnitSpan,
     SourceSpan,
 )
@@ -301,38 +308,29 @@ def _evaluate_case(
     error: str | None = None
 
     try:
-        units = _run_builder(case, builder, source, case.hunks)
-        target_units = [_unit_projection(unit) for unit in units]
-        legacy_units = [_legacy_unit_projection(unit) for unit in units]
+        file_result = _run_builder(case, builder, source, case.hunks)
+        first_snapshot = _file_result_snapshot(file_result)
+        units = file_result.units
+        target_units = first_snapshot["units"]
+        legacy_units = first_snapshot["legacy_units"]
         actual = {
             "units": target_units,
-            "diagnostics": [],
+            "diagnostics": first_snapshot["diagnostics"],
         }
+        invariant_violations.extend(_file_result_invariants(case, file_result, source))
         invariant_violations.extend(_unit_invariants(case, units, source))
         repeated = _run_builder(case, builder, source, case.hunks)
-        repeat_snapshot = (
-            [_unit_projection(unit) for unit in repeated],
-            [_legacy_unit_projection(unit) for unit in repeated],
-        )
-        repeat_equal = reports_equal(
-            {"units": target_units, "legacy_units": legacy_units},
-            {"units": repeat_snapshot[0], "legacy_units": repeat_snapshot[1]},
-        )
+        repeat_snapshot = _file_result_snapshot(repeated)
+        repeat_equal = reports_equal(first_snapshot, repeat_snapshot)
         if len(case.hunks) > 1:
-            reversed_units = _run_builder(
+            reversed_result = _run_builder(
                 case,
                 builder,
                 source,
                 tuple(reversed(case.hunks)),
             )
-            reversed_snapshot = (
-                [_unit_projection(unit) for unit in reversed_units],
-                [_legacy_unit_projection(unit) for unit in reversed_units],
-            )
-            reversed_hunks_equal = reports_equal(
-                {"units": target_units, "legacy_units": legacy_units},
-                {"units": reversed_snapshot[0], "legacy_units": reversed_snapshot[1]},
-            )
+            reversed_snapshot = _file_result_snapshot(reversed_result)
+            reversed_hunks_equal = reports_equal(first_snapshot, reversed_snapshot)
         if not repeat_equal:
             invariant_violations.append("repeated execution changed ReviewUnit output")
         if reversed_hunks_equal is False:
@@ -368,20 +366,37 @@ def _run_builder(
     builder: ReviewUnitBuilder,
     source: str,
     hunks: tuple[FileHunk, ...],
-) -> list[Any]:
+) -> ReviewUnitFileResult:
     facts = CodeFacts(
         path=case.logical_path,
         declarations=[_copy_declaration(item) for item in case.declarations],
         parser_layer=case.parser_layer,  # type: ignore[arg-type]
         warnings=list(case.warnings),
     )
-    return builder.build_units(
+    return builder.build_file_result(
         case.logical_path,
         source,
         facts,
         case.mode,  # type: ignore[arg-type]
         list(hunks),
     )
+
+
+def _file_result_snapshot(result: Any) -> dict[str, Any]:
+    if not isinstance(result, ReviewUnitFileResult):
+        raise ValueError("ReviewUnit builder must return ReviewUnitFileResult")
+    result.validate()
+    return {
+        "path": result.path,
+        "units": [_unit_projection(unit) for unit in result.units],
+        "legacy_units": [_legacy_unit_projection(unit) for unit in result.units],
+        "parser_quality": {
+            "parser_layer": result.parser_quality.parser_layer,
+            "warnings": list(result.parser_quality.warnings),
+        },
+        "diagnostics": _actual_diagnostics(result.diagnostics),
+        "unassigned_hunk_lines": list(result.unassigned_hunk_lines),
+    }
 
 
 def _copy_declaration(declaration: Declaration) -> Declaration:
@@ -450,6 +465,75 @@ def _actual_diagnostics(values: Any) -> list[dict[str, Any]]:
     return diagnostics
 
 
+def _file_result_invariants(
+    case: ReviewUnitGoldenCase,
+    result: ReviewUnitFileResult,
+    source: str,
+) -> list[str]:
+    violations: list[str] = []
+    source_line_count = max(1, len(source.splitlines()))
+    hunk_lines = {
+        line
+        for hunk in case.hunks
+        for line in range(hunk.new_start, hunk.new_end + 1)
+    }
+
+    if result.path != case.logical_path:
+        violations.append("result.path does not match the Golden logical path")
+    if not isinstance(result.units, list):
+        violations.append("result.units is not a list")
+        units: list[Any] = []
+    else:
+        units = result.units
+
+    if not isinstance(result.parser_quality, ParserQuality):
+        violations.append("result.parser_quality is not a ParserQuality")
+    else:
+        if result.parser_quality.parser_layer != case.parser_layer:
+            violations.append("result.parser_quality.parser_layer does not match CodeFacts")
+        if list(result.parser_quality.warnings) != list(case.warnings):
+            violations.append("result.parser_quality.warnings do not match CodeFacts")
+
+    diagnostics = _actual_diagnostics(result.diagnostics)
+    if diagnostics != sorted(diagnostics, key=_canonical) or len(
+        {_canonical(item) for item in diagnostics}
+    ) != len(diagnostics):
+        violations.append("result.diagnostics is not sorted and unique")
+    violations.extend(
+        _diagnostic_semantic_violations(
+            diagnostics,
+            prefix="result.diagnostics",
+            source_line_count=source_line_count,
+            hunk_lines=hunk_lines,
+            context_span=None,
+            result_level=True,
+        )
+    )
+
+    unassigned = result.unassigned_hunk_lines
+    if not isinstance(unassigned, list) or any(
+        not isinstance(line, int) or isinstance(line, bool) or line < 1
+        for line in unassigned
+    ):
+        violations.append("result.unassigned_hunk_lines must contain 1-based integers")
+    elif unassigned != sorted(set(unassigned)):
+        violations.append("result.unassigned_hunk_lines is not sorted and unique")
+    else:
+        assigned_lines = {
+            line
+            for unit in units
+            if isinstance(unit, ReviewUnit)
+            for line in unit.changed_new_lines
+        }
+        expected_unassigned = sorted(hunk_lines - assigned_lines)
+        if unassigned != expected_unassigned:
+            violations.append(
+                "result.unassigned_hunk_lines does not equal input hunk lines "
+                "without a ReviewUnit owner"
+            )
+    return violations
+
+
 def _unit_invariants(
     case: ReviewUnitGoldenCase,
     units: list[Any],
@@ -482,6 +566,10 @@ def _unit_invariants(
             violations.append(f"{prefix}.file does not match the Golden logical path")
         if not isinstance(unit.host_summary, HostSummary):
             violations.append(f"{prefix}.host_summary is not a HostSummary")
+        elif unit.host_summary != _expected_host_summary(case, unit, source):
+            violations.append(
+                f"{prefix}.host_summary does not match its frozen host occurrence"
+            )
         expected_unit_ref = f"{unit.unit_symbol}@{case.logical_path}"
         if unit.unit_ref != expected_unit_ref:
             violations.append(f"{prefix}.unit_ref does not preserve unit_symbol@logical_path")
@@ -688,6 +776,117 @@ def _matches_frozen_declaration(
     )
 
 
+def _expected_host_summary(
+    case: ReviewUnitGoldenCase,
+    unit: ReviewUnit,
+    source: str,
+) -> HostSummary:
+    host = _frozen_host_for_span(
+        case.declarations,
+        unit.source_span.start_line,
+        unit.source_span.end_line,
+    )
+    if host is None:
+        return HostSummary()
+
+    host_text = extract_lines(source, host.span.start_line, host.span.end_line)
+    lifecycle = sorted(
+        {
+            declaration.name
+            for declaration in case.declarations
+            if declaration.kind in {"method", "build_method", "builder"}
+            and declaration.name in LIFECYCLE_SYMBOLS
+            and _same_declaration_occurrence(
+                _frozen_host_for_span(
+                    case.declarations,
+                    declaration.span.start_line,
+                    declaration.span.end_line,
+                ),
+                host,
+            )
+        }
+    )
+    return HostSummary(
+        struct=host.name,
+        decorators=_frozen_host_decorators(host_text, host.name),
+        states=_frozen_host_states(host_text),
+        lifecycle=lifecycle,
+        # The v1 Golden parser fixture deliberately freezes declarations and
+        # quality only; it does not provide ImportInfo file hints.
+        imports=[],
+    )
+
+
+def _frozen_host_for_span(
+    declarations: tuple[Declaration, ...],
+    start_line: int,
+    end_line: int,
+) -> Declaration | None:
+    hosts = [
+        declaration
+        for declaration in declarations
+        if declaration.kind in {"struct", "class"}
+        and declaration.span.contains_line_range(start_line, end_line)
+    ]
+    if not hosts:
+        return None
+    return min(
+        hosts,
+        key=lambda declaration: (
+            declaration.line_count,
+            declaration.span.start_line,
+            declaration.span.end_line,
+            declaration.qualified_name,
+        ),
+    )
+
+
+def _same_declaration_occurrence(
+    first: Declaration | None,
+    second: Declaration,
+) -> bool:
+    return first is not None and (
+        first.kind,
+        first.qualified_name,
+        first.span.start_line,
+        first.span.end_line,
+    ) == (
+        second.kind,
+        second.qualified_name,
+        second.span.start_line,
+        second.span.end_line,
+    )
+
+
+def _frozen_host_decorators(host_text: str, host_name: str) -> list[str]:
+    declaration_match = re.search(
+        rf"\b(?:struct|class)\s+{re.escape(host_name)}\b",
+        host_text,
+    )
+    leading_text = (
+        host_text[: declaration_match.start()]
+        if declaration_match is not None
+        else ""
+    )
+    return sorted(
+        {
+            match.group(1)
+            for match in re.finditer(
+                r"(?m)^[ \t]*(@(?:ComponentV2|Component|Entry))\b",
+                leading_text,
+            )
+        }
+    )
+
+
+def _frozen_host_states(host_text: str) -> list[str]:
+    decorator_names = "|".join(
+        re.escape(decorator.removeprefix("@")) for decorator in STATE_DECORATORS
+    )
+    pattern = re.compile(rf"@(?:{decorator_names})\s+[^\n;]+")
+    return [" ".join(match.group(0).split()) for match in pattern.finditer(host_text)]
+
+
 def _diagnostic_semantic_violations(
     diagnostics: list[dict[str, Any]],
     *,
@@ -737,9 +936,12 @@ def _diagnostic_semantic_violations(
 
 
 def is_perfect(report: dict[str, Any], target_phase: str | None = None) -> bool:
-    cases = report.get("cases")
-    if not isinstance(cases, list):
+    if not _report_is_self_consistent(report):
         return False
+    if target_phase is not None and target_phase not in TARGET_PHASES:
+        return False
+    cases = report.get("cases")
+    assert isinstance(cases, list)
     selected_phases = (
         TARGET_PHASES
         if target_phase is None
@@ -758,6 +960,126 @@ def is_perfect(report: dict[str, Any], target_phase: str | None = None) -> bool:
         not case.get("invariant_violations") or _is_allowed_fail_closed_error(case)
         for case in cases
     )
+
+
+def _report_is_self_consistent(report: object) -> bool:
+    """Reject incomplete or internally forged reports before applying a phase gate."""
+
+    try:
+        report_data = _mapping(report, "report")
+        _require_exact_fields(report_data, REPORT_FIELDS, "report")
+        if report_data.get("schema_version") != SCHEMA_VERSION:
+            return False
+        _string(report_data.get("suite_id"), "report.suite_id")
+        _string(report_data.get("implementation"), "report.implementation")
+        _sha256(report_data.get("manifest_sha256"), "report.manifest_sha256")
+
+        case_count = _nonnegative_int(report_data.get("case_count"), "report.case_count")
+        if not 12 <= case_count <= 16:
+            return False
+        cases = _list(report_data.get("cases"), "report.cases")
+        if len(cases) != case_count:
+            return False
+
+        phase_case_counts = _phase_count_mapping(
+            report_data.get("phase_case_counts"),
+            "report.phase_case_counts",
+        )
+        phase_mismatch_counts = _phase_count_mapping(
+            report_data.get("phase_mismatch_counts"),
+            "report.phase_mismatch_counts",
+        )
+        if any(phase_case_counts[phase] < 1 for phase in TARGET_PHASES):
+            return False
+        if sum(phase_case_counts.values()) != case_count:
+            return False
+
+        observed_phase_counts: Counter[str] = Counter()
+        observed_phase_mismatches: Counter[str] = Counter()
+        case_ids: list[str] = []
+        matched_count = 0
+        for index, raw_case in enumerate(cases):
+            context = f"report.cases[{index}]"
+            case = _mapping(raw_case, context)
+            _require_exact_fields(case, CASE_RESULT_FIELDS, context)
+            case_id = _string(case.get("case_id"), f"{context}.case_id")
+            target = _string(case.get("target_phase"), f"{context}.target_phase")
+            if target not in TARGET_PHASES:
+                return False
+            _string(case.get("logical_path"), f"{context}.logical_path")
+            _sha256(case.get("source_sha256"), f"{context}.source_sha256")
+            _mapping(case.get("provenance"), f"{context}.provenance")
+            _mapping(case.get("input"), f"{context}.input")
+            expected = _mapping(case.get("expected"), f"{context}.expected")
+            actual = _mapping(case.get("actual"), f"{context}.actual")
+            _list(case.get("legacy_units"), f"{context}.legacy_units")
+            differences = _string_list(
+                case.get("differences"),
+                f"{context}.differences",
+                allow_empty=True,
+            )
+            invariants = _string_list(
+                case.get("invariant_violations"),
+                f"{context}.invariant_violations",
+                allow_empty=True,
+            )
+            if differences != sorted(set(differences)):
+                return False
+            if differences != _differences(expected, actual):
+                return False
+            if invariants != sorted(set(invariants)):
+                return False
+            _boolean(case.get("repeat_equal"), f"{context}.repeat_equal")
+            reversed_equal = case.get("reversed_hunks_equal")
+            if reversed_equal is not None:
+                _boolean(reversed_equal, f"{context}.reversed_hunks_equal")
+            error = case.get("error")
+            if error is not None:
+                _string(error, f"{context}.error")
+            matched = _boolean(case.get("matched"), f"{context}.matched")
+            if matched != (not differences and not invariants and error is None):
+                return False
+
+            case_ids.append(case_id)
+            observed_phase_counts[target] += 1
+            if matched:
+                matched_count += 1
+            else:
+                observed_phase_mismatches[target] += 1
+
+        if case_ids != sorted(case_ids) or len(case_ids) != len(set(case_ids)):
+            return False
+        if phase_case_counts != {
+            phase: observed_phase_counts.get(phase, 0) for phase in TARGET_PHASES
+        }:
+            return False
+        if phase_mismatch_counts != {
+            phase: observed_phase_mismatches.get(phase, 0) for phase in TARGET_PHASES
+        }:
+            return False
+        declared_matched = _nonnegative_int(
+            report_data.get("matched_case_count"),
+            "report.matched_case_count",
+        )
+        declared_mismatched = _nonnegative_int(
+            report_data.get("mismatched_case_count"),
+            "report.mismatched_case_count",
+        )
+        return (
+            declared_matched == matched_count
+            and declared_mismatched == case_count - matched_count
+        )
+    except ValueError:
+        return False
+
+
+def _phase_count_mapping(value: object, context: str) -> dict[str, int]:
+    mapping = _mapping(value, context)
+    _require_exact_fields(mapping, TARGET_PHASES, context)
+    return {
+        phase: _nonnegative_int(mapping.get(phase), f"{context}.{phase}")
+        for phase in TARGET_PHASES
+    }
 
 
 def _is_allowed_fail_closed_error(case: dict[str, Any]) -> bool:

@@ -41,7 +41,7 @@ ArkTS AI Code Reviewer
 |---|---|---|
 | 输入与编排 | `partial` | CLI 可读取文件和手工 hunk；无 Git diff 解析、Webhook、队列和服务 |
 | Parser | `partial` | merged-L1 Parser v1 已在 `2c1df96` 冻结并通过确定性门禁；v2 occurrence owner/span 和独立分发仍未实现 |
-| ReviewUnit | `partial` | 16-case 独立 Golden 和 span-qualified `unit_id` 已实现；多 owner、质量传播、事实作用域和二次解析尚未解决 |
+| ReviewUnit | `partial` | RU-0～RU-2 已完成：16-case Golden、唯一 ID、多 owner、质量传播和结果信封已实现；事实作用域与二次解析仍待 RU-3 |
 | Tags / Dimensions | `partial` | 24 Tags 和 12 Dimensions 硬编码实现，尚未配置化 |
 | 知识库构建 | `partial` | 11 个知识来源及固定 revision 已登记；无 registry loader、Clause parser、数据库或真实索引 |
 | Retrieval | `designed` | 无代码 |
@@ -76,15 +76,16 @@ Source registry                19 entries / all revisions verified / clean workt
 
 Parser v1 足以为 ReviewUnit 提供经过验证的 declaration 行级 occurrence。当前集合字段仍是
 文件级 presence signal，不能证明某个 API、modifier、decorator 或 syntax 属于某个 Unit。
-ReviewUnit 的 RU-0/RU-1 已建立独立 Golden 并修复 span-qualified identity；下一步是 RU-2
-多 owner 和质量传播，阶段门禁为现有 16-case v1 Golden 达到 14/16。该 v1 Golden 继续作为
-兼容回归集，不会被后续 ChangeSet 或 Context Planner schema 反向覆盖。删除 Unit 二次
-Parser 属于 RU-3，必须先有可追溯的 FactOccurrence 和 Unit exact facts，并保持 Parser v1
-及其 Golden 无漂移。
+ReviewUnit 的 RU-0～RU-2 已建立独立 Golden、修复 span-qualified identity，并完成多 owner、
+文件级结果信封和 Parser 质量传播；现有 16-case v1 Golden 达到 RU-2 目标 `14/16`。该 v1
+Golden 继续作为兼容回归集，不会被后续 ChangeSet 或 Context Planner schema 反向覆盖。
+下一步 RU-3 必须先取得 Parser v2 的单独授权；删除 Unit 二次 Parser 前，必须先有可追溯的
+FactOccurrence 和 Unit exact facts，并保持 Parser v1 及其 Golden 无漂移。
 
 当前真实调用次数是每文件 `1 + U` 次 Parser，其中 `U` 是去重后的 ReviewUnit 数。截取声明
-并重新解析还可能把 struct method 改成顶层 function，且第二次解析的 layer/warning 没进入
-Analysis metadata；这既是性能问题，也是正确性问题。
+并重新解析还可能把 struct method 改成顶层 function。RU-2 已把第二次解析的 layer/warning
+汇总进 Analysis metadata，并把降级诊断绑定到对应 Unit；合成源码造成的语义变化和性能问题
+仍须由 RU-3 的 parse-once 解决。
 
 外部资产分为：
 
@@ -172,7 +173,7 @@ ReviewUnit 不是“从 diff 中只挑最相关的一段”，而是保留全部
 预算下选择必要的关联代码。其内部开发顺序为：
 
 ```text
-RU-2  找全直接改动 owner，并传播 Parser 质量
+RU-2  找全直接改动 owner，并传播 Parser 质量                         已完成
 RU-3  建立 FactOccurrence/owner，按完整文件 parse-once 投影精确事实
 RU-4  消费精确 ChangeSet，支持 base/head、删除和 rename
 RU-5  生成关系、Supporting、ChangeGroup，执行真实上下文预算
@@ -317,8 +318,8 @@ PoC 可以使用单进程 CLI，但生产形态应中心化部署，统一模型
 ```text
 Milestone 0  多仓库来源基线 + Parser v1 确定性验证             已完成
 Milestone 1a ReviewUnit Golden + 唯一 Unit identity               RU-0/RU-1 已完成
-Milestone 1b 多 owner + Parser quality diagnostics               RU-2 当前下一项；14/16 门禁
-Milestone 1c FactOccurrence + Unit exact facts + parse-once       RU-3
+Milestone 1b 多 owner + Parser quality diagnostics               RU-2 已完成；14/16
+Milestone 1c FactOccurrence + Unit exact facts + parse-once       RU-3；开始前需单独授权
 Milestone 1d 精确 ChangeSet + base/head ReviewUnit                RU-4；独立 v2 Golden
 Milestone 1e related context + ChangeGroup + token budget         RU-5；Context Golden
              -> ContextPlanResult                                ReviewUnit 完成边界

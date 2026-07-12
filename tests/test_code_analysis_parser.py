@@ -4,7 +4,14 @@ import unittest
 from pathlib import Path
 
 from arkts_code_reviewer.code_analysis import ArktsTreeSitterParser, CodeAnalyzer, LexicalParser
-from arkts_code_reviewer.code_analysis.models import CodeFacts, FileHunk, FileInput
+from arkts_code_reviewer.code_analysis.models import (
+    CodeFacts,
+    Declaration,
+    FileHunk,
+    FileInput,
+    ParserQuality,
+    SourceSpan,
+)
 from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.tagger import derive_tags
 
@@ -674,6 +681,381 @@ function exercise(info: accessibility.EventInfo) {
 
 
 class CodeAnalyzerTest(unittest.TestCase):
+    def test_exposes_file_results_for_diff_without_hunks(self) -> None:
+        result = CodeAnalyzer(parser=LexicalParser()).analyze_file(
+            path="src/pages/EmptyDiff.ets",
+            content="const unchanged = true\n",
+            mode="diff",
+            hunks=[],
+        )
+
+        self.assertEqual(result.review_units, [])
+        self.assertEqual(result.retrieval_query.units, [])
+        self.assertIsNotNone(result.review_unit_build_result)
+        build_result = result.review_unit_build_result
+        assert build_result is not None
+        self.assertEqual(build_result.schema_version, "review-unit-build-v1")
+        self.assertEqual(build_result.mode, "diff")
+        self.assertEqual(build_result.flatten_units(), result.review_units)
+        self.assertEqual(len(build_result.file_results), 1)
+        file_result = build_result.file_results[0]
+        self.assertEqual(file_result.path, "src/pages/EmptyDiff.ets")
+        self.assertEqual(file_result.units, [])
+        self.assertEqual(file_result.parser_quality.parser_layer, "L0")
+        self.assertEqual(file_result.unassigned_hunk_lines, [])
+        self.assertEqual(
+            [diagnostic.code for diagnostic in file_result.diagnostics],
+            ["diff_file_without_hunks"],
+        )
+
+    def test_preserves_full_file_and_secondary_parser_quality(self) -> None:
+        class SequencedParser:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def parse(self, source: str, path: str) -> CodeFacts:
+                self.calls += 1
+                facts = LexicalParser().parse(source, path)
+                if self.calls == 1:
+                    facts.parser_layer = "L1"
+                    facts.warnings = ["arkts_tree_sitter_error_nodes: 1"]
+                else:
+                    facts.parser_layer = "parse_degraded"
+                    facts.warnings = ["arkts_tree_sitter_failed: unit fixture"]
+                return facts
+
+        parser = SequencedParser()
+        result = CodeAnalyzer(parser=parser).analyze_file(
+            path="src/pages/PhotoWall.ets",
+            content=SAMPLE,
+            mode="diff",
+            hunks=[(15, 1)],
+        )
+
+        self.assertEqual(parser.calls, 2)
+        unit = result.review_units[0]
+        self.assertTrue(unit.context_degraded)
+        self.assertEqual(
+            [diagnostic.code for diagnostic in unit.diagnostics],
+            ["parser_degraded", "parser_error_nodes"],
+        )
+        unit.context_degraded = False
+        with self.assertRaisesRegex(
+            ValueError,
+            "parser quality diagnostics require context_degraded",
+        ):
+            unit.validate()
+        unit.context_degraded = True
+        self.assertEqual(result.metadata.parser_layer, "parse_degraded")
+        self.assertTrue(
+            any("unit fixture" in warning for warning in result.metadata.warnings)
+        )
+        build_result = result.review_unit_build_result
+        assert build_result is not None
+        parser_quality = build_result.file_results[0].parser_quality
+        self.assertEqual(parser_quality.parser_layer, "L1")
+        self.assertEqual(
+            parser_quality.warnings,
+            ["arkts_tree_sitter_error_nodes: 1"],
+        )
+
+    def test_rejects_invalid_secondary_parser_layer(self) -> None:
+        class InvalidSecondaryLayerParser:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def parse(self, source: str, path: str) -> CodeFacts:
+                self.calls += 1
+                facts = LexicalParser().parse(source, path)
+                if self.calls > 1:
+                    facts.parser_layer = "BROKEN"  # type: ignore[assignment]
+                return facts
+
+        with self.assertRaisesRegex(ValueError, "unsupported parser layers"):
+            CodeAnalyzer(parser=InvalidSecondaryLayerParser()).analyze_file(
+                path="src/pages/PhotoWall.ets",
+                content=SAMPLE,
+                mode="diff",
+                hunks=[(15, 1)],
+            )
+
+    def test_rejects_builder_parser_quality_that_drifts_from_file_facts(self) -> None:
+        class DriftedQualityBuilder(ReviewUnitBuilder):
+            def build_file_result(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+                result = super().build_file_result(*args, **kwargs)
+                result.parser_quality = ParserQuality(
+                    parser_layer="parse_degraded",
+                    warnings=["builder_quality_lost"],
+                )
+                return result
+
+        with self.assertRaisesRegex(ValueError, "must match the full-file CodeFacts"):
+            CodeAnalyzer(
+                parser=LexicalParser(),
+                unit_builder=DriftedQualityBuilder(),
+            ).analyze_file(
+                path="src/pages/PhotoWall.ets",
+                content=SAMPLE,
+                mode="diff",
+                hunks=[(15, 1)],
+            )
+
+    def test_analysis_result_rejects_legacy_and_envelope_drift(self) -> None:
+        analyzer = CodeAnalyzer(parser=LexicalParser())
+        result = analyzer.analyze_file(
+            path="src/pages/PhotoWall.ets",
+            content=SAMPLE,
+            mode="full",
+        )
+
+        build_result = result.review_unit_build_result
+        assert build_result is not None
+        file_result = build_result.file_results[0]
+        file_result.parser_quality = ParserQuality(
+            parser_layer="parse_degraded",
+            warnings=[],
+        )
+        with self.assertRaisesRegex(ValueError, "must propagate to every Unit"):
+            file_result.validate()
+        file_result.parser_quality = ParserQuality(parser_layer="L0", warnings=[])
+        file_result.unassigned_hunk_lines = [1]
+        with self.assertRaisesRegex(ValueError, "full ReviewUnitBuildResult"):
+            build_result.validate()
+        file_result.unassigned_hunk_lines = []
+
+        result.review_units = []
+
+        with self.assertRaisesRegex(ValueError, "must match ReviewUnitBuildResult"):
+            result.to_dict()
+        with self.assertRaisesRegex(ValueError, "must match ReviewUnitBuildResult"):
+            analyzer.to_json_ready(result)
+
+    def test_sorts_file_results_independently_of_input_order(self) -> None:
+        files = [
+            FileInput(path="src/Z.ets", content="const z = 1\n"),
+            FileInput(path="src/A.ets", content="const a = 1\n"),
+        ]
+
+        result = CodeAnalyzer(parser=LexicalParser()).analyze_files(files, mode="full")
+
+        build_result = result.review_unit_build_result
+        assert build_result is not None
+        self.assertEqual(
+            [file_result.path for file_result in build_result.file_results],
+            ["src/A.ets", "src/Z.ets"],
+        )
+        self.assertEqual(build_result.flatten_units(), result.review_units)
+
+    def test_host_summary_does_not_mix_multiple_structs(self) -> None:
+        source = """@Component
+struct First {
+  @State first: number = 0
+  aboutToAppear() {}
+  build() {}
+}
+
+@Entry
+@ComponentV2
+struct Second {
+  @State second: number = 0
+  aboutToDisappear() {}
+  build() {}
+}
+"""
+        source_lines = source.splitlines()
+        declarations = [
+            Declaration(
+                kind="struct",
+                name="First",
+                qualified_name="First",
+                span=SourceSpan(start_line=1, end_line=6),
+                text="\n".join(source_lines[0:6]),
+            ),
+            Declaration(
+                kind="method",
+                name="aboutToAppear",
+                qualified_name="First.aboutToAppear",
+                parent_name="First",
+                span=SourceSpan(start_line=4, end_line=4),
+                text=source_lines[3],
+            ),
+            Declaration(
+                kind="build_method",
+                name="build",
+                qualified_name="First.build",
+                parent_name="First",
+                span=SourceSpan(start_line=5, end_line=5),
+                text=source_lines[4],
+            ),
+            Declaration(
+                kind="struct",
+                name="Second",
+                qualified_name="Second",
+                span=SourceSpan(start_line=8, end_line=14),
+                text="\n".join(source_lines[7:14]),
+            ),
+            Declaration(
+                kind="method",
+                name="aboutToDisappear",
+                qualified_name="Second.aboutToDisappear",
+                parent_name="Second",
+                span=SourceSpan(start_line=12, end_line=12),
+                text=source_lines[11],
+            ),
+            Declaration(
+                kind="build_method",
+                name="build",
+                qualified_name="Second.build",
+                parent_name="Second",
+                span=SourceSpan(start_line=13, end_line=13),
+                text=source_lines[12],
+            ),
+        ]
+        facts = CodeFacts(
+            path="src/pages/Hosts.ets",
+            declarations=declarations,
+            decorators={"@Component", "@ComponentV2", "@Entry"},
+            symbols={"aboutToAppear", "aboutToDisappear"},
+        )
+
+        units = ReviewUnitBuilder().build_full_units(
+            "src/pages/Hosts.ets",
+            source,
+            facts,
+        )
+
+        summaries = {unit.unit_symbol: unit.host_summary for unit in units}
+        self.assertEqual(summaries["First"].decorators, ["@Component"])
+        self.assertEqual(summaries["First"].lifecycle, ["aboutToAppear"])
+        self.assertEqual(summaries["First"].states, ["@State first: number = 0"])
+        self.assertEqual(
+            summaries["Second"].decorators,
+            ["@ComponentV2", "@Entry"],
+        )
+        self.assertEqual(
+            summaries["Second"].lifecycle,
+            ["aboutToDisappear"],
+        )
+        self.assertEqual(
+            summaries["Second"].states,
+            ["@State second: number = 0"],
+        )
+
+    def test_long_build_assigns_each_changed_line_to_its_innermost_owner(self) -> None:
+        source = """struct Page {
+  build() {
+    // build-only before
+    Column() {
+      Text('target')
+    }
+    // build-only after
+  }
+}
+"""
+        facts = CodeFacts(
+            path="src/pages/Page.ets",
+            declarations=[
+                Declaration(
+                    kind="struct",
+                    name="Page",
+                    qualified_name="Page",
+                    span=SourceSpan(start_line=1, end_line=9),
+                    text=source.rstrip(),
+                ),
+                Declaration(
+                    kind="build_method",
+                    name="build",
+                    qualified_name="Page.build",
+                    parent_name="Page",
+                    span=SourceSpan(start_line=2, end_line=8),
+                    text="\n".join(source.splitlines()[1:8]),
+                ),
+                Declaration(
+                    kind="ui_block",
+                    name="Column",
+                    qualified_name="Page.build.Column",
+                    parent_name="Page.build",
+                    span=SourceSpan(start_line=4, end_line=6),
+                    text="\n".join(source.splitlines()[3:6]),
+                ),
+            ],
+        )
+
+        result = ReviewUnitBuilder(max_build_lines=5).build_file_result(
+            "src/pages/Page.ets",
+            source,
+            facts,
+            "diff",
+            [FileHunk(new_start=3, new_lines=5)],
+        )
+
+        self.assertEqual(
+            [unit.unit_symbol for unit in result.units],
+            ["Page.build", "Page.build.Column"],
+        )
+        self.assertEqual(result.units[0].changed_new_lines, [3, 7])
+        self.assertEqual(result.units[1].changed_new_lines, [4, 5, 6])
+        self.assertEqual(result.unassigned_hunk_lines, [])
+
+    def test_full_mode_emits_only_top_level_structs_and_classes(self) -> None:
+        source = """class Root {
+}
+
+function outer() {
+  class Local {
+    value: number = 1
+  }
+}
+"""
+        facts = CodeFacts(
+            path="src/Outer.ets",
+            declarations=[
+                Declaration(
+                    kind="class",
+                    name="Root",
+                    qualified_name="Root",
+                    span=SourceSpan(start_line=1, end_line=2),
+                    text="\n".join(source.splitlines()[0:2]),
+                ),
+                Declaration(
+                    kind="function",
+                    name="outer",
+                    qualified_name="outer",
+                    span=SourceSpan(start_line=4, end_line=8),
+                    text="\n".join(source.splitlines()[3:8]),
+                ),
+                Declaration(
+                    kind="class",
+                    name="Local",
+                    qualified_name="Local",
+                    parent_name=None,
+                    span=SourceSpan(start_line=5, end_line=7),
+                    text="\n".join(source.splitlines()[4:7]),
+                ),
+            ],
+        )
+
+        units = ReviewUnitBuilder().build_full_units(
+            "src/Outer.ets",
+            source,
+            facts,
+        )
+
+        self.assertEqual([unit.unit_symbol for unit in units], ["Root"])
+
+        diff_result = ReviewUnitBuilder().build_file_result(
+            "src/Outer.ets",
+            source,
+            facts,
+            "diff",
+            [FileHunk(new_start=6, new_lines=1)],
+        )
+        self.assertEqual(
+            [unit.unit_symbol for unit in diff_result.units],
+            ["Local"],
+        )
+        self.assertEqual(diff_result.units[0].changed_new_lines, [6])
+
     def test_rejects_normalized_path_aliases_before_parsing(self) -> None:
         class CountingParser:
             def __init__(self) -> None:
@@ -761,7 +1143,10 @@ class CodeAnalyzerTest(unittest.TestCase):
         self.assertEqual(unit.changed_new_lines, [14, 15, 16])
         self.assertEqual(unit.selection_reason, "innermost_changed_declaration")
         self.assertEqual(unit.host_summary.struct, "PhotoWall")
-        self.assertIn(13, unit.file_changed_lines)
+        self.assertEqual(unit.file_changed_lines, [14, 15, 16])
+        build_result = result.review_unit_build_result
+        assert build_result is not None
+        self.assertEqual(build_result.file_results[0].unassigned_hunk_lines, [13])
 
         retrieval_unit = result.retrieval_query.units[0]
         self.assertIn("has_image", retrieval_unit.code_features.tags)

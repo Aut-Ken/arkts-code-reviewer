@@ -195,19 +195,19 @@ ReviewUnit(
 `full_text` 必须严格等于 `context_span` 的源码切片，越过 context 的粗 hunk 行通过结构化
 `changed_lines_outside_context` 暴露，不再静默混入 `changed_new_lines`。
 
-## 9. 已确认缺陷
+## 9. 已确认问题与状态
 
-| 严重度 | 问题 | 影响 |
-|---|---|---|
-| high | 一个 hunk 强制选择一个 declaration | 横跨两个方法/节点时静默丢 owner |
-| high | Unit 二次 Parser 改变语义上下文 | method 可变成 function，行号和 owner 改变 |
-| high | Unit parse layer/warning 未汇总 | metadata 可能错误报告 L1 且隐藏降级 |
-| high | diff 文件无 hunk 时走 full | 未修改文件可能被审查 |
-| medium | 多行 import 被逐行重建 | 合成 Unit source 可能语法残缺 |
-| medium | Parser degraded 不进入 Unit diagnostics | `context_degraded=false` 可能误导下游 |
-| medium | 固定 160/20 行阈值 | 不是 token/context budget |
-| medium | token budget 只写入输出 | 不执行裁剪；传入 0 还会回退默认值 |
-| medium | hunk 缺少精确 changed/deleted lines | context line 被当改动，删除场景不可表达 |
+| 严重度 | 问题 | 状态 | 影响 |
+|---|---|---|---|
+| high | 一个 hunk 强制选择一个 declaration | RU-2 已修复 | 横跨两个方法/节点时会产出全部直接 owner |
+| high | Unit 二次 Parser 改变语义上下文 | RU-3 待解决 | method 可变成 function，行号和 owner 改变 |
+| high | Unit parse layer/warning 未汇总 | RU-2 已修复 | metadata 与对应 Unit 会保留二次解析降级 |
+| high | diff 文件无 hunk 时走 full | RU-2 已修复 | 现在返回零 Unit 和文件级 diagnostic |
+| medium | 多行 import 被逐行重建 | RU-3 待解决 | 合成 Unit source 可能语法残缺 |
+| medium | Parser degraded 不进入 Unit diagnostics | RU-2 已修复 | 质量 diagnostic 与 `context_degraded` 强绑定 |
+| medium | 固定 160/20 行阈值 | RU-5 待解决 | 不是 token/context budget |
+| medium | token budget 只写入输出 | RU-5 待解决 | 不执行裁剪；传入 0 还会回退默认值 |
+| medium | hunk 缺少精确 changed/deleted lines | RU-4 待解决 | context line 被当改动，删除场景不可表达 |
 
 ## 10. ReviewUnit v1 过渡输出
 
@@ -300,7 +300,7 @@ budget_not_enforced
 - `full_text == source[context_span]`。
 - 所有 assigned changed lines 位于 context span，或有明确 diagnostic。
 
-### RU-2：多 owner 和质量传播
+### RU-2：多 owner 和质量传播（已完成）
 
 - 一个 change region 可以产生多个 Primary owner，不再强制 Top1。hunk 横跨两个方法时，
   两个方法都必须产出；同一 owner 的多个 hunk 仍按 `unit_id` 合并。
@@ -328,6 +328,12 @@ ReviewUnitBuildResult
     └── unassigned_hunk_lines[]
 ```
 
+当前实现中，file result 的 `parser_quality` 严格表示完整文件 Parser 的 `parser_layer` 和
+原始 warnings；仍保留的 Unit 二次 Parser 质量进入 `AnalysisMetadata`，其降级、ERROR 和
+missing 状态同时进入对应 Unit diagnostics。这样不会把某一个合成 Unit 的降级误报为其他
+Unit 的完整文件质量。旧 `AnalysisResult.review_units` 继续保留，并在构造与序列化时校验其
+必须等于结果信封的稳定扁平视图。
+
 RU-3 为 file result 增加 head `source_ref_id`；RU-4 再为顶层结果增加 `change_set_id` 和
 `unassigned_change_atom_ids`。RU-2 不提前发明匿名 revision 或精确 diff 身份。
 
@@ -341,6 +347,10 @@ RU-2 验收：
 - 每个有效 changed line 要么进入至少一个 Primary，要么有结构化未归属原因。
 - `diff + hunks=[]`、Parser degraded、ERROR/missing 和 HostSummary 多 host 串扰都有回归测试。
 - ReviewUnit Golden 的 RU-2 target 通过；RU-4/RU-5 未实现 case 继续保持显式差异。
+
+当前结果为 RU-1 `9/9`、RU-2 `5/5`，合计 `14/16`；剩余两个差异分别属于 RU-4 的
+deletion-only 和 RU-5 的真实 budget enforcement。`require-target RU-2` 与 strict current
+baseline 均通过，`require-perfect` 仍应失败，不能用后续阶段红灯伪装本阶段回归。
 
 ### RU-3：Unit fact scope 与 parse-once
 

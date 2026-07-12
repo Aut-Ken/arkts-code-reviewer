@@ -8,8 +8,8 @@
     "implementation": "ReviewUnitBuilder",
     "manifest_sha256": "58c706b00812ca5040f480c5688e201b6a2f01d10c557d95f29aee0eb846c999",
     "case_count": 16,
-    "matched_case_count": 9,
-    "mismatched_case_count": 7,
+    "matched_case_count": 14,
+    "mismatched_case_count": 2,
     "phase_case_counts": {
       "RU-1": 9,
       "RU-2": 5,
@@ -18,7 +18,7 @@
     },
     "phase_mismatch_counts": {
       "RU-1": 0,
-      "RU-2": 5,
+      "RU-2": 0,
       "RU-4": 1,
       "RU-5": 1
     },
@@ -976,16 +976,27 @@
               ],
               "selection_reason": "innermost_changed_declaration",
               "context_degraded": false,
-              "diagnostics": [
-                {
-                  "code": "changed_lines_outside_context",
-                  "lines": [
-                    11,
-                    12,
-                    13
-                  ]
-                }
-              ]
+              "diagnostics": []
+            },
+            {
+              "unit_id": "golden/review_unit/CorePage.ets@method:CorePage.second:L12-L14",
+              "unit_kind": "method",
+              "unit_symbol": "CorePage.second",
+              "source_span": {
+                "start_line": 12,
+                "end_line": 14
+              },
+              "context_span": {
+                "start_line": 12,
+                "end_line": 14
+              },
+              "changed_new_lines": [
+                12,
+                13
+              ],
+              "selection_reason": "innermost_changed_declaration",
+              "context_degraded": false,
+              "diagnostics": []
             }
           ],
           "diagnostics": []
@@ -995,34 +1006,41 @@
             "unit_ref": "CorePage.first@golden/review_unit/CorePage.ets",
             "changed_lines": [
               9,
-              10,
-              11,
-              12,
-              13
+              10
             ],
             "file_changed_lines": [
               9,
-              10,
-              11,
-              12,
-              13
+              10
             ],
             "unit_changed_lines": [
               2,
               3
             ],
             "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
+          },
+          {
+            "unit_ref": "CorePage.second@golden/review_unit/CorePage.ets",
+            "changed_lines": [
+              12,
+              13
+            ],
+            "file_changed_lines": [
+              12,
+              13
+            ],
+            "unit_changed_lines": [
+              1,
+              2
+            ],
+            "full_text_sha256": "105a379fc1f9c40bcebdd5bdef5613ef3ebc010428bf835da27fd625bccff960"
           }
         ],
-        "differences": [
-          "result.units.length: expected 2, actual 1",
-          "result.units[0].diagnostics.length: expected 0, actual 1"
-        ],
+        "differences": [],
         "invariant_violations": [],
         "repeat_equal": true,
         "reversed_hunks_equal": null,
         "error": null,
-        "matched": false
+        "matched": true
       },
       {
         "case_id": "RU007-full-multiple-hosts",
@@ -1714,45 +1732,21 @@
           ]
         },
         "actual": {
-          "units": [
+          "units": [],
+          "diagnostics": [
             {
-              "unit_id": "golden/review_unit/CorePage.ets@struct:CorePage:L5-L21",
-              "unit_kind": "struct",
-              "unit_symbol": "CorePage",
-              "source_span": {
-                "start_line": 5,
-                "end_line": 21
-              },
-              "context_span": {
-                "start_line": 5,
-                "end_line": 21
-              },
-              "changed_new_lines": [],
-              "selection_reason": "full_top_level_declaration",
-              "context_degraded": false,
-              "diagnostics": []
+              "code": "diff_file_without_hunks",
+              "lines": []
             }
-          ],
-          "diagnostics": []
+          ]
         },
-        "legacy_units": [
-          {
-            "unit_ref": "CorePage@golden/review_unit/CorePage.ets",
-            "changed_lines": [],
-            "file_changed_lines": [],
-            "unit_changed_lines": [],
-            "full_text_sha256": "d5bbb81341a3bfa1545bc6774e51c372079240a9ed056ff10893965cbe4b148c"
-          }
-        ],
-        "differences": [
-          "result.diagnostics.length: expected 1, actual 0",
-          "result.units.length: expected 0, actual 1"
-        ],
+        "legacy_units": [],
+        "differences": [],
         "invariant_violations": [],
         "repeat_equal": true,
         "reversed_hunks_equal": null,
         "error": null,
-        "matched": false
+        "matched": true
       },
       {
         "case_id": "RU012-parser-degraded",
@@ -1887,8 +1881,13 @@
                 9
               ],
               "selection_reason": "innermost_changed_declaration",
-              "context_degraded": false,
-              "diagnostics": []
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "parser_degraded",
+                  "lines": []
+                }
+              ]
             }
           ],
           "diagnostics": []
@@ -1908,15 +1907,12 @@
             "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
           }
         ],
-        "differences": [
-          "result.units[0].context_degraded: expected True, actual False",
-          "result.units[0].diagnostics.length: expected 1, actual 0"
-        ],
+        "differences": [],
         "invariant_violations": [],
         "repeat_equal": true,
         "reversed_hunks_equal": null,
         "error": null,
-        "matched": false
+        "matched": true
       },
       {
         "case_id": "RU013-l1-error-missing-warning",
@@ -2056,8 +2052,17 @@
                 9
               ],
               "selection_reason": "innermost_changed_declaration",
-              "context_degraded": false,
-              "diagnostics": []
+              "context_degraded": true,
+              "diagnostics": [
+                {
+                  "code": "parser_error_nodes",
+                  "lines": []
+                },
+                {
+                  "code": "parser_missing_nodes",
+                  "lines": []
+                }
+              ]
             }
           ],
           "diagnostics": []
@@ -2077,15 +2082,12 @@
             "full_text_sha256": "279d846c123450bfd8e6bf7c9d15dfe351945c02f316d90b40bee59465b4a588"
           }
         ],
-        "differences": [
-          "result.units[0].context_degraded: expected True, actual False",
-          "result.units[0].diagnostics.length: expected 2, actual 0"
-        ],
+        "differences": [],
         "invariant_violations": [],
         "repeat_equal": true,
         "reversed_hunks_equal": null,
         "error": null,
-        "matched": false
+        "matched": true
       },
       {
         "case_id": "RU014-out-of-range-hunk",
@@ -2134,19 +2136,23 @@
         },
         "actual": {
           "units": [],
-          "diagnostics": []
+          "diagnostics": [
+            {
+              "code": "hunk_out_of_range",
+              "lines": [
+                99,
+                100
+              ]
+            }
+          ]
         },
         "legacy_units": [],
-        "differences": [
-          "result.diagnostics.length: expected 1, actual 0"
-        ],
-        "invariant_violations": [
-          "builder execution failed: ValueError('hunk L99-L100 exceeds source line count 4')"
-        ],
-        "repeat_equal": false,
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
         "reversed_hunks_equal": null,
-        "error": "ValueError('hunk L99-L100 exceeds source line count 4')",
-        "matched": false
+        "error": null,
+        "matched": true
       },
       {
         "case_id": "RU015-unsupported-deletion-only",

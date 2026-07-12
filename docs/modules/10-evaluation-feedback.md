@@ -312,8 +312,8 @@ CI 质量门禁
 
 ## 16. 下一步
 
-1. 使用现有 ReviewUnit v1 Golden 完成 RU-2，并达到 `14/16` phase target。
-2. 为 RU-3 建立 FactOccurrence 和 parse-once 的独立门禁，保持 Parser v1 Golden 无漂移。
+1. RU-2 已达到现有 ReviewUnit v1 Golden 的 `14/16` phase target，并保留两个后续阶段红灯。
+2. 取得单独授权后，为 RU-3 建立 Parser v2 FactOccurrence 和 parse-once 的独立门禁，保持 Parser v1 Golden 无漂移。
 3. 为 RU-4 新建 ChangeSet Golden 与 ReviewUnit v2 Golden。
 4. 为 RU-5 先建立 12～16 个 Context Golden case，再实现 Planner 并通过 require-perfect。
 5. `ContextPlanResult` 稳定后，再分别建立 Retrieval、Rules 和 Final Review Golden。

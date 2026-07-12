@@ -402,6 +402,12 @@ RU-2 只填前者作为粗 FileHunk proxy；RU-3 增加 head `source_ref_id`，R
 粗粒度 hunk 有未归属行时，必须通过这个信封显式表达，不能静默改为 full
 review。
 
+RU-2 的 schema version 是 `review-unit-build-v1`。其中 `parser_quality` 使用
+`parser_layer` 和排序去重后的 `warnings`，只描述构建 Unit 所依据的完整文件 Parser 结果；
+过渡期 Unit 二次 Parser 的质量进入 `AnalysisMetadata` 和对应 Unit diagnostics，不反向污染
+完整文件质量。兼容字段 `AnalysisResult.review_units` 必须严格等于 `file_results[].units` 的
+稳定扁平视图。
+
 ### 10.2 RU-5 上下文规划最小对象
 
 RU-5 不是只取 Top-1 Unit。所有直接改动 owner 都是 Primary `ReviewUnit`；预算只能筛选

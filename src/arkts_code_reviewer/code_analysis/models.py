@@ -12,10 +12,12 @@ from arkts_code_reviewer.code_analysis.review_unit_contract import (
     SelectionReason,
     declaration_unit_id,
     fallback_unit_id,
+    normalize_review_path,
 )
 
 ParserLayer = Literal["L0", "L1", "parse_degraded"]
 AnalysisMode = Literal["full", "diff"]
+REVIEW_UNIT_BUILD_SCHEMA_VERSION = "review-unit-build-v1"
 
 
 @dataclass(frozen=True)
@@ -161,6 +163,13 @@ class ReviewUnitDiagnostic:
             raise ValueError("ReviewUnitDiagnostic.lines must be 1-based")
         if list(self.lines) != sorted(set(self.lines)):
             raise ValueError("ReviewUnitDiagnostic.lines must be sorted and unique")
+        if self.code not in {
+            "changed_lines_outside_context",
+            "hunk_out_of_range",
+        } and self.lines:
+            raise ValueError(
+                f"ReviewUnit diagnostic {self.code!r} must not carry line payloads"
+            )
 
 
 @dataclass
@@ -293,6 +302,17 @@ class ReviewUnit:
             raise ValueError("ReviewUnit diagnostics must contain each code at most once")
 
         diagnostics_by_code = {item.code: item for item in self.diagnostics}
+        parser_quality_codes = {
+            "parser_degraded",
+            "parser_error_nodes",
+            "parser_missing_nodes",
+        }
+        if parser_quality_codes.intersection(diagnostics_by_code) and not (
+            self.context_degraded
+        ):
+            raise ValueError(
+                "ReviewUnit parser quality diagnostics require context_degraded"
+            )
         outside_lines = tuple(
             line
             for line in self.file_changed_lines
@@ -310,6 +330,201 @@ class ReviewUnit:
             raise ValueError(
                 "fallback ReviewUnit must carry exactly one no_matching_declaration code"
             )
+
+
+def _review_unit_sort_key(unit: ReviewUnit) -> tuple[int, int, int, int, str]:
+    return (
+        unit.context_span.start_line,
+        unit.context_span.end_line,
+        unit.source_span.start_line,
+        unit.source_span.end_line,
+        unit.unit_id,
+    )
+
+
+def _validate_review_unit_diagnostics(
+    diagnostics: list[ReviewUnitDiagnostic],
+    context: str,
+) -> None:
+    if not isinstance(diagnostics, list) or any(
+        not isinstance(item, ReviewUnitDiagnostic) for item in diagnostics
+    ):
+        raise ValueError(f"{context} must contain structured diagnostics")
+    diagnostic_keys = [(item.code, item.lines) for item in diagnostics]
+    if diagnostic_keys != sorted(set(diagnostic_keys)):
+        raise ValueError(f"{context} must be sorted and unique")
+    if len({item.code for item in diagnostics}) != len(diagnostics):
+        raise ValueError(f"{context} must contain each code at most once")
+
+
+@dataclass(frozen=True)
+class ParserQuality:
+    """Parser quality retained at the file boundary used to build ReviewUnits."""
+
+    parser_layer: ParserLayer
+    warnings: list[str] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        self.validate()
+
+    def validate(self) -> None:
+        if self.parser_layer not in {"L0", "L1", "parse_degraded"}:
+            raise ValueError(f"unsupported parser layer: {self.parser_layer}")
+        if not isinstance(self.warnings, list) or any(
+            not isinstance(warning, str) or not warning for warning in self.warnings
+        ):
+            raise ValueError("ParserQuality.warnings must contain non-empty strings")
+        if self.warnings != sorted(set(self.warnings)):
+            raise ValueError("ParserQuality.warnings must be sorted and unique")
+
+
+@dataclass
+class ReviewUnitFileResult:
+    """ReviewUnit output and file-scoped quality/assignment diagnostics."""
+
+    path: str
+    units: list[ReviewUnit]
+    parser_quality: ParserQuality
+    diagnostics: list[ReviewUnitDiagnostic] = field(default_factory=list)
+    unassigned_hunk_lines: list[int] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        self.validate()
+
+    def validate(self) -> None:
+        normalized_path = normalize_review_path(self.path)
+        if not isinstance(self.units, list) or any(
+            not isinstance(unit, ReviewUnit) for unit in self.units
+        ):
+            raise ValueError("ReviewUnitFileResult.units must contain ReviewUnit values")
+        for unit in self.units:
+            unit.validate()
+            if normalize_review_path(unit.file) != normalized_path:
+                raise ValueError(
+                    "ReviewUnitFileResult units must belong to the result path"
+                )
+        if self.units != sorted(self.units, key=_review_unit_sort_key):
+            raise ValueError("ReviewUnitFileResult.units must use stable source order")
+        unit_ids = [unit.unit_id for unit in self.units]
+        if len(unit_ids) != len(set(unit_ids)):
+            raise ValueError("ReviewUnitFileResult.units must have unique unit_id values")
+
+        if not isinstance(self.parser_quality, ParserQuality):
+            raise ValueError(
+                "ReviewUnitFileResult.parser_quality must use ParserQuality"
+            )
+        self.parser_quality.validate()
+        required_quality_codes: set[str] = set()
+        if self.parser_quality.parser_layer == "parse_degraded":
+            required_quality_codes.add("parser_degraded")
+        for warning in self.parser_quality.warnings:
+            warning_code = warning.partition(":")[0]
+            if warning_code in {
+                "arkts_tree_sitter_error_nodes",
+                "tree_sitter_error_nodes",
+            }:
+                required_quality_codes.add("parser_error_nodes")
+            elif warning_code in {
+                "arkts_tree_sitter_missing_nodes",
+                "tree_sitter_missing_nodes",
+            }:
+                required_quality_codes.add("parser_missing_nodes")
+        for unit in self.units:
+            unit_quality_codes = {
+                diagnostic.code for diagnostic in unit.diagnostics
+            }
+            if not required_quality_codes.issubset(unit_quality_codes):
+                raise ValueError(
+                    "ReviewUnitFileResult parser quality must propagate to every Unit"
+                )
+        _validate_review_unit_diagnostics(
+            self.diagnostics,
+            "ReviewUnitFileResult.diagnostics",
+        )
+
+        if not isinstance(self.unassigned_hunk_lines, list) or any(
+            not isinstance(line, int) or isinstance(line, bool) or line < 1
+            for line in self.unassigned_hunk_lines
+        ):
+            raise ValueError(
+                "ReviewUnitFileResult.unassigned_hunk_lines must contain 1-based lines"
+            )
+        if self.unassigned_hunk_lines != sorted(set(self.unassigned_hunk_lines)):
+            raise ValueError(
+                "ReviewUnitFileResult.unassigned_hunk_lines must be sorted and unique"
+            )
+        assigned_lines = {
+            line for unit in self.units for line in unit.changed_new_lines
+        }
+        if assigned_lines.intersection(self.unassigned_hunk_lines):
+            raise ValueError(
+                "ReviewUnitFileResult unassigned lines must not be assigned to a Unit"
+            )
+
+
+@dataclass
+class ReviewUnitBuildResult:
+    """Deterministic batch envelope for ReviewUnit construction."""
+
+    schema_version: str
+    mode: AnalysisMode
+    file_results: list[ReviewUnitFileResult]
+    diagnostics: list[ReviewUnitDiagnostic] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        self.validate()
+
+    def validate(self) -> None:
+        if self.schema_version != REVIEW_UNIT_BUILD_SCHEMA_VERSION:
+            raise ValueError(
+                "ReviewUnitBuildResult.schema_version must be "
+                f"{REVIEW_UNIT_BUILD_SCHEMA_VERSION!r}"
+            )
+        if self.mode not in {"full", "diff"}:
+            raise ValueError(f"unsupported ReviewUnit analysis mode: {self.mode}")
+        if not isinstance(self.file_results, list) or any(
+            not isinstance(result, ReviewUnitFileResult)
+            for result in self.file_results
+        ):
+            raise ValueError(
+                "ReviewUnitBuildResult.file_results must contain file results"
+            )
+        for result in self.file_results:
+            result.validate()
+            if self.mode == "full" and result.unassigned_hunk_lines:
+                raise ValueError(
+                    "full ReviewUnitBuildResult must not contain unassigned hunk lines"
+                )
+        normalized_paths = [
+            normalize_review_path(result.path) for result in self.file_results
+        ]
+        if normalized_paths != sorted(normalized_paths):
+            raise ValueError(
+                "ReviewUnitBuildResult.file_results must use stable path order"
+            )
+        if len(normalized_paths) != len(set(normalized_paths)):
+            raise ValueError(
+                "ReviewUnitBuildResult.file_results must have unique paths"
+            )
+        _validate_review_unit_diagnostics(
+            self.diagnostics,
+            "ReviewUnitBuildResult.diagnostics",
+        )
+
+        unit_ids = [unit.unit_id for unit in self._flatten_units_unchecked()]
+        if len(unit_ids) != len(set(unit_ids)):
+            raise ValueError(
+                "ReviewUnitBuildResult units must have globally unique unit_id values"
+            )
+
+    def flatten_units(self) -> list[ReviewUnit]:
+        """Return Units in validated file/source order for legacy consumers."""
+
+        self.validate()
+        return self._flatten_units_unchecked()
+
+    def _flatten_units_unchecked(self) -> list[ReviewUnit]:
+        return [unit for result in self.file_results for unit in result.units]
 
 
 @dataclass(frozen=True)
@@ -343,8 +558,33 @@ class AnalysisResult:
     retrieval_query: RetrievalQuery
     review_units: list[ReviewUnit]
     metadata: AnalysisMetadata
+    review_unit_build_result: ReviewUnitBuildResult | None = field(
+        default=None,
+        kw_only=True,
+    )
+
+    def __post_init__(self) -> None:
+        self.validate()
+
+    def validate(self) -> None:
+        if not isinstance(self.review_units, list) or any(
+            not isinstance(unit, ReviewUnit) for unit in self.review_units
+        ):
+            raise ValueError("AnalysisResult.review_units must contain ReviewUnit values")
+        if self.review_unit_build_result is None:
+            return
+        if not isinstance(self.review_unit_build_result, ReviewUnitBuildResult):
+            raise ValueError(
+                "AnalysisResult.review_unit_build_result must use ReviewUnitBuildResult"
+            )
+        flattened_units = self.review_unit_build_result.flatten_units()
+        if self.review_units != flattened_units:
+            raise ValueError(
+                "AnalysisResult.review_units must match ReviewUnitBuildResult.flatten_units()"
+            )
 
     def to_dict(self) -> dict[str, object]:
+        self.validate()
         return asdict(self)
 
 

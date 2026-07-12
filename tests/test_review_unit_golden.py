@@ -13,8 +13,11 @@ from arkts_code_reviewer.code_analysis.models import (
     CodeFacts,
     Declaration,
     FileHunk,
+    HostSummary,
+    ParserQuality,
     ReviewUnit,
     ReviewUnitDiagnostic,
+    ReviewUnitFileResult,
     ReviewUnitSpan,
     SourceSpan,
 )
@@ -27,6 +30,7 @@ from arkts_code_reviewer.code_analysis.review_unit_contract import (
 )
 from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.review_unit_validation.golden import (
+    ReviewUnitGoldenCase,
     evaluate_golden_suite,
     is_perfect,
     load_golden_baseline,
@@ -78,26 +82,29 @@ class ReviewUnitGoldenTest(unittest.TestCase):
 
         self.assertEqual(first, second)
 
-    def test_ru1_gate_checks_outside_line_diagnostics_on_future_cases(self) -> None:
-        class MissingOutsideDiagnosticBuilder(ReviewUnitBuilder):
-            def build_diff_units(
+    def test_ru1_gate_checks_unassigned_lines_on_future_cases(self) -> None:
+        class MissingUnassignedLineBuilder(ReviewUnitBuilder):
+            def build_file_result(  # type: ignore[override]
                 self,
                 path: str,
                 source: str,
                 facts: CodeFacts,
+                mode: str,
                 hunks: list[FileHunk],
-            ) -> list[ReviewUnit]:
-                units = super().build_diff_units(path, source, facts, hunks)
-                for unit in units:
-                    unit.diagnostics = [
-                        item
-                        for item in unit.diagnostics
-                        if item.code != "changed_lines_outside_context"
-                    ]
-                return units
+            ) -> ReviewUnitFileResult:
+                result = super().build_file_result(
+                    path,
+                    source,
+                    facts,
+                    mode,  # type: ignore[arg-type]
+                    hunks,
+                )
+                if hunks == [FileHunk(new_start=9, new_lines=5)]:
+                    result.unassigned_hunk_lines = []
+                return result
 
         suite = load_golden_suite(MANIFEST)
-        report = evaluate_golden_suite(suite, MissingOutsideDiagnosticBuilder())
+        report = evaluate_golden_suite(suite, MissingUnassignedLineBuilder())
 
         self.assertTrue(
             all(
@@ -107,6 +114,48 @@ class ReviewUnitGoldenTest(unittest.TestCase):
             )
         )
         self.assertFalse(is_perfect(report, "RU-1"))
+
+    def test_evaluator_repeatability_includes_result_assignment_fields(self) -> None:
+        class AlternatingAssignmentBuilder(ReviewUnitBuilder):
+            matching_calls = 0
+
+            def build_file_result(  # type: ignore[override]
+                self,
+                path: str,
+                source: str,
+                facts: CodeFacts,
+                mode: str,
+                hunks: list[FileHunk],
+            ) -> ReviewUnitFileResult:
+                result = super().build_file_result(
+                    path,
+                    source,
+                    facts,
+                    mode,  # type: ignore[arg-type]
+                    hunks,
+                )
+                if hunks == [FileHunk(new_start=9, new_lines=5)]:
+                    self.matching_calls += 1
+                    result.unassigned_hunk_lines = (
+                        [11] if self.matching_calls % 2 else []
+                    )
+                return result
+
+        report = evaluate_golden_suite(
+            load_golden_suite(MANIFEST),
+            AlternatingAssignmentBuilder(),
+        )
+        cross_owner = next(
+            case
+            for case in report["cases"]
+            if case["case_id"] == "RU006-cross-two-methods"
+        )
+
+        self.assertFalse(cross_owner["repeat_equal"])
+        self.assertIn(
+            "repeated execution changed ReviewUnit output",
+            cross_owner["invariant_violations"],
+        )
 
     def test_ru1_gate_recomputes_identity_on_future_cases(self) -> None:
         class DriftedFutureIdentityBuilder(ReviewUnitBuilder):
@@ -206,6 +255,111 @@ class ReviewUnitGoldenTest(unittest.TestCase):
             any(case["error"] is not None for case in report["cases"][:5])
         )
 
+    def test_gate_rejects_typed_but_wrong_host_summary(self) -> None:
+        class WrongHostSummaryBuilder(ReviewUnitBuilder):
+            def build_file_result(  # type: ignore[override]
+                self,
+                path: str,
+                source: str,
+                facts: CodeFacts,
+                mode: str,
+                hunks: list[FileHunk],
+            ) -> ReviewUnitFileResult:
+                result = super().build_file_result(
+                    path,
+                    source,
+                    facts,
+                    mode,  # type: ignore[arg-type]
+                    hunks,
+                )
+                for unit in result.units:
+                    unit.host_summary = HostSummary(
+                        struct="WrongHost",
+                        decorators=["@Wrong"],
+                        states=["wrong: number = 1"],
+                        lifecycle=["wrongLifecycle"],
+                        imports=["wrong.import"],
+                    )
+                return result
+
+        report = evaluate_golden_suite(
+            load_golden_suite(MANIFEST),
+            WrongHostSummaryBuilder(),
+        )
+
+        self.assertFalse(is_perfect(report, "RU-2"))
+        first_case = report["cases"][0]
+        self.assertFalse(first_case["matched"])
+        self.assertIn(
+            "units[0].host_summary does not match its frozen host occurrence",
+            first_case["invariant_violations"],
+        )
+
+    def test_target_gate_rejects_incomplete_or_inconsistent_reports(self) -> None:
+        report = evaluate_golden_suite(load_golden_suite(MANIFEST))
+
+        truncated = copy.deepcopy(report)
+        truncated["cases"] = truncated["cases"][:1]
+        self.assertFalse(is_perfect(truncated, "RU-2"))
+
+        internally_counted_but_incomplete = copy.deepcopy(truncated)
+        internally_counted_but_incomplete["case_count"] = 1
+        internally_counted_but_incomplete["matched_case_count"] = 1
+        internally_counted_but_incomplete["mismatched_case_count"] = 0
+        internally_counted_but_incomplete["phase_case_counts"] = {
+            "RU-1": 1,
+            "RU-2": 0,
+            "RU-4": 0,
+            "RU-5": 0,
+        }
+        internally_counted_but_incomplete["phase_mismatch_counts"] = {
+            phase: 0 for phase in ("RU-1", "RU-2", "RU-4", "RU-5")
+        }
+        self.assertFalse(is_perfect(internally_counted_but_incomplete, "RU-2"))
+
+        inconsistent_phase_counts = copy.deepcopy(report)
+        inconsistent_phase_counts["phase_case_counts"]["RU-2"] -= 1
+        self.assertFalse(is_perfect(inconsistent_phase_counts, "RU-2"))
+
+        forged_empty_differences = copy.deepcopy(report)
+        forged_empty_differences["cases"][0]["actual"]["units"][0][
+            "unit_symbol"
+        ] = "Forged.symbol"
+        self.assertEqual(forged_empty_differences["cases"][0]["differences"], [])
+        self.assertFalse(is_perfect(forged_empty_differences, "RU-2"))
+
+    def test_evaluator_rejects_legacy_list_instead_of_file_result(self) -> None:
+        class LegacyListResultBuilder(ReviewUnitBuilder):
+            def build_file_result(  # type: ignore[override]
+                self,
+                path: str,
+                source: str,
+                facts: CodeFacts,
+                mode: str,
+                hunks: list[FileHunk],
+            ) -> list[ReviewUnit]:
+                return self.build_units(
+                    path,
+                    source,
+                    facts,
+                    mode,  # type: ignore[arg-type]
+                    hunks,
+                )
+
+        report = evaluate_golden_suite(
+            load_golden_suite(MANIFEST),
+            LegacyListResultBuilder(),
+        )
+
+        self.assertFalse(is_perfect(report, "RU-1"))
+        self.assertTrue(
+            all(
+                "ReviewUnitFileResult" in (case["error"] or "")
+                for case in report["cases"]
+                if case["case_id"] != "RU014-out-of-range-hunk"
+            )
+        )
+
     def test_before_ru1_baseline_exposes_collision_and_order_dependence(self) -> None:
         suite = load_golden_suite(MANIFEST)
         baseline = load_golden_baseline(BEFORE_RU1_BASELINE, suite=suite)
@@ -254,10 +408,12 @@ class ReviewUnitGoldenTest(unittest.TestCase):
             for case in report["cases"]
             if case["case_id"] == "RU006-cross-two-methods"
         )
+        self.assertEqual(len(cross_owner["actual"]["units"]), 2)
         self.assertEqual(
-            cross_owner["actual"]["units"][0]["diagnostics"],
-            [{"code": "changed_lines_outside_context", "lines": [11, 12, 13]}],
+            [unit["diagnostics"] for unit in cross_owner["actual"]["units"]],
+            [[], []],
         )
+        self.assertTrue(is_perfect(report, "RU-2"))
 
         with_global_invariant = copy.deepcopy(report)
         cross_owner_copy = next(
@@ -267,6 +423,91 @@ class ReviewUnitGoldenTest(unittest.TestCase):
         )
         cross_owner_copy["invariant_violations"] = ["simulated RU-1 invariant drift"]
         self.assertFalse(is_perfect(with_global_invariant, "RU-1"))
+
+    def test_file_result_exposes_quality_assignment_and_fail_closed_diagnostics(
+        self,
+    ) -> None:
+        suite = load_golden_suite(MANIFEST)
+        builder = ReviewUnitBuilder()
+
+        cross_owner = next(
+            case for case in suite.cases if case.case_id == "RU006-cross-two-methods"
+        )
+        cross_result = builder.build_file_result(
+            cross_owner.logical_path,
+            cross_owner.read_source(),
+            self._facts_for_case(cross_owner),
+            cross_owner.mode,  # type: ignore[arg-type]
+            list(cross_owner.hunks),
+        )
+        self.assertIsInstance(cross_result, ReviewUnitFileResult)
+        self.assertEqual(cross_result.path, cross_owner.logical_path)
+        self.assertEqual(len(cross_result.units), 2)
+        self.assertEqual(cross_result.unassigned_hunk_lines, [11])
+        self.assertEqual(cross_result.diagnostics, [])
+        self.assertEqual(cross_result.parser_quality, ParserQuality("L1", []))
+
+        warned = next(
+            case
+            for case in suite.cases
+            if case.case_id == "RU013-l1-error-missing-warning"
+        )
+        warned_result = builder.build_file_result(
+            warned.logical_path,
+            warned.read_source(),
+            self._facts_for_case(warned),
+            warned.mode,  # type: ignore[arg-type]
+            list(warned.hunks),
+        )
+        self.assertEqual(
+            warned_result.parser_quality,
+            ParserQuality("L1", list(warned.warnings)),
+        )
+
+        no_hunks = next(
+            case for case in suite.cases if case.case_id == "RU011-diff-without-hunks"
+        )
+        no_hunks_result = builder.build_file_result(
+            no_hunks.logical_path,
+            no_hunks.read_source(),
+            self._facts_for_case(no_hunks),
+            no_hunks.mode,  # type: ignore[arg-type]
+            list(no_hunks.hunks),
+        )
+        self.assertEqual(no_hunks_result.units, [])
+        self.assertEqual(
+            no_hunks_result.diagnostics,
+            [ReviewUnitDiagnostic(code="diff_file_without_hunks")],
+        )
+
+        out_of_range = next(
+            case for case in suite.cases if case.case_id == "RU014-out-of-range-hunk"
+        )
+        out_of_range_result = builder.build_file_result(
+            out_of_range.logical_path,
+            out_of_range.read_source(),
+            self._facts_for_case(out_of_range),
+            out_of_range.mode,  # type: ignore[arg-type]
+            list(out_of_range.hunks),
+        )
+        self.assertEqual(out_of_range_result.units, [])
+        self.assertEqual(out_of_range_result.unassigned_hunk_lines, [99, 100])
+        self.assertEqual(
+            out_of_range_result.diagnostics,
+            [ReviewUnitDiagnostic(code="hunk_out_of_range", lines=(99, 100))],
+        )
+
+        report = evaluate_golden_suite(suite)
+        for case_id in ("RU011-diff-without-hunks", "RU014-out-of-range-hunk"):
+            with self.subTest(case_id=case_id):
+                case_result = next(
+                    case for case in report["cases"] if case["case_id"] == case_id
+                )
+                self.assertEqual(
+                    case_result["actual"]["diagnostics"],
+                    case_result["expected"]["diagnostics"],
+                )
+                self.assertIsNone(case_result["error"])
 
     def test_builder_slices_full_text_from_context_span(self) -> None:
         source = "function work() {\n  return\n}\n"
@@ -766,6 +1007,14 @@ class ReviewUnitGoldenTest(unittest.TestCase):
             mutate(data)  # type: ignore[operator]
             manifest_path.write_text(json.dumps(data), encoding="utf-8")
             load_golden_suite(manifest_path)
+
+    def _facts_for_case(self, case: ReviewUnitGoldenCase) -> CodeFacts:
+        return CodeFacts(
+            path=case.logical_path,
+            declarations=copy.deepcopy(list(case.declarations)),
+            parser_layer=case.parser_layer,  # type: ignore[arg-type]
+            warnings=list(case.warnings),
+        )
 
 
 if __name__ == "__main__":
