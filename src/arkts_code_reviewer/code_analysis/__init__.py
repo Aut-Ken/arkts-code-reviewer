@@ -2,6 +2,24 @@
 
 from arkts_code_reviewer.code_analysis.analyzer import CodeAnalyzer
 from arkts_code_reviewer.code_analysis.arkts_tree_sitter_parser import ArktsTreeSitterParser
+from arkts_code_reviewer.code_analysis.change_review import (
+    CHANGE_REVIEW_BUILD_SCHEMA_VERSION,
+    ChangeSetReviewUnitBuilder,
+    build_change_review_units,
+)
+from arkts_code_reviewer.code_analysis.change_set import (
+    CHANGE_SET_SCHEMA_VERSION,
+    DIFF_NORMALIZER_VERSION,
+    ChangeAtom,
+    ChangeAtomInput,
+    ChangedFile,
+    ChangedFileInput,
+    ChangeSet,
+    ChangeSetDiagnostic,
+    CodeSourceSnapshot,
+    DiffPosition,
+    normalize_change_set,
+)
 from arkts_code_reviewer.code_analysis.file_analysis_models import (
     FILE_ANALYSIS_SCHEMA_VERSION,
     CodeSourceRef,
@@ -44,12 +62,24 @@ __all__ = [
     "AnalysisResult",
     "ArktsFileAnalysisParser",
     "ArktsTreeSitterParser",
+    "CHANGE_REVIEW_BUILD_SCHEMA_VERSION",
+    "CHANGE_SET_SCHEMA_VERSION",
+    "ChangeAtom",
+    "ChangeAtomInput",
+    "ChangedFile",
+    "ChangedFileInput",
+    "ChangeSet",
+    "ChangeSetDiagnostic",
+    "ChangeSetReviewUnitBuilder",
     "CodeSourceRef",
+    "CodeSourceSnapshot",
     "CodeAnalyzer",
     "CodeFacts",
     "CodeFeatures",
     "Declaration",
     "DeclarationOccurrence",
+    "DIFF_NORMALIZER_VERSION",
+    "DiffPosition",
     "ExactRange",
     "FactKind",
     "FactOccurrence",
@@ -74,4 +104,6 @@ __all__ = [
     "ScopedFacts",
     "TreeSitterParser",
     "UnitFactScope",
+    "build_change_review_units",
+    "normalize_change_set",
 ]

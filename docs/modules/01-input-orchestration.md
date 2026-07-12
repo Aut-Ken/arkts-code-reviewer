@@ -2,7 +2,7 @@
 title: 01 输入与编排模块
 status: canonical
 implementation: partial
-updated: 2026-07-10
+updated: 2026-07-12
 ---
 
 # 01 输入与编排模块
@@ -27,7 +27,21 @@ Source Registry 管理。
 
 ## 2. 当前实现
 
-当前只有 `src/arkts_code_reviewer/code_analysis/cli.py`：
+当前同时保留兼容 CLI 输入，并实现了供调用方使用的结构化 ChangeSet normalizer：
+
+```text
+ChangedFileInput + ChangeAtomInput + CodeSourceSnapshot
+-> normalize_change_set(...)
+-> change-set-v1 / change-normalizer-v1
+-> CodeAnalyzer.analyze_change_set(...)
+```
+
+normalizer 校验 repository-relative path、base/head revision、source content hash、1-based
+inclusive span、UTF-16 exact range、changed lines、rename/binary 语义和稳定顺序，并生成确定性的
+`change_set_id/changed_file_id/atom_id/diagnostic_id`。它只消费结构化输入，不解析 raw Git diff，
+也不读取仓库或连接 GitCode。
+
+兼容 CLI 仍使用：
 
 ```bash
 PYTHONPATH=src python -m arkts_code_reviewer.code_analysis.cli \
@@ -45,8 +59,7 @@ CLI 行为：
 当前缺失：
 
 - Git diff 文本解析。
-- 精确 added/deleted lines。
-- base 版本旧文件。
+- 从 Git 平台获取 base/head 源码和精确 changed lines 的 Adapter。
 - GitCode Webhook 和 API 调用。
 - 目录递归、文件类型过滤和大小限制。
 - Job Queue、幂等、取消、重试和状态查询。
@@ -94,22 +107,26 @@ GitCodeAdapter          ManualAdapter
              Output Adapter
 ```
 
-## 5. ChangeSet 要求
+## 5. ChangeSet v1 合同
 
-目标契约见 [跨模块数据契约](../architecture/data-contracts.md)。输入模块必须提供：
+完整契约见 [跨模块数据契约](../architecture/data-contracts.md)。当前 normalizer 接受：
 
 ```text
-repository / change_id
+repository
 base_revision / head_revision
 old_path / new_path
-change_type
-old_content / new_content
-精确 added_lines
+status: added / modified / deleted / renamed
+old/new CodeSourceSnapshot
+ChangeAtom kind: addition / deletion / replacement
+精确 added_new_lines
 精确 deleted_old_lines
-Git diff_position 映射
+可选 Git diff_position 映射
 ```
 
-ReviewUnit 不应自行解析原始 Git diff。
+输出固定为 `change-set-v1`，默认 normalizer 为 `change-normalizer-v1`。addition 只引用 head，
+deletion 只引用 base，replacement 同时引用两侧；pure rename 可以没有 atom；binary 不伪造
+source/atom，而是输出 `binary_source_unavailable`。ReviewUnit 只消费该合同，不自行解析原始
+Git diff。
 
 ## 6. 编排状态机
 
@@ -208,20 +225,25 @@ GITCODE_TOKEN
 
 ## 12. 测试
 
-需要补充：
+已覆盖：
 
-- unified diff added/modified/deleted/rename fixture。
-- 删除-only 行号映射。
-- 多 hunk 和跨文件变更。
+- 14-case 独立 ChangeSet Golden：added、deletion-only、replacement、pure rename、rename+edit、
+  multi-hunk、multi-file 稳定顺序、empty change/file、binary diagnostic、Unicode UTF-16、
+  diff position、multiline replacement 和 normalizer version identity。
+- duplicate key/case、未知/缺失字段、source hash/provenance、span/line/position、ID/顺序/引用
+  漂移和 symlink fail-closed。
+
+仍需补充：
+
+- raw unified diff parser 及其独立 fixtures。
 - Webhook 重放和幂等。
 - MR head 更新导致旧任务 superseded。
 - 路径安全和文件大小限制。
 
 ## 13. 下一步
 
-1. 定义并实现 `ChangeSet` Pydantic 模型。
-2. 实现纯函数 Git diff parser 和 Golden fixtures。
-3. 让 CLI 也走统一 `ChangeSet`，删除手工 hunk 特例。
-4. 在 Review Job metadata 中固定 `source_bundle_id/config_bundle_version`，但不把知识源
+1. 实现纯函数 Git diff parser 和独立 Golden fixtures，不改变已冻结的 `change-set-v1`。
+2. 让 CLI 也走统一 `ChangeSet`，再迁移手工 hunk 特例。
+3. 在 Review Job metadata 中固定 `source_bundle_id/config_bundle_version`，但不把知识源
    内容复制进 ChangeSet。
-5. 端到端闭环稳定后再加入 Webhook、队列和持久 Job Store。
+4. 端到端闭环稳定后再加入 Webhook、队列和持久 Job Store。

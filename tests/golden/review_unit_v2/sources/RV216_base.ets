@@ -1,0 +1,3 @@
+function stable() {
+  return before
+}

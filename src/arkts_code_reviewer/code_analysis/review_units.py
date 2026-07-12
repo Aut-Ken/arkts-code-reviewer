@@ -811,9 +811,20 @@ class ReviewUnitBuilder:
             existing.changed_new_lines = sorted(
                 set(existing.changed_new_lines) | set(unit.changed_new_lines)
             )
+            existing.changed_old_lines = sorted(
+                set(existing.changed_old_lines) | set(unit.changed_old_lines)
+            )
+            existing.change_atom_ids = sorted(
+                set(existing.change_atom_ids) | set(unit.change_atom_ids)
+            )
+            effective_changed_lines = (
+                existing.changed_old_lines
+                if existing.source_role == "base"
+                else existing.changed_new_lines
+            )
             existing.unit_changed_lines = [
                 line - existing.context_span.start_line + 1
-                for line in existing.changed_new_lines
+                for line in effective_changed_lines
             ]
             existing.diagnostics = self._merge_diagnostics(
                 existing.diagnostics,
@@ -835,7 +846,9 @@ class ReviewUnitBuilder:
             "host_summary",
             "context_degraded",
             "source_ref_id",
+            "source_role",
             "owner_ref",
+            "identity_source_ref_id",
             "identity_start_offset_utf16",
             "identity_end_offset_utf16",
         )

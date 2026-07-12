@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
+
+from arkts_code_reviewer.code_analysis.change_review import (
+    build_change_review_units,
+)
+from arkts_code_reviewer.code_analysis.change_set import (
+    ChangeSet,
+    CodeSourceSnapshot,
+)
 from arkts_code_reviewer.code_analysis.file_analysis_models import (
     CodeSourceRef,
     FileParseResult,
@@ -204,8 +213,183 @@ class CodeAnalyzer:
         )
         return self.analyze_files([file_input], mode=mode, token_budget=token_budget)
 
+    def analyze_change_set(
+        self,
+        change_set: ChangeSet,
+        source_snapshots: Mapping[str, CodeSourceSnapshot],
+        token_budget: int | None = None,
+    ) -> AnalysisResult:
+        """Analyze an immutable base/head ChangeSet without parsing a Git diff.
+
+        Source acquisition stays outside this module. Every supplied snapshot is
+        hash-checked before the first parser call, then each unique CodeSourceRef is
+        parsed exactly once regardless of the number of ChangeAtoms or ReviewUnits.
+        """
+
+        snapshots = self._validate_change_set_inputs(change_set, source_snapshots)
+        parse_results_by_source_ref: dict[str, FileParseResult] = {}
+        for source_ref in sorted(
+            change_set.source_refs,
+            key=lambda item: (item.path, item.revision, item.source_ref_id),
+        ):
+            snapshot = snapshots[source_ref.source_ref_id]
+            parse_result = self.file_parser.parse_file(source_ref, snapshot.content)
+            self._validate_parse_result(parse_result, source_ref)
+            parse_results_by_source_ref[source_ref.source_ref_id] = parse_result
+
+        build_result = build_change_review_units(
+            change_set=change_set,
+            source_snapshots=snapshots,
+            file_parse_results=parse_results_by_source_ref,
+            review_unit_builder=self.unit_builder,
+        )
+        if build_result.change_set_id != change_set.change_set_id:
+            raise ValueError(
+                "ChangeSet ReviewUnit build result must retain change_set_id"
+            )
+        return self._assemble_change_set_result(
+            change_set=change_set,
+            build_result=build_result,
+            parse_results_by_source_ref=parse_results_by_source_ref,
+            token_budget=token_budget,
+        )
+
     def to_json_ready(self, result: AnalysisResult) -> dict[str, object]:
         return result.to_dict()
+
+    def _validate_change_set_inputs(
+        self,
+        change_set: ChangeSet,
+        source_snapshots: Mapping[str, CodeSourceSnapshot],
+    ) -> dict[str, CodeSourceSnapshot]:
+        if not isinstance(change_set, ChangeSet):
+            raise ValueError("change_set must use ChangeSet")
+        change_set.validate()
+        if not isinstance(source_snapshots, Mapping):
+            raise ValueError("source_snapshots must be a source_ref_id mapping")
+        expected = {
+            source_ref.source_ref_id: source_ref
+            for source_ref in change_set.source_refs
+        }
+        if set(source_snapshots) != set(expected):
+            raise ValueError(
+                "source_snapshots must exactly cover ChangeSet.source_refs"
+            )
+        validated: dict[str, CodeSourceSnapshot] = {}
+        for source_ref_id, source_ref in expected.items():
+            snapshot = source_snapshots[source_ref_id]
+            if not isinstance(snapshot, CodeSourceSnapshot):
+                raise ValueError(
+                    "source_snapshots must contain CodeSourceSnapshot values"
+                )
+            if snapshot.source_ref != source_ref:
+                raise ValueError(
+                    "CodeSourceSnapshot source_ref must match ChangeSet source"
+                )
+            source_ref.verify_content(snapshot.content)
+            validated[source_ref_id] = snapshot
+        return validated
+
+    def _assemble_change_set_result(
+        self,
+        *,
+        change_set: ChangeSet,
+        build_result: ReviewUnitBuildResult,
+        parse_results_by_source_ref: Mapping[str, FileParseResult],
+        token_budget: int | None,
+    ) -> AnalysisResult:
+        build_result.validate()
+        review_units = build_result.flatten_units()
+        parse_results = sorted(
+            parse_results_by_source_ref.values(),
+            key=lambda item: (
+                item.analysis.source_ref.path,
+                item.analysis.source_ref.revision,
+                item.analysis.source_ref.source_ref_id,
+            ),
+        )
+
+        routing_tags_by_source: dict[str, set[str]] = {}
+        routing_tags: set[str] = set()
+        parser_layers: set[str] = set()
+        warnings: list[str] = []
+        for parse_result in parse_results:
+            analysis = parse_result.analysis
+            facts = parse_result.compatibility_facts
+            source_ref = analysis.source_ref
+            source_routing_tags = self._derive_scoped_tags(
+                analysis.file_hints,
+                analysis.file_hints.to_code_facts(
+                    source_ref.path,
+                    parser_layer=facts.parser_layer,
+                ),
+            )
+            routing_tags_by_source[source_ref.source_ref_id] = source_routing_tags
+            routing_tags.update(source_routing_tags)
+            parser_layers.add(facts.parser_layer)
+            warnings.extend(
+                f"{source_ref.path}@{source_ref.revision}: {warning}"
+                for warning in facts.warnings
+            )
+
+        exact_tags: set[str] = set()
+        unit_fact_scopes: list[UnitFactScope] = []
+        retrieval_units: list[RetrievalUnit] = []
+        for unit in review_units:
+            if unit.source_ref_id is None:
+                raise ValueError("ChangeSet ReviewUnit requires source_ref_id")
+            unit_parse_result = parse_results_by_source_ref.get(unit.source_ref_id)
+            if unit_parse_result is None:
+                raise ValueError(
+                    "ChangeSet ReviewUnit references an unparsed source revision"
+                )
+            unit_scope = project(unit_parse_result.analysis, unit)
+            unit_fact_scopes.append(unit_scope)
+            unit_facts = unit_scope.unit_exact.to_code_facts(
+                unit.file,
+                parser_layer=unit_parse_result.compatibility_facts.parser_layer,
+            )
+            unit_tags = self._derive_scoped_tags(
+                unit_scope.unit_exact,
+                unit_facts,
+            )
+            exact_tags.update(unit_tags)
+            unit_routing_tags = routing_tags_by_source[unit.source_ref_id]
+            retrieval_units.append(
+                RetrievalUnit(
+                    unit_ref=unit.unit_ref,
+                    code_features=CodeFeatures.from_facts(unit_facts, unit_tags),
+                    intent_summary=self._intent_summary(unit_facts, unit_tags),
+                    unit_id=unit.unit_id,
+                    source_ref_id=unit.source_ref_id,
+                    unit_fact_scope=unit_scope,
+                    dimensions=trigger_dimensions(unit_tags),
+                    routing_tags=sorted(unit_routing_tags),
+                )
+            )
+
+        result = AnalysisResult(
+            retrieval_query=RetrievalQuery(
+                mr_context=MrContext(
+                    triggered_dimensions=trigger_dimensions(
+                        exact_tags | routing_tags
+                    ),
+                    token_budget=token_budget or self.token_budget,
+                ),
+                units=retrieval_units,
+            ),
+            review_units=review_units,
+            metadata=AnalysisMetadata(
+                parser_layer=self._dominant_parser_layer(parser_layers),
+                warnings=sorted(set(warnings)),
+            ),
+            review_unit_build_result=build_result,
+            file_parse_results=parse_results,
+            unit_fact_scopes=unit_fact_scopes,
+            change_set=change_set,
+        )
+        result.validate()
+        return result
 
     def _intent_summary(self, facts: CodeFacts, tags: set[str]) -> str:
         components = facts.components

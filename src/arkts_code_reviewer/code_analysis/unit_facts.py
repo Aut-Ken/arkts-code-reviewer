@@ -56,6 +56,11 @@ def project(file_analysis: FileAnalysis, unit: ReviewUnit) -> UnitFactScope:
             ),
         )
 
+    if not _owner_matches_unit(file_analysis, owner_ref, unit):
+        raise ValueError(
+            "ReviewUnit owner identity does not match FileAnalysis occurrence"
+        )
+
     eligible_owners = _eligible_owner_keys(file_analysis, owner_ref)
     if not eligible_owners:
         return _empty_scope(
@@ -153,6 +158,68 @@ def _eligible_owner_keys(
         and region.quality in _EXACT_QUALITIES
     )
     return eligible
+
+
+def _owner_matches_unit(
+    file_analysis: FileAnalysis,
+    owner_ref: OwnerRef,
+    unit: ReviewUnit,
+) -> bool:
+    if owner_ref.kind == "region":
+        region = next(
+            (
+                item
+                for item in file_analysis.review_regions
+                if item.region_id == owner_ref.ref_id
+            ),
+            None,
+        )
+        return bool(
+            region is not None
+            and unit.unit_kind == region.kind
+            and unit.unit_symbol == region.symbol
+            and unit.source_span.start_line == region.span.start_line
+            and unit.source_span.end_line == region.span.end_line
+            and unit.identity_start_offset_utf16
+            == region.exact_range.start_offset_utf16
+            and unit.identity_end_offset_utf16
+            == region.exact_range.end_offset_utf16
+        )
+
+    declaration = next(
+        (
+            item
+            for item in file_analysis.declarations
+            if item.declaration_id == owner_ref.ref_id
+        ),
+        None,
+    )
+    if not (
+        declaration is not None
+        and unit.unit_kind == declaration.kind
+        and unit.unit_symbol == declaration.qualified_name
+        and unit.source_span.start_line == declaration.span.start_line
+        and unit.source_span.end_line == declaration.span.end_line
+    ):
+        return False
+    collisions = [
+        item
+        for item in file_analysis.declarations
+        if item.kind == declaration.kind
+        and item.qualified_name == declaration.qualified_name
+        and item.span.start_line == declaration.span.start_line
+        and item.span.end_line == declaration.span.end_line
+    ]
+    if len(collisions) > 1 and unit.identity_start_offset_utf16 is None:
+        return False
+    if unit.identity_start_offset_utf16 is None:
+        return True
+    return (
+        unit.identity_start_offset_utf16
+        == declaration.exact_range.start_offset_utf16
+        and unit.identity_end_offset_utf16
+        == declaration.exact_range.end_offset_utf16
+    )
 
 
 def _owner_key(owner_ref: OwnerRef) -> tuple[str, str]:

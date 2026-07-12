@@ -10,6 +10,7 @@ from arkts_code_reviewer.code_analysis.file_analysis_models import (
     FileAnalysis,
     FileParserQuality,
     OwnerRef,
+    ReviewRegion,
     ScopedFacts,
 )
 from arkts_code_reviewer.code_analysis.models import (
@@ -18,6 +19,7 @@ from arkts_code_reviewer.code_analysis.models import (
     ReviewUnitSpan,
     SourceSpan,
 )
+from arkts_code_reviewer.code_analysis.review_unit_contract import declaration_unit_id
 from arkts_code_reviewer.code_analysis.tagger import derive_tags
 from arkts_code_reviewer.code_analysis.unit_facts import project
 
@@ -179,19 +181,89 @@ class UnitFactProjectionTest(unittest.TestCase):
             (self.sibling_api.occurrence_id,),
         )
 
+    def test_projects_direct_review_region_facts_for_change_set_unit(self) -> None:
+        region = ReviewRegion.create(
+            source_ref_id=self.source_ref.source_ref_id,
+            kind="field_region",
+            symbol="Page.value",
+            span=SourceSpan(3, 3),
+            exact_range=_range(3, 3, 20, 29),
+            owner_declaration_id=self.method.declaration_id,
+        )
+        field_write = _fact(
+            self.source_ref.source_ref_id,
+            kind="field_write",
+            name="value",
+            canonical_name="Page.value",
+            exact_range=_range(3, 3, 22, 27),
+            owner=OwnerRef("region", region.region_id),
+        )
+        analysis = FileAnalysis.create(
+            source_ref=self.source_ref,
+            parser_version="fixture-v1",
+            parser_quality=FileParserQuality(
+                layer="L1",
+                error_nodes=0,
+                missing_nodes=0,
+            ),
+            declarations=(self.method,),
+            review_regions=(region,),
+            fact_occurrences=(field_write,),
+            file_hints=ScopedFacts(field_writes=("Page.value",)),
+        )
+        atom_id = "change-atom:sha256:" + "0" * 64
+        unit = ReviewUnit(
+            file=PATH,
+            unit_symbol="Page.value",
+            unit_ref=f"Page.value@{PATH}",
+            full_text="// line 3",
+            changed_lines=[3],
+            file_changed_lines=[3],
+            unit_changed_lines=[1],
+            unit_id=declaration_unit_id(
+                PATH,
+                "field_region",
+                "Page.value",
+                3,
+                3,
+                start_offset_utf16=20,
+                end_offset_utf16=29,
+                source_role="head",
+                source_ref_id=self.source_ref.source_ref_id,
+            ),
+            unit_kind="field_region",
+            source_span=ReviewUnitSpan(3, 3),
+            context_span=ReviewUnitSpan(3, 3),
+            changed_new_lines=[3],
+            selection_reason="changed_review_region",
+            diagnostics=[],
+            source_ref_id=self.source_ref.source_ref_id,
+            source_role="head",
+            change_atom_ids=[atom_id],
+            owner_ref=OwnerRef("region", region.region_id),
+            identity_source_ref_id=self.source_ref.source_ref_id,
+            identity_start_offset_utf16=20,
+            identity_end_offset_utf16=29,
+        )
+
+        scope = project(analysis, unit)
+
+        self.assertEqual(scope.unit_exact.field_writes, ("Page.value",))
+        self.assertEqual(scope.exact_occurrence_ids, (field_write.occurrence_id,))
+
     def test_unresolved_owner_never_becomes_exact_from_span_alone(self) -> None:
         unit = _declaration_unit(
             self.source_ref.source_ref_id,
             self.method.declaration_id,
             symbol="Page.load",
-            start_line=7,
+            start_line=2,
             end_line=8,
         )
 
         scope = project(self.analysis, unit)
 
-        self.assertEqual(scope.unit_exact, ScopedFacts())
-        self.assertEqual(scope.exact_occurrence_ids, ())
+        self.assertNotIn("sensor.on", scope.unit_exact.apis)
+        self.assertNotIn(self.unresolved_api.occurrence_id, scope.exact_occurrence_ids)
         self.assertIn("sensor.on", scope.file_hints.apis)
 
     def test_fallback_and_ownerless_units_keep_only_file_hints(self) -> None:

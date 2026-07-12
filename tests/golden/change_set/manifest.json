@@ -1,0 +1,1579 @@
+{
+  "schema_version": "change-set-golden-v1",
+  "suite_id": "change-set-golden-v1",
+  "description": "Human-reviewed ChangeSet v1 identity, provenance, coordinate, and ordering truth.",
+  "coordinate_system": {
+    "line_base": 1,
+    "line_end": "inclusive",
+    "offset_encoding": "UTF-16",
+    "offset_base": 0,
+    "offset_end": "exclusive"
+  },
+  "frozen_contract": {
+    "change_set_schema_version": "change-set-v1",
+    "diff_normalizer_version": "change-normalizer-v1",
+    "atom_kinds": [
+      "addition",
+      "deletion",
+      "replacement"
+    ],
+    "file_statuses": [
+      "added",
+      "modified",
+      "deleted",
+      "renamed"
+    ],
+    "diagnostic_codes": [
+      "binary_source_unavailable"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "CS001-added-file",
+      "description": "An added text file retains only a head source and one full-file addition atom.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS001",
+      "head_revision": "head-CS001",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/cs001_added.ets",
+          "role": "head",
+          "relative_path": "src/NewPage.ets",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "content_sha256": "6aba36e6bc5ba9ffb0005ae4ff18fe363a980b3df12053426601043658690f86"
+        }
+      ],
+      "files": [
+        {
+          "status": "added",
+          "old_path": null,
+          "new_path": "src/NewPage.ets",
+          "old_source_alias": null,
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "addition",
+              "old_span": null,
+              "new_span": {
+                "start_line": 1,
+                "end_line": 5
+              },
+              "added_new_lines": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "deleted_old_lines": [],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:51781b07d0a42443e49aa6e4bfaba018a39e9fe7739f430f242cd68cfca0c11e",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS001",
+        "head_revision": "head-CS001",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:f33304b7590173a5194346168422d28032b6705ccf7be6d7bea1170110b0d457",
+            "repository": "golden/change-set",
+            "revision": "head-CS001",
+            "path": "src/NewPage.ets",
+            "content_hash": "sha256:6aba36e6bc5ba9ffb0005ae4ff18fe363a980b3df12053426601043658690f86"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:3630745a6bb798600e736b26e34df818aca160119734ff4c634aa58efc32dbf2",
+            "status": "added",
+            "old_path": null,
+            "new_path": "src/NewPage.ets",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:f33304b7590173a5194346168422d28032b6705ccf7be6d7bea1170110b0d457",
+            "atom_ids": [
+              "change-atom:sha256:d6ac3d57791c7910c446c8e4373497dd8f38cbaf3277c4d182b65811b5548ec8"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:d6ac3d57791c7910c446c8e4373497dd8f38cbaf3277c4d182b65811b5548ec8",
+            "kind": "addition",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:f33304b7590173a5194346168422d28032b6705ccf7be6d7bea1170110b0d457",
+            "old_span": null,
+            "new_span": {
+              "start_line": 1,
+              "end_line": 5,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 51
+            },
+            "added_new_lines": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "deleted_old_lines": [],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS002-deletion-only-file",
+      "description": "A deleted text file retains only base provenance and deleted old lines.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS002",
+      "head_revision": "head-CS002",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs002_deleted.ets",
+          "role": "base",
+          "relative_path": "src/RemovedPage.ets",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "content_sha256": "92238c0255763df40aa17a2546c1bca985197324fe8f0cccb040277919587a03"
+        }
+      ],
+      "files": [
+        {
+          "status": "deleted",
+          "old_path": "src/RemovedPage.ets",
+          "new_path": null,
+          "old_source_alias": "base",
+          "new_source_alias": null,
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "deletion",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 5
+              },
+              "new_span": null,
+              "added_new_lines": [],
+              "deleted_old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:2d8678dd6e2b3df6f3e3fab349ef9889d15ca00ab6f07d1f07c5f642cc68b0f8",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS002",
+        "head_revision": "head-CS002",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:2c4e15c1a9c4bf1a0cfd7ae03127f241be07247d2021f8edec08307ca9f42134",
+            "repository": "golden/change-set",
+            "revision": "base-CS002",
+            "path": "src/RemovedPage.ets",
+            "content_hash": "sha256:92238c0255763df40aa17a2546c1bca985197324fe8f0cccb040277919587a03"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:c0759bf6386f98b320190a314925946b193fb99e1efab615ce814a21ea4aa8ef",
+            "status": "deleted",
+            "old_path": "src/RemovedPage.ets",
+            "new_path": null,
+            "old_source_ref_id": "code-source:sha256:2c4e15c1a9c4bf1a0cfd7ae03127f241be07247d2021f8edec08307ca9f42134",
+            "new_source_ref_id": null,
+            "atom_ids": [
+              "change-atom:sha256:8cb78eb7796ee355b8ec3b7ab544ab582758b103cf4c247dc07ce06802067b46"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:8cb78eb7796ee355b8ec3b7ab544ab582758b103cf4c247dc07ce06802067b46",
+            "kind": "deletion",
+            "old_source_ref_id": "code-source:sha256:2c4e15c1a9c4bf1a0cfd7ae03127f241be07247d2021f8edec08307ca9f42134",
+            "new_source_ref_id": null,
+            "old_span": {
+              "start_line": 1,
+              "end_line": 5,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 55
+            },
+            "new_span": null,
+            "added_new_lines": [],
+            "deleted_old_lines": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS003-replacement-context",
+      "description": "A replacement separates changed lines from the wider exact span.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS003",
+      "head_revision": "head-CS003",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs003_base.ets",
+          "role": "base",
+          "relative_path": "src/value.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "c929d4c814e93b923d10777ad99dc58516011f514a4fe6ded4c783682baab0ec"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs003_head.ets",
+          "role": "head",
+          "relative_path": "src/value.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "8f87dd2dff73620c33b4be4195420bfb46d67c761edb2565ae956c1812c2da28"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/value.ets",
+          "new_path": "src/value.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 3
+              },
+              "new_span": {
+                "start_line": 1,
+                "end_line": 3
+              },
+              "added_new_lines": [
+                2
+              ],
+              "deleted_old_lines": [
+                2
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:c8db4d7c19b96d99275f897044dfe80eea3888b656feb718af35b858b3a64db7",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS003",
+        "head_revision": "head-CS003",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:2e5619f01c4a618eaa9a85e7f7a3dddb2110c1f11910997daf639d1960fd18a7",
+            "repository": "golden/change-set",
+            "revision": "base-CS003",
+            "path": "src/value.ets",
+            "content_hash": "sha256:c929d4c814e93b923d10777ad99dc58516011f514a4fe6ded4c783682baab0ec"
+          },
+          {
+            "source_ref_id": "code-source:sha256:86305773b6f594e9bbf357408cad30f05634b9698ff4395f2ca12851a62ff7e8",
+            "repository": "golden/change-set",
+            "revision": "head-CS003",
+            "path": "src/value.ets",
+            "content_hash": "sha256:8f87dd2dff73620c33b4be4195420bfb46d67c761edb2565ae956c1812c2da28"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:af26728c83afbe1259a026ec515e332999298bfa8334922b892a042abc8b4c03",
+            "status": "modified",
+            "old_path": "src/value.ets",
+            "new_path": "src/value.ets",
+            "old_source_ref_id": "code-source:sha256:2e5619f01c4a618eaa9a85e7f7a3dddb2110c1f11910997daf639d1960fd18a7",
+            "new_source_ref_id": "code-source:sha256:86305773b6f594e9bbf357408cad30f05634b9698ff4395f2ca12851a62ff7e8",
+            "atom_ids": [
+              "change-atom:sha256:30e611af4766430d98416090419cb4bdf0d439de1497dcca589e9e77918a5b33"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:30e611af4766430d98416090419cb4bdf0d439de1497dcca589e9e77918a5b33",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:2e5619f01c4a618eaa9a85e7f7a3dddb2110c1f11910997daf639d1960fd18a7",
+            "new_source_ref_id": "code-source:sha256:86305773b6f594e9bbf357408cad30f05634b9698ff4395f2ca12851a62ff7e8",
+            "old_span": {
+              "start_line": 1,
+              "end_line": 3,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 40
+            },
+            "new_span": {
+              "start_line": 1,
+              "end_line": 3,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 40
+            },
+            "added_new_lines": [
+              2
+            ],
+            "deleted_old_lines": [
+              2
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS004-pure-rename",
+      "description": "A pure rename retains both endpoints without fabricating atoms.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS004",
+      "head_revision": "head-CS004",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs004_old.ets",
+          "role": "base",
+          "relative_path": "src/OldName.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "2ab7b57dc794b88f382f12601d1abbf59c3da341d3c610854ad40cbf17569fe9"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs004_new.ets",
+          "role": "head",
+          "relative_path": "src/NewName.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "2ab7b57dc794b88f382f12601d1abbf59c3da341d3c610854ad40cbf17569fe9"
+        }
+      ],
+      "files": [
+        {
+          "status": "renamed",
+          "old_path": "src/OldName.ets",
+          "new_path": "src/NewName.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": []
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:674b521ec66dcbe4ac88714b359ba69c54a6e051256287c98be7e0654c91d4a2",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS004",
+        "head_revision": "head-CS004",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:1db8d1fb0726d6c1716175590cd9aaa2086608f45ca7bab574e3da9c5b9d67dd",
+            "repository": "golden/change-set",
+            "revision": "base-CS004",
+            "path": "src/OldName.ets",
+            "content_hash": "sha256:2ab7b57dc794b88f382f12601d1abbf59c3da341d3c610854ad40cbf17569fe9"
+          },
+          {
+            "source_ref_id": "code-source:sha256:75005ca3b74edaa05d04a97920f7be552f264cd8d3de814b46a25861d909f99e",
+            "repository": "golden/change-set",
+            "revision": "head-CS004",
+            "path": "src/NewName.ets",
+            "content_hash": "sha256:2ab7b57dc794b88f382f12601d1abbf59c3da341d3c610854ad40cbf17569fe9"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:e23758ee28ac51d84dba3a96932c6b6725c4cdd0e84f77d742b85441f273d98f",
+            "status": "renamed",
+            "old_path": "src/OldName.ets",
+            "new_path": "src/NewName.ets",
+            "old_source_ref_id": "code-source:sha256:1db8d1fb0726d6c1716175590cd9aaa2086608f45ca7bab574e3da9c5b9d67dd",
+            "new_source_ref_id": "code-source:sha256:75005ca3b74edaa05d04a97920f7be552f264cd8d3de814b46a25861d909f99e",
+            "atom_ids": [],
+            "is_binary": false
+          }
+        ],
+        "atoms": [],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS005-rename-with-edit",
+      "description": "A rename with content change carries replacement provenance on both paths.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS005",
+      "head_revision": "head-CS005",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs005_old.ets",
+          "role": "base",
+          "relative_path": "src/OldLabel.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "34960441443f95d641efd7f4bbafb009181f3d930cabf9070d1eb983aba4891b"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs005_new.ets",
+          "role": "head",
+          "relative_path": "src/NewLabel.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "c699ea150f8be9fd622e307d38f6b323c0ae0cafade40bf04f2e9dc046d389fe"
+        }
+      ],
+      "files": [
+        {
+          "status": "renamed",
+          "old_path": "src/OldLabel.ets",
+          "new_path": "src/NewLabel.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 3
+              },
+              "new_span": {
+                "start_line": 1,
+                "end_line": 3
+              },
+              "added_new_lines": [
+                2
+              ],
+              "deleted_old_lines": [
+                2
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:922239ea4a1110c862a4d7059a3067d4bd0bb1811d824166b202762e3b8b5d56",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS005",
+        "head_revision": "head-CS005",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:5dcad694b4fafbec60773db9fba4d671ee79c489ccec320fff6aec808ff40003",
+            "repository": "golden/change-set",
+            "revision": "base-CS005",
+            "path": "src/OldLabel.ets",
+            "content_hash": "sha256:34960441443f95d641efd7f4bbafb009181f3d930cabf9070d1eb983aba4891b"
+          },
+          {
+            "source_ref_id": "code-source:sha256:e0466a3af5387f584420f2271b54b3f7a97f4910f1fecb659e416e46fbae6e2e",
+            "repository": "golden/change-set",
+            "revision": "head-CS005",
+            "path": "src/NewLabel.ets",
+            "content_hash": "sha256:c699ea150f8be9fd622e307d38f6b323c0ae0cafade40bf04f2e9dc046d389fe"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:5b163bdca408c900bb8365c8398d6611d03f5a5927da7f852d4124dd85d8396f",
+            "status": "renamed",
+            "old_path": "src/OldLabel.ets",
+            "new_path": "src/NewLabel.ets",
+            "old_source_ref_id": "code-source:sha256:5dcad694b4fafbec60773db9fba4d671ee79c489ccec320fff6aec808ff40003",
+            "new_source_ref_id": "code-source:sha256:e0466a3af5387f584420f2271b54b3f7a97f4910f1fecb659e416e46fbae6e2e",
+            "atom_ids": [
+              "change-atom:sha256:94016837a71a873484f00cbd889106eeb1cfdc5595b7eb038b6c77ac00584118"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:94016837a71a873484f00cbd889106eeb1cfdc5595b7eb038b6c77ac00584118",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:5dcad694b4fafbec60773db9fba4d671ee79c489ccec320fff6aec808ff40003",
+            "new_source_ref_id": "code-source:sha256:e0466a3af5387f584420f2271b54b3f7a97f4910f1fecb659e416e46fbae6e2e",
+            "old_span": {
+              "start_line": 1,
+              "end_line": 3,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 51
+            },
+            "new_span": {
+              "start_line": 1,
+              "end_line": 3,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 51
+            },
+            "added_new_lines": [
+              2
+            ],
+            "deleted_old_lines": [
+              2
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS006-multiple-hunks",
+      "description": "Independent addition and deletion atoms are normalized into stable source order.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS006",
+      "head_revision": "head-CS006",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs006_base.ets",
+          "role": "base",
+          "relative_path": "src/Multi.ets",
+          "origin_lines": [
+            1,
+            4
+          ],
+          "content_sha256": "c9edd291935431815a728925ad638e1fe097424e6ddd1f4758db9546760bed33"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs006_head.ets",
+          "role": "head",
+          "relative_path": "src/Multi.ets",
+          "origin_lines": [
+            1,
+            4
+          ],
+          "content_sha256": "556255207e09ec58d16b8054711650d6cbfe3400793cf07ce69a43db1f740c1e"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/Multi.ets",
+          "new_path": "src/Multi.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "deletion",
+              "old_span": {
+                "start_line": 2,
+                "end_line": 2
+              },
+              "new_span": null,
+              "added_new_lines": [],
+              "deleted_old_lines": [
+                2
+              ],
+              "diff_positions": []
+            },
+            {
+              "kind": "addition",
+              "old_span": null,
+              "new_span": {
+                "start_line": 4,
+                "end_line": 4
+              },
+              "added_new_lines": [
+                4
+              ],
+              "deleted_old_lines": [],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:bce57e9e6d627082c0813796e1585d44d53d83219e3ea1aaf7db6d69db5e8980",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS006",
+        "head_revision": "head-CS006",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:2719048020e8558dcf39ae15b7b9ff03cb2252de1692bb39ee033bb8b1afd4e4",
+            "repository": "golden/change-set",
+            "revision": "base-CS006",
+            "path": "src/Multi.ets",
+            "content_hash": "sha256:c9edd291935431815a728925ad638e1fe097424e6ddd1f4758db9546760bed33"
+          },
+          {
+            "source_ref_id": "code-source:sha256:79420ba0b8b401b55c4b1cbe9d0b4fee4dbc24f3d0083fcd23847093417345bb",
+            "repository": "golden/change-set",
+            "revision": "head-CS006",
+            "path": "src/Multi.ets",
+            "content_hash": "sha256:556255207e09ec58d16b8054711650d6cbfe3400793cf07ce69a43db1f740c1e"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:f3865cad77daeea55ddd30989d679969e4fc02a12ecf994105e233cd222856fa",
+            "status": "modified",
+            "old_path": "src/Multi.ets",
+            "new_path": "src/Multi.ets",
+            "old_source_ref_id": "code-source:sha256:2719048020e8558dcf39ae15b7b9ff03cb2252de1692bb39ee033bb8b1afd4e4",
+            "new_source_ref_id": "code-source:sha256:79420ba0b8b401b55c4b1cbe9d0b4fee4dbc24f3d0083fcd23847093417345bb",
+            "atom_ids": [
+              "change-atom:sha256:8ebf5cebf0f757abad19fd713804bb9d4ed7f3da6f767c5c33a4637196c0cc73",
+              "change-atom:sha256:9cc00e6ea66ed534c0a5cd188ac2a146f60f3147a4aeb127dc8a0c3139d7aa78"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:8ebf5cebf0f757abad19fd713804bb9d4ed7f3da6f767c5c33a4637196c0cc73",
+            "kind": "addition",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:79420ba0b8b401b55c4b1cbe9d0b4fee4dbc24f3d0083fcd23847093417345bb",
+            "old_span": null,
+            "new_span": {
+              "start_line": 4,
+              "end_line": 4,
+              "start_offset_utf16": 47,
+              "end_offset_utf16": 63
+            },
+            "added_new_lines": [
+              4
+            ],
+            "deleted_old_lines": [],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          },
+          {
+            "atom_id": "change-atom:sha256:9cc00e6ea66ed534c0a5cd188ac2a146f60f3147a4aeb127dc8a0c3139d7aa78",
+            "kind": "deletion",
+            "old_source_ref_id": "code-source:sha256:2719048020e8558dcf39ae15b7b9ff03cb2252de1692bb39ee033bb8b1afd4e4",
+            "new_source_ref_id": null,
+            "old_span": {
+              "start_line": 2,
+              "end_line": 2,
+              "start_offset_utf16": 15,
+              "end_offset_utf16": 32
+            },
+            "new_span": null,
+            "added_new_lines": [],
+            "deleted_old_lines": [
+              2
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS007-multi-file-order",
+      "description": "File input order cannot change IDs or serialized output order.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS007",
+      "head_revision": "head-CS007",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "deleted",
+          "file": "sources/cs007_deleted.ets",
+          "role": "base",
+          "relative_path": "src/ZDeleted.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "19bc1e554b6d4fbe06e8b63bc82bb91be53205d6928c9462fe4f66fcb32ff944"
+        },
+        {
+          "alias": "added",
+          "file": "sources/cs007_added.ets",
+          "role": "head",
+          "relative_path": "src/AAdded.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "523be8927a982009fae5bb5572c345d7d6926437164066690d8aa2125907a4e2"
+        }
+      ],
+      "files": [
+        {
+          "status": "deleted",
+          "old_path": "src/ZDeleted.ets",
+          "new_path": null,
+          "old_source_alias": "deleted",
+          "new_source_alias": null,
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "deletion",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "new_span": null,
+              "added_new_lines": [],
+              "deleted_old_lines": [
+                1
+              ],
+              "diff_positions": []
+            }
+          ]
+        },
+        {
+          "status": "added",
+          "old_path": null,
+          "new_path": "src/AAdded.ets",
+          "old_source_alias": null,
+          "new_source_alias": "added",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "addition",
+              "old_span": null,
+              "new_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "added_new_lines": [
+                1
+              ],
+              "deleted_old_lines": [],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:2478e1c2f98c79552d4a117b9fd8b730f25270ba8b70fbec229d092ab1691985",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS007",
+        "head_revision": "head-CS007",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:041cc1b72adbf300ae71da4399bd9ed9a8f0ae1d3b8fda2e67ef3ad800a0bb84",
+            "repository": "golden/change-set",
+            "revision": "head-CS007",
+            "path": "src/AAdded.ets",
+            "content_hash": "sha256:523be8927a982009fae5bb5572c345d7d6926437164066690d8aa2125907a4e2"
+          },
+          {
+            "source_ref_id": "code-source:sha256:6a473a7135b3a34039178a6e13fa41b17d623544d06413ba82cce61a8c32ced8",
+            "repository": "golden/change-set",
+            "revision": "base-CS007",
+            "path": "src/ZDeleted.ets",
+            "content_hash": "sha256:19bc1e554b6d4fbe06e8b63bc82bb91be53205d6928c9462fe4f66fcb32ff944"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:888ed00fe56c8445a2c3dbd6228bcd37d29af11d13f98d3544df899138949873",
+            "status": "added",
+            "old_path": null,
+            "new_path": "src/AAdded.ets",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:041cc1b72adbf300ae71da4399bd9ed9a8f0ae1d3b8fda2e67ef3ad800a0bb84",
+            "atom_ids": [
+              "change-atom:sha256:61d2c656a88a611d4e4d95958c5d36f1d113bcdf7bc22c4dbf8dad418b6acf18"
+            ],
+            "is_binary": false
+          },
+          {
+            "changed_file_id": "changed-file:sha256:ea2477aa67ae5850de8ea81ed9ba4854b62c30dc69466f6ffaee44794f38776b",
+            "status": "deleted",
+            "old_path": "src/ZDeleted.ets",
+            "new_path": null,
+            "old_source_ref_id": "code-source:sha256:6a473a7135b3a34039178a6e13fa41b17d623544d06413ba82cce61a8c32ced8",
+            "new_source_ref_id": null,
+            "atom_ids": [
+              "change-atom:sha256:fefdb0a9a8b23f466da89da5a4e4c161dcb9525fff666d5e64f8d274bd10a558"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:61d2c656a88a611d4e4d95958c5d36f1d113bcdf7bc22c4dbf8dad418b6acf18",
+            "kind": "addition",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:041cc1b72adbf300ae71da4399bd9ed9a8f0ae1d3b8fda2e67ef3ad800a0bb84",
+            "old_span": null,
+            "new_span": {
+              "start_line": 1,
+              "end_line": 1,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 26
+            },
+            "added_new_lines": [
+              1
+            ],
+            "deleted_old_lines": [],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          },
+          {
+            "atom_id": "change-atom:sha256:fefdb0a9a8b23f466da89da5a4e4c161dcb9525fff666d5e64f8d274bd10a558",
+            "kind": "deletion",
+            "old_source_ref_id": "code-source:sha256:6a473a7135b3a34039178a6e13fa41b17d623544d06413ba82cce61a8c32ced8",
+            "new_source_ref_id": null,
+            "old_span": {
+              "start_line": 1,
+              "end_line": 1,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 28
+            },
+            "new_span": null,
+            "added_new_lines": [],
+            "deleted_old_lines": [
+              1
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS008-empty-change-set",
+      "description": "An empty change set remains a deterministic first-class value.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS008",
+      "head_revision": "head-CS008",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [],
+      "files": [],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:75f12b7511ff0a6f166f2a76f3f34689787cafc791f95278e3328813cf843a7d",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS008",
+        "head_revision": "head-CS008",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [],
+        "files": [],
+        "atoms": [],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS009-empty-added-file",
+      "description": "An empty added text file has a head source but no atom.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS009",
+      "head_revision": "head-CS009",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "head",
+          "file": "sources/cs009_empty.ets",
+          "role": "head",
+          "relative_path": "src/Empty.ets",
+          "origin_lines": null,
+          "content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "files": [
+        {
+          "status": "added",
+          "old_path": null,
+          "new_path": "src/Empty.ets",
+          "old_source_alias": null,
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": []
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:f0ebf56cd4dce72bb298733db82480a81682f119cdba50b3780559a33bb23efa",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS009",
+        "head_revision": "head-CS009",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:1f3aa2017a1f615dc410edd0b66c9ece435c1f359159948e3754184c833a5378",
+            "repository": "golden/change-set",
+            "revision": "head-CS009",
+            "path": "src/Empty.ets",
+            "content_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:45cc553e6d8cb508988166679398dfdc4036da7f6ae890e6ade0ae59a854971f",
+            "status": "added",
+            "old_path": null,
+            "new_path": "src/Empty.ets",
+            "old_source_ref_id": null,
+            "new_source_ref_id": "code-source:sha256:1f3aa2017a1f615dc410edd0b66c9ece435c1f359159948e3754184c833a5378",
+            "atom_ids": [],
+            "is_binary": false
+          }
+        ],
+        "atoms": [],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS010-binary-diagnostic",
+      "description": "A binary modification emits a structured diagnostic without fake source text.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS010",
+      "head_revision": "head-CS010",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "assets/icon.bin",
+          "new_path": "assets/icon.bin",
+          "old_source_alias": null,
+          "new_source_alias": null,
+          "is_binary": true,
+          "atoms": []
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:614e507acf23da47bedcb53409d359b8e470d00c62445e079e67276205459b3d",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS010",
+        "head_revision": "head-CS010",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:2446973bcbd168dedc248d7cb987dfe46d2b694c8940101ace5f4700f241bcf9",
+            "status": "modified",
+            "old_path": "assets/icon.bin",
+            "new_path": "assets/icon.bin",
+            "old_source_ref_id": null,
+            "new_source_ref_id": null,
+            "atom_ids": [],
+            "is_binary": true
+          }
+        ],
+        "atoms": [],
+        "diagnostics": [
+          {
+            "diagnostic_id": "change-diagnostic:sha256:a3b96b1223f296b2ecd2b407ffce3d06fe1817cd8ad65dbaba6d2f9149c67452",
+            "code": "binary_source_unavailable",
+            "changed_file_id": "changed-file:sha256:2446973bcbd168dedc248d7cb987dfe46d2b694c8940101ace5f4700f241bcf9"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "CS011-unicode-utf16",
+      "description": "Astral Unicode freezes 0-based end-exclusive UTF-16 offsets.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS011",
+      "head_revision": "head-CS011",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs011_base.ets",
+          "role": "base",
+          "relative_path": "src/Unicode.ets",
+          "origin_lines": [
+            1,
+            2
+          ],
+          "content_sha256": "1522a2fe2252ff2ea2e06d1602287cfd23663c67b6d1600939be5a364268f24d"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs011_head.ets",
+          "role": "head",
+          "relative_path": "src/Unicode.ets",
+          "origin_lines": [
+            1,
+            2
+          ],
+          "content_sha256": "2d70b28b70b2d1ef02db4bd93c24180bea6ce546336756a3a2d5f289672e7c9a"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/Unicode.ets",
+          "new_path": "src/Unicode.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 2
+              },
+              "new_span": {
+                "start_line": 1,
+                "end_line": 2
+              },
+              "added_new_lines": [
+                2
+              ],
+              "deleted_old_lines": [
+                2
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:df7140fd9700b524400ff5171e1a1d177503b2e2bfa86b9bdc0e991cf5223018",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS011",
+        "head_revision": "head-CS011",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:30222dc76bbce83f419ec65c69a081227c6b86dd5b70550dddca0784951efe27",
+            "repository": "golden/change-set",
+            "revision": "head-CS011",
+            "path": "src/Unicode.ets",
+            "content_hash": "sha256:2d70b28b70b2d1ef02db4bd93c24180bea6ce546336756a3a2d5f289672e7c9a"
+          },
+          {
+            "source_ref_id": "code-source:sha256:4d621b2983d0e8128938cc420024e1d1db649c8c211d14ce0989cee449922b4e",
+            "repository": "golden/change-set",
+            "revision": "base-CS011",
+            "path": "src/Unicode.ets",
+            "content_hash": "sha256:1522a2fe2252ff2ea2e06d1602287cfd23663c67b6d1600939be5a364268f24d"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:da8f56ac591bde0055c9c19c5bac4297a80cb1ed87d22dc1646d0a6f1537b129",
+            "status": "modified",
+            "old_path": "src/Unicode.ets",
+            "new_path": "src/Unicode.ets",
+            "old_source_ref_id": "code-source:sha256:4d621b2983d0e8128938cc420024e1d1db649c8c211d14ce0989cee449922b4e",
+            "new_source_ref_id": "code-source:sha256:30222dc76bbce83f419ec65c69a081227c6b86dd5b70550dddca0784951efe27",
+            "atom_ids": [
+              "change-atom:sha256:44fe58ac76da8645ebf47f9c4f2790333fc914d0523cde2f7e20dafcbd9671e3"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:44fe58ac76da8645ebf47f9c4f2790333fc914d0523cde2f7e20dafcbd9671e3",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:4d621b2983d0e8128938cc420024e1d1db649c8c211d14ce0989cee449922b4e",
+            "new_source_ref_id": "code-source:sha256:30222dc76bbce83f419ec65c69a081227c6b86dd5b70550dddca0784951efe27",
+            "old_span": {
+              "start_line": 1,
+              "end_line": 2,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 29
+            },
+            "new_span": {
+              "start_line": 1,
+              "end_line": 2,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 29
+            },
+            "added_new_lines": [
+              2
+            ],
+            "deleted_old_lines": [
+              2
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS012-diff-positions",
+      "description": "Optional diff positions remain side-aware metadata tied to changed lines.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS012",
+      "head_revision": "head-CS012",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs012_base.ets",
+          "role": "base",
+          "relative_path": "src/Positioned.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "a3154941dd324a2e8c485c7fa561ed2aa29afecf0ae9e8e80d5f3951010b35bc"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs012_head.ets",
+          "role": "head",
+          "relative_path": "src/Positioned.ets",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "content_sha256": "2c2571e58a34dd5c4d7ccaa50a3b43bff845f078105d105d3e90548e4338840a"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/Positioned.ets",
+          "new_path": "src/Positioned.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 2,
+                "end_line": 2
+              },
+              "new_span": {
+                "start_line": 2,
+                "end_line": 2
+              },
+              "added_new_lines": [
+                2
+              ],
+              "deleted_old_lines": [
+                2
+              ],
+              "diff_positions": [
+                {
+                  "side": "base",
+                  "source_line": 2,
+                  "diff_position": 5
+                },
+                {
+                  "side": "head",
+                  "source_line": 2,
+                  "diff_position": 6
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:a365305fd4f297a0329d642d460ccf104b12adc7a21c8f4cb8bd394b680982ce",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS012",
+        "head_revision": "head-CS012",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:28ea106988d267f1033b3accb8c736087893d073abbbd5176d21bf3765528677",
+            "repository": "golden/change-set",
+            "revision": "base-CS012",
+            "path": "src/Positioned.ets",
+            "content_hash": "sha256:a3154941dd324a2e8c485c7fa561ed2aa29afecf0ae9e8e80d5f3951010b35bc"
+          },
+          {
+            "source_ref_id": "code-source:sha256:f0d08921e1a29b9561dd446577f6929d885dd996ff2efdbd7dfa22e3d6e529d8",
+            "repository": "golden/change-set",
+            "revision": "head-CS012",
+            "path": "src/Positioned.ets",
+            "content_hash": "sha256:2c2571e58a34dd5c4d7ccaa50a3b43bff845f078105d105d3e90548e4338840a"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:4755d25a96921160467f5c749d0548255de01222781f5664dd97f172aa533e6a",
+            "status": "modified",
+            "old_path": "src/Positioned.ets",
+            "new_path": "src/Positioned.ets",
+            "old_source_ref_id": "code-source:sha256:28ea106988d267f1033b3accb8c736087893d073abbbd5176d21bf3765528677",
+            "new_source_ref_id": "code-source:sha256:f0d08921e1a29b9561dd446577f6929d885dd996ff2efdbd7dfa22e3d6e529d8",
+            "atom_ids": [
+              "change-atom:sha256:759e0ae30d82b6c16a343bbc070bc21bfece1bccf0164fbe69bd1350272b78c7"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:759e0ae30d82b6c16a343bbc070bc21bfece1bccf0164fbe69bd1350272b78c7",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:28ea106988d267f1033b3accb8c736087893d073abbbd5176d21bf3765528677",
+            "new_source_ref_id": "code-source:sha256:f0d08921e1a29b9561dd446577f6929d885dd996ff2efdbd7dfa22e3d6e529d8",
+            "old_span": {
+              "start_line": 2,
+              "end_line": 2,
+              "start_offset_utf16": 8,
+              "end_offset_utf16": 17
+            },
+            "new_span": {
+              "start_line": 2,
+              "end_line": 2,
+              "start_offset_utf16": 8,
+              "end_offset_utf16": 17
+            },
+            "added_new_lines": [
+              2
+            ],
+            "deleted_old_lines": [
+              2
+            ],
+            "diff_positions": [
+              {
+                "side": "base",
+                "source_line": 2,
+                "diff_position": 5
+              },
+              {
+                "side": "head",
+                "source_line": 2,
+                "diff_position": 6
+              }
+            ],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS013-multiline-replacement",
+      "description": "A multiline replacement preserves two changed lines inside a bounded context span.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS013",
+      "head_revision": "head-CS013",
+      "diff_normalizer_version": "change-normalizer-v1",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs013_base.ets",
+          "role": "base",
+          "relative_path": "src/Compute.ets",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "content_sha256": "27d34d54456e07e60644b7660335ffb9d4cfc69d553fe8e07567587c0e64059e"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs013_head.ets",
+          "role": "head",
+          "relative_path": "src/Compute.ets",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "content_sha256": "87f5122bbe7406c04a51fcfec7ab657c58b9f0ca47de4574de091f6e18c35a43"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/Compute.ets",
+          "new_path": "src/Compute.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 2,
+                "end_line": 4
+              },
+              "new_span": {
+                "start_line": 2,
+                "end_line": 4
+              },
+              "added_new_lines": [
+                3,
+                4
+              ],
+              "deleted_old_lines": [
+                3,
+                4
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:e8c9745e9e8bf6b7a08b78c752cddbb283ad65ad96659cbca623c25180169bdc",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS013",
+        "head_revision": "head-CS013",
+        "diff_normalizer_version": "change-normalizer-v1",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:c2dc7d5acb14e72806eb6777f09b931553b2ca2bd8cd8650ecfbc02245fc9b02",
+            "repository": "golden/change-set",
+            "revision": "head-CS013",
+            "path": "src/Compute.ets",
+            "content_hash": "sha256:87f5122bbe7406c04a51fcfec7ab657c58b9f0ca47de4574de091f6e18c35a43"
+          },
+          {
+            "source_ref_id": "code-source:sha256:e6804aa3e47be269af81c0f6b86118bdb352a9838e6592a8b140586126f4ab66",
+            "repository": "golden/change-set",
+            "revision": "base-CS013",
+            "path": "src/Compute.ets",
+            "content_hash": "sha256:27d34d54456e07e60644b7660335ffb9d4cfc69d553fe8e07567587c0e64059e"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:121077aaf56b008c5fca851083b273fa0edd74f458f163aca62abf3a539f01d5",
+            "status": "modified",
+            "old_path": "src/Compute.ets",
+            "new_path": "src/Compute.ets",
+            "old_source_ref_id": "code-source:sha256:e6804aa3e47be269af81c0f6b86118bdb352a9838e6592a8b140586126f4ab66",
+            "new_source_ref_id": "code-source:sha256:c2dc7d5acb14e72806eb6777f09b931553b2ca2bd8cd8650ecfbc02245fc9b02",
+            "atom_ids": [
+              "change-atom:sha256:ebe3695d860d201a0cc9d28ad414a8f0f4958ae4109acfc2987822ec05553cba"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:ebe3695d860d201a0cc9d28ad414a8f0f4958ae4109acfc2987822ec05553cba",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:e6804aa3e47be269af81c0f6b86118bdb352a9838e6592a8b140586126f4ab66",
+            "new_source_ref_id": "code-source:sha256:c2dc7d5acb14e72806eb6777f09b931553b2ca2bd8cd8650ecfbc02245fc9b02",
+            "old_span": {
+              "start_line": 2,
+              "end_line": 4,
+              "start_offset_utf16": 29,
+              "end_offset_utf16": 86
+            },
+            "new_span": {
+              "start_line": 2,
+              "end_line": 4,
+              "start_offset_utf16": 29,
+              "end_offset_utf16": 86
+            },
+            "added_new_lines": [
+              3,
+              4
+            ],
+            "deleted_old_lines": [
+              3,
+              4
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-v1"
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "CS014-normalizer-version",
+      "description": "The declared normalizer version participates in atom and ChangeSet identity.",
+      "repository": "golden/change-set",
+      "base_revision": "base-CS014",
+      "head_revision": "head-CS014",
+      "diff_normalizer_version": "change-normalizer-golden-v9",
+      "sources": [
+        {
+          "alias": "base",
+          "file": "sources/cs014_base.ets",
+          "role": "base",
+          "relative_path": "src/Version.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "1c608c36415406a02baf8e076626b87ebcdf953e030eec4c90e352aff5ccdc62"
+        },
+        {
+          "alias": "head",
+          "file": "sources/cs014_head.ets",
+          "role": "head",
+          "relative_path": "src/Version.ets",
+          "origin_lines": [
+            1,
+            1
+          ],
+          "content_sha256": "76f250c22069b4786fac7a195b83b8d48863090fdc007d2045d7062f03c05441"
+        }
+      ],
+      "files": [
+        {
+          "status": "modified",
+          "old_path": "src/Version.ets",
+          "new_path": "src/Version.ets",
+          "old_source_alias": "base",
+          "new_source_alias": "head",
+          "is_binary": false,
+          "atoms": [
+            {
+              "kind": "replacement",
+              "old_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "new_span": {
+                "start_line": 1,
+                "end_line": 1
+              },
+              "added_new_lines": [
+                1
+              ],
+              "deleted_old_lines": [
+                1
+              ],
+              "diff_positions": []
+            }
+          ]
+        }
+      ],
+      "expected": {
+        "schema_version": "change-set-v1",
+        "change_set_id": "change-set:sha256:2e6b0310315e5a1e439f0b804e25e30d95f0abb268e1bba9f83f0f5735ad4da6",
+        "repository": "golden/change-set",
+        "base_revision": "base-CS014",
+        "head_revision": "head-CS014",
+        "diff_normalizer_version": "change-normalizer-golden-v9",
+        "source_refs": [
+          {
+            "source_ref_id": "code-source:sha256:48900eadf977b59b853c19f8d37fa3bab5ea76a34f7b3ba1a00aad36068cc94b",
+            "repository": "golden/change-set",
+            "revision": "base-CS014",
+            "path": "src/Version.ets",
+            "content_hash": "sha256:1c608c36415406a02baf8e076626b87ebcdf953e030eec4c90e352aff5ccdc62"
+          },
+          {
+            "source_ref_id": "code-source:sha256:fe9e9fe19f8826d37dbe8ccfd3028bcec7be2f3e2f7458fee84e631b938f2a52",
+            "repository": "golden/change-set",
+            "revision": "head-CS014",
+            "path": "src/Version.ets",
+            "content_hash": "sha256:76f250c22069b4786fac7a195b83b8d48863090fdc007d2045d7062f03c05441"
+          }
+        ],
+        "files": [
+          {
+            "changed_file_id": "changed-file:sha256:185f3df0d29220b2ad7adbd16ebb1c302b782a57c38fafe80e6d1033562397f5",
+            "status": "modified",
+            "old_path": "src/Version.ets",
+            "new_path": "src/Version.ets",
+            "old_source_ref_id": "code-source:sha256:48900eadf977b59b853c19f8d37fa3bab5ea76a34f7b3ba1a00aad36068cc94b",
+            "new_source_ref_id": "code-source:sha256:fe9e9fe19f8826d37dbe8ccfd3028bcec7be2f3e2f7458fee84e631b938f2a52",
+            "atom_ids": [
+              "change-atom:sha256:f533dd20150310ba0358761000b5215d4b0da66d1a2df9fede0130081093c760"
+            ],
+            "is_binary": false
+          }
+        ],
+        "atoms": [
+          {
+            "atom_id": "change-atom:sha256:f533dd20150310ba0358761000b5215d4b0da66d1a2df9fede0130081093c760",
+            "kind": "replacement",
+            "old_source_ref_id": "code-source:sha256:48900eadf977b59b853c19f8d37fa3bab5ea76a34f7b3ba1a00aad36068cc94b",
+            "new_source_ref_id": "code-source:sha256:fe9e9fe19f8826d37dbe8ccfd3028bcec7be2f3e2f7458fee84e631b938f2a52",
+            "old_span": {
+              "start_line": 1,
+              "end_line": 1,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 23
+            },
+            "new_span": {
+              "start_line": 1,
+              "end_line": 1,
+              "start_offset_utf16": 0,
+              "end_offset_utf16": 23
+            },
+            "added_new_lines": [
+              1
+            ],
+            "deleted_old_lines": [
+              1
+            ],
+            "diff_positions": [],
+            "diff_normalizer_version": "change-normalizer-golden-v9"
+          }
+        ],
+        "diagnostics": []
+      }
+    }
+  ]
+}

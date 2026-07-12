@@ -1,0 +1,3019 @@
+{
+  "schema_version": "review-unit-v2-golden-baseline-v1",
+  "suite_id": "review-unit-v2-ru4",
+  "implementation": "ReviewUnitBuilder",
+  "manifest_sha256": "92fadb6ad2f8ca172a784af4939e15bba811431fb3e38f3c1119935c53e187e5",
+  "report": {
+    "schema_version": "review-unit-v2-golden-v1",
+    "suite_id": "review-unit-v2-ru4",
+    "implementation": "ReviewUnitBuilder",
+    "manifest_sha256": "92fadb6ad2f8ca172a784af4939e15bba811431fb3e38f3c1119935c53e187e5",
+    "case_count": 16,
+    "matched_case_count": 16,
+    "mismatched_case_count": 0,
+    "cases": [
+      {
+        "case_id": "RV201",
+        "description": "added file maps all added lines to its function owner",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:4e68334327cad5072f478ae510f4fb57faab65b9e19d3f8ef65389b6d0d4ebab",
+          "file_results": [
+            {
+              "changed_file_alias": "added",
+              "changed_file_id": "changed-file:sha256:aeb82d65374f149222d6c714ffefd0ec1a0364d399019be14020a2d25a0222f5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:19b015442343fe105d68e4c80fbbe100e7527c7624f65915216fdfd0c0c1e407",
+              "source_role": "head",
+              "path": "src/Added.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Added.ets@function:greet:L1-L3:Rhead:S19b015442343fe105d68e4c80fbbe100e7527c7624f65915216fdfd0c0c1e407",
+                  "unit_kind": "function",
+                  "unit_symbol": "greet",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "greet",
+                    "ref_id": "declaration:sha256:0138b60cc08bbb5c6c4a375ebfefc55e2862fb8411c0167e49baa6ffe0490e6f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ac3101cad188376636b6439f9f5ca36b8318e4442e0e0812a3e442fd097ab4f8"
+                  ],
+                  "full_text_sha256": "52d45b9a1a679824dcf702923bf94fa3076f5082e9e858e74ce1e5eaf3ffb00c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:ac3101cad188376636b6439f9f5ca36b8318e4442e0e0812a3e442fd097ab4f8",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:4e68334327cad5072f478ae510f4fb57faab65b9e19d3f8ef65389b6d0d4ebab",
+          "file_results": [
+            {
+              "changed_file_alias": "added",
+              "changed_file_id": "changed-file:sha256:aeb82d65374f149222d6c714ffefd0ec1a0364d399019be14020a2d25a0222f5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:19b015442343fe105d68e4c80fbbe100e7527c7624f65915216fdfd0c0c1e407",
+              "source_role": "head",
+              "path": "src/Added.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Added.ets@function:greet:L1-L3:Rhead:S19b015442343fe105d68e4c80fbbe100e7527c7624f65915216fdfd0c0c1e407",
+                  "unit_kind": "function",
+                  "unit_symbol": "greet",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "greet",
+                    "ref_id": "declaration:sha256:0138b60cc08bbb5c6c4a375ebfefc55e2862fb8411c0167e49baa6ffe0490e6f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ac3101cad188376636b6439f9f5ca36b8318e4442e0e0812a3e442fd097ab4f8"
+                  ],
+                  "full_text_sha256": "52d45b9a1a679824dcf702923bf94fa3076f5082e9e858e74ce1e5eaf3ffb00c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:ac3101cad188376636b6439f9f5ca36b8318e4442e0e0812a3e442fd097ab4f8",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV202",
+        "description": "replacement keeps independent base and head identities on the same path",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:bde101d5ec9f0c29c58c989d832d7d4c340c96e71d12c71a83888d0a8f470144",
+          "file_results": [
+            {
+              "changed_file_alias": "same",
+              "changed_file_id": "changed-file:sha256:f4b55ddf2d4b74ae7c32fc513070f8ed6e9bf7eea7cac2277d5d0ed662e359e5",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:e9b7cb52528be839570a4987c698547400831a73d014a804a1bf080bcedfb88a",
+              "source_role": "base",
+              "path": "src/Same.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Same.ets@function:compute:L1-L3:Rbase:Se9b7cb52528be839570a4987c698547400831a73d014a804a1bf080bcedfb88a",
+                  "unit_kind": "function",
+                  "unit_symbol": "compute",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_compute",
+                    "ref_id": "declaration:sha256:f886f9250d8200f6d10f6d4e35fe79cc2c0b733113f8d36478e9b50be7a478bf"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8"
+                  ],
+                  "full_text_sha256": "8032101508a64a785d2e2a7f36185ca9c2454eaea41ec6c0787fac6ad9b71518"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "same",
+              "changed_file_id": "changed-file:sha256:f4b55ddf2d4b74ae7c32fc513070f8ed6e9bf7eea7cac2277d5d0ed662e359e5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:80c4ebd03b39eab85ef8791cd78ff9fc85a5943787c8def8046e2b6530969c7e",
+              "source_role": "head",
+              "path": "src/Same.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Same.ets@function:compute:L1-L3:Rhead:S80c4ebd03b39eab85ef8791cd78ff9fc85a5943787c8def8046e2b6530969c7e",
+                  "unit_kind": "function",
+                  "unit_symbol": "compute",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_compute",
+                    "ref_id": "declaration:sha256:4b6a0370b749806f23b26acecd944b3ebb0a6c2c64677dd012e828c4d3addc4a"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8"
+                  ],
+                  "full_text_sha256": "bc20168629ef4fdc02f7f8f1622798a01d157f098af96f957eb8e9c6b1ac83cd"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:bde101d5ec9f0c29c58c989d832d7d4c340c96e71d12c71a83888d0a8f470144",
+          "file_results": [
+            {
+              "changed_file_alias": "same",
+              "changed_file_id": "changed-file:sha256:f4b55ddf2d4b74ae7c32fc513070f8ed6e9bf7eea7cac2277d5d0ed662e359e5",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:e9b7cb52528be839570a4987c698547400831a73d014a804a1bf080bcedfb88a",
+              "source_role": "base",
+              "path": "src/Same.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Same.ets@function:compute:L1-L3:Rbase:Se9b7cb52528be839570a4987c698547400831a73d014a804a1bf080bcedfb88a",
+                  "unit_kind": "function",
+                  "unit_symbol": "compute",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_compute",
+                    "ref_id": "declaration:sha256:f886f9250d8200f6d10f6d4e35fe79cc2c0b733113f8d36478e9b50be7a478bf"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8"
+                  ],
+                  "full_text_sha256": "8032101508a64a785d2e2a7f36185ca9c2454eaea41ec6c0787fac6ad9b71518"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "same",
+              "changed_file_id": "changed-file:sha256:f4b55ddf2d4b74ae7c32fc513070f8ed6e9bf7eea7cac2277d5d0ed662e359e5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:80c4ebd03b39eab85ef8791cd78ff9fc85a5943787c8def8046e2b6530969c7e",
+              "source_role": "head",
+              "path": "src/Same.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Same.ets@function:compute:L1-L3:Rhead:S80c4ebd03b39eab85ef8791cd78ff9fc85a5943787c8def8046e2b6530969c7e",
+                  "unit_kind": "function",
+                  "unit_symbol": "compute",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_compute",
+                    "ref_id": "declaration:sha256:4b6a0370b749806f23b26acecd944b3ebb0a6c2c64677dd012e828c4d3addc4a"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8"
+                  ],
+                  "full_text_sha256": "bc20168629ef4fdc02f7f8f1622798a01d157f098af96f957eb8e9c6b1ac83cd"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:2cbc947d686d0814e7476fed798838842cb29febfaf946e93711285d04cb17b8",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV203",
+        "description": "deletion-only change builds a base-source ReviewUnit",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:ebd7fc6678246b7b261f6aec56de55ffe0df938266ad829bfa46793f0a256a5a",
+          "file_results": [
+            {
+              "changed_file_alias": "deleted",
+              "changed_file_id": "changed-file:sha256:76b9c8297378ca5b3d773159894d51b480a119f2511b96b9f84ccd4d3f5cdb40",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:a567093e01571afeafcd15665daf7eeb162949a258e6a37814acc640df359a46",
+              "source_role": "base",
+              "path": "src/Deleted.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Deleted.ets@function:retired:L1-L3:Rbase:Sa567093e01571afeafcd15665daf7eeb162949a258e6a37814acc640df359a46",
+                  "unit_kind": "function",
+                  "unit_symbol": "retired",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "retired",
+                    "ref_id": "declaration:sha256:8b3709e7f7d14633a0b8fdfa48e769ffd51995c908d4b6036f80e61d04f24ae3"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:31be219758a36bbac5e949efe9f2e5f1411136a7fa5eb5ecedec71021ec49b30"
+                  ],
+                  "full_text_sha256": "9ee2035b1f67b46ef4ca07a91efb49b53891242f6e0317d3ed95b9f081f7ad63"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:31be219758a36bbac5e949efe9f2e5f1411136a7fa5eb5ecedec71021ec49b30",
+              "source_role": "base",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:ebd7fc6678246b7b261f6aec56de55ffe0df938266ad829bfa46793f0a256a5a",
+          "file_results": [
+            {
+              "changed_file_alias": "deleted",
+              "changed_file_id": "changed-file:sha256:76b9c8297378ca5b3d773159894d51b480a119f2511b96b9f84ccd4d3f5cdb40",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:a567093e01571afeafcd15665daf7eeb162949a258e6a37814acc640df359a46",
+              "source_role": "base",
+              "path": "src/Deleted.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Deleted.ets@function:retired:L1-L3:Rbase:Sa567093e01571afeafcd15665daf7eeb162949a258e6a37814acc640df359a46",
+                  "unit_kind": "function",
+                  "unit_symbol": "retired",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "retired",
+                    "ref_id": "declaration:sha256:8b3709e7f7d14633a0b8fdfa48e769ffd51995c908d4b6036f80e61d04f24ae3"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:31be219758a36bbac5e949efe9f2e5f1411136a7fa5eb5ecedec71021ec49b30"
+                  ],
+                  "full_text_sha256": "9ee2035b1f67b46ef4ca07a91efb49b53891242f6e0317d3ed95b9f081f7ad63"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:31be219758a36bbac5e949efe9f2e5f1411136a7fa5eb5ecedec71021ec49b30",
+              "source_role": "base",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV204",
+        "description": "pure rename retains both source roles without fabricating changed lines",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:3f2fa17e4a09dd16d5d0ba94d54b7af2d224d8b445e1383c683c3c7f355712bb",
+          "file_results": [
+            {
+              "changed_file_alias": "rename",
+              "changed_file_id": "changed-file:sha256:01dd154872313d2eabe87a2045e867eabba9424d14dc0bd76315fdfb3e402aa5",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:484af0ff01932f67f2a77c6ea73098cc584b8fb0c3a9c1dc3aba25798fb984bb",
+              "source_role": "base",
+              "path": "src/Old.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": []
+            },
+            {
+              "changed_file_alias": "rename",
+              "changed_file_id": "changed-file:sha256:01dd154872313d2eabe87a2045e867eabba9424d14dc0bd76315fdfb3e402aa5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:ae6b17ecae37da0340058c90cdc29dc0d3665fa54e63e0a21e2fb92eb8a6a4ba",
+              "source_role": "head",
+              "path": "src/New.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": []
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:3f2fa17e4a09dd16d5d0ba94d54b7af2d224d8b445e1383c683c3c7f355712bb",
+          "file_results": [
+            {
+              "changed_file_alias": "rename",
+              "changed_file_id": "changed-file:sha256:01dd154872313d2eabe87a2045e867eabba9424d14dc0bd76315fdfb3e402aa5",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:484af0ff01932f67f2a77c6ea73098cc584b8fb0c3a9c1dc3aba25798fb984bb",
+              "source_role": "base",
+              "path": "src/Old.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": []
+            },
+            {
+              "changed_file_alias": "rename",
+              "changed_file_id": "changed-file:sha256:01dd154872313d2eabe87a2045e867eabba9424d14dc0bd76315fdfb3e402aa5",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:ae6b17ecae37da0340058c90cdc29dc0d3665fa54e63e0a21e2fb92eb8a6a4ba",
+              "source_role": "head",
+              "path": "src/New.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": []
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV205",
+        "description": "rename with edit maps replacement lines on both paths",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:dd25d00ee723f10296ccbdc465ef762cc1ec7b1a8c303f4ef4b26d219091c08c",
+          "file_results": [
+            {
+              "changed_file_alias": "rename_edit",
+              "changed_file_id": "changed-file:sha256:13975209904941d6ce364e70381e9a4f4dd6450950f22bffb6172c2af2c0703c",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:a5a2be2a0157e2c4894a8a0b0c28e2f7af62e04151eb030ed4dde9271c87a023",
+              "source_role": "base",
+              "path": "src/Before.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Before.ets@function:label:L1-L3:Rbase:Sa5a2be2a0157e2c4894a8a0b0c28e2f7af62e04151eb030ed4dde9271c87a023",
+                  "unit_kind": "function",
+                  "unit_symbol": "label",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_label",
+                    "ref_id": "declaration:sha256:73b2c61d998423025993640e3fd55a0fdc98ea01d276d0a27f2f62f3a2cecc3f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051"
+                  ],
+                  "full_text_sha256": "94a5ff770ed66555d5b3b40d00bf72a7ede473bb83fce9f71a6fcff50febab44"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "rename_edit",
+              "changed_file_id": "changed-file:sha256:13975209904941d6ce364e70381e9a4f4dd6450950f22bffb6172c2af2c0703c",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:76b856c2101d539c1b07ec993266298a5f75dcca3c3bc33684a56acb4a9c2c0d",
+              "source_role": "head",
+              "path": "src/After.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/After.ets@function:label:L1-L3:Rhead:S76b856c2101d539c1b07ec993266298a5f75dcca3c3bc33684a56acb4a9c2c0d",
+                  "unit_kind": "function",
+                  "unit_symbol": "label",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_label",
+                    "ref_id": "declaration:sha256:596531c8866c6ca483d30a8ae4be88b33dc30b541a0dfb3ae65a099e9ad14410"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051"
+                  ],
+                  "full_text_sha256": "1a18eaf4c7ae1dd5e13091152c085fe70f4e910dba80a674281e02bc33bf032a"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:dd25d00ee723f10296ccbdc465ef762cc1ec7b1a8c303f4ef4b26d219091c08c",
+          "file_results": [
+            {
+              "changed_file_alias": "rename_edit",
+              "changed_file_id": "changed-file:sha256:13975209904941d6ce364e70381e9a4f4dd6450950f22bffb6172c2af2c0703c",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:a5a2be2a0157e2c4894a8a0b0c28e2f7af62e04151eb030ed4dde9271c87a023",
+              "source_role": "base",
+              "path": "src/Before.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Before.ets@function:label:L1-L3:Rbase:Sa5a2be2a0157e2c4894a8a0b0c28e2f7af62e04151eb030ed4dde9271c87a023",
+                  "unit_kind": "function",
+                  "unit_symbol": "label",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_label",
+                    "ref_id": "declaration:sha256:73b2c61d998423025993640e3fd55a0fdc98ea01d276d0a27f2f62f3a2cecc3f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051"
+                  ],
+                  "full_text_sha256": "94a5ff770ed66555d5b3b40d00bf72a7ede473bb83fce9f71a6fcff50febab44"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "rename_edit",
+              "changed_file_id": "changed-file:sha256:13975209904941d6ce364e70381e9a4f4dd6450950f22bffb6172c2af2c0703c",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:76b856c2101d539c1b07ec993266298a5f75dcca3c3bc33684a56acb4a9c2c0d",
+              "source_role": "head",
+              "path": "src/After.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/After.ets@function:label:L1-L3:Rhead:S76b856c2101d539c1b07ec993266298a5f75dcca3c3bc33684a56acb4a9c2c0d",
+                  "unit_kind": "function",
+                  "unit_symbol": "label",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_label",
+                    "ref_id": "declaration:sha256:596531c8866c6ca483d30a8ae4be88b33dc30b541a0dfb3ae65a099e9ad14410"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051"
+                  ],
+                  "full_text_sha256": "1a18eaf4c7ae1dd5e13091152c085fe70f4e910dba80a674281e02bc33bf032a"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:5e4635d4d1dc32f04e35b8ee21a0027a215e6a8638c000fa2427128a2648f051",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV206",
+        "description": "empty ChangeSet has a deterministic empty build envelope",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:9a1f2437169c56e1ef61a6561ff9fb3318c38bd19bf17c7fb89bfe5ff6a907cd",
+          "file_results": [],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:9a1f2437169c56e1ef61a6561ff9fb3318c38bd19bf17c7fb89bfe5ff6a907cd",
+          "file_results": [],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV207",
+        "description": "binary input emits a structured unsupported diagnostic without source units",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:8bbb0b319b490698006cc5b640d39110fbc235b58bc62458c355ff50e1182375",
+          "file_results": [],
+          "diagnostics": [
+            {
+              "code": "binary_change_unsupported",
+              "lines": []
+            }
+          ],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:8bbb0b319b490698006cc5b640d39110fbc235b58bc62458c355ff50e1182375",
+          "file_results": [],
+          "diagnostics": [
+            {
+              "code": "binary_change_unsupported",
+              "lines": []
+            }
+          ],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": []
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV208",
+        "description": "multiple atoms owned by one declaration merge into one Unit",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:35ccaf338cc419d2b716d6bcc119cfb7cebe6ba17346a9f873ce24cc223bc55b",
+          "file_results": [
+            {
+              "changed_file_alias": "multi",
+              "changed_file_id": "changed-file:sha256:65c17d1f852aa618a60aaaaf3f8856e6c06e29e0c9d2c98a55b44fe8bc33c249",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:2d8381b930c32047661344f0d3917b4036f7648f4d9d61b0cf6fac2d646bfbf7",
+              "source_role": "head",
+              "path": "src/Multi.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Multi.ets@function:run:L1-L6:Rhead:S2d8381b930c32047661344f0d3917b4036f7648f4d9d61b0cf6fac2d646bfbf7",
+                  "unit_kind": "function",
+                  "unit_symbol": "run",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 6
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 6
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "run",
+                    "ref_id": "declaration:sha256:ef327d7e49dd1eb0d1b1a8f151edfabd1c9fbaef31705a90643bc5c72bbdfa29"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a",
+                    "atom_b"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:0898199980fed8134cf6e6ac1c792b367e5a81e7c5f441aa7d6d04bf069eadfe",
+                    "change-atom:sha256:9f9164a431fae6ecac80313d8319c473432b95b2b731dfb302b52a7945a18587"
+                  ],
+                  "full_text_sha256": "b16e432f407f9a37ad79b37a1aa1514a6e5fca597d68603d67fd64420c2a5eab"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:0898199980fed8134cf6e6ac1c792b367e5a81e7c5f441aa7d6d04bf069eadfe",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_b",
+              "atom_id": "change-atom:sha256:9f9164a431fae6ecac80313d8319c473432b95b2b731dfb302b52a7945a18587",
+              "source_role": "head",
+              "lines": [
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:35ccaf338cc419d2b716d6bcc119cfb7cebe6ba17346a9f873ce24cc223bc55b",
+          "file_results": [
+            {
+              "changed_file_alias": "multi",
+              "changed_file_id": "changed-file:sha256:65c17d1f852aa618a60aaaaf3f8856e6c06e29e0c9d2c98a55b44fe8bc33c249",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:2d8381b930c32047661344f0d3917b4036f7648f4d9d61b0cf6fac2d646bfbf7",
+              "source_role": "head",
+              "path": "src/Multi.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Multi.ets@function:run:L1-L6:Rhead:S2d8381b930c32047661344f0d3917b4036f7648f4d9d61b0cf6fac2d646bfbf7",
+                  "unit_kind": "function",
+                  "unit_symbol": "run",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 6
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 6
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "run",
+                    "ref_id": "declaration:sha256:ef327d7e49dd1eb0d1b1a8f151edfabd1c9fbaef31705a90643bc5c72bbdfa29"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a",
+                    "atom_b"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:0898199980fed8134cf6e6ac1c792b367e5a81e7c5f441aa7d6d04bf069eadfe",
+                    "change-atom:sha256:9f9164a431fae6ecac80313d8319c473432b95b2b731dfb302b52a7945a18587"
+                  ],
+                  "full_text_sha256": "b16e432f407f9a37ad79b37a1aa1514a6e5fca597d68603d67fd64420c2a5eab"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:0898199980fed8134cf6e6ac1c792b367e5a81e7c5f441aa7d6d04bf069eadfe",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_b",
+              "atom_id": "change-atom:sha256:9f9164a431fae6ecac80313d8319c473432b95b2b731dfb302b52a7945a18587",
+              "source_role": "head",
+              "lines": [
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV209",
+        "description": "one atom crossing two methods retains both owners",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:d4aac0f648b2b86e47188cd9758a9779cdea1dfe4df0afb40e780e662f8d4a30",
+          "file_results": [
+            {
+              "changed_file_alias": "cross",
+              "changed_file_id": "changed-file:sha256:faba92401aec50d683d655eafe79999cd40496f90f28bda531d30ef5544b0f1e",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+              "source_role": "head",
+              "path": "src/Cross.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Cross.ets@function:first:L1-L3:Rhead:S072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+                  "unit_kind": "function",
+                  "unit_symbol": "first",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "first",
+                    "ref_id": "declaration:sha256:abb97d386333d5a13ea0c637a31fafe4b031ae889ac189578eb3a8c2dfa624e4"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844"
+                  ],
+                  "full_text_sha256": "51ca8dd43c7f53656ae11cdeedaed062152d8f64e74998edc2c25a2213844521"
+                },
+                {
+                  "unit_id": "src/Cross.ets@function:second:L4-L6:Rhead:S072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+                  "unit_kind": "function",
+                  "unit_symbol": "second",
+                  "source_span": {
+                    "start_line": 4,
+                    "end_line": 6
+                  },
+                  "context_span": {
+                    "start_line": 4,
+                    "end_line": 6
+                  },
+                  "changed_new_lines": [
+                    4,
+                    5,
+                    6
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "second",
+                    "ref_id": "declaration:sha256:a2ef868a7750f7f6c6af1b3226efcc1f97d149479f11aafa71a3a5c92b1177a9"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844"
+                  ],
+                  "full_text_sha256": "23c18882a94872b2204aaa6b99fc44705808e34023dbb126ac40c5133863ae0d"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:d4aac0f648b2b86e47188cd9758a9779cdea1dfe4df0afb40e780e662f8d4a30",
+          "file_results": [
+            {
+              "changed_file_alias": "cross",
+              "changed_file_id": "changed-file:sha256:faba92401aec50d683d655eafe79999cd40496f90f28bda531d30ef5544b0f1e",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+              "source_role": "head",
+              "path": "src/Cross.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Cross.ets@function:first:L1-L3:Rhead:S072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+                  "unit_kind": "function",
+                  "unit_symbol": "first",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "first",
+                    "ref_id": "declaration:sha256:abb97d386333d5a13ea0c637a31fafe4b031ae889ac189578eb3a8c2dfa624e4"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844"
+                  ],
+                  "full_text_sha256": "51ca8dd43c7f53656ae11cdeedaed062152d8f64e74998edc2c25a2213844521"
+                },
+                {
+                  "unit_id": "src/Cross.ets@function:second:L4-L6:Rhead:S072dfc875ddb849204681c0667d2f72c4654def0f9e1a32a52da2962f99eaab9",
+                  "unit_kind": "function",
+                  "unit_symbol": "second",
+                  "source_span": {
+                    "start_line": 4,
+                    "end_line": 6
+                  },
+                  "context_span": {
+                    "start_line": 4,
+                    "end_line": 6
+                  },
+                  "changed_new_lines": [
+                    4,
+                    5,
+                    6
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "second",
+                    "ref_id": "declaration:sha256:a2ef868a7750f7f6c6af1b3226efcc1f97d149479f11aafa71a3a5c92b1177a9"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844"
+                  ],
+                  "full_text_sha256": "23c18882a94872b2204aaa6b99fc44705808e34023dbb126ac40c5133863ae0d"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:8d51d99b20aad7305c98e06648fc7f03deee4798cca3036244a25536e6109844",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV210",
+        "description": "field changes prefer the exact field review region",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:47167b5d785fe85132db268ffed8cd4b331b500e4bf24a0f5ec14197705dfcec",
+          "file_results": [
+            {
+              "changed_file_alias": "field",
+              "changed_file_id": "changed-file:sha256:1cfb9ffc76fd133eb2ce9a6213746d598e54689ccda3236f31b8b73b7514a435",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:b57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+              "source_role": "head",
+              "path": "src/Field.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Field.ets@struct:Page:L1-L4:Rhead:Sb57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+                  "unit_kind": "struct",
+                  "unit_symbol": "Page",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "changed_new_lines": [
+                    1,
+                    3,
+                    4
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "page",
+                    "ref_id": "declaration:sha256:471331f530376a0112bcadd158840950340729250c77052165775640ba359a07"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb"
+                  ],
+                  "full_text_sha256": "5a8fdc2e3c4bc54efeff0fa19330a1475b834b5c13e1acdfd46a820bcd06e3ca"
+                },
+                {
+                  "unit_id": "src/Field.ets@field_region:Page.value:L2-L2:O14-34:Rhead:Sb57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+                  "unit_kind": "field_region",
+                  "unit_symbol": "Page.value",
+                  "source_span": {
+                    "start_line": 2,
+                    "end_line": 2
+                  },
+                  "context_span": {
+                    "start_line": 2,
+                    "end_line": 2
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "changed_review_region",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "region",
+                    "alias": "value",
+                    "ref_id": "region:sha256:f33929b641db9b2a8f97276db3c93d553b54b8665e577541a44cc6cf2c439653"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb"
+                  ],
+                  "full_text_sha256": "16c1aaed39170762ac96dfe1fcea22748eba0e3d2575e588402241867ea1a06f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:47167b5d785fe85132db268ffed8cd4b331b500e4bf24a0f5ec14197705dfcec",
+          "file_results": [
+            {
+              "changed_file_alias": "field",
+              "changed_file_id": "changed-file:sha256:1cfb9ffc76fd133eb2ce9a6213746d598e54689ccda3236f31b8b73b7514a435",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:b57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+              "source_role": "head",
+              "path": "src/Field.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Field.ets@struct:Page:L1-L4:Rhead:Sb57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+                  "unit_kind": "struct",
+                  "unit_symbol": "Page",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "changed_new_lines": [
+                    1,
+                    3,
+                    4
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "page",
+                    "ref_id": "declaration:sha256:471331f530376a0112bcadd158840950340729250c77052165775640ba359a07"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb"
+                  ],
+                  "full_text_sha256": "5a8fdc2e3c4bc54efeff0fa19330a1475b834b5c13e1acdfd46a820bcd06e3ca"
+                },
+                {
+                  "unit_id": "src/Field.ets@field_region:Page.value:L2-L2:O14-34:Rhead:Sb57dfd69424f703bc42e8238c3fdf482062099dbd956f8dae7d80ae84460231c",
+                  "unit_kind": "field_region",
+                  "unit_symbol": "Page.value",
+                  "source_span": {
+                    "start_line": 2,
+                    "end_line": 2
+                  },
+                  "context_span": {
+                    "start_line": 2,
+                    "end_line": 2
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "changed_review_region",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "region",
+                    "alias": "value",
+                    "ref_id": "region:sha256:f33929b641db9b2a8f97276db3c93d553b54b8665e577541a44cc6cf2c439653"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb"
+                  ],
+                  "full_text_sha256": "16c1aaed39170762ac96dfe1fcea22748eba0e3d2575e588402241867ea1a06f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:8b24091faf9c696dfee1ada073c5cd2fea746a37332c0f1fc84ee734642a0bbb",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV211",
+        "description": "multiline import changes prefer the import review region",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:6a494770681428f057576c415978841ceeb7724e4e5ea20cae9a3a6c8e063486",
+          "file_results": [
+            {
+              "changed_file_alias": "imports",
+              "changed_file_id": "changed-file:sha256:e9ffcb773d6933736bd0c9a06242c846bcf888fc5e293bab9128533d8c476f94",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+              "source_role": "head",
+              "path": "src/Import.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Import.ets@import_region:import%3Apkg:L1-L3:O0-32:Rhead:S7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+                  "unit_kind": "import_region",
+                  "unit_symbol": "import:pkg",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "changed_review_region",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "region",
+                    "alias": "import_block",
+                    "ref_id": "region:sha256:d4510d4f54eec40589c2f103a0b991d8b0ac21cb074ac460d1991e527fdffc37"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d"
+                  ],
+                  "full_text_sha256": "24d303fc9a385bdd490391324559ff06c211ff0ce15d170d89e95a9c873d6edc"
+                },
+                {
+                  "unit_id": "src/Import.ets@fallback:fallback:L4-L4:C1-L4:Rhead:S7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L4-L4",
+                  "source_span": {
+                    "start_line": 4,
+                    "end_line": 4
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "changed_new_lines": [
+                    4
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d"
+                  ],
+                  "full_text_sha256": "e3d17a2f5f7a9c436aa2fe9ba852bea9b0c8d4ceef4bc521ba952fc510bb165f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:6a494770681428f057576c415978841ceeb7724e4e5ea20cae9a3a6c8e063486",
+          "file_results": [
+            {
+              "changed_file_alias": "imports",
+              "changed_file_id": "changed-file:sha256:e9ffcb773d6933736bd0c9a06242c846bcf888fc5e293bab9128533d8c476f94",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+              "source_role": "head",
+              "path": "src/Import.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Import.ets@import_region:import%3Apkg:L1-L3:O0-32:Rhead:S7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+                  "unit_kind": "import_region",
+                  "unit_symbol": "import:pkg",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "changed_review_region",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "region",
+                    "alias": "import_block",
+                    "ref_id": "region:sha256:d4510d4f54eec40589c2f103a0b991d8b0ac21cb074ac460d1991e527fdffc37"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d"
+                  ],
+                  "full_text_sha256": "24d303fc9a385bdd490391324559ff06c211ff0ce15d170d89e95a9c873d6edc"
+                },
+                {
+                  "unit_id": "src/Import.ets@fallback:fallback:L4-L4:C1-L4:Rhead:S7dc0f206f4aff0b3c5a6737c9041252686b241967ec6a2d156b68344c4c7c1e5",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L4-L4",
+                  "source_span": {
+                    "start_line": 4,
+                    "end_line": 4
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 4
+                  },
+                  "changed_new_lines": [
+                    4
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d"
+                  ],
+                  "full_text_sha256": "e3d17a2f5f7a9c436aa2fe9ba852bea9b0c8d4ceef4bc521ba952fc510bb165f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:ec446fef0844bf55e97d4e7f8386f7c05ffc2188c8d8c5b339d61ee22d0eed4d",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV212",
+        "description": "source without a declaration uses a bounded fallback window",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:3b5737a926d1ef93ba30c985f7371b73bd7410ad03b1458742da1a8d74e272a6",
+          "file_results": [
+            {
+              "changed_file_alias": "fallback",
+              "changed_file_id": "changed-file:sha256:f374d18fc5961ba82e75bec33fa0ca52863a3bf66d2636e979584716e3bb3cbc",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:24c64d4492d23972fe5f8e611618d3b5bfdf892613d465ff442519c8883301eb",
+              "source_role": "head",
+              "path": "src/Fallback.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Fallback.ets@fallback:fallback:L1-L3:C1-L3:Rhead:S24c64d4492d23972fe5f8e611618d3b5bfdf892613d465ff442519c8883301eb",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L1-L3",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:6a1462d9172b966054bb92a90e212bfc604a09d97fc7b4e525ae0d7be07fb748"
+                  ],
+                  "full_text_sha256": "072d98ec0fe3afa588c0c7c7fe3dcb2fe86d9f63882761c0800417637f38069f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:6a1462d9172b966054bb92a90e212bfc604a09d97fc7b4e525ae0d7be07fb748",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:3b5737a926d1ef93ba30c985f7371b73bd7410ad03b1458742da1a8d74e272a6",
+          "file_results": [
+            {
+              "changed_file_alias": "fallback",
+              "changed_file_id": "changed-file:sha256:f374d18fc5961ba82e75bec33fa0ca52863a3bf66d2636e979584716e3bb3cbc",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:24c64d4492d23972fe5f8e611618d3b5bfdf892613d465ff442519c8883301eb",
+              "source_role": "head",
+              "path": "src/Fallback.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Fallback.ets@fallback:fallback:L1-L3:C1-L3:Rhead:S24c64d4492d23972fe5f8e611618d3b5bfdf892613d465ff442519c8883301eb",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L1-L3",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:6a1462d9172b966054bb92a90e212bfc604a09d97fc7b4e525ae0d7be07fb748"
+                  ],
+                  "full_text_sha256": "072d98ec0fe3afa588c0c7c7fe3dcb2fe86d9f63882761c0800417637f38069f"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:6a1462d9172b966054bb92a90e212bfc604a09d97fc7b4e525ae0d7be07fb748",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV213",
+        "description": "unchanged lines inside the atom span remain context rather than changed lines",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:1d85dadf07603968b9c7f0e3e85bc0b4045f47a649673d426050ec1546a157b2",
+          "file_results": [
+            {
+              "changed_file_alias": "context",
+              "changed_file_id": "changed-file:sha256:0766333ac4b1e4d1e472890d663bc5f15a7d20bcf37495958e258be8fc9bc9d3",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:5697d040f2c4c4bf475a75011083f0cbbc185f6622c7d67bb69afd61cfff2965",
+              "source_role": "base",
+              "path": "src/Context.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Context.ets@function:contextOnly:L1-L5:Rbase:S5697d040f2c4c4bf475a75011083f0cbbc185f6622c7d67bb69afd61cfff2965",
+                  "unit_kind": "function",
+                  "unit_symbol": "contextOnly",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    3
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_context",
+                    "ref_id": "declaration:sha256:eb0e7d4412cf52607efa87761532b1cf2a948b4c8e63decccc1035ea6675a33c"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308"
+                  ],
+                  "full_text_sha256": "0d7b0f6df73b5876e1f85044e89ddb7ed3ee1a7cc51d7877db2ca47ea7cbcc5b"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "context",
+              "changed_file_id": "changed-file:sha256:0766333ac4b1e4d1e472890d663bc5f15a7d20bcf37495958e258be8fc9bc9d3",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:f5895fd99a092be4239ee8f3b72c1c103704c59429fdeff559479617dcbdc7e3",
+              "source_role": "head",
+              "path": "src/Context.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Context.ets@function:contextOnly:L1-L5:Rhead:Sf5895fd99a092be4239ee8f3b72c1c103704c59429fdeff559479617dcbdc7e3",
+                  "unit_kind": "function",
+                  "unit_symbol": "contextOnly",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "changed_new_lines": [
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_context",
+                    "ref_id": "declaration:sha256:ba1f4719ac34deb7b4305bc1b7714bf67d902db769dc71bf8fbed1372c4d786f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308"
+                  ],
+                  "full_text_sha256": "6b969c9691b2587f84593eb7cc11ed06b8667dd51347fecea6db7d113bf115a4"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308",
+              "source_role": "base",
+              "lines": [
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308",
+              "source_role": "head",
+              "lines": [
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:1d85dadf07603968b9c7f0e3e85bc0b4045f47a649673d426050ec1546a157b2",
+          "file_results": [
+            {
+              "changed_file_alias": "context",
+              "changed_file_id": "changed-file:sha256:0766333ac4b1e4d1e472890d663bc5f15a7d20bcf37495958e258be8fc9bc9d3",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:5697d040f2c4c4bf475a75011083f0cbbc185f6622c7d67bb69afd61cfff2965",
+              "source_role": "base",
+              "path": "src/Context.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Context.ets@function:contextOnly:L1-L5:Rbase:S5697d040f2c4c4bf475a75011083f0cbbc185f6622c7d67bb69afd61cfff2965",
+                  "unit_kind": "function",
+                  "unit_symbol": "contextOnly",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    3
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_context",
+                    "ref_id": "declaration:sha256:eb0e7d4412cf52607efa87761532b1cf2a948b4c8e63decccc1035ea6675a33c"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308"
+                  ],
+                  "full_text_sha256": "0d7b0f6df73b5876e1f85044e89ddb7ed3ee1a7cc51d7877db2ca47ea7cbcc5b"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "context",
+              "changed_file_id": "changed-file:sha256:0766333ac4b1e4d1e472890d663bc5f15a7d20bcf37495958e258be8fc9bc9d3",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:f5895fd99a092be4239ee8f3b72c1c103704c59429fdeff559479617dcbdc7e3",
+              "source_role": "head",
+              "path": "src/Context.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Context.ets@function:contextOnly:L1-L5:Rhead:Sf5895fd99a092be4239ee8f3b72c1c103704c59429fdeff559479617dcbdc7e3",
+                  "unit_kind": "function",
+                  "unit_symbol": "contextOnly",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 5
+                  },
+                  "changed_new_lines": [
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_context",
+                    "ref_id": "declaration:sha256:ba1f4719ac34deb7b4305bc1b7714bf67d902db769dc71bf8fbed1372c4d786f"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308"
+                  ],
+                  "full_text_sha256": "6b969c9691b2587f84593eb7cc11ed06b8667dd51347fecea6db7d113bf115a4"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308",
+              "source_role": "base",
+              "lines": [
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:c2d3777ecf4a30fa1506492b17d5002f6d71ad97eadc87a28bf9a18dc4152308",
+              "source_role": "head",
+              "lines": [
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV214",
+        "description": "degraded parser quality propagates to every selected Unit",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:42c10670aca3b5d86c155248ef2fcf6bf4dab63d60b9eed148a446f98da9002e",
+          "file_results": [
+            {
+              "changed_file_alias": "degraded",
+              "changed_file_id": "changed-file:sha256:69b4e98594d695c9f37d1b955522183e14ad86d56235841292d9b35a7cf1017d",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:0d0f3f732aaf42b6fa6ed3da7a725f568572d4b2bb6350ff2dd56cd1c33b3fbb",
+              "source_role": "head",
+              "path": "src/Degraded.ets",
+              "parser_quality": {
+                "layer": "parse_degraded",
+                "warnings": [
+                  "fixture_degraded"
+                ]
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Degraded.ets@fallback:fallback:L1-L3:C1-L3:Rhead:S0d0f3f732aaf42b6fa6ed3da7a725f568572d4b2bb6350ff2dd56cd1c33b3fbb",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L1-L3",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    },
+                    {
+                      "code": "parser_degraded",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:d1ad11ade6ece300a435052281e81f6f73a022457154fccf1e676c2f541ff3a6"
+                  ],
+                  "full_text_sha256": "974dd8478107a39164912b1c1521403670ea8f305c04ed9122a6fd22b013ac0c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:d1ad11ade6ece300a435052281e81f6f73a022457154fccf1e676c2f541ff3a6",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:42c10670aca3b5d86c155248ef2fcf6bf4dab63d60b9eed148a446f98da9002e",
+          "file_results": [
+            {
+              "changed_file_alias": "degraded",
+              "changed_file_id": "changed-file:sha256:69b4e98594d695c9f37d1b955522183e14ad86d56235841292d9b35a7cf1017d",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:0d0f3f732aaf42b6fa6ed3da7a725f568572d4b2bb6350ff2dd56cd1c33b3fbb",
+              "source_role": "head",
+              "path": "src/Degraded.ets",
+              "parser_quality": {
+                "layer": "parse_degraded",
+                "warnings": [
+                  "fixture_degraded"
+                ]
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Degraded.ets@fallback:fallback:L1-L3:C1-L3:Rhead:S0d0f3f732aaf42b6fa6ed3da7a725f568572d4b2bb6350ff2dd56cd1c33b3fbb",
+                  "unit_kind": "fallback",
+                  "unit_symbol": "hunk-L1-L3",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "fallback_window",
+                  "context_degraded": true,
+                  "diagnostics": [
+                    {
+                      "code": "no_matching_declaration",
+                      "lines": []
+                    },
+                    {
+                      "code": "parser_degraded",
+                      "lines": []
+                    }
+                  ],
+                  "owner": null,
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:d1ad11ade6ece300a435052281e81f6f73a022457154fccf1e676c2f541ff3a6"
+                  ],
+                  "full_text_sha256": "974dd8478107a39164912b1c1521403670ea8f305c04ed9122a6fd22b013ac0c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:d1ad11ade6ece300a435052281e81f6f73a022457154fccf1e676c2f541ff3a6",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV215",
+        "description": "multiple files have deterministic normalized output order",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:dca97754ce23cedcf81b9256ffc3fb28e27b913860ede644609feeb627b994de",
+          "file_results": [
+            {
+              "changed_file_alias": "file_alpha",
+              "changed_file_id": "changed-file:sha256:669c0741ccc125eaa17e7f9bb7a3b9219cdeb45283ffe5887287692a79f46640",
+              "source_alias": "head_alpha",
+              "source_ref_id": "code-source:sha256:5fda8b090852cb24ace4461f24356143514f6ad040cd4a3ae0719290b0a3c7e3",
+              "source_role": "head",
+              "path": "src/Alpha.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Alpha.ets@function:alpha:L1-L3:Rhead:S5fda8b090852cb24ace4461f24356143514f6ad040cd4a3ae0719290b0a3c7e3",
+                  "unit_kind": "function",
+                  "unit_symbol": "alpha",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "alpha",
+                    "ref_id": "declaration:sha256:4fd582524101af8957621638d7825cb4f289c045d917890ed2ad433daf86d0d0"
+                  },
+                  "change_atom_aliases": [
+                    "atom_alpha"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:784379543bf6503c6e9896413faf791f623c2e13c9e1d79083682ccd6f390d58"
+                  ],
+                  "full_text_sha256": "4ecce1aa6d3b23c663ecd74ebf3fc3e4d0cc84aa2e6278cc033be313c074159e"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "file_zeta",
+              "changed_file_id": "changed-file:sha256:ebb23e114f1759e2166d9625ed7934e759e29faa97fe8b448117b9be15e44e41",
+              "source_alias": "head_zeta",
+              "source_ref_id": "code-source:sha256:e27b9799bb7c552526a13760f5066a2b752b6c373b44773f8ab397a981b99fba",
+              "source_role": "head",
+              "path": "src/Zeta.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Zeta.ets@function:zeta:L1-L3:Rhead:Se27b9799bb7c552526a13760f5066a2b752b6c373b44773f8ab397a981b99fba",
+                  "unit_kind": "function",
+                  "unit_symbol": "zeta",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "zeta",
+                    "ref_id": "declaration:sha256:4840846195d74a9b2f9df61425f19de243ad6548ee3240f32ab448e9858944e4"
+                  },
+                  "change_atom_aliases": [
+                    "atom_zeta"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c8efdaec393c840e9150c33d688259a71ae271cdbcf54c379fd2e69883823483"
+                  ],
+                  "full_text_sha256": "fa80d43dddf88d9b0b52eacddd0b0aae3cff0b15a9778f86d8d67891f19d847c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_alpha",
+              "atom_id": "change-atom:sha256:784379543bf6503c6e9896413faf791f623c2e13c9e1d79083682ccd6f390d58",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_zeta",
+              "atom_id": "change-atom:sha256:c8efdaec393c840e9150c33d688259a71ae271cdbcf54c379fd2e69883823483",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:dca97754ce23cedcf81b9256ffc3fb28e27b913860ede644609feeb627b994de",
+          "file_results": [
+            {
+              "changed_file_alias": "file_alpha",
+              "changed_file_id": "changed-file:sha256:669c0741ccc125eaa17e7f9bb7a3b9219cdeb45283ffe5887287692a79f46640",
+              "source_alias": "head_alpha",
+              "source_ref_id": "code-source:sha256:5fda8b090852cb24ace4461f24356143514f6ad040cd4a3ae0719290b0a3c7e3",
+              "source_role": "head",
+              "path": "src/Alpha.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Alpha.ets@function:alpha:L1-L3:Rhead:S5fda8b090852cb24ace4461f24356143514f6ad040cd4a3ae0719290b0a3c7e3",
+                  "unit_kind": "function",
+                  "unit_symbol": "alpha",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "alpha",
+                    "ref_id": "declaration:sha256:4fd582524101af8957621638d7825cb4f289c045d917890ed2ad433daf86d0d0"
+                  },
+                  "change_atom_aliases": [
+                    "atom_alpha"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:784379543bf6503c6e9896413faf791f623c2e13c9e1d79083682ccd6f390d58"
+                  ],
+                  "full_text_sha256": "4ecce1aa6d3b23c663ecd74ebf3fc3e4d0cc84aa2e6278cc033be313c074159e"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "file_zeta",
+              "changed_file_id": "changed-file:sha256:ebb23e114f1759e2166d9625ed7934e759e29faa97fe8b448117b9be15e44e41",
+              "source_alias": "head_zeta",
+              "source_ref_id": "code-source:sha256:e27b9799bb7c552526a13760f5066a2b752b6c373b44773f8ab397a981b99fba",
+              "source_role": "head",
+              "path": "src/Zeta.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Zeta.ets@function:zeta:L1-L3:Rhead:Se27b9799bb7c552526a13760f5066a2b752b6c373b44773f8ab397a981b99fba",
+                  "unit_kind": "function",
+                  "unit_symbol": "zeta",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    1,
+                    2,
+                    3
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "zeta",
+                    "ref_id": "declaration:sha256:4840846195d74a9b2f9df61425f19de243ad6548ee3240f32ab448e9858944e4"
+                  },
+                  "change_atom_aliases": [
+                    "atom_zeta"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:c8efdaec393c840e9150c33d688259a71ae271cdbcf54c379fd2e69883823483"
+                  ],
+                  "full_text_sha256": "fa80d43dddf88d9b0b52eacddd0b0aae3cff0b15a9778f86d8d67891f19d847c"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_alpha",
+              "atom_id": "change-atom:sha256:784379543bf6503c6e9896413faf791f623c2e13c9e1d79083682ccd6f390d58",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "atom_alias": "atom_zeta",
+              "atom_id": "change-atom:sha256:c8efdaec393c840e9150c33d688259a71ae271cdbcf54c379fd2e69883823483",
+              "source_role": "head",
+              "lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      },
+      {
+        "case_id": "RV216",
+        "description": "same path and declaration coordinates still receive revision-scoped Unit identities",
+        "expected": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:c7df7dfa197d631556ba48982ed54a34f163227a874e2fb7f6cad8c2d9295dc3",
+          "file_results": [
+            {
+              "changed_file_alias": "stable",
+              "changed_file_id": "changed-file:sha256:5ffbf85a53f1514399226ed8c9c006e03e4de6dfc9d875b682b7c1affaaae04f",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:dd05fb419737a95168d8ae8bfed8a8d31bb41d259a3a4b556c88f5139d17cdeb",
+              "source_role": "base",
+              "path": "src/Stable.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Stable.ets@function:stable:L1-L3:Rbase:Sdd05fb419737a95168d8ae8bfed8a8d31bb41d259a3a4b556c88f5139d17cdeb",
+                  "unit_kind": "function",
+                  "unit_symbol": "stable",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_stable",
+                    "ref_id": "declaration:sha256:8f6e2ec0b5a084087dc7cfe5ebfc66b951b9c1b644ea227967b835469e509f85"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5"
+                  ],
+                  "full_text_sha256": "5102795f118388cfa35364762bd812bf0b93356b769c418c7c5af4782db712a9"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "stable",
+              "changed_file_id": "changed-file:sha256:5ffbf85a53f1514399226ed8c9c006e03e4de6dfc9d875b682b7c1affaaae04f",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:82121112822b2cb727f268e24e43ee2d00ea06632c94064c1520634f6ef689eb",
+              "source_role": "head",
+              "path": "src/Stable.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Stable.ets@function:stable:L1-L3:Rhead:S82121112822b2cb727f268e24e43ee2d00ea06632c94064c1520634f6ef689eb",
+                  "unit_kind": "function",
+                  "unit_symbol": "stable",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_stable",
+                    "ref_id": "declaration:sha256:5f3b3a05a0cbd751b93b731dcbb76791aadb4afafb6b7aff3531d07d3f2fc173"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5"
+                  ],
+                  "full_text_sha256": "5206356818f00e03389cce1019f8a3ea5ab8924ffe03095e1e1018ba245de5f4"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "actual": {
+          "schema_version": "review-unit-build-v3",
+          "change_set_id": "change-set:sha256:c7df7dfa197d631556ba48982ed54a34f163227a874e2fb7f6cad8c2d9295dc3",
+          "file_results": [
+            {
+              "changed_file_alias": "stable",
+              "changed_file_id": "changed-file:sha256:5ffbf85a53f1514399226ed8c9c006e03e4de6dfc9d875b682b7c1affaaae04f",
+              "source_alias": "base",
+              "source_ref_id": "code-source:sha256:dd05fb419737a95168d8ae8bfed8a8d31bb41d259a3a4b556c88f5139d17cdeb",
+              "source_role": "base",
+              "path": "src/Stable.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Stable.ets@function:stable:L1-L3:Rbase:Sdd05fb419737a95168d8ae8bfed8a8d31bb41d259a3a4b556c88f5139d17cdeb",
+                  "unit_kind": "function",
+                  "unit_symbol": "stable",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [],
+                  "changed_old_lines": [
+                    2
+                  ],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "base_stable",
+                    "ref_id": "declaration:sha256:8f6e2ec0b5a084087dc7cfe5ebfc66b951b9c1b644ea227967b835469e509f85"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5"
+                  ],
+                  "full_text_sha256": "5102795f118388cfa35364762bd812bf0b93356b769c418c7c5af4782db712a9"
+                }
+              ]
+            },
+            {
+              "changed_file_alias": "stable",
+              "changed_file_id": "changed-file:sha256:5ffbf85a53f1514399226ed8c9c006e03e4de6dfc9d875b682b7c1affaaae04f",
+              "source_alias": "head",
+              "source_ref_id": "code-source:sha256:82121112822b2cb727f268e24e43ee2d00ea06632c94064c1520634f6ef689eb",
+              "source_role": "head",
+              "path": "src/Stable.ets",
+              "parser_quality": {
+                "layer": "L1",
+                "warnings": []
+              },
+              "diagnostics": [],
+              "unassigned_hunk_lines": [],
+              "unassigned_change_atom_aliases": [],
+              "unassigned_change_atom_ids": [],
+              "units": [
+                {
+                  "unit_id": "src/Stable.ets@function:stable:L1-L3:Rhead:S82121112822b2cb727f268e24e43ee2d00ea06632c94064c1520634f6ef689eb",
+                  "unit_kind": "function",
+                  "unit_symbol": "stable",
+                  "source_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "context_span": {
+                    "start_line": 1,
+                    "end_line": 3
+                  },
+                  "changed_new_lines": [
+                    2
+                  ],
+                  "changed_old_lines": [],
+                  "selection_reason": "innermost_changed_declaration",
+                  "context_degraded": false,
+                  "diagnostics": [],
+                  "owner": {
+                    "kind": "declaration",
+                    "alias": "head_stable",
+                    "ref_id": "declaration:sha256:5f3b3a05a0cbd751b93b731dcbb76791aadb4afafb6b7aff3531d07d3f2fc173"
+                  },
+                  "change_atom_aliases": [
+                    "atom_a"
+                  ],
+                  "change_atom_ids": [
+                    "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5"
+                  ],
+                  "full_text_sha256": "5206356818f00e03389cce1019f8a3ea5ab8924ffe03095e1e1018ba245de5f4"
+                }
+              ]
+            }
+          ],
+          "diagnostics": [],
+          "unassigned_change_atom_aliases": [],
+          "unassigned_change_atom_ids": [],
+          "coverage": [
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5",
+              "source_role": "base",
+              "lines": [
+                2
+              ]
+            },
+            {
+              "atom_alias": "atom_a",
+              "atom_id": "change-atom:sha256:99e1d05ed8351e8b8b3c6f6e3b4919d002853f4f96ac1ca63980f678590dada5",
+              "source_role": "head",
+              "lines": [
+                2
+              ]
+            }
+          ]
+        },
+        "differences": [],
+        "invariant_violations": [],
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "error": null,
+        "matched": true
+      }
+    ]
+  }
+}

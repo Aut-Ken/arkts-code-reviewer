@@ -32,10 +32,14 @@ updated: 2026-07-12
 | `parser_validation/candidates.py` | provisional candidate contract、评分、fingerprint 和 evidence 审计 |
 | `parser_validation/packager.py` | Parser 输出和源码片段打包 |
 | `file_analysis_validation/golden.py` | 独立 Parser v2 occurrence Golden、完整比较和 fail-closed loader |
+| `change_set_validation/golden.py` | 独立 ChangeSet v1 Golden、完整比较和 fail-closed loader |
+| `review_unit_v2_validation/golden.py` | 独立 base/head ReviewUnit v2 Golden 和 fail-closed loader |
 | `parser_validation/glm_judge.py` | dry-run、GLM client、重试和结果解析 |
 | `tools/run_arkts_parser_batch.py` | 确定性批测 |
 | `tools/evaluate_parser_golden.py` | L0/merged-L1 Golden 评测和 strict baseline 门禁 |
 | `tools/evaluate_file_analysis_golden.py` | FileAnalysis strict baseline 与 require-perfect 门禁 |
+| `tools/evaluate_change_set_golden.py` | ChangeSet strict baseline 与 require-perfect 门禁 |
+| `tools/evaluate_review_unit_v2_golden.py` | ReviewUnit v2 strict baseline 与 require-perfect 门禁 |
 | `tools/evaluate_parser_candidates.py` | 默认 23 个候选样本的 provisional 诊断 |
 | `tools/audit_parser_candidate_evidence.py` | candidate evidence 冻结政策审计 |
 | `tools/verify_parser_golden_provenance.py` | 外部 snapshot 与 pinned checkout 对照 |
@@ -55,6 +59,12 @@ tests/golden/parser/manifest.json
 tests/golden/file_analysis/manifest.json
   15 个自包含、人工逐 occurrence 复核的 Parser v2 accuracy oracle
 
+tests/golden/change_set/manifest.json
+  14 个自包含、人工复核的 ChangeSet v1 normalization oracle
+
+tests/golden/review_unit_v2/manifest.json
+  16 个自包含、人工复核的 base/head ReviewUnit assignment oracle
+
 tests/fixtures/arkui_ace_engine_samples.json
   63 个完整真实文件的 robustness/performance corpus
 
@@ -65,9 +75,10 @@ third_party/tree-sitter-arkts/test/corpus
   grammar source -> AST corpus，不是 CodeFacts 真值
 ```
 
-Parser v1 Golden 与 FileAnalysis Golden 相互独立：前者冻结集合字段和 declaration 行级 span，
-后者冻结 owner、UTF-16 exact range、quality/provenance 和完整 occurrence 列表，任何一方的
-baseline 都不能生成或覆盖另一方 expected。
+Parser v1、FileAnalysis、ChangeSet、ReviewUnit v1 和 ReviewUnit v2 Golden 相互独立：Parser
+两套分别冻结集合/declaration 与 occurrence；ChangeSet 冻结规范化 old/new 坐标和身份；
+ReviewUnit v2 冻结 source role、owner 和 ChangeAtom assignment。任何 baseline 都不能生成或
+覆盖另一套 expected；RU-4 也不修改 ReviewUnit v1 的 16-case expected 和 14/16 兼容门禁。
 
 R63 包含 63 个样本、16 个类别，源码来自相邻 `arkui_ace_engine` 仓库。它能回答是否
 missing、crash、degraded、为空和耗时情况，不能证明字段准确。
@@ -404,6 +415,10 @@ review unit issue
 - L0 与 merged-L1 完整逐 case baseline。
 - FileAnalysis 15-case 完整 occurrence truth、strict baseline 和 schema/provenance fail-closed。
 - FileAnalysis 同行同名 identity、scope shadow、UTF-16、ERROR/missing recovery 和 unresolved owner。
+- ChangeSet 14-case normalization truth、strict baseline、稳定 ID/order 和 schema/provenance
+  fail-closed。
+- ReviewUnit v2 16-case base/head、old/new lines、ChangeAtom assignment、declaration/region owner、
+  source-scoped identity、diagnostics、atom coverage 和稳定输出 truth。
 - candidate truth/annotation fingerprint 和 evidence fail-closed 审计。
 - Golden external snapshot provenance。
 - R63 empty/declaration/layer/warning fail-closed 门禁。
