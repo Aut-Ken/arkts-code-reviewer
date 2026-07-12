@@ -1,0 +1,1877 @@
+{
+  "schema_version": "feature-routing-baseline-v1",
+  "suite_id": "feature-routing-fr0",
+  "manifest_sha256": "d7aca20881e20de54352052f01604b23df31df945da74c36f26dec0e9cb86819",
+  "report": {
+    "schema_version": "feature-routing-report-v1",
+    "suite_id": "feature-routing-fr0",
+    "implementation": "legacy-hardcoded-feature-routing",
+    "manifest_sha256": "d7aca20881e20de54352052f01604b23df31df945da74c36f26dec0e9cb86819",
+    "case_count": 16,
+    "matched_case_count": 14,
+    "mismatched_case_count": 2,
+    "metrics": {
+      "exact_tag_precision": 0.9393939393939394,
+      "exact_tag_recall": 0.96875,
+      "routing_tag_precision": 0.925,
+      "routing_tag_recall": 0.9487179487179487,
+      "dimension_precision": 0.9855072463768116,
+      "dimension_recall": 0.9927007299270073,
+      "mr_dimension_precision": 1.0,
+      "mr_dimension_recall": 1.0,
+      "case_exact_accuracy": 0.875,
+      "input_order_stability": 1.0
+    },
+    "cases": [
+      {
+        "case_id": "FR001",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "timer",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR001_timer.ets",
+            "content_sha256": "c028aab1cf17db13d2fc5c7a9571d8f752ec951ac84d92b438625c6db633fe1c",
+            "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR001:timer",
+              "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5",
+              "exact_tags": [
+                "has_timer"
+              ],
+              "routing_tags": [
+                "has_image",
+                "has_resource_ref",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-10",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR001:timer",
+              "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5",
+              "exact_tags": [
+                "has_timer"
+              ],
+              "routing_tags": [
+                "has_image",
+                "has_resource_ref",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-10",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 1,
+          "exact_tag_actual": 1,
+          "exact_tag_hit": 1,
+          "routing_tag_true": 3,
+          "routing_tag_actual": 3,
+          "routing_tag_hit": 3,
+          "dimension_true": 7,
+          "dimension_actual": 7,
+          "dimension_hit": 7,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR002",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "subscription",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR002_subscription.ets",
+            "content_sha256": "41df25dfaed5ff5a996517a62b13534a9363ed4477a21bf7b3677cee75964436",
+            "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195",
+            "origin_lines": [
+              1,
+              5
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR002:subscribe",
+              "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195",
+              "exact_tags": [
+                "has_subscription"
+              ],
+              "routing_tags": [
+                "has_subscription"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR002:subscribe",
+              "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195",
+              "exact_tags": [
+                "has_subscription"
+              ],
+              "routing_tags": [
+                "has_subscription"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 1,
+          "exact_tag_actual": 1,
+          "exact_tag_hit": 1,
+          "routing_tag_true": 1,
+          "routing_tag_actual": 1,
+          "routing_tag_hit": 1,
+          "dimension_true": 7,
+          "dimension_actual": 7,
+          "dimension_hit": 7,
+          "mr_dimension_true": 7,
+          "mr_dimension_actual": 7,
+          "mr_dimension_hit": 7
+        }
+      },
+      {
+        "case_id": "FR003",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "media_io",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR003_media_io.ets",
+            "content_sha256": "f41dab5ab426e8bf1ba962a97fc70373c407b1b96ca3d5efaeef3964dba9f363",
+            "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR003:persist",
+              "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267",
+              "exact_tags": [
+                "has_file_io",
+                "has_media"
+              ],
+              "routing_tags": [
+                "has_file_io",
+                "has_media"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR003:persist",
+              "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267",
+              "exact_tags": [
+                "has_file_io",
+                "has_media"
+              ],
+              "routing_tags": [
+                "has_file_io",
+                "has_media"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 7,
+          "dimension_actual": 7,
+          "dimension_hit": 7,
+          "mr_dimension_true": 7,
+          "mr_dimension_actual": 7,
+          "mr_dimension_hit": 7
+        }
+      },
+      {
+        "case_id": "FR004",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "async_workers",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR004_async_workers.ets",
+            "content_sha256": "be9b95327096cd8ff4da1550258e088dafdd4cb91698146eca5f7744e4949d40",
+            "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR004:dispatch",
+              "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d",
+              "exact_tags": [
+                "has_async",
+                "has_taskpool",
+                "has_worker"
+              ],
+              "routing_tags": [
+                "has_async",
+                "has_taskpool",
+                "has_worker"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-07",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-07",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR004:dispatch",
+              "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d",
+              "exact_tags": [
+                "has_async",
+                "has_taskpool",
+                "has_worker"
+              ],
+              "routing_tags": [
+                "has_async",
+                "has_taskpool",
+                "has_worker"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-07",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-07",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 3,
+          "exact_tag_actual": 3,
+          "exact_tag_hit": 3,
+          "routing_tag_true": 3,
+          "routing_tag_actual": 3,
+          "routing_tag_hit": 3,
+          "dimension_true": 7,
+          "dimension_actual": 7,
+          "dimension_hit": 7,
+          "mr_dimension_true": 7,
+          "mr_dimension_actual": 7,
+          "mr_dimension_hit": 7
+        }
+      },
+      {
+        "case_id": "FR005",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "ui",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR005_ui.ets",
+            "content_sha256": "6b29b1f30fa575bf4602377ef9bef8c80da5e749d5fbb4d095532df838aa322b",
+            "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9",
+            "origin_lines": [
+              1,
+              9
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR005:controls",
+              "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9",
+              "exact_tags": [
+                "has_interactive_component",
+                "has_layout",
+                "has_responsive_api"
+              ],
+              "routing_tags": [
+                "has_interactive_component",
+                "has_layout",
+                "has_responsive_api"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-09",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-08",
+            "DIM-09",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR005:controls",
+              "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9",
+              "exact_tags": [
+                "has_interactive_component",
+                "has_layout",
+                "has_responsive_api"
+              ],
+              "routing_tags": [
+                "has_interactive_component",
+                "has_layout",
+                "has_responsive_api"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-09",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-08",
+            "DIM-09",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 3,
+          "exact_tag_actual": 3,
+          "exact_tag_hit": 3,
+          "routing_tag_true": 3,
+          "routing_tag_actual": 3,
+          "routing_tag_hit": 3,
+          "dimension_true": 8,
+          "dimension_actual": 8,
+          "dimension_hit": 8,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR006",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "text_resource",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR006_text_resource.ets",
+            "content_sha256": "737fdc1c756ff4d48544a1372536d5742c65b17ce8cd728650739d1fb15e461c",
+            "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR006:title",
+              "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228",
+              "exact_tags": [
+                "has_resource_ref",
+                "has_text_display"
+              ],
+              "routing_tags": [
+                "has_resource_ref",
+                "has_text_display"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-10",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-10",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR006:title",
+              "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228",
+              "exact_tags": [
+                "has_resource_ref",
+                "has_text_display"
+              ],
+              "routing_tags": [
+                "has_resource_ref",
+                "has_text_display"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-10",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-10",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 7,
+          "dimension_actual": 7,
+          "dimension_hit": 7,
+          "mr_dimension_true": 7,
+          "mr_dimension_actual": 7,
+          "mr_dimension_hit": 7
+        }
+      },
+      {
+        "case_id": "FR007",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "security",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR007_security.ets",
+            "content_sha256": "53f385954da29ead20ce20d2acc2998e2fa8862bc2d966ee23efd806096ef49b",
+            "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992",
+            "origin_lines": [
+              1,
+              10
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR007:submit",
+              "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992",
+              "exact_tags": [
+                "has_interactive_component",
+                "has_network",
+                "has_permission_request",
+                "has_storage",
+                "has_text_display",
+                "has_user_input"
+              ],
+              "routing_tags": [
+                "has_interactive_component",
+                "has_network",
+                "has_permission_request",
+                "has_storage",
+                "has_text_display",
+                "has_user_input"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-10",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-08",
+            "DIM-10",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR007:submit",
+              "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992",
+              "exact_tags": [
+                "has_interactive_component",
+                "has_network",
+                "has_permission_request",
+                "has_storage",
+                "has_text_display",
+                "has_user_input"
+              ],
+              "routing_tags": [
+                "has_interactive_component",
+                "has_network",
+                "has_permission_request",
+                "has_storage",
+                "has_text_display",
+                "has_user_input"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-10",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-08",
+            "DIM-10",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 6,
+          "exact_tag_actual": 6,
+          "exact_tag_hit": 6,
+          "routing_tag_true": 6,
+          "routing_tag_actual": 6,
+          "routing_tag_hit": 6,
+          "dimension_true": 9,
+          "dimension_actual": 9,
+          "dimension_hit": 9,
+          "mr_dimension_true": 9,
+          "mr_dimension_actual": 9,
+          "mr_dimension_hit": 9
+        }
+      },
+      {
+        "case_id": "FR008",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "state_lifecycle",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR008_state_lifecycle.ets",
+            "content_sha256": "c63ec251598adc27f031a4afbb2fda1965bf6810f1f003f0993ce8ab773b72aa",
+            "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660",
+            "origin_lines": [
+              1,
+              8
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR008:lifecycle",
+              "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660",
+              "exact_tags": [
+                "has_lifecycle",
+                "has_state_management"
+              ],
+              "routing_tags": [
+                "has_lifecycle",
+                "has_state_management"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR008:lifecycle",
+              "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660",
+              "exact_tags": [
+                "has_lifecycle",
+                "has_state_management"
+              ],
+              "routing_tags": [
+                "has_lifecycle",
+                "has_state_management"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 6,
+          "dimension_actual": 6,
+          "dimension_hit": 6,
+          "mr_dimension_true": 6,
+          "mr_dimension_actual": 6,
+          "mr_dimension_hit": 6
+        }
+      },
+      {
+        "case_id": "FR009",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "image",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR009_image.ets",
+            "content_sha256": "caed444cde192e3045f1afda73f7ab335d0ab4538d5707a5f7cf98c54f9a4f64",
+            "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2",
+            "origin_lines": [
+              1,
+              6
+            ]
+          },
+          {
+            "alias": "network",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR009_network.ets",
+            "content_sha256": "6dbb1c5f9cbfbde63ccc6aafdcda7b413a2b04fd41c2680f9903efa1346372e0",
+            "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413",
+            "origin_lines": [
+              1,
+              5
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR009:image",
+              "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2",
+              "exact_tags": [
+                "has_image"
+              ],
+              "routing_tags": [
+                "has_image"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR009:network",
+              "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413",
+              "exact_tags": [
+                "has_network"
+              ],
+              "routing_tags": [
+                "has_network"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR009:image",
+              "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2",
+              "exact_tags": [
+                "has_image"
+              ],
+              "routing_tags": [
+                "has_image"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR009:network",
+              "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413",
+              "exact_tags": [
+                "has_network"
+              ],
+              "routing_tags": [
+                "has_network"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 14,
+          "dimension_actual": 14,
+          "dimension_hit": 14,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR010",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "list_animation",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR010_list_animation.ets",
+            "content_sha256": "bb2589a798665e1decdb8c7b0f80a8ae4ac5ea75e3606a3e7259ddc975bc775a",
+            "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR010:list",
+              "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc",
+              "exact_tags": [
+                "has_animation",
+                "has_list_render"
+              ],
+              "routing_tags": [
+                "has_animation",
+                "has_list_render"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR010:list",
+              "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc",
+              "exact_tags": [
+                "has_animation",
+                "has_list_render"
+              ],
+              "routing_tags": [
+                "has_animation",
+                "has_list_render"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 6,
+          "dimension_actual": 6,
+          "dimension_hit": 6,
+          "mr_dimension_true": 6,
+          "mr_dimension_actual": 6,
+          "mr_dimension_hit": 6
+        }
+      },
+      {
+        "case_id": "FR011",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "builder_nav_log",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR011_builder_nav_log.ets",
+            "content_sha256": "5812858ae4038b88139e91e493e8c062528b33c0927a73836fc392e3fa0cebe4",
+            "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc",
+            "origin_lines": [
+              1,
+              9
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR011:destination",
+              "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc",
+              "exact_tags": [
+                "has_builder",
+                "has_logging",
+                "has_navigation"
+              ],
+              "routing_tags": [
+                "has_builder",
+                "has_logging",
+                "has_navigation"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR011:destination",
+              "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc",
+              "exact_tags": [
+                "has_builder",
+                "has_logging",
+                "has_navigation"
+              ],
+              "routing_tags": [
+                "has_builder",
+                "has_logging",
+                "has_navigation"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 3,
+          "exact_tag_actual": 3,
+          "exact_tag_hit": 3,
+          "routing_tag_true": 3,
+          "routing_tag_actual": 3,
+          "routing_tag_hit": 3,
+          "dimension_true": 6,
+          "dimension_actual": 6,
+          "dimension_hit": 6,
+          "mr_dimension_true": 6,
+          "mr_dimension_actual": 6,
+          "mr_dimension_hit": 6
+        }
+      },
+      {
+        "case_id": "FR012",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "fallback",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR012_fallback.ets",
+            "content_sha256": "e36a89379e0376c657b3589fa19dd4b5f42be457ade71da417822add03c11200",
+            "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3",
+            "origin_lines": [
+              1,
+              5
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR012:fallback",
+              "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3",
+              "exact_tags": [],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR012:fallback",
+              "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3",
+              "exact_tags": [],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 0,
+          "exact_tag_actual": 0,
+          "exact_tag_hit": 0,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 2,
+          "dimension_true": 6,
+          "dimension_actual": 6,
+          "dimension_hit": 6,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR013",
+        "matched": false,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "negative_api",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR013_negative_api.ets",
+            "content_sha256": "345a05282774c1efa2cb42c1bae938ffbe44d7e69268094ed6455ad7d3e1ba7c",
+            "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+            "origin_lines": [
+              1,
+              7
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR013:sdk",
+              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+              "exact_tags": [],
+              "routing_tags": [
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR013:stop",
+              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+              "exact_tags": [
+                "has_timer"
+              ],
+              "routing_tags": [
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR013:sdk",
+              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+              "exact_tags": [
+                "has_subscription"
+              ],
+              "routing_tags": [
+                "has_subscription"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR013:stop",
+              "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+              "exact_tags": [],
+              "routing_tags": [
+                "has_subscription"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-12"
+          ]
+        },
+        "differences": [
+          "result.units[0].dimensions.length: expected 6, actual 7",
+          "result.units[0].dimensions[5]: expected 'DIM-12', actual 'DIM-06'",
+          "result.units[0].exact_tags.length: expected 0, actual 1",
+          "result.units[0].routing_tags[0]: expected 'has_timer', actual 'has_subscription'",
+          "result.units[1].dimensions.length: expected 7, actual 6",
+          "result.units[1].dimensions[5]: expected 'DIM-06', actual 'DIM-12'",
+          "result.units[1].exact_tags.length: expected 1, actual 0",
+          "result.units[1].routing_tags[0]: expected 'has_timer', actual 'has_subscription'"
+        ],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 1,
+          "exact_tag_actual": 1,
+          "exact_tag_hit": 0,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 2,
+          "routing_tag_hit": 0,
+          "dimension_true": 13,
+          "dimension_actual": 13,
+          "dimension_hit": 12,
+          "mr_dimension_true": 7,
+          "mr_dimension_actual": 7,
+          "mr_dimension_hit": 7
+        }
+      },
+      {
+        "case_id": "FR014",
+        "matched": false,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "click",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR014_click.ets",
+            "content_sha256": "dd1c2fb46982559483ebace2fecf6a61d0c0b229d7b592b8bfc1bce163dacb95",
+            "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd",
+            "origin_lines": [
+              1,
+              6
+            ]
+          },
+          {
+            "alias": "lifecycle",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR014_lifecycle_attrs.ets",
+            "content_sha256": "19a78931207382e19330bc4750759466077e6a9d52da463e8b0d32a84346393c",
+            "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
+            "origin_lines": [
+              1,
+              8
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR014:click",
+              "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd",
+              "exact_tags": [
+                "has_interactive_component"
+              ],
+              "routing_tags": [
+                "has_interactive_component"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR014:lifecycle",
+              "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
+              "exact_tags": [
+                "has_image"
+              ],
+              "routing_tags": [
+                "has_image"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-08",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR014:click",
+              "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd",
+              "exact_tags": [
+                "has_interactive_component"
+              ],
+              "routing_tags": [
+                "has_interactive_component"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-08",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR014:lifecycle",
+              "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
+              "exact_tags": [
+                "has_image",
+                "has_interactive_component"
+              ],
+              "routing_tags": [
+                "has_image",
+                "has_interactive_component"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-08",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-08",
+            "DIM-12"
+          ]
+        },
+        "differences": [
+          "result.units[1].dimensions.length: expected 7, actual 8",
+          "result.units[1].dimensions[6]: expected 'DIM-12', actual 'DIM-08'",
+          "result.units[1].exact_tags.length: expected 1, actual 2",
+          "result.units[1].routing_tags.length: expected 1, actual 2"
+        ],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 3,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 2,
+          "routing_tag_actual": 3,
+          "routing_tag_hit": 2,
+          "dimension_true": 14,
+          "dimension_actual": 15,
+          "dimension_hit": 14,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR015",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "permutation",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR015_permutation.ets",
+            "content_sha256": "b49b33d5989a1fb788235f3d1e0ecc6860fe0d11991d67fa730b5e45a7c67991",
+            "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+            "origin_lines": [
+              1,
+              9
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR015:a-timer",
+              "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+              "exact_tags": [
+                "has_timer"
+              ],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR015:z-network",
+              "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+              "exact_tags": [
+                "has_network"
+              ],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR015:a-timer",
+              "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+              "exact_tags": [
+                "has_timer"
+              ],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-06",
+                "DIM-12"
+              ]
+            },
+            {
+              "unit_id": "fr-unit:FR015:z-network",
+              "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+              "exact_tags": [
+                "has_network"
+              ],
+              "routing_tags": [
+                "has_network",
+                "has_timer"
+              ],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-11",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-06",
+            "DIM-11",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 2,
+          "exact_tag_actual": 2,
+          "exact_tag_hit": 2,
+          "routing_tag_true": 4,
+          "routing_tag_actual": 4,
+          "routing_tag_hit": 4,
+          "dimension_true": 14,
+          "dimension_actual": 14,
+          "dimension_hit": 14,
+          "mr_dimension_true": 8,
+          "mr_dimension_actual": 8,
+          "mr_dimension_hit": 8
+        }
+      },
+      {
+        "case_id": "FR016",
+        "matched": true,
+        "repeat_equal": true,
+        "permutation_equal": true,
+        "source_provenance": [
+          {
+            "alias": "neutral",
+            "repository": "feature-routing-golden",
+            "revision": "feature-routing-golden-v1",
+            "logical_path": "golden/feature_routing/FR016_neutral.ets",
+            "content_sha256": "f9f87981b7dc3288b6bcae29962f2d5ba6a91a9af761191389caf0267e8f0daa",
+            "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
+            "origin_lines": [
+              1,
+              3
+            ]
+          }
+        ],
+        "expected": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR016:neutral",
+              "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
+              "exact_tags": [],
+              "routing_tags": [],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "actual": {
+          "units": [
+            {
+              "unit_id": "fr-unit:FR016:neutral",
+              "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
+              "exact_tags": [],
+              "routing_tags": [],
+              "dimensions": [
+                "DIM-01",
+                "DIM-02",
+                "DIM-03",
+                "DIM-04",
+                "DIM-05",
+                "DIM-12"
+              ]
+            }
+          ],
+          "mr_dimensions": [
+            "DIM-01",
+            "DIM-02",
+            "DIM-03",
+            "DIM-04",
+            "DIM-05",
+            "DIM-12"
+          ]
+        },
+        "differences": [],
+        "error": null,
+        "metric_counts": {
+          "exact_tag_true": 0,
+          "exact_tag_actual": 0,
+          "exact_tag_hit": 0,
+          "routing_tag_true": 0,
+          "routing_tag_actual": 0,
+          "routing_tag_hit": 0,
+          "dimension_true": 6,
+          "dimension_actual": 6,
+          "dimension_hit": 6,
+          "mr_dimension_true": 6,
+          "mr_dimension_actual": 6,
+          "mr_dimension_hit": 6
+        }
+      }
+    ]
+  }
+}

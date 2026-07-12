@@ -1,0 +1,2027 @@
+{
+  "schema_version": "feature-routing-golden-v1",
+  "suite_id": "feature-routing-fr0",
+  "description": "Human-reviewed FR-0 truth for occurrence-exact tags, source-scoped routing hints, Unit dimensions, and MR dimension union.",
+  "tag_ids": [
+    "has_animation",
+    "has_async",
+    "has_builder",
+    "has_file_io",
+    "has_image",
+    "has_interactive_component",
+    "has_layout",
+    "has_lifecycle",
+    "has_list_render",
+    "has_logging",
+    "has_media",
+    "has_navigation",
+    "has_network",
+    "has_permission_request",
+    "has_resource_ref",
+    "has_responsive_api",
+    "has_state_management",
+    "has_storage",
+    "has_subscription",
+    "has_taskpool",
+    "has_text_display",
+    "has_timer",
+    "has_user_input",
+    "has_worker"
+  ],
+  "dimension_ids": [
+    "DIM-01",
+    "DIM-02",
+    "DIM-03",
+    "DIM-04",
+    "DIM-05",
+    "DIM-06",
+    "DIM-07",
+    "DIM-08",
+    "DIM-09",
+    "DIM-10",
+    "DIM-11",
+    "DIM-12"
+  ],
+  "cases": [
+    {
+      "case_id": "FR001",
+      "description": "A timer owner stays exact while image/resource file hints only widen routing.",
+      "sources": [
+        {
+          "alias": "timer",
+          "file": "sources/FR001_timer.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR001_timer.ets",
+          "content_sha256": "c028aab1cf17db13d2fc5c7a9571d8f752ec951ac84d92b438625c6db633fe1c",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR001:timer",
+          "source_alias": "timer",
+          "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "setInterval"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Image"
+            ],
+            "apis": [
+              "$r",
+              "setInterval"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": [
+              "app.media.icon"
+            ]
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR001:timer",
+            "source_ref_id": "code-source:sha256:c1326b1213c1ee8e69873f689369308a77fef9394703dd7e14c4ac66a01ca8d5",
+            "exact_tags": [
+              "has_timer"
+            ],
+            "routing_tags": [
+              "has_image",
+              "has_resource_ref",
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-10",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR002",
+      "description": "A canonical emitter subscription triggers resource-lifecycle routing.",
+      "sources": [
+        {
+          "alias": "subscription",
+          "file": "sources/FR002_subscription.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR002_subscription.ets",
+          "content_sha256": "41df25dfaed5ff5a996517a62b13534a9363ed4477a21bf7b3677cee75964436",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR002:subscribe",
+          "source_alias": "subscription",
+          "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "emitter.on"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "emitter"
+            ],
+            "import_uses": [
+              "emitter"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "emitter.on"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "emitter"
+            ],
+            "import_uses": [
+              "emitter"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR002:subscribe",
+            "source_ref_id": "code-source:sha256:22b433df987ee690443fb48853ac404a4f09f8accf8a28ec8ded7488612c0195",
+            "exact_tags": [
+              "has_subscription"
+            ],
+            "routing_tags": [
+              "has_subscription"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR003",
+      "description": "Media and file-I/O facts independently converge on DIM-06.",
+      "sources": [
+        {
+          "alias": "media_io",
+          "file": "sources/FR003_media_io.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR003_media_io.ets",
+          "content_sha256": "f41dab5ab426e8bf1ba962a97fc70373c407b1b96ca3d5efaeef3964dba9f363",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR003:persist",
+          "source_alias": "media_io",
+          "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "fs.openSync",
+              "media.createAVPlayer"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "fs",
+              "media"
+            ],
+            "import_uses": [
+              "fs",
+              "media"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "fs.openSync",
+              "media.createAVPlayer"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "fs",
+              "media"
+            ],
+            "import_uses": [
+              "fs",
+              "media"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR003:persist",
+            "source_ref_id": "code-source:sha256:ccbcc5e08df04406202e955e761e28b046d86ff86a58920cbf0b3c56bcb7d267",
+            "exact_tags": [
+              "has_file_io",
+              "has_media"
+            ],
+            "routing_tags": [
+              "has_file_io",
+              "has_media"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR004",
+      "description": "Async, taskpool, and worker signals trigger DIM-07 together.",
+      "sources": [
+        {
+          "alias": "async_workers",
+          "file": "sources/FR004_async_workers.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR004_async_workers.ets",
+          "content_sha256": "be9b95327096cd8ff4da1550258e088dafdd4cb91698146eca5f7744e4949d40",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR004:dispatch",
+          "source_alias": "async_workers",
+          "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "taskpool.execute",
+              "worker.ThreadWorker"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "ThreadWorker",
+              "dispatchWork"
+            ],
+            "syntax": [
+              "async_fn",
+              "await_expr",
+              "promise"
+            ],
+            "import_bindings": [
+              "taskpool",
+              "worker"
+            ],
+            "import_uses": [
+              "taskpool",
+              "worker"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "taskpool.execute",
+              "worker.ThreadWorker"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "ThreadWorker",
+              "dispatchWork"
+            ],
+            "syntax": [
+              "async_fn",
+              "await_expr",
+              "promise"
+            ],
+            "import_bindings": [
+              "taskpool",
+              "worker"
+            ],
+            "import_uses": [
+              "taskpool",
+              "worker"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR004:dispatch",
+            "source_ref_id": "code-source:sha256:fc67ff31fab1cce386602efd0add573db0f2e010fa526e4c91cca6a25f457f3d",
+            "exact_tags": [
+              "has_async",
+              "has_taskpool",
+              "has_worker"
+            ],
+            "routing_tags": [
+              "has_async",
+              "has_taskpool",
+              "has_worker"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-07",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-07",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR005",
+      "description": "Interactive, layout, and responsive UI signals map to DIM-08 and DIM-09.",
+      "sources": [
+        {
+          "alias": "ui",
+          "file": "sources/FR005_ui.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR005_ui.ets",
+          "content_sha256": "6b29b1f30fa575bf4602377ef9bef8c80da5e749d5fbb4d095532df838aa322b",
+          "origin_lines": [
+            1,
+            9
+          ],
+          "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR005:controls",
+          "source_alias": "ui",
+          "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9",
+          "unit_exact": {
+            "components": [
+              "Button",
+              "GridRow"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onClick"
+            ],
+            "symbols": [
+              "ResponsiveControls"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Button",
+              "GridRow"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onClick"
+            ],
+            "symbols": [
+              "ResponsiveControls"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR005:controls",
+            "source_ref_id": "code-source:sha256:f65ac7590bc9c40c2d6a3ca522abcfeb07cfb17161385622d952e6c7fbaf09a9",
+            "exact_tags": [
+              "has_interactive_component",
+              "has_layout",
+              "has_responsive_api"
+            ],
+            "routing_tags": [
+              "has_interactive_component",
+              "has_layout",
+              "has_responsive_api"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-08",
+              "DIM-09",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-08",
+          "DIM-09",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR006",
+      "description": "Text display and a scoped resource reference map to DIM-10.",
+      "sources": [
+        {
+          "alias": "text_resource",
+          "file": "sources/FR006_text_resource.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR006_text_resource.ets",
+          "content_sha256": "737fdc1c756ff4d48544a1372536d5742c65b17ce8cd728650739d1fb15e461c",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR006:title",
+          "source_alias": "text_resource",
+          "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228",
+          "unit_exact": {
+            "components": [
+              "Text"
+            ],
+            "apis": [
+              "$r"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [
+              "app.string.title"
+            ],
+            "resource_references": [
+              "app.string.title"
+            ]
+          },
+          "file_hints": {
+            "components": [
+              "Text"
+            ],
+            "apis": [
+              "$r"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [
+              "app.string.title"
+            ],
+            "resource_references": [
+              "app.string.title"
+            ]
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR006:title",
+            "source_ref_id": "code-source:sha256:de7a505a9d00f57df53d0b2c6c3ffd9673ffece16ba5119472c46ff366bbb228",
+            "exact_tags": [
+              "has_resource_ref",
+              "has_text_display"
+            ],
+            "routing_tags": [
+              "has_resource_ref",
+              "has_text_display"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-10",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-10",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR007",
+      "description": "Permission, input, network, and storage signals cover all DIM-11 routes.",
+      "sources": [
+        {
+          "alias": "security",
+          "file": "sources/FR007_security.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR007_security.ets",
+          "content_sha256": "53f385954da29ead20ce20d2acc2998e2fa8862bc2d966ee23efd806096ef49b",
+          "origin_lines": [
+            1,
+            10
+          ],
+          "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR007:submit",
+          "source_alias": "security",
+          "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992",
+          "unit_exact": {
+            "components": [
+              "TextInput"
+            ],
+            "apis": [
+              "abilityAccessCtrl.requestPermissionsFromUser",
+              "http.createHttp",
+              "preferences.getPreferences"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "abilityAccessCtrl",
+              "http",
+              "preferences"
+            ],
+            "import_uses": [
+              "abilityAccessCtrl",
+              "http",
+              "preferences"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "TextInput"
+            ],
+            "apis": [
+              "abilityAccessCtrl.requestPermissionsFromUser",
+              "http.createHttp",
+              "preferences.getPreferences"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "abilityAccessCtrl",
+              "http",
+              "preferences"
+            ],
+            "import_uses": [
+              "abilityAccessCtrl",
+              "http",
+              "preferences"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR007:submit",
+            "source_ref_id": "code-source:sha256:cc05bcd1c7247451291460bab4d6c4722a6e91664381b882a9c028c3b21dc992",
+            "exact_tags": [
+              "has_interactive_component",
+              "has_network",
+              "has_permission_request",
+              "has_storage",
+              "has_text_display",
+              "has_user_input"
+            ],
+            "routing_tags": [
+              "has_interactive_component",
+              "has_network",
+              "has_permission_request",
+              "has_storage",
+              "has_text_display",
+              "has_user_input"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-08",
+              "DIM-10",
+              "DIM-11",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-08",
+          "DIM-10",
+          "DIM-11",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR008",
+      "description": "State-management and lifecycle tags remain routing taxonomy without extra conditional dimensions.",
+      "sources": [
+        {
+          "alias": "state_lifecycle",
+          "file": "sources/FR008_state_lifecycle.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR008_state_lifecycle.ets",
+          "content_sha256": "c63ec251598adc27f031a4afbb2fda1965bf6810f1f003f0993ce8ab773b72aa",
+          "origin_lines": [
+            1,
+            8
+          ],
+          "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR008:lifecycle",
+          "source_alias": "state_lifecycle",
+          "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660",
+          "unit_exact": {
+            "components": [],
+            "apis": [],
+            "decorators": [
+              "@State"
+            ],
+            "attributes": [],
+            "symbols": [
+              "StatefulPage",
+              "aboutToAppear"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [
+              "StatefulPage.count"
+            ],
+            "field_writes": [
+              "StatefulPage.count"
+            ],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [],
+            "decorators": [
+              "@State"
+            ],
+            "attributes": [],
+            "symbols": [
+              "StatefulPage",
+              "aboutToAppear"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [
+              "StatefulPage.count"
+            ],
+            "field_writes": [
+              "StatefulPage.count"
+            ],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR008:lifecycle",
+            "source_ref_id": "code-source:sha256:0b182520d8e34efbb504ec9205cc0b5bc26711d6379c3f30e78fd63234833660",
+            "exact_tags": [
+              "has_lifecycle",
+              "has_state_management"
+            ],
+            "routing_tags": [
+              "has_lifecycle",
+              "has_state_management"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR009",
+      "description": "Two files keep exact and routing tags isolated by source_ref_id.",
+      "sources": [
+        {
+          "alias": "image",
+          "file": "sources/FR009_image.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR009_image.ets",
+          "content_sha256": "caed444cde192e3045f1afda73f7ab335d0ab4538d5707a5f7cf98c54f9a4f64",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2"
+        },
+        {
+          "alias": "network",
+          "file": "sources/FR009_network.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR009_network.ets",
+          "content_sha256": "6dbb1c5f9cbfbde63ccc6aafdcda7b413a2b04fd41c2680f9903efa1346372e0",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR009:network",
+          "source_alias": "network",
+          "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "http.createHttp"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "http"
+            ],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "http.createHttp"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "http"
+            ],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        },
+        {
+          "unit_id": "fr-unit:FR009:image",
+          "source_alias": "image",
+          "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2",
+          "unit_exact": {
+            "components": [
+              "Image"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "Avatar"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Image"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "Avatar"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR009:image",
+            "source_ref_id": "code-source:sha256:80b637c19c63c6de54cfd08acd3e20ecc4c470527d61df292c92b5a2106163b2",
+            "exact_tags": [
+              "has_image"
+            ],
+            "routing_tags": [
+              "has_image"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          },
+          {
+            "unit_id": "fr-unit:FR009:network",
+            "source_ref_id": "code-source:sha256:3581607cbb63d3ab77c81f0711408941800015fa6610f3df17f8958670731413",
+            "exact_tags": [
+              "has_network"
+            ],
+            "routing_tags": [
+              "has_network"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-11",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-11",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR010",
+      "description": "List rendering and animation tags are retained without inventing a conditional dimension.",
+      "sources": [
+        {
+          "alias": "list_animation",
+          "file": "sources/FR010_list_animation.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR010_list_animation.ets",
+          "content_sha256": "bb2589a798665e1decdb8c7b0f80a8ae4ac5ea75e3606a3e7259ddc975bc775a",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR010:list",
+          "source_alias": "list_animation",
+          "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc",
+          "unit_exact": {
+            "components": [
+              "List"
+            ],
+            "apis": [
+              "animateTo"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "AnimatedList"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "List"
+            ],
+            "apis": [
+              "animateTo"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "AnimatedList"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR010:list",
+            "source_ref_id": "code-source:sha256:4e38b3f4f6fa66e8c1a1435d0745628358ced4532b9a82deed4e8851d6f6fddc",
+            "exact_tags": [
+              "has_animation",
+              "has_list_render"
+            ],
+            "routing_tags": [
+              "has_animation",
+              "has_list_render"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR011",
+      "description": "Builder, navigation, and logging taxonomy remains independently visible.",
+      "sources": [
+        {
+          "alias": "builder_nav_log",
+          "file": "sources/FR011_builder_nav_log.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR011_builder_nav_log.ets",
+          "content_sha256": "5812858ae4038b88139e91e493e8c062528b33c0927a73836fc392e3fa0cebe4",
+          "origin_lines": [
+            1,
+            9
+          ],
+          "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR011:destination",
+          "source_alias": "builder_nav_log",
+          "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc",
+          "unit_exact": {
+            "components": [
+              "Navigation"
+            ],
+            "apis": [
+              "hilog.info",
+              "router.pushUrl"
+            ],
+            "decorators": [
+              "@Builder"
+            ],
+            "attributes": [],
+            "symbols": [
+              "destination"
+            ],
+            "syntax": [],
+            "import_bindings": [
+              "hilog",
+              "router"
+            ],
+            "import_uses": [
+              "hilog",
+              "router"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Navigation"
+            ],
+            "apis": [
+              "hilog.info",
+              "router.pushUrl"
+            ],
+            "decorators": [
+              "@Builder"
+            ],
+            "attributes": [],
+            "symbols": [
+              "destination"
+            ],
+            "syntax": [],
+            "import_bindings": [
+              "hilog",
+              "router"
+            ],
+            "import_uses": [
+              "hilog",
+              "router"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR011:destination",
+            "source_ref_id": "code-source:sha256:035ea4c4967a8177f54ac0e0bd2da6341947143270647d4df05123c8574ffacc",
+            "exact_tags": [
+              "has_builder",
+              "has_logging",
+              "has_navigation"
+            ],
+            "routing_tags": [
+              "has_builder",
+              "has_logging",
+              "has_navigation"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR012",
+      "description": "A fallback has no exact tags; same-file hints widen only routing and MR dimensions.",
+      "sources": [
+        {
+          "alias": "fallback",
+          "file": "sources/FR012_fallback.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR012_fallback.ets",
+          "content_sha256": "e36a89379e0376c657b3589fa19dd4b5f42be457ade71da417822add03c11200",
+          "origin_lines": [
+            1,
+            5
+          ],
+          "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR012:fallback",
+          "source_alias": "fallback",
+          "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3",
+          "unit_exact": {
+            "components": [],
+            "apis": [],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "http.createHttp",
+              "setTimeout"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "http"
+            ],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR012:fallback",
+            "source_ref_id": "code-source:sha256:0ac4b8faecb852fcf6b9762e9354eb17e67214fb25f476aa22546afccbef9fc3",
+            "exact_tags": [],
+            "routing_tags": [
+              "has_network",
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-11",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR013",
+      "description": "clearInterval is a timer signal, while an unrelated SDK.on is not a subscription.",
+      "sources": [
+        {
+          "alias": "negative_api",
+          "file": "sources/FR013_negative_api.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR013_negative_api.ets",
+          "content_sha256": "345a05282774c1efa2cb42c1bae938ffbe44d7e69268094ed6455ad7d3e1ba7c",
+          "origin_lines": [
+            1,
+            7
+          ],
+          "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR013:stop",
+          "source_alias": "negative_api",
+          "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "clearInterval"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "clearInterval"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "SDK.on",
+              "clearInterval"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "SDK.on",
+              "clearInterval"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        },
+        {
+          "unit_id": "fr-unit:FR013:sdk",
+          "source_alias": "negative_api",
+          "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "SDK.on"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "SDK.on"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "SDK.on",
+              "clearInterval"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "SDK.on",
+              "clearInterval"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR013:sdk",
+            "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+            "exact_tags": [],
+            "routing_tags": [
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          },
+          {
+            "unit_id": "fr-unit:FR013:stop",
+            "source_ref_id": "code-source:sha256:eab0bfdcc6d0a2f20a93d617cda89b3ef79645ee4049820fdb257d621e3d1ce8",
+            "exact_tags": [
+              "has_timer"
+            ],
+            "routing_tags": [
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR014",
+      "description": "Lifecycle/error callbacks do not imply interaction, while onClick remains a positive control.",
+      "sources": [
+        {
+          "alias": "click",
+          "file": "sources/FR014_click.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR014_click.ets",
+          "content_sha256": "dd1c2fb46982559483ebace2fecf6a61d0c0b229d7b592b8bfc1bce163dacb95",
+          "origin_lines": [
+            1,
+            6
+          ],
+          "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd"
+        },
+        {
+          "alias": "lifecycle",
+          "file": "sources/FR014_lifecycle_attrs.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR014_lifecycle_attrs.ets",
+          "content_sha256": "19a78931207382e19330bc4750759466077e6a9d52da463e8b0d32a84346393c",
+          "origin_lines": [
+            1,
+            8
+          ],
+          "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR014:lifecycle",
+          "source_alias": "lifecycle",
+          "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
+          "unit_exact": {
+            "components": [
+              "Image"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onAppear",
+              "onError"
+            ],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Image"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onAppear",
+              "onError"
+            ],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        },
+        {
+          "unit_id": "fr-unit:FR014:click",
+          "source_alias": "click",
+          "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd",
+          "unit_exact": {
+            "components": [
+              "Button"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onClick"
+            ],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [
+              "Button"
+            ],
+            "apis": [],
+            "decorators": [],
+            "attributes": [
+              "onClick"
+            ],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR014:click",
+            "source_ref_id": "code-source:sha256:60a3599964271754d326ee1e3acdf314a066e24521dfecf8c927bf59e1b879fd",
+            "exact_tags": [
+              "has_interactive_component"
+            ],
+            "routing_tags": [
+              "has_interactive_component"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-08",
+              "DIM-12"
+            ]
+          },
+          {
+            "unit_id": "fr-unit:FR014:lifecycle",
+            "source_ref_id": "code-source:sha256:c7b39a0857f622fc9062d02c64d694941c4c353db569d1eefd54e8a605b661f1",
+            "exact_tags": [
+              "has_image"
+            ],
+            "routing_tags": [
+              "has_image"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-08",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR015",
+      "description": "Reverse-ordered Unit input produces canonical output without changing tag or dimension semantics.",
+      "sources": [
+        {
+          "alias": "permutation",
+          "file": "sources/FR015_permutation.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR015_permutation.ets",
+          "content_sha256": "b49b33d5989a1fb788235f3d1e0ecc6860fe0d11991d67fa730b5e45a7c67991",
+          "origin_lines": [
+            1,
+            9
+          ],
+          "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR015:z-network",
+          "source_alias": "permutation",
+          "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "http.createHttp"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "http.createHttp",
+              "setTimeout"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "http"
+            ],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        },
+        {
+          "unit_id": "fr-unit:FR015:a-timer",
+          "source_alias": "permutation",
+          "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+          "unit_exact": {
+            "components": [],
+            "apis": [
+              "setTimeout"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [
+              "http.createHttp",
+              "setTimeout"
+            ],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [],
+            "syntax": [],
+            "import_bindings": [
+              "http"
+            ],
+            "import_uses": [
+              "http"
+            ],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR015:a-timer",
+            "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+            "exact_tags": [
+              "has_timer"
+            ],
+            "routing_tags": [
+              "has_network",
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-06",
+              "DIM-12"
+            ]
+          },
+          {
+            "unit_id": "fr-unit:FR015:z-network",
+            "source_ref_id": "code-source:sha256:bda7e3e6992888f0270f63283fb3a73751097df27a260761cc54b2679ab6a58a",
+            "exact_tags": [
+              "has_network"
+            ],
+            "routing_tags": [
+              "has_network",
+              "has_timer"
+            ],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-11",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-06",
+          "DIM-11",
+          "DIM-12"
+        ]
+      }
+    },
+    {
+      "case_id": "FR016",
+      "description": "Neutral ArkTS facts do not fabricate taxonomy tags or conditional dimensions.",
+      "sources": [
+        {
+          "alias": "neutral",
+          "file": "sources/FR016_neutral.ets",
+          "repository": "feature-routing-golden",
+          "revision": "feature-routing-golden-v1",
+          "logical_path": "golden/feature_routing/FR016_neutral.ets",
+          "content_sha256": "f9f87981b7dc3288b6bcae29962f2d5ba6a91a9af761191389caf0267e8f0daa",
+          "origin_lines": [
+            1,
+            3
+          ],
+          "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e"
+        }
+      ],
+      "units": [
+        {
+          "unit_id": "fr-unit:FR016:neutral",
+          "source_alias": "neutral",
+          "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
+          "unit_exact": {
+            "components": [],
+            "apis": [],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "calculate"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "calculate"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "file_hints": {
+            "components": [],
+            "apis": [],
+            "decorators": [],
+            "attributes": [],
+            "symbols": [
+              "calculate"
+            ],
+            "syntax": [],
+            "import_bindings": [],
+            "import_uses": [],
+            "field_reads": [],
+            "field_writes": [],
+            "calls": [
+              "calculate"
+            ],
+            "string_literals": [],
+            "resource_references": []
+          },
+          "scope_diagnostics": []
+        }
+      ],
+      "expected": {
+        "units": [
+          {
+            "unit_id": "fr-unit:FR016:neutral",
+            "source_ref_id": "code-source:sha256:538972b4fc0edd22b922d56fe112bd49c600498585e82d53fcbbce354a5cd02e",
+            "exact_tags": [],
+            "routing_tags": [],
+            "dimensions": [
+              "DIM-01",
+              "DIM-02",
+              "DIM-03",
+              "DIM-04",
+              "DIM-05",
+              "DIM-12"
+            ]
+          }
+        ],
+        "mr_dimensions": [
+          "DIM-01",
+          "DIM-02",
+          "DIM-03",
+          "DIM-04",
+          "DIM-05",
+          "DIM-12"
+        ]
+      }
+    }
+  ]
+}
