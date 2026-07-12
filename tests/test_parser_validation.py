@@ -4,7 +4,16 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from arkts_code_reviewer.code_analysis.file_analysis_models import (
+    CodeSourceRef,
+    FileParseResult,
+)
+from arkts_code_reviewer.code_analysis.file_analysis_parser import (
+    LegacyFileAnalysisAdapter,
+)
+from arkts_code_reviewer.code_analysis.lexical import LexicalParser
 from arkts_code_reviewer.parser_validation.glm_judge import (
     DryRunJudgeClient,
     _response_format_config,
@@ -64,8 +73,45 @@ class ParserValidationTest(unittest.TestCase):
         self.assertIn("Button", facts["components"])
         self.assertIn("@State", facts["decorators"])
         self.assertIn("router.pushUrl", facts["apis"])
-        tags = request.parser_output.retrieval_units[0]["code_features"]["tags"]
+        retrieval_unit = request.parser_output.retrieval_units[0]
+        tags = retrieval_unit["routing_tags"]
         self.assertIn("has_navigation", tags)
+
+    def test_build_validation_request_parses_source_once(self) -> None:
+        class CountingFileParser:
+            def __init__(self) -> None:
+                self.calls = 0
+                self.delegate = LegacyFileAnalysisAdapter(LexicalParser())
+
+            def parse_file(
+                self,
+                source_ref: CodeSourceRef,
+                source: str,
+            ) -> FileParseResult:
+                self.calls += 1
+                return self.delegate.parse_file(source_ref, source)
+
+        parser = CountingFileParser()
+        with tempfile.TemporaryDirectory() as temp_dir:
+            engine_root = Path(temp_dir)
+            source_path = engine_root / "src/pages/DemoPage.ets"
+            source_path.parent.mkdir(parents=True)
+            source_path.write_text(SAMPLE_SOURCE, encoding="utf-8")
+            with patch(
+                "arkts_code_reviewer.parser_validation.packager."
+                "create_file_analysis_parser",
+                return_value=parser,
+            ):
+                build_validation_request(
+                    engine_root=engine_root,
+                    sample=SampleEntry(
+                        category="demo",
+                        path="src/pages/DemoPage.ets",
+                    ),
+                    parser_name="lexical",
+                )
+
+        self.assertEqual(parser.calls, 1)
 
     def test_build_judge_messages_treats_code_as_data(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

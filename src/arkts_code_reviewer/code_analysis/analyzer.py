@@ -1,9 +1,17 @@
 from __future__ import annotations
 
-from arkts_code_reviewer.code_analysis.arkts_tree_sitter_parser import ArktsTreeSitterParser
-from arkts_code_reviewer.code_analysis.lexical import LexicalParser
+from arkts_code_reviewer.code_analysis.file_analysis_models import (
+    CodeSourceRef,
+    FileParseResult,
+    ScopedFacts,
+    UnitFactScope,
+)
+from arkts_code_reviewer.code_analysis.file_analysis_parser import (
+    ArktsFileAnalysisParser,
+    FileAnalysisParser,
+    LegacyFileAnalysisAdapter,
+)
 from arkts_code_reviewer.code_analysis.models import (
-    REVIEW_UNIT_BUILD_SCHEMA_VERSION,
     AnalysisMetadata,
     AnalysisMode,
     AnalysisResult,
@@ -19,13 +27,13 @@ from arkts_code_reviewer.code_analysis.models import (
     RetrievalUnit,
     ReviewUnit,
     ReviewUnitBuildResult,
-    ReviewUnitDiagnostic,
     ReviewUnitFileResult,
 )
 from arkts_code_reviewer.code_analysis.review_unit_contract import normalize_review_path
 from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.tagger import derive_tags, trigger_dimensions
 from arkts_code_reviewer.code_analysis.text_utils import extract_lines
+from arkts_code_reviewer.code_analysis.unit_facts import project
 
 
 class CodeAnalyzer:
@@ -34,8 +42,20 @@ class CodeAnalyzer:
         parser: CodeParser | None = None,
         unit_builder: ReviewUnitBuilder | None = None,
         token_budget: int = 8000,
+        *,
+        file_parser: FileAnalysisParser | None = None,
     ) -> None:
-        self.parser = parser or ArktsTreeSitterParser(fallback=LexicalParser())
+        if parser is not None and file_parser is not None:
+            raise ValueError("parser and file_parser are mutually exclusive")
+        self.file_parser: FileAnalysisParser = (
+            file_parser
+            if file_parser is not None
+            else (
+                LegacyFileAnalysisAdapter(parser)
+                if parser is not None
+                else ArktsFileAnalysisParser()
+            )
+        )
         self.unit_builder = unit_builder or ReviewUnitBuilder()
         self.token_budget = token_budget
 
@@ -49,20 +69,46 @@ class CodeAnalyzer:
 
         retrieval_units: list[RetrievalUnit] = []
         file_results: list[ReviewUnitFileResult] = []
-        all_tags: set[str] = set()
+        file_parse_results: list[FileParseResult] = []
+        unit_fact_scopes: list[UnitFactScope] = []
+        exact_tags: set[str] = set()
+        routing_tags: set[str] = set()
         warnings: list[str] = []
         parser_layers: set[str] = set()
         review_unit_ids: set[str] = set()
+        parse_results_by_source_ref: dict[str, FileParseResult] = {}
 
         for file_input in sorted(
             files,
             key=lambda item: normalize_review_path(item.path),
         ):
-            facts = self.parser.parse(file_input.content, file_input.path)
+            source_ref = file_input.source_ref or CodeSourceRef.inline(
+                file_input.path,
+                file_input.content,
+            )
+            parse_result = parse_results_by_source_ref.get(source_ref.source_ref_id)
+            if parse_result is None:
+                parse_result = self.file_parser.parse_file(
+                    source_ref,
+                    file_input.content,
+                )
+                self._validate_parse_result(parse_result, source_ref)
+                parse_results_by_source_ref[source_ref.source_ref_id] = parse_result
+            facts = parse_result.compatibility_facts
+            file_parse_results.append(parse_result)
             warnings.extend(
                 f"{file_input.path}: {warning}" for warning in facts.warnings
             )
             parser_layers.add(facts.parser_layer)
+
+            file_routing_tags = self._derive_scoped_tags(
+                parse_result.analysis.file_hints,
+                parse_result.analysis.file_hints.to_code_facts(
+                    file_input.path,
+                    parser_layer=facts.parser_layer,
+                ),
+            )
+            routing_tags.update(file_routing_tags)
 
             file_result = self.unit_builder.build_file_result(
                 file_input.path,
@@ -70,12 +116,14 @@ class CodeAnalyzer:
                 facts,
                 mode,
                 file_input.hunks,
+                source_ref_id=source_ref.source_ref_id,
             )
             self._validate_file_result_contract(
                 file_result,
                 file_input,
                 facts,
                 mode,
+                source_ref.source_ref_id,
             )
             for unit in file_result.units:
                 self._validate_unit_for_file(unit, file_input, mode)
@@ -86,44 +134,41 @@ class CodeAnalyzer:
                         f"duplicate ReviewUnit unit_id in AnalysisResult: {unit.unit_id!r}"
                     )
                 review_unit_ids.add(unit.unit_id)
-                unit_source = self._unit_source_with_imports(
-                    file_input.content, unit.full_text
+                unit_scope = project(parse_result.analysis, unit)
+                unit_fact_scopes.append(unit_scope)
+                unit_facts = unit_scope.unit_exact.to_code_facts(
+                    file_input.path,
+                    parser_layer=facts.parser_layer,
                 )
-                unit_facts = self.parser.parse(unit_source, file_input.path)
-                parser_layers.add(unit_facts.parser_layer)
-                for warning in unit_facts.warnings:
-                    scoped_warning = f"unit {unit.unit_id}: {warning}"
-                    warnings.append(f"{file_input.path}: {scoped_warning}")
-                self._propagate_unit_parser_quality(unit, unit_facts)
-                unit_tags = derive_tags(unit_facts)
-                all_tags.update(unit_tags)
+                unit_tags = self._derive_scoped_tags(
+                    unit_scope.unit_exact,
+                    unit_facts,
+                )
+                exact_tags.update(unit_tags)
                 retrieval_units.append(
                     RetrievalUnit(
                         unit_ref=unit.unit_ref,
                         code_features=CodeFeatures.from_facts(unit_facts, unit_tags),
                         intent_summary=self._intent_summary(unit_facts, unit_tags),
+                        unit_id=unit.unit_id,
+                        source_ref_id=source_ref.source_ref_id,
+                        unit_fact_scope=unit_scope,
+                        dimensions=trigger_dimensions(unit_tags),
+                        routing_tags=sorted(file_routing_tags),
                     )
                 )
 
-            file_results.append(
-                ReviewUnitFileResult(
-                    path=file_result.path,
-                    units=file_result.units,
-                    parser_quality=file_result.parser_quality,
-                    diagnostics=file_result.diagnostics,
-                    unassigned_hunk_lines=file_result.unassigned_hunk_lines,
-                )
-            )
+            file_results.append(file_result)
 
         review_unit_build_result = ReviewUnitBuildResult(
-            schema_version=REVIEW_UNIT_BUILD_SCHEMA_VERSION,
+            schema_version="review-unit-build-v2",
             mode=mode,
             file_results=file_results,
         )
         review_units = review_unit_build_result.flatten_units()
 
         mr_context = MrContext(
-            triggered_dimensions=trigger_dimensions(all_tags),
+            triggered_dimensions=trigger_dimensions(exact_tags | routing_tags),
             token_budget=token_budget or self.token_budget,
         )
         return AnalysisResult(
@@ -136,6 +181,8 @@ class CodeAnalyzer:
                 warnings=sorted(set(warnings)),
             ),
             review_unit_build_result=review_unit_build_result,
+            file_parse_results=file_parse_results,
+            unit_fact_scopes=unit_fact_scopes,
         )
 
     def analyze_file(
@@ -172,6 +219,16 @@ class CodeAnalyzer:
             pieces.append("tags: " + ", ".join(sorted(tags)[:5]))
         return "; ".join(pieces) if pieces else "ArkTS review unit"
 
+    def _derive_scoped_tags(
+        self,
+        scoped_facts: ScopedFacts,
+        code_facts: CodeFacts,
+    ) -> set[str]:
+        tags = derive_tags(code_facts)
+        if scoped_facts.resource_references:
+            tags.add("has_resource_ref")
+        return tags
+
     def _dominant_parser_layer(self, layers: set[str]) -> ParserLayer:
         unsupported = sorted(layers - {"L0", "L1", "parse_degraded"})
         if unsupported:
@@ -181,45 +238,6 @@ class CodeAnalyzer:
         if "L0" in layers or not layers:
             return "L0"
         return "L1"
-
-    def _propagate_unit_parser_quality(
-        self,
-        unit: ReviewUnit,
-        facts: CodeFacts,
-    ) -> None:
-        """Retain secondary-parser degradation until RU-3 removes that parse."""
-
-        quality_codes: set[str] = set()
-        if facts.parser_layer == "parse_degraded":
-            quality_codes.add("parser_degraded")
-        for warning in facts.warnings:
-            warning_code = warning.partition(":")[0]
-            if warning_code in {
-                "arkts_tree_sitter_error_nodes",
-                "tree_sitter_error_nodes",
-            }:
-                quality_codes.add("parser_error_nodes")
-            elif warning_code in {
-                "arkts_tree_sitter_missing_nodes",
-                "tree_sitter_missing_nodes",
-            }:
-                quality_codes.add("parser_missing_nodes")
-
-        if not quality_codes:
-            return
-
-        lines_by_code = {
-            diagnostic.code: set(diagnostic.lines)
-            for diagnostic in unit.diagnostics
-        }
-        for code in quality_codes:
-            lines_by_code.setdefault(code, set())
-        unit.diagnostics = [
-            ReviewUnitDiagnostic(code=code, lines=tuple(sorted(lines)))  # type: ignore[arg-type]
-            for code, lines in sorted(lines_by_code.items())
-        ]
-        unit.context_degraded = True
-        unit.validate()
 
     def _hunk(self, start: int, lines: int) -> FileHunk:
         return FileHunk(new_start=start, new_lines=lines)
@@ -244,6 +262,16 @@ class CodeAnalyzer:
                 raise ValueError(f"files[{index}].hunks must contain FileHunk values")
 
             normalized_path = normalize_review_path(file_input.path)
+            if file_input.source_ref is not None:
+                if not isinstance(file_input.source_ref, CodeSourceRef):
+                    raise ValueError(
+                        f"files[{index}].source_ref must use CodeSourceRef or None"
+                    )
+                if file_input.source_ref.path != normalized_path:
+                    raise ValueError(
+                        f"files[{index}].source_ref path must match FileInput.path"
+                    )
+                file_input.source_ref.verify_content(file_input.content)
             previous_path = paths.get(normalized_path)
             if previous_path is not None:
                 raise ValueError(
@@ -251,6 +279,31 @@ class CodeAnalyzer:
                     f"{normalized_path!r}: {previous_path!r} and {file_input.path!r}"
                 )
             paths[normalized_path] = file_input.path
+
+    def _validate_parse_result(
+        self,
+        result: FileParseResult,
+        source_ref: CodeSourceRef,
+    ) -> None:
+        if not isinstance(result, FileParseResult):
+            raise ValueError(
+                "FileAnalysisParser.parse_file must return FileParseResult"
+            )
+        if result.analysis.source_ref != source_ref:
+            raise ValueError(
+                "FileParseResult source_ref must match the requested source revision"
+            )
+        expected_hints = ScopedFacts.from_code_facts(result.compatibility_facts)
+        if result.analysis.file_hints != expected_hints:
+            raise ValueError(
+                "FileAnalysis.file_hints must match compatibility CodeFacts"
+            )
+        if result.analysis.parser_quality.warnings != tuple(
+            sorted(set(result.compatibility_facts.warnings))
+        ):
+            raise ValueError(
+                "FileAnalysis parser warnings must match compatibility CodeFacts"
+            )
 
     def _validate_unit_for_file(
         self,
@@ -292,6 +345,7 @@ class CodeAnalyzer:
         file_input: FileInput,
         facts: CodeFacts,
         mode: AnalysisMode,
+        source_ref_id: str,
     ) -> None:
         if not isinstance(result, ReviewUnitFileResult):
             raise ValueError(
@@ -299,6 +353,10 @@ class CodeAnalyzer:
             )
         if result.path != file_input.path:
             raise ValueError("ReviewUnitFileResult.path must match its FileInput.path")
+        if result.source_ref_id != source_ref_id:
+            raise ValueError(
+                "ReviewUnitFileResult.source_ref_id must match the parsed source"
+            )
         expected_quality = ParserQuality(
             parser_layer=facts.parser_layer,
             warnings=sorted(set(facts.warnings)),
@@ -338,13 +396,3 @@ class CodeAnalyzer:
                 "ReviewUnitFileResult must account for every diff hunk line as assigned "
                 "or unassigned"
             )
-
-    def _unit_source_with_imports(self, file_source: str, unit_text: str) -> str:
-        import_lines = [
-            line
-            for line in file_source.splitlines()
-            if line.lstrip().startswith("import ")
-        ]
-        if not import_lines:
-            return unit_text
-        return "\n".join(import_lines) + "\n\n" + unit_text

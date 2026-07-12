@@ -5,10 +5,15 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from arkts_code_reviewer.code_analysis.lexical import LexicalParser
-from arkts_code_reviewer.code_analysis.models import CodeFacts, Declaration, SourceSpan
+from arkts_code_reviewer.code_analysis.models import (
+    CodeFacts,
+    Declaration,
+    DeclarationKind,
+    SourceSpan,
+)
 from arkts_code_reviewer.code_analysis.text_utils import extract_lines
 
 ATTACHED_DECORATOR_LINE = re.compile(
@@ -31,7 +36,10 @@ class ArktsTreeSitterParser:
         timeout_seconds: float | None = None,
     ) -> None:
         self.fallback = fallback or LexicalParser()
-        self.node_executable = node_executable or os.getenv("ARKTS_PARSER_NODE", "node")
+        self.node_executable = cast(
+            str,
+            node_executable or os.getenv("ARKTS_PARSER_NODE", "node"),
+        )
         self.timeout_seconds = timeout_seconds or float(os.getenv("ARKTS_PARSER_TIMEOUT", "20"))
         self.sidecar_path = sidecar_path or self._default_sidecar_path()
 
@@ -63,9 +71,22 @@ class ArktsTreeSitterParser:
             facts.warnings.append(f"arkts_tree_sitter_missing_nodes: {missing_nodes}")
         return facts
 
-    def _run_sidecar(self, source: str, path: str) -> dict[str, Any]:
+    def _run_sidecar(
+        self,
+        source: str,
+        path: str,
+        output_schema: str | None = None,
+    ) -> dict[str, Any]:
+        command: list[str] = [
+            self.node_executable,
+            str(self.sidecar_path),
+            "--path",
+            path,
+        ]
+        if output_schema is not None:
+            command.extend(["--output-schema", output_schema])
         completed = subprocess.run(
-            [self.node_executable, str(self.sidecar_path), "--path", path],
+            command,
             input=source.encode("utf-8"),
             capture_output=True,
             timeout=self.timeout_seconds,
@@ -119,7 +140,11 @@ class ArktsTreeSitterParser:
             kind = item.get("kind")
             name = item.get("name")
             qualified_name = item.get("qualified_name")
-            if not all(isinstance(part, str) for part in (kind, name, qualified_name)):
+            if not isinstance(kind, str):
+                continue
+            if not isinstance(name, str):
+                continue
+            if not isinstance(qualified_name, str):
                 continue
             valid_kinds = {
                 "struct",
@@ -145,7 +170,7 @@ class ArktsTreeSitterParser:
             parent_name = item.get("parent_name")
             declarations.append(
                 Declaration(
-                    kind=kind,  # type: ignore[arg-type]
+                    kind=cast(DeclarationKind, kind),
                     name=name,
                     qualified_name=qualified_name,
                     span=span,

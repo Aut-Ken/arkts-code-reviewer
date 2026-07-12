@@ -8,7 +8,7 @@ from arkts_code_reviewer.code_analysis.analyzer import CodeAnalyzer
 from arkts_code_reviewer.code_analysis.models import CodeFacts, ReviewUnit
 from arkts_code_reviewer.code_analysis.parser_factory import (
     ParserChoice,
-    create_code_parser,
+    create_file_analysis_parser,
     parser_display_name,
 )
 from arkts_code_reviewer.parser_validation.manifest import SampleEntry
@@ -39,10 +39,12 @@ def build_validation_request(
 ) -> ValidationRequest:
     source_path = engine_root / Path(sample.path)
     source = source_path.read_text(encoding="utf-8")
-    parser = create_code_parser(parser_name)
-    facts = parser.parse(source, sample.path)
-    analyzer = CodeAnalyzer(parser=parser)
+    file_parser = create_file_analysis_parser(parser_name)
+    analyzer = CodeAnalyzer(file_parser=file_parser)
     analysis = analyzer.analyze_file(path=sample.path, content=source, mode="full")
+    if len(analysis.file_parse_results) != 1:
+        raise ValueError("single-file validation must retain one FileParseResult")
+    facts = analysis.file_parse_results[0].compatibility_facts
     excerpt = numbered_excerpt(source, max_lines=max_source_lines)
 
     return ValidationRequest(

@@ -89,6 +89,8 @@ class ReviewUnitBuilder:
         facts: CodeFacts,
         mode: AnalysisMode,
         hunks: list[FileHunk],
+        *,
+        source_ref_id: str | None = None,
     ) -> ReviewUnitFileResult:
         """Build one fail-closed file result while preserving the list API."""
 
@@ -117,6 +119,19 @@ class ReviewUnitBuilder:
                 )
                 unit.validate()
 
+        if source_ref_id is not None:
+            from arkts_code_reviewer.code_analysis.file_analysis_models import OwnerRef
+
+            for unit in units:
+                unit.source_ref_id = source_ref_id
+                declaration = self._declaration_for_unit(facts.declarations, unit)
+                if declaration is not None and declaration.declaration_id is not None:
+                    unit.owner_ref = OwnerRef(
+                        kind="declaration",
+                        ref_id=declaration.declaration_id,
+                    )
+                unit.validate()
+
         hunk_lines = (
             {
                 line
@@ -140,6 +155,7 @@ class ReviewUnitBuilder:
             ),
             diagnostics=self._merge_diagnostics([], diagnostics),
             unassigned_hunk_lines=sorted(hunk_lines - assigned_lines),
+            source_ref_id=source_ref_id,
         )
 
     def build_full_units(self, path: str, source: str, facts: CodeFacts) -> list[ReviewUnit]:
@@ -169,6 +185,7 @@ class ReviewUnitBuilder:
         units = []
         for declaration in structs:
             source_span = self._review_span(declaration)
+            identity_offsets = self._identity_offsets(facts.declarations, declaration)
             units.append(
                 ReviewUnit(
                     file=path,
@@ -187,6 +204,8 @@ class ReviewUnitBuilder:
                         declaration.qualified_name,
                         source_span.start_line,
                         source_span.end_line,
+                        start_offset_utf16=identity_offsets[0],
+                        end_offset_utf16=identity_offsets[1],
                     ),
                     unit_kind=declaration.kind,
                     source_span=source_span,
@@ -194,6 +213,8 @@ class ReviewUnitBuilder:
                     changed_new_lines=[],
                     selection_reason="full_top_level_declaration",
                     diagnostics=[],
+                    identity_start_offset_utf16=identity_offsets[0],
+                    identity_end_offset_utf16=identity_offsets[1],
                 )
             )
         return self._deduplicate_units(units)
@@ -248,6 +269,7 @@ class ReviewUnitBuilder:
         for declaration, selection_reason, assigned_lines in assignments:
             source_span = self._review_span(declaration)
             file_changed = list(assigned_lines)
+            identity_offsets = self._identity_offsets(facts.declarations, declaration)
             units.append(
                 ReviewUnit(
                     file=path,
@@ -271,6 +293,8 @@ class ReviewUnitBuilder:
                         declaration.qualified_name,
                         source_span.start_line,
                         source_span.end_line,
+                        start_offset_utf16=identity_offsets[0],
+                        end_offset_utf16=identity_offsets[1],
                     ),
                     unit_kind=declaration.kind,
                     source_span=source_span,
@@ -278,6 +302,8 @@ class ReviewUnitBuilder:
                     changed_new_lines=file_changed,
                     selection_reason=selection_reason,
                     diagnostics=[],
+                    identity_start_offset_utf16=identity_offsets[0],
+                    identity_end_offset_utf16=identity_offsets[1],
                 )
             )
         return units
@@ -321,7 +347,10 @@ class ReviewUnitBuilder:
         if not covering:
             return []
 
-        reason_by_identity: dict[tuple[str, str, int, int], SelectionReason] = {}
+        reason_by_identity: dict[
+            tuple[str, str, int, int, int | None, int | None],
+            SelectionReason,
+        ] = {}
         precise_candidates = [
             item for item in covering if item.kind in {"method", "function", "builder"}
         ]
@@ -378,7 +407,10 @@ class ReviewUnitBuilder:
 
         hosts = [item for item in covering if item.kind in {"struct", "class"}]
         if hosts:
-            host_reasons = {
+            host_reasons: dict[
+                tuple[str, str, int, int, int | None, int | None],
+                SelectionReason,
+            ] = {
                 self._declaration_identity(item): "innermost_changed_declaration"
                 for item in hosts
             }
@@ -387,7 +419,10 @@ class ReviewUnitBuilder:
                 hunk,
                 host_reasons,
             )
-        remaining_reasons = {
+        remaining_reasons: dict[
+            tuple[str, str, int, int, int | None, int | None],
+            SelectionReason,
+        ] = {
             self._declaration_identity(item): "innermost_changed_declaration"
             for item in covering
         }
@@ -401,15 +436,22 @@ class ReviewUnitBuilder:
         self,
         declarations: list[Declaration],
         hunk: FileHunk,
-        reason_by_identity: dict[tuple[str, str, int, int], SelectionReason],
+        reason_by_identity: dict[
+            tuple[str, str, int, int, int | None, int | None],
+            SelectionReason,
+        ],
     ) -> list[tuple[Declaration, SelectionReason, tuple[int, ...]]]:
-        unique: dict[tuple[str, str, int, int], Declaration] = {}
+        unique: dict[
+            tuple[str, str, int, int, int | None, int | None],
+            Declaration,
+        ] = {}
         for declaration in declarations:
             key = self._declaration_identity(declaration)
             unique.setdefault(key, declaration)
         candidates = list(unique.values())
         selected: dict[
-            tuple[str, str, int, int], tuple[Declaration, set[int]]
+            tuple[str, str, int, int, int | None, int | None],
+            tuple[Declaration, set[int]],
         ] = {}
         for line in range(hunk.new_start, hunk.new_end + 1):
             line_candidates = [
@@ -446,13 +488,65 @@ class ReviewUnitBuilder:
     def _declaration_identity(
         self,
         declaration: Declaration,
-    ) -> tuple[str, str, int, int]:
+    ) -> tuple[str, str, int, int, int | None, int | None]:
+        return (
+            declaration.kind,
+            declaration.qualified_name,
+            declaration.span.start_line,
+            declaration.span.end_line,
+            declaration.start_offset_utf16,
+            declaration.end_offset_utf16,
+        )
+
+    def _line_identity(self, declaration: Declaration) -> tuple[str, str, int, int]:
         return (
             declaration.kind,
             declaration.qualified_name,
             declaration.span.start_line,
             declaration.span.end_line,
         )
+
+    def _identity_offsets(
+        self,
+        declarations: list[Declaration],
+        declaration: Declaration,
+    ) -> tuple[int | None, int | None]:
+        collisions = [
+            item
+            for item in declarations
+            if self._line_identity(item) == self._line_identity(declaration)
+        ]
+        if len(collisions) < 2:
+            return None, None
+        if (
+            declaration.start_offset_utf16 is None
+            or declaration.end_offset_utf16 is None
+        ):
+            return None, None
+        return declaration.start_offset_utf16, declaration.end_offset_utf16
+
+    def _declaration_for_unit(
+        self,
+        declarations: list[Declaration],
+        unit: ReviewUnit,
+    ) -> Declaration | None:
+        candidates = [
+            declaration
+            for declaration in declarations
+            if declaration.kind == unit.unit_kind
+            and declaration.qualified_name == unit.unit_symbol
+            and declaration.span.start_line == unit.source_span.start_line
+            and declaration.span.end_line == unit.source_span.end_line
+        ]
+        if unit.identity_start_offset_utf16 is not None:
+            candidates = [
+                declaration
+                for declaration in candidates
+                if declaration.start_offset_utf16
+                == unit.identity_start_offset_utf16
+                and declaration.end_offset_utf16 == unit.identity_end_offset_utf16
+            ]
+        return candidates[0] if len(candidates) == 1 else None
 
     def _strictly_contains(
         self,
@@ -473,6 +567,16 @@ class ReviewUnitBuilder:
             declaration.span.end_line,
             declaration.kind,
             declaration.qualified_name,
+            (
+                -1
+                if declaration.start_offset_utf16 is None
+                else declaration.start_offset_utf16
+            ),
+            (
+                -1
+                if declaration.end_offset_utf16 is None
+                else declaration.end_offset_utf16
+            ),
         )
 
     def _overlaps(self, declaration: Declaration, hunk: FileHunk) -> bool:
@@ -566,6 +670,19 @@ class ReviewUnitBuilder:
                 raise ValueError("Declaration.parent_name must be a string or None")
             if not isinstance(declaration.text, str):
                 raise ValueError("Declaration.text must be a string")
+            if (declaration.start_offset_utf16 is None) != (
+                declaration.end_offset_utf16 is None
+            ):
+                raise ValueError("Declaration exact offsets must be provided together")
+            if declaration.start_offset_utf16 is not None and (
+                not isinstance(declaration.start_offset_utf16, int)
+                or isinstance(declaration.start_offset_utf16, bool)
+                or declaration.start_offset_utf16 < 0
+                or not isinstance(declaration.end_offset_utf16, int)
+                or isinstance(declaration.end_offset_utf16, bool)
+                or declaration.end_offset_utf16 <= declaration.start_offset_utf16
+            ):
+                raise ValueError("Declaration exact offsets must be a valid UTF-16 range")
             span = declaration.span
             if (
                 not isinstance(span, SourceSpan)
@@ -717,6 +834,10 @@ class ReviewUnitBuilder:
             "full_text",
             "host_summary",
             "context_degraded",
+            "source_ref_id",
+            "owner_ref",
+            "identity_start_offset_utf16",
+            "identity_end_offset_utf16",
         )
         if any(
             getattr(existing, field) != getattr(incoming, field)

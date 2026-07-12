@@ -1,0 +1,3567 @@
+{
+  "schema_version": "file-analysis-golden-v1",
+  "suite_id": "file-analysis-golden-v1",
+  "cases": [
+    {
+      "case_id": "FA001-api-alias-owner",
+      "description": "SDK import alias call is canonicalized and owned by its function.",
+      "source": {
+        "file": "sources/fa001_api_alias.ets",
+        "logical_path": "golden/file_analysis/fa001_api_alias.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "d7ed23c1d213684b9ee36b70a2dde01204368a4b45e9fc2674cec99315b915e3"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [
+            "router.pushUrl"
+          ],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "openPage"
+          ],
+          "syntax": [],
+          "import_bindings": [
+            "router"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "open",
+            "function",
+            "openPage",
+            "openPage",
+            3,
+            5,
+            35,
+            98,
+            null,
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            1,
+            0,
+            33,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "router",
+            "@ohos.router#default",
+            1,
+            1,
+            7,
+            13,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@ohos.router'",
+            null,
+            1,
+            1,
+            19,
+            33,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "openPage",
+            "openPage",
+            3,
+            3,
+            44,
+            52,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            4,
+            4,
+            59,
+            65,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "router.pushUrl",
+            "router.pushUrl",
+            4,
+            4,
+            59,
+            73,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'pages/Next'",
+            null,
+            4,
+            4,
+            81,
+            93,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA002-nested-components",
+      "description": "Nested ArkUI component occurrences retain declaration owners.",
+      "source": {
+        "file": "sources/fa002_components.ets",
+        "logical_path": "golden/file_analysis/fa002_components.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "2320668583da5e958451da2a2676297bba514063029852d8ea08724b419131a3"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Column",
+            "Text"
+          ],
+          "apis": [],
+          "decorators": [
+            "@Component"
+          ],
+          "attributes": [],
+          "symbols": [
+            "Card",
+            "Card.build",
+            "Card.build.Column",
+            "Card.build.Column.Text",
+            "Column",
+            "Text",
+            "build"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "Card",
+            "Card",
+            1,
+            8,
+            0,
+            83,
+            null,
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "Card.build",
+            3,
+            7,
+            27,
+            81,
+            "host",
+            "exact"
+          ],
+          [
+            "column",
+            "ui_block",
+            "Column",
+            "Card.build.Column",
+            4,
+            6,
+            41,
+            77,
+            "build",
+            "exact"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "Card.build.Column.Text",
+            5,
+            5,
+            58,
+            71,
+            "column",
+            "exact"
+          ]
+        ],
+        "review_regions": [],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Card",
+            "Card",
+            2,
+            2,
+            18,
+            22,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "Card.build",
+            3,
+            3,
+            27,
+            32,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Column",
+            "Column",
+            4,
+            4,
+            41,
+            47,
+            [
+              "declaration",
+              "column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Column",
+            "Card.build.Column",
+            4,
+            4,
+            41,
+            47,
+            [
+              "declaration",
+              "column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            5,
+            5,
+            58,
+            62,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "Card.build.Column.Text",
+            5,
+            5,
+            58,
+            62,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'hello'",
+            null,
+            5,
+            5,
+            63,
+            70,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA003-attached-decorators",
+      "description": "Host, field, and builder decorators attach to distinct owners.",
+      "source": {
+        "file": "sources/fa003_decorators.ets",
+        "logical_path": "golden/file_analysis/fa003_decorators.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "3650f2d8168ed7dc9de47b1cdbb54a90b5bd3e488f8eb52d51260b5f17fafce9"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Text"
+          ],
+          "apis": [],
+          "decorators": [
+            "@Builder",
+            "@Component",
+            "@State"
+          ],
+          "attributes": [],
+          "symbols": [
+            "Decorated",
+            "Decorated.build",
+            "Decorated.content",
+            "Decorated.content.Text",
+            "Text",
+            "build",
+            "content"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "Decorated",
+            "Decorated",
+            1,
+            13,
+            0,
+            142,
+            null,
+            "exact"
+          ],
+          [
+            "content_builder",
+            "builder",
+            "content",
+            "Decorated.content",
+            5,
+            8,
+            60,
+            104,
+            "host",
+            "exact"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "Decorated.content.Text",
+            7,
+            7,
+            87,
+            100,
+            "content_builder",
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "Decorated.build",
+            10,
+            12,
+            108,
+            140,
+            "host",
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "count",
+            "field_region",
+            "Decorated.count",
+            3,
+            3,
+            32,
+            56,
+            "host",
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Decorated",
+            "Decorated",
+            2,
+            2,
+            18,
+            27,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "decorator",
+            "@State",
+            "@State",
+            3,
+            3,
+            32,
+            38,
+            [
+              "region",
+              "count"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "decorator",
+            "@Builder",
+            "@Builder",
+            5,
+            5,
+            60,
+            68,
+            [
+              "declaration",
+              "content_builder"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "content",
+            "Decorated.content",
+            6,
+            6,
+            71,
+            78,
+            [
+              "declaration",
+              "content_builder"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            7,
+            7,
+            87,
+            91,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "Decorated.content.Text",
+            7,
+            7,
+            87,
+            91,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'value'",
+            null,
+            7,
+            7,
+            92,
+            99,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "Decorated.build",
+            10,
+            10,
+            108,
+            113,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "this.content",
+            "this.content",
+            11,
+            11,
+            122,
+            134,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA004-syntax-occurrences",
+      "description": "Async, Promise, await, try/catch, and arrow syntax retain exact offsets.",
+      "source": {
+        "file": "sources/fa004_syntax.ets",
+        "logical_path": "golden/file_analysis/fa004_syntax.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "28ddc122b41159849d886cc4540e1b127ab01ba756b6c86e3d5f69b8b12c6be8"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "work"
+          ],
+          "syntax": [
+            "arrow_fn",
+            "async_fn",
+            "await_expr",
+            "promise",
+            "try_catch"
+          ],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "work",
+            "function",
+            "work",
+            "work",
+            1,
+            7,
+            0,
+            128,
+            null,
+            "exact"
+          ]
+        ],
+        "review_regions": [],
+        "fact_occurrences": [
+          [
+            "syntax",
+            "async",
+            "async_fn",
+            1,
+            1,
+            0,
+            5,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "work",
+            "work",
+            1,
+            1,
+            15,
+            19,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "Promise",
+            "promise",
+            1,
+            1,
+            23,
+            30,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "await",
+            "await_expr",
+            2,
+            2,
+            41,
+            46,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "Promise",
+            "promise",
+            2,
+            2,
+            47,
+            54,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "Promise.resolve",
+            "Promise.resolve",
+            2,
+            2,
+            47,
+            62,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "try",
+            "try_catch",
+            3,
+            3,
+            67,
+            70,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "[1].map",
+            "[1].map",
+            4,
+            4,
+            77,
+            84,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "=>",
+            "arrow_fn",
+            4,
+            4,
+            93,
+            95,
+            [
+              "declaration",
+              "work"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA005-same-line-identity",
+      "description": "Same-name UI occurrences on one line remain unique by UTF-16 offsets.",
+      "source": {
+        "file": "sources/fa005_same_line.ets",
+        "logical_path": "golden/file_analysis/fa005_same_line.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "9864f9a73a80debba283f766d161bd57d2d758186706a647b5ca300c77308acb"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Column",
+            "Text"
+          ],
+          "apis": [],
+          "decorators": [
+            "@Component"
+          ],
+          "attributes": [],
+          "symbols": [
+            "Column",
+            "SameLine",
+            "SameLine.build",
+            "SameLine.build.Column",
+            "SameLine.build.Column.Text",
+            "Text",
+            "build"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "SameLine",
+            "SameLine",
+            1,
+            4,
+            0,
+            90,
+            null,
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "SameLine.build",
+            3,
+            3,
+            31,
+            88,
+            "host",
+            "exact"
+          ],
+          [
+            "first_column",
+            "ui_block",
+            "Column",
+            "SameLine.build.Column",
+            3,
+            3,
+            41,
+            63,
+            "build",
+            "exact"
+          ],
+          [
+            "first_text",
+            "ui_block",
+            "Text",
+            "SameLine.build.Column.Text",
+            3,
+            3,
+            52,
+            61,
+            "first_column",
+            "exact"
+          ],
+          [
+            "second_column",
+            "ui_block",
+            "Column",
+            "SameLine.build.Column",
+            3,
+            3,
+            64,
+            86,
+            "build",
+            "exact"
+          ],
+          [
+            "second_text",
+            "ui_block",
+            "Text",
+            "SameLine.build.Column.Text",
+            3,
+            3,
+            75,
+            84,
+            "second_column",
+            "exact"
+          ]
+        ],
+        "review_regions": [],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "SameLine",
+            "SameLine",
+            2,
+            2,
+            18,
+            26,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "SameLine.build",
+            3,
+            3,
+            31,
+            36,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Column",
+            "Column",
+            3,
+            3,
+            41,
+            47,
+            [
+              "declaration",
+              "first_column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Column",
+            "SameLine.build.Column",
+            3,
+            3,
+            41,
+            47,
+            [
+              "declaration",
+              "first_column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            3,
+            3,
+            52,
+            56,
+            [
+              "declaration",
+              "first_text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "SameLine.build.Column.Text",
+            3,
+            3,
+            52,
+            56,
+            [
+              "declaration",
+              "first_text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'a'",
+            null,
+            3,
+            3,
+            57,
+            60,
+            [
+              "declaration",
+              "first_text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Column",
+            "Column",
+            3,
+            3,
+            64,
+            70,
+            [
+              "declaration",
+              "second_column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Column",
+            "SameLine.build.Column",
+            3,
+            3,
+            64,
+            70,
+            [
+              "declaration",
+              "second_column"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            3,
+            3,
+            75,
+            79,
+            [
+              "declaration",
+              "second_text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "SameLine.build.Column.Text",
+            3,
+            3,
+            75,
+            79,
+            [
+              "declaration",
+              "second_text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'b'",
+            null,
+            3,
+            3,
+            80,
+            83,
+            [
+              "declaration",
+              "second_text"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA006-multiline-import",
+      "description": "A multiline import is one region with exact binding occurrences.",
+      "source": {
+        "file": "sources/fa006_multiline_import.ets",
+        "logical_path": "golden/file_analysis/fa006_multiline_import.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "844a0e8f4981edeb0412eebf215dd75429cba6dccbcec1a6e363ceaf64b78bd2"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [
+            "router.pushUrl"
+          ],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "openPage"
+          ],
+          "syntax": [],
+          "import_bindings": [
+            "PromptAction",
+            "nav"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "open",
+            "function",
+            "openPage",
+            "openPage",
+            6,
+            8,
+            62,
+            122,
+            null,
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            4,
+            0,
+            60,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "nav",
+            "@kit.ArkUI#router",
+            2,
+            2,
+            21,
+            24,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_binding",
+            "PromptAction",
+            "@kit.ArkUI#PromptAction",
+            3,
+            3,
+            28,
+            40,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@kit.ArkUI'",
+            null,
+            4,
+            4,
+            48,
+            60,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "openPage",
+            "openPage",
+            6,
+            6,
+            71,
+            79,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "nav",
+            "@kit.ArkUI#router",
+            7,
+            7,
+            86,
+            89,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "nav.pushUrl",
+            "router.pushUrl",
+            7,
+            7,
+            86,
+            97,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'pages/Next'",
+            null,
+            7,
+            7,
+            105,
+            117,
+            [
+              "declaration",
+              "open"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA007-api-shadow",
+      "description": "A parameter shadowing an SDK import prevents a false exact API occurrence.",
+      "source": {
+        "file": "sources/fa007_api_shadow.ets",
+        "logical_path": "golden/file_analysis/fa007_api_shadow.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "43711273464803dcd6f2305c56ee532d4ed3eea36e313ea7a95e20356beb09a9"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [
+            "router.back",
+            "router.pushUrl"
+          ],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "arrowShadow",
+            "catchShadow",
+            "destructure",
+            "navigate"
+          ],
+          "syntax": [
+            "arrow_fn",
+            "try_catch"
+          ],
+          "import_bindings": [
+            "router"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "navigate",
+            "function",
+            "navigate",
+            "navigate",
+            3,
+            5,
+            35,
+            74,
+            null,
+            "exact"
+          ],
+          [
+            "destructure",
+            "function",
+            "destructure",
+            "destructure",
+            7,
+            9,
+            76,
+            168,
+            null,
+            "exact"
+          ],
+          [
+            "catch_shadow",
+            "function",
+            "catchShadow",
+            "catchShadow",
+            11,
+            17,
+            170,
+            297,
+            null,
+            "exact"
+          ],
+          [
+            "arrow_shadow",
+            "function",
+            "arrowShadow",
+            "arrowShadow",
+            19,
+            22,
+            299,
+            409,
+            null,
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            1,
+            0,
+            33,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "router",
+            "@ohos.router#default",
+            1,
+            1,
+            7,
+            13,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@ohos.router'",
+            null,
+            1,
+            1,
+            19,
+            33,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "navigate",
+            "navigate",
+            3,
+            3,
+            44,
+            52,
+            [
+              "declaration",
+              "navigate"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            4,
+            4,
+            59,
+            65,
+            [
+              "declaration",
+              "navigate"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "router.back",
+            "router.back",
+            4,
+            4,
+            59,
+            70,
+            [
+              "declaration",
+              "navigate"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "destructure",
+            "destructure",
+            7,
+            7,
+            85,
+            96,
+            [
+              "declaration",
+              "destructure"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "router.pushUrl",
+            "router.pushUrl",
+            8,
+            8,
+            133,
+            147,
+            [
+              "declaration",
+              "destructure"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'shadow'",
+            null,
+            8,
+            8,
+            155,
+            163,
+            [
+              "declaration",
+              "destructure"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "catchShadow",
+            "catchShadow",
+            11,
+            11,
+            179,
+            190,
+            [
+              "declaration",
+              "catch_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "try",
+            "try_catch",
+            12,
+            12,
+            197,
+            200,
+            [
+              "declaration",
+              "catch_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'failed'",
+            null,
+            13,
+            13,
+            223,
+            231,
+            [
+              "declaration",
+              "catch_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "router.pushUrl",
+            "router.pushUrl",
+            15,
+            15,
+            258,
+            272,
+            [
+              "declaration",
+              "catch_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'shadow'",
+            null,
+            15,
+            15,
+            280,
+            288,
+            [
+              "declaration",
+              "catch_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "arrowShadow",
+            "arrowShadow",
+            19,
+            19,
+            308,
+            319,
+            [
+              "declaration",
+              "arrow_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "=>",
+            "arrow_fn",
+            20,
+            20,
+            358,
+            360,
+            [
+              "declaration",
+              "arrow_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "router.pushUrl",
+            "router.pushUrl",
+            20,
+            20,
+            361,
+            375,
+            [
+              "declaration",
+              "arrow_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'shadow'",
+            null,
+            20,
+            20,
+            383,
+            391,
+            [
+              "declaration",
+              "arrow_shadow"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "invoke",
+            "invoke",
+            21,
+            21,
+            397,
+            403,
+            [
+              "declaration",
+              "arrow_shadow"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA008-field-read-write",
+      "description": "Field reads and writes are distinguished and owned by the containing method/UI node.",
+      "source": {
+        "file": "sources/fa008_field_access.ets",
+        "logical_path": "golden/file_analysis/fa008_field_access.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "c701338d378d213c0c35ff157ca9665ff677063c1b8b9ebac6d7f00d96493e28"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Text"
+          ],
+          "apis": [],
+          "decorators": [
+            "@Component"
+          ],
+          "attributes": [],
+          "symbols": [
+            "Counter",
+            "Counter.build",
+            "Counter.build.Text",
+            "Counter.update",
+            "Text",
+            "build",
+            "update"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "Counter",
+            "Counter",
+            1,
+            13,
+            0,
+            162,
+            null,
+            "exact"
+          ],
+          [
+            "update",
+            "method",
+            "update",
+            "Counter.update",
+            5,
+            8,
+            51,
+            117,
+            "host",
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "Counter.build",
+            10,
+            12,
+            121,
+            160,
+            "host",
+            "exact"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "Counter.build.Text",
+            11,
+            11,
+            135,
+            156,
+            "build",
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "count",
+            "field_region",
+            "Counter.count",
+            3,
+            3,
+            30,
+            47,
+            "host",
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Counter",
+            "Counter",
+            2,
+            2,
+            18,
+            25,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "update",
+            "Counter.update",
+            5,
+            5,
+            51,
+            57,
+            [
+              "declaration",
+              "update"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_read",
+            "count",
+            "Counter.count",
+            6,
+            6,
+            71,
+            76,
+            [
+              "declaration",
+              "update"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_write",
+            "count",
+            "Counter.count",
+            6,
+            6,
+            71,
+            76,
+            [
+              "declaration",
+              "update"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_write",
+            "count",
+            "Counter.count",
+            7,
+            7,
+            91,
+            96,
+            [
+              "declaration",
+              "update"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_read",
+            "count",
+            "Counter.count",
+            7,
+            7,
+            104,
+            109,
+            [
+              "declaration",
+              "update"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "Counter.build",
+            10,
+            10,
+            121,
+            126,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            11,
+            11,
+            135,
+            139,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "Counter.build.Text",
+            11,
+            11,
+            135,
+            139,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "`${this.count}`",
+            null,
+            11,
+            11,
+            140,
+            155,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_read",
+            "count",
+            "Counter.count",
+            11,
+            11,
+            148,
+            153,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA009-field-initializer-owner",
+      "description": "A resource API in a field initializer is owned by the field region.",
+      "source": {
+        "file": "sources/fa009_field_initializer.ets",
+        "logical_path": "golden/file_analysis/fa009_field_initializer.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "b4361581534091b7dd9e20170042b9f2186bc10e04ae03d0e39dfcb1a7308f98"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Text"
+          ],
+          "apis": [
+            "$r"
+          ],
+          "decorators": [
+            "@Component",
+            "@State"
+          ],
+          "attributes": [],
+          "symbols": [
+            "Text",
+            "Title",
+            "Title.build",
+            "Title.build.Text",
+            "build"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "Title",
+            "Title",
+            1,
+            8,
+            0,
+            118,
+            null,
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "Title.build",
+            5,
+            7,
+            82,
+            116,
+            "host",
+            "exact"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "Title.build.Text",
+            6,
+            6,
+            96,
+            112,
+            "build",
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "title",
+            "field_region",
+            "Title.title",
+            3,
+            3,
+            28,
+            78,
+            "host",
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Title",
+            "Title",
+            2,
+            2,
+            18,
+            23,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "decorator",
+            "@State",
+            "@State",
+            3,
+            3,
+            28,
+            34,
+            [
+              "region",
+              "title"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "$r",
+            "$r",
+            3,
+            3,
+            56,
+            58,
+            [
+              "region",
+              "title"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "resource_reference",
+            "$r",
+            "app.string.title",
+            3,
+            3,
+            56,
+            78,
+            [
+              "region",
+              "title"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'app.string.title'",
+            null,
+            3,
+            3,
+            59,
+            77,
+            [
+              "region",
+              "title"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "Title.build",
+            5,
+            5,
+            82,
+            87,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            6,
+            6,
+            96,
+            100,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "Title.build.Text",
+            6,
+            6,
+            96,
+            100,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_read",
+            "title",
+            "Title.title",
+            6,
+            6,
+            106,
+            111,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA010-modifier-continuation",
+      "description": "Multiline modifier occurrences stay attached to the leaf Text UI owner.",
+      "source": {
+        "file": "sources/fa010_modifier_continuation.ets",
+        "logical_path": "golden/file_analysis/fa010_modifier_continuation.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "0af6e7fd7a484433d18c742e4476c9123da255e0a588fac663f1bc932161651b"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [
+            "Text"
+          ],
+          "apis": [],
+          "decorators": [
+            "@Component"
+          ],
+          "attributes": [
+            "fontSize",
+            "onClick"
+          ],
+          "symbols": [
+            "Styled",
+            "Styled.build",
+            "Styled.build.Text",
+            "Styled.tap",
+            "Text",
+            "build",
+            "tap"
+          ],
+          "syntax": [
+            "arrow_fn"
+          ],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "Styled",
+            "Styled",
+            1,
+            11,
+            0,
+            130,
+            null,
+            "exact"
+          ],
+          [
+            "build",
+            "build_method",
+            "build",
+            "Styled.build",
+            3,
+            7,
+            29,
+            113,
+            "host",
+            "exact"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "Styled.build.Text",
+            4,
+            6,
+            43,
+            109,
+            "build",
+            "exact"
+          ],
+          [
+            "tap",
+            "method",
+            "tap",
+            "Styled.tap",
+            9,
+            10,
+            117,
+            128,
+            "host",
+            "exact"
+          ]
+        ],
+        "review_regions": [],
+        "fact_occurrences": [
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            1,
+            1,
+            0,
+            10,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Styled",
+            "Styled",
+            2,
+            2,
+            18,
+            24,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "build",
+            "Styled.build",
+            3,
+            3,
+            29,
+            34,
+            [
+              "declaration",
+              "build"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            4,
+            4,
+            43,
+            47,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "Styled.build.Text",
+            4,
+            4,
+            43,
+            47,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'hello'",
+            null,
+            4,
+            4,
+            48,
+            55,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "attribute",
+            "fontSize",
+            "fontSize",
+            5,
+            5,
+            64,
+            72,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "attribute",
+            "onClick",
+            "onClick",
+            6,
+            6,
+            84,
+            91,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "syntax",
+            "=>",
+            "arrow_fn",
+            6,
+            6,
+            95,
+            97,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "this.tap",
+            "this.tap",
+            6,
+            6,
+            98,
+            106,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "tap",
+            "Styled.tap",
+            9,
+            9,
+            117,
+            120,
+            [
+              "declaration",
+              "tap"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA011-method-sibling-decorator",
+      "description": "A sibling @Styles decorator belongs to the following method only.",
+      "source": {
+        "file": "sources/fa011_sibling_decorator.ets",
+        "logical_path": "golden/file_analysis/fa011_sibling_decorator.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "f14594b94aee3118d20586e8d467af4151b04fa596b5ff3031401831075913e4"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [],
+          "decorators": [
+            "@Styles"
+          ],
+          "attributes": [],
+          "symbols": [
+            "StylesPage",
+            "StylesPage.first",
+            "StylesPage.second",
+            "first",
+            "second"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "host",
+            "struct",
+            "StylesPage",
+            "StylesPage",
+            1,
+            10,
+            0,
+            117,
+            null,
+            "exact"
+          ],
+          [
+            "first",
+            "method",
+            "first",
+            "StylesPage.first",
+            2,
+            3,
+            22,
+            35,
+            "host",
+            "exact"
+          ],
+          [
+            "second",
+            "method",
+            "second",
+            "StylesPage.second",
+            6,
+            9,
+            59,
+            115,
+            "host",
+            "exact"
+          ]
+        ],
+        "review_regions": [],
+        "fact_occurrences": [
+          [
+            "symbol",
+            "StylesPage",
+            "StylesPage",
+            1,
+            1,
+            7,
+            17,
+            [
+              "declaration",
+              "host"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "first",
+            "StylesPage.first",
+            2,
+            2,
+            22,
+            27,
+            [
+              "declaration",
+              "first"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "decorator",
+            "@Styles",
+            "@Styles",
+            6,
+            6,
+            59,
+            66,
+            [
+              "declaration",
+              "second"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "second",
+            "StylesPage.second",
+            8,
+            8,
+            101,
+            107,
+            [
+              "declaration",
+              "second"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA012-comments-and-local-recovery",
+      "description": "Comments/strings do not create APIs while ERROR and missing recovery stay local.",
+      "source": {
+        "file": "sources/fa012_comments_errors.ets",
+        "logical_path": "golden/file_analysis/fa012_comments_errors.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "c637f06cd5040f1d098ba65e3e06dff841bb3fbc6c185a5d5fac3b1c74551f2b"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 1,
+          "missing_nodes": 1,
+          "warnings": [
+            "arkts_tree_sitter_error_nodes: 1",
+            "arkts_tree_sitter_missing_nodes: 1"
+          ]
+        },
+        "file_hints": {
+          "components": [
+            "Text"
+          ],
+          "apis": [
+            "router.back",
+            "router.pushUrl"
+          ],
+          "decorators": [
+            "@Component"
+          ],
+          "attributes": [],
+          "symbols": [
+            "MissingEnd",
+            "MissingEnd.build",
+            "MissingEnd.build.Text",
+            "Text",
+            "broken",
+            "build",
+            "safe"
+          ],
+          "syntax": [],
+          "import_bindings": [
+            "router"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "safe",
+            "function",
+            "safe",
+            "safe",
+            3,
+            7,
+            35,
+            163,
+            null,
+            "exact"
+          ],
+          [
+            "broken",
+            "function",
+            "broken",
+            "broken",
+            9,
+            11,
+            165,
+            204,
+            null,
+            "recovered"
+          ],
+          [
+            "missing_host",
+            "struct",
+            "MissingEnd",
+            "MissingEnd",
+            13,
+            15,
+            206,
+            260,
+            null,
+            "recovered"
+          ],
+          [
+            "missing_build",
+            "build_method",
+            "build",
+            "MissingEnd.build",
+            15,
+            15,
+            239,
+            260,
+            "missing_host",
+            "recovered"
+          ],
+          [
+            "text",
+            "ui_block",
+            "Text",
+            "MissingEnd.build.Text",
+            15,
+            15,
+            249,
+            258,
+            "missing_build",
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            1,
+            0,
+            33,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "router",
+            "@ohos.router#default",
+            1,
+            1,
+            7,
+            13,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@ohos.router'",
+            null,
+            1,
+            1,
+            19,
+            33,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "safe",
+            "safe",
+            3,
+            3,
+            44,
+            48,
+            [
+              "declaration",
+              "safe"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "\"router.pushUrl({ url: 'string' })\"",
+            null,
+            5,
+            5,
+            110,
+            145,
+            [
+              "declaration",
+              "safe"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            6,
+            6,
+            148,
+            154,
+            [
+              "declaration",
+              "safe"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "router.back",
+            "router.back",
+            6,
+            6,
+            148,
+            159,
+            [
+              "declaration",
+              "safe"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "broken",
+            "broken",
+            9,
+            9,
+            174,
+            180,
+            [
+              "declaration",
+              "broken"
+            ],
+            "recovered",
+            "recovered"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            10,
+            10,
+            187,
+            193,
+            [
+              "declaration",
+              "broken"
+            ],
+            "recovered",
+            "recovered"
+          ],
+          [
+            "decorator",
+            "@Component",
+            "@Component",
+            13,
+            13,
+            206,
+            216,
+            [
+              "declaration",
+              "missing_host"
+            ],
+            "recovered",
+            "recovered"
+          ],
+          [
+            "symbol",
+            "MissingEnd",
+            "MissingEnd",
+            14,
+            14,
+            224,
+            234,
+            [
+              "declaration",
+              "missing_host"
+            ],
+            "recovered",
+            "recovered"
+          ],
+          [
+            "symbol",
+            "build",
+            "MissingEnd.build",
+            15,
+            15,
+            239,
+            244,
+            [
+              "declaration",
+              "missing_build"
+            ],
+            "recovered",
+            "recovered"
+          ],
+          [
+            "call",
+            "Text",
+            "Text",
+            15,
+            15,
+            249,
+            253,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "component",
+            "Text",
+            "Text",
+            15,
+            15,
+            249,
+            253,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "Text",
+            "MissingEnd.build.Text",
+            15,
+            15,
+            249,
+            253,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'x'",
+            null,
+            15,
+            15,
+            254,
+            257,
+            [
+              "declaration",
+              "text"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": [
+          "parser_error_nodes",
+          "parser_missing_nodes"
+        ]
+      }
+    },
+    {
+      "case_id": "FA013-unicode-import-resource-call",
+      "description": "A preceding emoji proves UTF-16 offsets while import use, resource/string, and a local helper call remain distinct exact facts.",
+      "source": {
+        "file": "sources/fa013_unicode_uses.ets",
+        "logical_path": "golden/file_analysis/fa013_unicode_uses.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "d113b7eca62dc54c5f3a1e11f45179aaa62c5bf5872ec7b6cc9d673a0285d153"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [
+            "$r",
+            "router.back"
+          ],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "helper",
+            "run"
+          ],
+          "syntax": [],
+          "import_bindings": [
+            "router"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "helper",
+            "function",
+            "helper",
+            "helper",
+            3,
+            5,
+            35,
+            92,
+            null,
+            "exact"
+          ],
+          [
+            "run",
+            "function",
+            "run",
+            "run",
+            7,
+            12,
+            94,
+            206,
+            null,
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            1,
+            0,
+            33,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "router",
+            "@ohos.router#default",
+            1,
+            1,
+            7,
+            13,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@ohos.router'",
+            null,
+            1,
+            1,
+            19,
+            33,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "helper",
+            "helper",
+            3,
+            3,
+            44,
+            50,
+            [
+              "declaration",
+              "helper"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "run",
+            "run",
+            7,
+            7,
+            103,
+            106,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'😀'",
+            null,
+            8,
+            8,
+            128,
+            132,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "$r",
+            "$r",
+            9,
+            9,
+            149,
+            151,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "resource_reference",
+            "$r",
+            "app.string.title",
+            9,
+            9,
+            149,
+            171,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'app.string.title'",
+            null,
+            9,
+            9,
+            152,
+            170,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "call",
+            "helper",
+            "helper",
+            10,
+            10,
+            174,
+            180,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            11,
+            11,
+            191,
+            197,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "api",
+            "router.back",
+            "router.back",
+            11,
+            11,
+            191,
+            202,
+            [
+              "declaration",
+              "run"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA014-class-field-owner",
+      "description": "A class field region and method preserve class ownership and exact field access.",
+      "source": {
+        "file": "sources/fa014_class_field.ets",
+        "logical_path": "golden/file_analysis/fa014_class_field.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "69694a7730e0fca24df0c89f892379ede7018e0f392baa654d0b08737a88ef72"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [
+            "Worker",
+            "Worker.increment",
+            "increment"
+          ],
+          "syntax": [],
+          "import_bindings": [],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [
+          [
+            "worker",
+            "class",
+            "Worker",
+            "Worker",
+            1,
+            7,
+            0,
+            77,
+            null,
+            "exact"
+          ],
+          [
+            "increment",
+            "method",
+            "increment",
+            "Worker.increment",
+            4,
+            6,
+            38,
+            75,
+            "worker",
+            "exact"
+          ]
+        ],
+        "review_regions": [
+          [
+            "value",
+            "field_region",
+            "Worker.value",
+            2,
+            2,
+            17,
+            34,
+            "worker",
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "symbol",
+            "Worker",
+            "Worker",
+            1,
+            1,
+            6,
+            12,
+            [
+              "declaration",
+              "worker"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "symbol",
+            "increment",
+            "Worker.increment",
+            4,
+            4,
+            38,
+            47,
+            [
+              "declaration",
+              "increment"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_read",
+            "value",
+            "Worker.value",
+            5,
+            5,
+            61,
+            66,
+            [
+              "declaration",
+              "increment"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "field_write",
+            "value",
+            "Worker.value",
+            5,
+            5,
+            61,
+            66,
+            [
+              "declaration",
+              "increment"
+            ],
+            "exact",
+            "L1"
+          ]
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "case_id": "FA015-unresolved-owner",
+      "description": "Top-level imported calls remain explicitly owner-unresolved instead of receiving a fabricated owner.",
+      "source": {
+        "file": "sources/fa015_unresolved_owner.ets",
+        "logical_path": "golden/file_analysis/fa015_unresolved_owner.ets",
+        "repository": "file-analysis-golden",
+        "revision": "file-analysis-golden-v1",
+        "content_sha256": "69bca1e324716e3939a602a174f64a819cc23c6ccc03f0f7d8fe6fdcf44440b4"
+      },
+      "expected": {
+        "parser_version": "arkts-file-analysis-python-v1.0.0/arkts-parser-sidecar-v2.0.0/tree-sitter-arkts@0.2.0/file-analysis-v1",
+        "parser_quality": {
+          "layer": "L1",
+          "error_nodes": 0,
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        "file_hints": {
+          "components": [],
+          "apis": [
+            "router.back"
+          ],
+          "decorators": [],
+          "attributes": [],
+          "symbols": [],
+          "syntax": [],
+          "import_bindings": [
+            "router"
+          ],
+          "import_uses": [],
+          "field_reads": [],
+          "field_writes": [],
+          "calls": [],
+          "string_literals": [],
+          "resource_references": []
+        },
+        "declarations": [],
+        "review_regions": [
+          [
+            "import",
+            "import_region",
+            "import@1",
+            1,
+            1,
+            0,
+            33,
+            null,
+            "exact",
+            "L1"
+          ]
+        ],
+        "fact_occurrences": [
+          [
+            "import_binding",
+            "router",
+            "@ohos.router#default",
+            1,
+            1,
+            7,
+            13,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "string_literal",
+            "'@ohos.router'",
+            null,
+            1,
+            1,
+            19,
+            33,
+            [
+              "region",
+              "import"
+            ],
+            "exact",
+            "L1"
+          ],
+          [
+            "import_use",
+            "router",
+            "@ohos.router#default",
+            3,
+            3,
+            50,
+            56,
+            null,
+            "unresolved",
+            "L1"
+          ],
+          [
+            "api",
+            "router.back",
+            "router.back",
+            3,
+            3,
+            50,
+            61,
+            null,
+            "unresolved",
+            "L1"
+          ]
+        ],
+        "diagnostics": [
+          "unresolved_fact_owner"
+        ]
+      }
+    }
+  ]
+}

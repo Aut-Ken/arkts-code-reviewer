@@ -108,6 +108,9 @@ def declaration_unit_id(
     unit_symbol: str,
     start_line: int,
     end_line: int,
+    *,
+    start_offset_utf16: int | None = None,
+    end_offset_utf16: int | None = None,
 ) -> str:
     if unit_kind not in REVIEW_UNIT_KINDS or unit_kind == "fallback":
         raise ValueError(f"unsupported declaration ReviewUnit kind: {unit_kind}")
@@ -118,10 +121,24 @@ def declaration_unit_id(
         path=True,
     )
     normalized_symbol = _identity_component(unit_symbol, "ReviewUnit symbol")
-    return (
+    unit_id = (
         f"{normalized_path}@{unit_kind}:{normalized_symbol}:"
         f"L{start_line}-L{end_line}"
     )
+    if (start_offset_utf16 is None) != (end_offset_utf16 is None):
+        raise ValueError("declaration identity offsets must be provided together")
+    if start_offset_utf16 is None:
+        return unit_id
+    if (
+        not isinstance(start_offset_utf16, int)
+        or isinstance(start_offset_utf16, bool)
+        or start_offset_utf16 < 0
+        or not isinstance(end_offset_utf16, int)
+        or isinstance(end_offset_utf16, bool)
+        or end_offset_utf16 <= start_offset_utf16
+    ):
+        raise ValueError("declaration identity offsets must be a valid UTF-16 range")
+    return f"{unit_id}:O{start_offset_utf16}-{end_offset_utf16}"
 
 
 def fallback_unit_id(

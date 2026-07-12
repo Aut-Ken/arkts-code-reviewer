@@ -1,9 +1,24 @@
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
 from arkts_code_reviewer.code_analysis import ArktsTreeSitterParser, CodeAnalyzer, LexicalParser
+from arkts_code_reviewer.code_analysis.file_analysis_models import (
+    CodeSourceRef,
+    DeclarationOccurrence,
+    ExactRange,
+    FactOccurrence,
+    FileAnalysis,
+    FileParseResult,
+    FileParserQuality,
+    OwnerRef,
+    ScopedFacts,
+)
+from arkts_code_reviewer.code_analysis.file_analysis_parser import (
+    LegacyFileAnalysisAdapter,
+)
 from arkts_code_reviewer.code_analysis.models import (
     CodeFacts,
     Declaration,
@@ -17,6 +32,20 @@ from arkts_code_reviewer.code_analysis.tagger import derive_tags
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SIDECAR_NODE_MODULE = REPO_ROOT / "sidecars" / "arkts-parser" / "node_modules" / "tree-sitter-arkts"
+
+
+class CountingFileParser:
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+        self.delegate = LegacyFileAnalysisAdapter(LexicalParser())
+
+    def parse_file(
+        self,
+        source_ref: CodeSourceRef,
+        source: str,
+    ) -> FileParseResult:
+        self.calls.append(source_ref.source_ref_id)
+        return self.delegate.parse_file(source_ref, source)
 
 
 SAMPLE = """import img from '@ohos.multimedia.image'
@@ -321,6 +350,33 @@ function exercise(values: Router[]) {
 
 
 class LexicalParserTest(unittest.TestCase):
+    def test_code_facts_to_dict_keeps_parser_v1_declaration_schema(self) -> None:
+        facts = LexicalParser().parse(SAMPLE, "src/pages/PhotoWall.ets")
+
+        declarations = facts.to_dict()["declarations"]
+        assert isinstance(declarations, list)
+        self.assertTrue(declarations)
+        self.assertEqual(
+            set(declarations[0]),
+            {
+                "kind",
+                "name",
+                "qualified_name",
+                "span",
+                "parent_name",
+                "text",
+            },
+        )
+        self.assertFalse(
+            {
+                "declaration_id",
+                "parent_id",
+                "start_offset_utf16",
+                "end_offset_utf16",
+            }
+            & set(declarations[0])
+        )
+
     def test_extracts_core_arkts_facts(self) -> None:
         facts = LexicalParser().parse(SAMPLE, "src/pages/PhotoWall.ets")
 
@@ -640,7 +696,13 @@ class ArktsTreeSitterParserTest(unittest.TestCase):
             path="src/pages/Main.ets",
             content=CUSTOM_COMPONENT_SAMPLE,
         )
-        self.assertIn("@ComponentV2", result.retrieval_query.units[0].code_features.decorators)
+        retrieval_unit = result.retrieval_query.units[0]
+        self.assertEqual(retrieval_unit.code_features.decorators, [])
+        assert retrieval_unit.unit_fact_scope is not None
+        self.assertIn(
+            "@ComponentV2",
+            retrieval_unit.unit_fact_scope.file_hints.decorators,
+        )
 
     def test_filters_l1_calls_and_uses_filtered_lexical_recovery(self) -> None:
         source = """import { router } from '@kit.ArkUI'
@@ -681,6 +743,295 @@ function exercise(info: accessibility.EventInfo) {
 
 
 class CodeAnalyzerTest(unittest.TestCase):
+    @unittest.skipUnless(
+        SIDECAR_NODE_MODULE.exists(),
+        "ArkTS tree-sitter sidecar dependencies are not installed",
+    )
+    def test_rawfile_keeps_exact_apis_and_routes_resource_without_proxy(self) -> None:
+        source = """@Component
+struct ResourcePage {
+  build() {
+    Image($rawfile('assets/icon.png'))
+  }
+}
+"""
+
+        result = CodeAnalyzer().analyze_file(
+            path="src/pages/ResourcePage.ets",
+            content=source,
+        )
+
+        self.assertEqual(len(result.retrieval_query.units), 1)
+        scope = result.unit_fact_scopes[0]
+        retrieval_unit = result.retrieval_query.units[0]
+        self.assertEqual(scope.unit_exact.apis, ("$rawfile",))
+        self.assertEqual(
+            scope.unit_exact.resource_references,
+            ("assets/icon.png",),
+        )
+        self.assertEqual(retrieval_unit.code_features.apis, ["$rawfile"])
+        self.assertNotIn("$r", retrieval_unit.code_features.apis)
+        self.assertIn("has_resource_ref", retrieval_unit.code_features.tags)
+        self.assertIn("DIM-10", retrieval_unit.dimensions)
+
+    def test_parses_once_for_zero_one_and_multiple_units(self) -> None:
+        multi_source = """struct First {
+  build() {}
+}
+
+struct Second {
+  build() {}
+}
+"""
+        cases = (
+            (
+                [FileInput(path="src/Zero.ets", content="const value = 1\n")],
+                "diff",
+                0,
+            ),
+            (
+                [
+                    FileInput(
+                        path="src/pages/PhotoWall.ets",
+                        content=SAMPLE,
+                        hunks=[FileHunk(new_start=15, new_lines=1)],
+                    )
+                ],
+                "diff",
+                1,
+            ),
+            (
+                [FileInput(path="src/Multiple.ets", content=multi_source)],
+                "full",
+                2,
+            ),
+        )
+
+        for files, mode, expected_units in cases:
+            with self.subTest(mode=mode, expected_units=expected_units):
+                parser = CountingFileParser()
+                result = CodeAnalyzer(file_parser=parser).analyze_files(
+                    files,
+                    mode=mode,  # type: ignore[arg-type]
+                )
+
+                self.assertEqual(len(parser.calls), 1)
+                self.assertEqual(len(result.review_units), expected_units)
+
+    def test_parses_each_unique_source_revision_once(self) -> None:
+        files = [
+            FileInput(path="src/Z.ets", content="const z = 1\n"),
+            FileInput(path="src/A.ets", content="const a = 1\n"),
+            FileInput(path="src/M.ets", content="const m = 1\n"),
+        ]
+        parser = CountingFileParser()
+
+        result = CodeAnalyzer(file_parser=parser).analyze_files(files, mode="full")
+
+        self.assertEqual(len(parser.calls), 3)
+        self.assertEqual(len(parser.calls), len(set(parser.calls)))
+        self.assertEqual(
+            [item.analysis.source_ref.path for item in result.file_parse_results],
+            ["src/A.ets", "src/M.ets", "src/Z.ets"],
+        )
+
+    def test_invalid_source_revision_fails_before_parser_call(self) -> None:
+        parser = CountingFileParser()
+        source_ref = CodeSourceRef.inline("src/A.ets", "const before = 1\n")
+
+        with self.assertRaisesRegex(ValueError, "content hash mismatch"):
+            CodeAnalyzer(file_parser=parser).analyze_files(
+                [
+                    FileInput(
+                        path="src/A.ets",
+                        content="const after = 2\n",
+                        source_ref=source_ref,
+                    )
+                ]
+            )
+
+        self.assertEqual(parser.calls, [])
+
+    def test_projects_owned_exact_facts_without_file_hint_leakage(self) -> None:
+        source = """struct Page {
+  first() {
+    router.pushUrl()
+  }
+  second() {
+    http.request()
+    Image()
+  }
+}
+"""
+
+        class FixtureFileParser:
+            def parse_file(
+                self,
+                source_ref: CodeSourceRef,
+                source_text: str,
+            ) -> FileParseResult:
+                source_ref.verify_content(source_text)
+                host = DeclarationOccurrence.create(
+                    source_ref_id=source_ref.source_ref_id,
+                    kind="struct",
+                    name="Page",
+                    qualified_name="Page",
+                    span=SourceSpan(1, 9),
+                    exact_range=ExactRange(1, 9, 0, 100),
+                )
+                first = DeclarationOccurrence.create(
+                    source_ref_id=source_ref.source_ref_id,
+                    kind="method",
+                    name="first",
+                    qualified_name="Page.first",
+                    span=SourceSpan(2, 4),
+                    exact_range=ExactRange(2, 4, 10, 40),
+                    parent_id=host.declaration_id,
+                )
+                second = DeclarationOccurrence.create(
+                    source_ref_id=source_ref.source_ref_id,
+                    kind="method",
+                    name="second",
+                    qualified_name="Page.second",
+                    span=SourceSpan(5, 8),
+                    exact_range=ExactRange(5, 8, 50, 90),
+                    parent_id=host.declaration_id,
+                )
+                facts = CodeFacts(
+                    path=source_ref.path,
+                    components={"Image"},
+                    apis={"http.request", "router.pushUrl"},
+                    declarations=[
+                        Declaration(
+                            kind="struct",
+                            name="Page",
+                            qualified_name="Page",
+                            span=SourceSpan(1, 9),
+                            text=source_text.rstrip(),
+                            declaration_id=host.declaration_id,
+                            start_offset_utf16=0,
+                            end_offset_utf16=100,
+                        ),
+                        Declaration(
+                            kind="method",
+                            name="first",
+                            qualified_name="Page.first",
+                            parent_name="Page",
+                            span=SourceSpan(2, 4),
+                            text="\n".join(source_text.splitlines()[1:4]),
+                            declaration_id=first.declaration_id,
+                            parent_id=host.declaration_id,
+                            start_offset_utf16=10,
+                            end_offset_utf16=40,
+                        ),
+                        Declaration(
+                            kind="method",
+                            name="second",
+                            qualified_name="Page.second",
+                            parent_name="Page",
+                            span=SourceSpan(5, 8),
+                            text="\n".join(source_text.splitlines()[4:8]),
+                            declaration_id=second.declaration_id,
+                            parent_id=host.declaration_id,
+                            start_offset_utf16=50,
+                            end_offset_utf16=90,
+                        ),
+                    ],
+                    parser_layer="L1",
+                )
+                occurrences = (
+                    FactOccurrence.create(
+                        source_ref_id=source_ref.source_ref_id,
+                        kind="api",
+                        name="router.pushUrl",
+                        canonical_name="router.pushUrl",
+                        span=SourceSpan(3, 3),
+                        exact_range=ExactRange(3, 3, 20, 25),
+                        owner_ref=OwnerRef("declaration", first.declaration_id),
+                    ),
+                    FactOccurrence.create(
+                        source_ref_id=source_ref.source_ref_id,
+                        kind="api",
+                        name="http.request",
+                        canonical_name="http.request",
+                        span=SourceSpan(6, 6),
+                        exact_range=ExactRange(6, 6, 60, 65),
+                        owner_ref=OwnerRef("declaration", second.declaration_id),
+                    ),
+                    FactOccurrence.create(
+                        source_ref_id=source_ref.source_ref_id,
+                        kind="component",
+                        name="Image",
+                        canonical_name="Image",
+                        span=SourceSpan(7, 7),
+                        exact_range=ExactRange(7, 7, 70, 75),
+                        owner_ref=OwnerRef("declaration", second.declaration_id),
+                    ),
+                )
+                analysis = FileAnalysis.create(
+                    source_ref=source_ref,
+                    parser_version="fixture-v1",
+                    parser_quality=FileParserQuality(
+                        layer="L1",
+                        error_nodes=0,
+                        missing_nodes=0,
+                    ),
+                    file_hints=ScopedFacts.from_code_facts(facts),
+                    declarations=(host, first, second),
+                    fact_occurrences=occurrences,
+                )
+                return FileParseResult(
+                    analysis=analysis,
+                    compatibility_facts=facts,
+                )
+
+        result = CodeAnalyzer(file_parser=FixtureFileParser()).analyze_file(
+            path="src/pages/Owned.ets",
+            content=source,
+            mode="diff",
+            hunks=[(3, 1)],
+        )
+
+        self.assertEqual(len(result.file_parse_results), 1)
+        self.assertEqual(len(result.review_units), 1)
+        unit = result.review_units[0]
+        self.assertIsNotNone(unit.owner_ref)
+        scope = result.unit_fact_scopes[0]
+        self.assertEqual(scope.unit_id, unit.unit_id)
+        self.assertEqual(scope.source_ref_id, unit.source_ref_id)
+        self.assertEqual(
+            set(scope.unit_exact.apis),
+            {"router.pushUrl"},
+        )
+        self.assertEqual(scope.unit_exact.components, ())
+        self.assertIn("Image", scope.file_hints.components)
+        self.assertIn("http.request", scope.file_hints.apis)
+        retrieval_unit = result.retrieval_query.units[0]
+        self.assertEqual(
+            retrieval_unit.code_features.apis,
+            list(scope.unit_exact.apis),
+        )
+        self.assertNotIn("Image", retrieval_unit.code_features.components)
+        self.assertIn("has_navigation", retrieval_unit.code_features.tags)
+        self.assertNotIn("has_image", retrieval_unit.code_features.tags)
+
+    def test_json_serialization_excludes_compatibility_code_facts(self) -> None:
+        result = CodeAnalyzer(file_parser=CountingFileParser()).analyze_file(
+            path="src/pages/PhotoWall.ets",
+            content=SAMPLE,
+            mode="diff",
+            hunks=[(15, 1)],
+        )
+
+        payload = result.to_dict()
+        encoded = json.dumps(payload, ensure_ascii=False)
+
+        self.assertNotIn("compatibility_facts", encoded)
+        self.assertEqual(
+            set(payload["file_parse_results"][0]),  # type: ignore[index]
+            {"analysis"},
+        )
+
     def test_exposes_file_results_for_diff_without_hunks(self) -> None:
         result = CodeAnalyzer(parser=LexicalParser()).analyze_file(
             path="src/pages/EmptyDiff.ets",
@@ -694,7 +1045,7 @@ class CodeAnalyzerTest(unittest.TestCase):
         self.assertIsNotNone(result.review_unit_build_result)
         build_result = result.review_unit_build_result
         assert build_result is not None
-        self.assertEqual(build_result.schema_version, "review-unit-build-v1")
+        self.assertEqual(build_result.schema_version, "review-unit-build-v2")
         self.assertEqual(build_result.mode, "diff")
         self.assertEqual(build_result.flatten_units(), result.review_units)
         self.assertEqual(len(build_result.file_results), 1)
@@ -708,7 +1059,7 @@ class CodeAnalyzerTest(unittest.TestCase):
             ["diff_file_without_hunks"],
         )
 
-    def test_preserves_full_file_and_secondary_parser_quality(self) -> None:
+    def test_preserves_full_file_quality_without_secondary_parse(self) -> None:
         class SequencedParser:
             def __init__(self) -> None:
                 self.calls = 0
@@ -732,12 +1083,12 @@ class CodeAnalyzerTest(unittest.TestCase):
             hunks=[(15, 1)],
         )
 
-        self.assertEqual(parser.calls, 2)
+        self.assertEqual(parser.calls, 1)
         unit = result.review_units[0]
         self.assertTrue(unit.context_degraded)
         self.assertEqual(
             [diagnostic.code for diagnostic in unit.diagnostics],
-            ["parser_degraded", "parser_error_nodes"],
+            ["parser_error_nodes"],
         )
         unit.context_degraded = False
         with self.assertRaisesRegex(
@@ -746,8 +1097,8 @@ class CodeAnalyzerTest(unittest.TestCase):
         ):
             unit.validate()
         unit.context_degraded = True
-        self.assertEqual(result.metadata.parser_layer, "parse_degraded")
-        self.assertTrue(
+        self.assertEqual(result.metadata.parser_layer, "L1")
+        self.assertFalse(
             any("unit fixture" in warning for warning in result.metadata.warnings)
         )
         build_result = result.review_unit_build_result
@@ -758,8 +1109,10 @@ class CodeAnalyzerTest(unittest.TestCase):
             parser_quality.warnings,
             ["arkts_tree_sitter_error_nodes: 1"],
         )
+        self.assertEqual(len(result.file_parse_results), 1)
+        self.assertEqual(result.unit_fact_scopes[0].unit_exact.apis, ())
 
-    def test_rejects_invalid_secondary_parser_layer(self) -> None:
+    def test_never_requests_a_secondary_parser_layer(self) -> None:
         class InvalidSecondaryLayerParser:
             def __init__(self) -> None:
                 self.calls = 0
@@ -771,13 +1124,16 @@ class CodeAnalyzerTest(unittest.TestCase):
                     facts.parser_layer = "BROKEN"  # type: ignore[assignment]
                 return facts
 
-        with self.assertRaisesRegex(ValueError, "unsupported parser layers"):
-            CodeAnalyzer(parser=InvalidSecondaryLayerParser()).analyze_file(
-                path="src/pages/PhotoWall.ets",
-                content=SAMPLE,
-                mode="diff",
-                hunks=[(15, 1)],
-            )
+        parser = InvalidSecondaryLayerParser()
+        result = CodeAnalyzer(parser=parser).analyze_file(
+            path="src/pages/PhotoWall.ets",
+            content=SAMPLE,
+            mode="diff",
+            hunks=[(15, 1)],
+        )
+
+        self.assertEqual(parser.calls, 1)
+        self.assertEqual(result.metadata.parser_layer, "L0")
 
     def test_rejects_builder_parser_quality_that_drifts_from_file_facts(self) -> None:
         class DriftedQualityBuilder(ReviewUnitBuilder):
@@ -1149,9 +1505,16 @@ function outer() {
         self.assertEqual(build_result.file_results[0].unassigned_hunk_lines, [13])
 
         retrieval_unit = result.retrieval_query.units[0]
-        self.assertIn("has_image", retrieval_unit.code_features.tags)
-        self.assertIn("has_timer", retrieval_unit.code_features.tags)
-        self.assertIn("has_async", retrieval_unit.code_features.tags)
+        self.assertEqual(retrieval_unit.code_features.tags, [])
+        self.assertIn("has_image", retrieval_unit.routing_tags)
+        self.assertIn("has_timer", retrieval_unit.routing_tags)
+        self.assertIn("has_async", retrieval_unit.routing_tags)
+        assert retrieval_unit.unit_fact_scope is not None
+        self.assertEqual(retrieval_unit.unit_fact_scope.unit_exact.apis, ())
+        self.assertIn(
+            "setInterval",
+            retrieval_unit.unit_fact_scope.file_hints.apis,
+        )
         self.assertIn("DIM-06", result.retrieval_query.mr_context.triggered_dimensions)
         self.assertIn("DIM-07", result.retrieval_query.mr_context.triggered_dimensions)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Literal, Protocol
+from typing import TYPE_CHECKING, Literal, Protocol
 
 from arkts_code_reviewer.code_analysis.review_unit_contract import (
     REVIEW_UNIT_DIAGNOSTIC_CODES,
@@ -15,8 +15,25 @@ from arkts_code_reviewer.code_analysis.review_unit_contract import (
     normalize_review_path,
 )
 
+if TYPE_CHECKING:
+    from arkts_code_reviewer.code_analysis.file_analysis_models import (
+        CodeSourceRef,
+        FileParseResult,
+        OwnerRef,
+        UnitFactScope,
+    )
+
 ParserLayer = Literal["L0", "L1", "parse_degraded"]
 AnalysisMode = Literal["full", "diff"]
+DeclarationKind = Literal[
+    "struct",
+    "class",
+    "function",
+    "method",
+    "build_method",
+    "builder",
+    "ui_block",
+]
 REVIEW_UNIT_BUILD_SCHEMA_VERSION = "review-unit-build-v1"
 
 
@@ -48,14 +65,16 @@ class ImportInfo:
 
 @dataclass
 class Declaration:
-    kind: Literal[
-        "struct", "class", "function", "method", "build_method", "builder", "ui_block"
-    ]
+    kind: DeclarationKind
     name: str
     qualified_name: str
     span: SourceSpan
     parent_name: str | None = None
     text: str = ""
+    declaration_id: str | None = None
+    parent_id: str | None = None
+    start_offset_utf16: int | None = None
+    end_offset_utf16: int | None = None
 
     @property
     def line_count(self) -> int:
@@ -77,17 +96,29 @@ class CodeFacts:
     warnings: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, object]:
-        data = asdict(self)
-        for key in (
-            "components",
-            "apis",
-            "decorators",
-            "attributes",
-            "symbols",
-            "syntax",
-        ):
-            data[key] = sorted(getattr(self, key))
-        return data
+        return {
+            "path": self.path,
+            "imports": [asdict(item) for item in self.imports],
+            "components": sorted(self.components),
+            "apis": sorted(self.apis),
+            "decorators": sorted(self.decorators),
+            "attributes": sorted(self.attributes),
+            "symbols": sorted(self.symbols),
+            "syntax": sorted(self.syntax),
+            "declarations": [
+                {
+                    "kind": item.kind,
+                    "name": item.name,
+                    "qualified_name": item.qualified_name,
+                    "span": asdict(item.span),
+                    "parent_name": item.parent_name,
+                    "text": item.text,
+                }
+                for item in self.declarations
+            ],
+            "parser_layer": self.parser_layer,
+            "warnings": list(self.warnings),
+        }
 
 
 @dataclass(frozen=True)
@@ -190,6 +221,10 @@ class ReviewUnit:
     changed_new_lines: list[int] = field(kw_only=True)
     selection_reason: SelectionReason = field(kw_only=True)
     diagnostics: list[ReviewUnitDiagnostic] = field(kw_only=True)
+    source_ref_id: str | None = field(default=None, kw_only=True)
+    owner_ref: OwnerRef | None = field(default=None, kw_only=True)
+    identity_start_offset_utf16: int | None = field(default=None, kw_only=True)
+    identity_end_offset_utf16: int | None = field(default=None, kw_only=True)
 
     def __post_init__(self) -> None:
         self.validate()
@@ -217,6 +252,32 @@ class ReviewUnit:
             )
         if not isinstance(self.context_degraded, bool):
             raise ValueError("ReviewUnit.context_degraded must be a boolean")
+        if self.source_ref_id is not None and (
+            not isinstance(self.source_ref_id, str) or not self.source_ref_id
+        ):
+            raise ValueError("ReviewUnit.source_ref_id must be non-empty or None")
+        if self.owner_ref is not None:
+            from arkts_code_reviewer.code_analysis.file_analysis_models import OwnerRef
+
+            if not isinstance(self.owner_ref, OwnerRef):
+                raise ValueError("ReviewUnit.owner_ref must use OwnerRef or None")
+            if self.source_ref_id is None:
+                raise ValueError("owned ReviewUnit requires source_ref_id")
+        offset_values = (
+            self.identity_start_offset_utf16,
+            self.identity_end_offset_utf16,
+        )
+        if (offset_values[0] is None) != (offset_values[1] is None):
+            raise ValueError("ReviewUnit identity offsets must be provided together")
+        if offset_values[0] is not None and (
+            not isinstance(offset_values[0], int)
+            or isinstance(offset_values[0], bool)
+            or offset_values[0] < 0
+            or not isinstance(offset_values[1], int)
+            or isinstance(offset_values[1], bool)
+            or offset_values[1] <= offset_values[0]
+        ):
+            raise ValueError("ReviewUnit identity offsets must be a valid UTF-16 range")
         if not isinstance(self.source_span, ReviewUnitSpan) or not isinstance(
             self.context_span, ReviewUnitSpan
         ):
@@ -252,6 +313,8 @@ class ReviewUnit:
                 self.unit_symbol,
                 self.source_span.start_line,
                 self.source_span.end_line,
+                start_offset_utf16=self.identity_start_offset_utf16,
+                end_offset_utf16=self.identity_end_offset_utf16,
             )
         )
         if self.unit_id != expected_id:
@@ -387,12 +450,17 @@ class ReviewUnitFileResult:
     parser_quality: ParserQuality
     diagnostics: list[ReviewUnitDiagnostic] = field(default_factory=list)
     unassigned_hunk_lines: list[int] = field(default_factory=list)
+    source_ref_id: str | None = None
 
     def __post_init__(self) -> None:
         self.validate()
 
     def validate(self) -> None:
         normalized_path = normalize_review_path(self.path)
+        if self.source_ref_id is not None and (
+            not isinstance(self.source_ref_id, str) or not self.source_ref_id
+        ):
+            raise ValueError("ReviewUnitFileResult.source_ref_id must be non-empty or None")
         if not isinstance(self.units, list) or any(
             not isinstance(unit, ReviewUnit) for unit in self.units
         ):
@@ -402,6 +470,10 @@ class ReviewUnitFileResult:
             if normalize_review_path(unit.file) != normalized_path:
                 raise ValueError(
                     "ReviewUnitFileResult units must belong to the result path"
+                )
+            if self.source_ref_id is not None and unit.source_ref_id != self.source_ref_id:
+                raise ValueError(
+                    "ReviewUnitFileResult units must use the result source_ref_id"
                 )
         if self.units != sorted(self.units, key=_review_unit_sort_key):
             raise ValueError("ReviewUnitFileResult.units must use stable source order")
@@ -475,10 +547,12 @@ class ReviewUnitBuildResult:
         self.validate()
 
     def validate(self) -> None:
-        if self.schema_version != REVIEW_UNIT_BUILD_SCHEMA_VERSION:
+        if self.schema_version not in {
+            REVIEW_UNIT_BUILD_SCHEMA_VERSION,
+            "review-unit-build-v2",
+        }:
             raise ValueError(
-                "ReviewUnitBuildResult.schema_version must be "
-                f"{REVIEW_UNIT_BUILD_SCHEMA_VERSION!r}"
+                "ReviewUnitBuildResult.schema_version is unsupported"
             )
         if self.mode not in {"full", "diff"}:
             raise ValueError(f"unsupported ReviewUnit analysis mode: {self.mode}")
@@ -491,6 +565,10 @@ class ReviewUnitBuildResult:
             )
         for result in self.file_results:
             result.validate()
+            if self.schema_version == "review-unit-build-v2" and result.source_ref_id is None:
+                raise ValueError(
+                    "review-unit-build-v2 file results require source_ref_id"
+                )
             if self.mode == "full" and result.unassigned_hunk_lines:
                 raise ValueError(
                     "full ReviewUnitBuildResult must not contain unassigned hunk lines"
@@ -532,6 +610,69 @@ class RetrievalUnit:
     unit_ref: str
     code_features: CodeFeatures
     intent_summary: str
+    unit_id: str | None = field(default=None, kw_only=True)
+    source_ref_id: str | None = field(default=None, kw_only=True)
+    unit_fact_scope: UnitFactScope | None = field(default=None, kw_only=True)
+    dimensions: list[str] = field(default_factory=list, kw_only=True)
+    routing_tags: list[str] = field(default_factory=list, kw_only=True)
+
+    def __post_init__(self) -> None:
+        for required_value, name in (
+            (self.unit_ref, "unit_ref"),
+            (self.intent_summary, "intent_summary"),
+        ):
+            if not isinstance(required_value, str) or not required_value:
+                raise ValueError(f"RetrievalUnit.{name} must be a non-empty string")
+        for optional_value, name in (
+            (self.unit_id, "unit_id"),
+            (self.source_ref_id, "source_ref_id"),
+        ):
+            if optional_value is not None and (
+                not isinstance(optional_value, str) or not optional_value
+            ):
+                raise ValueError(
+                    f"RetrievalUnit.{name} must be non-empty or None"
+                )
+        for values, name in (
+            (self.dimensions, "dimensions"),
+            (self.routing_tags, "routing_tags"),
+        ):
+            if not isinstance(values, list) or any(
+                not isinstance(value, str) or not value for value in values
+            ):
+                raise ValueError(f"RetrievalUnit.{name} must contain strings")
+            if values != sorted(set(values)):
+                raise ValueError(
+                    f"RetrievalUnit.{name} must be sorted and unique"
+                )
+        if self.unit_fact_scope is not None:
+            from arkts_code_reviewer.code_analysis.file_analysis_models import (
+                UnitFactScope,
+            )
+
+            if not isinstance(self.unit_fact_scope, UnitFactScope):
+                raise ValueError(
+                    "RetrievalUnit.unit_fact_scope must use UnitFactScope or None"
+                )
+            if self.unit_id != self.unit_fact_scope.unit_id:
+                raise ValueError(
+                    "RetrievalUnit.unit_id must match its UnitFactScope"
+                )
+            if self.source_ref_id != self.unit_fact_scope.source_ref_id:
+                raise ValueError(
+                    "RetrievalUnit.source_ref_id must match its UnitFactScope"
+                )
+            exact = self.unit_fact_scope.unit_exact
+            if self.code_features.components != list(exact.components):
+                raise ValueError(
+                    "RetrievalUnit components must come from unit_exact"
+                )
+            if self.code_features.decorators != list(exact.decorators):
+                raise ValueError(
+                    "RetrievalUnit decorators must come from unit_exact"
+                )
+            if self.code_features.apis != list(exact.apis):
+                raise ValueError("RetrievalUnit APIs must come from unit_exact")
 
 
 @dataclass(frozen=True)
@@ -562,6 +703,15 @@ class AnalysisResult:
         default=None,
         kw_only=True,
     )
+    file_parse_results: list[FileParseResult] = field(
+        default_factory=list,
+        kw_only=True,
+        repr=False,
+    )
+    unit_fact_scopes: list[UnitFactScope] = field(
+        default_factory=list,
+        kw_only=True,
+    )
 
     def __post_init__(self) -> None:
         self.validate()
@@ -571,21 +721,89 @@ class AnalysisResult:
             not isinstance(unit, ReviewUnit) for unit in self.review_units
         ):
             raise ValueError("AnalysisResult.review_units must contain ReviewUnit values")
-        if self.review_unit_build_result is None:
-            return
-        if not isinstance(self.review_unit_build_result, ReviewUnitBuildResult):
+        if self.review_unit_build_result is not None:
+            if not isinstance(self.review_unit_build_result, ReviewUnitBuildResult):
+                raise ValueError(
+                    "AnalysisResult.review_unit_build_result must use ReviewUnitBuildResult"
+                )
+            flattened_units = self.review_unit_build_result.flatten_units()
+            if self.review_units != flattened_units:
+                raise ValueError(
+                    "AnalysisResult.review_units must match "
+                    "ReviewUnitBuildResult.flatten_units()"
+                )
+
+        from arkts_code_reviewer.code_analysis.file_analysis_models import (
+            FileParseResult,
+            UnitFactScope,
+        )
+
+        if not isinstance(self.file_parse_results, list) or any(
+            not isinstance(result, FileParseResult)
+            for result in self.file_parse_results
+        ):
             raise ValueError(
-                "AnalysisResult.review_unit_build_result must use ReviewUnitBuildResult"
+                "AnalysisResult.file_parse_results must contain FileParseResult values"
             )
-        flattened_units = self.review_unit_build_result.flatten_units()
-        if self.review_units != flattened_units:
+        source_paths = [
+            result.analysis.source_ref.path for result in self.file_parse_results
+        ]
+        if source_paths != sorted(source_paths) or len(source_paths) != len(
+            set(source_paths)
+        ):
             raise ValueError(
-                "AnalysisResult.review_units must match ReviewUnitBuildResult.flatten_units()"
+                "AnalysisResult.file_parse_results must use unique stable path order"
             )
+        if not isinstance(self.unit_fact_scopes, list) or any(
+            not isinstance(scope, UnitFactScope) for scope in self.unit_fact_scopes
+        ):
+            raise ValueError(
+                "AnalysisResult.unit_fact_scopes must contain UnitFactScope values"
+            )
+        scope_ids = [scope.unit_id for scope in self.unit_fact_scopes]
+        if (self.file_parse_results or self.unit_fact_scopes) and scope_ids != [
+            unit.unit_id for unit in self.review_units
+        ]:
+            raise ValueError(
+                "AnalysisResult.unit_fact_scopes must align with review_units"
+            )
+        if self.file_parse_results or self.unit_fact_scopes:
+            retrieval_units = self.retrieval_query.units
+            if [item.unit_id for item in retrieval_units] != scope_ids:
+                raise ValueError(
+                    "AnalysisResult RetrievalUnits must align by unit_id"
+                )
+        if self.file_parse_results and self.review_unit_build_result is not None:
+            parse_source_ids = [
+                result.analysis.source_ref.source_ref_id
+                for result in self.file_parse_results
+            ]
+            build_source_ids = [
+                result.source_ref_id
+                for result in self.review_unit_build_result.file_results
+            ]
+            if parse_source_ids != build_source_ids:
+                raise ValueError(
+                    "AnalysisResult FileParseResults must align with file results"
+                )
 
     def to_dict(self) -> dict[str, object]:
         self.validate()
-        return asdict(self)
+        return {
+            "retrieval_query": asdict(self.retrieval_query),
+            "review_units": [asdict(unit) for unit in self.review_units],
+            "metadata": asdict(self.metadata),
+            "review_unit_build_result": (
+                None
+                if self.review_unit_build_result is None
+                else asdict(self.review_unit_build_result)
+            ),
+            "file_parse_results": [
+                {"analysis": result.analysis.to_dict()}
+                for result in self.file_parse_results
+            ],
+            "unit_fact_scopes": [scope.to_dict() for scope in self.unit_fact_scopes],
+        }
 
 
 @dataclass(frozen=True)
@@ -617,6 +835,7 @@ class FileInput:
     path: str
     content: str
     hunks: list[FileHunk] = field(default_factory=list)
+    source_ref: CodeSourceRef | None = None
 
 
 class CodeParser(Protocol):

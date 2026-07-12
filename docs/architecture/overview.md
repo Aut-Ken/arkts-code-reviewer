@@ -40,8 +40,8 @@ ArkTS AI Code Reviewer
 | 模块 | 状态 | 当前事实 |
 |---|---|---|
 | 输入与编排 | `partial` | CLI 可读取文件和手工 hunk；无 Git diff 解析、Webhook、队列和服务 |
-| Parser | `partial` | merged-L1 Parser v1 已在 `2c1df96` 冻结并通过确定性门禁；v2 occurrence owner/span 和独立分发仍未实现 |
-| ReviewUnit | `partial` | RU-0～RU-2 已完成：16-case Golden、唯一 ID、多 owner、质量传播和结果信封已实现；事实作用域与二次解析仍待 RU-3 |
+| Parser | `partial` | Parser v1 继续冻结；显式 `file-analysis-v1` 已提供 occurrence owner/span、quality/provenance 和独立 Golden |
+| ReviewUnit | `partial` | RU-0～RU-3 已完成：唯一 ID、多 owner、质量传播、parse-once 与 `unit_exact/file_hints` 已实现；RU-4/RU-5 待完成 |
 | Tags / Dimensions | `partial` | 24 Tags 和 12 Dimensions 硬编码实现，尚未配置化 |
 | 知识库构建 | `partial` | 11 个知识来源及固定 revision 已登记；无 registry loader、Clause parser、数据库或真实索引 |
 | Retrieval | `designed` | 无代码 |
@@ -51,41 +51,43 @@ ArkTS AI Code Reviewer
 | 评测闭环 | `designed` | 只有 Parser/前置链路测试，未形成最终评审 Golden Set |
 | Parser Validation | `partial` | 确定性 v1 release gate 已完成；Grok candidate evidence 尚未晋级，GLM judge 仍为 experimental |
 
-当前 `AnalysisResult` 能输出 ReviewUnit、RetrievalQuery 原料和 Parser metadata，不能输出正式代码评审 Finding。
+当前 `AnalysisResult` 能输出 FileAnalysis、ReviewUnit、UnitFactScope、兼容 RetrievalQuery 原料和
+Parser metadata，不能输出正式代码评审 Finding。
 
 ### 2.1 当前可复核结果
 
 ```text
-pytest after npm ci             78 passed, 64 subtests passed
+pytest after npm ci             full suite passed; exact count follows the current gate output
 Parser Golden                   15 cases / strict L0 baseline / perfect merged-L1
+FileAnalysis Golden              15 cases / complete occurrence truth / perfect
 LexicalParser real samples     63 parsed / 0 missing / 0 crashed
 Merged-L1 real samples          63 L1 / 0 missing / 0 crashed
 R63 L1 AST warnings             7 files with ERROR / 7 files with missing nodes
 Declarations                   L0 2,880 / merged-L1 5,414
 Golden snapshot provenance      4/4 match the pinned external revision
 Provisional candidates          23 cases; value fields exact except 2 known bad annotation spans
-ReviewUnit Golden               16 cases; RU-1 target 9/9; 7 future-phase gaps visible
+ReviewUnit Golden               16 cases; RU-2 target 14/16; 2 future-phase gaps visible
+RU-3 real-file spot check       6/6 pinned allowlisted files at L1; unresolved owner explicit
 Source registry                19 entries / all revisions verified / clean worktrees
 ```
 
-这里的 “perfect merged-L1” 只覆盖冻结的 v1 集合字段和 declaration 行级 span。它不代表
-全 ArkTS 语法 99% 准确，也不覆盖 fact occurrence span/owner、raw-L1 diagnostics 或类型解析。
-23 个候选样本的旧 symbol evidence 仍有 441 项不满足冻结证据政策，因此不能当作正式真值。
+这里的 “perfect merged-L1” 只覆盖冻结的 Parser v1 集合字段和 declaration 行级 span；
+occurrence span/owner 的准确率由独立 FileAnalysis Golden 证明。两者都不代表全 ArkTS 语法
+99% 准确，也不覆盖完整类型解析。23 个候选样本的旧 symbol evidence 仍有 441 项不满足
+冻结证据政策，因此不能当作正式真值。
 
 ### 2.2 当前开发边界
 
-Parser v1 足以为 ReviewUnit 提供经过验证的 declaration 行级 occurrence。当前集合字段仍是
-文件级 presence signal，不能证明某个 API、modifier、decorator 或 syntax 属于某个 Unit。
-ReviewUnit 的 RU-0～RU-2 已建立独立 Golden、修复 span-qualified identity，并完成多 owner、
-文件级结果信封和 Parser 质量传播；现有 16-case v1 Golden 达到 RU-2 目标 `14/16`。该 v1
-Golden 继续作为兼容回归集，不会被后续 ChangeSet 或 Context Planner schema 反向覆盖。
-下一步 RU-3 必须先取得 Parser v2 的单独授权；删除 Unit 二次 Parser 前，必须先有可追溯的
-FactOccurrence 和 Unit exact facts，并保持 Parser v1 及其 Golden 无漂移。
+Parser v1 继续提供兼容 `CodeFacts`；RU-3 的 Parser v2 则以不可变 `CodeSourceRef` 绑定
+`FileAnalysis`，为 declaration、13 种 fact 和两种 ReviewRegion 提供 owner、文件绝对 span、
+UTF-16 精确 offset 以及 exact/recovered/unresolved 质量。sidecar 默认仍返回 v1 schema，只有
+显式请求 `file-analysis-v1` 才返回 v2 数据，Parser v1 Golden 和发布门禁没有改变。
 
-当前真实调用次数是每文件 `1 + U` 次 Parser，其中 `U` 是去重后的 ReviewUnit 数。截取声明
-并重新解析还可能把 struct method 改成顶层 function。RU-2 已把第二次解析的 layer/warning
-汇总进 Analysis metadata，并把降级诊断绑定到对应 Unit；合成源码造成的语义变化和性能问题
-仍须由 RU-3 的 parse-once 解决。
+`CodeAnalyzer` 现在按唯一 `source_ref_id` 缓存 `FileParseResult`，每个源码 revision 只解析
+完整文件一次；ReviewUnit facts 从 occurrence 的 owner/span 投影，不再把 imports 与 Unit
+切片合成为新源码重新解析。`unit_exact` 才进入 Unit code features/tags，`file_hints` 只保守
+扩大路由和 MR dimensions，不能成为 Finding evidence。现有 16-case ReviewUnit v1 Golden
+仍以 `14/16` 作为 RU-2 兼容目标；剩余 deletion-only 和真实预算差异分别属于 RU-4/RU-5。
 
 外部资产分为：
 
@@ -174,7 +176,7 @@ ReviewUnit 不是“从 diff 中只挑最相关的一段”，而是保留全部
 
 ```text
 RU-2  找全直接改动 owner，并传播 Parser 质量                         已完成
-RU-3  建立 FactOccurrence/owner，按完整文件 parse-once 投影精确事实
+RU-3  建立 FactOccurrence/owner，按完整文件 parse-once 投影精确事实    已完成
 RU-4  消费精确 ChangeSet，支持 base/head、删除和 rename
 RU-5  生成关系、Supporting、ChangeGroup，执行真实上下文预算
       -> ContextPlanResult
@@ -185,10 +187,10 @@ RU-5  生成关系、Supporting、ChangeGroup，执行真实上下文预算
 LLM 结论或发布结果。完整字段只在[跨模块数据契约](data-contracts.md)维护，本总览不复制
 schema。
 
-阶段评测也保持分层：RU-2 继续使用现有 16-case ReviewUnit v1 Golden；RU-4 新建
-ChangeSet Golden 和 ReviewUnit v2 Golden；RU-5 先新建 12～16 个 Context Golden case，
-再实现 Planner。这样身份和兼容行为、精确 diff 语义、上下文充分性不会混成一个无法归因
-的分数。
+阶段评测也保持分层：RU-2 继续使用现有 16-case ReviewUnit v1 Golden；RU-3 使用独立
+15-case FileAnalysis Golden；RU-4 新建 ChangeSet Golden 和 ReviewUnit v2 Golden；RU-5
+先新建 12～16 个 Context Golden case，再实现 Planner。这样身份和兼容行为、occurrence、
+精确 diff 语义、上下文充分性不会混成一个无法归因的分数。
 
 ## 5. 核心架构原则
 
@@ -319,7 +321,7 @@ PoC 可以使用单进程 CLI，但生产形态应中心化部署，统一模型
 Milestone 0  多仓库来源基线 + Parser v1 确定性验证             已完成
 Milestone 1a ReviewUnit Golden + 唯一 Unit identity               RU-0/RU-1 已完成
 Milestone 1b 多 owner + Parser quality diagnostics               RU-2 已完成；14/16
-Milestone 1c FactOccurrence + Unit exact facts + parse-once       RU-3；开始前需单独授权
+Milestone 1c FactOccurrence + Unit exact facts + parse-once       RU-3 已完成
 Milestone 1d 精确 ChangeSet + base/head ReviewUnit                RU-4；独立 v2 Golden
 Milestone 1e related context + ChangeGroup + token budget         RU-5；Context Golden
              -> ContextPlanResult                                ReviewUnit 完成边界
