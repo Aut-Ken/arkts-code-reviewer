@@ -39,6 +39,8 @@ def default_feature_config() -> FeatureConfig:
 
 class FeatureRouter:
     def __init__(self, config: FeatureConfig | None = None) -> None:
+        if config is not None and not isinstance(config, FeatureConfig):
+            raise ValueError("FeatureRouter.config must use FeatureConfig or None")
         self.config = default_feature_config() if config is None else config
 
     def route(
@@ -50,6 +52,8 @@ class FeatureRouter:
         # a route operation is actually requested.
         from arkts_code_reviewer.code_analysis.file_analysis_models import UnitFactScope
 
+        if not isinstance(scopes, Sequence) or isinstance(scopes, str | bytes):
+            raise ValueError("FeatureRouter.scopes must be a sequence")
         normalized = tuple(scopes)
         if any(not isinstance(scope, UnitFactScope) for scope in normalized):
             raise ValueError("FeatureRouter scopes must contain UnitFactScope values")
@@ -124,8 +128,11 @@ class FeatureRouter:
             definition.id
             for definition in self.config.dimensions_by_id.values()
             if definition.status == "Draft"
-            and set(definition.triggers.any_tag).intersection(
-                (*exact_tags, *shadow_exact_tags)
+            and (
+                definition.always_check
+                or set(definition.triggers.any_tag).intersection(
+                    (*exact_tags, *shadow_exact_tags)
+                )
             )
         )
         review_question_ids, shadow_review_question_ids = self._questions(
