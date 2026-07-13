@@ -375,6 +375,21 @@ def test_load_performs_full_model_and_projection_validation() -> None:
         corrupted.load(index.index_version)
 
 
+def test_load_uses_python_compatible_rule_id_collation() -> None:
+    index = _knowledge_index()
+    connection = _ScriptedConnection([_Step("pg_advisory_xact_lock"), *_load_steps(index)])
+    store = PostgresIndexStore(
+        "postgresql://fixture/test",
+        connector=_connector(connection),
+    )
+
+    assert store.load(index.index_version) == index
+    entry_query = next(
+        sql for sql, _ in connection.executed if "FROM retrieval.index_entries" in sql
+    )
+    assert 'ORDER BY rule_id COLLATE "C"' in entry_query
+
+
 def test_load_missing_index_fails_closed() -> None:
     index = _knowledge_index()
     connection = _ScriptedConnection(

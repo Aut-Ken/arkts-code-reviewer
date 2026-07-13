@@ -133,7 +133,7 @@ _SELECT_ENTRIES = """
         embedding_version
     FROM retrieval.index_entries
     WHERE index_version = %s
-    ORDER BY rule_id
+    ORDER BY rule_id COLLATE "C"
 """
 _SELECT_ALIAS = """
     SELECT aliases.index_version
