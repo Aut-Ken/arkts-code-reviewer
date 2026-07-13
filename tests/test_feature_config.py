@@ -377,8 +377,8 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "sidecars/knowledge-api-parser/parse_api.js": (
             "arkts_code_reviewer/knowledge/sidecars/api_parser/parse_api.js"
         ),
-        "prompts/knowledge/grok-knowledge-auditor-v3.md": (
-            "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v3.md"
+        "prompts/knowledge/grok-knowledge-auditor-v4.md": (
+            "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v4.md"
         ),
     }
     assert DEFAULT_TAGS_PATH.is_file()

@@ -106,7 +106,7 @@ def test_unknown_grok_model_cannot_accept_packet() -> None:
             "kind": "model",
             "provider": "xai",
             "model": "unknown",
-            "prompt_version": "grok-knowledge-auditor-v3",
+            "prompt_version": "grok-knowledge-auditor-v4",
         },
         "packet_decision": "accept",
         "clause_reviews": [],

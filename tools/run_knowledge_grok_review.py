@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -15,7 +16,7 @@ from arkts_code_reviewer.knowledge.review_validation import (
 
 DEFAULT_PACKET_ROOT = Path(
     "/home/autken/Code/arkts-review-data/reports/knowledge-review/"
-    "knowledge-seed-v1-grok-4.5-auditor-v3"
+    "knowledge-seed-v1-grok-4.5-auditor-v4"
 )
 DEFAULT_OUTPUT_ROOT = Path(
     "/home/autken/Code/arkts-review-data/reports/knowledge-review-responses/"
@@ -128,10 +129,11 @@ def run_review(
     if existing:
         raise ValueError(f"Knowledge review output already exists: {existing}")
     output_dir.mkdir(parents=True, exist_ok=True)
+    request_path: Path | None = None
     command = [
         grok_binary,
-        "--single",
-        request,
+        "--prompt-file",
+        "__REQUEST_FILE__",
         "--model",
         packet.model_name,
         "--reasoning-effort",
@@ -153,6 +155,17 @@ def run_review(
         "json",
     ]
     try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            prefix=".grok-request-",
+            suffix=".md",
+            dir=output_dir,
+            delete=False,
+        ) as request_file:
+            request_file.write(request)
+            request_path = Path(request_file.name)
+        command[2] = str(request_path)
         completed = subprocess.run(
             command,
             check=False,
@@ -162,6 +175,9 @@ def run_review(
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise ValueError("Grok CLI invocation failed before producing a response") from exc
+    finally:
+        if request_path is not None:
+            request_path.unlink(missing_ok=True)
     if completed.returncode != 0:
         digest = packet.packet_id.rsplit(":", 1)[-1]
         failure_prefix = output_dir / f"review-{digest}.failed"

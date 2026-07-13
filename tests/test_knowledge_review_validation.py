@@ -182,7 +182,7 @@ def review_packet() -> KnowledgeReviewPacket:
         export_policy_fingerprint=(
             "knowledge-model-export-policy:sha256:" + "7" * 64
         ),
-        prompt_version="grok-knowledge-auditor-v3",
+        prompt_version="grok-knowledge-auditor-v4",
         prompt_hash="sha256:" + "8" * 64,
         tag_registry=tuple(
             sorted(feature_config.tags_by_id.values(), key=lambda item: item.id)
@@ -212,7 +212,7 @@ def _accept_payload(packet: KnowledgeReviewPacket) -> dict[str, object]:
             "kind": "model",
             "provider": "xai",
             "model": "grok-4",
-            "prompt_version": "grok-knowledge-auditor-v3",
+            "prompt_version": "grok-knowledge-auditor-v4",
         },
         "packet_decision": "accept",
         "clause_reviews": [
@@ -424,7 +424,7 @@ def test_registered_annotation_correction_is_accepted_as_uncertain(
                 "proposed_value": "model supplied scenario",
                 "reason_code": "insufficient_source_evidence",
             },
-            "only correct registered",
+            "Input should be",
         ),
     ],
 )

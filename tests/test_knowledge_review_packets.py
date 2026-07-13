@@ -344,7 +344,7 @@ def test_external_export_succeeds_only_when_both_policy_and_source_allow_it() ->
             enabled=True,
             provider="xai",
             allowed_models=("grok-test",),
-            allowed_prompt_versions=("grok-knowledge-auditor-v3",),
+            allowed_prompt_versions=("grok-knowledge-auditor-v4",),
             source_allowlist=(
                 ModelExportSourceRule(
                     source_id=SOURCE_ID,
@@ -391,7 +391,7 @@ def test_external_export_requires_source_governance_even_when_allowlisted() -> N
             enabled=True,
             provider="xai",
             allowed_models=("grok-test",),
-            allowed_prompt_versions=("grok-knowledge-auditor-v3",),
+            allowed_prompt_versions=("grok-knowledge-auditor-v4",),
             source_allowlist=(
                 ModelExportSourceRule(
                     source_id=SOURCE_ID,

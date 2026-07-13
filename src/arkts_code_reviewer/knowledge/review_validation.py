@@ -14,7 +14,14 @@ from arkts_code_reviewer.knowledge.models import (
 )
 from arkts_code_reviewer.knowledge.review_packets import KnowledgeReviewPacket
 
-_REGISTERED_CHANGE_KINDS = {"api", "dimension", "domain", "tag"}
+_REGISTERED_CHANGE_KINDS = {
+    "api",
+    "component",
+    "decorator",
+    "dimension",
+    "domain",
+    "tag",
+}
 
 
 class _DuplicateKeyError(ValueError):
@@ -148,6 +155,10 @@ def _annotation_values(
     values: Iterable[str]
     if kind == "api":
         values = annotation.apis
+    elif kind == "component":
+        values = annotation.components
+    elif kind == "decorator":
+        values = annotation.decorators
     elif kind == "dimension":
         values = annotation.dimension_ids
     elif kind == "domain":
@@ -164,6 +175,18 @@ def _annotation_values(
 def _registered_values(packet: KnowledgeReviewPacket, kind: str) -> frozenset[str]:
     if kind == "api":
         return frozenset(item.canonical_name for item in packet.api_catalog_slice)
+    if kind == "component":
+        return frozenset(
+            value
+            for item in packet.tag_registry
+            for value in item.triggers.any_component
+        )
+    if kind == "decorator":
+        return frozenset(
+            value
+            for item in packet.tag_registry
+            for value in item.triggers.any_decorator
+        )
     if kind == "dimension":
         return frozenset(item.id for item in packet.dimension_registry)
     if kind == "domain":
@@ -203,7 +226,7 @@ def _validate_annotation_changes(
         kind = change.annotation_kind
         if kind not in _REGISTERED_CHANGE_KINDS:
             raise ValueError(
-                "Knowledge review may only correct registered API, Dimension, Domain, or Tag values"
+                "Knowledge review correction kind is not identity-bound by the packet"
             )
         current_values = _annotation_values(annotation, kind)
         registered_values = _registered_values(packet, kind)

@@ -47,6 +47,14 @@ AnnotationKind = Literal[
     "decorator",
     "scenario",
 ]
+ModelReviewAnnotationKind = Literal[
+    "api",
+    "tag",
+    "dimension",
+    "domain",
+    "component",
+    "decorator",
+]
 AnnotationAction = Literal["add", "remove", "replace"]
 ApiLanguageMode = Literal["dynamic", "static", "unified"]
 AnnotationTargetKind = Literal["clause", "api_symbol"]
@@ -629,7 +637,7 @@ class ModelReviewEvidence(_FrozenModel):
 
 
 class AnnotationChange(_FrozenModel):
-    annotation_kind: AnnotationKind
+    annotation_kind: ModelReviewAnnotationKind
     current_value: str | None
     proposed_action: AnnotationAction
     proposed_value: str | None
@@ -733,7 +741,7 @@ class ModelReviewer(_FrozenModel):
     kind: Literal["model"]
     provider: Literal["xai"]
     model: Annotated[str, Field(min_length=1)]
-    prompt_version: Literal["grok-knowledge-auditor-v3"]
+    prompt_version: Literal["grok-knowledge-auditor-v4"]
 
 
 class ModelReviewSummary(_FrozenModel):
