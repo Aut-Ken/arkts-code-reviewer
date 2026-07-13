@@ -31,6 +31,7 @@ from arkts_code_reviewer.knowledge.review_validation import (
 )
 
 CAMPAIGN_SUMMARY_SCHEMA_VERSION = "knowledge-grok-campaign-summary-v1"
+PARTIAL_CAMPAIGN_AUDIT_SCHEMA_VERSION = "knowledge-partial-campaign-audit-v1"
 
 _ROUND_PREFIX_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 _PACKET_ID_RE = re.compile(r"^knowledge-review-packet:sha256:([0-9a-f]{64})$")
@@ -443,6 +444,136 @@ class KnowledgeGrokCampaignSummary(_FrozenModel):
             raise ValueError("Campaign transport failure count is inconsistent")
         if self.summary_id != self.expected_summary_id():
             raise ValueError("KnowledgeGrokCampaignSummary.summary_id does not match content")
+        return self
+
+
+class PartialKnowledgeGrokCampaignAudit(_FrozenModel):
+    """Content-addressed audit of every valid receipt available in one round.
+
+    Unlike :class:`KnowledgeGrokCampaignSummary`, this contract records missing
+    packets instead of treating them as release-ready.  It exists only for
+    explicitly non-production evaluation builds; the production summary keeps
+    requiring exactly one receipt for every packet.
+    """
+
+    schema_version: Literal["knowledge-partial-campaign-audit-v1"] = (
+        "knowledge-partial-campaign-audit-v1"
+    )
+    audit_id: Annotated[
+        str,
+        Field(pattern=r"^knowledge-partial-campaign-audit:sha256:[0-9a-f]{64}$"),
+    ]
+    packet_build_id: Annotated[
+        str,
+        Field(pattern=r"^knowledge-review-packets:sha256:[0-9a-f]{64}$"),
+    ]
+    packet_manifest_hash: Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
+    round_prefix: Annotated[str, Field(min_length=1)]
+    round_names: tuple[str, ...]
+    source_packet_ids: tuple[str, ...]
+    selected_receipts: tuple[SelectedCampaignReview, ...]
+    missing_packet_ids: tuple[str, ...]
+    failed_attempts: tuple[CampaignFailedAttempt, ...]
+
+    @field_validator(
+        "round_names",
+        "source_packet_ids",
+        "selected_receipts",
+        "missing_packet_ids",
+        "failed_attempts",
+        mode="before",
+    )
+    @classmethod
+    def parse_sequences(cls, value: object) -> tuple[object, ...]:
+        if not isinstance(value, list | tuple):
+            raise ValueError("Partial campaign audit collections must be sequences")
+        return tuple(value)
+
+    def identity_payload(self) -> dict[str, object]:
+        return {
+            "packet_build_id": self.packet_build_id,
+            "packet_manifest_hash": self.packet_manifest_hash,
+            "round_prefix": self.round_prefix,
+            "round_names": self.round_names,
+            "source_packet_ids": self.source_packet_ids,
+            "selected_receipts": [
+                item.model_dump(mode="json") for item in self.selected_receipts
+            ],
+            "missing_packet_ids": self.missing_packet_ids,
+            "failed_attempts": [
+                item.model_dump(mode="json") for item in self.failed_attempts
+            ],
+        }
+
+    def expected_audit_id(self) -> str:
+        return _canonical_hash(
+            "knowledge-partial-campaign-audit",
+            self.identity_payload(),
+        )
+
+    @model_validator(mode="after")
+    def validate_audit(self) -> PartialKnowledgeGrokCampaignAudit:
+        if not _ROUND_PREFIX_RE.fullmatch(self.round_prefix):
+            raise ValueError("Partial campaign round_prefix must use lowercase kebab-case")
+        if not self.round_names or list(self.round_names) != sorted(set(self.round_names)):
+            raise ValueError("Partial campaign round_names must be sorted and unique")
+        if any(
+            name != self.round_prefix and not name.startswith(f"{self.round_prefix}-")
+            for name in self.round_names
+        ):
+            raise ValueError("Partial campaign round_names do not match round_prefix")
+        if not self.source_packet_ids or list(self.source_packet_ids) != sorted(
+            set(self.source_packet_ids)
+        ):
+            raise ValueError("Partial campaign source packets must be sorted and unique")
+        selected_ids = tuple(item.packet_id for item in self.selected_receipts)
+        if selected_ids != tuple(sorted(set(selected_ids))):
+            raise ValueError("Partial campaign selected receipts must be packet-sorted")
+        if self.missing_packet_ids != tuple(sorted(set(self.missing_packet_ids))):
+            raise ValueError("Partial campaign missing packets must be sorted and unique")
+        if set(selected_ids).intersection(self.missing_packet_ids) or tuple(
+            sorted((*selected_ids, *self.missing_packet_ids))
+        ) != self.source_packet_ids:
+            raise ValueError(
+                "Partial campaign selected and missing packets must partition the source build"
+            )
+        known_rounds = set(self.round_names)
+        if any(item.round_name not in known_rounds for item in self.selected_receipts):
+            raise ValueError("Partial campaign receipt references an unknown round")
+        failure_keys = [
+            (item.round_name, item.packet_id, item.failure_kind, item.message)
+            for item in self.failed_attempts
+        ]
+        if failure_keys != sorted(set(failure_keys)):
+            raise ValueError("Partial campaign failed attempts must be sorted and unique")
+        if any(
+            item.round_name not in known_rounds
+            or item.packet_id not in set(self.source_packet_ids)
+            for item in self.failed_attempts
+        ):
+            raise ValueError("Partial campaign failed attempt has unknown provenance")
+        request_ids = [
+            *(item.request_id for item in self.selected_receipts),
+            *(
+                item.request_id
+                for item in self.failed_attempts
+                if item.request_id is not None
+            ),
+        ]
+        session_ids = [
+            *(item.session_id for item in self.selected_receipts),
+            *(
+                item.session_id
+                for item in self.failed_attempts
+                if item.session_id is not None
+            ),
+        ]
+        if len(request_ids) != len(set(request_ids)):
+            raise ValueError("Partial campaign request IDs must be globally unique")
+        if len(session_ids) != len(set(session_ids)):
+            raise ValueError("Partial campaign session IDs must be globally unique")
+        if self.audit_id != self.expected_audit_id():
+            raise ValueError("Partial campaign audit_id does not match content")
         return self
 
 
@@ -1089,6 +1220,125 @@ type LoadedSelectedCampaignReview = tuple[
 ]
 
 
+def audit_partial_knowledge_grok_campaign(
+    *,
+    packet_root: str | Path,
+    campaign_base: str | Path,
+    round_prefix: str,
+) -> tuple[
+    PartialKnowledgeGrokCampaignAudit,
+    KnowledgeReviewPacketBuild,
+    tuple[LoadedSelectedCampaignReview, ...],
+]:
+    """Validate every available receipt while explicitly recording gaps.
+
+    This is deliberately separate from ``summarize_knowledge_grok_campaign``.
+    The latter remains the release path and still rejects any missing packet.
+    """
+
+    packet_root_path = Path(packet_root)
+    campaign_base_path = Path(campaign_base)
+    build, _, _, packets, packet_raws = _load_packet_artifacts(packet_root_path)
+    manifest_hash = _sha256_bytes((packet_root_path / "manifest.json").read_bytes())
+    rounds = _round_directories(campaign_base_path, round_prefix)
+    receipt_paths: dict[str, list[tuple[Path, Path]]] = {}
+    for round_path in rounds:
+        for receipt_path in sorted(round_path.glob("*.receipt.json")):
+            if receipt_path.is_symlink() or not receipt_path.is_file():
+                raise ValueError("campaign receipts must be regular non-symlink files")
+            stem = receipt_path.name.removesuffix(".receipt.json")
+            packet_id = _packet_id_from_stem(stem)
+            receipt_paths.setdefault(packet_id, []).append((round_path, receipt_path))
+    unknown = sorted(set(receipt_paths) - set(packets))
+    if unknown:
+        raise ValueError(f"partial campaign receipts reference unknown packets: {unknown}")
+    duplicate = sorted(
+        packet_id for packet_id, paths in receipt_paths.items() if len(paths) != 1
+    )
+    if duplicate:
+        raise ValueError(
+            "partial campaign must select at most one validated receipt per packet: "
+            f"duplicate={duplicate}"
+        )
+
+    selected: list[SelectedCampaignReview] = []
+    loaded: list[LoadedSelectedCampaignReview] = []
+    selected_stems: set[tuple[str, str]] = set()
+    request_ids: list[str] = []
+    session_ids: list[str] = []
+    for packet_id in sorted(receipt_paths):
+        round_path, receipt_path = receipt_paths[packet_id][0]
+        item, review, request_id, session_id = _validate_selected_receipt(
+            receipt_path=receipt_path,
+            round_name=round_path.name,
+            packet=packets[packet_id],
+            packet_raw=packet_raws[packet_id],
+            campaign_base=campaign_base_path,
+        )
+        selected.append(item)
+        loaded.append((item, packets[packet_id], review))
+        selected_stems.add(
+            (round_path.name, receipt_path.name.removesuffix(".receipt.json"))
+        )
+        request_ids.append(request_id)
+        session_ids.append(session_id)
+
+    failed, failed_request_ids, failed_session_ids = _failed_attempts(
+        rounds=rounds,
+        selected_stems=selected_stems,
+        packets=packets,
+        campaign_base=campaign_base_path,
+    )
+    request_ids.extend(failed_request_ids)
+    session_ids.extend(failed_session_ids)
+    if len(request_ids) != len(set(request_ids)):
+        raise ValueError("partial campaign request_id values must be globally unique")
+    if len(session_ids) != len(set(session_ids)):
+        raise ValueError("partial campaign session_id values must be globally unique")
+
+    source_packet_ids = tuple(sorted(packets))
+    missing_packet_ids = tuple(sorted(set(packets) - set(receipt_paths)))
+    ordered_failures = tuple(
+        sorted(
+            failed,
+            key=lambda item: (
+                item.round_name,
+                item.packet_id,
+                item.failure_kind,
+                item.message,
+            ),
+        )
+    )
+    identity_payload = {
+        "packet_build_id": build.build_id,
+        "packet_manifest_hash": manifest_hash,
+        "round_prefix": round_prefix,
+        "round_names": tuple(item.name for item in rounds),
+        "source_packet_ids": source_packet_ids,
+        "selected_receipts": [item.model_dump(mode="json") for item in selected],
+        "missing_packet_ids": missing_packet_ids,
+        "failed_attempts": [
+            item.model_dump(mode="json") for item in ordered_failures
+        ],
+    }
+    audit_id = _canonical_hash(
+        "knowledge-partial-campaign-audit",
+        identity_payload,
+    )
+    audit = PartialKnowledgeGrokCampaignAudit(
+        audit_id=audit_id,
+        packet_build_id=build.build_id,
+        packet_manifest_hash=manifest_hash,
+        round_prefix=round_prefix,
+        round_names=tuple(item.name for item in rounds),
+        source_packet_ids=source_packet_ids,
+        selected_receipts=tuple(selected),
+        missing_packet_ids=missing_packet_ids,
+        failed_attempts=ordered_failures,
+    )
+    return audit, build, tuple(loaded)
+
+
 def load_selected_knowledge_grok_campaign_reviews(
     *,
     packet_root: str | Path,
@@ -1282,6 +1532,7 @@ def load_selected_knowledge_grok_campaign_reviews(
 
 __all__ = [
     "CAMPAIGN_SUMMARY_SCHEMA_VERSION",
+    "PARTIAL_CAMPAIGN_AUDIT_SCHEMA_VERSION",
     "CampaignArtifactRef",
     "CampaignFailedAttempt",
     "CampaignGlobalFindings",
@@ -1290,7 +1541,9 @@ __all__ = [
     "GrokReviewReceipt",
     "KnowledgeGrokCampaignSummary",
     "LoadedSelectedCampaignReview",
+    "PartialKnowledgeGrokCampaignAudit",
     "SelectedCampaignReview",
+    "audit_partial_knowledge_grok_campaign",
     "load_selected_knowledge_grok_campaign_reviews",
     "summarize_knowledge_grok_campaign",
 ]
