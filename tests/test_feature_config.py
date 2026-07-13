@@ -358,6 +358,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "config/dimensions.yaml": (
             "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
         ),
+        "config/knowledge_seed_v1.yaml": (
+            "arkts_code_reviewer/knowledge/defaults/knowledge_seed_v1.yaml"
+        ),
         "config/tags.yaml": "arkts_code_reviewer/feature_routing/defaults/tags.yaml",
     }
     assert DEFAULT_TAGS_PATH.is_file()

@@ -1,0 +1,84 @@
+schema_version: knowledge-seed-v1
+seed_id: knowledge-seed-v1
+description: First reviewed Knowledge build slice for stable Clause, API, annotation, and retrieval contracts.
+source_ids:
+  - arkui-specs
+  - interface-sdk-js
+  - openharmony-docs
+domains:
+  - async-taskpool-worker
+  - state-management-arkts
+  - timer-subscription-lifecycle
+documents:
+  - source_id: arkui-specs
+    relative_path: 04-common-capability/04-common-events/06-gesture-capability/Feat-05-gesture-recognizer-recovery-spec.md
+    domains: [state-management-arkts]
+  - source_id: arkui-specs
+    relative_path: 05-ui-components/02-navigation-components/01-navigation/Feat-05-navigation-transition-spec.md
+    domains: [async-taskpool-worker, timer-subscription-lifecycle]
+  - source_id: arkui-specs
+    relative_path: 05-ui-components/02-navigation-components/01-navigation/Feat-07-navigation-events-modifier-spec.md
+    domains: [timer-subscription-lifecycle]
+  - source_id: arkui-specs
+    relative_path: 05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md
+    domains: [timer-subscription-lifecycle]
+  - source_id: arkui-specs
+    relative_path: 05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-06-tabs-cache-scroll-spec.md
+    domains: [state-management-arkts, timer-subscription-lifecycle]
+  - source_id: arkui-specs
+    relative_path: 05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md
+    domains: [timer-subscription-lifecycle]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.arkui.StateManagement.d.ts
+    domains: [state-management-arkts]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.arkui.observer.d.ts
+    domains: [state-management-arkts, timer-subscription-lifecycle]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.events.emitter.d.ts
+    domains: [timer-subscription-lifecycle]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.systemTimer.d.ts
+    domains: [timer-subscription-lifecycle]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.taskpool.d.ts
+    domains: [async-taskpool-worker]
+  - source_id: interface-sdk-js
+    relative_path: api/@ohos.worker.d.ts
+    domains: [async-taskpool-worker]
+  - source_id: interface-sdk-js
+    relative_path: api/arkui/stateManagement/decorator.static.d.ets
+    domains: [state-management-arkts]
+  - source_id: interface-sdk-js
+    relative_path: arkts/builtin/static/Global.static.d.ets
+    domains: [timer-subscription-lifecycle]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/arkts-utils/sendable-constraints.md
+    domains: [async-taskpool-worker, state-management-arkts]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/arkts-utils/taskpool-introduction.md
+    domains: [async-taskpool-worker]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md
+    domains: [async-taskpool-worker]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/arkts-utils/worker-introduction.md
+    domains: [async-taskpool-worker]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/dfx/event-subscription-overview.md
+    domains: [timer-subscription-lifecycle]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/reference/common/js-apis-timer.md
+    domains: [timer-subscription-lifecycle]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md
+    domains: [state-management-arkts]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md
+    domains: [state-management-arkts, timer-subscription-lifecycle]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md
+    domains: [state-management-arkts]
+  - source_id: openharmony-docs
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-two-way-sync.md
+    domains: [state-management-arkts]

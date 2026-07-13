@@ -1,3 +1,8 @@
+from arkts_code_reviewer.knowledge.build import (
+    NormalizedKnowledgeBuild,
+    NormalizedSeedDocument,
+    build_normalized_seed,
+)
 from arkts_code_reviewer.knowledge.models import (
     AnnotationChange,
     AnnotationProvenance,
@@ -32,6 +37,11 @@ from arkts_code_reviewer.knowledge.registry import (
     resolve_source_path,
     verify_source_checkout,
 )
+from arkts_code_reviewer.knowledge.seed import (
+    KnowledgeSeed,
+    SeedDocument,
+    load_knowledge_seed,
+)
 
 __all__ = [
     "ApiSymbol",
@@ -51,7 +61,9 @@ __all__ = [
     "KnowledgeClause",
     "KnowledgeModelReview",
     "ModelReviewEvidence",
+    "NormalizedKnowledgeBuild",
     "NormalizedDocument",
+    "NormalizedSeedDocument",
     "SourceRef",
     "SourceBundle",
     "SourceBundleEntry",
@@ -60,8 +72,12 @@ __all__ = [
     "SourceSpan",
     "VerifiedSource",
     "build_source_bundle",
+    "build_normalized_seed",
     "ingestion_path_allowed",
     "load_source_registry",
+    "KnowledgeSeed",
+    "SeedDocument",
+    "load_knowledge_seed",
     "resolve_source_path",
     "verify_source_checkout",
 ]
