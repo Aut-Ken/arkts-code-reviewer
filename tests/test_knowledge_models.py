@@ -68,6 +68,36 @@ def test_accept_model_review_rejects_hidden_changes() -> None:
         )
 
 
+def test_model_review_evidence_rejects_path_escape() -> None:
+    with pytest.raises(ValidationError, match="safe relative path"):
+        ModelReviewEvidence(
+            source_id="openharmony-docs",
+            relative_path="../escape.md",
+            start_line=4,
+            end_line=4,
+            exact_quote="example",
+        )
+
+
+def test_accept_with_corrections_requires_a_concrete_change() -> None:
+    evidence = ModelReviewEvidence(
+        source_id="openharmony-docs",
+        relative_path="zh-cn/example.md",
+        start_line=4,
+        end_line=4,
+        exact_quote="example",
+    )
+    with pytest.raises(ValidationError, match="requires annotation changes"):
+        ClauseModelReview(
+            rule_id="RESOURCE/TIMER/R-01",
+            decision="accept_with_corrections",
+            issue_codes=("tag_error",),
+            evidence=(evidence,),
+            annotation_changes=(),
+            rationale="The candidate requires a Tag correction.",
+        )
+
+
 def test_unknown_grok_model_cannot_accept_packet() -> None:
     payload = {
         "schema_version": "knowledge-model-review-v1",

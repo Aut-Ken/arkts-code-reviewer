@@ -361,6 +361,12 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "config/knowledge_seed_v1.yaml": (
             "arkts_code_reviewer/knowledge/defaults/knowledge_seed_v1.yaml"
         ),
+        "config/knowledge_annotations.yaml": (
+            "arkts_code_reviewer/knowledge/defaults/knowledge_annotations.yaml"
+        ),
+        "config/knowledge_model_export.yaml": (
+            "arkts_code_reviewer/knowledge/defaults/knowledge_model_export.yaml"
+        ),
         "config/tags.yaml": "arkts_code_reviewer/feature_routing/defaults/tags.yaml",
         "sidecars/knowledge-api-parser/package-lock.json": (
             "arkts_code_reviewer/knowledge/sidecars/api_parser/package-lock.json"
@@ -370,6 +376,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         ),
         "sidecars/knowledge-api-parser/parse_api.js": (
             "arkts_code_reviewer/knowledge/sidecars/api_parser/parse_api.js"
+        ),
+        "prompts/knowledge/grok-knowledge-auditor-v1.md": (
+            "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v1.md"
         ),
     }
     assert DEFAULT_TAGS_PATH.is_file()

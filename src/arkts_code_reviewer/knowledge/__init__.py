@@ -1,3 +1,11 @@
+from arkts_code_reviewer.knowledge.annotation import (
+    KnowledgeAnnotationBuild,
+    build_knowledge_annotations,
+)
+from arkts_code_reviewer.knowledge.annotation_config import (
+    KnowledgeAnnotationConfig,
+    load_knowledge_annotation_config,
+)
 from arkts_code_reviewer.knowledge.build import (
     NormalizedKnowledgeBuild,
     NormalizedSeedDocument,
@@ -43,6 +51,17 @@ from arkts_code_reviewer.knowledge.registry import (
     resolve_source_path,
     verify_source_checkout,
 )
+from arkts_code_reviewer.knowledge.review_packets import (
+    KnowledgeModelExportPolicy,
+    KnowledgeReviewPacket,
+    KnowledgeReviewPacketBuild,
+    build_knowledge_review_packets,
+    load_knowledge_model_export_policy,
+    load_knowledge_review_prompt,
+)
+from arkts_code_reviewer.knowledge.review_validation import (
+    load_and_validate_knowledge_model_review,
+)
 from arkts_code_reviewer.knowledge.seed import (
     KnowledgeSeed,
     SeedDocument,
@@ -66,9 +85,14 @@ __all__ = [
     "IndexSegment",
     "IngestionProfile",
     "KnowledgeAnnotation",
+    "KnowledgeAnnotationBuild",
+    "KnowledgeAnnotationConfig",
     "KnowledgeClause",
     "KnowledgeExtractionBuild",
     "KnowledgeModelReview",
+    "KnowledgeModelExportPolicy",
+    "KnowledgeReviewPacket",
+    "KnowledgeReviewPacketBuild",
     "ModelReviewEvidence",
     "NormalizedKnowledgeBuild",
     "NormalizedDocument",
@@ -82,12 +106,18 @@ __all__ = [
     "VerifiedSource",
     "build_source_bundle",
     "build_knowledge_extraction",
+    "build_knowledge_annotations",
+    "build_knowledge_review_packets",
     "build_normalized_seed",
     "ingestion_path_allowed",
     "load_source_registry",
     "KnowledgeSeed",
     "SeedDocument",
     "load_knowledge_seed",
+    "load_knowledge_annotation_config",
+    "load_knowledge_model_export_policy",
+    "load_knowledge_review_prompt",
+    "load_and_validate_knowledge_model_review",
     "resolve_source_path",
     "verify_source_checkout",
 ]

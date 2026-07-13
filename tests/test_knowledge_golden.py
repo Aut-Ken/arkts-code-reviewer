@@ -11,6 +11,7 @@ from arkts_code_reviewer.knowledge.parsing.golden_subject import (
     current_knowledge_subject,
 )
 from arkts_code_reviewer.knowledge_validation.golden import (
+    ANNOTATION_FIELDS,
     STRUCTURE_FIELDS,
     assert_strict_baseline,
     evaluate_golden_suite,
@@ -43,23 +44,23 @@ def _mutate_manifest(tmp_path: Path, mutate: object) -> Path:
     return manifest
 
 
-def test_knowledge_k3_records_honest_structure_only_baseline() -> None:
+def test_knowledge_k4_records_honest_annotation_without_curation_baseline() -> None:
     suite = load_golden_suite(MANIFEST)
     report = evaluate_golden_suite(
         suite,
         current_knowledge_subject,
-        implementation="knowledge-structure-v1",
+        implementation="knowledge-annotation-v1",
     )
 
     assert len(suite.cases) == 12
-    assert report["matched_case_count"] == 1
-    assert report["mismatched_case_count"] == 11
+    assert report["matched_case_count"] == 4
+    assert report["mismatched_case_count"] == 8
     assert report["field_matched_case_counts"] == {
-        "annotations": 1,
+        "annotations": 12,
         "api_symbols": 12,
         "clauses": 4,
     }
-    assert report["implementation"] == "knowledge-structure-v1"
+    assert report["implementation"] == "knowledge-annotation-v1"
     assert is_perfect(report) is False
     assert_strict_baseline(report, suite, BASELINE)
 
@@ -71,6 +72,20 @@ def test_knowledge_k3_structure_gate_is_perfect() -> None:
         current_knowledge_subject,
         implementation="knowledge-structure-v1",
         fields=STRUCTURE_FIELDS,
+    )
+
+    assert report["matched_case_count"] == 12
+    assert report["mismatched_case_count"] == 0
+    assert is_perfect(report) is True
+
+
+def test_knowledge_k4_annotation_gate_is_perfect_without_promoting_drafts() -> None:
+    suite = load_golden_suite(MANIFEST)
+    report = evaluate_golden_suite(
+        suite,
+        current_knowledge_subject,
+        implementation="knowledge-annotation-v1",
+        fields=ANNOTATION_FIELDS,
     )
 
     assert report["matched_case_count"] == 12

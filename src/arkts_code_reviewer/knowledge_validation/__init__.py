@@ -1,4 +1,5 @@
 from arkts_code_reviewer.knowledge_validation.golden import (
+    ANNOTATION_FIELDS,
     FULL_FIELDS,
     STRUCTURE_FIELDS,
     KnowledgeGoldenCase,
@@ -11,6 +12,7 @@ from arkts_code_reviewer.knowledge_validation.golden import (
 )
 
 __all__ = [
+    "ANNOTATION_FIELDS",
     "FULL_FIELDS",
     "KnowledgeGoldenCase",
     "KnowledgeGoldenSuite",

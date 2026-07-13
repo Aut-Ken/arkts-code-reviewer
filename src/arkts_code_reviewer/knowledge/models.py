@@ -7,7 +7,14 @@ from datetime import datetime
 from pathlib import PurePosixPath
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 
 KNOWLEDGE_SCHEMA_VERSION = "knowledge-v1"
 KNOWLEDGE_REVIEW_SCHEMA_VERSION = "knowledge-model-review-v1"
@@ -36,7 +43,9 @@ AnnotationKind = Literal[
     "dimension",
     "domain",
     "keyword",
-    "applicability",
+    "component",
+    "decorator",
+    "scenario",
 ]
 AnnotationAction = Literal["add", "remove", "replace"]
 ApiLanguageMode = Literal["dynamic", "static", "unified"]
@@ -166,7 +175,11 @@ class Applicability(_FrozenModel):
 
     @field_validator("releases", "language_modes", "permissions", "system_capabilities")
     @classmethod
-    def validate_collections(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_collections(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _validate_sorted_unique(value, f"Applicability.{info.field_name}")
 
     @model_validator(mode="after")
@@ -187,7 +200,7 @@ class HeadingNode(_FrozenModel):
 
 
 class NormalizedDocument(_FrozenModel):
-    schema_version: Literal["knowledge-v1"] = KNOWLEDGE_SCHEMA_VERSION
+    schema_version: Literal["knowledge-v1"] = "knowledge-v1"
     document_id: Annotated[str, Field(min_length=1)]
     source_ref: SourceRef
     media_type: Annotated[str, Field(min_length=1)]
@@ -214,7 +227,7 @@ class ClauseExample(_FrozenModel):
 
 
 class ClauseCandidate(_FrozenModel):
-    schema_version: Literal["knowledge-v1"] = KNOWLEDGE_SCHEMA_VERSION
+    schema_version: Literal["knowledge-v1"] = "knowledge-v1"
     candidate_id: Annotated[str, Field(min_length=1)]
     native_rule_id: str | None = None
     rule_type: Annotated[str, Field(min_length=1)]
@@ -230,7 +243,11 @@ class ClauseCandidate(_FrozenModel):
 
     @field_validator("heading_path", "neighbor_candidate_ids", "diagnostics")
     @classmethod
-    def validate_sorted_fields(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_sorted_fields(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         if info.field_name == "heading_path":
             if any(not item for item in value):
                 raise ValueError("ClauseCandidate.heading_path must contain non-empty strings")
@@ -303,7 +320,7 @@ class ClauseCandidate(_FrozenModel):
 
 
 class KnowledgeClause(_FrozenModel):
-    schema_version: Literal["knowledge-v1"] = KNOWLEDGE_SCHEMA_VERSION
+    schema_version: Literal["knowledge-v1"] = "knowledge-v1"
     rule_id: Annotated[str, Field(min_length=1)]
     native_rule_id: str | None = None
     rule_type: Annotated[str, Field(min_length=1)]
@@ -395,7 +412,11 @@ class ApiSymbol(_FrozenModel):
 
     @field_validator("aliases", "permissions", "system_capabilities", "diagnostics")
     @classmethod
-    def validate_sorted_fields(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_sorted_fields(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _validate_sorted_unique(value, f"ApiSymbol.{info.field_name}")
 
     @model_validator(mode="after")
@@ -509,7 +530,11 @@ class KnowledgeAnnotation(_FrozenModel):
         "llm_keywords",
     )
     @classmethod
-    def validate_sorted_fields(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_sorted_fields(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _validate_sorted_unique(value, f"KnowledgeAnnotation.{info.field_name}")
 
     @model_validator(mode="after")
@@ -521,7 +546,11 @@ class KnowledgeAnnotation(_FrozenModel):
             *(('domain', value) for value in self.domains),
             *(('keyword', value) for value in self.raw_keywords),
             *(('keyword', value) for value in self.llm_keywords),
+            *(('component', value) for value in self.components),
+            *(('decorator', value) for value in self.decorators),
         }
+        if self.scenario is not None:
+            expected.add(("scenario", self.scenario))
         actual = {(item.kind, item.value) for item in self.provenance}
         if not expected.issubset(actual):
             raise ValueError("KnowledgeAnnotation.provenance must cover every published annotation")
@@ -574,6 +603,16 @@ class ModelReviewEvidence(_FrozenModel):
     start_line: Annotated[int, Field(ge=1)]
     end_line: Annotated[int, Field(ge=1)]
     exact_quote: Annotated[str, Field(min_length=1)]
+
+    @field_validator("relative_path")
+    @classmethod
+    def validate_relative_path(cls, value: str) -> str:
+        path = PurePosixPath(value)
+        if path.is_absolute() or not path.parts or "." in path.parts or ".." in path.parts:
+            raise ValueError("ModelReviewEvidence.relative_path must be a safe relative path")
+        if "\\" in value:
+            raise ValueError("ModelReviewEvidence.relative_path must use POSIX separators")
+        return str(path)
 
     @model_validator(mode="after")
     def validate_lines(self) -> ModelReviewEvidence:
@@ -636,6 +675,8 @@ class ClauseModelReview(_FrozenModel):
                 raise ValueError("accepted Clause review must not carry issues or changes")
         elif not self.issue_codes or not self.evidence:
             raise ValueError("non-accept Clause review requires issue codes and evidence")
+        if self.decision == "accept_with_corrections" and not self.annotation_changes:
+            raise ValueError("accept_with_corrections requires annotation changes")
         return self
 
 
@@ -643,7 +684,7 @@ class MissingClauseReview(_FrozenModel):
     proposed_rule_id: Annotated[str, Field(min_length=1)]
     rule_type: Annotated[str, Field(min_length=1)]
     text: Annotated[str, Field(min_length=1)]
-    evidence: tuple[ModelReviewEvidence, ...]
+    evidence: Annotated[tuple[ModelReviewEvidence, ...], Field(min_length=1)]
     rationale: Annotated[str, Field(min_length=1)]
 
     @model_validator(mode="after")
@@ -655,7 +696,7 @@ class MissingClauseReview(_FrozenModel):
 
 class DuplicateClauseGroup(_FrozenModel):
     rule_ids: tuple[str, ...]
-    evidence: tuple[ModelReviewEvidence, ...]
+    evidence: Annotated[tuple[ModelReviewEvidence, ...], Field(min_length=1)]
 
     @field_validator("rule_ids")
     @classmethod
@@ -669,7 +710,7 @@ class DuplicateClauseGroup(_FrozenModel):
 class KnowledgeConflictReview(_FrozenModel):
     conflict_id: Annotated[str, Field(min_length=1)]
     rule_ids: tuple[str, ...]
-    evidence: tuple[ModelReviewEvidence, ...]
+    evidence: Annotated[tuple[ModelReviewEvidence, ...], Field(min_length=1)]
     rationale: Annotated[str, Field(min_length=1)]
 
     @field_validator("rule_ids")
@@ -696,7 +737,7 @@ class ModelReviewSummary(_FrozenModel):
 
 
 class KnowledgeModelReview(_FrozenModel):
-    schema_version: Literal["knowledge-model-review-v1"] = KNOWLEDGE_REVIEW_SCHEMA_VERSION
+    schema_version: Literal["knowledge-model-review-v1"] = "knowledge-model-review-v1"
     packet_id: Annotated[str, Field(pattern=r"^knowledge-review-packet:sha256:[0-9a-f]{64}$")]
     reviewer: ModelReviewer
     packet_decision: PacketReviewDecision

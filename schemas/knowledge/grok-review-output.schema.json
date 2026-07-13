@@ -10,7 +10,9 @@
             "dimension",
             "domain",
             "keyword",
-            "applicability"
+            "component",
+            "decorator",
+            "scenario"
           ],
           "title": "Annotation Kind",
           "type": "string"
@@ -124,6 +126,7 @@
           "items": {
             "$ref": "#/$defs/ModelReviewEvidence"
           },
+          "minItems": 1,
           "title": "Evidence",
           "type": "array"
         },
@@ -154,6 +157,7 @@
           "items": {
             "$ref": "#/$defs/ModelReviewEvidence"
           },
+          "minItems": 1,
           "title": "Evidence",
           "type": "array"
         },
@@ -186,6 +190,7 @@
           "items": {
             "$ref": "#/$defs/ModelReviewEvidence"
           },
+          "minItems": 1,
           "title": "Evidence",
           "type": "array"
         },

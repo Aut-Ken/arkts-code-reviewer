@@ -5,7 +5,24 @@
     "cases": [
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "clearInterval"
+              ],
+              "dimension_ids": [
+                "DIM-06"
+              ],
+              "domains": [
+                "component-lifecycle",
+                "resource-management"
+              ],
+              "tags": [
+                "has_timer"
+              ],
+              "target_id": "TIMER/AC-1.1"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -35,7 +52,6 @@
         },
         "case_id": "KG001",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -94,7 +110,30 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "autoPlay"
+              ],
+              "dimension_ids": [],
+              "domains": [
+                "ui-components"
+              ],
+              "tags": [],
+              "target_id": "AUTOPLAY/AC-2.1"
+            },
+            {
+              "apis": [
+                "autoPlayInterval"
+              ],
+              "dimension_ids": [],
+              "domains": [
+                "ui-components"
+              ],
+              "tags": [],
+              "target_id": "AUTOPLAY/AC-2.2"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -145,7 +184,6 @@
         },
         "case_id": "KG002",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -233,7 +271,22 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [],
+              "dimension_ids": [
+                "DIM-06"
+              ],
+              "domains": [
+                "background-task",
+                "resource-management"
+              ],
+              "tags": [
+                "has_timer"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG003_constraint.md:约束与限制:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -263,7 +316,6 @@
         },
         "case_id": "KG003",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -320,7 +372,36 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "taskpool.Task"
+              ],
+              "dimension_ids": [
+                "DIM-07"
+              ],
+              "domains": [
+                "taskpool-concurrency"
+              ],
+              "tags": [
+                "has_taskpool"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:01"
+            },
+            {
+              "apis": [],
+              "dimension_ids": [
+                "DIM-07"
+              ],
+              "domains": [
+                "taskpool-concurrency"
+              ],
+              "tags": [
+                "has_taskpool"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:02"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -371,7 +452,6 @@
         },
         "case_id": "KG004",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -465,7 +545,23 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [],
+              "dimension_ids": [
+                "DIM-06"
+              ],
+              "domains": [
+                "component-lifecycle",
+                "resource-management"
+              ],
+              "tags": [
+                "has_lifecycle",
+                "has_subscription"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG005_note.md:组件生命周期:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -494,7 +590,6 @@
         },
         "case_id": "KG005",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -551,7 +646,23 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "worker.postMessage"
+              ],
+              "dimension_ids": [
+                "DIM-07"
+              ],
+              "domains": [
+                "worker-concurrency"
+              ],
+              "tags": [
+                "has_worker"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG006_code_example.md:Worker 通信:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -589,7 +700,6 @@
         },
         "case_id": "KG006",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -653,7 +763,19 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [],
+              "dimension_ids": [],
+              "domains": [
+                "state-management"
+              ],
+              "tags": [
+                "has_state_management"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG007_versioned.md:API 12 起:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -683,7 +805,6 @@
         },
         "case_id": "KG007",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -735,7 +856,19 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [],
+              "dimension_ids": [],
+              "domains": [
+                "state-management"
+              ],
+              "tags": [
+                "has_state_management"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG008_parent_context.md:@Link:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -766,7 +899,6 @@
         },
         "case_id": "KG008",
         "differences": [
-          "expected.annotations differs",
           "expected.clauses differs"
         ],
         "expected": {
@@ -821,7 +953,19 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [],
+              "dimension_ids": [],
+              "domains": [
+                "state-management"
+              ],
+              "tags": [
+                "has_state_management"
+              ],
+              "target_id": "knowledge-golden-synthetic:KG009_deprecated.md:Deprecated:01"
+            }
+          ],
           "api_symbols": [],
           "clauses": [
             {
@@ -850,9 +994,7 @@
           ]
         },
         "case_id": "KG009",
-        "differences": [
-          "expected.annotations differs"
-        ],
+        "differences": [],
         "expected": {
           "annotations": [
             {
@@ -896,7 +1038,7 @@
             }
           ]
         },
-        "matched": false
+        "matched": true
       },
       {
         "actual": {
@@ -915,7 +1057,38 @@
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "taskpool.Task"
+              ],
+              "dimension_ids": [
+                "DIM-07"
+              ],
+              "domains": [
+                "taskpool-concurrency"
+              ],
+              "tags": [
+                "has_taskpool"
+              ],
+              "target_id": "taskpool.Task"
+            },
+            {
+              "apis": [
+                "taskpool.Task.isCanceled"
+              ],
+              "dimension_ids": [
+                "DIM-07"
+              ],
+              "domains": [
+                "taskpool-concurrency"
+              ],
+              "tags": [
+                "has_taskpool"
+              ],
+              "target_id": "taskpool.Task.isCanceled"
+            }
+          ],
           "api_symbols": [
             {
               "canonical_name": "taskpool.Task",
@@ -943,9 +1116,7 @@
           "clauses": []
         },
         "case_id": "KG011",
-        "differences": [
-          "expected.annotations differs"
-        ],
+        "differences": [],
         "expected": {
           "annotations": [
             {
@@ -1013,11 +1184,27 @@
           ],
           "clauses": []
         },
-        "matched": false
+        "matched": true
       },
       {
         "actual": {
-          "annotations": [],
+          "annotations": [
+            {
+              "apis": [
+                "timer.legacyStart"
+              ],
+              "dimension_ids": [
+                "DIM-06"
+              ],
+              "domains": [
+                "resource-management"
+              ],
+              "tags": [
+                "has_timer"
+              ],
+              "target_id": "timer.legacyStart"
+            }
+          ],
           "api_symbols": [
             {
               "canonical_name": "timer.legacyStart",
@@ -1034,9 +1221,7 @@
           "clauses": []
         },
         "case_id": "KG012",
-        "differences": [
-          "expected.annotations differs"
-        ],
+        "differences": [],
         "expected": {
           "annotations": [
             {
@@ -1076,11 +1261,11 @@
           ],
           "clauses": []
         },
-        "matched": false
+        "matched": true
       }
     ],
     "field_matched_case_counts": {
-      "annotations": 1,
+      "annotations": 12,
       "api_symbols": 12,
       "clauses": 4
     },
@@ -1089,10 +1274,10 @@
       "api_symbols",
       "clauses"
     ],
-    "implementation": "knowledge-structure-v1",
+    "implementation": "knowledge-annotation-v1",
     "manifest_sha256": "d9cbc7a388f021f34eaab01306c575a9c8257e2aa104a6244660244685436e47",
-    "matched_case_count": 1,
-    "mismatched_case_count": 11,
+    "matched_case_count": 4,
+    "mismatched_case_count": 8,
     "schema_version": "knowledge-golden-report-v1",
     "suite_id": "knowledge-k0"
   },

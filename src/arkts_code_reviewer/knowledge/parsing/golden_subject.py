@@ -1,14 +1,33 @@
 from __future__ import annotations
 
+from functools import lru_cache
+
 from markdown_it import MarkdownIt
 
+from arkts_code_reviewer.feature_routing.config import load_default_feature_config
+from arkts_code_reviewer.knowledge.annotation import (
+    annotate_api_symbol,
+    annotate_clause,
+)
+from arkts_code_reviewer.knowledge.annotation_config import (
+    KnowledgeAnnotationConfig,
+    load_knowledge_annotation_config,
+)
 from arkts_code_reviewer.knowledge.models import (
     HeadingNode,
+    KnowledgeAnnotation,
     NormalizedDocument,
     SourceRef,
     SourceSpan,
 )
-from arkts_code_reviewer.knowledge.parsing.clauses import parse_markdown_clauses
+from arkts_code_reviewer.knowledge.parsing.api import (
+    ApiCatalogParseResult,
+    parse_api_symbols,
+)
+from arkts_code_reviewer.knowledge.parsing.clauses import (
+    ClauseParseResult,
+    parse_markdown_clauses,
+)
 from arkts_code_reviewer.knowledge_validation.golden import KnowledgeGoldenCase
 
 
@@ -53,11 +72,14 @@ def _normalized_document(case: KnowledgeGoldenCase) -> NormalizedDocument:
     )
 
 
-def _clause_projection(case: KnowledgeGoldenCase) -> list[dict[str, object]]:
-    result = parse_markdown_clauses(
-        _normalized_document(case),
-        rule_namespace=case.source.rule_namespace,
+@lru_cache(maxsize=1)
+def _annotation_config() -> KnowledgeAnnotationConfig:
+    return load_knowledge_annotation_config(
+        feature_config=load_default_feature_config()
     )
+
+
+def _clause_projection(result: ClauseParseResult) -> list[dict[str, object]]:
     clauses: list[dict[str, object]] = []
     for item in result.clauses:
         candidate = item.candidate
@@ -86,10 +108,7 @@ def _clause_projection(case: KnowledgeGoldenCase) -> list[dict[str, object]]:
     return clauses
 
 
-def _api_projection(case: KnowledgeGoldenCase) -> list[dict[str, object]]:
-    from arkts_code_reviewer.knowledge.parsing.api import parse_api_symbols
-
-    result = parse_api_symbols(_normalized_document(case))
+def _api_projection(result: ApiCatalogParseResult) -> list[dict[str, object]]:
     return [
         {
             "canonical_name": symbol.canonical_name,
@@ -103,17 +122,66 @@ def _api_projection(case: KnowledgeGoldenCase) -> list[dict[str, object]]:
     ]
 
 
+def _annotation_projection(
+    annotation: KnowledgeAnnotation,
+    target_id: str,
+) -> dict[str, object]:
+    return {
+        "target_id": target_id,
+        "tags": list(annotation.tags),
+        "dimension_ids": list(annotation.dimension_ids),
+        "apis": list(annotation.apis),
+        "domains": list(annotation.domains),
+    }
+
+
 def current_knowledge_subject(case: KnowledgeGoldenCase) -> dict[str, object]:
+    document = _normalized_document(case)
+    feature_config = load_default_feature_config()
+    annotation_config = _annotation_config()
+    index_version = "knowledge-golden-annotation-v1"
     if case.source.relative_path.endswith(".md"):
-        clauses = _clause_projection(case)
+        clause_result = parse_markdown_clauses(
+            document,
+            rule_namespace=case.source.rule_namespace,
+        )
+        clauses = _clause_projection(clause_result)
         api_symbols: list[dict[str, object]] = []
+        annotations = [
+            _annotation_projection(
+                annotate_clause(
+                    clause,
+                    catalog={},
+                    feature_config=feature_config,
+                    config=annotation_config,
+                    index_version=index_version,
+                ),
+                clause.rule_id,
+            )
+            for clause in clause_result.clauses
+        ]
     else:
         clauses = []
-        api_symbols = _api_projection(case)
+        api_result = parse_api_symbols(document)
+        api_symbols = _api_projection(api_result)
+        catalog = {symbol.canonical_name: symbol for symbol in api_result.symbols}
+        annotations = [
+            _annotation_projection(
+                annotate_api_symbol(
+                    symbol,
+                    catalog=catalog,
+                    feature_config=feature_config,
+                    config=annotation_config,
+                    index_version=index_version,
+                ),
+                symbol.canonical_name,
+            )
+            for symbol in api_result.symbols
+        ]
     return {
         "clauses": clauses,
         "api_symbols": api_symbols,
-        "annotations": [],
+        "annotations": annotations,
     }
 
 

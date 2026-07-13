@@ -1,0 +1,14 @@
+schema_version: knowledge-model-export-policy-v1
+version: knowledge-model-export-policy-v1
+max_clauses_per_packet: 25
+max_source_ids_per_packet: 3
+context_lines_before: 2
+context_lines_after: 2
+max_excerpt_lines: 120
+max_packet_excerpt_characters: 100000
+external_model:
+  enabled: false
+  provider: xai
+  allowed_models: []
+  allowed_prompt_versions: []
+  source_allowlist: []

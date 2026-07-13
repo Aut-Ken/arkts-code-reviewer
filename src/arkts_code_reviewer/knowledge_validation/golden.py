@@ -7,7 +7,14 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
 from arkts_code_reviewer.knowledge.models import (
@@ -20,6 +27,7 @@ REPORT_SCHEMA_VERSION = "knowledge-golden-report-v1"
 BASELINE_SCHEMA_VERSION = "knowledge-golden-baseline-v1"
 SUITE_ID = "knowledge-k0"
 STRUCTURE_FIELDS = ("api_symbols", "clauses")
+ANNOTATION_FIELDS = ("api_symbols", "clauses", "annotations")
 FULL_FIELDS = ("annotations", "api_symbols", "clauses")
 
 GoldenSubject = Callable[["KnowledgeGoldenCase"], dict[str, object]]
@@ -45,7 +53,11 @@ class _Contract(_FrozenModel):
 
     @field_validator("tag_ids", "dimension_ids")
     @classmethod
-    def validate_ids(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_ids(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _sorted_unique(value, f"contract.{info.field_name}")
 
 
@@ -62,7 +74,7 @@ class _Source(_FrozenModel):
 
     @field_validator("file", "relative_path")
     @classmethod
-    def validate_paths(cls, value: str, info: object) -> str:
+    def validate_paths(cls, value: str, info: ValidationInfo) -> str:
         path = PurePosixPath(value)
         if (
             not value
@@ -77,7 +89,7 @@ class _Source(_FrozenModel):
 
     @field_validator("source_id", "repository", "authority")
     @classmethod
-    def validate_text(cls, value: str, info: object) -> str:
+    def validate_text(cls, value: str, info: ValidationInfo) -> str:
         if not value or value.strip() != value:
             raise ValueError(f"source.{info.field_name} must be non-empty and trimmed")
         return value
@@ -127,7 +139,11 @@ class _Applicability(_FrozenModel):
 
     @field_validator("releases", "language_modes")
     @classmethod
-    def validate_collections(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_collections(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _sorted_unique(value, f"applicability.{info.field_name}")
 
     @model_validator(mode="after")
@@ -168,7 +184,7 @@ class _ExpectedClause(_FrozenModel):
 
     @field_validator("rule_id", "rule_type", "text")
     @classmethod
-    def validate_text_fields(cls, value: str, info: object) -> str:
+    def validate_text_fields(cls, value: str, info: ValidationInfo) -> str:
         if not value or value.strip() != value:
             raise ValueError(f"clause.{info.field_name} must be non-empty and trimmed")
         return value
@@ -191,7 +207,7 @@ class _ExpectedApiSymbol(_FrozenModel):
 
     @field_validator("canonical_name", "kind", "signature")
     @classmethod
-    def validate_text_fields(cls, value: str, info: object) -> str:
+    def validate_text_fields(cls, value: str, info: ValidationInfo) -> str:
         if not value or value.strip() != value:
             raise ValueError(f"api_symbol.{info.field_name} must be non-empty and trimmed")
         return value
@@ -225,7 +241,11 @@ class _ExpectedAnnotation(_FrozenModel):
         "forbidden_dimension_ids",
     )
     @classmethod
-    def validate_collections(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_collections(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         return _sorted_unique(value, f"annotation.{info.field_name}")
 
     @model_validator(mode="after")
@@ -508,7 +528,7 @@ def _scope_projection(
     fields: tuple[str, ...],
 ) -> dict[str, object]:
     projection = {field: payload[field] for field in fields}
-    if fields == STRUCTURE_FIELDS:
+    if fields in {STRUCTURE_FIELDS, ANNOTATION_FIELDS}:
         clauses = projection["clauses"]
         if not isinstance(clauses, list):
             raise ValueError("Knowledge Golden clauses must be a list")
@@ -521,6 +541,54 @@ def _scope_projection(
     return projection
 
 
+def _annotation_diff(expected: object, actual: object) -> list[str]:
+    if not isinstance(expected, list) or not isinstance(actual, list):
+        return ["expected.annotations must be lists"]
+    expected_ids = [
+        item.get("target_id") if isinstance(item, dict) else None for item in expected
+    ]
+    actual_ids = [
+        item.get("target_id") if isinstance(item, dict) else None for item in actual
+    ]
+    if expected_ids != actual_ids:
+        return [
+            "expected.annotations target order differs: "
+            f"expected={expected_ids!r} actual={actual_ids!r}"
+        ]
+    differences: list[str] = []
+    actual_fields = {"target_id", "tags", "dimension_ids", "apis", "domains"}
+    for index, (expected_item, actual_item) in enumerate(zip(expected, actual, strict=True)):
+        path = f"expected.annotations[{index}]"
+        if not isinstance(expected_item, dict) or not isinstance(actual_item, dict):
+            differences.append(f"{path} must be objects")
+            continue
+        if set(actual_item) != actual_fields:
+            differences.append(
+                f"{path} actual fields differ: expected={sorted(actual_fields)} "
+                f"actual={sorted(actual_item)}"
+            )
+            continue
+        for field in ("target_id", "tags", "dimension_ids", "apis", "domains"):
+            differences.extend(
+                _diff(expected_item.get(field), actual_item.get(field), f"{path}.{field}")
+            )
+        forbidden_tags = set(expected_item.get("forbidden_tags", ()))
+        forbidden_dimensions = set(expected_item.get("forbidden_dimension_ids", ()))
+        actual_tags = set(actual_item.get("tags", ()))
+        actual_dimensions = set(actual_item.get("dimension_ids", ()))
+        if forbidden_tags.intersection(actual_tags):
+            differences.append(f"{path}.tags contains a forbidden Tag")
+        if forbidden_dimensions.intersection(actual_dimensions):
+            differences.append(f"{path}.dimension_ids contains a forbidden Dimension")
+    return differences
+
+
+def _field_diff(field: str, expected: object, actual: object) -> list[str]:
+    if field == "annotations":
+        return _annotation_diff(expected, actual)
+    return _diff(expected, actual, f"expected.{field}")
+
+
 def evaluate_golden_suite(
     suite: KnowledgeGoldenSuite,
     subject: GoldenSubject | None = None,
@@ -528,8 +596,8 @@ def evaluate_golden_suite(
     implementation: str = "not-implemented",
     fields: tuple[str, ...] = FULL_FIELDS,
 ) -> dict[str, object]:
-    if fields not in {STRUCTURE_FIELDS, FULL_FIELDS}:
-        raise ValueError("Knowledge Golden fields must be structure or full scope")
+    if fields not in {STRUCTURE_FIELDS, ANNOTATION_FIELDS, FULL_FIELDS}:
+        raise ValueError("Knowledge Golden fields must be structure, annotation, or full scope")
     active_subject = _empty_subject if subject is None else subject
     reports: list[dict[str, object]] = []
     field_matches = {field: 0 for field in fields}
@@ -542,13 +610,21 @@ def evaluate_golden_suite(
         expected_projection = _scope_projection(case.expected, fields)
         actual_projection = _scope_projection(actual, fields)
         for field in fields:
-            if not _diff(
+            if not _field_diff(
+                field,
                 expected_projection[field],
                 actual_projection[field],
-                f"expected.{field}",
             ):
                 field_matches[field] += 1
-        differences = _diff(expected_projection, actual_projection)
+        differences = [
+            difference
+            for field in fields
+            for difference in _field_diff(
+                field,
+                expected_projection[field],
+                actual_projection[field],
+            )
+        ]
         reports.append(
             {
                 "case_id": case.case_id,
@@ -632,6 +708,7 @@ def assert_strict_baseline(
 
 
 __all__ = [
+    "ANNOTATION_FIELDS",
     "FULL_FIELDS",
     "KnowledgeGoldenCase",
     "KnowledgeGoldenSuite",

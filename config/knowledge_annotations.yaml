@@ -1,0 +1,36 @@
+schema_version: knowledge-annotation-config-v1
+version: knowledge-annotations-v1
+source_domain_ids: [async-taskpool-worker, state-management-arkts, timer-subscription-lifecycle]
+keyword_tag_rules:
+  - tag_id: has_lifecycle
+    keywords: [aboutToDisappear, 生命周期, 组件销毁]
+  - tag_id: has_state_management
+    keywords: ['@Link', '@ObjectLink', '@ObservedV2', '@State', '@Trace', 状态存储, 状态管理]
+  - tag_id: has_subscription
+    keywords: [emitter.off, emitter.on, emitter.once, 传感器订阅, 解除订阅, 订阅]
+  - tag_id: has_taskpool
+    keywords: [TaskPool, taskpool.]
+  - tag_id: has_timer
+    keywords: [clearInterval, clearTimeout, setInterval, setTimeout, systemTimer., timer., 周期定时器, 定时器]
+  - tag_id: has_worker
+    keywords: [ThreadWorker, Worker, worker.]
+api_aliases:
+  - keyword: TaskPool
+    canonical_name: taskpool.Task
+    match_phrases: [使用 TaskPool]
+domain_rules:
+  - domain_id: background-task
+    any_keywords: [后台, 短时任务]
+  - domain_id: component-lifecycle
+    any_tags: [has_lifecycle]
+    any_keywords: [不再使用, 组件创建, 组件销毁]
+  - domain_id: resource-management
+    any_tags: [has_file_io, has_image, has_media, has_subscription, has_timer]
+  - domain_id: state-management
+    any_tags: [has_state_management]
+  - domain_id: taskpool-concurrency
+    any_tags: [has_taskpool]
+  - domain_id: ui-components
+    any_apis: [autoPlay, autoPlayInterval]
+  - domain_id: worker-concurrency
+    any_tags: [has_worker]

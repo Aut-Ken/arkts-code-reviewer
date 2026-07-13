@@ -9,6 +9,7 @@ from arkts_code_reviewer.knowledge.parsing.golden_subject import (
     current_knowledge_subject,
 )
 from arkts_code_reviewer.knowledge_validation.golden import (
+    ANNOTATION_FIELDS,
     FULL_FIELDS,
     STRUCTURE_FIELDS,
     assert_strict_baseline,
@@ -36,7 +37,7 @@ def main() -> int:
     parser.add_argument("--require-perfect", action="store_true")
     parser.add_argument(
         "--scope",
-        choices=("full", "structure"),
+        choices=("full", "structure", "annotation"),
         default="full",
         help="K-3 structure compares Clause/API; full also compares K-4 annotations",
     )
@@ -46,11 +47,17 @@ def main() -> int:
         parser.error("baseline operations require --scope full")
 
     suite = load_golden_suite(args.manifest)
-    fields = STRUCTURE_FIELDS if args.scope == "structure" else FULL_FIELDS
+    fields: tuple[str, ...]
+    if args.scope == "structure":
+        fields = STRUCTURE_FIELDS
+    elif args.scope == "annotation":
+        fields = ANNOTATION_FIELDS
+    else:
+        fields = FULL_FIELDS
     report = evaluate_golden_suite(
         suite,
         current_knowledge_subject,
-        implementation="knowledge-structure-v1",
+        implementation="knowledge-annotation-v1",
         fields=fields,
     )
     print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
