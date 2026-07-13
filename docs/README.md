@@ -38,7 +38,7 @@
 新建 Chat 或交接开发任务时，先让执行者阅读上面四份文档，再阅读本次要实现的模块
 文档。不要以 `archive/`、聊天记录或外部仓库 README 代替 canonical 文档。
 
-截至 2026-07-12 的可验证基线：
+截至 2026-07-13 的可验证基线：
 
 ```text
 主项目测试（npm ci 后）     全量 pytest 通过；精确计数以当前门禁输出为准
@@ -53,8 +53,12 @@ L1 declarations             5,414；63/63 文件均有 declaration
 Grok candidate              默认 23 例仅作 provisional 诊断；旧 evidence 尚未通过政策审计
 ReviewUnit                  RU-0～RU-5 已完成；ContextPlan 是模块最终交付边界
 Feature Routing             24 Tags、12 Dimensions、12 Review Questions 已完成并配置化
+Knowledge publication       双审/人工 curation/Baselined publication 合同已实现；真实 round-2 为 20/21，无正式 consensus/publication
+Retrieval Golden            36 case strict + require-perfect；确定性指标均为 1.0
+Retrieval embedding         Jina code 768D；12-case Recall@5 0.857143、Precision@5 0.692308、MRR 0.875
+Retrieval runtime           PostgreSQL 17 + pgvector Docker fixture 发布、回读和 alias 切换已验证；无生产知识索引
 来源登记                    19 项：11 knowledge + 4 corpus + 4 tool
-知识构建/在线检索/正式评审   尚未实现运行闭环
+正式评审                    Rules、Prompt/Final LLM、Finding 和 GitCode 尚未形成运行闭环
 ```
 
 快速复核命令：
@@ -68,6 +72,12 @@ PYTHONPATH=src python tools/evaluate_review_unit_v2_golden.py --require-perfect
 PYTHONPATH=src python tools/evaluate_context_plan_golden.py --require-perfect
 PYTHONPATH=src python tools/evaluate_feature_routing_golden.py --require-perfect
 PYTHONPATH=src python tools/check_feature_routing_package.py
+PYTHONPATH=src python tools/evaluate_retrieval_golden.py \
+  --strict-baseline tests/golden/retrieval/baseline.json --require-perfect
+PYTHONPATH=src python tools/run_retrieval_e2e.py
+PYTHONPATH=src python tools/evaluate_retrieval_embedding.py \
+  --cache /home/autken/.cache/arkts-code-reviewer/fastembed-code \
+  --local-files-only --require-thresholds
 PYTHONPATH=src python tools/check_parser_v1.py \
   --source-root /home/autken/Code/arkui_ace_engine \
   --include-candidate-diagnostics
@@ -77,7 +87,7 @@ PYTHONPATH=src python tools/check_parser_v1.py \
 provenance 和 R63 L0/L1 fail-closed 批测。candidate 分数仍标记为 provisional，不属于
 Parser v1 准确率承诺。
 
-### 当前开发交接：ReviewUnit 与 Feature Routing
+### 当前开发交接
 
 Parser v1 已由提交 `2c1df96` 冻结。RU-3 在不改变其默认输出和 Golden 的前提下，增加了
 显式选择的 `file-analysis-v1` sidecar schema：`CodeSourceRef`、`FileAnalysis`、带 UTF-16
@@ -145,9 +155,15 @@ Feature Routing 的独立 16-case Golden 已使用正式引擎通过 strict base
 Tag 的依赖；`AnalysisResult` 会从原始 UnitFactScopes 重放 Feature 结果。两份 YAML 同时通过
 wheel `force-include` 打包，source checkout 与安装环境共享相同配置语义。
 
-当前下一阶段是 relation discovery 与 Knowledge/Retrieval，而不是继续扩张 ReviewUnit 或
-Feature Routing。Knowledge、Retrieval、Rules、Prompt、最终 Finding 和 GitCode 仍未形成运行闭环。
-新会话除四份架构文档外，还应依次阅读模块 01、02、03、04、10 和 11。
+Retrieval v1 core/runtime 已从正式上游图构造请求，完成确定性与向量混合召回、RRF、适用性、
+Evidence 预算、36-case Golden、本地 Jina code embedding 选型以及 PostgreSQL/pgvector Docker
+fixture 验证。实现不会读取兼容 `RetrievalQuery`。运行时可从数据库装载并校验不可变索引，
+`RetrievalService` 对注入的索引在进程内执行；数据库候选下推尚未实现。仓库仍缺真实、经策展的
+`PublishedKnowledgeBuild` 和生产索引，所以不得把 fixture 指标写成生产知识准确率。
+
+当前下一阶段是准备真实 Baselined 知识发布，并实现 Rules、Prompt/Final LLM 与结构化 Finding；
+不要继续扩张 ReviewUnit/Feature Routing，也不要把 Retrieval 命中直接当成代码问题。
+新会话除四份架构文档外，还应按所开发模块阅读 01～11 的对应 canonical 文档。
 
 ### 按流水线阅读模块
 
@@ -158,7 +174,7 @@ Feature Routing。Knowledge、Retrieval、Rules、Prompt、最终 Finding 和 Gi
 | 03 | ReviewUnit 上下文规划 | `complete` | [03-review-unit.md](modules/03-review-unit.md) |
 | 04 | Tags、评审维度与问题路由 | `complete` | [04-feature-routing.md](modules/04-feature-routing.md) |
 | 05 | 知识库构建 | `partial` | [05-knowledge-base.md](modules/05-knowledge-base.md) |
-| 06 | Retrieval 检索 | `designed` | [06-retrieval.md](modules/06-retrieval.md) |
+| 06 | Retrieval 检索 | `partial`（core/runtime implemented；fixture tested；无生产知识） | [06-retrieval.md](modules/06-retrieval.md) |
 | 07 | Deterministic Rules | `designed` | [07-rules.md](modules/07-rules.md) |
 | 08 | Prompt 与 Final LLM | `designed` | [08-prompt-review.md](modules/08-prompt-review.md) |
 | 09 | 输出与 GitCode 集成 | `planned` | [09-output-integration.md](modules/09-output-integration.md) |

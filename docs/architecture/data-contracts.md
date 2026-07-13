@@ -620,7 +620,7 @@ Feature Routing 拥有 Question registry 和适用性选择；ReviewUnit/Context
 把上面的二字段 binding 转换为现有 Context Planner `QuestionBinding`；兼容入参若出现，只能
 验证相等，不能覆盖正式结果。
 
-## 12. 兼容 RetrievalQuery 与未来正式 Retrieval 输入
+## 12. 兼容 RetrievalQuery 与正式 Retrieval 输入
 
 当前 `AnalysisResult.retrieval_query` 是早期 CLI 的 compatibility-only 视图。它仍保留
 `RetrievalUnit.code_features/dimensions/routing_tags` 和 `MrContext.triggered_dimensions`，但必须
@@ -634,48 +634,87 @@ MR triggered_dimensions  == result.mr_dimensions
 ```
 
 它没有表达 `retrieval_policy`、exact/hint signal scope、Draft shadow、activation trace 或 Question
-bindings，因此不是后续在线 Retrieval 的正式输入。后续 Retrieval 不得读取兼容 Dimensions 或
-MR 并集后自行检索，否则会绕过 `retrieval_dimensions/routing_dimensions` 的政策边界。
+bindings，因此不是在线 Retrieval 的正式输入。`build_retrieval_request(...)` 已冻结
+`retrieval-request-v1`，只接收完整 `AnalysisResult + ContextPlanResult`；正式
+`FeatureRoutingResult` 必须已经绑定在 `AnalysisResult` 中并可重放，且实现不读取兼容对象。
 
-正式 Retrieval 输入尚未实现。它必须从 `ContextPlanResult + FeatureRoutingResult` 组装，并至少
-保留 Unit/profile identity、review question、正式/保守检索维度、配置 fingerprint、目标平台
-和独立知识 token budget；具体 schema 在 Retrieval 模块实现时另行冻结。
+正式请求绑定 `request_id/context_plan_id/feature_routing_id/feature_config_version/index_version`、
+目标平台和独立知识 token budget。每个 Unit 绑定 `source_ref_id/profile_id`、正式与可 dispatch
+Review Questions、`unit_exact` facts、exact/routing Tags、retrieval/routing Dimensions、最小代码
+摘录、确定性 intent、Parser/context quality 和 Unit 预算。请求对象会重放上游图并拒绝 identity、
+scope、排序、配置或预算漂移；Dimension 不能绕过 Feature Routing 独立启动检索。
 
 ## 13. EvidencePack
 
 ```jsonc
 {
-  "index_version": "idx-2026-07-10-001",
-  "source_bundle_id": "sha256:...",
+  "schema_version": "evidence-pack-v1",
+  "evidence_pack_id": "evidence-pack:sha256:...",
+  "request_id": "retrieval-request:sha256:...",
+  "retrieval_version": "retrieval-v1",
+  "retrieval_config_fingerprint": "retrieval-config:sha256:...",
+  "index_version": "knowledge-index:sha256:...",
+  "source_bundle_id": "source-bundle:sha256:...",
+  "degraded": false,
   "embedding_version": "candidate-model@internal-v1",
   "units": [
     {
       "unit_id": "...",
+      "profile_id": "feature-profile:sha256:...",
+      "requested_dimension_ids": ["DIM-05", "DIM-06"],
+      "routing_dimension_ids": ["DIM-05", "DIM-06"],
+      "covered_dimension_ids": ["DIM-05", "DIM-06"],
       "clauses": [
         {
+          "rank": 1,
           "rule_id": "RESOURCE/TIMER/R-01",
-          "dimension_ids": ["DIM-05", "DIM-06"],
+          "rule_type": "constraint",
           "text": "组件创建的定时器应在不再使用时主动清理。",
           "status": "Baselined",
+          "heading_path": ["资源管理", "定时器"],
+          "parent_context": "组件资源应与生命周期配对。",
+          "dimension_ids": ["DIM-05", "DIM-06"],
+          "tags": ["has_timer"],
+          "apis": ["setInterval"],
+          "components": [],
+          "decorators": [],
+          "domains": ["timer-subscription-lifecycle"],
           "source_ref": {
             "source_id": "arkui-specs",
             "revision": "98bbe6578e0f...",
             "relative_path": "timer/Feat-01-spec.md",
             "anchor": "L40-L47",
-            "authority": "feature_spec"
+            "authority": "feature_spec",
+            "content_hash": "sha256:..."
           },
-          "matched_by": ["api:setInterval", "tag:has_timer"],
-          "match_reason": "...",
-          "score": 0.91,
-          "rank_detail": {}
+          "matched_by": [
+            {"kind": "api", "value": "setInterval", "scope": "unit_exact"},
+            {"kind": "tag", "value": "has_timer", "scope": "unit_exact"}
+          ],
+          "applicability": "applicable",
+          "score": 0.0325,
+          "rank_detail": {
+            "exact_rank": 1,
+            "vector_rank": 1,
+            "exact_score": 85,
+            "vector_similarity": 0.81,
+            "rrf_score": 0.0325,
+            "authority_priority": 80,
+            "dimension_overlap": 2
+          },
+          "token_count": 24
         }
       ],
-      "uncovered_dimensions": []
+      "uncovered_dimension_ids": [],
+      "diagnostics": []
     }
-  ]
+  ],
+  "diagnostics": []
 }
 ```
 
+`EvidencePack` 逐 Unit 划分 requested/covered/uncovered Dimensions，只包含 Baselined Clause，
+并保存 match scope、适用性、exact/vector rank、RRF、authority、token 和结构化 diagnostic。
 `dimension_ids` 是多值。调试字段记录到评审审计数据，但不全部进入 Prompt。
 
 ## 14. RuleFinding
