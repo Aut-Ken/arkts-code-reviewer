@@ -1,0 +1,241 @@
+{
+  "schema_version": "applications-app-samples-v1",
+  "source_id": "applications-app-samples",
+  "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
+  "entries": [
+    {
+      "path": "code/BasicFeature/Connectivity/NetworkObserver/entry/src/main/ets/utils/NetUtils.ets",
+      "sha256": "sha256:fc8c3e6df1cc7908ae40ab25031c844d4a662214e0e9024860ec69b08a63501e",
+      "line_count": 428,
+      "kind": "code",
+      "case_role": "neutral",
+      "topics": ["network", "observer"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/Ability/UIAbilityLifecycle/README_zh.md",
+      "sha256": "sha256:55e9f176ea4b255bccdd7ab221bbe3982446116c0bb0bb9a973f26f5dcfe432c",
+      "line_count": 69,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["lifecycle", "resource-management"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/Ability/UIAbilityLifecycle/entry/src/main/ets/entryability/EntryAbility.ets",
+      "sha256": "sha256:c32f43c46a136c735e1f1fe23470653dcc5ad6485596956319ecd79abaf55d8b",
+      "line_count": 181,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["lifecycle", "resource-management"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/ApplicationMultithreadingDevelopment/PracticalCases/README.md",
+      "sha256": "sha256:310d0a02de04290f03d734b595e521f0a24229f4e26530d5444548c0fe3c1f7d",
+      "line_count": 121,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["concurrency", "database", "state-management", "taskpool"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/ApplicationMultithreadingDevelopment/PracticalCases/entry/src/main/ets/managers/UsingTaskPool.ets",
+      "sha256": "sha256:f7d7e00b7b4778cce544111afb711d9691c1038add11d0873af4bab4069d5cfa",
+      "line_count": 143,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["database", "taskpool"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/ApplicationMultithreadingDevelopment/PracticalCases/entry/src/main/ets/sdk/TimerSdk.ets",
+      "sha256": "sha256:9252ac152a721b9a33655e1f29cf28683cd62895a733344927cd8963321e3062",
+      "line_count": 35,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["async", "timer"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/ApplicationMultithreadingDevelopment/PracticalCasesSecond/entry/src/main/ets/pages/workerAndTaskpool.ets",
+      "sha256": "sha256:ba102257882402fbac9e2b7fb41dc963670090ba968ac07eecab4840f91b5005",
+      "line_count": 61,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["async", "worker"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/AsyncConcurrencyOverview/README.md",
+      "sha256": "sha256:63e01efb5db1d00449c502217b8e18b593504ac3b8780b92e14706f2d6b34d74",
+      "line_count": 66,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["async"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkTS/ArkTsConcurrent/AsyncConcurrencyOverview/entry/src/main/ets/pages/Index.ets",
+      "sha256": "sha256:edfa563f1ce599b51b3f178445d24aca961719756ebc51259276156fa0adae7b",
+      "line_count": 105,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["async", "timer"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ComponentStateManagement/README_zh.md",
+      "sha256": "sha256:1972439f86a82e2c3f1fa095420cdec6efcd818e951e24cad55e01c6c7d9d092",
+      "line_count": 97,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ComponentStateManagement/entry/src/main/ets/pages/LinkDecorator/LinkUsage.ets",
+      "sha256": "sha256:106d545b1fbae372f713b515cb2ea45d9b5f8112857c290519c8c6192f20cd34",
+      "line_count": 46,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/DialogProject/entry/src/main/ets/pages/customdialog/pageleveldialogbox/PageLevelDialogInNavigation.ets",
+      "sha256": "sha256:39ee88a6316233fa26db367a255ac0d52fb73a8d59a474327ce61a0aa7a0522c",
+      "line_count": 112,
+      "kind": "code",
+      "case_role": "neutral",
+      "topics": ["dialog", "navigation", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ImageComponent/README_zh.md",
+      "sha256": "sha256:948360c91e1325c10d67c67770a48dbd36498688529a6f6ce3816649903de8de",
+      "line_count": 95,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["image", "resource-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ImageComponent/entry/src/main/ets/pages/LoadingResources.ets",
+      "sha256": "sha256:c226331bd5904169342d9a220b613abd6737187aa9f7c6a87c00256bfb4fd8fb",
+      "line_count": 53,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["image", "resource-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/Navigation/README_zh.md",
+      "sha256": "sha256:818846907657007a05d879d50943b96e00ebcdebd049beffc39908404a2c803d",
+      "line_count": 158,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["lifecycle", "navigation", "routing"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/Navigation/entry/src/main/ets/pages/navigation/template2/Index.ets",
+      "sha256": "sha256:48dff746a03df11ec2ea5c334792984410c03f03041be5c65450d98aeff27f94",
+      "line_count": 92,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["lifecycle", "navigation"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/Navigation/entry/src/main/ets/pages/pageRouter/lifeCycle/Index.ets",
+      "sha256": "sha256:1d8b815984b086b92364ce6fb2091250b42db53210d27d37ff7391caab819498",
+      "line_count": 51,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["lifecycle", "navigation"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ParadigmStateManagement/README_zh.md",
+      "sha256": "sha256:2083bbdb44ce600bc07e95e0bb19dc1d558feb33e542734e9f2604cbc2677b3d",
+      "line_count": 254,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ParadigmStateManagement/entry/src/main/ets/pages/local/LocalObserveChangesDeepObject.ets",
+      "sha256": "sha256:ceeb3a3902ebadcb1bbb513d32f340513172d2fb3789fae4b78291f91b72cab9",
+      "line_count": 91,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ParadigmStateManagement/entry/src/main/ets/pages/localBuilder/ProblemUINotRefreshOpposite.ets",
+      "sha256": "sha256:037b2f786be56f59509349f52a63452e54cd06d1e738584e53bd6dac6f8d6d0e",
+      "line_count": 71,
+      "kind": "code",
+      "case_role": "negative",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/ParadigmStateManagement/entry/src/main/ets/pages/localBuilder/ProblemUINotRefreshPositive.ets",
+      "sha256": "sha256:82f7a1a755187963dab3ea84f201c05fef4a2bf983c890d25aea1ce152d23864",
+      "line_count": 71,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["state-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ArkUISample/RenderingControl/entry/src/main/ets/pages/Index.ets",
+      "sha256": "sha256:8af291bc48cbadb16924599deb09444b131a830931b98f6031e8730b3034a7df",
+      "line_count": 220,
+      "kind": "code",
+      "case_role": "neutral",
+      "topics": ["lifecycle", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/NetWork_Kit/NetWorkKit_Datatransmission/HTTP_case/README_zh.md",
+      "sha256": "sha256:37f64c5227efeedc826012b20103b86f4c9758d7ab6728643c4ce09ef40871e2",
+      "line_count": 116,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["network", "resource-management"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/NetWork_Kit/NetWorkKit_Datatransmission/HTTP_case/entry/src/main/ets/pages/Index.ets",
+      "sha256": "sha256:ca9e2a6060a59218f7c43309c57659d4fbcb3fa730e0aa58a02361615b028f17",
+      "line_count": 320,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["network", "resource-management"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ResourceManagement/ResourceCategoriesAndAccess/README_zh.md",
+      "sha256": "sha256:b448508774d94ee2ba6d00ea45fc60bf82cb1e497ad80c9fc79db1c26556c745",
+      "line_count": 89,
+      "kind": "sample_guidance",
+      "case_role": "neutral",
+      "topics": ["resource-management", "ui"],
+      "normative": false
+    },
+    {
+      "path": "code/DocsSample/ResourceManagement/ResourceCategoriesAndAccess/entry/src/main/ets/pages/Index.ets",
+      "sha256": "sha256:cf0718da8c0e4aa21150e6d41cd5ee2a11f8c509172ff875ab8a60786cf1bb79",
+      "line_count": 143,
+      "kind": "code",
+      "case_role": "positive",
+      "topics": ["resource-management", "ui"],
+      "normative": false
+    }
+  ]
+}

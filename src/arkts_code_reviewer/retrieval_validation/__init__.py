@@ -1,3 +1,10 @@
+from arkts_code_reviewer.retrieval_validation.app_samples import (
+    AppSampleEntry,
+    AppSamplesManifest,
+    VerifiedAppSamplesCheckout,
+    load_app_samples_manifest,
+    verify_checkout,
+)
 from arkts_code_reviewer.retrieval_validation.embedding_candidate import (
     EmbeddingCandidateReport,
     evaluate_embedding_candidate,
@@ -12,12 +19,17 @@ from arkts_code_reviewer.retrieval_validation.golden import (
 )
 
 __all__ = [
+    "AppSampleEntry",
+    "AppSamplesManifest",
     "EmbeddingCandidateReport",
     "RetrievalGoldenReport",
+    "VerifiedAppSamplesCheckout",
     "evaluate_embedding_candidate",
     "evaluate_retrieval_golden",
+    "load_app_samples_manifest",
     "load_retrieval_golden_manifest",
     "render_embedding_candidate_report",
     "render_retrieval_golden_report",
     "validate_retrieval_golden_baseline",
+    "verify_checkout",
 ]
