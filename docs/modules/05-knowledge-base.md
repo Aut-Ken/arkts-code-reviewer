@@ -53,7 +53,7 @@ Source Registry
 
 - 2026-07-13 已获得用户对 `knowledge-seed-v1` 的 Grok 审核授权。Source Registry 只对
   首批三个来源打开来源级开关，独立 export policy 进一步固定 `xai/grok-4.5`、
-  `grok-knowledge-auditor-v2`、三个 revision 和 24 个 relative path；两道门禁必须同时
+  `grok-knowledge-auditor-v3`、三个 revision 和 24 个 relative path；两道门禁必须同时
   命中。
 - 已有一个通过 schema、packet identity 和 evidence validator 的真实 Grok smoke result；
   其余 packet、第二轮独立审核、consensus 和最终 curation 尚未完成。

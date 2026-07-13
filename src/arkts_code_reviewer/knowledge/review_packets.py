@@ -49,10 +49,10 @@ REPO_REVIEW_PROMPT = (
     Path(__file__).resolve().parents[3]
     / "prompts"
     / "knowledge"
-    / "grok-knowledge-auditor-v2.md"
+    / "grok-knowledge-auditor-v3.md"
 )
 PACKAGED_REVIEW_PROMPT = (
-    Path(__file__).resolve().parent / "defaults" / "grok-knowledge-auditor-v2.md"
+    Path(__file__).resolve().parent / "defaults" / "grok-knowledge-auditor-v3.md"
 )
 DEFAULT_EXPORT_POLICY = (
     REPO_EXPORT_POLICY if REPO_EXPORT_POLICY.is_file() else PACKAGED_EXPORT_POLICY
@@ -313,7 +313,7 @@ class KnowledgeReviewPacket(_FrozenModel):
         str,
         Field(pattern=r"^knowledge-model-export-policy:sha256:[0-9a-f]{64}$"),
     ]
-    prompt_version: Literal["grok-knowledge-auditor-v2"]
+    prompt_version: Literal["grok-knowledge-auditor-v3"]
     prompt_hash: Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
     tag_registry: tuple[TagDefinition, ...]
     dimension_registry: tuple[DimensionDefinition, ...]
@@ -489,7 +489,7 @@ class KnowledgeReviewPacketBuild(_FrozenModel):
     annotation_build_id: Annotated[str, Field(min_length=1)]
     source_bundle_id: Annotated[str, Field(min_length=1)]
     export_policy_fingerprint: Annotated[str, Field(min_length=1)]
-    prompt_version: Literal["grok-knowledge-auditor-v2"]
+    prompt_version: Literal["grok-knowledge-auditor-v3"]
     prompt_hash: Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
     packets: tuple[KnowledgeReviewPacket, ...]
 
@@ -696,8 +696,8 @@ def build_knowledge_review_packets(
     annotation_config.validate_feature_references(feature_config)
     if not prompt or prompt.strip() != prompt or "\x00" in prompt:
         raise ValueError("Knowledge review prompt must be non-empty and trimmed")
-    prompt_version: Literal["grok-knowledge-auditor-v2"] = (
-        "grok-knowledge-auditor-v2"
+    prompt_version: Literal["grok-knowledge-auditor-v3"] = (
+        "grok-knowledge-auditor-v3"
     )
     prompt_hash = _content_hash(prompt)
     normalized_documents = {

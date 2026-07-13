@@ -733,7 +733,7 @@ class ModelReviewer(_FrozenModel):
     kind: Literal["model"]
     provider: Literal["xai"]
     model: Annotated[str, Field(min_length=1)]
-    prompt_version: Literal["grok-knowledge-auditor-v2"]
+    prompt_version: Literal["grok-knowledge-auditor-v3"]
 
 
 class ModelReviewSummary(_FrozenModel):

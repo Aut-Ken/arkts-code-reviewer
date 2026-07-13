@@ -10,7 +10,7 @@ external_model:
   enabled: true
   provider: xai
   allowed_models: [grok-4.5]
-  allowed_prompt_versions: [grok-knowledge-auditor-v2]
+  allowed_prompt_versions: [grok-knowledge-auditor-v3]
   source_allowlist:
     - source_id: arkui-specs
       revision: 98bbe6578e0fb8e314a2c1b19342fc2b79ee4604

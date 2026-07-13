@@ -15,7 +15,7 @@ from arkts_code_reviewer.knowledge.review_validation import (
 
 DEFAULT_PACKET_ROOT = Path(
     "/home/autken/Code/arkts-review-data/reports/knowledge-review/"
-    "knowledge-seed-v1-grok-4.5-auditor-v2"
+    "knowledge-seed-v1-grok-4.5-auditor-v3"
 )
 DEFAULT_OUTPUT_ROOT = Path(
     "/home/autken/Code/arkts-review-data/reports/knowledge-review-responses/"

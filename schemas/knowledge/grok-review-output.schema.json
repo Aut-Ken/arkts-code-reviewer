@@ -311,7 +311,7 @@
           "type": "string"
         },
         "prompt_version": {
-          "const": "grok-knowledge-auditor-v2",
+          "const": "grok-knowledge-auditor-v3",
           "title": "Prompt Version",
           "type": "string"
         },
