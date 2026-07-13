@@ -66,7 +66,7 @@ updated: 2026-07-12
   governance:
     authority: official_documentation
     curation_required: true
-    raw_prompt_use_allowed: false
+    raw_prompt_use_allowed: true
 ```
 
 目标 `SourceRegistryLoader` 将其校验为 Pydantic `SourceRecord`，并计算：

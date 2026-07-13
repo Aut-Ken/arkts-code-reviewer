@@ -206,7 +206,7 @@ Parser 输出和 declaration 边界都不能自动变成 ReviewUnit expected。
   governance:
     authority: official_documentation
     curation_required: true
-    raw_prompt_use_allowed: false
+    raw_prompt_use_allowed: true
 ```
 
 实现 `SourceRegistryLoader` 时必须校验：
@@ -215,7 +215,9 @@ Parser 输出和 declaration 边界都不能自动变成 ReviewUnit expected。
 - 本地目录、Git remote、branch 和 revision 与登记一致。
 - ingestion 路径不能越过仓库根目录。
 - `execute_repository_scripts` 当前必须为 `false`。
-- `raw_prompt_use_allowed` 当前必须为 `false`。
+- `raw_prompt_use_allowed` 是来源级第一道门禁。`true` 只表示该来源可进入受控审核活动，
+  仍必须由主项目的独立 export policy 精确限制 provider、model、Prompt 版本、revision 和
+  relative path；未同时命中两道门禁时不得外发。
 - 构建日志记录实际读取的 source revision，而不是只记录 branch。
 
 ## 8. 从原始来源到在线 Evidence

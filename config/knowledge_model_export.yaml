@@ -1,5 +1,5 @@
 schema_version: knowledge-model-export-policy-v1
-version: knowledge-model-export-policy-v1
+version: knowledge-model-export-policy-v2-grok-4.5-seed-v1
 max_clauses_per_packet: 25
 max_source_ids_per_packet: 3
 context_lines_before: 2
@@ -7,8 +7,41 @@ context_lines_after: 2
 max_excerpt_lines: 120
 max_packet_excerpt_characters: 100000
 external_model:
-  enabled: false
+  enabled: true
   provider: xai
-  allowed_models: []
-  allowed_prompt_versions: []
-  source_allowlist: []
+  allowed_models: [grok-4.5]
+  allowed_prompt_versions: [grok-knowledge-auditor-v2]
+  source_allowlist:
+    - source_id: arkui-specs
+      revision: 98bbe6578e0fb8e314a2c1b19342fc2b79ee4604
+      relative_paths:
+        - 04-common-capability/04-common-events/06-gesture-capability/Feat-05-gesture-recognizer-recovery-spec.md
+        - 05-ui-components/02-navigation-components/01-navigation/Feat-05-navigation-transition-spec.md
+        - 05-ui-components/02-navigation-components/01-navigation/Feat-07-navigation-events-modifier-spec.md
+        - 05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md
+        - 05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-06-tabs-cache-scroll-spec.md
+        - 05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md
+    - source_id: interface-sdk-js
+      revision: e3f5c3bb3282c1c4b08cbed209250a563e0b4e7b
+      relative_paths:
+        - api/@ohos.arkui.StateManagement.d.ts
+        - api/@ohos.arkui.observer.d.ts
+        - api/@ohos.events.emitter.d.ts
+        - api/@ohos.systemTimer.d.ts
+        - api/@ohos.taskpool.d.ts
+        - api/@ohos.worker.d.ts
+        - api/arkui/stateManagement/decorator.static.d.ets
+        - arkts/builtin/static/Global.static.d.ets
+    - source_id: openharmony-docs
+      revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+      relative_paths:
+        - zh-cn/application-dev/arkts-utils/sendable-constraints.md
+        - zh-cn/application-dev/arkts-utils/taskpool-introduction.md
+        - zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md
+        - zh-cn/application-dev/arkts-utils/worker-introduction.md
+        - zh-cn/application-dev/dfx/event-subscription-overview.md
+        - zh-cn/application-dev/reference/common/js-apis-timer.md
+        - zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md
+        - zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md
+        - zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md
+        - zh-cn/application-dev/ui/state-management/arkts-two-way-sync.md

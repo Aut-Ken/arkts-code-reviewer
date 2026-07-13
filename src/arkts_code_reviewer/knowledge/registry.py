@@ -10,7 +10,14 @@ from datetime import date
 from pathlib import Path, PurePosixPath
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationInfo,
+    field_validator,
+    model_validator,
+)
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
@@ -105,7 +112,11 @@ class IngestionProfile(_FrozenModel):
 
     @field_validator("include", "exclude", mode="before")
     @classmethod
-    def normalize_patterns(cls, value: object, info: object) -> tuple[str, ...]:
+    def normalize_patterns(
+        cls,
+        value: object,
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         if value is None:
             return ()
         if not isinstance(value, list | tuple):
@@ -114,7 +125,11 @@ class IngestionProfile(_FrozenModel):
 
     @field_validator("include", "exclude")
     @classmethod
-    def validate_patterns(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
+    def validate_patterns(
+        cls,
+        value: tuple[str, ...],
+        info: ValidationInfo,
+    ) -> tuple[str, ...]:
         for item in value:
             _validate_relative_pattern(item, f"IngestionProfile.{info.field_name}")
         return value
@@ -135,7 +150,7 @@ class IngestionProfile(_FrozenModel):
 class GovernanceProfile(_FrozenModel):
     authority: Annotated[str, Field(min_length=1)]
     curation_required: Literal[True]
-    raw_prompt_use_allowed: Literal[False]
+    raw_prompt_use_allowed: bool
     compiler_or_doc_cross_check_required: bool = False
     positive_example_assumption_allowed: bool = False
     prompt_pattern_review_required: bool = False
@@ -295,7 +310,7 @@ class SourceBundleEntry(_FrozenModel):
 
 
 class SourceBundle(_FrozenModel):
-    schema_version: Literal["source-bundle-v1"] = SOURCE_BUNDLE_SCHEMA_VERSION
+    schema_version: Literal["source-bundle-v1"] = "source-bundle-v1"
     source_bundle_id: Annotated[str, Field(pattern=r"^source-bundle:sha256:[0-9a-f]{64}$")]
     entries: tuple[SourceBundleEntry, ...]
 

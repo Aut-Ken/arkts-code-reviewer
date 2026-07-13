@@ -176,7 +176,9 @@ def test_registry_loader_rejects_unknown_fields(tmp_path: Path) -> None:
         load_source_registry(registry_path)
 
 
-def test_registry_governance_cannot_enable_raw_prompt_or_scripts(tmp_path: Path) -> None:
+def test_registry_governance_keeps_scripts_disabled_and_requires_explicit_prompt_policy(
+    tmp_path: Path,
+) -> None:
     repo, revision, remote = _temporary_repo(tmp_path)
     source = _source(repo, revision, remote)
     with pytest.raises(ValidationError, match="Input should be False"):
@@ -188,12 +190,12 @@ def test_registry_governance_cannot_enable_raw_prompt_or_scripts(tmp_path: Path)
                 "execute_repository_scripts": True,
             }
         )
-    with pytest.raises(ValidationError, match="Input should be False"):
-        GovernanceProfile(
-            authority="official_documentation",
-            curation_required=True,
-            raw_prompt_use_allowed=True,
-        )
+    governance = GovernanceProfile(
+        authority="official_documentation",
+        curation_required=True,
+        raw_prompt_use_allowed=True,
+    )
+    assert governance.raw_prompt_use_allowed is True
 
 
 def test_environment_override_must_be_absolute(tmp_path: Path) -> None:

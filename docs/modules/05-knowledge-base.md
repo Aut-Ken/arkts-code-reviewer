@@ -51,16 +51,18 @@ Source Registry
 
 尚未完成：
 
-- 当前来源治理均为 `raw_prompt_use_allowed=false`，因此只能生成带
-  `LOCAL_ONLY_DO_NOT_EXPORT` 标记的审核包，不能把原文摘录发送给 Grok。外发必须同时
-  获得 Source Registry 和独立 provider/model/path policy 两道明确授权。
-- 尚未获得并应用有效的 Grok 审核结果，也没有完成双审 consensus 和最终 curation。
+- 2026-07-13 已获得用户对 `knowledge-seed-v1` 的 Grok 审核授权。Source Registry 只对
+  首批三个来源打开来源级开关，独立 export policy 进一步固定 `xai/grok-4.5`、
+  `grok-knowledge-auditor-v2`、三个 revision 和 24 个 relative path；两道门禁必须同时
+  命中。
+- 已有一个通过 schema、packet identity 和 evidence validator 的真实 Grok smoke result；
+  其余 packet、第二轮独立审核、consensus 和最终 curation 尚未完成。
 - 当前 Clause 都是候选；普通候选保持 `Draft`，不能直接称为 Baselined 知识。
 - 没有数据库迁移、发布后的真实 Clause 数据集、Embedding 或在线索引。
 - K-4 完整 Golden、K-5 存储、K-6 发布和后续 Retrieval Golden 尚未完成。
 
 因此本模块状态仍是 `partial`：K-0 到 K-4 的来源、标准化、候选提取、确定性标注和
-本地审核工具链已经实现，但外部审核授权、策展、存储和发布链尚未完成。
+本地审核工具链已经实现，但批量双审、策展、存储和发布链尚未完成。
 
 ## 3. 来源分类和处理策略
 
@@ -148,7 +150,8 @@ ARKTS_SOURCE_REGISTRY
 3. 环境变量覆盖路径后仍然指向同一 remote/revision。
 4. include/exclude 路径不越过仓库根目录。
 5. 当前所有来源 `execute_repository_scripts=false`。
-6. 当前所有来源 `raw_prompt_use_allowed=false`。
+6. `raw_prompt_use_allowed` 必须是显式布尔值；即使为 true，仍必须命中独立的精确
+   provider/model/revision/path allowlist。
 
 校验成功后计算 `source_bundle_id`：
 
@@ -371,7 +374,9 @@ API catalog 精确匹配
 ```
 
 可选 LLM enrichment 只生成 `scenario` 和补充关键词，不允许覆盖原文和版本信息。
-内部资料只能发送到经过批准的模型服务。
+内部资料只能发送到经过批准的模型服务。当前首批审核固定使用 Grok Build CLI 的
+`grok-4.5`，并关闭 Web、Memory、子代理和工具访问；JSON Schema 约束输出后仍要经过
+本地 packet/evidence validator，CLI 返回成功不等于审核结果可用。
 
 当前 K-4 的正式行为是：
 
@@ -485,9 +490,9 @@ async/taskpool/worker
 
 ## 19. 下一步
 
-1. 由数据 owner 明确决定是否允许固定来源、固定路径发送给指定 Grok 模型；未授权时
-   继续保持 `local_only`。
-2. 导入两次相互独立且通过严格证据校验的审核结果，形成 curation consensus；correction
+1. 完成两轮相互独立的 `grok-4.5` packet 审核，并保存 request/session ID、原始响应和
+   使用量审计信息。
+2. 导入两次均通过严格证据校验的审核结果，形成 curation consensus；correction
    只生成新的 Draft 并重新审核，不在同轮自动晋级。
 3. 实现 PostgreSQL/pgvector 稳定层迁移和不依赖 Embedding 的精确索引。
 4. 完成确定性 publication build 和原子 current alias 门禁。

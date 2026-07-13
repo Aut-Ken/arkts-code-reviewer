@@ -81,7 +81,7 @@ def _source_ref(path: str, body: str, anchor: str = "document") -> SourceRef:
     )
 
 
-def _source_registry() -> SourceRegistry:
+def _source_registry(*, raw_prompt_use_allowed: bool = False) -> SourceRegistry:
     return SourceRegistry(
         schema_version=1,
         updated_at=date(2026, 7, 13),
@@ -107,7 +107,7 @@ def _source_registry() -> SourceRegistry:
                 governance=GovernanceProfile(
                     authority="synthetic_test",
                     curation_required=True,
-                    raw_prompt_use_allowed=False,
+                    raw_prompt_use_allowed=raw_prompt_use_allowed,
                 ),
             ),
         ),
@@ -305,12 +305,12 @@ def test_packet_rejects_excerpt_registry_and_catalog_drift() -> None:
         KnowledgeReviewPacket.model_validate(catalog_drift)
 
 
-def test_default_external_model_export_is_fail_closed() -> None:
+def test_default_external_model_export_rejects_unallowlisted_target() -> None:
     normalized, extraction, annotations = _artifacts(1)
     features = load_default_feature_config()
     annotation_config = load_knowledge_annotation_config(feature_config=features)
 
-    with pytest.raises(ValueError, match="external Knowledge model export is disabled"):
+    with pytest.raises(ValueError, match="external Knowledge model target is not allowlisted"):
         build_knowledge_review_packets(
             normalized,
             extraction,
@@ -324,6 +324,53 @@ def test_default_external_model_export_is_fail_closed() -> None:
             model_provider="xai",
             model_name="grok-test",
         )
+
+
+def test_external_export_succeeds_only_when_both_policy_and_source_allow_it() -> None:
+    normalized, extraction, annotations = _artifacts(1)
+    features = load_default_feature_config()
+    annotation_config = load_knowledge_annotation_config(feature_config=features)
+    source_path = extraction.documents[0].clauses[0].candidate.source_ref.relative_path
+    policy = KnowledgeModelExportPolicy(
+        schema_version="knowledge-model-export-policy-v1",
+        version="test-enabled-v1",
+        max_clauses_per_packet=25,
+        max_source_ids_per_packet=3,
+        context_lines_before=2,
+        context_lines_after=2,
+        max_excerpt_lines=120,
+        max_packet_excerpt_characters=100_000,
+        external_model=ExternalModelPolicy(
+            enabled=True,
+            provider="xai",
+            allowed_models=("grok-test",),
+            allowed_prompt_versions=("grok-knowledge-auditor-v2",),
+            source_allowlist=(
+                ModelExportSourceRule(
+                    source_id=SOURCE_ID,
+                    revision=REVISION,
+                    relative_paths=(source_path,),
+                ),
+            ),
+        ),
+    )
+
+    build = build_knowledge_review_packets(
+        normalized,
+        extraction,
+        annotations,
+        registry=_source_registry(raw_prompt_use_allowed=True),
+        feature_config=features,
+        annotation_config=annotation_config,
+        policy=policy,
+        prompt=load_knowledge_review_prompt(),
+        distribution="external_model",
+        model_provider="xai",
+        model_name="grok-test",
+    )
+
+    assert build.distribution == "external_model"
+    assert all(packet.model_name == "grok-test" for packet in build.packets)
 
 
 def test_external_export_requires_source_governance_even_when_allowlisted() -> None:
@@ -344,7 +391,7 @@ def test_external_export_requires_source_governance_even_when_allowlisted() -> N
             enabled=True,
             provider="xai",
             allowed_models=("grok-test",),
-            allowed_prompt_versions=("grok-knowledge-auditor-v1",),
+            allowed_prompt_versions=("grok-knowledge-auditor-v2",),
             source_allowlist=(
                 ModelExportSourceRule(
                     source_id=SOURCE_ID,

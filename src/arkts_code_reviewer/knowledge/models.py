@@ -61,20 +61,27 @@ _REVIEW_ISSUE_CODES = {
     "boundary_error",
     "conflict",
     "dimension_error",
+    "domain_error",
     "duplicate_clause",
     "example_misclassified",
     "incomplete_semantics",
     "insufficient_evidence",
     "missing_clause",
+    "non_normative_candidate",
+    "rule_type_error",
     "source_mismatch",
     "status_error",
     "tag_error",
     "unsupported_claim",
 }
 _ANNOTATION_REASON_CODES = {
+    "api_not_applicable",
     "api_not_in_catalog",
     "derived_mapping_mismatch",
+    "dimension_not_applicable",
     "dimension_not_registered",
+    "domain_not_applicable",
+    "domain_not_registered",
     "insufficient_source_evidence",
     "keyword_only_false_positive",
     "source_explicit_metadata",
@@ -726,7 +733,7 @@ class ModelReviewer(_FrozenModel):
     kind: Literal["model"]
     provider: Literal["xai"]
     model: Annotated[str, Field(min_length=1)]
-    prompt_version: Literal["grok-knowledge-auditor-v1"]
+    prompt_version: Literal["grok-knowledge-auditor-v2"]
 
 
 class ModelReviewSummary(_FrozenModel):
