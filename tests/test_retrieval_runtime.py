@@ -31,6 +31,7 @@ from arkts_code_reviewer.retrieval.postgres import PostgresIndexStore
 from arkts_code_reviewer.retrieval.postgres_migrations import apply_postgres_migrations
 from arkts_code_reviewer.retrieval.runtime import (
     load_published_knowledge_file,
+    publish_evaluation_knowledge,
     publish_published_knowledge,
 )
 
@@ -76,7 +77,15 @@ class _MemoryStore:
     def resolve_alias(self, alias_name: str = "current") -> str:
         return self.aliases[alias_name]
 
-    def switch_alias(self, index_version: str, alias_name: str = "current") -> bool:
+    def switch_alias(
+        self,
+        index_version: str,
+        alias_name: str = "current",
+        *,
+        allow_evaluation_fixture: bool = False,
+        allow_golden_fixture: bool = False,
+    ) -> bool:
+        del allow_evaluation_fixture, allow_golden_fixture
         if index_version not in self.indexes:
             raise ValueError("index is not ready")
         changed = self.aliases.get(alias_name) != index_version
@@ -195,6 +204,42 @@ def test_publish_revalidates_and_rejects_model_constructed_draft() -> None:
     with pytest.raises(ValueError, match="Baselined"):
         publish_published_knowledge(bypassed, store)
     assert store.publish_calls == 0
+
+
+def test_evaluation_publish_api_rejects_production_publication_type() -> None:
+    with pytest.raises(TypeError, match="EvaluationKnowledgeBuild"):
+        publish_evaluation_knowledge(_publication(), _MemoryStore())  # type: ignore[arg-type]
+
+
+def test_publish_evaluation_cli_requires_opt_in_and_staging_alias(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    missing = tmp_path / "evaluation.json"
+    base = [
+        "publish-evaluation",
+        "--evaluation",
+        str(missing),
+        "--database-url",
+        "postgresql://fixture/test",
+        "--exact-only",
+    ]
+
+    assert runtime.main(base) == 1
+    assert "requires --allow-evaluation-fixture" in capsys.readouterr().err
+
+    assert (
+        runtime.main(
+            [
+                *base,
+                "--allow-evaluation-fixture",
+                "--switch-alias",
+                "current",
+            ]
+        )
+        == 1
+    )
+    assert "only staging-* aliases" in capsys.readouterr().err
 
 
 def test_publication_file_loader_is_strict_and_rejects_symlinks(tmp_path: Path) -> None:

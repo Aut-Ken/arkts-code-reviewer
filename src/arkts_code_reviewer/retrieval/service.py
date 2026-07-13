@@ -25,6 +25,7 @@ class RetrievalService:
         config: RetrievalConfig | None = None,
         embedding_provider: EmbeddingProvider | None = None,
         allow_golden_fixture: bool = False,
+        allow_evaluation_fixture: bool = False,
     ) -> None:
         if not isinstance(index, KnowledgeIndex):
             raise TypeError("index must use KnowledgeIndex")
@@ -32,8 +33,12 @@ class RetrievalService:
             raise TypeError("config must use RetrievalConfig")
         if not isinstance(allow_golden_fixture, bool):
             raise TypeError("allow_golden_fixture must be boolean")
+        if not isinstance(allow_evaluation_fixture, bool):
+            raise TypeError("allow_evaluation_fixture must be boolean")
         if index.origin == "golden_fixture" and not allow_golden_fixture:
             raise ValueError("Golden fixture index requires an explicit test-only opt-in")
+        if index.origin == "evaluation_fixture" and not allow_evaluation_fixture:
+            raise ValueError("Evaluation fixture index requires an explicit staging opt-in")
         self.index = index
         self.config = config or load_default_retrieval_config()
         self.embedding_provider = embedding_provider
@@ -109,6 +114,9 @@ class RetrievalService:
             retrieval_version=self.index.retrieval_version,
             retrieval_config_fingerprint=self.config.fingerprint,
             index_version=self.index.index_version,
+            index_origin=self.index.origin,
+            knowledge_build_id=self.index.published_build_id,
+            production_eligible=self.index.origin == "publication",
             source_bundle_id=self.index.source_bundle_id,
             embedding_version=self.index.embedding_version,
             units=tuple(unit_evidence),

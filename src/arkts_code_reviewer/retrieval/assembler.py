@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal, cast
+
 from arkts_code_reviewer.retrieval.config import RetrievalConfig
 from arkts_code_reviewer.retrieval.fusion import FusedHit
 from arkts_code_reviewer.retrieval.models import (
@@ -106,7 +108,10 @@ def assemble_unit_evidence(
                 rank=rank,
                 rule_id=record.clause.rule_id,
                 rule_type=record.clause.rule_type,
-                status="Baselined",
+                status=cast(
+                    "Literal['Draft', 'Baselined']",
+                    record.clause.status,
+                ),
                 text=record.clause.text,
                 heading_path=record.clause.heading_path,
                 parent_context=record.clause.parent_context,

@@ -7,6 +7,7 @@ from collections.abc import Iterator, Sequence
 from contextlib import AbstractContextManager, contextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from typing import Literal
 
 import pytest
 
@@ -27,6 +28,7 @@ from arkts_code_reviewer.retrieval.postgres import (
     PostgresIndexCorruptionError,
     PostgresIndexDatabaseError,
     PostgresIndexNotFoundError,
+    PostgresIndexPolicyError,
     PostgresIndexStore,
 )
 from arkts_code_reviewer.retrieval.postgres_migrations import (
@@ -108,7 +110,15 @@ def _connector(connection: _ScriptedConnection):
     return connect
 
 
-def _knowledge_index(*, embedding: bool = True) -> KnowledgeIndex:
+def _knowledge_index(
+    *,
+    embedding: bool = True,
+    origin: Literal[
+        "publication",
+        "evaluation_fixture",
+        "golden_fixture",
+    ] = "golden_fixture",
+) -> KnowledgeIndex:
     rule_id = "RESOURCE/TIMER/R-01"
     source_ref = SourceRef(
         source_id="fixture",
@@ -122,7 +132,7 @@ def _knowledge_index(*, embedding: bool = True) -> KnowledgeIndex:
         rule_id=rule_id,
         native_rule_id="R-01",
         rule_type="constraint",
-        status="Baselined",
+        status="Draft" if origin == "evaluation_fixture" else "Baselined",
         authority=source_ref.authority,
         text="组件创建的定时器应在不再使用时主动清理。",
         heading_path=("资源管理", "定时器"),
@@ -179,9 +189,14 @@ def _knowledge_index(*, embedding: bool = True) -> KnowledgeIndex:
         token_count=16,
         embedding=(1.0, 0.0, 0.0) if embedding else None,
     )
+    build_prefix = {
+        "publication": "published-knowledge",
+        "evaluation_fixture": "evaluation-knowledge",
+        "golden_fixture": "retrieval-fixture",
+    }[origin]
     return KnowledgeIndex.create(
-        origin="golden_fixture",
-        published_build_id="retrieval-fixture:sha256:" + "d" * 64,
+        origin=origin,
+        published_build_id=f"{build_prefix}:sha256:" + "d" * 64,
         source_bundle_id="source-bundle:sha256:" + "e" * 64,
         feature_config_version=load_default_feature_config().fingerprint,
         annotation_version="annotation-v1",
@@ -392,7 +407,14 @@ def test_switch_and_resolve_alias_validate_ready_index() -> None:
         connector=_connector(switch_connection),
     )
 
-    assert store.switch_alias(index.index_version) is True
+    assert (
+        store.switch_alias(
+            index.index_version,
+            "test-current",
+            allow_golden_fixture=True,
+        )
+        is True
+    )
     assert switch_connection.steps == []
 
     resolve_connection = _ScriptedConnection(
@@ -406,8 +428,127 @@ def test_switch_and_resolve_alias_validate_ready_index() -> None:
         "postgresql://fixture/test",
         connector=_connector(resolve_connection),
     )
-    assert resolver.resolve_alias() == index.index_version
+    assert resolver.resolve_alias("test-current") == index.index_version
     assert resolve_connection.steps == []
+
+
+@pytest.mark.parametrize(
+    ("origin", "alias_name", "options", "allowed"),
+    (
+        ("publication", "current", {}, True),
+        ("publication", "release-v1", {}, True),
+        ("publication", "staging-v1", {}, False),
+        ("publication", "test-v1", {}, False),
+        ("evaluation_fixture", "staging-v1", {}, False),
+        (
+            "evaluation_fixture",
+            "staging-v1",
+            {"allow_evaluation_fixture": True},
+            True,
+        ),
+        (
+            "evaluation_fixture",
+            "current",
+            {"allow_evaluation_fixture": True},
+            False,
+        ),
+        (
+            "evaluation_fixture",
+            "test-v1",
+            {"allow_evaluation_fixture": True},
+            False,
+        ),
+        ("golden_fixture", "test-v1", {}, False),
+        (
+            "golden_fixture",
+            "test-v1",
+            {"allow_golden_fixture": True},
+            True,
+        ),
+        (
+            "golden_fixture",
+            "staging-v1",
+            {"allow_golden_fixture": True},
+            False,
+        ),
+        (
+            "golden_fixture",
+            "current",
+            {"allow_golden_fixture": True},
+            False,
+        ),
+    ),
+)
+def test_switch_alias_enforces_origin_namespace_and_explicit_fixture_opt_in(
+    monkeypatch: pytest.MonkeyPatch,
+    origin: str,
+    alias_name: str,
+    options: dict[str, bool],
+    allowed: bool,
+) -> None:
+    index_version = "knowledge-index:sha256:" + "1" * 64
+    steps = [_Step("pg_advisory_xact_lock")]
+    if allowed:
+        steps.extend(
+            (
+                _Step("FROM retrieval.current_index_aliases", one=None),
+                _Step("INSERT INTO retrieval.current_index_aliases"),
+            )
+        )
+    connection = _ScriptedConnection(steps)
+    store = PostgresIndexStore(
+        "postgresql://fixture/test",
+        connector=_connector(connection),
+    )
+    monkeypatch.setattr(
+        PostgresIndexStore,
+        "_load",
+        staticmethod(lambda _connection, _index_version: type("Index", (), {"origin": origin})()),
+    )
+
+    if allowed:
+        assert store.switch_alias(index_version, alias_name, **options) is True
+        assert connection.transaction_context.committed is True
+    else:
+        with pytest.raises(PostgresIndexPolicyError):
+            store.switch_alias(index_version, alias_name, **options)
+        assert connection.transaction_context.rolled_back is True
+    assert connection.steps == []
+
+
+def test_resolve_alias_rejects_corrupt_origin_namespace() -> None:
+    index = _knowledge_index(embedding=False)
+    connection = _ScriptedConnection(
+        [
+            _Step("pg_advisory_xact_lock"),
+            _Step("FROM retrieval.current_index_aliases", one=(index.index_version,)),
+            *_load_steps(index),
+        ]
+    )
+    store = PostgresIndexStore(
+        "postgresql://fixture/test",
+        connector=_connector(connection),
+    )
+
+    with pytest.raises(PostgresIndexPolicyError, match="test-\\*"):
+        store.resolve_alias("ordinary-alias")
+    assert connection.transaction_context.rolled_back is True
+
+
+def test_switch_alias_rejects_non_boolean_fixture_opt_in_before_database_access() -> None:
+    connection = _ScriptedConnection(())
+    store = PostgresIndexStore(
+        "postgresql://fixture/test",
+        connector=_connector(connection),
+    )
+
+    with pytest.raises(TypeError, match="must be bool"):
+        store.switch_alias(
+            "knowledge-index:sha256:" + "1" * 64,
+            "staging-v1",
+            allow_evaluation_fixture=1,  # type: ignore[arg-type]
+        )
+    assert connection.executed == []
 
 
 def test_missing_alias_and_database_failure_fail_closed() -> None:
@@ -462,7 +603,156 @@ def test_real_postgres_publish_load_and_alias_round_trip() -> None:
     first_publish = store.publish(index)
     assert first_publish in (True, False)
     assert store.load(index.index_version) == index
-    first_switch = store.switch_alias(index.index_version, "integration-current")
+    first_switch = store.switch_alias(
+        index.index_version,
+        "test-integration-current",
+        allow_golden_fixture=True,
+    )
     assert first_switch in (True, False)
-    assert store.resolve_alias("integration-current") == index.index_version
+    assert store.resolve_alias("test-integration-current") == index.index_version
     assert store.publish(index) is False
+
+
+@pytest.mark.integration
+def test_real_postgres_rejects_direct_sql_fixture_boundary_bypasses() -> None:
+    database_url = os.environ.get("ARKTS_RETRIEVAL_TEST_DATABASE_URL")
+    if not database_url:
+        pytest.skip("set ARKTS_RETRIEVAL_TEST_DATABASE_URL to run PostgreSQL integration")
+
+    try:
+        import psycopg
+    except ImportError:
+        pytest.skip("install the retrieval optional dependency to run PostgreSQL integration")
+
+    apply_postgres_migrations(database_url)
+    golden = _knowledge_index(embedding=False)
+    publication = _knowledge_index(embedding=False, origin="publication")
+    evaluation = _knowledge_index(embedding=False, origin="evaluation_fixture")
+    store = PostgresIndexStore(database_url)
+    store.publish(golden)
+    store.publish(publication)
+    store.publish(evaluation)
+    assert store.load(evaluation.index_version) == evaluation
+
+    evaluation_version = evaluation.index_version
+    clone_entry_sql = """
+        INSERT INTO retrieval.index_entries (
+            index_version,
+            rule_id,
+            rule_type,
+            status,
+            authority,
+            clause_text,
+            clause,
+            annotation,
+            domains,
+            retrieval_text,
+            token_count,
+            heading_path,
+            parent_context,
+            neighbor_rule_ids,
+            applicability,
+            source_ref,
+            func_ids,
+            dimension_ids,
+            tags,
+            apis,
+            components,
+            decorators,
+            raw_keywords,
+            llm_keywords,
+            scenario,
+            embedding,
+            embedding_dimensions,
+            embedding_version
+        )
+        SELECT
+            %s,
+            %s,
+            source.rule_type,
+            %s,
+            source.authority,
+            source.clause_text,
+            jsonb_set(source.clause, '{status}', to_jsonb(%s::text), false),
+            source.annotation,
+            source.domains,
+            source.retrieval_text,
+            source.token_count,
+            source.heading_path,
+            source.parent_context,
+            source.neighbor_rule_ids,
+            source.applicability,
+            source.source_ref,
+            source.func_ids,
+            source.dimension_ids,
+            source.tags,
+            source.apis,
+            source.components,
+            source.decorators,
+            source.raw_keywords,
+            source.llm_keywords,
+            source.scenario,
+            source.embedding,
+            source.embedding_dimensions,
+            source.embedding_version
+        FROM retrieval.index_entries AS source
+        WHERE source.index_version = %s
+        LIMIT 1
+    """
+    alias_sql = """
+        INSERT INTO retrieval.current_index_aliases (
+            alias_name,
+            index_version,
+            index_state
+        ) VALUES (%s, %s, 'ready')
+        ON CONFLICT (alias_name) DO UPDATE SET
+            index_version = EXCLUDED.index_version,
+            index_state = EXCLUDED.index_state,
+            switched_at = transaction_timestamp()
+    """
+
+    with psycopg.connect(database_url, autocommit=True) as connection:
+        with pytest.raises(psycopg.errors.CheckViolation):
+            connection.execute(
+                clone_entry_sql,
+                (
+                    publication.index_version,
+                    "DIRECT-SQL/INVALID-DRAFT",
+                    "Draft",
+                    "Draft",
+                    publication.index_version,
+                ),
+            )
+        with pytest.raises(psycopg.errors.CheckViolation):
+            connection.execute(
+                clone_entry_sql,
+                (
+                    evaluation_version,
+                    "DIRECT-SQL/INVALID-BASELINED",
+                    "Baselined",
+                    "Baselined",
+                    publication.index_version,
+                ),
+            )
+
+        valid_aliases = (
+            ("direct-sql-publication", publication.index_version),
+            ("test-direct-sql-golden", golden.index_version),
+            ("staging-direct-sql-evaluation", evaluation_version),
+        )
+        for alias_name, index_version in valid_aliases:
+            connection.execute(alias_sql, (alias_name, index_version))
+
+        invalid_aliases = (
+            ("staging-direct-sql-publication", publication.index_version),
+            ("test-direct-sql-publication", publication.index_version),
+            ("direct-sql-golden", golden.index_version),
+            ("staging-direct-sql-golden", golden.index_version),
+            ("current", golden.index_version),
+            ("direct-sql-evaluation", evaluation_version),
+            ("test-direct-sql-evaluation", evaluation_version),
+            ("current", evaluation_version),
+        )
+        for alias_name, index_version in invalid_aliases:
+            with pytest.raises(psycopg.errors.CheckViolation):
+                connection.execute(alias_sql, (alias_name, index_version))

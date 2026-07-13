@@ -177,6 +177,10 @@ class PostgresIndexConflictError(PostgresIndexStoreError):
     """An immutable index version already exists with different content."""
 
 
+class PostgresIndexPolicyError(PostgresIndexStoreError):
+    """An index origin is not allowed in the requested alias namespace."""
+
+
 class PostgresIndexCorruptionError(PostgresIndexStoreError):
     """Stored rows cannot reconstruct their validated KnowledgeIndex."""
 
@@ -288,16 +292,34 @@ class PostgresIndexStore:
             with connection.transaction():
                 self._lock(connection)
                 index_version = self._resolve_alias(connection, alias)
-                self._load(connection, index_version)
+                index = self._load(connection, index_version)
+                _validate_alias_origin(alias, index.origin)
                 return index_version
 
-    def switch_alias(self, index_version: str, alias_name: str = "current") -> bool:
+    def switch_alias(
+        self,
+        index_version: str,
+        alias_name: str = "current",
+        *,
+        allow_evaluation_fixture: bool = False,
+        allow_golden_fixture: bool = False,
+    ) -> bool:
         _validate_index_version(index_version)
         alias = _validate_alias(alias_name)
+        _validate_fixture_opt_in(
+            allow_evaluation_fixture=allow_evaluation_fixture,
+            allow_golden_fixture=allow_golden_fixture,
+        )
         with self._connection() as connection:
             with connection.transaction():
                 self._lock(connection)
-                self._load(connection, index_version)
+                index = self._load(connection, index_version)
+                _validate_alias_origin(alias, index.origin)
+                _validate_fixture_activation(
+                    index.origin,
+                    allow_evaluation_fixture=allow_evaluation_fixture,
+                    allow_golden_fixture=allow_golden_fixture,
+                )
                 current = connection.execute(_SELECT_ALIAS, (alias,)).fetchone()
                 if current is not None and len(current) == 1 and current[0] == index_version:
                     return False
@@ -365,6 +387,61 @@ def _validate_alias(alias_name: str) -> str:
     ):
         raise ValueError("alias_name must be non-empty trimmed text")
     return alias_name
+
+
+def _validate_fixture_opt_in(
+    *,
+    allow_evaluation_fixture: bool,
+    allow_golden_fixture: bool,
+) -> None:
+    if type(allow_evaluation_fixture) is not bool or type(allow_golden_fixture) is not bool:
+        raise TypeError("fixture activation flags must be bool")
+
+
+def _validate_alias_origin(alias_name: str, origin: str) -> None:
+    is_staging_alias = alias_name.startswith("staging-") and len(alias_name) > len(
+        "staging-"
+    )
+    is_test_alias = alias_name.startswith("test-") and len(alias_name) > len("test-")
+    uses_reserved_prefix = alias_name.startswith(("staging-", "test-"))
+
+    if alias_name == "current" and origin != "publication":
+        raise PostgresIndexPolicyError(
+            "the current alias accepts publication indexes only"
+        )
+    if origin == "publication":
+        if uses_reserved_prefix:
+            raise PostgresIndexPolicyError(
+                "publication indexes cannot use staging-* or test-* aliases"
+            )
+        return
+    if origin == "evaluation_fixture":
+        if not is_staging_alias:
+            raise PostgresIndexPolicyError(
+                "evaluation fixtures require a staging-* alias"
+            )
+        return
+    if origin == "golden_fixture":
+        if not is_test_alias:
+            raise PostgresIndexPolicyError("golden fixtures require a test-* alias")
+        return
+    raise PostgresIndexPolicyError(f"unsupported index origin: {origin}")
+
+
+def _validate_fixture_activation(
+    origin: str,
+    *,
+    allow_evaluation_fixture: bool,
+    allow_golden_fixture: bool,
+) -> None:
+    if origin == "evaluation_fixture" and not allow_evaluation_fixture:
+        raise PostgresIndexPolicyError(
+            "evaluation fixture activation requires allow_evaluation_fixture=True"
+        )
+    if origin == "golden_fixture" and not allow_golden_fixture:
+        raise PostgresIndexPolicyError(
+            "golden fixture activation requires allow_golden_fixture=True"
+        )
 
 
 def _canonical_json(value: object) -> str:

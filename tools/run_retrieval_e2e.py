@@ -29,6 +29,7 @@ from arkts_code_reviewer.knowledge.models import (
     SourceRef,
     SourceSpan,
 )
+from arkts_code_reviewer.retrieval.catalog import aggregate_api_catalog_version
 from arkts_code_reviewer.retrieval.config import load_default_retrieval_config
 from arkts_code_reviewer.retrieval.models import (
     EvidencePack,
@@ -299,7 +300,7 @@ def build_test_only_baselined_index(*, embedded: bool = False) -> KnowledgeIndex
         source_bundle_id=f"source-bundle:sha256:{'d' * 64}",
         feature_config_version=load_default_feature_config().fingerprint,
         annotation_version="annotation-v1",
-        catalog_version="api-catalog-v1",
+        catalog_version=aggregate_api_catalog_version(()),
         retrieval_version=retrieval_config.version,
         retrieval_config_fingerprint=retrieval_config.fingerprint,
         embedding_model="fixture-embedding" if embedded else None,

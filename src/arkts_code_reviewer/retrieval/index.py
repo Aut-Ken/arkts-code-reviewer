@@ -5,8 +5,10 @@ import struct
 from typing import Protocol
 
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
+from arkts_code_reviewer.knowledge.evaluation import EvaluationKnowledgeBuild
 from arkts_code_reviewer.knowledge.models import Applicability
 from arkts_code_reviewer.knowledge.publication import PublishedKnowledgeBuild
+from arkts_code_reviewer.retrieval.catalog import aggregate_api_catalog_version
 from arkts_code_reviewer.retrieval.config import load_default_retrieval_config
 from arkts_code_reviewer.retrieval.models import KnowledgeIndex, KnowledgeIndexRecord
 
@@ -53,6 +55,49 @@ def canonical_pgvector_embedding(vector: tuple[float, ...]) -> tuple[float, ...]
     if any(not math.isfinite(value) for value in canonical):
         raise ValueError("embedding must contain finite pgvector values")
     return canonical
+
+
+def _embed_passages(
+    texts: tuple[str, ...],
+    provider: EmbeddingProvider | None,
+) -> tuple[
+    tuple[tuple[float, ...] | None, ...],
+    str | None,
+    str | None,
+    int | None,
+]:
+    if provider is None:
+        return tuple(None for _ in texts), None, None, None
+
+    model_id = provider.model_id
+    provider_version = provider.version
+    dimensions = provider.dimensions
+    if (
+        not isinstance(model_id, str)
+        or not model_id
+        or model_id != model_id.strip()
+        or not isinstance(provider_version, str)
+        or not provider_version
+        or provider_version != provider_version.strip()
+        or not isinstance(dimensions, int)
+        or isinstance(dimensions, bool)
+        or dimensions < 1
+    ):
+        raise ValueError("Embedding provider metadata is invalid")
+    generated = provider.embed_passages(texts)
+    if not isinstance(generated, tuple):
+        raise ValueError("Embedding provider must return a tuple of passage vectors")
+    if len(generated) != len(texts):
+        raise ValueError("Embedding provider returned the wrong passage count")
+    if any(
+        not isinstance(vector, tuple)
+        or len(vector) != dimensions
+        or any(not math.isfinite(value) for value in vector)
+        for vector in generated
+    ):
+        raise ValueError("Embedding provider returned invalid passage vectors")
+    embeddings = tuple(canonical_pgvector_embedding(vector) for vector in generated)
+    return embeddings, model_id, provider_version, dimensions
 
 
 def _applicability_text(value: Applicability) -> str:
@@ -119,44 +164,12 @@ def build_knowledge_index(
         )
         for item in publication.clauses
     )
-    embeddings: tuple[tuple[float, ...] | None, ...]
-    if embedding_provider is None:
-        embeddings = tuple(None for _ in texts)
-        embedding_model = None
-        embedding_version = None
-        embedding_dimensions = None
-    else:
-        model_id = embedding_provider.model_id
-        provider_version = embedding_provider.version
-        dimensions = embedding_provider.dimensions
-        if (
-            not isinstance(model_id, str)
-            or not model_id
-            or model_id != model_id.strip()
-            or not isinstance(provider_version, str)
-            or not provider_version
-            or provider_version != provider_version.strip()
-            or not isinstance(dimensions, int)
-            or isinstance(dimensions, bool)
-            or dimensions < 1
-        ):
-            raise ValueError("Embedding provider metadata is invalid")
-        generated = embedding_provider.embed_passages(texts)
-        if not isinstance(generated, tuple):
-            raise ValueError("Embedding provider must return a tuple of passage vectors")
-        if len(generated) != len(texts):
-            raise ValueError("Embedding provider returned the wrong passage count")
-        if any(
-            not isinstance(vector, tuple)
-            or len(vector) != dimensions
-            or any(not math.isfinite(value) for value in vector)
-            for vector in generated
-        ):
-            raise ValueError("Embedding provider returned invalid passage vectors")
-        embeddings = tuple(canonical_pgvector_embedding(vector) for vector in generated)
-        embedding_model = model_id
-        embedding_version = provider_version
-        embedding_dimensions = dimensions
+    (
+        embeddings,
+        embedding_model,
+        embedding_version,
+        embedding_dimensions,
+    ) = _embed_passages(texts, embedding_provider)
 
     records = tuple(
         KnowledgeIndexRecord(
@@ -174,10 +187,7 @@ def build_knowledge_index(
             strict=True,
         )
     )
-    catalog_versions = {item.catalog_version for item in publication.api_symbols}
-    if len(catalog_versions) > 1:
-        raise ValueError("Published API symbols contain multiple catalog versions")
-    catalog_version = next(iter(catalog_versions), "api-catalog:none")
+    catalog_version = aggregate_api_catalog_version(publication.api_symbols)
     return KnowledgeIndex.create(
         origin="publication",
         published_build_id=publication.build_id,
@@ -195,8 +205,78 @@ def build_knowledge_index(
     )
 
 
+def build_evaluation_knowledge_index(
+    evaluation: EvaluationKnowledgeBuild,
+    *,
+    retrieval_version: str,
+    embedding_provider: EmbeddingProvider | None = None,
+) -> KnowledgeIndex:
+    if not isinstance(evaluation, EvaluationKnowledgeBuild):
+        raise TypeError("evaluation must use EvaluationKnowledgeBuild")
+    if evaluation.production_eligible is not False:
+        raise ValueError("Evaluation Knowledge must remain production-ineligible")
+    if not retrieval_version or retrieval_version != retrieval_version.strip():
+        raise ValueError("retrieval_version must be non-empty and trimmed")
+    feature_config = load_default_feature_config()
+    retrieval_config = load_default_retrieval_config()
+    if retrieval_version != retrieval_config.version:
+        raise ValueError("retrieval_version does not match the active Retrieval config")
+    if evaluation.feature_config_fingerprint != feature_config.fingerprint:
+        raise ValueError("Evaluation Knowledge feature config does not match runtime")
+
+    texts = tuple(
+        retrieval_text(
+            scenario=item.annotation.scenario,
+            heading_path=item.clause.heading_path,
+            parent_context=item.clause.parent_context,
+            applicability=item.clause.applicability,
+            text=item.clause.text,
+        )
+        for item in evaluation.clauses
+    )
+    (
+        embeddings,
+        embedding_model,
+        embedding_version,
+        embedding_dimensions,
+    ) = _embed_passages(texts, embedding_provider)
+
+    records = tuple(
+        KnowledgeIndexRecord(
+            clause=item.clause,
+            annotation=item.annotation,
+            domains=item.domains,
+            retrieval_text=text_value,
+            token_count=estimate_knowledge_tokens(text_value),
+            embedding=embedding,
+        )
+        for item, text_value, embedding in zip(
+            evaluation.clauses,
+            texts,
+            embeddings,
+            strict=True,
+        )
+    )
+    return KnowledgeIndex.create(
+        origin="evaluation_fixture",
+        published_build_id=evaluation.build_id,
+        source_bundle_id=evaluation.source_bundle_id,
+        feature_config_version=evaluation.feature_config_fingerprint,
+        annotation_version=evaluation.annotation_version,
+        catalog_version=aggregate_api_catalog_version(evaluation.api_symbols),
+        retrieval_version=retrieval_version,
+        retrieval_config_fingerprint=retrieval_config.fingerprint,
+        embedding_model=embedding_model,
+        embedding_version=embedding_version,
+        embedding_dimensions=embedding_dimensions,
+        api_symbols=evaluation.api_symbols,
+        records=records,
+    )
+
+
 __all__ = [
     "EmbeddingProvider",
+    "build_evaluation_knowledge_index",
     "build_knowledge_index",
     "canonical_pgvector_embedding",
     "estimate_knowledge_tokens",

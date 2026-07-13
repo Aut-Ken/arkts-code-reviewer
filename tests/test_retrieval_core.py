@@ -28,6 +28,10 @@ from arkts_code_reviewer.code_analysis.models import (
     ReviewUnitSpan,
 )
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
+from arkts_code_reviewer.knowledge.evaluation import (
+    EvaluationClause,
+    EvaluationKnowledgeBuild,
+)
 from arkts_code_reviewer.knowledge.models import (
     AnnotationKind,
     AnnotationProvenance,
@@ -43,8 +47,10 @@ from arkts_code_reviewer.knowledge.publication import (
     PublishedClause,
     PublishedKnowledgeBuild,
 )
+from arkts_code_reviewer.knowledge.review_packets import KnowledgeReviewClause
 from arkts_code_reviewer.retrieval.applicability import evaluate_applicability
 from arkts_code_reviewer.retrieval.assembler import assemble_unit_evidence
+from arkts_code_reviewer.retrieval.catalog import aggregate_api_catalog_version
 from arkts_code_reviewer.retrieval.config import (
     DEFAULT_RETRIEVAL_CONFIG_PATH,
     RetrievalConfig,
@@ -55,6 +61,7 @@ from arkts_code_reviewer.retrieval.embeddings import FastEmbedProvider, _cache_f
 from arkts_code_reviewer.retrieval.exact import ExactHit, search_exact
 from arkts_code_reviewer.retrieval.fusion import FusedHit, fuse_hits
 from arkts_code_reviewer.retrieval.index import (
+    build_evaluation_knowledge_index,
     build_knowledge_index,
     canonical_pgvector_embedding,
     estimate_knowledge_tokens,
@@ -275,6 +282,7 @@ def _api_symbol(
     canonical_name: str,
     *,
     aliases: tuple[str, ...] = (),
+    catalog_version: str = "api-catalog-v1",
 ) -> ApiSymbol:
     source_ref = _source_ref(f"api-{canonical_name}", authority="official_api_definition")
     return ApiSymbol.create(
@@ -287,7 +295,7 @@ def _api_symbol(
         deprecated_since=None,
         source_ref=source_ref,
         source_span=SourceSpan(start_line=1, end_line=1),
-        catalog_version="api-catalog-v1",
+        catalog_version=catalog_version,
     )
 
 
@@ -296,6 +304,9 @@ def _index(
     *,
     api_symbols: tuple[ApiSymbol, ...] = (),
     embedded: bool | None = None,
+    origin: Literal["publication", "evaluation_fixture", "golden_fixture"] = (
+        "golden_fixture"
+    ),
 ) -> KnowledgeIndex:
     retrieval_config = load_default_retrieval_config()
     has_embeddings = (
@@ -303,13 +314,18 @@ def _index(
         if embedded is None
         else embedded
     )
+    build_prefix = {
+        "publication": "published-knowledge",
+        "evaluation_fixture": "evaluation-knowledge",
+        "golden_fixture": "retrieval-fixture",
+    }[origin]
     return KnowledgeIndex.create(
-        origin="golden_fixture",
-        published_build_id=f"retrieval-fixture:sha256:{'f' * 64}",
+        origin=origin,
+        published_build_id=f"{build_prefix}:sha256:{'f' * 64}",
         source_bundle_id=f"source-bundle:sha256:{'d' * 64}",
         feature_config_version=load_default_feature_config().fingerprint,
         annotation_version="annotation-v1",
-        catalog_version="api-catalog-v1",
+        catalog_version=aggregate_api_catalog_version(api_symbols),
         retrieval_version=retrieval_config.version,
         retrieval_config_fingerprint=retrieval_config.fingerprint,
         embedding_model="fixture-embedding" if has_embeddings else None,
@@ -434,6 +450,30 @@ def _publication(
         published_at=_NOW,
         curation_decisions=decisions,
         clauses=clauses,
+        api_symbols=api_symbols,
+    )
+
+
+def _evaluation_build(
+    record: KnowledgeIndexRecord,
+    *,
+    api_symbols: tuple[ApiSymbol, ...] = (),
+) -> EvaluationKnowledgeBuild:
+    source_clause = KnowledgeReviewClause.model_construct(
+        annotation=record.annotation,
+        domains=record.domains,
+    )
+    evaluation_clause = EvaluationClause.model_construct(
+        clause=record.clause,
+        source_clause=source_clause,
+    )
+    return EvaluationKnowledgeBuild.model_construct(
+        build_id=f"evaluation-knowledge:sha256:{'8' * 64}",
+        source_bundle_id=f"source-bundle:sha256:{'5' * 64}",
+        feature_config_fingerprint=load_default_feature_config().fingerprint,
+        annotation_version="annotation-v1",
+        production_eligible=False,
+        clauses=(evaluation_clause,),
         api_symbols=api_symbols,
     )
 
@@ -692,9 +732,39 @@ def test_request_loader_rejects_identity_tampering() -> None:
         load_retrieval_request(json.dumps(payload))
 
 
-def test_index_record_accepts_only_baselined_clause() -> None:
-    with pytest.raises(ValueError, match="only Baselined"):
-        _record("R-DRAFT", status="Draft")
+def test_index_record_accepts_draft_but_rejects_deprecated_clause() -> None:
+    assert _record("R-DRAFT", status="Draft").clause.status == "Draft"
+    with pytest.raises(ValueError, match="Draft or Baselined"):
+        _record("R-DEPRECATED", status="Deprecated")
+
+
+def test_index_origin_strictly_controls_clause_status_and_build_identity() -> None:
+    draft = _record("R-DRAFT", status="Draft")
+    baselined = _record("R-BASELINED")
+
+    assert _index((draft,), origin="evaluation_fixture").origin == "evaluation_fixture"
+    with pytest.raises(ValueError, match="golden_fixture.*Baselined"):
+        _index((draft,))
+    with pytest.raises(ValueError, match="evaluation_fixture.*Draft"):
+        _index((baselined,), origin="evaluation_fixture")
+
+    config = load_default_retrieval_config()
+    with pytest.raises(ValueError, match="origin does not match"):
+        KnowledgeIndex.create(
+            origin="evaluation_fixture",
+            published_build_id=f"retrieval-fixture:sha256:{'f' * 64}",
+            source_bundle_id=f"source-bundle:sha256:{'d' * 64}",
+            feature_config_version=load_default_feature_config().fingerprint,
+            annotation_version="annotation-v1",
+            catalog_version="api-catalog:none",
+            retrieval_version=config.version,
+            retrieval_config_fingerprint=config.fingerprint,
+            embedding_model=None,
+            embedding_version=None,
+            embedding_dimensions=None,
+            api_symbols=(),
+            records=(draft,),
+        )
 
 
 def test_index_factory_normalizes_records_and_api_symbol_order() -> None:
@@ -715,6 +785,60 @@ def test_index_factory_normalizes_records_and_api_symbol_order() -> None:
     assert left == right
     assert tuple(item.clause.rule_id for item in left.records) == ("R-1", "R-2")
     assert tuple(item.canonical_name for item in left.api_symbols) == ("alpha", "zeta")
+
+
+def test_api_catalog_aggregate_handles_none_one_and_multiple_fragments() -> None:
+    first = _api_symbol("alpha", catalog_version="api-fragment-a")
+    second = _api_symbol("zeta", catalog_version="api-fragment-b")
+
+    assert aggregate_api_catalog_version(()) == "api-catalog:none"
+    assert aggregate_api_catalog_version((first,)) == "api-fragment-a"
+    combined = aggregate_api_catalog_version((first, second))
+    assert combined.startswith("api-catalog:sha256:")
+    assert combined == aggregate_api_catalog_version((second, first))
+    assert (
+        _index((_record("R-1"),), api_symbols=(second, first)).catalog_version
+        == combined
+    )
+
+
+def test_publication_index_accepts_multiple_catalog_fragments_deterministically() -> None:
+    first = _api_symbol("alpha", catalog_version="api-fragment-a")
+    second = _api_symbol("zeta", catalog_version="api-fragment-b")
+    publication = _publication(
+        (_record("R-PUBLISHED"),),
+        api_symbols=(first, second),
+    )
+
+    index = build_knowledge_index(
+        publication,
+        retrieval_version=load_default_retrieval_config().version,
+    )
+
+    assert index.catalog_version == aggregate_api_catalog_version((first, second))
+
+
+def test_evaluation_index_build_preserves_draft_status_and_origin() -> None:
+    evaluation = _evaluation_build(_record("R-EVALUATION", status="Draft"))
+
+    index = build_evaluation_knowledge_index(
+        evaluation,
+        retrieval_version=load_default_retrieval_config().version,
+    )
+
+    assert index.origin == "evaluation_fixture"
+    assert index.published_build_id == evaluation.build_id
+    assert index.records[0].clause.status == "Draft"
+
+
+def test_evaluation_index_build_rejects_production_eligible_input() -> None:
+    evaluation = _evaluation_build(_record("R-EVALUATION", status="Draft"))
+
+    with pytest.raises(ValueError, match="production-ineligible"):
+        build_evaluation_knowledge_index(
+            evaluation.model_copy(update={"production_eligible": True}),
+            retrieval_version=load_default_retrieval_config().version,
+        )
 
 
 def test_index_rebinds_annotation_self_reference_without_hash_cycle() -> None:
@@ -757,7 +881,7 @@ def test_index_rejects_partial_embedding_metadata() -> None:
             source_bundle_id=f"source-bundle:sha256:{'d' * 64}",
             feature_config_version=load_default_feature_config().fingerprint,
             annotation_version="annotation-v1",
-            catalog_version="api-catalog-v1",
+            catalog_version="api-catalog:none",
             retrieval_version=config.version,
             retrieval_config_fingerprint=config.fingerprint,
             embedding_model="fixture-embedding",
@@ -776,7 +900,7 @@ def test_evidence_pack_loader_rejects_duplicate_key_and_unknown_field() -> None:
     )
     pack = RetrievalService(index, allow_golden_fixture=True).retrieve(request)
     raw = pack.model_dump_json()
-    duplicate = '{"schema_version":"evidence-pack-v1",' + raw[1:]
+    duplicate = '{"schema_version":"evidence-pack-v2",' + raw[1:]
 
     with pytest.raises(ValueError, match="duplicate JSON key"):
         load_evidence_pack(duplicate)
@@ -1294,6 +1418,52 @@ def test_service_requires_explicit_fixture_opt_in() -> None:
         RetrievalService(index, allow_golden_fixture=cast("bool", 1))
 
 
+def test_service_isolates_evaluation_fixture_and_labels_evidence_pack() -> None:
+    index = _index(
+        (_record("R-EVALUATION", status="Draft", apis=("foo",)),),
+        origin="evaluation_fixture",
+    )
+    request = _request(
+        index,
+        (_unit(exact_signals=UnitExactSignals(apis=("foo",))),),
+    )
+
+    with pytest.raises(ValueError, match="explicit staging opt-in"):
+        RetrievalService(index)
+    with pytest.raises(TypeError, match="must be boolean"):
+        RetrievalService(index, allow_evaluation_fixture=cast("bool", 1))
+
+    pack = RetrievalService(
+        index,
+        allow_evaluation_fixture=True,
+    ).retrieve(request)
+
+    assert pack.schema_version == "evidence-pack-v2"
+    assert pack.index_origin == "evaluation_fixture"
+    assert pack.knowledge_build_id == index.published_build_id
+    assert pack.production_eligible is False
+    assert pack.units[0].clauses[0].status == "Draft"
+
+
+def test_evidence_pack_rejects_origin_and_production_eligibility_tampering() -> None:
+    index = _index((_record("R-1", apis=("foo",)),))
+    request = _request(
+        index,
+        (_unit(exact_signals=UnitExactSignals(apis=("foo",))),),
+    )
+    pack = RetrievalService(index, allow_golden_fixture=True).retrieve(request)
+
+    payload = pack.model_dump(mode="json")
+    payload["production_eligible"] = True
+    with pytest.raises(ValueError, match="production eligibility"):
+        load_evidence_pack(json.dumps(payload))
+
+    payload = pack.model_dump(mode="json")
+    payload["knowledge_build_id"] = f"published-knowledge:sha256:{'a' * 64}"
+    with pytest.raises(ValueError, match="origin does not match"):
+        load_evidence_pack(json.dumps(payload))
+
+
 def test_service_exact_only_path_returns_a_valid_stable_evidence_pack() -> None:
     index = _index((_record("R-API", apis=("foo",)),))
     request = _request(
@@ -1358,6 +1528,9 @@ def test_service_and_pack_keep_input_units_in_stable_identity_order() -> None:
         retrieval_version=pack.retrieval_version,
         retrieval_config_fingerprint=pack.retrieval_config_fingerprint,
         index_version=pack.index_version,
+        index_origin=pack.index_origin,
+        knowledge_build_id=pack.knowledge_build_id,
+        production_eligible=pack.production_eligible,
         source_bundle_id=pack.source_bundle_id,
         embedding_version=pack.embedding_version,
         units=tuple(reversed(pack.units)),

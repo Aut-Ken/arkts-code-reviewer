@@ -1,3 +1,4 @@
+from arkts_code_reviewer.retrieval.catalog import aggregate_api_catalog_version
 from arkts_code_reviewer.retrieval.config import (
     RetrievalConfig,
     load_default_retrieval_config,
@@ -5,6 +6,7 @@ from arkts_code_reviewer.retrieval.config import (
 )
 from arkts_code_reviewer.retrieval.index import (
     EmbeddingProvider,
+    build_evaluation_knowledge_index,
     build_knowledge_index,
     canonical_pgvector_embedding,
     estimate_knowledge_tokens,
@@ -13,6 +15,7 @@ from arkts_code_reviewer.retrieval.models import (
     EvidenceClause,
     EvidenceMatch,
     EvidencePack,
+    IndexOrigin,
     KnowledgeIndex,
     KnowledgeIndexRecord,
     ParserContextQuality,
@@ -35,6 +38,7 @@ __all__ = [
     "EvidenceMatch",
     "EvidencePack",
     "EmbeddingProvider",
+    "IndexOrigin",
     "KnowledgeIndex",
     "KnowledgeIndexRecord",
     "ParserContextQuality",
@@ -47,7 +51,9 @@ __all__ = [
     "TargetPlatform",
     "UnitEvidence",
     "UnitExactSignals",
+    "aggregate_api_catalog_version",
     "build_knowledge_index",
+    "build_evaluation_knowledge_index",
     "build_retrieval_request",
     "canonical_pgvector_embedding",
     "estimate_knowledge_tokens",

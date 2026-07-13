@@ -21,12 +21,13 @@ from arkts_code_reviewer.knowledge.models import (
     KnowledgeClause,
     SourceRef,
 )
+from arkts_code_reviewer.retrieval.catalog import aggregate_api_catalog_version
 
 RETRIEVAL_REQUEST_SCHEMA_VERSION = "retrieval-request-v1"
 KNOWLEDGE_INDEX_SCHEMA_VERSION = "knowledge-index-v1"
-EVIDENCE_PACK_SCHEMA_VERSION = "evidence-pack-v1"
+EVIDENCE_PACK_SCHEMA_VERSION = "evidence-pack-v2"
 
-IndexOrigin = Literal["publication", "golden_fixture"]
+IndexOrigin = Literal["publication", "evaluation_fixture", "golden_fixture"]
 ApplicabilityResult = Literal["applicable", "unknown"]
 MatchKind = Literal[
     "rule_id",
@@ -54,8 +55,14 @@ _REQUEST_ID_PATTERN = r"^retrieval-request:sha256:[0-9a-f]{64}$"
 _EVIDENCE_PACK_ID_PATTERN = r"^evidence-pack:sha256:[0-9a-f]{64}$"
 _SOURCE_BUNDLE_ID_PATTERN = r"^source-bundle:sha256:[0-9a-f]{64}$"
 _PUBLISHED_BUILD_ID_PATTERN = (
-    r"^(?:published-knowledge|retrieval-fixture):sha256:[0-9a-f]{64}$"
+    r"^(?:published-knowledge|evaluation-knowledge|retrieval-fixture):sha256:[0-9a-f]{64}$"
 )
+
+_BUILD_PREFIX_BY_ORIGIN: dict[IndexOrigin, str] = {
+    "publication": "published-knowledge:",
+    "evaluation_fixture": "evaluation-knowledge:",
+    "golden_fixture": "retrieval-fixture:",
+}
 
 
 class _FrozenModel(BaseModel):
@@ -392,8 +399,8 @@ class KnowledgeIndexRecord(_FrozenModel):
         _validate_strings(self.domains, "KnowledgeIndexRecord.domains")
         if not self.domains:
             raise ValueError("Knowledge index record requires a Domain")
-        if self.clause.status != "Baselined":
-            raise ValueError("Knowledge index accepts only Baselined Clauses")
+        if self.clause.status not in {"Draft", "Baselined"}:
+            raise ValueError("Knowledge index record accepts only Draft or Baselined Clauses")
         if (
             self.annotation.target_kind != "clause"
             or self.annotation.target_id != self.clause.rule_id
@@ -565,9 +572,7 @@ class KnowledgeIndex(_FrozenModel):
 
     @model_validator(mode="after")
     def validate_index(self) -> KnowledgeIndex:
-        if (self.origin == "publication") != self.published_build_id.startswith(
-            "published-knowledge:"
-        ):
+        if not self.published_build_id.startswith(_BUILD_PREFIX_BY_ORIGIN[self.origin]):
             raise ValueError("Knowledge index origin does not match build identity")
         rule_ids = [item.clause.rule_id for item in self.records]
         if not rule_ids or rule_ids != sorted(set(rule_ids)):
@@ -584,8 +589,13 @@ class KnowledgeIndex(_FrozenModel):
         declaration_ids = [item.declaration_id for item in self.api_symbols]
         if len(declaration_ids) != len(set(declaration_ids)):
             raise ValueError("Knowledge index API declaration IDs must be unique")
-        if any(item.catalog_version != self.catalog_version for item in self.api_symbols):
-            raise ValueError("Knowledge index API catalog versions disagree")
+        if aggregate_api_catalog_version(self.api_symbols) != self.catalog_version:
+            raise ValueError("Knowledge index API catalog aggregate does not match content")
+        expected_status = "Draft" if self.origin == "evaluation_fixture" else "Baselined"
+        if any(item.clause.status != expected_status for item in self.records):
+            raise ValueError(
+                f"{self.origin} index requires only {expected_status} Clauses"
+            )
         for item in self.records:
             if item.annotation.index_version != self.index_version:
                 raise ValueError("Knowledge annotation does not match index version")
@@ -644,7 +654,7 @@ class EvidenceClause(_FrozenModel):
     rank: Annotated[int, Field(ge=1)]
     rule_id: Annotated[str, Field(min_length=1)]
     rule_type: Annotated[str, Field(min_length=1)]
-    status: Literal["Baselined"]
+    status: Literal["Draft", "Baselined"]
     text: Annotated[str, Field(min_length=1)]
     heading_path: tuple[str, ...]
     parent_context: str | None = None
@@ -773,7 +783,7 @@ class UnitEvidence(_FrozenModel):
 
 
 class EvidencePack(_FrozenModel):
-    schema_version: Literal["evidence-pack-v1"] = "evidence-pack-v1"
+    schema_version: Literal["evidence-pack-v2"] = "evidence-pack-v2"
     evidence_pack_id: Annotated[str, Field(pattern=_EVIDENCE_PACK_ID_PATTERN)]
     request_id: Annotated[str, Field(pattern=_REQUEST_ID_PATTERN)]
     retrieval_version: Annotated[str, Field(min_length=1)]
@@ -782,6 +792,9 @@ class EvidencePack(_FrozenModel):
         Field(pattern=r"^retrieval-config:sha256:[0-9a-f]{64}$"),
     ]
     index_version: Annotated[str, Field(pattern=_INDEX_VERSION_PATTERN)]
+    index_origin: IndexOrigin
+    knowledge_build_id: Annotated[str, Field(pattern=_PUBLISHED_BUILD_ID_PATTERN)]
+    production_eligible: bool
     source_bundle_id: Annotated[str, Field(pattern=_SOURCE_BUNDLE_ID_PATTERN)]
     embedding_version: str | None = None
     degraded: bool
@@ -819,6 +832,9 @@ class EvidencePack(_FrozenModel):
         retrieval_version: str,
         retrieval_config_fingerprint: str,
         index_version: str,
+        index_origin: IndexOrigin,
+        knowledge_build_id: str,
+        production_eligible: bool,
         source_bundle_id: str,
         embedding_version: str | None,
         units: tuple[UnitEvidence, ...],
@@ -859,6 +875,9 @@ class EvidencePack(_FrozenModel):
             retrieval_version=retrieval_version,
             retrieval_config_fingerprint=retrieval_config_fingerprint,
             index_version=index_version,
+            index_origin=index_origin,
+            knowledge_build_id=knowledge_build_id,
+            production_eligible=production_eligible,
             source_bundle_id=source_bundle_id,
             embedding_version=embedding_version,
             degraded=degraded,
@@ -871,6 +890,9 @@ class EvidencePack(_FrozenModel):
             retrieval_version=retrieval_version,
             retrieval_config_fingerprint=retrieval_config_fingerprint,
             index_version=index_version,
+            index_origin=index_origin,
+            knowledge_build_id=knowledge_build_id,
+            production_eligible=production_eligible,
             source_bundle_id=source_bundle_id,
             embedding_version=embedding_version,
             degraded=degraded,
@@ -884,6 +906,9 @@ class EvidencePack(_FrozenModel):
             "retrieval_version": self.retrieval_version,
             "retrieval_config_fingerprint": self.retrieval_config_fingerprint,
             "index_version": self.index_version,
+            "index_origin": self.index_origin,
+            "knowledge_build_id": self.knowledge_build_id,
+            "production_eligible": self.production_eligible,
             "source_bundle_id": self.source_bundle_id,
             "embedding_version": self.embedding_version,
             "degraded": self.degraded,
@@ -893,6 +918,23 @@ class EvidencePack(_FrozenModel):
 
     @model_validator(mode="after")
     def validate_pack(self) -> EvidencePack:
+        if not self.knowledge_build_id.startswith(
+            _BUILD_PREFIX_BY_ORIGIN[self.index_origin]
+        ):
+            raise ValueError("Evidence Pack origin does not match knowledge build identity")
+        if self.production_eligible != (self.index_origin == "publication"):
+            raise ValueError("Evidence Pack production eligibility does not match origin")
+        expected_status = (
+            "Draft" if self.index_origin == "evaluation_fixture" else "Baselined"
+        )
+        if any(
+            clause.status != expected_status
+            for unit in self.units
+            for clause in unit.clauses
+        ):
+            raise ValueError(
+                f"Evidence Pack {self.index_origin} clauses must be {expected_status}"
+            )
         unit_ids = [item.unit_id for item in self.units]
         if not unit_ids or unit_ids != sorted(set(unit_ids)):
             raise ValueError("Evidence Pack Units must be non-empty, sorted, and unique")
@@ -964,6 +1006,7 @@ __all__ = [
     "EvidenceClause",
     "EvidenceMatch",
     "EvidencePack",
+    "IndexOrigin",
     "KnowledgeIndex",
     "KnowledgeIndexRecord",
     "ParserContextQuality",

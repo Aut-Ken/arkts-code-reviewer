@@ -95,7 +95,7 @@ def _write_migration(directory: Path, filename: str, sql: str) -> Path:
 def test_repository_migration_contains_required_storage_and_guards() -> None:
     migrations = discover_postgres_migrations()
 
-    assert [migration.version for migration in migrations] == ["0001"]
+    assert [migration.version for migration in migrations] == ["0001", "0002"]
     sql = migrations[0].sql
     for expected in (
         "CREATE EXTENSION IF NOT EXISTS vector",
@@ -113,6 +113,19 @@ def test_repository_migration_contains_required_storage_and_guards() -> None:
         "index_entries_are_immutable",
     ):
         assert expected in sql
+
+    evaluation_sql = migrations[1].sql
+    for expected in (
+        "evaluation_fixture",
+        "evaluation-knowledge:sha256:",
+        "index_entries_status_v2_check",
+        "enforce_index_entry_origin_status",
+        "enforce_alias_origin_namespace",
+        "^staging-.+$",
+        "^test-.+$",
+        "current alias accepts publication indexes only",
+    ):
+        assert expected in evaluation_sql
 
 
 def test_compose_pins_pgvector_and_requires_a_password() -> None:
