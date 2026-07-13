@@ -5,7 +5,12 @@ import argparse
 import json
 from pathlib import Path
 
+from arkts_code_reviewer.knowledge.parsing.golden_subject import (
+    current_knowledge_subject,
+)
 from arkts_code_reviewer.knowledge_validation.golden import (
+    FULL_FIELDS,
+    STRUCTURE_FIELDS,
     assert_strict_baseline,
     evaluate_golden_suite,
     is_perfect,
@@ -29,10 +34,25 @@ def main() -> int:
     parser.add_argument("--write-current", action="store_true")
     parser.add_argument("--strict-baseline", action="store_true")
     parser.add_argument("--require-perfect", action="store_true")
+    parser.add_argument(
+        "--scope",
+        choices=("full", "structure"),
+        default="full",
+        help="K-3 structure compares Clause/API; full also compares K-4 annotations",
+    )
     args = parser.parse_args()
 
+    if args.scope != "full" and (args.write_current or args.strict_baseline):
+        parser.error("baseline operations require --scope full")
+
     suite = load_golden_suite(args.manifest)
-    report = evaluate_golden_suite(suite)
+    fields = STRUCTURE_FIELDS if args.scope == "structure" else FULL_FIELDS
+    report = evaluate_golden_suite(
+        suite,
+        current_knowledge_subject,
+        implementation="knowledge-structure-v1",
+        fields=fields,
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True))
 
     if args.write_current:

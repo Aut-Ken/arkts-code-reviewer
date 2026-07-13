@@ -7,7 +7,11 @@ from pathlib import Path
 
 import pytest
 
+from arkts_code_reviewer.knowledge.parsing.golden_subject import (
+    current_knowledge_subject,
+)
 from arkts_code_reviewer.knowledge_validation.golden import (
+    STRUCTURE_FIELDS,
     assert_strict_baseline,
     evaluate_golden_suite,
     is_perfect,
@@ -39,22 +43,45 @@ def _mutate_manifest(tmp_path: Path, mutate: object) -> Path:
     return manifest
 
 
-def test_knowledge_k0_records_honest_preimplementation_baseline() -> None:
+def test_knowledge_k3_records_honest_structure_only_baseline() -> None:
     suite = load_golden_suite(MANIFEST)
-    report = evaluate_golden_suite(suite)
+    report = evaluate_golden_suite(
+        suite,
+        current_knowledge_subject,
+        implementation="knowledge-structure-v1",
+    )
 
     assert len(suite.cases) == 12
     assert report["matched_case_count"] == 1
     assert report["mismatched_case_count"] == 11
-    assert report["implementation"] == "not-implemented"
+    assert report["field_matched_case_counts"] == {
+        "annotations": 1,
+        "api_symbols": 12,
+        "clauses": 4,
+    }
+    assert report["implementation"] == "knowledge-structure-v1"
     assert is_perfect(report) is False
     assert_strict_baseline(report, suite, BASELINE)
 
 
+def test_knowledge_k3_structure_gate_is_perfect() -> None:
+    suite = load_golden_suite(MANIFEST)
+    report = evaluate_golden_suite(
+        suite,
+        current_knowledge_subject,
+        implementation="knowledge-structure-v1",
+        fields=STRUCTURE_FIELDS,
+    )
+
+    assert report["matched_case_count"] == 12
+    assert report["mismatched_case_count"] == 0
+    assert is_perfect(report) is True
+
+
 def test_knowledge_evaluator_is_repeatable_and_forged_report_is_not_perfect() -> None:
     suite = load_golden_suite(MANIFEST)
-    first = evaluate_golden_suite(suite)
-    second = evaluate_golden_suite(suite)
+    first = evaluate_golden_suite(suite, current_knowledge_subject)
+    second = evaluate_golden_suite(suite, current_knowledge_subject)
     assert first == second
 
     forged = copy.deepcopy(first)
@@ -146,6 +173,6 @@ def test_knowledge_loader_rejects_source_symlink(tmp_path: Path) -> None:
 
 def test_knowledge_baseline_writer_cannot_escape_current_path(tmp_path: Path) -> None:
     suite = load_golden_suite(MANIFEST)
-    report = evaluate_golden_suite(suite)
+    report = evaluate_golden_suite(suite, current_knowledge_subject)
     with pytest.raises(ValueError, match="may only update"):
         write_current_baseline(report, suite, tmp_path / "forged.json")

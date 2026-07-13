@@ -19,6 +19,8 @@ MANIFEST_SCHEMA_VERSION = "knowledge-golden-v1"
 REPORT_SCHEMA_VERSION = "knowledge-golden-report-v1"
 BASELINE_SCHEMA_VERSION = "knowledge-golden-baseline-v1"
 SUITE_ID = "knowledge-k0"
+STRUCTURE_FIELDS = ("api_symbols", "clauses")
+FULL_FIELDS = ("annotations", "api_symbols", "clauses")
 
 GoldenSubject = Callable[["KnowledgeGoldenCase"], dict[str, object]]
 
@@ -53,6 +55,7 @@ class _Source(_FrozenModel):
     repository: str
     revision: Annotated[str, Field(pattern=r"^[0-9a-f]{40}$")]
     relative_path: str
+    rule_namespace: str | None = None
     authority: str
     content_sha256: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
     origin_lines: tuple[int, int]
@@ -77,6 +80,17 @@ class _Source(_FrozenModel):
     def validate_text(cls, value: str, info: object) -> str:
         if not value or value.strip() != value:
             raise ValueError(f"source.{info.field_name} must be non-empty and trimmed")
+        return value
+
+    @field_validator("rule_namespace")
+    @classmethod
+    def validate_rule_namespace(cls, value: str | None) -> str | None:
+        if value is not None and (
+            not value
+            or value.strip() != value
+            or any(character.isspace() for character in value)
+        ):
+            raise ValueError("source.rule_namespace must be non-empty and contain no whitespace")
         return value
 
     @field_validator("origin_lines")
@@ -259,6 +273,21 @@ class _Case(_FrozenModel):
             raise ValueError("case.description must be non-empty and trimmed")
         return value
 
+    @model_validator(mode="after")
+    def validate_native_rule_namespace(self) -> _Case:
+        native_clauses = [
+            clause for clause in self.expected.clauses if clause.native_rule_id is not None
+        ]
+        if native_clauses and self.source.rule_namespace is None:
+            raise ValueError("source.rule_namespace is required for native Clause IDs")
+        if any(
+            clause.rule_id
+            != f"{self.source.rule_namespace}/{clause.native_rule_id}"
+            for clause in native_clauses
+        ):
+            raise ValueError("native Clause rule_id must use source.rule_namespace")
+        return self
+
 
 class _Manifest(_FrozenModel):
     schema_version: Literal["knowledge-golden-v1"]
@@ -284,6 +313,7 @@ class KnowledgeGoldenSource:
     repository: str
     revision: str
     relative_path: str
+    rule_namespace: str | None
     authority: str
     content_sha256: str
     origin_lines: tuple[int, int]
@@ -431,6 +461,7 @@ def load_golden_suite(manifest_path: str | Path) -> KnowledgeGoldenSuite:
                     repository=case.source.repository,
                     revision=case.source.revision,
                     relative_path=case.source.relative_path,
+                    rule_namespace=case.source.rule_namespace,
                     authority=case.source.authority,
                     content_sha256=digest,
                     origin_lines=case.source.origin_lines,
@@ -472,24 +503,59 @@ def _diff(expected: object, actual: object, path: str = "expected") -> list[str]
     return []
 
 
+def _scope_projection(
+    payload: Mapping[str, object],
+    fields: tuple[str, ...],
+) -> dict[str, object]:
+    projection = {field: payload[field] for field in fields}
+    if fields == STRUCTURE_FIELDS:
+        clauses = projection["clauses"]
+        if not isinstance(clauses, list):
+            raise ValueError("Knowledge Golden clauses must be a list")
+        projection["clauses"] = [
+            {key: value for key, value in clause.items() if key != "status"}
+            if isinstance(clause, dict)
+            else clause
+            for clause in clauses
+        ]
+    return projection
+
+
 def evaluate_golden_suite(
     suite: KnowledgeGoldenSuite,
     subject: GoldenSubject | None = None,
     *,
     implementation: str = "not-implemented",
+    fields: tuple[str, ...] = FULL_FIELDS,
 ) -> dict[str, object]:
+    if fields not in {STRUCTURE_FIELDS, FULL_FIELDS}:
+        raise ValueError("Knowledge Golden fields must be structure or full scope")
     active_subject = _empty_subject if subject is None else subject
     reports: list[dict[str, object]] = []
+    field_matches = {field: 0 for field in fields}
     for case in suite.cases:
         actual = active_subject(case)
-        differences = _diff(case.expected, actual)
+        if set(actual) != set(FULL_FIELDS):
+            raise ValueError(
+                "Knowledge Golden subject must return clauses, api_symbols, and annotations"
+            )
+        expected_projection = _scope_projection(case.expected, fields)
+        actual_projection = _scope_projection(actual, fields)
+        for field in fields:
+            if not _diff(
+                expected_projection[field],
+                actual_projection[field],
+                f"expected.{field}",
+            ):
+                field_matches[field] += 1
+        differences = _diff(expected_projection, actual_projection)
         reports.append(
             {
                 "case_id": case.case_id,
                 "matched": not differences,
                 "differences": differences,
-                "expected": case.expected,
-                "actual": actual,
+                "expected": expected_projection,
+                "actual": actual_projection,
             }
         )
     matched = sum(bool(report["matched"]) for report in reports)
@@ -497,6 +563,8 @@ def evaluate_golden_suite(
         "schema_version": REPORT_SCHEMA_VERSION,
         "suite_id": suite.suite_id,
         "implementation": implementation,
+        "fields": list(fields),
+        "field_matched_case_counts": field_matches,
         "manifest_sha256": suite.manifest_sha256,
         "case_count": len(reports),
         "matched_case_count": matched,
@@ -564,8 +632,10 @@ def assert_strict_baseline(
 
 
 __all__ = [
+    "FULL_FIELDS",
     "KnowledgeGoldenCase",
     "KnowledgeGoldenSuite",
+    "STRUCTURE_FIELDS",
     "assert_strict_baseline",
     "evaluate_golden_suite",
     "is_perfect",

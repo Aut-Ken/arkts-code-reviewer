@@ -56,6 +56,7 @@
         "repository": "synthetic://knowledge-golden",
         "revision": "0000000000000000000000000000000000000001",
         "relative_path": "KG001_numbered_spec.md",
+        "rule_namespace": "TIMER",
         "authority": "golden_fixture",
         "content_sha256": "9ae3191bc7124de4b4605af4a817dcaa6c516cd25ed7bf9b6cefa16547d7c360",
         "origin_lines": [1, 5]
@@ -98,6 +99,7 @@
         "repository": "synthetic://knowledge-golden",
         "revision": "0000000000000000000000000000000000000001",
         "relative_path": "KG002_spec_table.md",
+        "rule_namespace": "AUTOPLAY",
         "authority": "golden_fixture",
         "content_sha256": "6b978e1b7bb5585974a7d93371a3188bfc129fae3eeb72a146cd3fad2032665b",
         "origin_lines": [1, 6]

@@ -362,6 +362,15 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
             "arkts_code_reviewer/knowledge/defaults/knowledge_seed_v1.yaml"
         ),
         "config/tags.yaml": "arkts_code_reviewer/feature_routing/defaults/tags.yaml",
+        "sidecars/knowledge-api-parser/package-lock.json": (
+            "arkts_code_reviewer/knowledge/sidecars/api_parser/package-lock.json"
+        ),
+        "sidecars/knowledge-api-parser/package.json": (
+            "arkts_code_reviewer/knowledge/sidecars/api_parser/package.json"
+        ),
+        "sidecars/knowledge-api-parser/parse_api.js": (
+            "arkts_code_reviewer/knowledge/sidecars/api_parser/parse_api.js"
+        ),
     }
     assert DEFAULT_TAGS_PATH.is_file()
     assert DEFAULT_DIMENSIONS_PATH.is_file()

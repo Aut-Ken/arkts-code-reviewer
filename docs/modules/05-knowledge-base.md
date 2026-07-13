@@ -2,7 +2,7 @@
 title: 05 知识库构建模块
 status: canonical
 implementation: partial
-updated: 2026-07-10
+updated: 2026-07-13
 ---
 
 # 05 知识库构建模块
@@ -33,15 +33,24 @@ Source Registry
 - 原始资料、代码语料、分析工具、模型和运行产物已经分目录隔离。
 - ingestion allowlist、权威度、人工整理要求和 Prompt 禁用边界已登记。
 - 当前知识资料约 22,523 个文件，包括 7,535 个 Markdown 和 3,676 个 API 声明。
+- 主项目已实现严格 Source Registry loader、固定 revision 校验和稳定
+  `source_bundle_id`。
+- `knowledge-seed-v1` 固定首批 3 个来源、3 个知识域和 24 个文件；Adapter 从
+  Git object 读取，不受外部仓库工作树污染。
+- 已实现 Markdown ClauseCandidate 解析器和独立 API 声明 sidecar；候选保留绝对
+  行号、来源哈希、重载、dynamic/static 版本以及结构化诊断。
+- Knowledge Golden 当前有 12 个独立人工 expected case。K-3 的 Clause/API
+  structure gate 为 12/12；完整 gate 仍为 1/12，等待 K-4 标注和审核。
 
 尚未完成：
 
-- 主项目没有 Source Registry loader。
-- 没有 Source Adapter、Clause parser、API catalog builder 或 curation workflow。
-- 没有数据库迁移、真实 Clause 数据集、Embedding 或在线索引。
-- 没有知识构建 Golden Set 和发布门禁。
+- 没有 Grok 审核包、审核结果应用和最终 curation workflow。
+- 当前 Clause 都是候选；普通候选保持 `Draft`，不能直接称为 Baselined 知识。
+- 没有数据库迁移、发布后的真实 Clause 数据集、Embedding 或在线索引。
+- K-4 完整 Golden、K-5 存储、K-6 发布和后续 Retrieval Golden 尚未完成。
 
-因此本模块状态是 `partial`：来源管理基线已经存在，知识构建执行链尚未实现。
+因此本模块状态仍是 `partial`：K-0 到 K-3 的来源、标准化和候选提取链已经实现，
+但模型审核、策展、存储和发布链尚未完成。
 
 ## 3. 来源分类和处理策略
 

@@ -65,6 +65,35 @@
       "title": "Applicability",
       "type": "object"
     },
+    "ClauseExample": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "positive",
+            "negative",
+            "neutral"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source_span": {
+          "$ref": "#/$defs/SourceSpan"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "text",
+        "source_span"
+      ],
+      "title": "ClauseExample",
+      "type": "object"
+    },
     "SourceRef": {
       "additionalProperties": false,
       "properties": {
@@ -162,12 +191,32 @@
       "title": "Doc Hash",
       "type": "string"
     },
+    "examples": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ClauseExample"
+      },
+      "title": "Examples",
+      "type": "array"
+    },
     "heading_path": {
       "items": {
         "type": "string"
       },
       "title": "Heading Path",
       "type": "array"
+    },
+    "native_rule_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Native Rule Id"
     },
     "neighbor_rule_ids": {
       "default": [],

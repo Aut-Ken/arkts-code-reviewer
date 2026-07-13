@@ -1,5 +1,5 @@
 {
-  "manifest_sha256": "85d88b93cc988092ceeb4bb5b7bf09093b1fd0f8ca3a62f8aa2a3889a438f88f",
+  "manifest_sha256": "d9cbc7a388f021f34eaab01306c575a9c8257e2aa104a6244660244685436e47",
   "report": {
     "case_count": 12,
     "cases": [
@@ -7,7 +7,31 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "定时器资源规格",
+                "AC-1.1 创建与清理"
+              ],
+              "native_rule_id": "AC-1.1",
+              "parent_context": null,
+              "rule_id": "TIMER/AC-1.1",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Draft",
+              "text": "组件创建周期定时器后，应在不再使用时调用 `clearInterval` 主动清理。"
+            }
+          ]
         },
         "case_id": "KG001",
         "differences": [
@@ -72,7 +96,52 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "自动播放规格"
+              ],
+              "native_rule_id": "AC-2.1",
+              "parent_context": "验收标准",
+              "rule_id": "AUTOPLAY/AC-2.1",
+              "rule_type": "behavior",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Draft",
+              "text": "`autoPlay` 默认值为 `false`。"
+            },
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "自动播放规格"
+              ],
+              "native_rule_id": "AC-2.2",
+              "parent_context": "验收标准",
+              "rule_id": "AUTOPLAY/AC-2.2",
+              "rule_type": "behavior",
+              "source_span": {
+                "end_line": 6,
+                "start_line": 6
+              },
+              "status": "Draft",
+              "text": "`autoPlayInterval` 默认值为 `3000ms`。"
+            }
+          ]
         },
         "case_id": "KG002",
         "differences": [
@@ -166,7 +235,31 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "后台任务",
+                "约束与限制"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG003_constraint.md:约束与限制:01",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Draft",
+              "text": "应用进入后台后，普通定时器可能停止运行。需要继续完成短时间任务时，应申请短时任务。"
+            }
+          ]
         },
         "case_id": "KG003",
         "differences": [
@@ -229,7 +322,52 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "并发任务选择"
+              ],
+              "native_rule_id": null,
+              "parent_context": "开发者应根据任务特点选择并发方式：",
+              "rule_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:01",
+              "rule_type": "guidance",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Draft",
+              "text": "独立耗时任务优先使用 TaskPool。"
+            },
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "并发任务选择"
+              ],
+              "native_rule_id": null,
+              "parent_context": "开发者应根据任务特点选择并发方式：",
+              "rule_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:02",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 6,
+                "start_line": 6
+              },
+              "status": "Draft",
+              "text": "长时间占用线程的任务不应阻塞 TaskPool 工作线程。"
+            }
+          ]
         },
         "case_id": "KG004",
         "differences": [
@@ -329,7 +467,30 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "组件生命周期"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG005_note.md:组件生命周期:01",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 3
+              },
+              "status": "Draft",
+              "text": "组件创建的订阅应在组件销毁时解除。只停止回调而不解除订阅，仍可能保留外部资源。"
+            }
+          ]
         },
         "case_id": "KG005",
         "differences": [
@@ -392,7 +553,39 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [
+                {
+                  "kind": "neutral",
+                  "source_span": {
+                    "end_line": 7,
+                    "start_line": 5
+                  },
+                  "text": "worker.postMessage(payload);"
+                }
+              ],
+              "heading_path": [
+                "Worker 通信"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG006_code_example.md:Worker 通信:01",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 3,
+                "start_line": 3
+              },
+              "status": "Draft",
+              "text": "主线程向 Worker 发送的对象必须满足可传输要求。"
+            }
+          ]
         },
         "case_id": "KG006",
         "differences": [
@@ -462,7 +655,31 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": 12,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "状态管理版本约束",
+                "API 12 起"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG007_versioned.md:API 12 起:01",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Draft",
+              "text": "`@ObservedV2` 与 `@Trace` 应配合使用以观察类属性变化。"
+            }
+          ]
         },
         "case_id": "KG007",
         "differences": [
@@ -520,7 +737,32 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "状态管理",
+                "父子组件同步",
+                "@Link"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG008_parent_context.md:@Link:01",
+              "rule_type": "constraint",
+              "source_span": {
+                "end_line": 7,
+                "start_line": 7
+              },
+              "status": "Draft",
+              "text": "子组件通过 `@Link` 接收父组件状态时，不应在本地建立另一份独立状态副本。"
+            }
+          ]
         },
         "case_id": "KG008",
         "differences": [
@@ -581,12 +823,35 @@
         "actual": {
           "annotations": [],
           "api_symbols": [],
-          "clauses": []
+          "clauses": [
+            {
+              "applicability": {
+                "language_modes": [],
+                "max_api_level": null,
+                "min_api_level": null,
+                "releases": []
+              },
+              "examples": [],
+              "heading_path": [
+                "旧版状态管理",
+                "Deprecated"
+              ],
+              "native_rule_id": null,
+              "parent_context": null,
+              "rule_id": "knowledge-golden-synthetic:KG009_deprecated.md:Deprecated:01",
+              "rule_type": "deprecation",
+              "source_span": {
+                "end_line": 5,
+                "start_line": 5
+              },
+              "status": "Deprecated",
+              "text": "旧版状态存储接口已废弃，新代码不应继续引入。"
+            }
+          ]
         },
         "case_id": "KG009",
         "differences": [
-          "expected.annotations differs",
-          "expected.clauses differs"
+          "expected.annotations differs"
         ],
         "expected": {
           "annotations": [
@@ -651,13 +916,35 @@
       {
         "actual": {
           "annotations": [],
-          "api_symbols": [],
+          "api_symbols": [
+            {
+              "canonical_name": "taskpool.Task",
+              "deprecated_since": null,
+              "kind": "class",
+              "signature": "class Task",
+              "since": 9,
+              "source_span": {
+                "end_line": 9,
+                "start_line": 6
+              }
+            },
+            {
+              "canonical_name": "taskpool.Task.isCanceled",
+              "deprecated_since": null,
+              "kind": "method",
+              "signature": "static isCanceled(): boolean",
+              "since": 9,
+              "source_span": {
+                "end_line": 8,
+                "start_line": 8
+              }
+            }
+          ],
           "clauses": []
         },
         "case_id": "KG011",
         "differences": [
-          "expected.annotations differs",
-          "expected.api_symbols differs"
+          "expected.annotations differs"
         ],
         "expected": {
           "annotations": [
@@ -731,13 +1018,24 @@
       {
         "actual": {
           "annotations": [],
-          "api_symbols": [],
+          "api_symbols": [
+            {
+              "canonical_name": "timer.legacyStart",
+              "deprecated_since": 12,
+              "kind": "function",
+              "signature": "function legacyStart(): number",
+              "since": 9,
+              "source_span": {
+                "end_line": 6,
+                "start_line": 6
+              }
+            }
+          ],
           "clauses": []
         },
         "case_id": "KG012",
         "differences": [
-          "expected.annotations differs",
-          "expected.api_symbols differs"
+          "expected.annotations differs"
         ],
         "expected": {
           "annotations": [
@@ -781,8 +1079,18 @@
         "matched": false
       }
     ],
-    "implementation": "not-implemented",
-    "manifest_sha256": "85d88b93cc988092ceeb4bb5b7bf09093b1fd0f8ca3a62f8aa2a3889a438f88f",
+    "field_matched_case_counts": {
+      "annotations": 1,
+      "api_symbols": 12,
+      "clauses": 4
+    },
+    "fields": [
+      "annotations",
+      "api_symbols",
+      "clauses"
+    ],
+    "implementation": "knowledge-structure-v1",
+    "manifest_sha256": "d9cbc7a388f021f34eaab01306c575a9c8257e2aa104a6244660244685436e47",
     "matched_case_count": 1,
     "mismatched_case_count": 11,
     "schema_version": "knowledge-golden-report-v1",

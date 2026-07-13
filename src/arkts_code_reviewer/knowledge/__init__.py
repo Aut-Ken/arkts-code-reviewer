@@ -3,9 +3,15 @@ from arkts_code_reviewer.knowledge.build import (
     NormalizedSeedDocument,
     build_normalized_seed,
 )
+from arkts_code_reviewer.knowledge.extraction import (
+    ExtractedKnowledgeDocument,
+    KnowledgeExtractionBuild,
+    build_knowledge_extraction,
+)
 from arkts_code_reviewer.knowledge.models import (
     AnnotationChange,
     AnnotationProvenance,
+    ApiAvailability,
     ApiSymbol,
     Applicability,
     ClauseCandidate,
@@ -45,6 +51,7 @@ from arkts_code_reviewer.knowledge.seed import (
 
 __all__ = [
     "ApiSymbol",
+    "ApiAvailability",
     "Applicability",
     "AnnotationChange",
     "AnnotationProvenance",
@@ -53,12 +60,14 @@ __all__ = [
     "ClauseModelReview",
     "CheckoutProfile",
     "CurationDecision",
+    "ExtractedKnowledgeDocument",
     "GovernanceProfile",
     "HeadingNode",
     "IndexSegment",
     "IngestionProfile",
     "KnowledgeAnnotation",
     "KnowledgeClause",
+    "KnowledgeExtractionBuild",
     "KnowledgeModelReview",
     "ModelReviewEvidence",
     "NormalizedKnowledgeBuild",
@@ -72,6 +81,7 @@ __all__ = [
     "SourceSpan",
     "VerifiedSource",
     "build_source_bundle",
+    "build_knowledge_extraction",
     "build_normalized_seed",
     "ingestion_path_allowed",
     "load_source_registry",

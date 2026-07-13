@@ -1,0 +1,14 @@
+{
+  "name": "knowledge-api-parser-sidecar",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pinned ArkTS API declaration parser for the Knowledge build",
+  "type": "commonjs",
+  "scripts": {
+    "parse": "node parse_api.js"
+  },
+  "dependencies": {
+    "tree-sitter": "0.21.1",
+    "tree-sitter-arkts": "0.2.0"
+  }
+}

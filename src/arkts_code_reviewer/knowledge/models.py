@@ -39,6 +39,8 @@ AnnotationKind = Literal[
     "applicability",
 ]
 AnnotationAction = Literal["add", "remove", "replace"]
+ApiLanguageMode = Literal["dynamic", "static", "unified"]
+AnnotationTargetKind = Literal["clause", "api_symbol"]
 
 _SHA256_RE = re.compile(r"^(?:sha256:)?[0-9a-f]{64}$")
 _REVISION_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -99,6 +101,17 @@ def _validate_sha256(value: str, context: str) -> str:
     if not _SHA256_RE.fullmatch(value):
         raise ValueError(f"{context} must be a SHA-256 value")
     return value if value.startswith("sha256:") else f"sha256:{value}"
+
+
+def validate_stable_rule_id(value: str, context: str) -> str:
+    """Validate source-derived rule IDs without assuming ASCII-only headings."""
+    if not value or value.strip() != value:
+        raise ValueError(f"{context} must be non-empty and trimmed")
+    if any(character.isspace() and character != " " for character in value):
+        raise ValueError(f"{context} must not contain control whitespace")
+    if any(ord(character) < 32 or ord(character) == 127 for character in value):
+        raise ValueError(f"{context} must not contain control characters")
+    return value
 
 
 class SourceSpan(_FrozenModel):
@@ -292,6 +305,7 @@ class ClauseCandidate(_FrozenModel):
 class KnowledgeClause(_FrozenModel):
     schema_version: Literal["knowledge-v1"] = KNOWLEDGE_SCHEMA_VERSION
     rule_id: Annotated[str, Field(min_length=1)]
+    native_rule_id: str | None = None
     rule_type: Annotated[str, Field(min_length=1)]
     status: ClauseStatus
     authority: Annotated[str, Field(min_length=1)]
@@ -302,6 +316,7 @@ class KnowledgeClause(_FrozenModel):
     applicability: Applicability = Applicability()
     source_ref: SourceRef
     source_span: SourceSpan
+    examples: tuple[ClauseExample, ...] = ()
     doc_hash: str
     curation_version: Annotated[str, Field(min_length=1)]
     created_at: datetime
@@ -310,8 +325,13 @@ class KnowledgeClause(_FrozenModel):
     @field_validator("rule_id")
     @classmethod
     def validate_rule_id(cls, value: str) -> str:
-        if not _RULE_ID_RE.fullmatch(value):
-            raise ValueError("KnowledgeClause.rule_id has an unsupported format")
+        return validate_stable_rule_id(value, "KnowledgeClause.rule_id")
+
+    @field_validator("native_rule_id")
+    @classmethod
+    def validate_native_rule_id(cls, value: str | None) -> str | None:
+        if value is not None and not _RULE_ID_RE.fullmatch(value):
+            raise ValueError("KnowledgeClause.native_rule_id has an unsupported format")
         return value
 
     @field_validator("neighbor_rule_ids")
@@ -340,7 +360,24 @@ class KnowledgeClause(_FrozenModel):
         return self
 
 
+class ApiAvailability(_FrozenModel):
+    language_mode: ApiLanguageMode
+    since: Annotated[int | None, Field(ge=1)] = None
+    deprecated_since: Annotated[int | None, Field(ge=1)] = None
+
+    @model_validator(mode="after")
+    def validate_versions(self) -> ApiAvailability:
+        if (
+            self.since is not None
+            and self.deprecated_since is not None
+            and self.deprecated_since < self.since
+        ):
+            raise ValueError("ApiAvailability.deprecated_since must be >= since")
+        return self
+
+
 class ApiSymbol(_FrozenModel):
+    declaration_id: Annotated[str, Field(pattern=r"^api-declaration:sha256:[0-9a-f]{64}$")]
     canonical_name: Annotated[str, Field(min_length=1)]
     aliases: tuple[str, ...] = ()
     module: Annotated[str, Field(min_length=1)]
@@ -350,11 +387,13 @@ class ApiSymbol(_FrozenModel):
     deprecated_since: Annotated[int | None, Field(ge=1)] = None
     permissions: tuple[str, ...] = ()
     system_capabilities: tuple[str, ...] = ()
+    availability: tuple[ApiAvailability, ...] = ()
     source_ref: SourceRef
     source_span: SourceSpan
     catalog_version: Annotated[str, Field(min_length=1)]
+    diagnostics: tuple[str, ...] = ()
 
-    @field_validator("aliases", "permissions", "system_capabilities")
+    @field_validator("aliases", "permissions", "system_capabilities", "diagnostics")
     @classmethod
     def validate_sorted_fields(cls, value: tuple[str, ...], info: object) -> tuple[str, ...]:
         return _validate_sorted_unique(value, f"ApiSymbol.{info.field_name}")
@@ -367,7 +406,71 @@ class ApiSymbol(_FrozenModel):
             and self.deprecated_since < self.since
         ):
             raise ValueError("ApiSymbol.deprecated_since must be >= since")
+        modes = [item.language_mode for item in self.availability]
+        if modes != sorted(set(modes)):
+            raise ValueError("ApiSymbol.availability must be sorted and unique by language_mode")
+        expected_id = _stable_identity(
+            "api-declaration",
+            {
+                "canonical_name": self.canonical_name,
+                "signature": self.signature,
+                "source_id": self.source_ref.source_id,
+                "revision": self.source_ref.revision,
+                "relative_path": self.source_ref.relative_path,
+                "source_span": self.source_span.model_dump(mode="json"),
+            },
+        )
+        if self.declaration_id != expected_id:
+            raise ValueError("ApiSymbol.declaration_id does not match its source declaration")
         return self
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        canonical_name: str,
+        aliases: tuple[str, ...] = (),
+        module: str,
+        kind: str,
+        signature: str,
+        since: int | None,
+        deprecated_since: int | None,
+        permissions: tuple[str, ...] = (),
+        system_capabilities: tuple[str, ...] = (),
+        availability: tuple[ApiAvailability, ...] = (),
+        source_ref: SourceRef,
+        source_span: SourceSpan,
+        catalog_version: str,
+        diagnostics: tuple[str, ...] = (),
+    ) -> ApiSymbol:
+        declaration_id = _stable_identity(
+            "api-declaration",
+            {
+                "canonical_name": canonical_name,
+                "signature": signature,
+                "source_id": source_ref.source_id,
+                "revision": source_ref.revision,
+                "relative_path": source_ref.relative_path,
+                "source_span": source_span.model_dump(mode="json"),
+            },
+        )
+        return cls(
+            declaration_id=declaration_id,
+            canonical_name=canonical_name,
+            aliases=aliases,
+            module=module,
+            kind=kind,
+            signature=signature,
+            since=since,
+            deprecated_since=deprecated_since,
+            permissions=permissions,
+            system_capabilities=system_capabilities,
+            availability=availability,
+            source_ref=source_ref,
+            source_span=source_span,
+            catalog_version=catalog_version,
+            diagnostics=diagnostics,
+        )
 
 
 class AnnotationProvenance(_FrozenModel):
@@ -378,7 +481,8 @@ class AnnotationProvenance(_FrozenModel):
 
 
 class KnowledgeAnnotation(_FrozenModel):
-    rule_id: Annotated[str, Field(min_length=1)]
+    target_kind: AnnotationTargetKind
+    target_id: Annotated[str, Field(min_length=1)]
     index_version: Annotated[str, Field(min_length=1)]
     func_ids: tuple[str, ...] = ()
     dimension_ids: tuple[str, ...] = ()
@@ -454,6 +558,8 @@ class IndexSegment(_FrozenModel):
     ordinal: Annotated[int, Field(ge=0)]
     retrieval_text: Annotated[str, Field(min_length=1)]
     token_count: Annotated[int, Field(ge=1)]
+    segmenter_version: Annotated[str, Field(min_length=1)]
+    tokenizer_id: Annotated[str, Field(min_length=1)]
 
     @model_validator(mode="after")
     def validate_segment_id(self) -> IndexSegment:
