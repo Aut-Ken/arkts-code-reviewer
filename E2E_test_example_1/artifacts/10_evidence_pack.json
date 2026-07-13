@@ -1,0 +1,4029 @@
+{
+  "degraded": false,
+  "diagnostics": [],
+  "embedding_version": "fastembed-gpu:0.8.0:jinaai/jina-embeddings-v2-base-code:sha256:521800e2505b16ac6c7f5d25bd75990cfe4b332970238e95ebaab2cf91c225e7:provider=CUDAExecutionProvider:batch=8:threads=2",
+  "evidence_pack_id": "evidence-pack:sha256:40cbd861c359c4a52e4e01165f01d5460e69da1dea65f6a6b130ef2547d4007d",
+  "index_origin": "evaluation_fixture",
+  "index_version": "knowledge-index:sha256:aa792a335c07f03f740f8f0f790f16782c7dba93bc4c94af6666214b985e291a",
+  "knowledge_build_id": "evaluation-knowledge:sha256:91fce00dabed89136dce40eaab881f33037ad5b1099bf81956e93b956805d2dc",
+  "production_eligible": false,
+  "request_id": "retrieval-request:sha256:f9fbf8d15fd626281806cbbc4aa4f79c3bd3f4eee16fbcb911e8fdfa557e4eda",
+  "retrieval_config_fingerprint": "retrieval-config:sha256:fa31904b5e4eae439cd9dbfeb3a364d72e4eee5a24da839ebff2e3eb4ca30f18",
+  "retrieval_version": "retrieval-v1",
+  "schema_version": "evidence-pack-v2",
+  "source_bundle_id": "source-bundle:sha256:43c2bc62db4e5fc4eea728a46a6f88e7411c2e6695962194e3339e68b1a00132",
+  "units": [
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 8,
+            "exact_score": 13,
+            "rrf_score": 0.0305789,
+            "vector_rank": 3,
+            "vector_similarity": 0.30582087
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:01",
+          "rule_type": "constraint",
+          "score": 0.0305789,
+          "source_ref": {
+            "anchor": "L112-L112",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "状态变量不能独立于UI存在，同一个数据被多个视图代理时，其中一个视图的更改不会通知其他视图更新。",
+          "token_count": 143
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Once",
+            "@Param"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 14,
+            "exact_score": 13,
+            "rrf_score": 0.02990696,
+            "vector_rank": 1,
+            "vector_similarity": 0.42827633
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-54c036c9f066",
+          "rule_type": "constraint",
+          "score": 0.02990696,
+          "source_ref": {
+            "anchor": "L145-L145",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Once](arkts-new-once.md)：\\@Once装饰的变量仅初始化时同步一次，需要与\\@Param一起使用。",
+          "token_count": 54
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@Provide"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V1）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 15,
+            "exact_score": 13,
+            "rrf_score": 0.02946237,
+            "vector_rank": 2,
+            "vector_similarity": 0.33698279
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-b7ac1cd733ef",
+          "rule_type": "constraint",
+          "score": 0.02946237,
+          "source_ref": {
+            "anchor": "L68-L68",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Provide/\\@Consume](arkts-provide-and-consume.md)：\\@Provide/\\@Consume装饰的变量用于跨组件层级（多层组件）同步状态变量，可以不需要通过参数命名机制传递，通过alias（别名）或者属性名绑定。",
+          "token_count": 94
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@ObjectLink",
+            "@Observed",
+            "@Prop"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V1）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 16,
+            "exact_score": 13,
+            "rrf_score": 0.02878289,
+            "vector_rank": 4,
+            "vector_similarity": 0.30358321
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:02",
+          "rule_type": "constraint",
+          "score": 0.02878289,
+          "source_ref": {
+            "anchor": "L70-L70",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Observed](arkts-observed-and-objectlink.md)：\\@Observed装饰class，需要观察多层嵌套场景的class需要被\\@Observed装饰。单独使用\\@Observed没有任何作用，需要和\\@ObjectLink、\\@Prop联用。",
+          "token_count": 85
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:5912618073e0804fdff5cd221481c16098f049790735c4316a7b179eca118a57",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "async-taskpool-worker",
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "Sendable使用规则与约束",
+            "上下文访问规则",
+            "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01639344,
+            "vector_rank": 1,
+            "vector_similarity": 0.33784303
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/sendable-constraints.md:Sendable类的内部不允许使用当前模块内上下文环境中定义的变量:01",
+          "rule_type": "constraint",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L313-L313",
+            "authority": "official_documentation",
+            "content_hash": "sha256:f1b2e284a28dcfb97b5b13868f4a0154f2acca5f3bda55e58defc1b007197845",
+            "relative_path": "zh-cn/application-dev/arkts-utils/sendable-constraints.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量",
+          "token_count": 72
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:dfbc81bd4699314b5925b3dd82635b13e99eca6207fdda623a364ee21020624c",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 5,
+            "exact_score": 13,
+            "rrf_score": 0.03100962,
+            "vector_rank": 4,
+            "vector_similarity": 0.30199966
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:自定义组件成员属性访问限定符使用限制:01",
+          "rule_type": "constraint",
+          "score": 0.03100962,
+          "source_ref": {
+            "anchor": "L9-L9",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "在状态管理V1版本中，完成自定义组件封装后，调用方难以明确知晓应传入哪些变量作为组件的输入参数。当组件开发者不希望状态变量被外部初始化时，可以使用private限定符来限制当前变量不允许被外部初始化。外部初始化也需要遵循装饰器自身的规则，具体规则见[使用限制](#使用限制)。",
+          "token_count": 146
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 8,
+            "exact_score": 13,
+            "rrf_score": 0.0305789,
+            "vector_rank": 3,
+            "vector_similarity": 0.30382068
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:01",
+          "rule_type": "constraint",
+          "score": 0.0305789,
+          "source_ref": {
+            "anchor": "L112-L112",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "状态变量不能独立于UI存在，同一个数据被多个视图代理时，其中一个视图的更改不会通知其他视图更新。",
+          "token_count": 143
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Once",
+            "@Param"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 14,
+            "exact_score": 13,
+            "rrf_score": 0.02964255,
+            "vector_rank": 2,
+            "vector_similarity": 0.33367176
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-54c036c9f066",
+          "rule_type": "constraint",
+          "score": 0.02964255,
+          "source_ref": {
+            "anchor": "L145-L145",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Once](arkts-new-once.md)：\\@Once装饰的变量仅初始化时同步一次，需要与\\@Param一起使用。",
+          "token_count": 54
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:d904a5cb16ac8f7ecd9ee5bc6ba765efa8c2270d1aae8d2621bd02c72e899ddb",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Once",
+            "@Param"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 14,
+            "exact_score": 13,
+            "rrf_score": 0.02990696,
+            "vector_rank": 1,
+            "vector_similarity": 0.32736857
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-54c036c9f066",
+          "rule_type": "constraint",
+          "score": 0.02990696,
+          "source_ref": {
+            "anchor": "L145-L145",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Once](arkts-new-once.md)：\\@Once装饰的变量仅初始化时同步一次，需要与\\@Param一起使用。",
+          "token_count": 54
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理版本介绍"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 13,
+            "exact_score": 13,
+            "rrf_score": 0.01369863,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理版本介绍:01",
+          "rule_type": "guidance",
+          "score": 0.01369863,
+          "source_ref": {
+            "anchor": "L37-L37",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "对于新开发的应用，建议直接使用V2版本范式来进行开发。",
+          "token_count": 41
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:bf27a2ddaf9d2607f0aeb5ecb0fec468f597d496c3559467aa54925860228334",
+      "requested_dimension_ids": [
+        "DIM-07"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-07"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Once",
+            "@Param"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 14,
+            "exact_score": 13,
+            "rrf_score": 0.02990696,
+            "vector_rank": 1,
+            "vector_similarity": 0.31948265
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-54c036c9f066",
+          "rule_type": "constraint",
+          "score": 0.02990696,
+          "source_ref": {
+            "anchor": "L145-L145",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Once](arkts-new-once.md)：\\@Once装饰的变量仅初始化时同步一次，需要与\\@Param一起使用。",
+          "token_count": 54
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理版本介绍"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 13,
+            "exact_score": 13,
+            "rrf_score": 0.02982766,
+            "vector_rank": 2,
+            "vector_similarity": 0.31810037
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理版本介绍:01",
+          "rule_type": "guidance",
+          "score": 0.02982766,
+          "source_ref": {
+            "anchor": "L37-L37",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "对于新开发的应用，建议直接使用V2版本范式来进行开发。",
+          "token_count": 41
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:0992c8a01cb1c439a15b92302e873714baa9df80626b887fc33b155f32433725",
+      "requested_dimension_ids": [
+        "DIM-07"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-07"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的删除"
+          ],
+          "matched_by": [
+            {
+              "kind": "keyword",
+              "scope": "unit_exact",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "例如if组件的分支改变或ForEach循环渲染中数组的个数改变，组件将被移除：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 18,
+            "rrf_score": 0.03278689,
+            "vector_rank": 1,
+            "vector_similarity": 0.3922274
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的删除:01",
+          "rule_type": "behavior",
+          "score": 0.03278689,
+          "source_ref": {
+            "anchor": "L55-L55",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "在删除组件之前，将调用其aboutToDisappear生命周期函数，标记着该节点将要被销毁。ArkUI的节点删除机制是：后端节点直接从组件树上摘下，后端节点被销毁，对前端节点解引用，前端节点已经没有引用时，将被Ark虚拟机垃圾回收。",
+          "token_count": 150
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [
+            "js_tabs.cpp"
+          ],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "特性规格",
+            "规则定义"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "规则定义",
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 80,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01612903,
+            "vector_rank": 2,
+            "vector_similarity": 0.30195662
+          },
+          "rule_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-06-tabs-cache-scroll-spec.md/R-17",
+          "rule_type": "behavior",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L142-L142",
+            "authority": "feature_spec",
+            "content_hash": "sha256:c2f39e6e1639c990a3331336806e67e52d77312b98716b38462b123b5b2b4b70",
+            "relative_path": "05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-06-tabs-cache-scroll-spec.md",
+            "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+            "source_id": "arkui-specs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "触发条件：`js_tabs.cpp`；预期行为：TabContent.onWillHide 回调在内容区即将隐藏时触发",
+          "token_count": 46
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:52dbcd6002d82b10dc9b676f21048cf9c831ce7d9a4b6e8a4d2f4d6169e4c528",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 9,
+            "exact_score": 13,
+            "rrf_score": 0.03011775,
+            "vector_rank": 4,
+            "vector_similarity": 0.31425235
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:02",
+          "rule_type": "constraint",
+          "score": 0.03011775,
+          "source_ref": {
+            "anchor": "L113-L113",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "只能感知对象属性第一层的变化，无法做到深度观测和深度监听。",
+          "token_count": 125
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@ObjectLink",
+            "@Observed"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V1）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 17,
+            "exact_score": 13,
+            "rrf_score": 0.02886003,
+            "vector_rank": 3,
+            "vector_similarity": 0.32437092
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:03",
+          "rule_type": "constraint",
+          "score": 0.02886003,
+          "source_ref": {
+            "anchor": "L72-L76",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@ObjectLink](arkts-observed-and-objectlink.md)：\\@ObjectLink装饰的变量接收\\@Observed装饰的class的实例，应用于观察多层嵌套场景，和父组件的数据源构建双向同步。**说明：**仅[\\@Observed/\\@ObjectLink](arkts-observed-and-objectlink.md)可以观察嵌套场景，其他的状态变量仅能观察第一层，详情见各个装饰器章节的“观察变化和行为表现”小节。",
+          "token_count": 149
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "async-taskpool-worker",
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "Sendable使用规则与约束",
+            "上下文访问规则",
+            "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01639344,
+            "vector_rank": 1,
+            "vector_similarity": 0.35027327
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/sendable-constraints.md:Sendable类的内部不允许使用当前模块内上下文环境中定义的变量:01",
+          "rule_type": "constraint",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L313-L313",
+            "authority": "official_documentation",
+            "content_hash": "sha256:f1b2e284a28dcfb97b5b13868f4a0154f2acca5f3bda55e58defc1b007197845",
+            "relative_path": "zh-cn/application-dev/arkts-utils/sendable-constraints.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量",
+          "token_count": 72
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:564d525fe0e0070eaff247929340a13659b7cda57f87b353c34d81129035f852",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 9,
+            "exact_score": 13,
+            "rrf_score": 0.03011775,
+            "vector_rank": 4,
+            "vector_similarity": 0.30598583
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:02",
+          "rule_type": "constraint",
+          "score": 0.03011775,
+          "source_ref": {
+            "anchor": "L113-L113",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "只能感知对象属性第一层的变化，无法做到深度观测和深度监听。",
+          "token_count": 125
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@ObjectLink",
+            "@Observed"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V1）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 17,
+            "exact_score": 13,
+            "rrf_score": 0.02886003,
+            "vector_rank": 3,
+            "vector_similarity": 0.31075234
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:03",
+          "rule_type": "constraint",
+          "score": 0.02886003,
+          "source_ref": {
+            "anchor": "L72-L76",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@ObjectLink](arkts-observed-and-objectlink.md)：\\@ObjectLink装饰的变量接收\\@Observed装饰的class的实例，应用于观察多层嵌套场景，和父组件的数据源构建双向同步。**说明：**仅[\\@Observed/\\@ObjectLink](arkts-observed-and-objectlink.md)可以观察嵌套场景，其他的状态变量仅能观察第一层，详情见各个装饰器章节的“观察变化和行为表现”小节。",
+          "token_count": 149
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "async-taskpool-worker",
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "Sendable使用规则与约束",
+            "上下文访问规则",
+            "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01639344,
+            "vector_rank": 1,
+            "vector_similarity": 0.36321307
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/sendable-constraints.md:Sendable类的内部不允许使用当前模块内上下文环境中定义的变量:01",
+          "rule_type": "constraint",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L313-L313",
+            "authority": "official_documentation",
+            "content_hash": "sha256:f1b2e284a28dcfb97b5b13868f4a0154f2acca5f3bda55e58defc1b007197845",
+            "relative_path": "zh-cn/application-dev/arkts-utils/sendable-constraints.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "Sendable类的内部不允许使用当前模块内上下文环境中定义的变量",
+          "token_count": 72
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:15b5fd83c64e2ed020090d06d439e38cf756e8f50cec9a9e7f1b26cdcf2f48d7",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的创建和渲染流程"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 6,
+            "exact_score": 13,
+            "rrf_score": 0.01515152,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的创建和渲染流程:01",
+          "rule_type": "behavior",
+          "score": 0.01515152,
+          "source_ref": {
+            "anchor": "L35-L35",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "初始化自定义组件的成员变量：通过本地默认值或者构造方法传递参数来初始化自定义组件的成员变量，初始化顺序为成员变量的定义顺序。",
+          "token_count": 85
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:3a57159e6e3159b32c3bcc3c94c4e6bf0078dbc79fcd07d8acc852555f16dffa",
+      "requested_dimension_ids": [
+        "DIM-06"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-06"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的删除"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "例如if组件的分支改变或ForEach循环渲染中数组的个数改变，组件将被移除：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 7,
+            "exact_score": 13,
+            "rrf_score": 0.03131882,
+            "vector_rank": 1,
+            "vector_similarity": 0.36512825
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的删除:01",
+          "rule_type": "behavior",
+          "score": 0.03131882,
+          "source_ref": {
+            "anchor": "L55-L55",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "在删除组件之前，将调用其aboutToDisappear生命周期函数，标记着该节点将要被销毁。ArkUI的节点删除机制是：后端节点直接从组件树上摘下，后端节点被销毁，对前端节点解引用，前端节点已经没有引用时，将被Ark虚拟机垃圾回收。",
+          "token_count": 150
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理版本介绍"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 13,
+            "exact_score": 13,
+            "rrf_score": 0.01369863,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理版本介绍:01",
+          "rule_type": "guidance",
+          "score": 0.01369863,
+          "source_ref": {
+            "anchor": "L37-L37",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "对于新开发的应用，建议直接使用V2版本范式来进行开发。",
+          "token_count": 41
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:10eab1077a0c45bf1036db72d3bebbb2515184c55224e54b5a84d318dca7a2a4",
+      "requested_dimension_ids": [
+        "DIM-06"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-06"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "特性规格",
+            "用户故事",
+            "US-4: 监听切换动画事件"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "验收标准",
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 80,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01639344,
+            "vector_rank": 1,
+            "vector_similarity": 0.34412643
+          },
+          "rule_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md/AC-5.11",
+          "rule_type": "behavior",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L79-L79",
+            "authority": "feature_spec",
+            "content_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+            "relative_path": "05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+            "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+            "source_id": "arkui-specs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "WHEN animationMode=NoAnimation THEN onAnimationStart/onAnimationEnd 不触发",
+          "token_count": 44
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "特性规格",
+            "用户故事",
+            "US-2: 监听标签选中/取消选中事件"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "验收标准",
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 80,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01612903,
+            "vector_rank": 2,
+            "vector_similarity": 0.33696302
+          },
+          "rule_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md/AC-5.5",
+          "rule_type": "behavior",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L55-L55",
+            "authority": "feature_spec",
+            "content_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+            "relative_path": "05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+            "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+            "source_id": "arkui-specs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "WHEN 标签取消选中 THEN onUnselected 回调被触发，参数为取消选中标签的 index",
+          "token_count": 58
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:cbb3b5b27d0e6795e352c1bd5f6b5199b19e7272c697bd506e3a321462244ba6",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的创建和渲染流程"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 6,
+            "exact_score": 13,
+            "rrf_score": 0.01515152,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的创建和渲染流程:01",
+          "rule_type": "behavior",
+          "score": 0.01515152,
+          "source_ref": {
+            "anchor": "L35-L35",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "初始化自定义组件的成员变量：通过本地默认值或者构造方法传递参数来初始化自定义组件的成员变量，初始化顺序为成员变量的定义顺序。",
+          "token_count": 85
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:5dea0bf6fcfd5171479ad3856cbf72900530e39ef8b16ed7e54961fb28d66b0d",
+      "requested_dimension_ids": [
+        "DIM-06"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-06"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理版本介绍"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 13,
+            "exact_score": 13,
+            "rrf_score": 0.03009207,
+            "vector_rank": 1,
+            "vector_similarity": 0.3002471
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理版本介绍:01",
+          "rule_type": "guidance",
+          "score": 0.03009207,
+          "source_ref": {
+            "anchor": "L37-L37",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "对于新开发的应用，建议直接使用V2版本范式来进行开发。",
+          "token_count": 41
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Consume",
+            "@LocalStorageLink",
+            "@LocalStorageProp",
+            "@StorageLink",
+            "@StorageProp"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 2,
+            "exact_score": 13,
+            "rrf_score": 0.01612903,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:02",
+          "rule_type": "constraint",
+          "score": 0.01612903,
+          "source_ref": {
+            "anchor": "L23-L23",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@StorageLink](./arkts-appstorage.md#storagelink)/[\\@StorageProp](./arkts-appstorage.md#storageprop)/[\\@LocalStorageLink](./arkts-localstorage.md#localstoragelink)/[\\@LocalStorageProp](./arkts-localstorage.md#localstorageprop)/[\\@Consume](./arkts-provide-and-consume.md)变量的初始化规则为不可以被外部初始化，当组件开发者希望当前变量被外部初始化而使用public修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 163
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Once",
+            "@Param"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "装饰器总览"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 14,
+            "exact_score": 13,
+            "rrf_score": 0.01351351,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:装饰器总览:01@heading-54c036c9f066",
+          "rule_type": "constraint",
+          "score": 0.01351351,
+          "source_ref": {
+            "anchor": "L145-L145",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Once](arkts-new-once.md)：\\@Once装饰的变量仅初始化时同步一次，需要与\\@Param一起使用。",
+          "token_count": 54
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:48afb38273fd6f188322a9d9416d3d9938fceba8feb6f73cb12ce198c8c49413",
+      "requested_dimension_ids": [],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的创建和渲染流程"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 6,
+            "exact_score": 13,
+            "rrf_score": 0.03128055,
+            "vector_rank": 2,
+            "vector_similarity": 0.32980646
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的创建和渲染流程:01",
+          "rule_type": "behavior",
+          "score": 0.03128055,
+          "source_ref": {
+            "anchor": "L35-L35",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "初始化自定义组件的成员变量：通过本地默认值或者构造方法传递参数来初始化自定义组件的成员变量，初始化顺序为成员变量的定义顺序。",
+          "token_count": 85
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 8,
+            "exact_score": 13,
+            "rrf_score": 0.0305789,
+            "vector_rank": 3,
+            "vector_similarity": 0.32947511
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:01",
+          "rule_type": "constraint",
+          "score": 0.0305789,
+          "source_ref": {
+            "anchor": "L112-L112",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "状态变量不能独立于UI存在，同一个数据被多个视图代理时，其中一个视图的更改不会通知其他视图更新。",
+          "token_count": 143
+        },
+        {
+          "apis": [
+            "$$"
+          ],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@Local",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "$$语法：系统组件双向同步",
+            "使用规则"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 18,
+            "exact_score": 13,
+            "rrf_score": 0.02797203,
+            "vector_rank": 6,
+            "vector_similarity": 0.31197905
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-two-way-sync.md:使用规则:01",
+          "rule_type": "behavior",
+          "score": 0.02797203,
+          "source_ref": {
+            "anchor": "L17-L17",
+            "authority": "official_documentation",
+            "content_hash": "sha256:802ae8cd53ddce76f7fcd150795b873de6465aaec68d6fbbd9d6a954824b558c",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-two-way-sync.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "当前`$$`支持基础类型变量，当该变量使用[\\@State](arkts-state.md)、[\\@Link](arkts-link.md)、[\\@Prop](arkts-prop.md)、[\\@Provide](arkts-provide-and-consume.md)等状态管理V1装饰器装饰，或者[\\@Local](arkts-new-local.md)等状态管理V2装饰器装饰时，变量值的变化会触发UI刷新。",
+          "token_count": 112
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理版本介绍"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 13,
+            "exact_score": 13,
+            "rrf_score": 0.01369863,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理版本介绍:01",
+          "rule_type": "guidance",
+          "score": 0.01369863,
+          "source_ref": {
+            "anchor": "L37-L37",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "对于新开发的应用，建议直接使用V2版本范式来进行开发。",
+          "token_count": 41
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:7664d6245c0b49d0e0e5379b5ca7f9612663082b9d3642b364d4bff287469e84",
+      "requested_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "clauses": [
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "状态管理概述",
+            "状态管理（V2）",
+            "状态管理V1现状以及V2优点"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "状态管理V1使用代理观察数据，创建状态变量时，会同时创建一个数据代理观察者。该观察者可以感知代理变化，但无法感知实际数据变化，因此存在以下限制：",
+          "rank": 1,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 8,
+            "exact_score": 13,
+            "rrf_score": 0.03083491,
+            "vector_rank": 2,
+            "vector_similarity": 0.35012795
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md:状态管理V1现状以及V2优点:01",
+          "rule_type": "constraint",
+          "score": 0.03083491,
+          "source_ref": {
+            "anchor": "L112-L112",
+            "authority": "official_documentation",
+            "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "状态变量不能独立于UI存在，同一个数据被多个视图代理时，其中一个视图的更改不会通知其他视图更新。",
+          "token_count": 143
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts",
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "自定义组件生命周期",
+            "自定义组件的创建和渲染流程"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_lifecycle"
+            },
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": null,
+          "rank": 2,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 6,
+            "exact_score": 13,
+            "rrf_score": 0.03053613,
+            "vector_rank": 5,
+            "vector_similarity": 0.32459911
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md:自定义组件的创建和渲染流程:01",
+          "rule_type": "behavior",
+          "score": 0.03053613,
+          "source_ref": {
+            "anchor": "L35-L35",
+            "authority": "official_documentation",
+            "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_lifecycle"
+          ],
+          "text": "初始化自定义组件的成员变量：通过本地默认值或者构造方法传递参数来初始化自定义组件的成员变量，初始化顺序为成员变量的定义顺序。",
+          "token_count": 85
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@BuilderParam",
+            "@Prop",
+            "@Provide",
+            "@State"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 3,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 1,
+            "exact_score": 13,
+            "rrf_score": 0.01639344,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:01",
+          "rule_type": "guidance",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L21-L21",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_builder",
+            "has_state_management"
+          ],
+          "text": "[\\@State](./arkts-state.md)/[\\@Prop](./arkts-prop.md)/[\\@Provide](./arkts-provide-and-consume.md)/[\\@BuilderParam](./arkts-builderparam.md)/常规成员变量(不涉及更新的普通变量)的初始化规则为可以被外部初始化，也可以使用本地值进行初始化。当组件开发者不希望当前变量被外部初始化时，可以使用private进行修饰，在这种情况下，错误进行外部初始化会有编译告警日志提示。",
+          "token_count": 164
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [],
+          "dimension_ids": [],
+          "domains": [
+            "timer-subscription-lifecycle"
+          ],
+          "heading_path": [
+            "特性规格",
+            "用户故事",
+            "US-5: 监听手势滑动事件"
+          ],
+          "matched_by": [
+            {
+              "kind": "vector",
+              "scope": "semantic",
+              "value": "jinaai/jina-embeddings-v2-base-code"
+            }
+          ],
+          "parent_context": "验收标准",
+          "rank": 4,
+          "rank_detail": {
+            "authority_priority": 80,
+            "dimension_overlap": 0,
+            "exact_rank": null,
+            "exact_score": 0,
+            "rrf_score": 0.01639344,
+            "vector_rank": 1,
+            "vector_similarity": 0.36117939
+          },
+          "rule_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md/AC-5.13",
+          "rule_type": "behavior",
+          "score": 0.01639344,
+          "source_ref": {
+            "anchor": "L90-L90",
+            "authority": "feature_spec",
+            "content_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+            "relative_path": "05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+            "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+            "source_id": "arkui-specs"
+          },
+          "status": "Draft",
+          "tags": [],
+          "text": "WHEN 滑动距离为 0 THEN onGestureSwipe 不触发",
+          "token_count": 39
+        },
+        {
+          "apis": [],
+          "applicability": "applicable",
+          "components": [],
+          "decorators": [
+            "@Link",
+            "@ObjectLink"
+          ],
+          "dimension_ids": [],
+          "domains": [
+            "state-management-arkts"
+          ],
+          "heading_path": [
+            "自定义组件成员属性访问限定符使用限制",
+            "使用限制"
+          ],
+          "matched_by": [
+            {
+              "kind": "tag",
+              "scope": "file_hint",
+              "value": "has_state_management"
+            }
+          ],
+          "parent_context": null,
+          "rank": 5,
+          "rank_detail": {
+            "authority_priority": 70,
+            "dimension_overlap": 0,
+            "exact_rank": 3,
+            "exact_score": 13,
+            "rrf_score": 0.01587302,
+            "vector_rank": null,
+            "vector_similarity": null
+          },
+          "rule_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md:使用限制:03",
+          "rule_type": "constraint",
+          "score": 0.01587302,
+          "source_ref": {
+            "anchor": "L25-L25",
+            "authority": "official_documentation",
+            "content_hash": "sha256:286ee73176b94be93506037097e3b2e4703df9727d1ed59343d3a837aac1e13d",
+            "relative_path": "zh-cn/application-dev/ui/state-management/arkts-custom-components-access-restrictions.md",
+            "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+            "source_id": "openharmony-docs"
+          },
+          "status": "Draft",
+          "tags": [
+            "has_state_management"
+          ],
+          "text": "[\\@Link](./arkts-link.md)/[\\@ObjectLink](./arkts-observed-and-objectlink.md)变量的初始化规则为必须被外部初始化，禁止本地初始化。当组件开发者使用private对变量进行修饰时，与装饰器本身的初始化规则不符，会有编译告警日志提示。",
+          "token_count": 113
+        }
+      ],
+      "covered_dimension_ids": [],
+      "diagnostics": [
+        {
+          "code": "budget_exhausted",
+          "detail": "At least one relevant Clause did not fit the knowledge token budget.",
+          "rule_id": null,
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+        }
+      ],
+      "profile_id": "feature-profile:sha256:4de05cdcaf6266ea083d2fa8a27bffa83eadf8996d3d1fb84c1d296b11ff4255",
+      "requested_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "uncovered_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    }
+  ]
+}

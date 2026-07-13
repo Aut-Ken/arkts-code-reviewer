@@ -1,0 +1,1756 @@
+{
+  "change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+  "diagnostics": [],
+  "file_results": [
+    {
+      "changed_file_id": "changed-file:sha256:2fbfaf8b78f91cbdaa34a404c8356aa13b477b0558d2c5b7fb76f78024e24912",
+      "diagnostics": [],
+      "parser_quality": {
+        "parser_layer": "L1",
+        "warnings": []
+      },
+      "path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "source_role": "base",
+      "unassigned_change_atom_ids": [],
+      "unassigned_hunk_lines": [],
+      "units": [
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:99e71c858735fcc1f4dd8ecf7b3de62bdf519fe7e90650bfe61f289c444336da"
+          ],
+          "changed_lines": [
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104
+          ],
+          "changed_new_lines": [],
+          "changed_old_lines": [
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104
+          ],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 130,
+            "start_line": 71
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104
+          ],
+          "full_text": "  async aboutToAppear() {\n    Log.info('about to appear');\n    this.songList = this.urlVideoList;\n    this.audioType = 'video';\n    this.currentPlayInfo = this.urlVideoList[0];\n    this.audioUtils.setVideoLoadedCallback((isLoaded: boolean) => {\n      this.isLoaded = isLoaded;\n    });\n    this.avPlayer = await this.audioUtils.init();\n    this.avPlayer?.on('audioInterrupt', (info: audio.InterruptEvent) => {\n      Log.info('audioInterrupt success, and InterruptEvent info is: ' + info);\n      if (this.avPlayer?.state === 'playing') {\n        Log.info('audio interrupt, start pause');\n        this.avPlayer?.pause();\n        this.setPlayState(avSession.PlaybackState.PLAYBACK_STATE_PAUSE);\n        promptAction.showToast({ message: 'audio interrupt, pause done' });\n      }\n    })\n    this.avPlayer?.on('timeUpdate', (time: number) => {\n      Log.info('timeUpdate time: ' + time);\n      if (!this.isProgressSliding) {\n        if (this.duration == 0) {\n          this.seedPosition = 0;\n        } else {\n          this.seedPosition = time / this.duration * 100;\n        }\n        const params: avSession.AVPlaybackState = {\n          position: {\n            elapsedTime: time,\n            updateTime: new Date().getTime()\n          },\n        };\n        this.session?.setAVPlaybackState(params);\n      }\n    })\n    this.avPlayer?.on('durationUpdate', (duration: number) => {\n      Log.info('durationUpdate duration: ' + duration);\n      this.duration = duration;\n      if (this.duration !== 0) {\n        const playMetaData: avSession.AVMetadata = {\n          assetId: this.currentPlayInfo?.assetId as string,  // origin assetId\n          title: this.currentPlayInfo?.title as string,\n          artist: this.currentPlayInfo?.artist as string,\n          mediaImage: this.albumImage, // origin mediaImage\n          album: this.currentPlayInfo?.albumTitle as string,\n          duration: this.duration\n        }\n        this.session?.setAVMetadata(playMetaData);\n      }\n\n    })\n    this.avPlayer?.on('videoSizeChange', (width: number, height: number) => {\n      Log.info('videoSizeChange success, and width is: ' + width + ', height is: ' + height);\n    })\n    await this.setAudioManager();\n    await this.autoStartAll(false);\n    this.addNetworkListener();\n    this.readLRCFile();\n    Log.info('about to appear done: ' + !!this.avPlayer);\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:fe8185665a60934287b396114362ee493e0cc0029daaf6a6f30ffe688b4b0b6f"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "source_role": "base",
+          "source_span": {
+            "end_line": 130,
+            "start_line": 71
+          },
+          "unit_changed_lines": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "unit_kind": "method",
+          "unit_ref": "Index.aboutToAppear@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.aboutToAppear"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:6dd134ebecde2fd57413797cfecc1f44f5e53f0ecb3bc632d1b49b843e9caa52"
+          ],
+          "changed_lines": [
+            162,
+            163,
+            164,
+            165
+          ],
+          "changed_new_lines": [],
+          "changed_old_lines": [
+            162,
+            163,
+            164,
+            165
+          ],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 167,
+            "start_line": 146
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            162,
+            163,
+            164,
+            165
+          ],
+          "full_text": "  addNetworkListener(): void {\n    Log.info('start add Network Listener');\n    this.netCon = connection.createNetConnection();\n    this.netCon?.register((error: BusinessError) => {\n      Log.error('network error: ' + JSON.stringify(error));\n    })\n    connection.getAllNets().then(data => {\n      Log.info('get all network: ' + JSON.stringify(data));\n      this.hasNetwork = data?.length > 0;\n    })\n    this.netCon?.on('netAvailable', data => {\n      Log.info('network Available: ' + JSON.stringify(data));\n      this.hasNetwork = true;\n    })\n    this.netCon?.on('netLost', data => {\n      Log.info('network Lost: ' + JSON.stringify(data));\n      connection.getAllNets().then(data => {\n        Log.info('get all network: ' + JSON.stringify(data));\n        this.hasNetwork = data?.length > 0;\n      });\n    })\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:9f08c014f72887ac6dfef6418e9617301568112cdfe48b569efbe28ac0cb9a6d"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "source_role": "base",
+          "source_span": {
+            "end_line": 167,
+            "start_line": 146
+          },
+          "unit_changed_lines": [
+            17,
+            18,
+            19,
+            20
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "unit_kind": "method",
+          "unit_ref": "Index.addNetworkListener@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.addNetworkListener"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:6b8a39e09821fc4638ec2ac67b4d98b2e85f859410a76437500f7ffec0336405",
+            "change-atom:sha256:e879f1958efd761a99b41637da9379e3264eb818662a6fe40e2a1e4a52645682"
+          ],
+          "changed_lines": [
+            953,
+            956
+          ],
+          "changed_new_lines": [],
+          "changed_old_lines": [
+            953,
+            956
+          ],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 959,
+            "start_line": 913
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            953,
+            956
+          ],
+          "full_text": "              Slider({\n                value: this.seedPosition,\n                min: 0,\n                max: 100,\n                style: SliderStyle.OutSet\n              })\n                .trackThickness(4)\n                .blockColor('rgba(255,255,255,1)')\n                .trackColor('rgba(255,255,255,0.3)')\n                .selectedColor('rgba(255,255,255,0.9)')\n                .showSteps(false)\n                .showTips(false)\n                .onChange((value: number, mode: SliderChangeMode) => {\n                  Log.info('value: ' + value + 'mode: ' + mode.toString() )\n                  if (mode === SliderChangeMode.End) {\n                    if (this.playType === 'local') {\n                      this.avPlayer?.seek(value / 100 * this.duration);\n                      const params: avSession.AVPlaybackState = {\n                        position: {\n                          elapsedTime: Math.floor(value / 100 * this.duration),\n                          updateTime: new Date().getTime(),\n                        },\n                      };\n                      this.session?.setAVPlaybackState(params);\n                      Log.info('params.position + ' + JSON.stringify((params.position)))\n                    } else {\n                      this.castController?.sendControlCommand({\n                        command: 'seek',\n                        parameter: value / 100 * this.duration,\n                      });\n                    }\n                  }\n                  this.seedPosition = value;\n                })\n                .width('70%')\n                .opacity(1)\n                .onTouch((event: TouchEvent) => {\n                  Log.info('progress touch: ' + event.type)\n                  if (event.type === TouchType.Up) {\n                    this.sliderTimer = setTimeout(() => {\n                      this.isProgressSliding = false;\n                    }, 200);\n                  } else {\n                    clearTimeout(this.sliderTimer);\n                    this.isProgressSliding = true;\n                  }\n                })",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:c4ccf38824d7d7fb81c30293d21833baf88ff96254dfc7c776ada93269902514"
+          },
+          "selection_reason": "large_build_ui_block",
+          "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "source_role": "base",
+          "source_span": {
+            "end_line": 959,
+            "start_line": 913
+          },
+          "unit_changed_lines": [
+            41,
+            44
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "unit_kind": "ui_block",
+          "unit_ref": "Index.build.Column.Flex.Row.Flex.Flex.Slider@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+        }
+      ]
+    },
+    {
+      "changed_file_id": "changed-file:sha256:2fbfaf8b78f91cbdaa34a404c8356aa13b477b0558d2c5b7fb76f78024e24912",
+      "diagnostics": [],
+      "parser_quality": {
+        "parser_layer": "L1",
+        "warnings": []
+      },
+      "path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "source_role": "head",
+      "unassigned_change_atom_ids": [],
+      "unassigned_hunk_lines": [],
+      "units": [
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:87f62aec4531c52ce8285d2e8f0cf0207626a5df1f7fb7fb1c04476523838611"
+          ],
+          "changed_lines": [
+            67
+          ],
+          "changed_new_lines": [
+            67
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 67,
+            "start_line": 67
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            67
+          ],
+          "full_text": "  private networkRetryTimer?: number;",
+          "host_summary": {
+            "decorators": [],
+            "imports": [],
+            "lifecycle": [],
+            "states": [],
+            "struct": null
+          },
+          "identity_end_offset_utf16": 3055,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": 3021,
+          "owner_ref": {
+            "kind": "region",
+            "ref_id": "region:sha256:f805e9aab88ac02bf1ae04540aa4973811dfa19c3d7f0b8b73625bca90769c85"
+          },
+          "selection_reason": "changed_review_region",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 67,
+            "start_line": 67
+          },
+          "unit_changed_lines": [
+            1
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "field_region",
+          "unit_ref": "Index.networkRetryTimer@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.networkRetryTimer"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:87f62aec4531c52ce8285d2e8f0cf0207626a5df1f7fb7fb1c04476523838611"
+          ],
+          "changed_lines": [
+            68
+          ],
+          "changed_new_lines": [
+            68
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 68,
+            "start_line": 68
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            68
+          ],
+          "full_text": "  private isDisposed: boolean = false;",
+          "host_summary": {
+            "decorators": [],
+            "imports": [],
+            "lifecycle": [],
+            "states": [],
+            "struct": null
+          },
+          "identity_end_offset_utf16": 3094,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": 3059,
+          "owner_ref": {
+            "kind": "region",
+            "ref_id": "region:sha256:10438f4def9d5ed445d0a9ecbadde3c33ea76fa5fdcbcf257e6e21360420ac18"
+          },
+          "selection_reason": "changed_review_region",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 68,
+            "start_line": 68
+          },
+          "unit_changed_lines": [
+            1
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "field_region",
+          "unit_ref": "Index.isDisposed@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.isDisposed"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:87f62aec4531c52ce8285d2e8f0cf0207626a5df1f7fb7fb1c04476523838611"
+          ],
+          "changed_lines": [
+            69
+          ],
+          "changed_new_lines": [
+            69
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 69,
+            "start_line": 69
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            69
+          ],
+          "full_text": "  private readonly networkRetryDelayMs: number = 1000;",
+          "host_summary": {
+            "decorators": [],
+            "imports": [],
+            "lifecycle": [],
+            "states": [],
+            "struct": null
+          },
+          "identity_end_offset_utf16": 3149,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": 3098,
+          "owner_ref": {
+            "kind": "region",
+            "ref_id": "region:sha256:3739cc6dacd0ef4a5bb8a743add831dffadae2d204ba0211541216f4af696cab"
+          },
+          "selection_reason": "changed_review_region",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 69,
+            "start_line": 69
+          },
+          "unit_changed_lines": [
+            1
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "field_region",
+          "unit_ref": "Index.networkRetryDelayMs@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.networkRetryDelayMs"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:8f3aaac62a1eb2c72430a217d09b5ffffb6d609e6e99a2f1a6792eb2ed5bc4c2",
+            "change-atom:sha256:99e71c858735fcc1f4dd8ecf7b3de62bdf519fe7e90650bfe61f289c444336da",
+            "change-atom:sha256:e1a15cf591daf741527590e4045dc4231401deb07f3f1496025a8a3c17a8e1db"
+          ],
+          "changed_lines": [
+            76,
+            77,
+            95,
+            121
+          ],
+          "changed_new_lines": [
+            76,
+            77,
+            95,
+            121
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 121,
+            "start_line": 74
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            76,
+            77,
+            95,
+            121
+          ],
+          "full_text": "  async aboutToAppear() {\n    Log.info('about to appear');\n    this.isDisposed = false;\n    this.clearRuntimeTimers();\n    this.songList = this.urlVideoList;\n    this.audioType = 'video';\n    this.currentPlayInfo = this.urlVideoList[0];\n    this.audioUtils.setVideoLoadedCallback((isLoaded: boolean) => {\n      this.isLoaded = isLoaded;\n    });\n    this.avPlayer = await this.audioUtils.init();\n    this.avPlayer?.on('audioInterrupt', (info: audio.InterruptEvent) => {\n      Log.info('audioInterrupt success, and InterruptEvent info is: ' + info);\n      if (this.avPlayer?.state === 'playing') {\n        Log.info('audio interrupt, start pause');\n        this.avPlayer?.pause();\n        this.setPlayState(avSession.PlaybackState.PLAYBACK_STATE_PAUSE);\n        promptAction.showToast({ message: 'audio interrupt, pause done' });\n      }\n    })\n    this.avPlayer?.on('timeUpdate', (time: number) => {\n      this.updatePlaybackProgress(time);\n    })\n    this.avPlayer?.on('durationUpdate', (duration: number) => {\n      Log.info('durationUpdate duration: ' + duration);\n      this.duration = duration;\n      if (this.duration !== 0) {\n        const playMetaData: avSession.AVMetadata = {\n          assetId: this.currentPlayInfo?.assetId as string,  // origin assetId\n          title: this.currentPlayInfo?.title as string,\n          artist: this.currentPlayInfo?.artist as string,\n          mediaImage: this.albumImage, // origin mediaImage\n          album: this.currentPlayInfo?.albumTitle as string,\n          duration: this.duration\n        }\n        this.session?.setAVMetadata(playMetaData);\n      }\n\n    })\n    this.avPlayer?.on('videoSizeChange', (width: number, height: number) => {\n      Log.info('videoSizeChange success, and width is: ' + width + ', height is: ' + height);\n    })\n    await this.setAudioManager();\n    await this.autoStartAll(false);\n    this.addNetworkListener();\n    this.readLRCFile();\n    Log.info('about to appear done: ' + !!this.avPlayer);\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:68ea04bfbfe136998b2aef7f9abf4cb7b2d9d94c75941e968546688bc4cbadec"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 121,
+            "start_line": 74
+          },
+          "unit_changed_lines": [
+            3,
+            4,
+            22,
+            48
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.aboutToAppear@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.aboutToAppear"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:8f3aaac62a1eb2c72430a217d09b5ffffb6d609e6e99a2f1a6792eb2ed5bc4c2"
+          ],
+          "changed_lines": [
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135
+          ],
+          "changed_new_lines": [
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 136,
+            "start_line": 123
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135
+          ],
+          "full_text": "  private updatePlaybackProgress(time: number): void {\n    if (this.isDisposed || this.isProgressSliding) {\n      return;\n    }\n    Log.info('timeUpdate time: ' + time);\n    this.seedPosition = this.duration === 0 ? 0 : time / this.duration * 100;\n    const params: avSession.AVPlaybackState = {\n      position: {\n        elapsedTime: time,\n        updateTime: new Date().getTime()\n      },\n    };\n    this.session?.setAVPlaybackState(params);\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:9a0f6062626dea72eb5a508816af800f8563307a5c422f6a4cc97b7984811b9a"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 136,
+            "start_line": 123
+          },
+          "unit_changed_lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.updatePlaybackProgress@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.updatePlaybackProgress"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:6dd134ebecde2fd57413797cfecc1f44f5e53f0ecb3bc632d1b49b843e9caa52",
+            "change-atom:sha256:ccbb6bd8c0b14328a84d52335a4288f92856f217a748155af0a9fb5b145ef26e",
+            "change-atom:sha256:e24d8ffe5b5aabbad58f51194e572d8651304a201f8b83ee199c3df45d294577"
+          ],
+          "changed_lines": [
+            165,
+            169,
+            170,
+            172
+          ],
+          "changed_new_lines": [
+            165,
+            169,
+            170,
+            172
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 172,
+            "start_line": 152
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            165,
+            169,
+            170,
+            172
+          ],
+          "full_text": "  addNetworkListener(): void {\n    Log.info('start add Network Listener');\n    this.netCon = connection.createNetConnection();\n    this.netCon?.register((error: BusinessError) => {\n      Log.error('network error: ' + JSON.stringify(error));\n    })\n    connection.getAllNets().then(data => {\n      Log.info('get all network: ' + JSON.stringify(data));\n      this.hasNetwork = data?.length > 0;\n    })\n    this.netCon?.on('netAvailable', data => {\n      Log.info('network Available: ' + JSON.stringify(data));\n      this.hasNetwork = true;\n      this.clearNetworkRetryTimer();\n    })\n    this.netCon?.on('netLost', data => {\n      Log.info('network Lost: ' + JSON.stringify(data));\n      this.hasNetwork = false;\n      this.scheduleNetworkRecovery();\n    })\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:1ff28aa5570561ba7d563bcd6b7758029bcb8ab760f5e9808d7898414197746d"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 172,
+            "start_line": 152
+          },
+          "unit_changed_lines": [
+            14,
+            18,
+            19,
+            21
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.addNetworkListener@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.addNetworkListener"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:ccbb6bd8c0b14328a84d52335a4288f92856f217a748155af0a9fb5b145ef26e"
+          ],
+          "changed_lines": [
+            174,
+            175,
+            176,
+            177,
+            178,
+            179
+          ],
+          "changed_new_lines": [
+            174,
+            175,
+            176,
+            177,
+            178,
+            179
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 179,
+            "start_line": 174
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            174,
+            175,
+            176,
+            177,
+            178,
+            179
+          ],
+          "full_text": "  private clearNetworkRetryTimer(): void {\n    if (this.networkRetryTimer !== undefined) {\n      clearTimeout(this.networkRetryTimer);\n      this.networkRetryTimer = undefined;\n    }\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:5e3644911ebb9e210805124384d8dceb0140d4ed2c1e1de282322200cf861613"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 179,
+            "start_line": 174
+          },
+          "unit_changed_lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.clearNetworkRetryTimer@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.clearNetworkRetryTimer"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:ccbb6bd8c0b14328a84d52335a4288f92856f217a748155af0a9fb5b145ef26e"
+          ],
+          "changed_lines": [
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201
+          ],
+          "changed_new_lines": [
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 202,
+            "start_line": 181
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            181,
+            182,
+            183,
+            184,
+            185,
+            186,
+            187,
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197,
+            198,
+            199,
+            200,
+            201
+          ],
+          "full_text": "  private scheduleNetworkRecovery(): void {\n    this.clearNetworkRetryTimer();\n    if (this.isDisposed) {\n      return;\n    }\n    this.networkRetryTimer = setTimeout(() => {\n      if (this.isDisposed) {\n        return;\n      }\n      connection.getAllNets()\n        .then(data => {\n          this.hasNetwork = data?.length > 0;\n          if (!this.hasNetwork) {\n            this.scheduleNetworkRecovery();\n          }\n        })\n        .catch((error: BusinessError) => {\n          Log.error('network recovery failed: ' + JSON.stringify(error));\n          this.scheduleNetworkRecovery();\n        });\n    }, this.networkRetryDelayMs);\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:2fd4edb61cbac71050b433ad3786f97bc0e45b96724771e4cc11565f61680b28"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 202,
+            "start_line": 181
+          },
+          "unit_changed_lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.scheduleNetworkRecovery@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.scheduleNetworkRecovery"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:7d3d3eb362a7a9565e5225b5e82b873cc89d2f54bc744ec0de462a7473c6d297"
+          ],
+          "changed_lines": [
+            294,
+            295,
+            296,
+            297,
+            298,
+            299,
+            300
+          ],
+          "changed_new_lines": [
+            294,
+            295,
+            296,
+            297,
+            298,
+            299,
+            300
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 300,
+            "start_line": 294
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            294,
+            295,
+            296,
+            297,
+            298,
+            299,
+            300
+          ],
+          "full_text": "  private clearRuntimeTimers(): void {\n    if (this.sliderTimer !== undefined) {\n      clearTimeout(this.sliderTimer);\n      this.sliderTimer = undefined;\n    }\n    this.clearNetworkRetryTimer();\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:1b9eb2170b6fa1be7c728612d7cc75870319402eb3001bed11ca27568ba9a852"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 300,
+            "start_line": 294
+          },
+          "unit_changed_lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.clearRuntimeTimers@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.clearRuntimeTimers"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:7d3d3eb362a7a9565e5225b5e82b873cc89d2f54bc744ec0de462a7473c6d297"
+          ],
+          "changed_lines": [
+            302,
+            303,
+            304,
+            305,
+            306,
+            307
+          ],
+          "changed_new_lines": [
+            302,
+            303,
+            304,
+            305,
+            306,
+            307
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 307,
+            "start_line": 302
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            302,
+            303,
+            304,
+            305,
+            306,
+            307
+          ],
+          "full_text": "  private removePlayerListeners(): void {\n    this.avPlayer?.off('audioInterrupt');\n    this.avPlayer?.off('timeUpdate');\n    this.avPlayer?.off('durationUpdate');\n    this.avPlayer?.off('videoSizeChange');\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:4307d41e91544272aac9615ba4997a588fba5077002e2ee9931af44867c97f20"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 307,
+            "start_line": 302
+          },
+          "unit_changed_lines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.removePlayerListeners@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.removePlayerListeners"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:aa086e23db341c42803387f25881e5839860aa0f5df12bfb123daf986804c28e",
+            "change-atom:sha256:f93146b946ac7432a29596705517a7f50cc38c1f956c8934c60f8bc87e74b8d9"
+          ],
+          "changed_lines": [
+            311,
+            312,
+            313,
+            339,
+            340,
+            341,
+            342,
+            343
+          ],
+          "changed_new_lines": [
+            311,
+            312,
+            313,
+            339,
+            340,
+            341,
+            342,
+            343
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 344,
+            "start_line": 309
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            311,
+            312,
+            313,
+            339,
+            340,
+            341,
+            342,
+            343
+          ],
+          "full_text": "  aboutToDisappear() {\n    Log.info('about to disappear');\n    this.isDisposed = true;\n    this.clearRuntimeTimers();\n    this.removePlayerListeners();\n    if (this.controller) {\n      this.controller.off('outputDeviceChange');\n      this.controller.destroy();\n    }\n    if (this.castController) {\n      this.castController?.off('playbackStateChange');\n      this.castController?.off('error');\n      this.castController?.off('playPrevious');\n      this.castController?.off('playNext');\n    }\n    try {\n      if (this.session) {\n        this.session?.stopCasting();\n        this.session?.destroy();\n      }\n    } catch (err) {\n      Log.info( `err is: ${JSON.stringify(err)}`);\n    }\n    if (this.avPlayer) {\n      this.avPlayer?.release();\n    }\n    // 使用unregister接口取消订阅\n    this.netCon?.unregister((error) => {\n      Log.info('error is: ' + JSON.stringify(error));\n    })\n    this.netCon = undefined;\n    this.controller = undefined;\n    this.castController = undefined;\n    this.session = undefined;\n    this.avPlayer = undefined;\n  }",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:1527e65aa74dfb9bc8542d547220d15bdf182f60a310cfb8b1d81cc672650a23"
+          },
+          "selection_reason": "innermost_changed_declaration",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 344,
+            "start_line": 309
+          },
+          "unit_changed_lines": [
+            3,
+            4,
+            5,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "method",
+          "unit_ref": "Index.aboutToDisappear@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.aboutToDisappear"
+        },
+        {
+          "change_atom_ids": [
+            "change-atom:sha256:18500ee4a33603754e808bf692b30791455efcc00071f518cc5c1406e4333d21",
+            "change-atom:sha256:6b8a39e09821fc4638ec2ac67b4d98b2e85f859410a76437500f7ffec0336405",
+            "change-atom:sha256:e879f1958efd761a99b41637da9379e3264eb818662a6fe40e2a1e4a52645682"
+          ],
+          "changed_lines": [
+            1010,
+            1011,
+            1012,
+            1014,
+            1015,
+            1016,
+            1017,
+            1020,
+            1021,
+            1022,
+            1023
+          ],
+          "changed_new_lines": [
+            1010,
+            1011,
+            1012,
+            1014,
+            1015,
+            1016,
+            1017,
+            1020,
+            1021,
+            1022,
+            1023
+          ],
+          "changed_old_lines": [],
+          "context_degraded": false,
+          "context_span": {
+            "end_line": 1026,
+            "start_line": 971
+          },
+          "diagnostics": [],
+          "file": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "file_changed_lines": [
+            1010,
+            1011,
+            1012,
+            1014,
+            1015,
+            1016,
+            1017,
+            1020,
+            1021,
+            1022,
+            1023
+          ],
+          "full_text": "              Slider({\n                value: this.seedPosition,\n                min: 0,\n                max: 100,\n                style: SliderStyle.OutSet\n              })\n                .trackThickness(4)\n                .blockColor('rgba(255,255,255,1)')\n                .trackColor('rgba(255,255,255,0.3)')\n                .selectedColor('rgba(255,255,255,0.9)')\n                .showSteps(false)\n                .showTips(false)\n                .onChange((value: number, mode: SliderChangeMode) => {\n                  Log.info('value: ' + value + 'mode: ' + mode.toString() )\n                  if (mode === SliderChangeMode.End) {\n                    if (this.playType === 'local') {\n                      this.avPlayer?.seek(value / 100 * this.duration);\n                      const params: avSession.AVPlaybackState = {\n                        position: {\n                          elapsedTime: Math.floor(value / 100 * this.duration),\n                          updateTime: new Date().getTime(),\n                        },\n                      };\n                      this.session?.setAVPlaybackState(params);\n                      Log.info('params.position + ' + JSON.stringify((params.position)))\n                    } else {\n                      this.castController?.sendControlCommand({\n                        command: 'seek',\n                        parameter: value / 100 * this.duration,\n                      });\n                    }\n                  }\n                  this.seedPosition = value;\n                })\n                .width('70%')\n                .opacity(1)\n                .onTouch((event: TouchEvent) => {\n                  Log.info('progress touch: ' + event.type)\n                  if (event.type === TouchType.Up) {\n                    if (this.sliderTimer !== undefined) {\n                      clearTimeout(this.sliderTimer);\n                    }\n                    this.sliderTimer = setTimeout(() => {\n                      if (!this.isDisposed) {\n                        this.isProgressSliding = false;\n                      }\n                      this.sliderTimer = undefined;\n                    }, 200);\n                  } else {\n                    if (this.sliderTimer !== undefined) {\n                      clearTimeout(this.sliderTimer);\n                      this.sliderTimer = undefined;\n                    }\n                    this.isProgressSliding = true;\n                  }\n                })",
+          "host_summary": {
+            "decorators": [
+              "@Component",
+              "@Entry"
+            ],
+            "imports": [
+              "../common/AudioUtils",
+              "../common/CommonUtils",
+              "../common/Constants",
+              "../common/Log",
+              "@ohos.app.ability.common",
+              "@ohos.app.ability.wantAgent",
+              "@ohos.base",
+              "@ohos.deviceInfo",
+              "@ohos.file.fs",
+              "@ohos.multimedia.audio",
+              "@ohos.multimedia.avCastPicker",
+              "@ohos.multimedia.avsession",
+              "@ohos.multimedia.image",
+              "@ohos.multimedia.media",
+              "@ohos.net.connection",
+              "@ohos.promptAction",
+              "@ohos.util"
+            ],
+            "lifecycle": [
+              "aboutToAppear",
+              "aboutToDisappear",
+              "onPageHide"
+            ],
+            "states": [
+              "@State message: string = 'Hello World'",
+              "@State outputDevice: avSession.OutputDeviceInfo = {devices: []}",
+              "@State outputDeviceInfo: avSession.OutputDeviceInfo = {devices: []}",
+              "@State castController: avSession.AVCastController | undefined = undefined",
+              "@State castControllerSession: avSession.AVSessionController | undefined = undefined",
+              "@State session: avSession.AVSession | undefined = undefined",
+              "@State controller: avSession.AVSessionController | undefined = undefined",
+              "@State albumImage: image.PixelMap | undefined = undefined",
+              "@State playType: 'local' | 'cast' = 'local'",
+              "@State isFavorMap: Map<string, boolean> = new Map()",
+              "@State volume: number = 0",
+              "@State seedPosition: number = 0",
+              "@State duration: number = 0",
+              "@State private currentIndex: number = 0",
+              "@State @Watch('playInfoUpdated') currentPlayInfo: avSession.AVMediaDescription | undefined = undefined",
+              "@State currentMediaId: string = ''",
+              "@State currentLoopMode: number = 2",
+              "@State hasNetwork: boolean = false",
+              "@State isProgressSliding: boolean = false",
+              "@State audioType: 'url' | 'rawfile' | 'scan' | 'video' = 'url'",
+              "@State avCastPickerColor:Color = Color.White",
+              "@State isLoaded: boolean = false",
+              "@State private songList: Array<avSession.AVMediaDescription> = []"
+            ],
+            "struct": "Index"
+          },
+          "identity_end_offset_utf16": null,
+          "identity_source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "identity_start_offset_utf16": null,
+          "owner_ref": {
+            "kind": "declaration",
+            "ref_id": "declaration:sha256:12e1d8ce8f93dbf1150ec40c255f5b57e01cd20165d2bb32daf22026e6552408"
+          },
+          "selection_reason": "large_build_ui_block",
+          "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "source_role": "head",
+          "source_span": {
+            "end_line": 1026,
+            "start_line": 971
+          },
+          "unit_changed_lines": [
+            40,
+            41,
+            42,
+            44,
+            45,
+            46,
+            47,
+            50,
+            51,
+            52,
+            53
+          ],
+          "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "unit_kind": "ui_block",
+          "unit_ref": "Index.build.Column.Flex.Row.Flex.Flex.Slider@code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+          "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+        }
+      ]
+    }
+  ],
+  "mode": "diff",
+  "schema_version": "review-unit-build-v3",
+  "unassigned_change_atom_ids": []
+}

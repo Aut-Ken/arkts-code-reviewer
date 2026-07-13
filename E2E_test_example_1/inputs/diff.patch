@@ -1,0 +1,175 @@
+--- a/code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets
++++ b/code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets
+@@ -64,12 +64,17 @@
+   private audioManager: audio.AudioManager | undefined = undefined;
+   private netCon?: connection.NetConnection;
+   private sliderTimer?: number;
++  private networkRetryTimer?: number;
++  private isDisposed: boolean = false;
++  private readonly networkRetryDelayMs: number = 1000;
+   private mXComponentController: XComponentController = new XComponentController();
+   @State private songList: Array<avSession.AVMediaDescription> = [];
+   private urlVideoList: Array<avSession.AVMediaDescription> = Constants.URL_VIDEO_LIST;
+ 
+   async aboutToAppear() {
+     Log.info('about to appear');
++    this.isDisposed = false;
++    this.clearRuntimeTimers();
+     this.songList = this.urlVideoList;
+     this.audioType = 'video';
+     this.currentPlayInfo = this.urlVideoList[0];
+@@ -87,21 +92,7 @@
+       }
+     })
+     this.avPlayer?.on('timeUpdate', (time: number) => {
+-      Log.info('timeUpdate time: ' + time);
+-      if (!this.isProgressSliding) {
+-        if (this.duration == 0) {
+-          this.seedPosition = 0;
+-        } else {
+-          this.seedPosition = time / this.duration * 100;
+-        }
+-        const params: avSession.AVPlaybackState = {
+-          position: {
+-            elapsedTime: time,
+-            updateTime: new Date().getTime()
+-          },
+-        };
+-        this.session?.setAVPlaybackState(params);
+-      }
++      this.updatePlaybackProgress(time);
+     })
+     this.avPlayer?.on('durationUpdate', (duration: number) => {
+       Log.info('durationUpdate duration: ' + duration);
+@@ -129,6 +120,21 @@
+     Log.info('about to appear done: ' + !!this.avPlayer);
+   }
+ 
++  private updatePlaybackProgress(time: number): void {
++    if (this.isDisposed || this.isProgressSliding) {
++      return;
++    }
++    Log.info('timeUpdate time: ' + time);
++    this.seedPosition = this.duration === 0 ? 0 : time / this.duration * 100;
++    const params: avSession.AVPlaybackState = {
++      position: {
++        elapsedTime: time,
++        updateTime: new Date().getTime()
++      },
++    };
++    this.session?.setAVPlaybackState(params);
++  }
++
+   readLRCFile(): void {
+     const context = getContext(this) as common.UIAbilityContext;
+     context.resourceManager.getRawFileContent('test.lrc', (error: BusinessError, value: Uint8Array) => {
+@@ -156,14 +162,43 @@
+     this.netCon?.on('netAvailable', data => {
+       Log.info('network Available: ' + JSON.stringify(data));
+       this.hasNetwork = true;
++      this.clearNetworkRetryTimer();
+     })
+     this.netCon?.on('netLost', data => {
+       Log.info('network Lost: ' + JSON.stringify(data));
+-      connection.getAllNets().then(data => {
+-        Log.info('get all network: ' + JSON.stringify(data));
+-        this.hasNetwork = data?.length > 0;
+-      });
++      this.hasNetwork = false;
++      this.scheduleNetworkRecovery();
+     })
++  }
++
++  private clearNetworkRetryTimer(): void {
++    if (this.networkRetryTimer !== undefined) {
++      clearTimeout(this.networkRetryTimer);
++      this.networkRetryTimer = undefined;
++    }
++  }
++
++  private scheduleNetworkRecovery(): void {
++    this.clearNetworkRetryTimer();
++    if (this.isDisposed) {
++      return;
++    }
++    this.networkRetryTimer = setTimeout(() => {
++      if (this.isDisposed) {
++        return;
++      }
++      connection.getAllNets()
++        .then(data => {
++          this.hasNetwork = data?.length > 0;
++          if (!this.hasNetwork) {
++            this.scheduleNetworkRecovery();
++          }
++        })
++        .catch((error: BusinessError) => {
++          Log.error('network recovery failed: ' + JSON.stringify(error));
++          this.scheduleNetworkRecovery();
++        });
++    }, this.networkRetryDelayMs);
+   }
+ 
+   onPageHide() {
+@@ -256,8 +291,26 @@
+     Log.info('set AV Metadata: ');
+   }
+ 
++  private clearRuntimeTimers(): void {
++    if (this.sliderTimer !== undefined) {
++      clearTimeout(this.sliderTimer);
++      this.sliderTimer = undefined;
++    }
++    this.clearNetworkRetryTimer();
++  }
++
++  private removePlayerListeners(): void {
++    this.avPlayer?.off('audioInterrupt');
++    this.avPlayer?.off('timeUpdate');
++    this.avPlayer?.off('durationUpdate');
++    this.avPlayer?.off('videoSizeChange');
++  }
++
+   aboutToDisappear() {
+     Log.info('about to disappear');
++    this.isDisposed = true;
++    this.clearRuntimeTimers();
++    this.removePlayerListeners();
+     if (this.controller) {
+       this.controller.off('outputDeviceChange');
+       this.controller.destroy();
+@@ -283,6 +336,11 @@
+     this.netCon?.unregister((error) => {
+       Log.info('error is: ' + JSON.stringify(error));
+     })
++    this.netCon = undefined;
++    this.controller = undefined;
++    this.castController = undefined;
++    this.session = undefined;
++    this.avPlayer = undefined;
+   }
+ 
+   async setAudioManager() {
+@@ -949,11 +1007,20 @@
+                 .onTouch((event: TouchEvent) => {
+                   Log.info('progress touch: ' + event.type)
+                   if (event.type === TouchType.Up) {
++                    if (this.sliderTimer !== undefined) {
++                      clearTimeout(this.sliderTimer);
++                    }
+                     this.sliderTimer = setTimeout(() => {
+-                      this.isProgressSliding = false;
++                      if (!this.isDisposed) {
++                        this.isProgressSliding = false;
++                      }
++                      this.sliderTimer = undefined;
+                     }, 200);
+                   } else {
+-                    clearTimeout(this.sliderTimer);
++                    if (this.sliderTimer !== undefined) {
++                      clearTimeout(this.sliderTimer);
++                      this.sliderTimer = undefined;
++                    }
+                     this.isProgressSliding = true;
+                   }
+                 })

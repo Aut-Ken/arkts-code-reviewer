@@ -1,0 +1,502 @@
+{
+  "excluded_stages": [
+    "Rules",
+    "Prompt",
+    "LLM review"
+  ],
+  "fixture_provenance": {
+    "content_sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+    "line_count": 984,
+    "relative_path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+    "repository_root_hint": "/home/autken/Code/applications_app_samples",
+    "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
+    "schema_version": "e2e-source-provenance-v1",
+    "source_id": "applications_app_samples",
+    "synthetic_head_line_count": 1051,
+    "synthetic_head_revision": "synthetic-e2e-example-1-v1",
+    "synthetic_head_sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60"
+  },
+  "mutation_spec": {
+    "diff_stats": {
+      "added_new_lines": 88,
+      "deleted_old_lines": 21,
+      "total_diff_lines": 109
+    },
+    "formal_change_stats": {
+      "assigned_added_new_lines": 83,
+      "assigned_deleted_old_lines": 21,
+      "assigned_total_lines": 104,
+      "excluded_whitespace_only_diff_lines": 5
+    },
+    "opcodes": [
+      {
+        "added_new_lines": [
+          67,
+          68,
+          69
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 69,
+          "start_line": 67
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          67,
+          68,
+          69
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          76,
+          77
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 77,
+          "start_line": 76
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          76,
+          77
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          95
+        ],
+        "deleted_old_lines": [
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104
+        ],
+        "kind": "replace",
+        "new_span": {
+          "end_line": 95,
+          "start_line": 95
+        },
+        "old_span": {
+          "end_line": 104,
+          "start_line": 90
+        },
+        "raw_added_new_lines": [
+          95
+        ],
+        "raw_deleted_old_lines": [
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104
+        ]
+      },
+      {
+        "added_new_lines": [
+          121,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 135,
+          "start_line": 121
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          165
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 165,
+          "start_line": 165
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          165
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          169,
+          170
+        ],
+        "deleted_old_lines": [
+          162,
+          163,
+          164,
+          165
+        ],
+        "kind": "replace",
+        "new_span": {
+          "end_line": 170,
+          "start_line": 169
+        },
+        "old_span": {
+          "end_line": 165,
+          "start_line": 162
+        },
+        "raw_added_new_lines": [
+          169,
+          170
+        ],
+        "raw_deleted_old_lines": [
+          162,
+          163,
+          164,
+          165
+        ]
+      },
+      {
+        "added_new_lines": [
+          172,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 201,
+          "start_line": 172
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          172,
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196,
+          197,
+          198,
+          199,
+          200,
+          201
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          294,
+          295,
+          296,
+          297,
+          298,
+          299,
+          300,
+          302,
+          303,
+          304,
+          305,
+          306,
+          307
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 308,
+          "start_line": 294
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          294,
+          295,
+          296,
+          297,
+          298,
+          299,
+          300,
+          301,
+          302,
+          303,
+          304,
+          305,
+          306,
+          307,
+          308
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          311,
+          312,
+          313
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 313,
+          "start_line": 311
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          311,
+          312,
+          313
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          339,
+          340,
+          341,
+          342,
+          343
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 343,
+          "start_line": 339
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          339,
+          340,
+          341,
+          342,
+          343
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          1010,
+          1011,
+          1012
+        ],
+        "deleted_old_lines": [],
+        "kind": "insert",
+        "new_span": {
+          "end_line": 1012,
+          "start_line": 1010
+        },
+        "old_span": null,
+        "raw_added_new_lines": [
+          1010,
+          1011,
+          1012
+        ],
+        "raw_deleted_old_lines": []
+      },
+      {
+        "added_new_lines": [
+          1014,
+          1015,
+          1016,
+          1017
+        ],
+        "deleted_old_lines": [
+          953
+        ],
+        "kind": "replace",
+        "new_span": {
+          "end_line": 1017,
+          "start_line": 1014
+        },
+        "old_span": {
+          "end_line": 953,
+          "start_line": 953
+        },
+        "raw_added_new_lines": [
+          1014,
+          1015,
+          1016,
+          1017
+        ],
+        "raw_deleted_old_lines": [
+          953
+        ]
+      },
+      {
+        "added_new_lines": [
+          1020,
+          1021,
+          1022,
+          1023
+        ],
+        "deleted_old_lines": [
+          956
+        ],
+        "kind": "replace",
+        "new_span": {
+          "end_line": 1023,
+          "start_line": 1020
+        },
+        "old_span": {
+          "end_line": 956,
+          "start_line": 956
+        },
+        "raw_added_new_lines": [
+          1020,
+          1021,
+          1022,
+          1023
+        ],
+        "raw_deleted_old_lines": [
+          956
+        ]
+      }
+    ],
+    "purpose": "Refactor playback progress updates and make network/slider timers explicitly owned by the page lifecycle.",
+    "schema_version": "e2e-mutation-spec-v1",
+    "topics": [
+      "async-callback",
+      "lifecycle-cleanup",
+      "network-retry",
+      "state-management",
+      "timer-ownership"
+    ]
+  },
+  "output_files": [
+    "00_run_manifest.json",
+    "01_change_set.json",
+    "02_parser_base.json",
+    "03_parser_head.json",
+    "04_review_unit_build.json",
+    "05_unit_fact_scopes.json",
+    "06_feature_routing.json",
+    "07_context_plan.json",
+    "08_retrieval_request.json",
+    "09_knowledge_index_summary.json",
+    "10_evidence_pack.json",
+    "11_assertions.json",
+    "12_summary.json"
+  ],
+  "review_unit_expected_file": "inputs/expected_review_units.json",
+  "runtime": {
+    "code_context_budget": 32768,
+    "database_url_persisted": false,
+    "database_url_source": "ARKTS_RETRIEVAL_DATABASE_URL",
+    "embedding_batch_size": 8,
+    "embedding_cache_configured": true,
+    "embedding_cache_path_persisted": false,
+    "embedding_device": "cuda",
+    "embedding_execution_provider": "CUDAExecutionProvider",
+    "embedding_threads": 2,
+    "knowledge_token_budget": 8192,
+    "python": "3.12.13",
+    "staging_alias": "staging-knowledge-seed-v1"
+  },
+  "schema_version": "e2e-run-manifest-v1",
+  "scope": "ChangeSet through Retrieval EvidencePack",
+  "semantic_retrieval_quality_status": "not_qualified",
+  "source": {
+    "base_content_hash": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+    "base_line_count": 984,
+    "head_content_hash": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+    "head_line_count": 1051,
+    "head_revision": "synthetic-e2e-example-1-v1",
+    "path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+    "repository": "applications_app_samples",
+    "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3"
+  },
+  "status": "pass"
+}

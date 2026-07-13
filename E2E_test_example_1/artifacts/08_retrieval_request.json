@@ -1,0 +1,1060 @@
+{
+  "context_plan_id": "context-plan:sha256:26b2050f278fc1f3ec5d5bb10fc0949f14e48f2d7b554015de2b2d24b508ce0d",
+  "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "feature_routing_id": "feature-routing:sha256:7ec55c6c2dc336ceabe291ba59beece57dca5f57300915ec8c681302b597cd16",
+  "index_version": "knowledge-index:sha256:aa792a335c07f03f740f8f0f790f16782c7dba93bc4c94af6666214b985e291a",
+  "request_id": "retrieval-request:sha256:f9fbf8d15fd626281806cbbc4aa4f79c3bd3f4eee16fbcb911e8fdfa557e4eda",
+  "schema_version": "retrieval-request-v1",
+  "target_platform": {
+    "api_level": 12,
+    "language_mode": "ArkTS",
+    "permissions": null,
+    "release": "OpenHarmony-5.0",
+    "system_capabilities": null
+  },
+  "total_knowledge_token_budget": 8192,
+  "units": [
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: field_region; symbol: Index.isDisposed; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 547,
+      "profile_id": "feature-profile:sha256:5912618073e0804fdff5cd221481c16098f049790735c4316a7b179eca118a57",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L68: private isDisposed: boolean = false;",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: field_region; symbol: Index.networkRetryDelayMs; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 547,
+      "profile_id": "feature-profile:sha256:dfbc81bd4699314b5925b3dd82635b13e99eca6207fdda623a364ee21020624c",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L69: private readonly networkRetryDelayMs: number = 1000;",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [],
+        "syntax": []
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: field_region; symbol: Index.networkRetryTimer; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:d904a5cb16ac8f7ecd9ee5bc6ba765efa8c2270d1aae8d2621bd02c72e899ddb",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L67: private networkRetryTimer?: number;",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [
+          "promptAction.showToast"
+        ],
+        "attributes": [],
+        "calls": [
+          "Log.info",
+          "newDate().getTime",
+          "this.addNetworkListener",
+          "this.audioUtils.init",
+          "this.audioUtils.setVideoLoadedCallback",
+          "this.autoStartAll",
+          "this.avPlayer?.on",
+          "this.avPlayer?.pause",
+          "this.readLRCFile",
+          "this.session?.setAVMetadata",
+          "this.session?.setAVPlaybackState",
+          "this.setAudioManager",
+          "this.setPlayState"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.aboutToAppear"
+        ],
+        "syntax": [
+          "arrow_fn",
+          "async_fn",
+          "await_expr"
+        ]
+      },
+      "exact_tags": [
+        "has_async"
+      ],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.aboutToAppear; apis: promptAction.showToast; syntax: arrow_fn, async_fn, await_expr; symbols: Index.aboutToAppear; calls: Log.info, newDate().getTime, this.addNetworkListener, this.audioUtils.init, this.audioUtils.setVideoLoadedCallback, this.autoStartAll, this.avPlayer?.on, this.avPlayer?.pause; tags: has_async; review questions: 并发与异步行为是否正确且可控, 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:bf27a2ddaf9d2607f0aeb5ecb0fec468f597d496c3559467aa54925860228334",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-07"
+      ],
+      "review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L89: this.avPlayer?.on('timeUpdate', (time: number) => { | L90: Log.info('timeUpdate time: ' + time); | L91: if (!this.isProgressSliding) { | L92: if (this.duration == 0) { | L93: this.seedPosition = 0; | L94: } else { | L95: this.seedPosition = time / this.duration * 100; | L96: } | L98: position: { | L99: elapsedTime: time, | L100: updateTime: new Date().getTime() | L101: }, | L102: }; | L103: this.session?.setAVPlaybackState(params); | L104: } | L105: })",
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [
+          "promptAction.showToast"
+        ],
+        "attributes": [],
+        "calls": [
+          "Log.info",
+          "this.addNetworkListener",
+          "this.audioUtils.init",
+          "this.audioUtils.setVideoLoadedCallback",
+          "this.autoStartAll",
+          "this.avPlayer?.on",
+          "this.avPlayer?.pause",
+          "this.clearRuntimeTimers",
+          "this.readLRCFile",
+          "this.session?.setAVMetadata",
+          "this.setAudioManager",
+          "this.setPlayState",
+          "this.updatePlaybackProgress"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.aboutToAppear"
+        ],
+        "syntax": [
+          "arrow_fn",
+          "async_fn",
+          "await_expr"
+        ]
+      },
+      "exact_tags": [
+        "has_async"
+      ],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.aboutToAppear; apis: promptAction.showToast; syntax: arrow_fn, async_fn, await_expr; symbols: Index.aboutToAppear; calls: Log.info, this.addNetworkListener, this.audioUtils.init, this.audioUtils.setVideoLoadedCallback, this.autoStartAll, this.avPlayer?.on, this.avPlayer?.pause, this.clearRuntimeTimers; tags: has_async; review questions: 并发与异步行为是否正确且可控, 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:0992c8a01cb1c439a15b92302e873714baa9df80626b887fc33b155f32433725",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-07"
+      ],
+      "review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L75: Log.info('about to appear'); | L76: this.isDisposed = false; | L77: this.clearRuntimeTimers(); | L78: this.songList = this.urlVideoList; | L94: this.avPlayer?.on('timeUpdate', (time: number) => { | L95: this.updatePlaybackProgress(time); | L96: }) | L120: Log.info('about to appear done: ' + !!this.avPlayer); | L121: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [
+          "JSON.stringify",
+          "Log.info",
+          "this.avPlayer?.release",
+          "this.castController?.off",
+          "this.clearRuntimeTimers",
+          "this.controller.destroy",
+          "this.controller.off",
+          "this.netCon?.unregister",
+          "this.removePlayerListeners",
+          "this.session?.destroy",
+          "this.session?.stopCasting"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.aboutToDisappear"
+        ],
+        "syntax": [
+          "arrow_fn",
+          "try_catch"
+        ]
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.aboutToDisappear; syntax: arrow_fn, try_catch; symbols: Index.aboutToDisappear; calls: JSON.stringify, Log.info, this.avPlayer?.release, this.castController?.off, this.clearRuntimeTimers, this.controller.destroy, this.controller.off, this.netCon?.unregister; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:52dbcd6002d82b10dc9b676f21048cf9c831ce7d9a4b6e8a4d2f4d6169e4c528",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L310: Log.info('about to disappear'); | L311: this.isDisposed = true; | L312: this.clearRuntimeTimers(); | L313: this.removePlayerListeners(); | L314: if (this.controller) { | L338: }) | L339: this.netCon = undefined; | L340: this.controller = undefined; | L341: this.castController = undefined; | L342: this.session = undefined; | L343: this.avPlayer = undefined; | L344: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [
+          "JSON.stringify",
+          "Log.error",
+          "Log.info",
+          "connection.createNetConnection",
+          "connection.getAllNets",
+          "connection.getAllNets().then",
+          "this.netCon?.on",
+          "this.netCon?.register"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.addNetworkListener"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ]
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.addNetworkListener; syntax: arrow_fn; symbols: Index.addNetworkListener; calls: JSON.stringify, Log.error, Log.info, connection.createNetConnection, connection.getAllNets, connection.getAllNets().then, this.netCon?.on, this.netCon?.register; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:564d525fe0e0070eaff247929340a13659b7cda57f87b353c34d81129035f852",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L161: Log.info('network Lost: ' + JSON.stringify(data)); | L162: connection.getAllNets().then(data => { | L163: Log.info('get all network: ' + JSON.stringify(data)); | L164: this.hasNetwork = data?.length > 0; | L165: }); | L166: })",
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [
+          "JSON.stringify",
+          "Log.error",
+          "Log.info",
+          "connection.createNetConnection",
+          "connection.getAllNets",
+          "connection.getAllNets().then",
+          "this.clearNetworkRetryTimer",
+          "this.netCon?.on",
+          "this.netCon?.register",
+          "this.scheduleNetworkRecovery"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.addNetworkListener"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ]
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.addNetworkListener; syntax: arrow_fn; symbols: Index.addNetworkListener; calls: JSON.stringify, Log.error, Log.info, connection.createNetConnection, connection.getAllNets, connection.getAllNets().then, this.clearNetworkRetryTimer, this.netCon?.on; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:15b5fd83c64e2ed020090d06d439e38cf756e8f50cec9a9e7f1b26cdcf2f48d7",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L164: this.hasNetwork = true; | L165: this.clearNetworkRetryTimer(); | L166: }) | L168: Log.info('network Lost: ' + JSON.stringify(data)); | L169: this.hasNetwork = false; | L170: this.scheduleNetworkRecovery(); | L171: }) | L172: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "exact_signals": {
+        "apis": [
+          "clearTimeout"
+        ],
+        "attributes": [],
+        "calls": [],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.clearNetworkRetryTimer"
+        ],
+        "syntax": []
+      },
+      "exact_tags": [
+        "has_timer"
+      ],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.clearNetworkRetryTimer; apis: clearTimeout; symbols: Index.clearNetworkRetryTimer; tags: has_timer; review questions: 改动是否正确且不会引入直接回归, 资源是否正确创建、持有和释放",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:3a57159e6e3159b32c3bcc3c94c4e6bf0078dbc79fcd07d8acc852555f16dffa",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L174: private clearNetworkRetryTimer(): void { | L175: if (this.networkRetryTimer !== undefined) { | L176: clearTimeout(this.networkRetryTimer); | L177: this.networkRetryTimer = undefined; | L178: } | L179: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "exact_signals": {
+        "apis": [
+          "clearTimeout"
+        ],
+        "attributes": [],
+        "calls": [
+          "this.clearNetworkRetryTimer"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.clearRuntimeTimers"
+        ],
+        "syntax": []
+      },
+      "exact_tags": [
+        "has_timer"
+      ],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.clearRuntimeTimers; apis: clearTimeout; symbols: Index.clearRuntimeTimers; calls: this.clearNetworkRetryTimer; tags: has_timer; review questions: 改动是否正确且不会引入直接回归, 资源是否正确创建、持有和释放",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:10eab1077a0c45bf1036db72d3bebbb2515184c55224e54b5a84d318dca7a2a4",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L294: private clearRuntimeTimers(): void { | L295: if (this.sliderTimer !== undefined) { | L296: clearTimeout(this.sliderTimer); | L297: this.sliderTimer = undefined; | L298: } | L299: this.clearNetworkRetryTimer(); | L300: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [
+          "this.avPlayer?.off"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.removePlayerListeners"
+        ],
+        "syntax": []
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.removePlayerListeners; symbols: Index.removePlayerListeners; calls: this.avPlayer?.off; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:cbb3b5b27d0e6795e352c1bd5f6b5199b19e7272c697bd506e3a321462244ba6",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L302: private removePlayerListeners(): void { | L303: this.avPlayer?.off('audioInterrupt'); | L304: this.avPlayer?.off('timeUpdate'); | L305: this.avPlayer?.off('durationUpdate'); | L306: this.avPlayer?.off('videoSizeChange'); | L307: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "exact_signals": {
+        "apis": [
+          "setTimeout"
+        ],
+        "attributes": [],
+        "calls": [
+          "JSON.stringify",
+          "Log.error",
+          "connection.getAllNets",
+          "connection.getAllNets().then",
+          "connection.getAllNets().then(data=>{this.hasNetwork=data?.length>0;if(!this.hasNetwork){this.scheduleNetworkRecovery();}}).catch",
+          "this.clearNetworkRetryTimer",
+          "this.scheduleNetworkRecovery"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.scheduleNetworkRecovery"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ]
+      },
+      "exact_tags": [
+        "has_timer"
+      ],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.scheduleNetworkRecovery; apis: setTimeout; syntax: arrow_fn; symbols: Index.scheduleNetworkRecovery; calls: JSON.stringify, Log.error, connection.getAllNets, connection.getAllNets().then, connection.getAllNets().then(data=>{this.hasNetwork=data?.length>0;if(!this.hasNetwork){this.scheduleNetworkRecovery();}}).catch, this.clearNetworkRetryTimer, this.scheduleNetworkRecovery; tags: has_timer; review questions: 改动是否正确且不会引入直接回归, 资源是否正确创建、持有和释放",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:5dea0bf6fcfd5171479ad3856cbf72900530e39ef8b16ed7e54961fb28d66b0d",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L181: private scheduleNetworkRecovery(): void { | L182: this.clearNetworkRetryTimer(); | L184: return; | L185: } | L187: if (this.isDisposed) { | L188: return; | L189: } | L191: .then(data => { | L192: this.hasNetwork = data?.length > 0; | L194: this.scheduleNetworkRecovery(); | L195: } | L196: }) | L198: Log.error('network recovery failed: ' + JSON.stringify(error)); | L199: this.scheduleNetworkRecovery(); | L201: }, this.networkRetryDelayMs); | L202: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-correctness"
+      ],
+      "exact_signals": {
+        "apis": [],
+        "attributes": [],
+        "calls": [
+          "Log.info",
+          "newDate().getTime",
+          "this.session?.setAVPlaybackState"
+        ],
+        "components": [],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.updatePlaybackProgress"
+        ],
+        "syntax": []
+      },
+      "exact_tags": [],
+      "intent_summary": "ArkTS review unit; kind: method; symbol: Index.updatePlaybackProgress; symbols: Index.updatePlaybackProgress; calls: Log.info, newDate().getTime, this.session?.setAVPlaybackState; review questions: 改动是否正确且不会引入直接回归",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:48afb38273fd6f188322a9d9416d3d9938fceba8feb6f73cb12ce198c8c49413",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L123: private updatePlaybackProgress(time: number): void { | L124: if (this.isDisposed || this.isProgressSliding) { | L125: return; | L126: } | L127: Log.info('timeUpdate time: ' + time); | L128: this.seedPosition = this.duration === 0 ? 0 : time / this.duration * 100; | L129: const params: avSession.AVPlaybackState = { | L130: position: { | L131: elapsedTime: time, | L132: updateTime: new Date().getTime() | L133: }, | L134: }; | L135: this.session?.setAVPlaybackState(params); | L136: }",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "exact_signals": {
+        "apis": [
+          "clearTimeout",
+          "setTimeout"
+        ],
+        "attributes": [
+          "blockColor",
+          "onChange",
+          "onTouch",
+          "opacity",
+          "selectedColor",
+          "showSteps",
+          "showTips",
+          "trackColor",
+          "trackThickness",
+          "width"
+        ],
+        "calls": [
+          "JSON.stringify",
+          "Log.info",
+          "Math.floor",
+          "Slider",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps(false).showTips",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps(false).showTips(false).onChange",
+          "mode.toString",
+          "newDate().getTime",
+          "this.avPlayer?.seek",
+          "this.castController?.sendControlCommand",
+          "this.session?.setAVPlaybackState"
+        ],
+        "components": [
+          "Slider"
+        ],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ]
+      },
+      "exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "intent_summary": "ArkTS review unit; kind: ui_block; symbol: Index.build.Column.Flex.Row.Flex.Flex.Slider; components: Slider; apis: clearTimeout, setTimeout; attributes: blockColor, onChange, onTouch, opacity, selectedColor, showSteps, showTips, trackColor; syntax: arrow_fn; symbols: Index.build.Column.Flex.Row.Flex.Flex.Slider; calls: JSON.stringify, Log.info, Math.floor, Slider, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor; tags: has_interactive_component, has_timer; review questions: 无障碍行为是否完整且可用, 改动是否正确且不会引入直接回归, 资源是否正确创建、持有和释放",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:7664d6245c0b49d0e0e5379b5ca7f9612663082b9d3642b364d4bff287469e84",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L952: this.sliderTimer = setTimeout(() => { | L953: this.isProgressSliding = false; | L954: }, 200); | L955: } else { | L956: clearTimeout(this.sliderTimer); | L957: this.isProgressSliding = true;",
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "dispatchable_review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "exact_signals": {
+        "apis": [
+          "clearTimeout",
+          "setTimeout"
+        ],
+        "attributes": [
+          "blockColor",
+          "onChange",
+          "onTouch",
+          "opacity",
+          "selectedColor",
+          "showSteps",
+          "showTips",
+          "trackColor",
+          "trackThickness",
+          "width"
+        ],
+        "calls": [
+          "JSON.stringify",
+          "Log.info",
+          "Math.floor",
+          "Slider",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps(false).showTips",
+          "Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor('rgba(255,255,255,0.9)').showSteps(false).showTips(false).onChange",
+          "mode.toString",
+          "newDate().getTime",
+          "this.avPlayer?.seek",
+          "this.castController?.sendControlCommand",
+          "this.session?.setAVPlaybackState"
+        ],
+        "components": [
+          "Slider"
+        ],
+        "decorators": [],
+        "resource_references": [],
+        "symbols": [
+          "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+        ],
+        "syntax": [
+          "arrow_fn"
+        ]
+      },
+      "exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "intent_summary": "ArkTS review unit; kind: ui_block; symbol: Index.build.Column.Flex.Row.Flex.Flex.Slider; components: Slider; apis: clearTimeout, setTimeout; attributes: blockColor, onChange, onTouch, opacity, selectedColor, showSteps, showTips, trackColor; syntax: arrow_fn; symbols: Index.build.Column.Flex.Row.Flex.Flex.Slider; calls: JSON.stringify, Log.info, Math.floor, Slider, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor, Slider({value:this.seedPosition,min:0,max:100,style:SliderStyle.OutSet}).trackThickness(4).blockColor('rgba(255,255,255,1)').trackColor('rgba(255,255,255,0.3)').selectedColor; tags: has_interactive_component, has_timer; review questions: 无障碍行为是否完整且可用, 改动是否正确且不会引入直接回归, 资源是否正确创建、持有和释放",
+      "knowledge_token_budget": 546,
+      "profile_id": "feature-profile:sha256:4de05cdcaf6266ea083d2fa8a27bffa83eadf8996d3d1fb84c1d296b11ff4255",
+      "quality": {
+        "context_degraded": false,
+        "error_nodes": 0,
+        "missing_nodes": 0,
+        "parser_layer": "L1"
+      },
+      "requested_rule_ids": [],
+      "retrieval_dimension_ids": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimension_ids": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "semantic_code_excerpt": "L1009: if (event.type === TouchType.Up) { | L1010: if (this.sliderTimer !== undefined) { | L1011: clearTimeout(this.sliderTimer); | L1012: } | L1013: this.sliderTimer = setTimeout(() => { | L1014: if (!this.isDisposed) { | L1015: this.isProgressSliding = false; | L1016: } | L1017: this.sliderTimer = undefined; | L1018: }, 200); | L1019: } else { | L1020: if (this.sliderTimer !== undefined) { | L1021: clearTimeout(this.sliderTimer); | L1022: this.sliderTimer = undefined; | L1023: } | L1024: this.isProgressSliding = true;",
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    }
+  ]
+}

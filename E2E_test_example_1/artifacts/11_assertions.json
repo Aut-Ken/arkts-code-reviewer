@@ -1,0 +1,176 @@
+{
+  "assertions": [
+    {
+      "assertion_id": "A00",
+      "description": "固定来源、base/head 内容哈希和原始/正式 Diff 统计均无漂移",
+      "evidence": {
+        "base_content_hash": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+        "formal_change_stats": {
+          "assigned_added_new_lines": 83,
+          "assigned_deleted_old_lines": 21,
+          "assigned_total_lines": 104,
+          "excluded_whitespace_only_diff_lines": 5
+        },
+        "head_content_hash": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+        "raw_diff_stats": {
+          "added_new_lines": 88,
+          "deleted_old_lines": 21,
+          "total_diff_lines": 109
+        },
+        "source_revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3"
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A01",
+      "description": "base/head Parser 都实际使用 L1，且无 ERROR、missing 或 warning",
+      "evidence": {
+        "parser_quality": [
+          {
+            "error_nodes": 0,
+            "layer": "L1",
+            "missing_nodes": 0,
+            "warnings": []
+          },
+          {
+            "error_nodes": 0,
+            "layer": "L1",
+            "missing_nodes": 0,
+            "warnings": []
+          }
+        ]
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A02",
+      "description": "ChangeSet 身份贯穿 AnalysisResult、ReviewUnitBuild 和 ContextPlan",
+      "evidence": {
+        "change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+        "context_plan_change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+        "review_unit_change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761"
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A03",
+      "description": "所有 ChangeAtom 在 base/head 适用侧均被分配给 ReviewUnit",
+      "evidence": {
+        "build_unassigned_change_atom_ids": [],
+        "file_unassigned": {
+          "base:code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets": [],
+          "head:code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A04",
+      "description": "每个 ReviewUnit.full_text 严格等于 context_span 对应源码切片",
+      "evidence": {
+        "failed_unit_ids": []
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A05",
+      "description": "每个 assigned changed line 都位于 Unit context_span 内",
+      "evidence": {
+        "failed_unit_ids": []
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A06",
+      "description": "ReviewUnit 身份唯一且 UnitFactScope/FeatureProfile 按 unit_id 完整覆盖",
+      "evidence": {
+        "review_unit_count": 15
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A06-GOLDEN",
+      "description": "ReviewUnit owner、span、changed lines、reason 和输出顺序匹配人工 expected",
+      "evidence": {
+        "actual_unit_count": 15,
+        "expected_file": "inputs/expected_review_units.json",
+        "expected_unit_count": 15
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A07",
+      "description": "ContextPlan 保留全部 Feature Routing 问题绑定且没有阻塞变更",
+      "evidence": {
+        "blocking_change_ids": [],
+        "planned_binding_count": 24,
+        "routed_binding_count": 24
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A08",
+      "description": "PostgreSQL alias 解析到人工冻结的不可变 staging index",
+      "evidence": {
+        "alias": "staging-knowledge-seed-v1",
+        "expected_index_version": "knowledge-index:sha256:aa792a335c07f03f740f8f0f790f16782c7dba93bc4c94af6666214b985e291a",
+        "resolved_index_version": "knowledge-index:sha256:aa792a335c07f03f740f8f0f790f16782c7dba93bc4c94af6666214b985e291a"
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A09",
+      "description": "KnowledgeIndex 向量完整，且运行时 GPU provider 与索引版本完全匹配",
+      "evidence": {
+        "embedded_record_count": 109,
+        "execution_provider": "CUDAExecutionProvider",
+        "record_count": 109
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A10",
+      "description": "RetrievalRequest 与 EvidencePack 按 unit_id 和 request_id 保持身份对齐",
+      "evidence": {
+        "evidence_request_id": "retrieval-request:sha256:f9fbf8d15fd626281806cbbc4aa4f79c3bd3f4eee16fbcb911e8fdfa557e4eda",
+        "evidence_unit_count": 15,
+        "request_id": "retrieval-request:sha256:f9fbf8d15fd626281806cbbc4aa4f79c3bd3f4eee16fbcb911e8fdfa557e4eda",
+        "request_unit_count": 15
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A11",
+      "description": "真实 EvidencePack 至少包含一个向量召回结果",
+      "evidence": {
+        "vector_match_count": 29,
+        "vector_ranked_clause_count": 29
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A12",
+      "description": "evaluation fixture 与 EvidencePack 均明确不可用于生产",
+      "evidence": {
+        "evidence_origin": "evaluation_fixture",
+        "index_origin": "evaluation_fixture",
+        "production_eligible": false
+      },
+      "passed": true
+    },
+    {
+      "assertion_id": "A13",
+      "description": "KnowledgeIndex、RetrievalRequest、EvidencePack 正式 loader 往返无漂移",
+      "evidence": {
+        "evidence_pack": true,
+        "knowledge_index": true,
+        "retrieval_request": true
+      },
+      "passed": true
+    }
+  ],
+  "failed": 0,
+  "passed": 15,
+  "schema_version": "e2e-assertions-v1",
+  "status": "pass"
+}
