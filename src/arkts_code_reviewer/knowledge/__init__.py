@@ -36,6 +36,13 @@ from arkts_code_reviewer.knowledge.models import (
     SourceRef,
     SourceSpan,
 )
+from arkts_code_reviewer.knowledge.publication import (
+    PublishedClause,
+    PublishedKnowledgeBuild,
+    build_published_knowledge,
+    curation_content_hash,
+    load_published_knowledge,
+)
 from arkts_code_reviewer.knowledge.registry import (
     CheckoutProfile,
     GovernanceProfile,
@@ -97,6 +104,8 @@ __all__ = [
     "NormalizedKnowledgeBuild",
     "NormalizedDocument",
     "NormalizedSeedDocument",
+    "PublishedClause",
+    "PublishedKnowledgeBuild",
     "SourceRef",
     "SourceBundle",
     "SourceBundleEntry",
@@ -109,6 +118,8 @@ __all__ = [
     "build_knowledge_annotations",
     "build_knowledge_review_packets",
     "build_normalized_seed",
+    "build_published_knowledge",
+    "curation_content_hash",
     "ingestion_path_allowed",
     "load_source_registry",
     "KnowledgeSeed",
@@ -117,6 +128,7 @@ __all__ = [
     "load_knowledge_annotation_config",
     "load_knowledge_model_export_policy",
     "load_knowledge_review_prompt",
+    "load_published_knowledge",
     "load_and_validate_knowledge_model_review",
     "resolve_source_path",
     "verify_source_checkout",
