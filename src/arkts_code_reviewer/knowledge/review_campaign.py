@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
+import stat
 from collections import Counter
 from pathlib import Path, PurePosixPath
 from typing import Annotated, Literal
@@ -1080,6 +1082,204 @@ def summarize_knowledge_grok_campaign(
     )
 
 
+type LoadedSelectedCampaignReview = tuple[
+    SelectedCampaignReview,
+    KnowledgeReviewPacket,
+    KnowledgeModelReview,
+]
+
+
+def load_selected_knowledge_grok_campaign_reviews(
+    *,
+    packet_root: str | Path,
+    campaign_base: str | Path,
+    summary: KnowledgeGrokCampaignSummary,
+) -> tuple[LoadedSelectedCampaignReview, ...]:
+    """Replay every selected receipt and return immutable validated review triples."""
+
+    def read_captured_bytes(path: Path, context: str) -> bytes:
+        flags = os.O_RDONLY | os.O_CLOEXEC
+        if hasattr(os, "O_NOFOLLOW"):
+            flags |= os.O_NOFOLLOW
+        try:
+            descriptor = os.open(path, flags)
+        except OSError as exc:
+            raise ValueError(f"cannot open {context}: {path}") from exc
+        try:
+            if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+                raise ValueError(f"{context} must be a regular file: {path}")
+            chunks: list[bytes] = []
+            while chunk := os.read(descriptor, 1024 * 1024):
+                chunks.append(chunk)
+            return b"".join(chunks)
+        except OSError as exc:
+            raise ValueError(f"cannot read {context}: {path}") from exc
+        finally:
+            os.close(descriptor)
+
+    def decode_captured(value: bytes, context: str) -> str:
+        try:
+            return value.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError(f"{context} must use UTF-8") from exc
+
+    packet_root_path = Path(packet_root)
+    campaign_base_path = Path(campaign_base)
+    replayed_summary = summarize_knowledge_grok_campaign(
+        packet_root=packet_root_path,
+        campaign_base=campaign_base_path,
+        round_prefix=summary.round_prefix,
+    )
+    if replayed_summary != summary:
+        raise ValueError("campaign summary changed before selected review replay")
+
+    build, _, _, packets, packet_raws = _load_packet_artifacts(packet_root_path)
+    manifest_hash = _sha256_bytes((packet_root_path / "manifest.json").read_bytes())
+    if (
+        build.build_id != summary.packet_build_id
+        or manifest_hash != summary.packet_manifest_hash
+    ):
+        raise ValueError("campaign packet provenance changed before review replay")
+    selected_ids = tuple(item.packet_id for item in summary.selected_receipts)
+    if selected_ids != tuple(sorted(packets)):
+        raise ValueError("campaign selected reviews do not cover the packet build")
+
+    loaded: list[LoadedSelectedCampaignReview] = []
+    for selected in summary.selected_receipts:
+        relative_receipt = PurePosixPath(selected.receipt_file)
+        expected_name = (
+            "review-"
+            f"{selected.packet_id.removeprefix('knowledge-review-packet:sha256:')}"
+            ".receipt.json"
+        )
+        if (
+            relative_receipt.parent != PurePosixPath(selected.round_name)
+            or relative_receipt.name != expected_name
+        ):
+            raise ValueError("campaign selected receipt path does not match its identity")
+        round_path = campaign_base_path / selected.round_name
+        if round_path.is_symlink() or not round_path.is_dir():
+            raise ValueError("campaign selected round must be a non-symlink directory")
+        receipt_path = campaign_base_path / selected.receipt_file
+        replayed, review, _, _ = _validate_selected_receipt(
+            receipt_path=receipt_path,
+            round_name=selected.round_name,
+            packet=packets[selected.packet_id],
+            packet_raw=packet_raws[selected.packet_id],
+            campaign_base=campaign_base_path,
+        )
+        if replayed != selected:
+            raise ValueError("campaign selected receipt changed during review replay")
+
+        stem = receipt_path.name.removesuffix(".receipt.json")
+        review_path = receipt_path.with_name(f"{stem}.review.json")
+        raw_path = receipt_path.with_name(f"{stem}.raw.json")
+        receipt_bytes = read_captured_bytes(receipt_path, "campaign receipt")
+        review_bytes = read_captured_bytes(review_path, "campaign review")
+        raw_bytes = read_captured_bytes(raw_path, "campaign raw response")
+        captured_hashes = (
+            _sha256_bytes(receipt_bytes),
+            _sha256_bytes(review_bytes),
+            _sha256_bytes(raw_bytes),
+        )
+        expected_hashes = (
+            selected.receipt_file_hash,
+            selected.review_file_hash,
+            selected.raw_file_hash,
+        )
+        if captured_hashes != expected_hashes:
+            raise ValueError("campaign selected artifacts changed during final capture")
+
+        receipt_text = decode_captured(receipt_bytes, "campaign receipt")
+        review_text = decode_captured(review_bytes, "campaign review")
+        raw_response = decode_captured(raw_bytes, "campaign raw response").strip()
+        receipt_payload = _load_json(receipt_text, "campaign receipt")
+        review_payload = _load_json(review_text, "campaign review")
+        try:
+            receipt = GrokReviewReceipt.model_validate(receipt_payload)
+        except ValidationError as exc:
+            raise ValueError(
+                f"invalid campaign receipt {receipt_path.name}: {exc}"
+            ) from exc
+        _, structured, usage, request_id, session_id, stop_reason = _wrapper_fields(
+            raw_response,
+            context="campaign raw response",
+        )
+        if review_payload != structured:
+            raise ValueError(
+                "campaign raw structuredOutput does not match captured review file"
+            )
+        if (
+            receipt.packet_hash != selected.packet_file_hash
+            or receipt.review_hash != _sha256_bytes(review_bytes)
+            or receipt.raw_response_hash != _sha256_text(raw_response)
+        ):
+            raise ValueError("captured campaign receipt hashes do not match artifacts")
+        try:
+            captured_review = load_and_validate_knowledge_model_review(
+                review_bytes,
+                packet=packets[selected.packet_id],
+            )
+        except ValueError as exc:
+            raise ValueError(
+                f"captured campaign review validator rejected {receipt_path.name}: {exc}"
+            ) from exc
+        captured_metadata = (
+            receipt.packet_id,
+            receipt.provider,
+            receipt.model,
+            receipt.prompt_version,
+            receipt.prompt_hash,
+            receipt.request_id,
+            receipt.session_id,
+            receipt.stop_reason,
+            receipt.usage,
+            receipt.packet_decision,
+            receipt.summary,
+        )
+        expected_metadata = (
+            selected.packet_id,
+            packets[selected.packet_id].model_provider,
+            packets[selected.packet_id].model_name,
+            packets[selected.packet_id].prompt_version,
+            packets[selected.packet_id].prompt_hash,
+            request_id,
+            session_id,
+            stop_reason,
+            usage,
+            captured_review.packet_decision,
+            captured_review.summary,
+        )
+        if captured_metadata != expected_metadata:
+            raise ValueError("captured campaign receipt metadata does not match review")
+        selected_metadata = (
+            selected.request_id,
+            selected.session_id,
+            selected.stop_reason,
+            selected.packet_decision,
+            selected.summary,
+            selected.usage,
+            selected.global_findings,
+        )
+        expected_selected_metadata = (
+            request_id,
+            session_id,
+            stop_reason,
+            captured_review.packet_decision,
+            captured_review.summary,
+            usage,
+            CampaignGlobalFindings(
+                missing_clauses=len(captured_review.missing_clauses),
+                duplicate_groups=len(captured_review.duplicate_groups),
+                conflicts=len(captured_review.conflicts),
+            ),
+        )
+        if selected_metadata != expected_selected_metadata or captured_review != review:
+            raise ValueError("campaign selected review metadata changed during replay")
+        loaded.append((selected, packets[selected.packet_id], captured_review))
+    return tuple(loaded)
+
+
 __all__ = [
     "CAMPAIGN_SUMMARY_SCHEMA_VERSION",
     "CampaignArtifactRef",
@@ -1089,6 +1289,8 @@ __all__ = [
     "CampaignUsage",
     "GrokReviewReceipt",
     "KnowledgeGrokCampaignSummary",
+    "LoadedSelectedCampaignReview",
     "SelectedCampaignReview",
+    "load_selected_knowledge_grok_campaign_reviews",
     "summarize_knowledge_grok_campaign",
 ]
