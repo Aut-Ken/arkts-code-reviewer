@@ -1,0 +1,250 @@
+{
+  "$defs": {
+    "Applicability": {
+      "additionalProperties": false,
+      "properties": {
+        "language_modes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Language Modes",
+          "type": "array"
+        },
+        "max_api_level": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Api Level"
+        },
+        "min_api_level": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Api Level"
+        },
+        "permissions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Permissions",
+          "type": "array"
+        },
+        "releases": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Releases",
+          "type": "array"
+        },
+        "system_capabilities": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "System Capabilities",
+          "type": "array"
+        }
+      },
+      "title": "Applicability",
+      "type": "object"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "minLength": 1,
+          "title": "Anchor",
+          "type": "string"
+        },
+        "authority": {
+          "minLength": 1,
+          "title": "Authority",
+          "type": "string"
+        },
+        "content_hash": {
+          "title": "Content Hash",
+          "type": "string"
+        },
+        "relative_path": {
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "revision",
+        "relative_path",
+        "anchor",
+        "authority",
+        "content_hash"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "SourceSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "start_line": {
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_line",
+        "end_line"
+      ],
+      "title": "SourceSpan",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "applicability": {
+      "$ref": "#/$defs/Applicability",
+      "default": {
+        "language_modes": [],
+        "max_api_level": null,
+        "min_api_level": null,
+        "permissions": [],
+        "releases": [],
+        "system_capabilities": []
+      }
+    },
+    "authority": {
+      "minLength": 1,
+      "title": "Authority",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "curation_version": {
+      "minLength": 1,
+      "title": "Curation Version",
+      "type": "string"
+    },
+    "doc_hash": {
+      "title": "Doc Hash",
+      "type": "string"
+    },
+    "heading_path": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Heading Path",
+      "type": "array"
+    },
+    "neighbor_rule_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Neighbor Rule Ids",
+      "type": "array"
+    },
+    "parent_context": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Context"
+    },
+    "rule_id": {
+      "minLength": 1,
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "rule_type": {
+      "minLength": 1,
+      "title": "Rule Type",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "knowledge-v1",
+      "default": "knowledge-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_ref": {
+      "$ref": "#/$defs/SourceRef"
+    },
+    "source_span": {
+      "$ref": "#/$defs/SourceSpan"
+    },
+    "status": {
+      "enum": [
+        "Draft",
+        "Baselined",
+        "Deprecated"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rule_id",
+    "rule_type",
+    "status",
+    "authority",
+    "text",
+    "heading_path",
+    "source_ref",
+    "source_span",
+    "doc_hash",
+    "curation_version",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "KnowledgeClause",
+  "type": "object"
+}

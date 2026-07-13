@@ -1,0 +1,585 @@
+{
+  "schema_version": "knowledge-golden-v1",
+  "suite_id": "knowledge-k0",
+  "description": "Human-authored Knowledge v1 truth for Clause boundaries, API symbols, applicability, examples, and retrieval annotations.",
+  "contract": {
+    "knowledge_schema_version": "knowledge-v1",
+    "review_schema_version": "knowledge-model-review-v1",
+    "tag_ids": [
+      "has_animation",
+      "has_async",
+      "has_builder",
+      "has_file_io",
+      "has_image",
+      "has_interactive_component",
+      "has_layout",
+      "has_lifecycle",
+      "has_list_render",
+      "has_logging",
+      "has_media",
+      "has_navigation",
+      "has_network",
+      "has_permission_request",
+      "has_resource_ref",
+      "has_responsive_api",
+      "has_state_management",
+      "has_storage",
+      "has_subscription",
+      "has_taskpool",
+      "has_text_display",
+      "has_timer",
+      "has_user_input",
+      "has_worker"
+    ],
+    "dimension_ids": [
+      "DIM-01",
+      "DIM-02",
+      "DIM-03",
+      "DIM-04",
+      "DIM-05",
+      "DIM-06",
+      "DIM-07",
+      "DIM-08",
+      "DIM-09",
+      "DIM-10",
+      "DIM-11",
+      "DIM-12"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "KG001",
+      "description": "Stable numbered requirement with timer cleanup annotation.",
+      "source": {
+        "file": "sources/KG001_numbered_spec.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG001_numbered_spec.md",
+        "authority": "golden_fixture",
+        "content_sha256": "9ae3191bc7124de4b4605af4a817dcaa6c516cd25ed7bf9b6cefa16547d7c360",
+        "origin_lines": [1, 5]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "TIMER/AC-1.1",
+            "native_rule_id": "AC-1.1",
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "组件创建周期定时器后，应在不再使用时调用 `clearInterval` 主动清理。",
+            "heading_path": ["定时器资源规格", "AC-1.1 创建与清理"],
+            "parent_context": null,
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "TIMER/AC-1.1",
+            "tags": ["has_timer"],
+            "dimension_ids": ["DIM-06"],
+            "apis": ["clearInterval"],
+            "domains": ["component-lifecycle", "resource-management"],
+            "forbidden_tags": ["has_async"],
+            "forbidden_dimension_ids": ["DIM-07"]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG002",
+      "description": "Specification table rows become separate stable Clauses.",
+      "source": {
+        "file": "sources/KG002_spec_table.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG002_spec_table.md",
+        "authority": "golden_fixture",
+        "content_sha256": "6b978e1b7bb5585974a7d93371a3188bfc129fae3eeb72a146cd3fad2032665b",
+        "origin_lines": [1, 6]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "AUTOPLAY/AC-2.1",
+            "native_rule_id": "AC-2.1",
+            "rule_type": "behavior",
+            "status": "Baselined",
+            "text": "`autoPlay` 默认值为 `false`。",
+            "heading_path": ["自动播放规格"],
+            "parent_context": "验收标准",
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          },
+          {
+            "rule_id": "AUTOPLAY/AC-2.2",
+            "native_rule_id": "AC-2.2",
+            "rule_type": "behavior",
+            "status": "Baselined",
+            "text": "`autoPlayInterval` 默认值为 `3000ms`。",
+            "heading_path": ["自动播放规格"],
+            "parent_context": "验收标准",
+            "source_span": {"start_line": 6, "end_line": 6},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "AUTOPLAY/AC-2.1",
+            "tags": [],
+            "dimension_ids": [],
+            "apis": ["autoPlay"],
+            "domains": ["ui-components"],
+            "forbidden_tags": ["has_animation"],
+            "forbidden_dimension_ids": []
+          },
+          {
+            "target_id": "AUTOPLAY/AC-2.2",
+            "tags": [],
+            "dimension_ids": [],
+            "apis": ["autoPlayInterval"],
+            "domains": ["ui-components"],
+            "forbidden_tags": ["has_animation"],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG003",
+      "description": "Official constraint paragraph keeps condition and recommendation together.",
+      "source": {
+        "file": "sources/KG003_constraint.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG003_constraint.md",
+        "authority": "golden_fixture",
+        "content_sha256": "0d56fe001d16b3a23fdb77dfeabdb0c2e2a709afb04001b169e99f587c4e0890",
+        "origin_lines": [1, 5]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG003_constraint.md:约束与限制:01",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "应用进入后台后，普通定时器可能停止运行。需要继续完成短时间任务时，应申请短时任务。",
+            "heading_path": ["后台任务", "约束与限制"],
+            "parent_context": null,
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG003_constraint.md:约束与限制:01",
+            "tags": ["has_timer"],
+            "dimension_ids": ["DIM-06"],
+            "apis": [],
+            "domains": ["background-task", "resource-management"],
+            "forbidden_tags": ["has_taskpool"],
+            "forbidden_dimension_ids": ["DIM-07"]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG004",
+      "description": "List introduction is preserved as parent context for independent items.",
+      "source": {
+        "file": "sources/KG004_list.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG004_list.md",
+        "authority": "golden_fixture",
+        "content_sha256": "1716dccecbdbe6316324489b554f2cff4d384f862024a8b3f33111eb7ec4f792",
+        "origin_lines": [1, 6]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:01",
+            "native_rule_id": null,
+            "rule_type": "guidance",
+            "status": "Baselined",
+            "text": "独立耗时任务优先使用 TaskPool。",
+            "heading_path": ["并发任务选择"],
+            "parent_context": "开发者应根据任务特点选择并发方式：",
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          },
+          {
+            "rule_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:02",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "长时间占用线程的任务不应阻塞 TaskPool 工作线程。",
+            "heading_path": ["并发任务选择"],
+            "parent_context": "开发者应根据任务特点选择并发方式：",
+            "source_span": {"start_line": 6, "end_line": 6},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:01",
+            "tags": ["has_taskpool"],
+            "dimension_ids": ["DIM-07"],
+            "apis": ["taskpool.Task"],
+            "domains": ["taskpool-concurrency"],
+            "forbidden_tags": ["has_worker"],
+            "forbidden_dimension_ids": []
+          },
+          {
+            "target_id": "knowledge-golden-synthetic:KG004_list.md:并发任务选择:02",
+            "tags": ["has_taskpool"],
+            "dimension_ids": ["DIM-07"],
+            "apis": [],
+            "domains": ["taskpool-concurrency"],
+            "forbidden_tags": ["has_worker"],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG005",
+      "description": "Normative note remains attached to the subscription cleanup rule.",
+      "source": {
+        "file": "sources/KG005_note.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG005_note.md",
+        "authority": "golden_fixture",
+        "content_sha256": "0bf40bda4a3ce4beaae026710220c72781d4fd12b91eeaff63ef9c4d03f2e9cf",
+        "origin_lines": [1, 5]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG005_note.md:组件生命周期:01",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "组件创建的订阅应在组件销毁时解除。只停止回调而不解除订阅，仍可能保留外部资源。",
+            "heading_path": ["组件生命周期"],
+            "parent_context": null,
+            "source_span": {"start_line": 3, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG005_note.md:组件生命周期:01",
+            "tags": ["has_lifecycle", "has_subscription"],
+            "dimension_ids": ["DIM-06"],
+            "apis": [],
+            "domains": ["component-lifecycle", "resource-management"],
+            "forbidden_tags": ["has_async"],
+            "forbidden_dimension_ids": ["DIM-07"]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG006",
+      "description": "Code block is linked as an example and not promoted to a separate Clause.",
+      "source": {
+        "file": "sources/KG006_code_example.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG006_code_example.md",
+        "authority": "golden_fixture",
+        "content_sha256": "0adabdf477b86d47322df54863ac576820253696521fad523837358646d69fa9",
+        "origin_lines": [1, 7]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG006_code_example.md:Worker 通信:01",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "主线程向 Worker 发送的对象必须满足可传输要求。",
+            "heading_path": ["Worker 通信"],
+            "parent_context": null,
+            "source_span": {"start_line": 3, "end_line": 3},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": [
+              {
+                "kind": "neutral",
+                "text": "worker.postMessage(payload);",
+                "source_span": {"start_line": 5, "end_line": 7}
+              }
+            ]
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG006_code_example.md:Worker 通信:01",
+            "tags": ["has_worker"],
+            "dimension_ids": ["DIM-07"],
+            "apis": ["worker.postMessage"],
+            "domains": ["worker-concurrency"],
+            "forbidden_tags": ["has_taskpool"],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG007",
+      "description": "API level in heading becomes structured applicability.",
+      "source": {
+        "file": "sources/KG007_versioned.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG007_versioned.md",
+        "authority": "golden_fixture",
+        "content_sha256": "17f5b547e1f6f5ea383437161cbf7e019e55acc316df6579355282705e7b38f9",
+        "origin_lines": [1, 5]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG007_versioned.md:API 12 起:01",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "`@ObservedV2` 与 `@Trace` 应配合使用以观察类属性变化。",
+            "heading_path": ["状态管理版本约束", "API 12 起"],
+            "parent_context": null,
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": 12, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG007_versioned.md:API 12 起:01",
+            "tags": ["has_state_management"],
+            "dimension_ids": [],
+            "apis": [],
+            "domains": ["state-management"],
+            "forbidden_tags": ["has_async"],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG008",
+      "description": "Nested heading path supplies the rule context.",
+      "source": {
+        "file": "sources/KG008_parent_context.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG008_parent_context.md",
+        "authority": "golden_fixture",
+        "content_sha256": "8fd280935100a571d6bc2de16219d98fb4a98337361e9d7b05cd16150da2f9c5",
+        "origin_lines": [1, 7]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG008_parent_context.md:@Link:01",
+            "native_rule_id": null,
+            "rule_type": "constraint",
+            "status": "Baselined",
+            "text": "子组件通过 `@Link` 接收父组件状态时，不应在本地建立另一份独立状态副本。",
+            "heading_path": ["状态管理", "父子组件同步", "@Link"],
+            "parent_context": null,
+            "source_span": {"start_line": 7, "end_line": 7},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG008_parent_context.md:@Link:01",
+            "tags": ["has_state_management"],
+            "dimension_ids": [],
+            "apis": [],
+            "domains": ["state-management"],
+            "forbidden_tags": ["has_storage"],
+            "forbidden_dimension_ids": ["DIM-11"]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG009",
+      "description": "Deprecated source section preserves lifecycle state.",
+      "source": {
+        "file": "sources/KG009_deprecated.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG009_deprecated.md",
+        "authority": "golden_fixture",
+        "content_sha256": "8ddf8770ded24637211fcff2257fd494681ec3952764330641937f846c12eece",
+        "origin_lines": [1, 5]
+      },
+      "expected": {
+        "clauses": [
+          {
+            "rule_id": "knowledge-golden-synthetic:KG009_deprecated.md:Deprecated:01",
+            "native_rule_id": null,
+            "rule_type": "deprecation",
+            "status": "Deprecated",
+            "text": "旧版状态存储接口已废弃，新代码不应继续引入。",
+            "heading_path": ["旧版状态管理", "Deprecated"],
+            "parent_context": null,
+            "source_span": {"start_line": 5, "end_line": 5},
+            "applicability": {"min_api_level": null, "max_api_level": null, "releases": [], "language_modes": []},
+            "examples": []
+          }
+        ],
+        "api_symbols": [],
+        "annotations": [
+          {
+            "target_id": "knowledge-golden-synthetic:KG009_deprecated.md:Deprecated:01",
+            "tags": ["has_state_management"],
+            "dimension_ids": [],
+            "apis": [],
+            "domains": ["state-management"],
+            "forbidden_tags": [],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG010",
+      "description": "Background-only prose does not become normative knowledge.",
+      "source": {
+        "file": "sources/KG010_background_only.md",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG010_background_only.md",
+        "authority": "golden_fixture",
+        "content_sha256": "c12bb37d1969b3d7b16d75bec8e2735ae25a16c3b5753bb49b64af231c42f86f",
+        "origin_lines": [1, 3]
+      },
+      "expected": {"clauses": [], "api_symbols": [], "annotations": []}
+    },
+    {
+      "case_id": "KG011",
+      "description": "API declaration emits canonical symbols and version metadata.",
+      "source": {
+        "file": "sources/KG011_api_taskpool.d.ts",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG011_api_taskpool.d.ts",
+        "authority": "golden_fixture",
+        "content_sha256": "00e38a65b74d41cac269b11ff12ee36b121a2452984f6bac8b8478e83098dd0b",
+        "origin_lines": [1, 10]
+      },
+      "expected": {
+        "clauses": [],
+        "api_symbols": [
+          {
+            "canonical_name": "taskpool.Task",
+            "kind": "class",
+            "signature": "class Task",
+            "since": 9,
+            "deprecated_since": null,
+            "source_span": {"start_line": 6, "end_line": 9}
+          },
+          {
+            "canonical_name": "taskpool.Task.isCanceled",
+            "kind": "method",
+            "signature": "static isCanceled(): boolean",
+            "since": 9,
+            "deprecated_since": null,
+            "source_span": {"start_line": 8, "end_line": 8}
+          }
+        ],
+        "annotations": [
+          {
+            "target_id": "taskpool.Task",
+            "tags": ["has_taskpool"],
+            "dimension_ids": ["DIM-07"],
+            "apis": ["taskpool.Task"],
+            "domains": ["taskpool-concurrency"],
+            "forbidden_tags": ["has_worker"],
+            "forbidden_dimension_ids": []
+          },
+          {
+            "target_id": "taskpool.Task.isCanceled",
+            "tags": ["has_taskpool"],
+            "dimension_ids": ["DIM-07"],
+            "apis": ["taskpool.Task.isCanceled"],
+            "domains": ["taskpool-concurrency"],
+            "forbidden_tags": ["has_worker"],
+            "forbidden_dimension_ids": []
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "KG012",
+      "description": "Deprecated API annotation preserves since and deprecated_since separately.",
+      "source": {
+        "file": "sources/KG012_api_deprecated.d.ts",
+        "source_id": "knowledge-golden-synthetic",
+        "repository": "synthetic://knowledge-golden",
+        "revision": "0000000000000000000000000000000000000001",
+        "relative_path": "KG012_api_deprecated.d.ts",
+        "authority": "golden_fixture",
+        "content_sha256": "fb8faa8b3a1af5b74fd30b03c34582870b1f63b15b0e3f75ed428a06b09423bf",
+        "origin_lines": [1, 7]
+      },
+      "expected": {
+        "clauses": [],
+        "api_symbols": [
+          {
+            "canonical_name": "timer.legacyStart",
+            "kind": "function",
+            "signature": "function legacyStart(): number",
+            "since": 9,
+            "deprecated_since": 12,
+            "source_span": {"start_line": 6, "end_line": 6}
+          }
+        ],
+        "annotations": [
+          {
+            "target_id": "timer.legacyStart",
+            "tags": ["has_timer"],
+            "dimension_ids": ["DIM-06"],
+            "apis": ["timer.legacyStart"],
+            "domains": ["resource-management"],
+            "forbidden_tags": ["has_async"],
+            "forbidden_dimension_ids": ["DIM-07"]
+          }
+        ]
+      }
+    }
+  ]
+}

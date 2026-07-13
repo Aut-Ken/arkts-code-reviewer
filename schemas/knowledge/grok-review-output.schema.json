@@ -1,0 +1,398 @@
+{
+  "$defs": {
+    "AnnotationChange": {
+      "additionalProperties": false,
+      "properties": {
+        "annotation_kind": {
+          "enum": [
+            "api",
+            "tag",
+            "dimension",
+            "domain",
+            "keyword",
+            "applicability"
+          ],
+          "title": "Annotation Kind",
+          "type": "string"
+        },
+        "current_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Current Value"
+        },
+        "proposed_action": {
+          "enum": [
+            "add",
+            "remove",
+            "replace"
+          ],
+          "title": "Proposed Action",
+          "type": "string"
+        },
+        "proposed_value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Proposed Value"
+        },
+        "reason_code": {
+          "title": "Reason Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "annotation_kind",
+        "current_value",
+        "proposed_action",
+        "proposed_value",
+        "reason_code"
+      ],
+      "title": "AnnotationChange",
+      "type": "object"
+    },
+    "ClauseModelReview": {
+      "additionalProperties": false,
+      "properties": {
+        "annotation_changes": {
+          "items": {
+            "$ref": "#/$defs/AnnotationChange"
+          },
+          "title": "Annotation Changes",
+          "type": "array"
+        },
+        "decision": {
+          "enum": [
+            "accept",
+            "reject",
+            "uncertain",
+            "accept_with_corrections"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/ModelReviewEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "issue_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Issue Codes",
+          "type": "array"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "rule_id": {
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "decision",
+        "issue_codes",
+        "evidence",
+        "annotation_changes",
+        "rationale"
+      ],
+      "title": "ClauseModelReview",
+      "type": "object"
+    },
+    "DuplicateClauseGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/ModelReviewEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "rule_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rule Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rule_ids",
+        "evidence"
+      ],
+      "title": "DuplicateClauseGroup",
+      "type": "object"
+    },
+    "KnowledgeConflictReview": {
+      "additionalProperties": false,
+      "properties": {
+        "conflict_id": {
+          "minLength": 1,
+          "title": "Conflict Id",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/ModelReviewEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "rule_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rule Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "conflict_id",
+        "rule_ids",
+        "evidence",
+        "rationale"
+      ],
+      "title": "KnowledgeConflictReview",
+      "type": "object"
+    },
+    "MissingClauseReview": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/ModelReviewEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "proposed_rule_id": {
+          "minLength": 1,
+          "title": "Proposed Rule Id",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "rule_type": {
+          "minLength": 1,
+          "title": "Rule Type",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "proposed_rule_id",
+        "rule_type",
+        "text",
+        "evidence",
+        "rationale"
+      ],
+      "title": "MissingClauseReview",
+      "type": "object"
+    },
+    "ModelReviewEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "end_line": {
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "exact_quote": {
+          "minLength": 1,
+          "title": "Exact Quote",
+          "type": "string"
+        },
+        "relative_path": {
+          "minLength": 1,
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "start_line": {
+          "minimum": 1,
+          "title": "Start Line",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "relative_path",
+        "start_line",
+        "end_line",
+        "exact_quote"
+      ],
+      "title": "ModelReviewEvidence",
+      "type": "object"
+    },
+    "ModelReviewSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted": {
+          "minimum": 0,
+          "title": "Accepted",
+          "type": "integer"
+        },
+        "rejected": {
+          "minimum": 0,
+          "title": "Rejected",
+          "type": "integer"
+        },
+        "uncertain": {
+          "minimum": 0,
+          "title": "Uncertain",
+          "type": "integer"
+        },
+        "with_corrections": {
+          "minimum": 0,
+          "title": "With Corrections",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "accepted",
+        "rejected",
+        "uncertain",
+        "with_corrections"
+      ],
+      "title": "ModelReviewSummary",
+      "type": "object"
+    },
+    "ModelReviewer": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "model",
+          "title": "Kind",
+          "type": "string"
+        },
+        "model": {
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "prompt_version": {
+          "const": "grok-knowledge-auditor-v1",
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "provider": {
+          "const": "xai",
+          "title": "Provider",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "provider",
+        "model",
+        "prompt_version"
+      ],
+      "title": "ModelReviewer",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "clause_reviews": {
+      "items": {
+        "$ref": "#/$defs/ClauseModelReview"
+      },
+      "title": "Clause Reviews",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/KnowledgeConflictReview"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "duplicate_groups": {
+      "items": {
+        "$ref": "#/$defs/DuplicateClauseGroup"
+      },
+      "title": "Duplicate Groups",
+      "type": "array"
+    },
+    "missing_clauses": {
+      "items": {
+        "$ref": "#/$defs/MissingClauseReview"
+      },
+      "title": "Missing Clauses",
+      "type": "array"
+    },
+    "packet_decision": {
+      "enum": [
+        "accept",
+        "reject",
+        "uncertain"
+      ],
+      "title": "Packet Decision",
+      "type": "string"
+    },
+    "packet_id": {
+      "pattern": "^knowledge-review-packet:sha256:[0-9a-f]{64}$",
+      "title": "Packet Id",
+      "type": "string"
+    },
+    "reviewer": {
+      "$ref": "#/$defs/ModelReviewer"
+    },
+    "schema_version": {
+      "const": "knowledge-model-review-v1",
+      "default": "knowledge-model-review-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "summary": {
+      "$ref": "#/$defs/ModelReviewSummary"
+    }
+  },
+  "required": [
+    "packet_id",
+    "reviewer",
+    "packet_decision",
+    "clause_reviews",
+    "missing_clauses",
+    "duplicate_groups",
+    "conflicts",
+    "summary"
+  ],
+  "title": "KnowledgeModelReview",
+  "type": "object"
+}
