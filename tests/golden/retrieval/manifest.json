@@ -1,0 +1,3249 @@
+{
+  "cases": [
+    {
+      "case_id": "RG-001",
+      "description": "exact canonical timer API ranks lifecycle cleanup before handle ownership",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "TIMER/CLEAR",
+            "TIMER/HANDLE"
+          ],
+          "required_rule_ids": [
+            "TIMER/CLEAR"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-001-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "setInterval"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_timer"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-001_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:0c5d17c60d98e6eb1f40157d341c8522a57626d94f986fe8b4c9f39d341b59d8",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:0c5d17c60d98e6eb1f40157d341c8522a57626d94f986fe8b4c9f39d341b59d8",
+          "unit_id": "RG-001-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-002",
+      "description": "exact API alias canonicalization preserves dimension-aware ranking",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-04",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "TIMER/HANDLE",
+            "TIMER/CLEAR"
+          ],
+          "required_rule_ids": [
+            "TIMER/HANDLE"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-002-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "global.setInterval"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_timer"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-002_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:5c39c11a20327d6a40ed66293bd6577cc981edf6d965e776eb7a5c22d604ac4c",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-04",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-04",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:5c39c11a20327d6a40ed66293bd6577cc981edf6d965e776eb7a5c22d604ac4c",
+          "unit_id": "RG-002-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-003",
+      "description": "exact file API and tag retrieve the paired close rule",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "required_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-003-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "fileIo.open"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_file_io"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-003_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:176635d7171bf17d632648683dbe8a678726ee792babc29d42b994fda21f0a5b",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:176635d7171bf17d632648683dbe8a678726ee792babc29d42b994fda21f0a5b",
+          "unit_id": "RG-003-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-004",
+      "description": "exact decorator outranks the broader state tag neighbor",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "STATE/LINK",
+            "STATE/OBSERVED"
+          ],
+          "required_rule_ids": [
+            "STATE/LINK"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-004-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [
+              "@Link"
+            ],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_state_management"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-004_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:60cd2c31450676e73f3c99c5c764f0b0b7b52b1acd662087c1999dd6d7f4a640",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:60cd2c31450676e73f3c99c5c764f0b0b7b52b1acd662087c1999dd6d7f4a640",
+          "unit_id": "RG-004-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-005",
+      "description": "exact Image component retrieves memory and lifecycle guidance",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-03",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "IMAGE/MEMORY"
+          ],
+          "required_rule_ids": [
+            "IMAGE/MEMORY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-005-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [
+              "Image"
+            ],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_image"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-005_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:5f8c579bf070744b46e405738a658a6b1569718ba0eeb6c88b09ba5af72c9795",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-03",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-03",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:5f8c579bf070744b46e405738a658a6b1569718ba0eeb6c88b09ba5af72c9795",
+          "unit_id": "RG-005-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-006",
+      "description": "exact interactive component retrieves accessibility evidence",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-08"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "required_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-006-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [
+              "Button"
+            ],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_interactive_component"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-006_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:b2f03eef8c87bc40d5b393b380edc33bf4ab0eeb0f749d3812adac43ac296680",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-08"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-08"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:b2f03eef8c87bc40d5b393b380edc33bf4ab0eeb0f749d3812adac43ac296680",
+          "unit_id": "RG-006-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-007",
+      "description": "requested rule ID is an explicit high-authority exact path",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-04"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "required_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-007-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-007_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:20aeb3e9d7d9f9052f381054d7c07cecc3760f4b03e3ca9b54be1d21f11369d6",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "retrieval_dimension_ids": [
+            "DIM-04"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-04"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:20aeb3e9d7d9f9052f381054d7c07cecc3760f4b03e3ca9b54be1d21f11369d6",
+          "unit_id": "RG-007-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-008",
+      "description": "dimension-only routing must not fabricate semantic evidence",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "MAINTAINABILITY/SPLIT",
+            "UI/RESPONSIVE"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-04"
+          ],
+          "unit_id": "RG-008-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-008_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:dda07634faaaee22aa45dd1ed98710134a5e23d296f5ad3a7a83028ed214da42",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-04"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-04"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:dda07634faaaee22aa45dd1ed98710134a5e23d296f5ad3a7a83028ed214da42",
+          "unit_id": "RG-008-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-009",
+      "description": "unknown exact API returns an auditable true negative",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "ROBUSTNESS/BOUNDARY"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-05"
+          ],
+          "unit_id": "RG-009-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "fixture.unknown"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-009_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:d61f7fd2ea0b3e4b3fd735274198746f2d1f0f1f108bb046a322773c363e2822",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:d61f7fd2ea0b3e4b3fd735274198746f2d1f0f1f108bb046a322773c363e2822",
+          "unit_id": "RG-009-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-010",
+      "description": "network evidence is retained when the required permission is present",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "NETWORK/PERMISSION"
+          ],
+          "required_rule_ids": [
+            "NETWORK/PERMISSION"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-010-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [
+          "ohos.permission.INTERNET"
+        ],
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "http.request"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_network"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-010_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:c900717b670c3a1a636488235e11625a530398ae7c93b8a8787b67216d4bad44",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:c900717b670c3a1a636488235e11625a530398ae7c93b8a8787b67216d4bad44",
+          "unit_id": "RG-010-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-011",
+      "description": "network evidence is excluded when the permission set is known absent",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "NETWORK/PERMISSION"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "unit_id": "RG-011-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [],
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "http.request"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_network"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-011_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:6f8b9ccd4fec0a5afbdefed779bc42ed07fd5a64b3880f117ab5cdc4e2a7d2b3",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:6f8b9ccd4fec0a5afbdefed779bc42ed07fd5a64b3880f117ab5cdc4e2a7d2b3",
+          "unit_id": "RG-011-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-012",
+      "description": "incomplete capability context retains evidence with applicability diagnostics",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-11"
+          ],
+          "diagnostic_codes": [
+            "applicability_unknown"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "SECURITY/CAPABILITY"
+          ],
+          "required_rule_ids": [
+            "SECURITY/CAPABILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-012-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "secureApi.use"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-012_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:84bf8d8b7b7c2bf4a095737b93f0872e89326451d4a3626db19ee0a7f623a39c",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:84bf8d8b7b7c2bf4a095737b93f0872e89326451d4a3626db19ee0a7f623a39c",
+          "unit_id": "RG-012-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-013",
+      "description": "fully matching release API level and language retain versioned evidence",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-02"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "VERSION/API12"
+          ],
+          "required_rule_ids": [
+            "VERSION/API12"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-013-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": 12,
+        "language_mode": "static",
+        "permissions": null,
+        "release": "OpenHarmony-5.x",
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "versionedApi.use"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-013_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:ddccf312b5bbb914811861a6fd010cba0227a99566f359b6a2757c78b0bdfb97",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:ddccf312b5bbb914811861a6fd010cba0227a99566f359b6a2757c78b0bdfb97",
+          "unit_id": "RG-013-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-014",
+      "description": "out-of-range API level excludes versioned evidence",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "VERSION/API12"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-02"
+          ],
+          "unit_id": "RG-014-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": 11,
+        "language_mode": "static",
+        "permissions": null,
+        "release": "OpenHarmony-5.x",
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "versionedApi.use"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-014_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:11ebc3c034098c468ada3e0d93b4b2b2d427cdb9902713951825126c099e30de",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:11ebc3c034098c468ada3e0d93b4b2b2d427cdb9902713951825126c099e30de",
+          "unit_id": "RG-014-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-015",
+      "description": "token budget keeps the leading timer clause and reports exhaustion",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [
+            "budget_exhausted"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "TIMER/CLEAR"
+          ],
+          "required_rule_ids": [
+            "TIMER/CLEAR"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-015-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "setInterval"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_timer"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-015_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 44,
+          "profile_id": "feature-profile:sha256:739e5766ba229c26038f56e43d3138fef9e6cf78f97bacc9c9d23d96091a7e2f",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:739e5766ba229c26038f56e43d3138fef9e6cf78f97bacc9c9d23d96091a7e2f",
+          "unit_id": "RG-015-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-016",
+      "description": "blocked Context Plan returns no clauses and fails closed",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "context_dispatch_blocked"
+          ],
+          "forbidden_rule_ids": [
+            "TIMER/CLEAR",
+            "TIMER/HANDLE"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "unit_id": "RG-016-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [],
+          "exact_signals": {
+            "apis": [
+              "setInterval"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-016_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:76552006862f8e78e17c1d8350427164b4c2c9aa60167c8c33ee47ef460534f8",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:76552006862f8e78e17c1d8350427164b4c2c9aa60167c8c33ee47ef460534f8",
+          "unit_id": "RG-016-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-017",
+      "description": "degraded parser context preserves exact evidence with confidence diagnostics",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [
+            "parser_degraded"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "required_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-017-u1"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "fileIo.open"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-017_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:48d896e6b9e2373a28c223056059640b0cfd175f524a123759d045fec0266476",
+          "quality": {
+            "context_degraded": true,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:48d896e6b9e2373a28c223056059640b0cfd175f524a123759d045fec0266476",
+          "unit_id": "RG-017-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-018",
+      "description": "one request keeps exact evidence isolated across two Units",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "STATE/LINK"
+          ],
+          "required_rule_ids": [
+            "STATE/LINK"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-018-u1"
+        },
+        {
+          "covered_dimension_ids": [
+            "DIM-08"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "required_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-018-u2"
+        }
+      ],
+      "query_embeddings": [],
+      "retrieval_mode": "exact",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [
+              "@Link"
+            ],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-018_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:a8f46fdedf2a21e65967cb282885905381e03945e13cc5a8ecd6d9a19fe7cee7",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:a8f46fdedf2a21e65967cb282885905381e03945e13cc5a8ecd6d9a19fe7cee7",
+          "unit_id": "RG-018-u1"
+        },
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [
+              "Button"
+            ],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-018_u2; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:e54a5967f257b716bef1b3af13340a54424c1c997580cd81666a1da033803678",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-08"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-08"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": null,
+          "source_ref_id": "code-source:sha256:e54a5967f257b716bef1b3af13340a54424c1c997580cd81666a1da033803678",
+          "unit_id": "RG-018-u2"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-019",
+      "description": "semantic logging vector retrieves DFX evidence without exact overlap",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-12"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "required_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-019-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:2d29935a4cdad1de99252c479168f3167a1577e9a2a30e689627c1bd4132a589",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [
+              "telemetry.capture"
+            ],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-019_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:524a2b0f6ec967aeba11e05b6d4d3f05882f065ccce3269404ac2b3a1f8b5445",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-12"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-12"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L8: telemetry.capture(error)",
+          "source_ref_id": "code-source:sha256:524a2b0f6ec967aeba11e05b6d4d3f05882f065ccce3269404ac2b3a1f8b5445",
+          "unit_id": "RG-019-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-020",
+      "description": "semantic boundary vector ranks robustness and related failure guidance",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05"
+          ],
+          "diagnostic_codes": [
+            "applicability_unknown"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "ROBUSTNESS/BOUNDARY",
+            "NAVIGATION/FAILURE",
+            "ASYNC/ERROR",
+            "NETWORK/PERMISSION"
+          ],
+          "required_rule_ids": [
+            "ROBUSTNESS/BOUNDARY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-020-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:c844513d9f180e45216c17668fcd14bb3d0d5caed2f1b5921cac8e4d834d8b1d",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [
+              "externalInput"
+            ],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-020_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:3ee4aaa88bc608ff497b4e8be98f658b0f5c10bac0b9a41df719646a8afd91f0",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L12: validate(externalInput)",
+          "source_ref_id": "code-source:sha256:3ee4aaa88bc608ff497b4e8be98f658b0f5c10bac0b9a41df719646a8afd91f0",
+          "unit_id": "RG-020-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-021",
+      "description": "semantic state vector respects target exclusion before ranking",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [
+            "VERSION/API12"
+          ],
+          "ordered_rule_ids": [
+            "STATE/LINK",
+            "STATE/OBSERVED",
+            "TASKPOOL/SENDABLE"
+          ],
+          "required_rule_ids": [
+            "STATE/LINK",
+            "STATE/OBSERVED"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-021-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:780876dd9511cf91549831b6cf7019b494ca372aea73c058c084b3f1f680e872",
+          "vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": 11,
+        "language_mode": "static",
+        "permissions": null,
+        "release": "OpenHarmony-5.x",
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [
+              "stateSnapshot"
+            ],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-021_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:ffaa9097b2745781429a67c8bcc8ee9265324a9557c7444420d102cb1d774bec",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L21: stateSnapshot.value = next",
+          "source_ref_id": "code-source:sha256:ffaa9097b2745781429a67c8bcc8ee9265324a9557c7444420d102cb1d774bec",
+          "unit_id": "RG-021-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-022",
+      "description": "semantic layout vector applies deterministic ranking and token budget",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-04"
+          ],
+          "diagnostic_codes": [
+            "budget_exhausted"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "MAINTAINABILITY/SPLIT",
+            "UI/RESPONSIVE"
+          ],
+          "required_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-022-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:89644d32b365b629ae1b11b5d9bc2644bd2f450616af07db921f7a60fad26663",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [
+              "layoutCoordinator"
+            ],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-022_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 87,
+          "profile_id": "feature-profile:sha256:c1c2eed52c7126c5afcb6549d4450c6e9806ee2bbc8c68cc2f6e36f10117a7bf",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-04"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-04"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L30: layoutCoordinator.reflow()",
+          "source_ref_id": "code-source:sha256:c1c2eed52c7126c5afcb6549d4450c6e9806ee2bbc8c68cc2f6e36f10117a7bf",
+          "unit_id": "RG-022-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-023",
+      "description": "semantic resource vector freezes tie-breaking across lifecycle clauses",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "FILE/CLOSE",
+            "SUBSCRIPTION/PAIR",
+            "TIMER/CLEAR",
+            "TIMER/HANDLE",
+            "IMAGE/MEMORY",
+            "WORKER/TERMINATE"
+          ],
+          "required_rule_ids": [
+            "FILE/CLOSE",
+            "SUBSCRIPTION/PAIR"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-023-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:99295d14e36326eaf1aedda5890ed6a9e7a403ff7c6a259d2da3404be24d3552",
+          "vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [
+              "resourceHandle"
+            ],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-023_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:ed98035832f4e482c184295a89fd7e9ffb0b713b6d331c40c3c8f9cefe00607c",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L5: release(resourceHandle)",
+          "source_ref_id": "code-source:sha256:ed98035832f4e482c184295a89fd7e9ffb0b713b6d331c40c3c8f9cefe00607c",
+          "unit_id": "RG-023-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-024",
+      "description": "hybrid fusion promotes exact security evidence ahead of semantic neighbors",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "SECURITY/CAPABILITY",
+            "NETWORK/PERMISSION",
+            "NAVIGATION/FAILURE"
+          ],
+          "required_rule_ids": [
+            "SECURITY/CAPABILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-024-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:8b1ead416cf3820ee4cc6b71c89fb0b76752903b290b72432e8348fb869ba09c",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [
+          "ohos.permission.INTERNET"
+        ],
+        "release": null,
+        "system_capabilities": [
+          "SystemCapability.Security"
+        ]
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "secureApi.use"
+            ],
+            "attributes": [],
+            "calls": [
+              "capabilityCheck"
+            ],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-024_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:bda49f3df937ef16c7248fef020f5dda0b8702439fa38dc5bd8020c7ae4ca547",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L9: secureApi.use(payload)",
+          "source_ref_id": "code-source:sha256:bda49f3df937ef16c7248fef020f5dda0b8702439fa38dc5bd8020c7ae4ca547",
+          "unit_id": "RG-024-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-025",
+      "description": "hybrid component fusion keeps exact accessibility ahead of semantic i18n",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-08"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "UI/ACCESSIBILITY",
+            "I18N/RESOURCE"
+          ],
+          "required_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-025-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:89fd4cc50205bb76aa6a16ac8122a9f2642f30f60ec0f61f84104f4e6e4f3717",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [
+              "Button"
+            ],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-025_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:453a66b99b8a8ed2c04bafea69fef7c291b124158abdb64cec7493f7333b9d76",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-08"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-08"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L14: Button('Save')",
+          "source_ref_id": "code-source:sha256:453a66b99b8a8ed2c04bafea69fef7c291b124158abdb64cec7493f7333b9d76",
+          "unit_id": "RG-025-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-026",
+      "description": "exact and vector agreement deduplicates one DFX clause",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-12"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "required_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-026-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:410c07da87f99a6d25df18503b8ca9b3c1b42a9bf8f16e3c2908869673264d83",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "hilog.info"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-026_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:9c6dad7d5bbe9e88e11dbba64710101b9e0e0e05a38008ce1acc665571e53a44",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-12"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-12"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L18: hilog.info(domain, tag, message)",
+          "source_ref_id": "code-source:sha256:9c6dad7d5bbe9e88e11dbba64710101b9e0e0e05a38008ce1acc665571e53a44",
+          "unit_id": "RG-026-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-027",
+      "description": "API alias and semantic vector fuse with stable cross-domain ordering",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-07"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "NAVIGATION/FAILURE",
+            "ROBUSTNESS/BOUNDARY",
+            "ASYNC/ERROR",
+            "NETWORK/PERMISSION"
+          ],
+          "required_rule_ids": [
+            "NAVIGATION/FAILURE"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-027-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:05a19f194756ec02ad1b226391f4f33078ec17ae8c966701eda907f96a951bee",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [
+          "ohos.permission.INTERNET"
+        ],
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "router.push"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-027_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:6bebaab83b59fa79e151e7b0f0bca566e7b52f33824508250b7d159191cfb8c7",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-07"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-07"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L24: router.push(target)",
+          "source_ref_id": "code-source:sha256:6bebaab83b59fa79e151e7b0f0bca566e7b52f33824508250b7d159191cfb8c7",
+          "unit_id": "RG-027-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-028",
+      "description": "zero semantic vector produces a reviewed hybrid true negative",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-12"
+          ],
+          "unit_id": "RG-028-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:405a2c1fed641d1b30d9518918ea8c702b6dd8458ff5de86dab49870c56e3b9e",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [
+              "noSemanticNeighbor"
+            ],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-028_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:f4c1b0db1823330693d940831d03945c51f4c5aa0fd5930d3a140c85dc19aa87",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-12"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-12"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L3: noSemanticNeighbor()",
+          "source_ref_id": "code-source:sha256:f4c1b0db1823330693d940831d03945c51f4c5aa0fd5930d3a140c85dc19aa87",
+          "unit_id": "RG-028-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-029",
+      "description": "semantic applicability filtering excludes known-missing permissions and capabilities",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [
+            "NETWORK/PERMISSION",
+            "SECURITY/CAPABILITY"
+          ],
+          "ordered_rule_ids": [
+            "NAVIGATION/FAILURE"
+          ],
+          "required_rule_ids": [
+            "NAVIGATION/FAILURE"
+          ],
+          "uncovered_dimension_ids": [
+            "DIM-11"
+          ],
+          "unit_id": "RG-029-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:f154e2ad9cca725718df8149ca56e93aa4908a7c14db391b059cd3dec1aa436a",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [],
+        "release": null,
+        "system_capabilities": []
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [
+              "guardedOperation"
+            ],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-029_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:30405f8bee7aa3314af605e4fc46ff5155dcd7189c86b94a84a7c39670ba5208",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L7: guardedOperation()",
+          "source_ref_id": "code-source:sha256:30405f8bee7aa3314af605e4fc46ff5155dcd7189c86b94a84a7c39670ba5208",
+          "unit_id": "RG-029-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-030",
+      "description": "two Units with identical semantic text share one reviewed query vector",
+      "expected_degraded": false,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-12"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "required_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-030-u1"
+        },
+        {
+          "covered_dimension_ids": [
+            "DIM-12"
+          ],
+          "diagnostic_codes": [],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "required_rule_ids": [
+            "DFX/LOGGING"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-030-u2"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:eb27bd234e758c8065259ee37052044f056e52f0a14394fec3d5241e24d85c3c",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "hybrid",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [
+              "telemetry.capture"
+            ],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: shared_logger; calls: telemetry.capture; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:1763a8c19e54a5b5e8daaddd4190f89a5e8f9b991dca603887c0d4df5836d5f6",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-12"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-12"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L11: telemetry.capture(error)",
+          "source_ref_id": "code-source:sha256:1763a8c19e54a5b5e8daaddd4190f89a5e8f9b991dca603887c0d4df5836d5f6",
+          "unit_id": "RG-030-u1"
+        },
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [
+              "telemetry.capture"
+            ],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: shared_logger; calls: telemetry.capture; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:fd13dacd49667f42593d54f8aa9c2da475d4f61b7bcc5545ff38dac1a2998efa",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-12"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-12"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L11: telemetry.capture(error)",
+          "source_ref_id": "code-source:sha256:fd13dacd49667f42593d54f8aa9c2da475d4f61b7bcc5545ff38dac1a2998efa",
+          "unit_id": "RG-030-u2"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-031",
+      "description": "embedding failure falls back to exact timer evidence",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [
+            "embedding_unavailable"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "TIMER/CLEAR",
+            "TIMER/HANDLE"
+          ],
+          "required_rule_ids": [
+            "TIMER/CLEAR"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-031-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:fa8d2b114d6c884f42e61e88068bf0a2fbbbe0591789cd4949bc3266f3e1df7a",
+          "vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "setInterval"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [
+            "has_timer"
+          ],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-031_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:0be5a8d7cb573de17ea32ea07d30cd42baf107e07e8a8ebbafc1ae8de1c29394",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L10: const timer = setInterval(tick, 1000)",
+          "source_ref_id": "code-source:sha256:0be5a8d7cb573de17ea32ea07d30cd42baf107e07e8a8ebbafc1ae8de1c29394",
+          "unit_id": "RG-031-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-032",
+      "description": "embedding failure preserves explicitly requested rule evidence",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-04"
+          ],
+          "diagnostic_codes": [
+            "embedding_unavailable"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "required_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-032-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:50f3bb5b131d21c41ac597552fb99b3f748a68788b1268efdbad54c0c80b12c0",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [
+              "LargeView"
+            ],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-032_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:eea09e1923fd3d5cb2cef34d2ce8c79e620a26b519b05b7a835b5832d5d791e5",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [
+            "MAINTAINABILITY/SPLIT"
+          ],
+          "retrieval_dimension_ids": [
+            "DIM-04"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-04"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L40: LargeView().render()",
+          "source_ref_id": "code-source:sha256:eea09e1923fd3d5cb2cef34d2ce8c79e620a26b519b05b7a835b5832d5d791e5",
+          "unit_id": "RG-032-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-033",
+      "description": "embedding failure preserves exact file lifecycle evidence",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "diagnostic_codes": [
+            "embedding_unavailable"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "required_rule_ids": [
+            "FILE/CLOSE"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-033-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:06d639d0a5294826da46687f43e82213037afca4d5fc3252b893d3a0f135d52b",
+          "vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "fileIo.open"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-033_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:37eb360282fd81312741d10158928e41385f6e516a9e78671d00cc9e1796200d",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-06"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L6: const file = fileIo.open(path)",
+          "source_ref_id": "code-source:sha256:37eb360282fd81312741d10158928e41385f6e516a9e78671d00cc9e1796200d",
+          "unit_id": "RG-033-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-034",
+      "description": "embedding failure plus unknown exact input yields explicit empty fallback",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "embedding_unavailable",
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "ROBUSTNESS/BOUNDARY"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-05"
+          ],
+          "unit_id": "RG-034-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:b0a827ae290ce5a4bccfd759222b64097cdc1f54a97d798b3ead3255d6641c94",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "fixture.unknown"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-034_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:ea3123574cbe7b729c9835caf9715b987c6a992829c71625ba4ae2580bccedf2",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L2: fixture.unknown(value)",
+          "source_ref_id": "code-source:sha256:ea3123574cbe7b729c9835caf9715b987c6a992829c71625ba4ae2580bccedf2",
+          "unit_id": "RG-034-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-035",
+      "description": "embedding failure cannot bypass a known-missing network permission",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [],
+          "diagnostic_codes": [
+            "embedding_unavailable",
+            "empty_result"
+          ],
+          "forbidden_rule_ids": [
+            "NETWORK/PERMISSION"
+          ],
+          "ordered_rule_ids": [],
+          "required_rule_ids": [],
+          "uncovered_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "unit_id": "RG-035-u1"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:98c8f59a8cd939acb5c4b979d7fe3faff7449d76237525e53763aaf91fd5e611",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": [],
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [
+              "http.request"
+            ],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-035_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:a546e1c251923c7efea74ba285610e7ecdd112be0ea951655be27f795aca18eb",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-05",
+            "DIM-11"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L15: http.request(url)",
+          "source_ref_id": "code-source:sha256:a546e1c251923c7efea74ba285610e7ecdd112be0ea951655be27f795aca18eb",
+          "unit_id": "RG-035-u1"
+        }
+      ]
+    },
+    {
+      "case_id": "RG-036",
+      "description": "embedding failure remains isolated across two exact fallback Units",
+      "expected_degraded": true,
+      "expected_units": [
+        {
+          "covered_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "diagnostic_codes": [
+            "embedding_unavailable"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "STATE/LINK"
+          ],
+          "required_rule_ids": [
+            "STATE/LINK"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-036-u1"
+        },
+        {
+          "covered_dimension_ids": [
+            "DIM-08"
+          ],
+          "diagnostic_codes": [
+            "embedding_unavailable"
+          ],
+          "forbidden_rule_ids": [],
+          "ordered_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "required_rule_ids": [
+            "UI/ACCESSIBILITY"
+          ],
+          "uncovered_dimension_ids": [],
+          "unit_id": "RG-036-u2"
+        }
+      ],
+      "query_embeddings": [
+        {
+          "query_text_hash": "sha256:4012820baa7aeeef0631ec04b149e45ed8eacef558e7e81ddba1f68bd4c0c54b",
+          "vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "query_text_hash": "sha256:d811b18ea742d32471a7435720f7d2bc6d306f72d3b2d822f2fa4f46ffe45d56",
+          "vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "retrieval_mode": "embedding_failure",
+      "target_platform": {
+        "api_level": null,
+        "language_mode": null,
+        "permissions": null,
+        "release": null,
+        "system_capabilities": null
+      },
+      "units": [
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [],
+            "decorators": [
+              "@Link"
+            ],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-036_u1; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:c7b9b85a75dd96805b9a5beaba4222c1b8d03a881a99cc4e094ec2d0f12051ff",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-02",
+            "DIM-05"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L4: @Link count: number",
+          "source_ref_id": "code-source:sha256:c7b9b85a75dd96805b9a5beaba4222c1b8d03a881a99cc4e094ec2d0f12051ff",
+          "unit_id": "RG-036-u1"
+        },
+        {
+          "dispatchable_review_question_ids": [
+            "RQ-correctness"
+          ],
+          "exact_signals": {
+            "apis": [],
+            "attributes": [],
+            "calls": [],
+            "components": [
+              "Button"
+            ],
+            "decorators": [],
+            "resource_references": [],
+            "symbols": [],
+            "syntax": []
+          },
+          "exact_tags": [],
+          "intent_summary": "ArkTS review unit; kind: function; symbol: rg-036_u2; review questions: 改动是否正确且不会引入直接回归",
+          "knowledge_token_budget": 500,
+          "profile_id": "feature-profile:sha256:a8db9c893f7574714b4bc0469f32a6f7c933d3566416bd7a0602103a9237a5d7",
+          "quality": {
+            "context_degraded": false,
+            "error_nodes": 0,
+            "missing_nodes": 0,
+            "parser_layer": "L1"
+          },
+          "requested_rule_ids": [],
+          "retrieval_dimension_ids": [
+            "DIM-08"
+          ],
+          "review_question_ids": [
+            "RQ-correctness"
+          ],
+          "routing_dimension_ids": [
+            "DIM-08"
+          ],
+          "routing_tags": [],
+          "semantic_code_excerpt": "L20: Button('Confirm')",
+          "source_ref_id": "code-source:sha256:a8db9c893f7574714b4bc0469f32a6f7c933d3566416bd7a0602103a9237a5d7",
+          "unit_id": "RG-036-u2"
+        }
+      ]
+    }
+  ],
+  "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "index_file": "index.json",
+  "index_hash": "sha256:8930429c065566969c8a73c4c75451305597336ba8a451ca48acf9efc57dbd90",
+  "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+  "retrieval_config_fingerprint": "retrieval-config:sha256:fa31904b5e4eae439cd9dbfeb3a364d72e4eee5a24da839ebff2e3eb4ca30f18",
+  "retrieval_version": "retrieval-v1",
+  "schema_version": "retrieval-golden-v1"
+}

@@ -1,0 +1,502 @@
+{
+  "case_count": 36,
+  "forbidden_hits": 0,
+  "mrr": 1.0,
+  "passed_cases": 36,
+  "perfect": true,
+  "precision_at_5": 1.0,
+  "recall_at_5": 1.0,
+  "results": [
+    {
+      "actual_rule_ids": [
+        [
+          "RG-001-u1",
+          [
+            "TIMER/CLEAR",
+            "TIMER/HANDLE"
+          ]
+        ]
+      ],
+      "case_id": "RG-001",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-002-u1",
+          [
+            "TIMER/HANDLE",
+            "TIMER/CLEAR"
+          ]
+        ]
+      ],
+      "case_id": "RG-002",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-003-u1",
+          [
+            "FILE/CLOSE"
+          ]
+        ]
+      ],
+      "case_id": "RG-003",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-004-u1",
+          [
+            "STATE/LINK",
+            "STATE/OBSERVED"
+          ]
+        ]
+      ],
+      "case_id": "RG-004",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-005-u1",
+          [
+            "IMAGE/MEMORY"
+          ]
+        ]
+      ],
+      "case_id": "RG-005",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-006-u1",
+          [
+            "UI/ACCESSIBILITY"
+          ]
+        ]
+      ],
+      "case_id": "RG-006",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-007-u1",
+          [
+            "MAINTAINABILITY/SPLIT"
+          ]
+        ]
+      ],
+      "case_id": "RG-007",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-008-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-008",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-009-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-009",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-010-u1",
+          [
+            "NETWORK/PERMISSION"
+          ]
+        ]
+      ],
+      "case_id": "RG-010",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-011-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-011",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-012-u1",
+          [
+            "SECURITY/CAPABILITY"
+          ]
+        ]
+      ],
+      "case_id": "RG-012",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-013-u1",
+          [
+            "VERSION/API12"
+          ]
+        ]
+      ],
+      "case_id": "RG-013",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-014-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-014",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-015-u1",
+          [
+            "TIMER/CLEAR"
+          ]
+        ]
+      ],
+      "case_id": "RG-015",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-016-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-016",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-017-u1",
+          [
+            "FILE/CLOSE"
+          ]
+        ]
+      ],
+      "case_id": "RG-017",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-018-u1",
+          [
+            "STATE/LINK"
+          ]
+        ],
+        [
+          "RG-018-u2",
+          [
+            "UI/ACCESSIBILITY"
+          ]
+        ]
+      ],
+      "case_id": "RG-018",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-019-u1",
+          [
+            "DFX/LOGGING"
+          ]
+        ]
+      ],
+      "case_id": "RG-019",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-020-u1",
+          [
+            "ROBUSTNESS/BOUNDARY",
+            "NAVIGATION/FAILURE",
+            "ASYNC/ERROR",
+            "NETWORK/PERMISSION"
+          ]
+        ]
+      ],
+      "case_id": "RG-020",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-021-u1",
+          [
+            "STATE/LINK",
+            "STATE/OBSERVED",
+            "TASKPOOL/SENDABLE"
+          ]
+        ]
+      ],
+      "case_id": "RG-021",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-022-u1",
+          [
+            "MAINTAINABILITY/SPLIT",
+            "UI/RESPONSIVE"
+          ]
+        ]
+      ],
+      "case_id": "RG-022",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-023-u1",
+          [
+            "FILE/CLOSE",
+            "SUBSCRIPTION/PAIR",
+            "TIMER/CLEAR",
+            "TIMER/HANDLE",
+            "IMAGE/MEMORY",
+            "WORKER/TERMINATE"
+          ]
+        ]
+      ],
+      "case_id": "RG-023",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-024-u1",
+          [
+            "SECURITY/CAPABILITY",
+            "NETWORK/PERMISSION",
+            "NAVIGATION/FAILURE"
+          ]
+        ]
+      ],
+      "case_id": "RG-024",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-025-u1",
+          [
+            "UI/ACCESSIBILITY",
+            "I18N/RESOURCE"
+          ]
+        ]
+      ],
+      "case_id": "RG-025",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-026-u1",
+          [
+            "DFX/LOGGING"
+          ]
+        ]
+      ],
+      "case_id": "RG-026",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-027-u1",
+          [
+            "NAVIGATION/FAILURE",
+            "ROBUSTNESS/BOUNDARY",
+            "ASYNC/ERROR",
+            "NETWORK/PERMISSION"
+          ]
+        ]
+      ],
+      "case_id": "RG-027",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-028-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-028",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-029-u1",
+          [
+            "NAVIGATION/FAILURE"
+          ]
+        ]
+      ],
+      "case_id": "RG-029",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-030-u1",
+          [
+            "DFX/LOGGING"
+          ]
+        ],
+        [
+          "RG-030-u2",
+          [
+            "DFX/LOGGING"
+          ]
+        ]
+      ],
+      "case_id": "RG-030",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-031-u1",
+          [
+            "TIMER/CLEAR",
+            "TIMER/HANDLE"
+          ]
+        ]
+      ],
+      "case_id": "RG-031",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-032-u1",
+          [
+            "MAINTAINABILITY/SPLIT"
+          ]
+        ]
+      ],
+      "case_id": "RG-032",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-033-u1",
+          [
+            "FILE/CLOSE"
+          ]
+        ]
+      ],
+      "case_id": "RG-033",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-034-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-034",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-035-u1",
+          []
+        ]
+      ],
+      "case_id": "RG-035",
+      "differences": [],
+      "passed": true
+    },
+    {
+      "actual_rule_ids": [
+        [
+          "RG-036-u1",
+          [
+            "STATE/LINK"
+          ]
+        ],
+        [
+          "RG-036-u2",
+          [
+            "UI/ACCESSIBILITY"
+          ]
+        ]
+      ],
+      "case_id": "RG-036",
+      "differences": [],
+      "passed": true
+    }
+  ]
+}

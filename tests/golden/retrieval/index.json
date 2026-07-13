@@ -1,0 +1,2508 @@
+{
+  "schema_version": "knowledge-index-v1",
+  "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+  "origin": "golden_fixture",
+  "published_build_id": "retrieval-fixture:sha256:e71f0a61537bc0eac6b3db9ffe9817fe2b894c46935f11a4c5de499894c3b77e",
+  "source_bundle_id": "source-bundle:sha256:086b6f0075a25efab24d3ceea1eeaec26fd2e068adcfd3b217d1197e876470e1",
+  "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "annotation_version": "retrieval-golden-annotation-v1",
+  "catalog_version": "retrieval-golden-api-catalog-v1",
+  "retrieval_version": "retrieval-v1",
+  "retrieval_config_fingerprint": "retrieval-config:sha256:fa31904b5e4eae439cd9dbfeb3a364d72e4eee5a24da839ebff2e3eb4ca30f18",
+  "embedding_model": "retrieval-golden-embedding-8d",
+  "embedding_version": "retrieval-golden-embedding-v1",
+  "embedding_dimensions": 8,
+  "api_symbols": [
+    {
+      "declaration_id": "api-declaration:sha256:49ad3ec6c37483cf5d4c7307561e88baaf01c2b2be8241460e8aa6db901fe3b2",
+      "canonical_name": "router.pushUrl",
+      "aliases": [
+        "router.push"
+      ],
+      "module": "fixture.global",
+      "kind": "function",
+      "signature": "function router.pushUrl(): void",
+      "since": null,
+      "deprecated_since": null,
+      "permissions": [],
+      "system_capabilities": [],
+      "availability": [],
+      "source_ref": {
+        "source_id": "retrieval-golden-v1",
+        "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "relative_path": "rules/api-router.pushurl.md",
+        "anchor": "L1-L1",
+        "authority": "test_evidence",
+        "content_hash": "sha256:e101e450872ae957968f71da36adb9294562d003e8bbbbe6f59b879033425f16"
+      },
+      "source_span": {
+        "start_line": 1,
+        "end_line": 1
+      },
+      "catalog_version": "retrieval-golden-api-catalog-v1",
+      "diagnostics": []
+    },
+    {
+      "declaration_id": "api-declaration:sha256:04103e802c10b8c211be57d737bb850a5f9cc66566818b7ff36177bed86e6254",
+      "canonical_name": "setInterval",
+      "aliases": [
+        "global.setInterval"
+      ],
+      "module": "fixture.global",
+      "kind": "function",
+      "signature": "function setInterval(): void",
+      "since": null,
+      "deprecated_since": null,
+      "permissions": [],
+      "system_capabilities": [],
+      "availability": [],
+      "source_ref": {
+        "source_id": "retrieval-golden-v1",
+        "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "relative_path": "rules/api-setinterval.md",
+        "anchor": "L1-L1",
+        "authority": "test_evidence",
+        "content_hash": "sha256:23a130e145c7a02c00d230807bbd3323ce6a24fa8eb83f0d608b2f886118939f"
+      },
+      "source_span": {
+        "start_line": 1,
+        "end_line": 1
+      },
+      "catalog_version": "retrieval-golden-api-catalog-v1",
+      "diagnostics": []
+    }
+  ],
+  "records": [
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "ASYNC/ERROR",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "异步调用必须显式处理失败路径，不能静默吞掉 rejected Promise。",
+        "heading_path": [
+          "ASYNC"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/async-error.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:d0013f15fadefe63f1db6ef2596ddb710026fa63a2cfb494c0bb5b78ef74ed1f"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:d0013f15fadefe63f1db6ef2596ddb710026fa63a2cfb494c0bb5b78ef74ed1f",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "ASYNC/ERROR",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05",
+          "DIM-07"
+        ],
+        "tags": [
+          "has_async"
+        ],
+        "apis": [],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "async-taskpool-worker"
+        ],
+        "raw_keywords": [
+          "Promise",
+          "失败路径"
+        ],
+        "llm_keywords": [],
+        "scenario": "异步任务和 Promise 的错误传播与失败处理",
+        "provenance": [
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-07",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "async-taskpool-worker",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "Promise",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "失败路径",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "异步任务和 Promise 的错误传播与失败处理",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_async",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "async-taskpool-worker"
+      ],
+      "retrieval_text": "异步任务和 Promise 的错误传播与失败处理\nASYNC\n异步调用必须显式处理失败路径，不能静默吞掉 rejected Promise。",
+      "token_count": 46,
+      "embedding": [
+        0.0,
+        0.8,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.8
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "DFX/LOGGING",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "关键失败路径应记录结构化诊断信息，避免只输出无上下文字符串。",
+        "heading_path": [
+          "DFX"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/dfx-logging.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:9de4738dd31cc786e40b1b86d8d07b82cecc26262246b53ba592645e0c9c73bd"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:9de4738dd31cc786e40b1b86d8d07b82cecc26262246b53ba592645e0c9c73bd",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "DFX/LOGGING",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-12"
+        ],
+        "tags": [
+          "has_logging"
+        ],
+        "apis": [
+          "hilog.info"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "diagnostics"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "日志、诊断和可测试性",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "hilog.info",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-12",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "diagnostics",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "日志、诊断和可测试性",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_logging",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "diagnostics"
+      ],
+      "retrieval_text": "日志、诊断和可测试性\nDFX\n关键失败路径应记录结构化诊断信息，避免只输出无上下文字符串。",
+      "token_count": 42,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "FILE/CLOSE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "文件句柄使用完成后必须在所有退出路径关闭。",
+        "heading_path": [
+          "FILE"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/file-close.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:7b5720908847e17bb49eece8971b966662a5704fdb5ae9d1ff2b97eb41b56fc2"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:7b5720908847e17bb49eece8971b966662a5704fdb5ae9d1ff2b97eb41b56fc2",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "FILE/CLOSE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05",
+          "DIM-06"
+        ],
+        "tags": [
+          "has_file_io"
+        ],
+        "apis": [
+          "fileIo.close",
+          "fileIo.open"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "resource-lifecycle"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "文件句柄创建、异常路径与释放",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "fileIo.close",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "fileIo.open",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "resource-lifecycle",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "文件句柄创建、异常路径与释放",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_file_io",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "resource-lifecycle"
+      ],
+      "retrieval_text": "文件句柄创建、异常路径与释放\nFILE\n文件句柄使用完成后必须在所有退出路径关闭。",
+      "token_count": 37,
+      "embedding": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "I18N/RESOURCE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "用户可见文本应使用资源引用，避免在组件中硬编码展示文案。",
+        "heading_path": [
+          "I18N"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/i18n-resource.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:f2c41837fa4b808978f8e2d47ae27fa9a6f1fd2a104926afe0b87977ff7dd426"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:f2c41837fa4b808978f8e2d47ae27fa9a6f1fd2a104926afe0b87977ff7dd426",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "I18N/RESOURCE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-10"
+        ],
+        "tags": [
+          "has_resource_ref",
+          "has_text_display"
+        ],
+        "apis": [
+          "$r"
+        ],
+        "components": [
+          "Text"
+        ],
+        "decorators": [],
+        "domains": [
+          "internationalization"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "用户可见文本和资源国际化",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "$r",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "component",
+            "value": "Text",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-10",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "internationalization",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "用户可见文本和资源国际化",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_resource_ref",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_text_display",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "internationalization"
+      ],
+      "retrieval_text": "用户可见文本和资源国际化\nI18N\n用户可见文本应使用资源引用，避免在组件中硬编码展示文案。",
+      "token_count": 42,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "IMAGE/MEMORY",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "大图加载应控制解码尺寸并及时释放不再使用的图片资源。",
+        "heading_path": [
+          "IMAGE"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/image-memory.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:76caca38245238ae27d0ee6e25660cf5f5012071a7db682bcd27d8c16f277c6a"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:76caca38245238ae27d0ee6e25660cf5f5012071a7db682bcd27d8c16f277c6a",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "IMAGE/MEMORY",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-03",
+          "DIM-06"
+        ],
+        "tags": [
+          "has_image"
+        ],
+        "apis": [],
+        "components": [
+          "Image"
+        ],
+        "decorators": [],
+        "domains": [
+          "image-loading"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "图片加载的内存和性能管理",
+        "provenance": [
+          {
+            "kind": "component",
+            "value": "Image",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-03",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "image-loading",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "图片加载的内存和性能管理",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_image",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "image-loading"
+      ],
+      "retrieval_text": "图片加载的内存和性能管理\nIMAGE\n大图加载应控制解码尺寸并及时释放不再使用的图片资源。",
+      "token_count": 40,
+      "embedding": [
+        0.8,
+        0.0,
+        0.0,
+        0.6,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "MAINTAINABILITY/SPLIT",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "职责过多的大型组件应按稳定职责拆分，并保留清晰的数据边界。",
+        "heading_path": [
+          "MAINTAINABILITY"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/maintainability-split.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:f98f5f2f3db9a9ab3c766aa30b16d4f12bf1e84ca9b841bc7cf538300e931b56"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:f98f5f2f3db9a9ab3c766aa30b16d4f12bf1e84ca9b841bc7cf538300e931b56",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "MAINTAINABILITY/SPLIT",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-04"
+        ],
+        "tags": [],
+        "apis": [],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "maintainability"
+        ],
+        "raw_keywords": [
+          "大型组件",
+          "职责拆分"
+        ],
+        "llm_keywords": [],
+        "scenario": "大型 UI 组件的职责拆分和可维护性",
+        "provenance": [
+          {
+            "kind": "dimension",
+            "value": "DIM-04",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "maintainability",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "大型组件",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "职责拆分",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "大型 UI 组件的职责拆分和可维护性",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "maintainability"
+      ],
+      "retrieval_text": "大型 UI 组件的职责拆分和可维护性\nMAINTAINABILITY\n职责过多的大型组件应按稳定职责拆分，并保留清晰的数据边界。",
+      "token_count": 49,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "NAVIGATION/FAILURE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "页面跳转应处理目标无效和调用失败，不能假设导航始终成功。",
+        "heading_path": [
+          "NAVIGATION"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/navigation-failure.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:d76f8d12bf258b450ff8253f79e1d069eb586fe3df6fc39b156a8c96f518d60c"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:d76f8d12bf258b450ff8253f79e1d069eb586fe3df6fc39b156a8c96f518d60c",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "NAVIGATION/FAILURE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05"
+        ],
+        "tags": [
+          "has_navigation"
+        ],
+        "apis": [
+          "router.pushUrl"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "navigation"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "导航调用的失败处理和状态一致性",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "router.pushUrl",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "navigation",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "导航调用的失败处理和状态一致性",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_navigation",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "navigation"
+      ],
+      "retrieval_text": "导航调用的失败处理和状态一致性\nNAVIGATION\n页面跳转应处理目标无效和调用失败，不能假设导航始终成功。",
+      "token_count": 46,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        0.0,
+        0.7
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "NETWORK/PERMISSION",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "发起网络请求前必须声明并满足对应权限，同时处理请求失败。",
+        "heading_path": [
+          "NETWORK"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [
+            "ohos.permission.INTERNET"
+          ],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/network-permission.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:ba31627d3f8dd20c3b343434159e24c3f804c143d200aba5c3a2dd36da88b5e6"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:ba31627d3f8dd20c3b343434159e24c3f804c143d200aba5c3a2dd36da88b5e6",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "NETWORK/PERMISSION",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05",
+          "DIM-11"
+        ],
+        "tags": [
+          "has_network",
+          "has_permission_request"
+        ],
+        "apis": [
+          "http.request"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "network-security"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "网络访问权限和失败处理",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "http.request",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-11",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "network-security",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "网络访问权限和失败处理",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_network",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_permission_request",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "network-security"
+      ],
+      "retrieval_text": "网络访问权限和失败处理\nNETWORK\napplicability: permissions=ohos.permission.INTERNET\n发起网络请求前必须声明并满足对应权限，同时处理请求失败。",
+      "token_count": 55,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.4
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "ROBUSTNESS/BOUNDARY",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "外部输入和边界返回值必须验证，失败时提供可恢复路径。",
+        "heading_path": [
+          "ROBUSTNESS"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/robustness-boundary.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:6bc26cf5fdd0cd47fffadd8dc3c5f661a4f54b36565011f1a8f6667ea45b407e"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:6bc26cf5fdd0cd47fffadd8dc3c5f661a4f54b36565011f1a8f6667ea45b407e",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "ROBUSTNESS/BOUNDARY",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05"
+        ],
+        "tags": [],
+        "apis": [],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "robustness"
+        ],
+        "raw_keywords": [
+          "输入验证",
+          "边界返回值"
+        ],
+        "llm_keywords": [],
+        "scenario": "边界输入验证、失败恢复和健壮性",
+        "provenance": [
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "robustness",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "输入验证",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "边界返回值",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "边界输入验证、失败恢复和健壮性",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "robustness"
+      ],
+      "retrieval_text": "边界输入验证、失败恢复和健壮性\nROBUSTNESS\n外部输入和边界返回值必须验证，失败时提供可恢复路径。",
+      "token_count": 44,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "SECURITY/CAPABILITY",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "调用受限能力前必须确认目标设备具备系统能力。",
+        "heading_path": [
+          "SECURITY"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": [
+            "SystemCapability.Security"
+          ]
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/security-capability.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:6cbdb4f43fb6771f8e26580fb2c446a600024be35c33850379098431bd19c3a0"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:6cbdb4f43fb6771f8e26580fb2c446a600024be35c33850379098431bd19c3a0",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "SECURITY/CAPABILITY",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-11"
+        ],
+        "tags": [
+          "has_permission_request"
+        ],
+        "apis": [
+          "secureApi.use"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "security"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": null,
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "secureApi.use",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-11",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "security",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_permission_request",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "security"
+      ],
+      "retrieval_text": "SECURITY\napplicability: system_capabilities=SystemCapability.Security\n调用受限能力前必须确认目标设备具备系统能力。",
+      "token_count": 40,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "STATE/LINK",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "@Link 必须由父组件提供双向状态来源，避免复制为彼此独立的状态。",
+        "heading_path": [
+          "STATE"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/state-link.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:98d3d3cd7678ca8759f22c1b11729a3a5b445f926b6d55300c166531418ad182"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:98d3d3cd7678ca8759f22c1b11729a3a5b445f926b6d55300c166531418ad182",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "STATE/LINK",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-02",
+          "DIM-05"
+        ],
+        "tags": [
+          "has_state_management"
+        ],
+        "apis": [],
+        "components": [],
+        "decorators": [
+          "@Link"
+        ],
+        "domains": [
+          "state-management"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "父子组件双向状态同步",
+        "provenance": [
+          {
+            "kind": "decorator",
+            "value": "@Link",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-02",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "state-management",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "父子组件双向状态同步",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_state_management",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "state-management"
+      ],
+      "retrieval_text": "父子组件双向状态同步\nSTATE\n@Link 必须由父组件提供双向状态来源，避免复制为彼此独立的状态。",
+      "token_count": 42,
+      "embedding": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "STATE/OBSERVED",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "被观察对象的变更必须通过可追踪状态路径传播。",
+        "heading_path": [
+          "STATE"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/state-observed.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:e73e5d6e3bcecf4f8725a3109e5b7fa0db7a9dcdb8850a4ea443c86f43e69824"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:e73e5d6e3bcecf4f8725a3109e5b7fa0db7a9dcdb8850a4ea443c86f43e69824",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "STATE/OBSERVED",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-02",
+          "DIM-05"
+        ],
+        "tags": [
+          "has_state_management"
+        ],
+        "apis": [],
+        "components": [],
+        "decorators": [
+          "@Observed"
+        ],
+        "domains": [
+          "state-management"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "观察对象和状态变更传播",
+        "provenance": [
+          {
+            "kind": "decorator",
+            "value": "@Observed",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-02",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "state-management",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "观察对象和状态变更传播",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_state_management",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "state-management"
+      ],
+      "retrieval_text": "观察对象和状态变更传播\nSTATE\n被观察对象的变更必须通过可追踪状态路径传播。",
+      "token_count": 35,
+      "embedding": [
+        0.0,
+        0.0,
+        0.9,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "SUBSCRIPTION/PAIR",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "事件或传感器订阅必须保存配对关系，并在生命周期结束时取消订阅。",
+        "heading_path": [
+          "SUBSCRIPTION"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/subscription-pair.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:720cf181e25f1371deb85dbca00a9cd725726b60bf46f8b2b58f09064f695eb1"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:720cf181e25f1371deb85dbca00a9cd725726b60bf46f8b2b58f09064f695eb1",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "SUBSCRIPTION/PAIR",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05",
+          "DIM-06"
+        ],
+        "tags": [
+          "has_lifecycle",
+          "has_subscription"
+        ],
+        "apis": [
+          "emitter.off",
+          "emitter.on",
+          "sensor.off",
+          "sensor.on"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "resource-lifecycle"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "订阅与取消订阅的生命周期配对",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "emitter.off",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "emitter.on",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "sensor.off",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "sensor.on",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "resource-lifecycle",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "订阅与取消订阅的生命周期配对",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_lifecycle",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_subscription",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "resource-lifecycle"
+      ],
+      "retrieval_text": "订阅与取消订阅的生命周期配对\nSUBSCRIPTION\n事件或传感器订阅必须保存配对关系，并在生命周期结束时取消订阅。",
+      "token_count": 49,
+      "embedding": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "TASKPOOL/SENDABLE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "传入 taskpool 的对象必须满足 Sendable 约束，避免跨线程共享不可发送状态。",
+        "heading_path": [
+          "TASKPOOL"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/taskpool-sendable.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:2e8d81e83b6f0ae87890c8fe51016910019c46dc46ee342a93c215dd332f9abe"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:2e8d81e83b6f0ae87890c8fe51016910019c46dc46ee342a93c215dd332f9abe",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "TASKPOOL/SENDABLE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-02",
+          "DIM-07"
+        ],
+        "tags": [
+          "has_async",
+          "has_taskpool"
+        ],
+        "apis": [
+          "taskpool.execute"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "async-taskpool-worker"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "taskpool 跨线程参数和 Sendable 约束",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "taskpool.execute",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-02",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-07",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "async-taskpool-worker",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "taskpool 跨线程参数和 Sendable 约束",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_async",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_taskpool",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "async-taskpool-worker"
+      ],
+      "retrieval_text": "taskpool 跨线程参数和 Sendable 约束\nTASKPOOL\n传入 taskpool 的对象必须满足 Sendable 约束，避免跨线程共享不可发送状态。",
+      "token_count": 47,
+      "embedding": [
+        0.0,
+        0.8,
+        0.7,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "TIMER/CLEAR",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "组件创建的定时器必须在不再使用或生命周期结束时主动清理。",
+        "heading_path": [
+          "TIMER"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/timer-clear.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:a77fd2645b23f4a31801e73db454ec176676477b907d5f9d7b9101d598d6c025"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:a77fd2645b23f4a31801e73db454ec176676477b907d5f9d7b9101d598d6c025",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "TIMER/CLEAR",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-05",
+          "DIM-06"
+        ],
+        "tags": [
+          "has_timer"
+        ],
+        "apis": [
+          "clearInterval",
+          "clearTimeout",
+          "setInterval",
+          "setTimeout"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "timer-subscription-lifecycle"
+        ],
+        "raw_keywords": [
+          "定时器"
+        ],
+        "llm_keywords": [],
+        "scenario": "组件定时器创建与生命周期清理",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "clearInterval",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "clearTimeout",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "setInterval",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "setTimeout",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-05",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "timer-subscription-lifecycle",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "定时器",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "组件定时器创建与生命周期清理",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_timer",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "timer-subscription-lifecycle"
+      ],
+      "retrieval_text": "组件定时器创建与生命周期清理\nTIMER\n组件创建的定时器必须在不再使用或生命周期结束时主动清理。",
+      "token_count": 44,
+      "embedding": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "TIMER/HANDLE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "周期定时器句柄应由明确 owner 保存，避免重复创建和无法清理。",
+        "heading_path": [
+          "TIMER"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/timer-handle.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:b91dae2b57f671b0facd54978da2d26d4cb1cac103f563189fd749bd4d414474"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:b91dae2b57f671b0facd54978da2d26d4cb1cac103f563189fd749bd4d414474",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "TIMER/HANDLE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-04",
+          "DIM-06"
+        ],
+        "tags": [
+          "has_timer"
+        ],
+        "apis": [
+          "setInterval",
+          "setTimeout"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "timer-subscription-lifecycle"
+        ],
+        "raw_keywords": [
+          "句柄"
+        ],
+        "llm_keywords": [],
+        "scenario": "定时器句柄所有权和重复创建",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "setInterval",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "api",
+            "value": "setTimeout",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-04",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "timer-subscription-lifecycle",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "keyword",
+            "value": "句柄",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "定时器句柄所有权和重复创建",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_timer",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "timer-subscription-lifecycle"
+      ],
+      "retrieval_text": "定时器句柄所有权和重复创建\nTIMER\n周期定时器句柄应由明确 owner 保存，避免重复创建和无法清理。",
+      "token_count": 43,
+      "embedding": [
+        0.9,
+        0.0,
+        0.0,
+        0.3,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "UI/ACCESSIBILITY",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "可交互组件必须提供可理解的无障碍描述和可操作状态。",
+        "heading_path": [
+          "UI"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/ui-accessibility.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:feb1978b0d79c81fe51b39f0668e10f0de8dd3da8041113287c90802a97a8105"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:feb1978b0d79c81fe51b39f0668e10f0de8dd3da8041113287c90802a97a8105",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "UI/ACCESSIBILITY",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-08"
+        ],
+        "tags": [
+          "has_interactive_component"
+        ],
+        "apis": [],
+        "components": [
+          "Button"
+        ],
+        "decorators": [],
+        "domains": [
+          "accessibility"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "交互组件无障碍描述和操作",
+        "provenance": [
+          {
+            "kind": "component",
+            "value": "Button",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-08",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "accessibility",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "交互组件无障碍描述和操作",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_interactive_component",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "accessibility"
+      ],
+      "retrieval_text": "交互组件无障碍描述和操作\nUI\n可交互组件必须提供可理解的无障碍描述和可操作状态。",
+      "token_count": 38,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "UI/RESPONSIVE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "布局应响应窗口和设备尺寸变化，避免依赖单一固定宽度。",
+        "heading_path": [
+          "UI"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/ui-responsive.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:fab1e0edacf5a7a9894ed7d21944a683712b9f60e312030900b78c4b7d27e0f0"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:fab1e0edacf5a7a9894ed7d21944a683712b9f60e312030900b78c4b7d27e0f0",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "UI/RESPONSIVE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-09"
+        ],
+        "tags": [
+          "has_layout",
+          "has_responsive_api"
+        ],
+        "apis": [],
+        "components": [
+          "GridRow"
+        ],
+        "decorators": [],
+        "domains": [
+          "adaptability"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "响应式布局和多设备适配",
+        "provenance": [
+          {
+            "kind": "component",
+            "value": "GridRow",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-09",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "adaptability",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "响应式布局和多设备适配",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_layout",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_responsive_api",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "adaptability"
+      ],
+      "retrieval_text": "响应式布局和多设备适配\nUI\n布局应响应窗口和设备尺寸变化，避免依赖单一固定宽度。",
+      "token_count": 38,
+      "embedding": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "VERSION/API12",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "该静态语言 API 仅适用于 API 12 到 API 14 的 OpenHarmony-5.x。",
+        "heading_path": [
+          "VERSION"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": 12,
+          "max_api_level": 14,
+          "releases": [
+            "OpenHarmony-5.x"
+          ],
+          "language_modes": [
+            "static"
+          ],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/version-api12.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:9359a91129db7f79f3d05e9ead5cc026eef2a2bba9f9189724e5680e73f96058"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:9359a91129db7f79f3d05e9ead5cc026eef2a2bba9f9189724e5680e73f96058",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "VERSION/API12",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-02"
+        ],
+        "tags": [],
+        "apis": [
+          "versionedApi.use"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "language-version"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "API level 和语言模式适用性",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "versionedApi.use",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-02",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "language-version",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "API level 和语言模式适用性",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "language-version"
+      ],
+      "retrieval_text": "API level 和语言模式适用性\nVERSION\napplicability: min_api_level=12; max_api_level=14; releases=OpenHarmony-5.x; language_modes=static\n该静态语言 API 仅适用于 API 12 到 API 14 的 OpenHarmony-5.x。",
+      "token_count": 59,
+      "embedding": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "clause": {
+        "schema_version": "knowledge-v1",
+        "rule_id": "WORKER/TERMINATE",
+        "native_rule_id": null,
+        "rule_type": "constraint",
+        "status": "Baselined",
+        "authority": "test_evidence",
+        "text": "Worker 不再使用时必须终止并释放跨线程资源。",
+        "heading_path": [
+          "WORKER"
+        ],
+        "parent_context": null,
+        "neighbor_rule_ids": [],
+        "applicability": {
+          "min_api_level": null,
+          "max_api_level": null,
+          "releases": [],
+          "language_modes": [],
+          "permissions": [],
+          "system_capabilities": []
+        },
+        "source_ref": {
+          "source_id": "retrieval-golden-v1",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "relative_path": "rules/worker-terminate.md",
+          "anchor": "L1-L1",
+          "authority": "test_evidence",
+          "content_hash": "sha256:4c78d5954a0d169f3a5c1d371e41821599d30c801c6eb317a24bd00faa16ca51"
+        },
+        "source_span": {
+          "start_line": 1,
+          "end_line": 1
+        },
+        "examples": [],
+        "doc_hash": "sha256:4c78d5954a0d169f3a5c1d371e41821599d30c801c6eb317a24bd00faa16ca51",
+        "curation_version": "retrieval-golden-curation-v1",
+        "created_at": "2026-07-13T00:00:00Z",
+        "updated_at": "2026-07-13T00:00:00Z"
+      },
+      "annotation": {
+        "target_kind": "clause",
+        "target_id": "WORKER/TERMINATE",
+        "index_version": "knowledge-index:sha256:425833ec594437a1876aaf0c20fa4868647388a90e75d184a935653a02f497d1",
+        "func_ids": [],
+        "dimension_ids": [
+          "DIM-06",
+          "DIM-07"
+        ],
+        "tags": [
+          "has_worker"
+        ],
+        "apis": [
+          "worker.terminate"
+        ],
+        "components": [],
+        "decorators": [],
+        "domains": [
+          "async-taskpool-worker"
+        ],
+        "raw_keywords": [],
+        "llm_keywords": [],
+        "scenario": "Worker 生命周期终止和资源释放",
+        "provenance": [
+          {
+            "kind": "api",
+            "value": "worker.terminate",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-06",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "dimension",
+            "value": "DIM-07",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "domain",
+            "value": "async-taskpool-worker",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "scenario",
+            "value": "Worker 生命周期终止和资源释放",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          },
+          {
+            "kind": "tag",
+            "value": "has_worker",
+            "origin": "human_curator",
+            "evidence_ref": "retrieval-golden-v1"
+          }
+        ],
+        "annotation_version": "retrieval-golden-annotation-v1"
+      },
+      "domains": [
+        "async-taskpool-worker"
+      ],
+      "retrieval_text": "Worker 生命周期终止和资源释放\nWORKER\nWorker 不再使用时必须终止并释放跨线程资源。",
+      "token_count": 35,
+      "embedding": [
+        0.7,
+        0.7,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ]
+}
