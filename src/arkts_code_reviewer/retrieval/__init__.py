@@ -6,6 +6,7 @@ from arkts_code_reviewer.retrieval.config import (
 from arkts_code_reviewer.retrieval.index import (
     EmbeddingProvider,
     build_knowledge_index,
+    canonical_pgvector_embedding,
     estimate_knowledge_tokens,
 )
 from arkts_code_reviewer.retrieval.models import (
@@ -48,6 +49,7 @@ __all__ = [
     "UnitExactSignals",
     "build_knowledge_index",
     "build_retrieval_request",
+    "canonical_pgvector_embedding",
     "estimate_knowledge_tokens",
     "load_evidence_pack",
     "load_default_retrieval_config",

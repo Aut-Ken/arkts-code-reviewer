@@ -1,0 +1,24 @@
+name: arkts-code-reviewer-retrieval
+
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.5-pg17-bookworm@sha256:d2ef61f42ef767baa5a1475393303cc235bcd92febd9d7014eddb48b41f3bad0
+    environment:
+      POSTGRES_DB: ${ARKTS_POSTGRES_DB:-arkts_retrieval}
+      POSTGRES_USER: ${ARKTS_POSTGRES_USER:-arkts}
+      POSTGRES_PASSWORD: ${ARKTS_POSTGRES_PASSWORD:?set ARKTS_POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:${ARKTS_POSTGRES_PORT:-55432}:5432"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+    volumes:
+      - retrieval_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  retrieval_postgres_data:

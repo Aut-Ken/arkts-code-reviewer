@@ -6,7 +6,10 @@ import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from arkts_code_reviewer.retrieval.index import EmbeddingProvider
+from arkts_code_reviewer.retrieval.index import (
+    EmbeddingProvider,
+    canonical_pgvector_embedding,
+)
 from arkts_code_reviewer.retrieval.models import (
     KnowledgeIndex,
     RetrievalRequest,
@@ -83,6 +86,7 @@ def _reembed(index: KnowledgeIndex, provider: EmbeddingProvider) -> KnowledgeInd
         for vector in vectors
     ):
         raise ValueError("Embedding candidate returned invalid passage vectors")
+    canonical_vectors = tuple(canonical_pgvector_embedding(vector) for vector in vectors)
     return KnowledgeIndex.create(
         origin=index.origin,
         published_build_id=index.published_build_id,
@@ -98,7 +102,7 @@ def _reembed(index: KnowledgeIndex, provider: EmbeddingProvider) -> KnowledgeInd
         api_symbols=index.api_symbols,
         records=tuple(
             record.model_copy(update={"embedding": vector})
-            for record, vector in zip(index.records, vectors, strict=True)
+            for record, vector in zip(index.records, canonical_vectors, strict=True)
         ),
     )
 

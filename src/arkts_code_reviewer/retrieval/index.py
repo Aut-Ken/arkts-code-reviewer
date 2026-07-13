@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import struct
 from typing import Protocol
 
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
@@ -35,6 +36,23 @@ def estimate_knowledge_tokens(text: str) -> int:
     ascii_bytes = sum(1 for character in text if ord(character) < 128)
     non_ascii_characters = len(text) - ascii_bytes
     return max(1, math.ceil(ascii_bytes / 4) + non_ascii_characters)
+
+
+def canonical_pgvector_embedding(vector: tuple[float, ...]) -> tuple[float, ...]:
+    """Round an embedding to pgvector's lossless IEEE-754 float32 contract."""
+
+    if not isinstance(vector, tuple) or not vector:
+        raise ValueError("embedding must be a non-empty tuple")
+    try:
+        canonical = tuple(
+            struct.unpack("!f", struct.pack("!f", float(value)))[0]
+            for value in vector
+        )
+    except (OverflowError, struct.error, TypeError, ValueError) as exc:
+        raise ValueError("embedding cannot be represented as pgvector float32") from exc
+    if any(not math.isfinite(value) for value in canonical):
+        raise ValueError("embedding must contain finite pgvector values")
+    return canonical
 
 
 def _applicability_text(value: Applicability) -> str:
@@ -135,7 +153,7 @@ def build_knowledge_index(
             for vector in generated
         ):
             raise ValueError("Embedding provider returned invalid passage vectors")
-        embeddings = tuple(generated)
+        embeddings = tuple(canonical_pgvector_embedding(vector) for vector in generated)
         embedding_model = model_id
         embedding_version = provider_version
         embedding_dimensions = dimensions
@@ -180,6 +198,7 @@ def build_knowledge_index(
 __all__ = [
     "EmbeddingProvider",
     "build_knowledge_index",
+    "canonical_pgvector_embedding",
     "estimate_knowledge_tokens",
     "retrieval_text",
 ]

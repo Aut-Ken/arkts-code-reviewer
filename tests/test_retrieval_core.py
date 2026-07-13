@@ -56,6 +56,7 @@ from arkts_code_reviewer.retrieval.exact import ExactHit, search_exact
 from arkts_code_reviewer.retrieval.fusion import FusedHit, fuse_hits
 from arkts_code_reviewer.retrieval.index import (
     build_knowledge_index,
+    canonical_pgvector_embedding,
     estimate_knowledge_tokens,
 )
 from arkts_code_reviewer.retrieval.models import (
@@ -528,6 +529,13 @@ def test_token_estimate_is_conservative_for_cjk_and_mixed_text() -> None:
     assert estimate_knowledge_tokens("abcd") == 1
     assert estimate_knowledge_tokens("中文") == 2
     assert estimate_knowledge_tokens("abcd中文") == 3
+
+
+def test_embedding_is_canonicalized_before_index_identity() -> None:
+    value = canonical_pgvector_embedding((0.1, -0.2))
+
+    assert value != (0.1, -0.2)
+    assert canonical_pgvector_embedding(value) == value
 
 
 def test_config_rejects_duplicate_yaml_keys(tmp_path: Path) -> None:

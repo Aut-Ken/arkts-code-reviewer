@@ -10,7 +10,18 @@ dependencies = [
     "ruamel.yaml>=0.18,<0.19",
 ]
 
+[project.scripts]
+arkts-retrieval = "arkts_code_reviewer.retrieval.runtime:main"
+
 [project.optional-dependencies]
+retrieval = [
+    "pgvector>=0.5,<0.6",
+    "psycopg[binary,pool]>=3.3,<4",
+]
+embedding-local = [
+    "fastembed>=0.8,<0.9",
+    "httpx[socks]>=0.28,<0.29",
+]
 parser = [
     "tree-sitter>=0.22,<0.23",
     "tree-sitter-typescript>=0.21,<0.22",
@@ -34,6 +45,7 @@ packages = ["src/arkts_code_reviewer"]
 "config/knowledge_seed_v1.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_seed_v1.yaml"
 "config/knowledge_annotations.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_annotations.yaml"
 "config/knowledge_model_export.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_model_export.yaml"
+"config/retrieval.yaml" = "arkts_code_reviewer/retrieval/defaults/retrieval.yaml"
 "prompts/knowledge/grok-knowledge-auditor-v4.md" = "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v4.md"
 "sidecars/knowledge-api-parser/package-lock.json" = "arkts_code_reviewer/knowledge/sidecars/api_parser/package-lock.json"
 "sidecars/knowledge-api-parser/package.json" = "arkts_code_reviewer/knowledge/sidecars/api_parser/package.json"
@@ -54,3 +66,6 @@ warn_unused_configs = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "integration: requires explicitly configured external infrastructure",
+]
