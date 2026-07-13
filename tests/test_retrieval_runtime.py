@@ -329,6 +329,60 @@ def test_cli_publishes_exact_index_and_switches_alias(
     assert store.resolve_alias() == payload["index_version"]
 
 
+def test_cli_passes_explicit_gpu_limits_and_reports_active_provider(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    source = tmp_path / "published.json"
+    source.write_text(_publication().model_dump_json(), encoding="utf-8")
+    store = _MemoryStore()
+    configured: dict[str, object] = {}
+
+    class ConfiguredProvider(_FixtureEmbeddingProvider):
+        execution_provider = "CUDAExecutionProvider"
+
+        def __init__(self, **kwargs: object) -> None:
+            configured.update(kwargs)
+            self.model_id = str(kwargs["model_id"])
+            self.dimensions = int(kwargs["dimensions"])  # type: ignore[arg-type]
+            self.version = "fixture-gpu-v1"
+            self.batch_size = int(kwargs["batch_size"])  # type: ignore[arg-type]
+            self.threads = int(kwargs["threads"])  # type: ignore[arg-type]
+
+    monkeypatch.setattr(runtime, "PostgresIndexStore", lambda _: store)
+    monkeypatch.setattr(runtime, "FastEmbedProvider", ConfiguredProvider)
+
+    exit_code = runtime.main(
+        [
+            "publish",
+            "--publication",
+            str(source),
+            "--database-url",
+            "postgresql://fixture/test",
+            "--embedding-dimensions",
+            "2",
+            "--embedding-device",
+            "cuda",
+            "--embedding-batch-size",
+            "4",
+            "--embedding-threads",
+            "1",
+            "--local-files-only",
+        ]
+    )
+
+    assert exit_code == 0
+    assert configured["execution_device"] == "cuda"
+    assert configured["batch_size"] == 4
+    assert configured["threads"] == 1
+    assert configured["local_files_only"] is True
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["embedding_execution_provider"] == "CUDAExecutionProvider"
+    assert payload["embedding_batch_size"] == 4
+    assert payload["embedding_threads"] == 1
+
+
 def test_cli_alias_commands_and_missing_database_fail_closed(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],

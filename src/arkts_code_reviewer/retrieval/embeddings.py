@@ -3,12 +3,20 @@ from __future__ import annotations
 import hashlib
 import importlib
 import math
+from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as package_version
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 DEFAULT_FASTEMBED_MODEL = "jinaai/jina-embeddings-v2-base-code"
 DEFAULT_FASTEMBED_DIMENSIONS = 768
+
+EmbeddingDevice = Literal["cpu", "cuda"]
+
+_PROVIDER_BY_DEVICE: dict[EmbeddingDevice, str] = {
+    "cpu": "CPUExecutionProvider",
+    "cuda": "CUDAExecutionProvider",
+}
 
 
 def _cache_fingerprint(root: Path) -> str:
@@ -94,8 +102,19 @@ def _vector(value: Any) -> tuple[float, ...]:
     return tuple(float(item) for item in raw)
 
 
+def _fastembed_distribution() -> tuple[str, str]:
+    """Return the installed mutually-exclusive FastEmbed distribution identity."""
+
+    for distribution in ("fastembed-gpu", "fastembed"):
+        try:
+            return distribution, package_version(distribution)
+        except PackageNotFoundError:
+            continue
+    raise RuntimeError("FastEmbed is not installed; install embedding-local or embedding-gpu")
+
+
 class FastEmbedProvider:
-    """Lazy optional adapter for the local FastEmbed CPU runtime."""
+    """Fail-closed adapter for a bounded CPU or CUDA FastEmbed runtime."""
 
     def __init__(
         self,
@@ -104,6 +123,9 @@ class FastEmbedProvider:
         dimensions: int = DEFAULT_FASTEMBED_DIMENSIONS,
         cache_dir: str | Path,
         local_files_only: bool = False,
+        execution_device: EmbeddingDevice = "cpu",
+        batch_size: int = 8,
+        threads: int = 2,
     ) -> None:
         if (
             not isinstance(model_id, str)
@@ -116,24 +138,44 @@ class FastEmbedProvider:
             raise ValueError("FastEmbed model metadata is invalid")
         if not isinstance(local_files_only, bool):
             raise TypeError("local_files_only must be boolean")
+        if execution_device not in _PROVIDER_BY_DEVICE:
+            raise ValueError("execution_device must be 'cpu' or 'cuda'")
+        if (
+            not isinstance(batch_size, int)
+            or isinstance(batch_size, bool)
+            or not 1 <= batch_size <= 64
+        ):
+            raise ValueError("FastEmbed batch_size must be an integer in 1..64")
+        if not isinstance(threads, int) or isinstance(threads, bool) or not 1 <= threads <= 64:
+            raise ValueError("FastEmbed threads must be an integer in 1..64")
         cache_path = Path(cache_dir).expanduser().absolute()
         if cache_path.is_symlink():
             raise ValueError("FastEmbed cache must not be a symlink")
         cache_path.mkdir(parents=True, exist_ok=True)
         try:
             fastembed = importlib.import_module("fastembed")
+            onnxruntime = importlib.import_module("onnxruntime")
             text_embedding = fastembed.TextEmbedding
-        except (AttributeError, ImportError) as exc:
+            available_providers = tuple(onnxruntime.get_available_providers())
+        except (AttributeError, ImportError, TypeError) as exc:
+            raise RuntimeError("FastEmbed/ONNX Runtime is not installed correctly") from exc
+        requested_provider = _PROVIDER_BY_DEVICE[execution_device]
+        if requested_provider not in available_providers:
             raise RuntimeError(
-                "FastEmbed is not installed; install the embedding-local extra"
-            ) from exc
+                f"{requested_provider} is unavailable; available providers: {available_providers}"
+            )
         self._model_id = model_id
         self._dimensions = dimensions
+        self._execution_device = execution_device
+        self._execution_provider = requested_provider
+        self._batch_size = batch_size
+        self._threads = threads
         self._model = text_embedding(
             model_name=model_id,
             cache_dir=str(cache_path),
             local_files_only=local_files_only,
-            providers=["CPUExecutionProvider"],
+            threads=threads,
+            providers=[requested_provider],
         )
         runtime_model = getattr(self._model, "model", None)
         model_path = getattr(runtime_model, "_model_dir", None)
@@ -142,11 +184,23 @@ class FastEmbedProvider:
         if not isinstance(model_path, Path):
             raise RuntimeError("FastEmbed runtime did not expose its initialized model path")
         if model_dimensions != dimensions:
-            raise ValueError(
-                "FastEmbed configured dimensions do not match the selected model"
+            raise ValueError("FastEmbed configured dimensions do not match the selected model")
+        session = getattr(runtime_model, "model", None)
+        get_providers = getattr(session, "get_providers", None)
+        if not callable(get_providers):
+            raise RuntimeError("FastEmbed runtime did not expose its ONNX providers")
+        active_providers = tuple(get_providers())
+        if not active_providers or active_providers[0] != requested_provider:
+            raise RuntimeError(
+                "FastEmbed execution provider silently fell back: "
+                f"requested {requested_provider}, active {active_providers}"
             )
         cache_hash = _model_cache_fingerprint(cache_path, model_path)
-        self._version = f"fastembed:{package_version('fastembed')}:{model_id}:{cache_hash}"
+        distribution, distribution_version = _fastembed_distribution()
+        self._version = (
+            f"{distribution}:{distribution_version}:{model_id}:{cache_hash}:"
+            f"provider={requested_provider}:batch={batch_size}:threads={threads}"
+        )
 
     @property
     def model_id(self) -> str:
@@ -160,12 +214,35 @@ class FastEmbedProvider:
     def dimensions(self) -> int:
         return self._dimensions
 
+    @property
+    def execution_device(self) -> EmbeddingDevice:
+        return self._execution_device
+
+    @property
+    def execution_provider(self) -> str:
+        return self._execution_provider
+
+    @property
+    def batch_size(self) -> int:
+        return self._batch_size
+
+    @property
+    def threads(self) -> int:
+        return self._threads
+
     def embed_passages(self, texts: tuple[str, ...]) -> tuple[tuple[float, ...], ...]:
         if not isinstance(texts, tuple) or any(
             not isinstance(text, str) or not text for text in texts
         ):
             raise ValueError("FastEmbed passages must be a tuple of non-empty strings")
-        vectors = tuple(_vector(value) for value in self._model.passage_embed(list(texts)))
+        vectors = tuple(
+            _vector(value)
+            for value in self._model.passage_embed(
+                list(texts),
+                batch_size=self._batch_size,
+                parallel=None,
+            )
+        )
         if len(vectors) != len(texts):
             raise RuntimeError("FastEmbed returned an unexpected passage count")
         return self._validate(vectors)
@@ -173,7 +250,14 @@ class FastEmbedProvider:
     def embed_query(self, text: str) -> tuple[float, ...]:
         if not isinstance(text, str) or not text:
             raise ValueError("FastEmbed query must be non-empty text")
-        vectors = tuple(_vector(value) for value in self._model.query_embed([text]))
+        vectors = tuple(
+            _vector(value)
+            for value in self._model.query_embed(
+                [text],
+                batch_size=self._batch_size,
+                parallel=None,
+            )
+        )
         if len(vectors) != 1:
             raise RuntimeError("FastEmbed returned an unexpected query count")
         return self._validate(vectors)[0]
@@ -193,5 +277,6 @@ class FastEmbedProvider:
 __all__ = [
     "DEFAULT_FASTEMBED_DIMENSIONS",
     "DEFAULT_FASTEMBED_MODEL",
+    "EmbeddingDevice",
     "FastEmbedProvider",
 ]

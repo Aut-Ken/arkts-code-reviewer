@@ -22,6 +22,10 @@ embedding-local = [
     "fastembed>=0.8,<0.9",
     "httpx[socks]>=0.28,<0.29",
 ]
+embedding-gpu = [
+    "fastembed-gpu>=0.8,<0.9",
+    "httpx[socks]>=0.28,<0.29",
+]
 parser = [
     "tree-sitter>=0.22,<0.23",
     "tree-sitter-typescript>=0.21,<0.22",

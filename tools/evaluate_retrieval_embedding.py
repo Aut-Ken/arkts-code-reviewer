@@ -32,6 +32,9 @@ def main() -> int:
         type=Path,
         default=Path.home() / ".cache/arkts-code-reviewer/fastembed",
     )
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
+    parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--threads", type=int, default=2)
     parser.add_argument("--local-files-only", action="store_true")
     parser.add_argument("--require-thresholds", action="store_true")
     parser.add_argument("--min-recall-at-5", type=float, default=0.80)
@@ -45,6 +48,9 @@ def main() -> int:
             dimensions=args.dimensions,
             cache_dir=args.cache,
             local_files_only=args.local_files_only,
+            execution_device=args.device,
+            batch_size=args.batch_size,
+            threads=args.threads,
         )
         report = evaluate_embedding_candidate(args.manifest, provider)
     except (OSError, RuntimeError, TypeError, ValueError) as exc:

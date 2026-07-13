@@ -78,8 +78,7 @@ def load_evaluation_knowledge_file(path: str | Path) -> EvaluationKnowledgeBuild
     evaluation_path = Path(path).expanduser().absolute()
     if evaluation_path.is_symlink() or not evaluation_path.is_file():
         raise ValueError(
-            "Evaluation Knowledge input must be a regular non-symlink file: "
-            f"{evaluation_path}"
+            f"Evaluation Knowledge input must be a regular non-symlink file: {evaluation_path}"
         )
     try:
         raw = evaluation_path.read_bytes()
@@ -156,6 +155,49 @@ def _default_cache_dir() -> Path:
     return Path.home() / ".cache" / "arkts-code-reviewer" / "fastembed"
 
 
+def _add_embedding_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--embedding-cache", type=Path, default=_default_cache_dir())
+    parser.add_argument("--embedding-model", default=DEFAULT_EMBEDDING_MODEL)
+    parser.add_argument(
+        "--embedding-dimensions",
+        type=int,
+        default=DEFAULT_EMBEDDING_DIMENSIONS,
+    )
+    parser.add_argument(
+        "--embedding-device",
+        choices=("cpu", "cuda"),
+        default="cpu",
+        help="ONNX Runtime execution device; cuda fails closed if CUDA is unavailable",
+    )
+    parser.add_argument(
+        "--embedding-batch-size",
+        type=int,
+        default=8,
+        help="bounded FastEmbed batch size (1..64)",
+    )
+    parser.add_argument(
+        "--embedding-threads",
+        type=int,
+        default=2,
+        help="bounded FastEmbed worker thread count (1..64)",
+    )
+    parser.add_argument("--local-files-only", action="store_true")
+
+
+def _embedding_provider(args: argparse.Namespace) -> FastEmbedProvider | None:
+    if args.exact_only:
+        return None
+    return FastEmbedProvider(
+        model_id=args.embedding_model,
+        dimensions=args.embedding_dimensions,
+        cache_dir=args.embedding_cache,
+        local_files_only=args.local_files_only,
+        execution_device=args.embedding_device,
+        batch_size=args.embedding_batch_size,
+        threads=args.embedding_threads,
+    )
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Build, publish, and activate versioned Retrieval indexes"
@@ -169,14 +211,7 @@ def _parser() -> argparse.ArgumentParser:
     publish.add_argument("--publication", type=Path, required=True)
     publish.add_argument("--database-url")
     publish.add_argument("--exact-only", action="store_true")
-    publish.add_argument("--embedding-cache", type=Path, default=_default_cache_dir())
-    publish.add_argument("--embedding-model", default=DEFAULT_EMBEDDING_MODEL)
-    publish.add_argument(
-        "--embedding-dimensions",
-        type=int,
-        default=DEFAULT_EMBEDDING_DIMENSIONS,
-    )
-    publish.add_argument("--local-files-only", action="store_true")
+    _add_embedding_arguments(publish)
     publish.add_argument(
         "--switch-alias",
         metavar="ALIAS",
@@ -190,18 +225,7 @@ def _parser() -> argparse.ArgumentParser:
     publish_evaluation.add_argument("--evaluation", type=Path, required=True)
     publish_evaluation.add_argument("--database-url")
     publish_evaluation.add_argument("--exact-only", action="store_true")
-    publish_evaluation.add_argument(
-        "--embedding-cache", type=Path, default=_default_cache_dir()
-    )
-    publish_evaluation.add_argument(
-        "--embedding-model", default=DEFAULT_EMBEDDING_MODEL
-    )
-    publish_evaluation.add_argument(
-        "--embedding-dimensions",
-        type=int,
-        default=DEFAULT_EMBEDDING_DIMENSIONS,
-    )
-    publish_evaluation.add_argument("--local-files-only", action="store_true")
+    _add_embedding_arguments(publish_evaluation)
     publish_evaluation.add_argument(
         "--allow-evaluation-fixture",
         action="store_true",
@@ -234,16 +258,7 @@ def _parser() -> argparse.ArgumentParser:
 
 def _publish(args: argparse.Namespace) -> dict[str, object]:
     publication = load_published_knowledge_file(args.publication)
-    provider: EmbeddingProvider | None
-    if args.exact_only:
-        provider = None
-    else:
-        provider = FastEmbedProvider(
-            model_id=args.embedding_model,
-            dimensions=args.embedding_dimensions,
-            cache_dir=args.embedding_cache,
-            local_files_only=args.local_files_only,
-        )
+    provider = _embedding_provider(args)
     store = PostgresIndexStore(_database_url(args.database_url))
     result = publish_published_knowledge(
         publication,
@@ -264,6 +279,11 @@ def _publish(args: argparse.Namespace) -> dict[str, object]:
         "embedding_model": result.index.embedding_model,
         "embedding_version": result.index.embedding_version,
         "embedding_dimensions": result.index.embedding_dimensions,
+        "embedding_execution_provider": (
+            provider.execution_provider if provider is not None else None
+        ),
+        "embedding_batch_size": provider.batch_size if provider is not None else None,
+        "embedding_threads": provider.threads if provider is not None else None,
         "alias": args.switch_alias,
         "alias_changed": alias_changed,
     }
@@ -275,16 +295,7 @@ def _publish_evaluation(args: argparse.Namespace) -> dict[str, object]:
     if args.switch_alias is not None and not _is_staging_alias(args.switch_alias):
         raise ValueError("Evaluation indexes may switch only staging-* aliases")
     evaluation = load_evaluation_knowledge_file(args.evaluation)
-    provider: EmbeddingProvider | None
-    if args.exact_only:
-        provider = None
-    else:
-        provider = FastEmbedProvider(
-            model_id=args.embedding_model,
-            dimensions=args.embedding_dimensions,
-            cache_dir=args.embedding_cache,
-            local_files_only=args.local_files_only,
-        )
+    provider = _embedding_provider(args)
     store = PostgresIndexStore(_database_url(args.database_url))
     result = publish_evaluation_knowledge(
         evaluation,
@@ -311,6 +322,11 @@ def _publish_evaluation(args: argparse.Namespace) -> dict[str, object]:
         "embedding_model": result.index.embedding_model,
         "embedding_version": result.index.embedding_version,
         "embedding_dimensions": result.index.embedding_dimensions,
+        "embedding_execution_provider": (
+            provider.execution_provider if provider is not None else None
+        ),
+        "embedding_batch_size": provider.batch_size if provider is not None else None,
+        "embedding_threads": provider.threads if provider is not None else None,
         "alias": args.switch_alias,
         "alias_changed": alias_changed,
     }
