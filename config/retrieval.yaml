@@ -1,0 +1,35 @@
+schema_version: retrieval-config-v1
+version: retrieval-v1
+max_units: 50
+exact_candidate_limit: 50
+vector_candidate_limit: 30
+result_limit: 8
+rrf_k: 60
+minimum_vector_similarity: 0.30
+weights:
+  rule_id: 100
+  api: 50
+  component: 40
+  decorator: 40
+  exact_tag: 30
+  routing_tag: 10
+  keyword: 5
+  dimension_overlap: 2
+  applicability_exact: 3
+authority_priorities:
+  - authority: internal_baselined
+    priority: 100
+  - authority: official_language_spec
+    priority: 90
+  - authority: official_security_notice
+    priority: 90
+  - authority: feature_spec
+    priority: 80
+  - authority: official_documentation
+    priority: 70
+  - authority: official_api_definition
+    priority: 60
+  - authority: implementation_rule_reference
+    priority: 40
+  - authority: test_evidence
+    priority: 10
