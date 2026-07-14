@@ -1,0 +1,4491 @@
+{
+  "schema_version": "tag-truth-baseline-v1",
+  "suite_id": "tag-rdb-01a",
+  "truth_status": "provisional",
+  "annotation_policy_version": "rdb-domain-annotation-v1-provisional",
+  "suite_fingerprint": "tag-truth-suite:sha256:80bff8ae2c2a2dccee095e19238be65549007f67087315349be733dde44e417d",
+  "repository": {
+    "source_id": "applications-app-samples",
+    "repository": "applications_app_samples",
+    "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3"
+  },
+  "base_feature_config_fingerprint": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "candidate": {
+    "tag_id": "has_relational_database",
+    "status": "Draft",
+    "description": "候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）",
+    "tag_config_version": "tags-rdb-shadow-v1",
+    "config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7",
+    "any_import_use": [
+      "@kit.ArkData#relationalStore",
+      "@ohos.data.rdb#default",
+      "@ohos.data.relationalStore#default"
+    ],
+    "observed_config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7"
+  },
+  "source_count": 104,
+  "case_count": 109,
+  "contract": {
+    "matched_case_count": 109,
+    "mismatched_case_count": 0,
+    "mismatched_case_ids": [],
+    "file_hint_promotion_count": 0,
+    "perfect": true
+  },
+  "provisional_semantic_metrics": {
+    "eligible_case_count": 100,
+    "positive_case_count": 40,
+    "negative_case_count": 60,
+    "true_positive": 35,
+    "false_positive": 0,
+    "false_negative": 5,
+    "true_negative": 60,
+    "precision": 1.0,
+    "recall": 0.875,
+    "f1": 0.9333333333333333,
+    "hard_negative_case_count": 60
+  },
+  "provisional_semantic_metrics_by_split": {
+    "calibration": {
+      "eligible_case_count": 70,
+      "positive_case_count": 26,
+      "negative_case_count": 44,
+      "true_positive": 23,
+      "false_positive": 0,
+      "false_negative": 3,
+      "true_negative": 44,
+      "precision": 1.0,
+      "recall": 0.8846153846153846,
+      "f1": 0.9387755102040816
+    },
+    "acceptance_holdout": {
+      "eligible_case_count": 30,
+      "positive_case_count": 14,
+      "negative_case_count": 16,
+      "true_positive": 12,
+      "false_positive": 0,
+      "false_negative": 2,
+      "true_negative": 16,
+      "precision": 1.0,
+      "recall": 0.8571428571428571,
+      "f1": 0.923076923076923
+    }
+  },
+  "provisional_semantic_metrics_by_stratum": {
+    "direct-legacy-rdb": {
+      "eligible_case_count": 1,
+      "positive_case_count": 1,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "direct-legacy-relational-store": {
+      "eligible_case_count": 26,
+      "positive_case_count": 26,
+      "negative_case_count": 0,
+      "true_positive": 26,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "direct-modern": {
+      "eligible_case_count": 8,
+      "positive_case_count": 8,
+      "negative_case_count": 0,
+      "true_positive": 8,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "hard-negative-data-share": {
+      "eligible_case_count": 8,
+      "positive_case_count": 0,
+      "negative_case_count": 8,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 8,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "hard-negative-kv-store": {
+      "eligible_case_count": 8,
+      "positive_case_count": 0,
+      "negative_case_count": 8,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 8,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "hard-negative-preferences": {
+      "eligible_case_count": 30,
+      "positive_case_count": 0,
+      "negative_case_count": 30,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 30,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "hard-negative-related-data-api": {
+      "eligible_case_count": 9,
+      "positive_case_count": 0,
+      "negative_case_count": 9,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 9,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "hard-negative-udmf": {
+      "eligible_case_count": 5,
+      "positive_case_count": 0,
+      "negative_case_count": 5,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 5,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "indirect-wrapper": {
+      "eligible_case_count": 5,
+      "positive_case_count": 5,
+      "negative_case_count": 0,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 5,
+      "true_negative": 0,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null
+    }
+  },
+  "provisional_semantic_metrics_by_app_scope": {
+    "code/ArkTS-Sta/OperaterdbintaskpoolSample": {
+      "eligible_case_count": 3,
+      "positive_case_count": 3,
+      "negative_case_count": 0,
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8
+    },
+    "code/BasicFeature/Ability/AppStartup": {
+      "eligible_case_count": 7,
+      "positive_case_count": 3,
+      "negative_case_count": 4,
+      "true_positive": 3,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 4,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/BasicFeature/Connectivity/UploadAndDownLoad": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/DFX/FaultLogger": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/DataManagement/Preferences": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/DataManagement/UDMF/UDMFDemo": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType": {
+      "eligible_case_count": 2,
+      "positive_case_count": 0,
+      "negative_case_count": 2,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 2,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/DataManagement/pasteboard": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/AudioMusicPlayer": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/Camera_js": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/CapturerApplication": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/ImageShow": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/QRCodeScan": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Media/VideoTrimmer": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Notification/CustomCommonEvent": {
+      "eligible_case_count": 4,
+      "positive_case_count": 0,
+      "negative_case_count": 4,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 4,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Security/AppAccountManager": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/TV/TVAIFace": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/BasicFeature/Web/WebGetCameraImage": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/LanguageBaseClassLibrary/ZipLib": {
+      "eligible_case_count": 2,
+      "positive_case_count": 0,
+      "negative_case_count": 2,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 2,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Performance/OperateRDBInTaskPool": {
+      "eligible_case_count": 1,
+      "positive_case_count": 1,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/Solutions/Game/DistributedDataGobang": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Solutions/Game/Game2048": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Solutions/Media/MultiMedia": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Solutions/TV/TVAIFace": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Solutions/TV/TVConnect": {
+      "eligible_case_count": 15,
+      "positive_case_count": 5,
+      "negative_case_count": 10,
+      "true_positive": 4,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 10,
+      "precision": 1.0,
+      "recall": 0.8,
+      "f1": 0.888888888888889
+    },
+    "code/Solutions/Tools/FlipClock": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/Solutions/Tools/PatternLock": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/ArkTSDistributedCalc": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/ArkTSDistributedMusicPlayer": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/DistributedFilemanager": {
+      "eligible_case_count": 2,
+      "positive_case_count": 0,
+      "negative_case_count": 2,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 2,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/DistributedJotNote": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/DistributedNote": {
+      "eligible_case_count": 2,
+      "positive_case_count": 0,
+      "negative_case_count": 2,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 2,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/DistributedAppDev/DistributedRdb": {
+      "eligible_case_count": 5,
+      "positive_case_count": 4,
+      "negative_case_count": 1,
+      "true_positive": 4,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SuperFeature/DistributedAppDev/Kvstore": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SuperFeature/Widget/FormGame": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SystemFeature/ApplicationModels/CustomShare": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SystemFeature/ApplicationModels/Launcher": {
+      "eligible_case_count": 1,
+      "positive_case_count": 1,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/ApplicationModels/StageModel": {
+      "eligible_case_count": 5,
+      "positive_case_count": 1,
+      "negative_case_count": 4,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 4,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/DataManagement/CrossAppDataShare": {
+      "eligible_case_count": 6,
+      "positive_case_count": 4,
+      "negative_case_count": 2,
+      "true_positive": 3,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 2,
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1": 0.8571428571428571
+    },
+    "code/SystemFeature/DistributedAppDev/DistributedAccount": {
+      "eligible_case_count": 6,
+      "positive_case_count": 6,
+      "negative_case_count": 0,
+      "true_positive": 6,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/TV/TVApplicationManager": {
+      "eligible_case_count": 1,
+      "positive_case_count": 0,
+      "negative_case_count": 1,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "code/SystemFeature/TV/TVDemandPlayer": {
+      "eligible_case_count": 2,
+      "positive_case_count": 2,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+    },
+    "code/SystemFeature/TV/TVPhotos": {
+      "eligible_case_count": 3,
+      "positive_case_count": 3,
+      "negative_case_count": 0,
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 1,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8
+    },
+    "code/SystemFeature/TV/TVSettings": {
+      "eligible_case_count": 1,
+      "positive_case_count": 1,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/TV/TVSettingsData": {
+      "eligible_case_count": 5,
+      "positive_case_count": 5,
+      "negative_case_count": 0,
+      "true_positive": 5,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/Widget/FormExtAbility": {
+      "eligible_case_count": 1,
+      "positive_case_count": 1,
+      "negative_case_count": 0,
+      "true_positive": 1,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "cohorts": {
+    "semantic_labels": {
+      "needs_taxonomy_decision": 1,
+      "negative": 62,
+      "parser_control": 4,
+      "positive": 42
+    },
+    "strata": {
+      "direct-legacy-rdb": 1,
+      "direct-legacy-relational-store": 26,
+      "direct-modern": 8,
+      "hard-negative-data-share": 8,
+      "hard-negative-kv-store": 8,
+      "hard-negative-preferences": 30,
+      "hard-negative-related-data-api": 9,
+      "hard-negative-udmf": 5,
+      "indirect-wrapper": 5,
+      "ohos-test-exact": 1,
+      "ohos-test-parser-error": 1,
+      "ohos-test-unused-binding": 2,
+      "unresolved-owner-control": 4,
+      "vector-store-quarantine": 1
+    },
+    "review_status": {
+      "proposed": 109
+    },
+    "taxonomy_conflict_case_ids": [
+      "RDB-Q001"
+    ],
+    "parser_risk_case_ids": [],
+    "recovered_signal_case_ids": []
+  },
+  "quality_decision": {
+    "metrics_status": "provisional_not_activation_evidence",
+    "dataset_ready_for_human_review": true,
+    "activation_ready": false,
+    "activation_failures": [
+      "holdout_recall_below_gate",
+      "insufficient_hard_negatives",
+      "recall_below_gate",
+      "truth_v1_is_provisional_only",
+      "unresolved_taxonomy_conflict"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "RDB-N001",
+      "source_alias": "src004",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/pages/Index.ets@method:Index.getKvStoreData:L59-L74",
+      "unit_kind": "method",
+      "unit_symbol": "Index.getKvStoreData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N002",
+      "source_alias": "src005",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/KVStoreTask.ets@method:KVStoreTask.init:L29-L50",
+      "unit_kind": "method",
+      "unit_symbol": "KVStoreTask.init",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N003",
+      "source_alias": "src006",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/KvManagerUtilTask.ets@method:KvManagerUtilTask.init:L28-L32",
+      "unit_kind": "method",
+      "unit_symbol": "KvManagerUtilTask.init",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N004",
+      "source_alias": "src008",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/util/SingleKVStore.ts@method:SingleKVStoreUtil.getKVStore:L22-L52",
+      "unit_kind": "method",
+      "unit_symbol": "SingleKVStoreUtil.getKVStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N005",
+      "source_alias": "src009",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Connectivity/UploadAndDownLoad",
+      "source_family_id": "url-utils-preferences-family",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Connectivity/UploadAndDownLoad/features/uploadanddownload/src/main/ets/utils/UrlUtils.ets@method:UrlUtil.getUrl:L29-L38",
+      "unit_kind": "method",
+      "unit_symbol": "UrlUtil.getUrl",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N006",
+      "source_alias": "src010",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DFX/FaultLogger",
+      "source_family_id": "family-b10ed63a3522",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DFX/FaultLogger/entry/src/main/ets/common/PreferencesManager.ets@class:PreferencesManager:L21-L94",
+      "unit_kind": "class",
+      "unit_symbol": "PreferencesManager",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N007",
+      "source_alias": "src011",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/Preferences",
+      "source_family_id": "family-b65158ee9edd",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DataManagement/Preferences/entry/src/main/ets/pages/Index.ets@method:Index.getPreferencesFromStorage:L80-L83",
+      "unit_kind": "method",
+      "unit_symbol": "Index.getPreferencesFromStorage",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N008",
+      "source_alias": "src012",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UDMFDemo",
+      "source_family_id": "family-668456d27f39",
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DataManagement/UDMF/UDMFDemo/entry/src/main/ets/pages/Index.ets@function:getIconByType:L198-L212",
+      "unit_kind": "function",
+      "unit_symbol": "getIconByType",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N009",
+      "source_alias": "src013",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType",
+      "source_family_id": "family-e6d6dc29b171",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-udmf",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType/entry/src/main/ets/pages/displayMediaFile.ets@method:selectMediaType.getFileIcon:L63-L86",
+      "unit_kind": "method",
+      "unit_symbol": "selectMediaType.getFileIcon",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N010",
+      "source_alias": "src014",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType",
+      "source_family_id": "family-e6d6dc29b171",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-udmf",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType/entry/src/main/ets/pages/selectMediaType.ets@method:selectMediaType.UpdateSelectedFiles:L63-L114",
+      "unit_kind": "method",
+      "unit_symbol": "selectMediaType.UpdateSelectedFiles",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N011",
+      "source_alias": "src015",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/pasteboard",
+      "source_family_id": "family-71f8bcf589b4",
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/DataManagement/pasteboard/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Row.Column.Flex.Flex.Button:L99-L122",
+      "unit_kind": "ui_block",
+      "unit_symbol": "Index.build.Row.Column.Flex.Flex.Button",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N012",
+      "source_alias": "src016",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/AudioMusicPlayer",
+      "source_family_id": "family-104ecfa01e82",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/AudioMusicPlayer/entry/src/main/ets/common/utils/PreferencesUtil.ets@class:PreferencesUtil:L23-L88",
+      "unit_kind": "class",
+      "unit_symbol": "PreferencesUtil",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N013",
+      "source_alias": "src017",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/Camera_js",
+      "source_family_id": "family-e806c69f29d6",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/Camera_js/entry/src/main/ets/views/ModeSwitchPage.ets@method:ModeSwitchPage.initPhotoThumbnail:L170-L181",
+      "unit_kind": "method",
+      "unit_symbol": "ModeSwitchPage.initPhotoThumbnail",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N014",
+      "source_alias": "src018",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/CapturerApplication",
+      "source_family_id": "family-1c142a38fe14",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/CapturerApplication/entry/src/main/ets/common/utils/PreferencesUtil.ets@class:PreferencesUtil:L23-L88",
+      "unit_kind": "class",
+      "unit_symbol": "PreferencesUtil",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N015",
+      "source_alias": "src019",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/ImageShow",
+      "source_family_id": "family-6f3704f1584d",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/ImageShow/imagelibrary/src/main/ets/components/pages/ChoicePhotos.ets@method:ChoicePhotos.getFileAssetsFromType:L78-L103",
+      "unit_kind": "method",
+      "unit_symbol": "ChoicePhotos.getFileAssetsFromType",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N016",
+      "source_alias": "src020",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/QRCodeScan",
+      "source_family_id": "family-203263bc6209",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/QRCodeScan/Feature/src/main/ets/qrcodescan/QRCodeParser.ets@method:QRCodeParser.getImageSource:L164-L197",
+      "unit_kind": "method",
+      "unit_symbol": "QRCodeParser.getImageSource",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N017",
+      "source_alias": "src021",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/VideoTrimmer",
+      "source_family_id": "url-utils-preferences-family",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Media/VideoTrimmer/entry/src/main/ets/utils/UrlUtils.ets@method:UrlUtil.getUrl:L31-L36",
+      "unit_kind": "method",
+      "unit_symbol": "UrlUtil.getUrl",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N018",
+      "source_alias": "src022",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/LauncherAbility/LauncherAbility.ts@method:LauncherAbility.onDestroy:L35-L57",
+      "unit_kind": "method",
+      "unit_symbol": "LauncherAbility.onDestroy",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N019",
+      "source_alias": "src023",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/HistoryFeature.ts@method:HistoryFeature.init:L35-L54",
+      "unit_kind": "method",
+      "unit_symbol": "HistoryFeature.init",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N020",
+      "source_alias": "src024",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/LaunchFeature.ts@class:LaunchFeature:L24-L181",
+      "unit_kind": "class",
+      "unit_symbol": "LaunchFeature",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N021",
+      "source_alias": "src025",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/SettingFeature.ts@class:SettingFeature:L23-L76",
+      "unit_kind": "class",
+      "unit_symbol": "SettingFeature",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N022",
+      "source_alias": "src026",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Security/AppAccountManager",
+      "source_family_id": "family-2b16893ff1c1",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Security/AppAccountManager/entry/src/main/ets/model/AccountData.ts@class:AccountData:L23-L100",
+      "unit_kind": "class",
+      "unit_symbol": "AccountData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N023",
+      "source_alias": "src027",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/TV/TVAIFace",
+      "source_family_id": "family-1a7b3e405633",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/TV/TVAIFace/entry/src/main/ets/pages/imageSelect.ets@method:ImageSelect.getThumbnail:L76-L142",
+      "unit_kind": "method",
+      "unit_symbol": "ImageSelect.getThumbnail",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N024",
+      "source_alias": "src028",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Web/WebGetCameraImage",
+      "source_family_id": "family-61cb593ad2a7",
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Web/WebGetCameraImage/webgetcameraimage/src/main/ets/components/mainpage/MainPage.ets@struct:WebGetCameraImageView:L59-L145",
+      "unit_kind": "struct",
+      "unit_symbol": "WebGetCameraImageView",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N025",
+      "source_alias": "src030",
+      "source_kind": "main",
+      "app_scope": "code/LanguageBaseClassLibrary/ZipLib",
+      "source_family_id": "family-5f8b0adff4f4",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/LanguageBaseClassLibrary/ZipLib/entry/src/main/ets/zlib/CompressFilesPage.ets@method:CompressFilesPage.aboutToAppear:L67-L76",
+      "unit_kind": "method",
+      "unit_symbol": "CompressFilesPage.aboutToAppear",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N026",
+      "source_alias": "src031",
+      "source_kind": "main",
+      "app_scope": "code/LanguageBaseClassLibrary/ZipLib",
+      "source_family_id": "family-5f8b0adff4f4",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/LanguageBaseClassLibrary/ZipLib/entry/src/main/ets/zlib/ZipLibDecompressionPage.ets@method:ZipLibDecompressionPage.aboutToAppear:L66-L73",
+      "unit_kind": "method",
+      "unit_symbol": "ZipLibDecompressionPage.aboutToAppear",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N027",
+      "source_alias": "src104",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/utils/Preferences.ets@method:PreferencesStore.get:L37-L46",
+      "unit_kind": "method",
+      "unit_symbol": "PreferencesStore.get",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N028",
+      "source_alias": "src035",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Game/DistributedDataGobang",
+      "source_family_id": "family-58f33613a36c",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/Game/DistributedDataGobang/entry/src/main/ets/Model/KvStoreModel.ts@class:KvStoreModel:L26-L112",
+      "unit_kind": "class",
+      "unit_symbol": "KvStoreModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N029",
+      "source_alias": "src036",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Game/Game2048",
+      "source_family_id": "family-b9a6bade8d99",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/Game/Game2048/entry/src/main/ets/pages/Index.ets@method:Game2048.handleLocalData:L88-L111",
+      "unit_kind": "method",
+      "unit_symbol": "Game2048.handleLocalData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N030",
+      "source_alias": "src037",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Media/MultiMedia",
+      "source_family_id": "family-d570136c493a",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/Media/MultiMedia/entry/src/main/ets/model/MediaUtils.ts@method:MediaUtils.getFileAssetsFromType:L93-L120",
+      "unit_kind": "method",
+      "unit_symbol": "MediaUtils.getFileAssetsFromType",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N031",
+      "source_alias": "src038",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVAIFace",
+      "source_family_id": "family-34c36ada8f2a",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVAIFace/entry/src/main/ets/pages/ImageSelect.ets@method:ImageSelect.getThumbnail:L73-L139",
+      "unit_kind": "method",
+      "unit_symbol": "ImageSelect.getThumbnail",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N032",
+      "source_alias": "src041",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/PreferencesHelper.ets@class:PreferencesHelper:L21-L75",
+      "unit_kind": "class",
+      "unit_symbol": "PreferencesHelper",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N033",
+      "source_alias": "src104",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/utils/Preferences.ets@method:PreferencesStore.put:L25-L35",
+      "unit_kind": "method",
+      "unit_symbol": "PreferencesStore.put",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N034",
+      "source_alias": "src105",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVApplicationManager",
+      "source_family_id": "family-6d4c0e66c122",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVApplicationManager/product/tv/src/main/ets/Utils/DiskCache.ets@method:DiskCache.getStore:L35-L37",
+      "unit_kind": "method",
+      "unit_symbol": "DiskCache.getStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N035",
+      "source_alias": "src044",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/UserLibraryDao.ets@method:UserLibraryDao.setUserData:L26-L83",
+      "unit_kind": "method",
+      "unit_symbol": "UserLibraryDao.setUserData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N036",
+      "source_alias": "src045",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/features/nearbydevice/src/main/ets/util/WifiPreferences.ets@class:WifiPreferences:L21-L86",
+      "unit_kind": "class",
+      "unit_symbol": "WifiPreferences",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N037",
+      "source_alias": "src046",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/features/nearbydevice/src/main/ets/viewmodel/PreferenceModel.ets@method:PreferenceModel.getPreferencesFromStorage:L37-L43",
+      "unit_kind": "method",
+      "unit_symbol": "PreferenceModel.getPreferencesFromStorage",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N038",
+      "source_alias": "src047",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/features/scenelibrary/src/main/ets/pages/AddScenePage.ets@struct:AddScenePage:L103-L704",
+      "unit_kind": "struct",
+      "unit_symbol": "AddScenePage",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N039",
+      "source_alias": "src048",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/features/scenelibrary/src/main/ets/viewmodel/SceneModel.ets@method:SceneModel.getPreferencesFromStorage:L38-L45",
+      "unit_kind": "method",
+      "unit_symbol": "SceneModel.getPreferencesFromStorage",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N040",
+      "source_alias": "src049",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/entryability/EntryAbility.ets@method:EntryAbility.getPrivacyAllowed:L86-L103",
+      "unit_kind": "method",
+      "unit_symbol": "EntryAbility.getPrivacyAllowed",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N041",
+      "source_alias": "src050",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/pages/LauncherPage.ets@method:LauncherPage.getDataPreferences:L72-L74",
+      "unit_kind": "method",
+      "unit_symbol": "LauncherPage.getDataPreferences",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N042",
+      "source_alias": "src051",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/pages/OrderExecution/Test.ets@function:start:L195-L257",
+      "unit_kind": "function",
+      "unit_symbol": "start",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N043",
+      "source_alias": "src052",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/viewmodel/OrderExecution/netConfig.ets@method:Net.saveProperties:L37-L50",
+      "unit_kind": "method",
+      "unit_symbol": "Net.saveProperties",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N044",
+      "source_alias": "src053",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Tools/FlipClock",
+      "source_family_id": "family-a4a56ec8a59d",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/Tools/FlipClock/entry/src/main/ets/model/StorageModel.ets@class:StorageModel:L18-L72",
+      "unit_kind": "class",
+      "unit_symbol": "StorageModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N045",
+      "source_alias": "src054",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Tools/PatternLock",
+      "source_family_id": "family-ecda4f4f39fd",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/Tools/PatternLock/entry/src/main/ets/model/PreferencesUtils.ts@class:PreferencesUtils:L22-L42",
+      "unit_kind": "class",
+      "unit_symbol": "PreferencesUtils",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N046",
+      "source_alias": "src055",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/ArkTSDistributedCalc",
+      "source_family_id": "family-1463ec01f9a8",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/ArkTSDistributedCalc/entry/src/main/ets/model/KvStoreModel.ets@class:KvStoreModel:L26-L170",
+      "unit_kind": "class",
+      "unit_symbol": "KvStoreModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N047",
+      "source_alias": "src056",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/ArkTSDistributedMusicPlayer",
+      "source_family_id": "family-7d032fcc3bca",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/ArkTSDistributedMusicPlayer/entry/src/main/ets/model/KvStoreModel.ts@class:KvStoreModel:L23-L121",
+      "unit_kind": "class",
+      "unit_symbol": "KvStoreModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N048",
+      "source_alias": "src057",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedFilemanager",
+      "source_family_id": "family-be3f80e072e9",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedFilemanager/entry/src/main/ets/model/DataObject.ets@class:DataObject:L28-L130",
+      "unit_kind": "class",
+      "unit_symbol": "DataObject",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N049",
+      "source_alias": "src058",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedFilemanager",
+      "source_family_id": "family-be3f80e072e9",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedFilemanager/entry/src/main/ets/pages/Index.ets@struct:Index:L28-L340",
+      "unit_kind": "struct",
+      "unit_symbol": "Index",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N050",
+      "source_alias": "src059",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedJotNote",
+      "source_family_id": "family-e9e04ec37052",
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedJotNote/entry/src/main/ets/entryability/EntryAbility.ets@class:SourceObject:L32-L47",
+      "unit_kind": "class",
+      "unit_symbol": "SourceObject",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N051",
+      "source_alias": "src060",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedNote",
+      "source_family_id": "family-b2d7e4446e87",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedNote/entry/src/main/ets/model/DistributedCanvasModel.ts@method:DistributedCanvasModel.constructor:L26-L30",
+      "unit_kind": "method",
+      "unit_symbol": "DistributedCanvasModel.constructor",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N052",
+      "source_alias": "src061",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedNote",
+      "source_family_id": "family-b2d7e4446e87",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedNote/entry/src/main/ets/model/DistributedObjectModel.ts@method:DistributedObjectModel.constructor:L26-L31",
+      "unit_kind": "method",
+      "unit_symbol": "DistributedObjectModel.constructor",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N053",
+      "source_alias": "src062",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/LiteStore.ets@class:LiteStore:L27-L68",
+      "unit_kind": "class",
+      "unit_symbol": "LiteStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N054",
+      "source_alias": "src068",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/Kvstore",
+      "source_family_id": "family-30a134c198c5",
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/Kvstore/entry/src/main/ets/model/KvStoreModel.ets@class:KvStoreModel:L28-L121",
+      "unit_kind": "class",
+      "unit_symbol": "KvStoreModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N055",
+      "source_alias": "src069",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/Widget/FormGame",
+      "source_family_id": "family-353f7cc98f7e",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/Widget/FormGame/entry/src/main/ets/FormAbility/FormAbility.ts@class:FormAbility:L31-L251",
+      "unit_kind": "class",
+      "unit_symbol": "FormAbility",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N056",
+      "source_alias": "src070",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/CustomShare",
+      "source_family_id": "family-7fa716293389",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/CustomShare/ShareComponent/src/main/ets/feature/MediaUtils.ts@method:MediaUtils.getFileAssetsFromType:L23-L47",
+      "unit_kind": "method",
+      "unit_symbol": "MediaUtils.getFileAssetsFromType",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N057",
+      "source_alias": "src073",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba",
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/feature/DataShareHelper.ts@method:DataShareHelper.getDataShareHelper:L28-L31",
+      "unit_kind": "method",
+      "unit_symbol": "DataShareHelper.getDataShareHelper",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N058",
+      "source_alias": "src074",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/DataShareExtAbilityPage.ets@method:DataShareExtAbilityPage.aboutToAppear:L67-L72",
+      "unit_kind": "method",
+      "unit_symbol": "DataShareExtAbilityPage.aboutToAppear",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N059",
+      "source_alias": "src075",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/component/BookView.ets@method:BookView.delete:L71-L76",
+      "unit_kind": "method",
+      "unit_symbol": "BookView.delete",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-N060",
+      "source_alias": "src076",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba",
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "semantic_label": "negative",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/component/TitleBar.ets@method:TitleBar.add:L54-L57",
+      "unit_kind": "method",
+      "unit_symbol": "TitleBar.add",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-P001",
+      "source_alias": "src002",
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/view/DatabaseConnection.ets@class:DatabaseConnection:L48-L310",
+      "unit_kind": "class",
+      "unit_symbol": "DatabaseConnection",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P002",
+      "source_alias": "src004",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/pages/Index.ets@method:Index.getRdbStoreData:L76-L104",
+      "unit_kind": "method",
+      "unit_symbol": "Index.getRdbStoreData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P003",
+      "source_alias": "src007",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/RdbStoreTask.ets@method:RdbStoreTask.init:L29-L60",
+      "unit_kind": "method",
+      "unit_symbol": "RdbStoreTask.init",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P004",
+      "source_alias": "src008",
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/util/SingleKVStore.ts@method:RdbStoreUtil.getRdbStore:L76-L94",
+      "unit_kind": "method",
+      "unit_symbol": "RdbStoreUtil.getRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P005",
+      "source_alias": "src033",
+      "source_kind": "main",
+      "app_scope": "code/Performance/OperateRDBInTaskPool",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Performance/OperateRDBInTaskPool/casesfeature/operaterdbintaskpool/src/main/ets/view/DatabaseConnection.ets@class:DatabaseConnection:L31-L342",
+      "unit_kind": "class",
+      "unit_symbol": "DatabaseConnection",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P006",
+      "source_alias": "src039",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/ConnectDatabaseHelperImpl.ets@class:ConnectDatabaseHelperImpl:L25-L206",
+      "unit_kind": "class",
+      "unit_symbol": "ConnectDatabaseHelperImpl",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P007",
+      "source_alias": "src040",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/IDatabaseHelper.ets@class:IDatabaseHelper:L25-L179",
+      "unit_kind": "class",
+      "unit_symbol": "IDatabaseHelper",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P008",
+      "source_alias": "src042",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/DeviceLibraryDao.ets@method:DeviceLibraryDao.deleteAllDevice:L65-L71",
+      "unit_kind": "method",
+      "unit_symbol": "DeviceLibraryDao.deleteAllDevice",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P009",
+      "source_alias": "src043",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/SceneLibraryDao.ets@method:SceneLibraryDao.deleteAllScene:L79-L84",
+      "unit_kind": "method",
+      "unit_symbol": "SceneLibraryDao.deleteAllScene",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P010",
+      "source_alias": "src064",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/RdbModel.ets@class:RdbModel:L25-L323",
+      "unit_kind": "class",
+      "unit_symbol": "RdbModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P011",
+      "source_alias": "src065",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/SearchModel.ets@method:SearchModel.getData:L124-L264",
+      "unit_kind": "method",
+      "unit_symbol": "SearchModel.getData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P012",
+      "source_alias": "src066",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/pages/ContactEdit.ets@struct:ContactEdit:L33-L185",
+      "unit_kind": "struct",
+      "unit_symbol": "ContactEdit",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P013",
+      "source_alias": "src067",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/pages/Index.ets@method:Index.getData:L129-L144",
+      "unit_kind": "method",
+      "unit_symbol": "Index.getData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P014",
+      "source_alias": "src071",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/Launcher",
+      "source_family_id": "family-7e05e49f5ff3",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/Launcher/base/src/main/ets/default/manager/RdbManager.ts@class:RdbManagerModel:L44-L200",
+      "unit_kind": "class",
+      "unit_symbol": "RdbManagerModel",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P015",
+      "source_alias": "src072",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/DataShareExtensionAbility/DataShareExtAbility.ts@method:DataShareExtAbility.onCreate:L30-L51",
+      "unit_kind": "method",
+      "unit_symbol": "DataShareExtAbility.onCreate",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P016",
+      "source_alias": "src077",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/common/src/main/ets/model/Contact.ts@function:getListFromResultSet:L46-L70",
+      "unit_kind": "function",
+      "unit_symbol": "getListFromResultSet",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P017",
+      "source_alias": "src079",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataProvider/src/main/ets/DataShareAbility/DataShareAbility.ts@method:DataShareAbility.onCreate:L24-L40",
+      "unit_kind": "method",
+      "unit_symbol": "DataShareAbility.onCreate",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P018",
+      "source_alias": "src080",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/feature/ContactStore.ets@method:ContactStore.getRdbStore:L34-L42",
+      "unit_kind": "method",
+      "unit_symbol": "ContactStore.getRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P019",
+      "source_alias": "src082",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/constants/CommonConstants.ets@class:CommonConstants:L21-L54",
+      "unit_kind": "class",
+      "unit_symbol": "CommonConstants",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P020",
+      "source_alias": "src083",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/database/Account.ets@method:Account.toValuesBucket:L42-L48",
+      "unit_kind": "method",
+      "unit_symbol": "Account.toValuesBucket",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P021",
+      "source_alias": "src084",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/database/GlobalContext.ts@method:GlobalContext.getrdbStore:L28-L30",
+      "unit_kind": "method",
+      "unit_symbol": "GlobalContext.getrdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P022",
+      "source_alias": "src085",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/utils/DatabaseUtils.ets@method:DatabaseUtils.createRdbStore:L39-L58",
+      "unit_kind": "method",
+      "unit_symbol": "DatabaseUtils.createRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P023",
+      "source_alias": "src086",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/distributedaccount/pages/DistributedAccountInfo.ets@method:DistributedAccountInfo.aboutToAppear:L38-L47",
+      "unit_kind": "method",
+      "unit_symbol": "DistributedAccountInfo.aboutToAppear",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P024",
+      "source_alias": "src087",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/pages/Index.ets@build_method:Index.build:L102-L200",
+      "unit_kind": "build_method",
+      "unit_symbol": "Index.build",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P025",
+      "source_alias": "src088",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb",
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVDemandPlayer/entry/src/main/ets/Model/Rdb.ets@class:RdbStoreLike:L48-L61",
+      "unit_kind": "class",
+      "unit_symbol": "RdbStoreLike",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P026",
+      "source_alias": "src091",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50",
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/manager/RdbManager.ets@class:RdbManager:L46-L280",
+      "unit_kind": "class",
+      "unit_symbol": "RdbManager",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P027",
+      "source_alias": "src092",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50",
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/manager/loader/MediaTasks.ets@function:deleteDfsPhoto:L187-L205",
+      "unit_kind": "function",
+      "unit_symbol": "deleteDfsPhoto",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P028",
+      "source_alias": "src094",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettings",
+      "source_family_id": "family-0c4fc7722d20",
+      "split": "calibration",
+      "stratum": "direct-legacy-rdb",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettings/common/utils/src/main/ets/default/baseUtil/RdbStoreUtil.ets@method:createRdbStore:L41-L55",
+      "unit_kind": "method",
+      "unit_symbol": "createRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.rdb#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P029",
+      "source_alias": "src095",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/entry/src/main/ets/DataAbility/DataExtAbility.ets@class:UserDsExtAbility:L43-L387",
+      "unit_kind": "class",
+      "unit_symbol": "UserDsExtAbility",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P030",
+      "source_alias": "src096",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/entry/src/main/ets/Utils/SettingsDBHelper.ets@class:SettingsDBHelper:L65-L375",
+      "unit_kind": "class",
+      "unit_symbol": "SettingsDBHelper",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P031",
+      "source_alias": "src100",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/product/phone/src/main/ets/Utils/SettingsDBHelper.ets@method:SettingsDBHelper.initRdbStore:L115-L136",
+      "unit_kind": "method",
+      "unit_symbol": "SettingsDBHelper.initRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P032",
+      "source_alias": "src101",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/product/tv/src/main/ets/DataAbility/DataExtAbility.ets@class:UserDsExtAbility:L39-L306",
+      "unit_kind": "class",
+      "unit_symbol": "UserDsExtAbility",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P033",
+      "source_alias": "src102",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/product/tv/src/main/ets/Utils/SettingsDBHelper.ets@class:SettingsDBHelper:L75-L369",
+      "unit_kind": "class",
+      "unit_symbol": "SettingsDBHelper",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P034",
+      "source_alias": "src103",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/Widget/FormExtAbility",
+      "source_family_id": "family-4c8b67a737dc",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/Widget/FormExtAbility/persistentProxyForm/src/main/ets/dataShare/DataShare.ts@method:DataShareExtAbility.onCreate:L28-L56",
+      "unit_kind": "method",
+      "unit_symbol": "DataShareExtAbility.onCreate",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P035",
+      "source_alias": "src002",
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/view/DatabaseConnection.ets@method:DatabaseConnection.initRdbStore:L69-L89",
+      "unit_kind": "method",
+      "unit_symbol": "DatabaseConnection.initRdbStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-Q001",
+      "source_alias": "src029",
+      "source_kind": "docs_sample",
+      "app_scope": "code/DocsSample/ArkData/VectorStore",
+      "source_family_id": "family-6837894f067c",
+      "split": "diagnostic",
+      "stratum": "vector-store-quarantine",
+      "semantic_label": "needs_taxonomy_decision",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/DocsSample/ArkData/VectorStore/entry/src/main/ets/pages/crud/vectorStoreCTUD.ets@function:getVectorStore:L34-L220",
+      "unit_kind": "function",
+      "unit_symbol": "getVectorStore",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-T001",
+      "source_alias": "src099",
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "diagnostic",
+      "stratum": "ohos-test-exact",
+      "semantic_label": "positive",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/TestUtils.ets@method:DatabaseTestHelper.insertTestData:L94-L105",
+      "unit_kind": "method",
+      "unit_symbol": "DatabaseTestHelper.insertTestData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-T002",
+      "source_alias": "src090",
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb",
+      "split": "diagnostic",
+      "stratum": "ohos-test-parser-error",
+      "semantic_label": "positive",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVDemandPlayer/entry/src/ohosTest/ets/test/ComprehensiveContract.test.ets@method:MockInsertStoreLike.delete:L127-L129",
+      "unit_kind": "method",
+      "unit_symbol": "MockInsertStoreLike.delete",
+      "parser_layer": "L1",
+      "parser_error_nodes": 2,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "parser_error_nodes"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_database",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-T003",
+      "source_alias": "src097",
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "diagnostic",
+      "stratum": "ohos-test-unused-binding",
+      "semantic_label": "negative",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/SettingsDataOperationsOptimized.test.ets@function:settingsDataOperationsOptimizedTest:L39-L317",
+      "unit_kind": "function",
+      "unit_symbol": "settingsDataOperationsOptimizedTest",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-T004",
+      "source_alias": "src098",
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1",
+      "split": "diagnostic",
+      "stratum": "ohos-test-unused-binding",
+      "semantic_label": "negative",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/SettingsDataSmoke.test.ets@function:settingsDataSmokeTest:L44-L116",
+      "unit_kind": "function",
+      "unit_symbol": "settingsDataSmokeTest",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-U001",
+      "source_alias": "src001",
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "semantic_label": "parser_control",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/constant/RdbConstant.ets@fallback:fallback:L36-L36:C16-L38",
+      "unit_kind": "fallback",
+      "unit_symbol": "hunk-L36-L36",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-U002",
+      "source_alias": "src032",
+      "source_kind": "main",
+      "app_scope": "code/Performance/OperateRDBInTaskPool",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "semantic_label": "parser_control",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Performance/OperateRDBInTaskPool/casesfeature/operaterdbintaskpool/src/main/ets/constant/RdbConstant.ets@fallback:fallback:L26-L26:C6-L30",
+      "unit_kind": "fallback",
+      "unit_symbol": "hunk-L26-L26",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-U003",
+      "source_alias": "src063",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "semantic_label": "parser_control",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/RdbConst.ets@fallback:fallback:L24-L24:C4-L34",
+      "unit_kind": "fallback",
+      "unit_symbol": "hunk-L24-L24",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-U004",
+      "source_alias": "src078",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "semantic_label": "parser_control",
+      "metric_eligible": false,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/common/src/main/ets/utils/Consts.ts@fallback:fallback:L22-L22:C2-L40",
+      "unit_kind": "fallback",
+      "unit_symbol": "hunk-L22-L22",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-W001",
+      "source_alias": "src003",
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family",
+      "split": "acceptance_holdout",
+      "stratum": "indirect-wrapper",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/view/TaskPool.ets@function:queryItem:L49-L51",
+      "unit_kind": "function",
+      "unit_symbol": "queryItem",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-W002",
+      "source_alias": "src042",
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9",
+      "split": "acceptance_holdout",
+      "stratum": "indirect-wrapper",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/DeviceLibraryDao.ets@method:DeviceLibraryDao.addDeviceList:L47-L60",
+      "unit_kind": "method",
+      "unit_symbol": "DeviceLibraryDao.addDeviceList",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-W003",
+      "source_alias": "src081",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/feature/SyncContact.ets@function:syncContact:L22-L74",
+      "unit_kind": "function",
+      "unit_symbol": "syncContact",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-W004",
+      "source_alias": "src089",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb",
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVDemandPlayer/entry/src/main/ets/components/ProjectionPopup.ets@method:ProjectionPopup.equalTo:L42-L44",
+      "unit_kind": "method",
+      "unit_symbol": "ProjectionPopup.equalTo",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    },
+    {
+      "case_id": "RDB-W005",
+      "source_alias": "src093",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50",
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": false,
+      "actual_shadow_match": false,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/pages/Index.ets@struct:PhotoIndex:L84-L1776",
+      "unit_kind": "struct",
+      "unit_symbol": "PhotoIndex",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [],
+      "candidate_occurrence_provenance": [],
+      "candidate_matches": []
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+schema_version: tag-config-v2
+version: tags-rdb-shadow-v1
+tags:
+  - id: has_animation
+    status: Active
+    description: 代码使用 ArkUI 动画 API 或 transition 属性
+    triggers:
+      any_api: [animateTo]
+      any_attribute: [transition]
+
+  - id: has_async
+    status: Active
+    description: 代码包含异步函数、await 表达式或 Promise
+    triggers:
+      any_syntax: [async_fn, await_expr, promise]
+
+  - id: has_builder
+    status: Active
+    description: 代码使用 ArkUI Builder 装饰器
+    triggers:
+      any_decorator: ['@Builder', '@BuilderParam']
+
+  - id: has_file_io
+    status: Active
+    description: 代码使用文件系统 API
+    triggers:
+      any_api_prefix: [fileIo., fs.]
+
+  - id: has_image
+    status: Active
+    description: 代码使用图片组件或图片 API
+    triggers:
+      any_component: [Image, ImageAnimator, ImageSpan]
+      any_api_prefix: [image.]
+
+  - id: has_interactive_component
+    status: Active
+    description: 代码包含交互组件或受控交互事件属性
+    triggers:
+      any_component: [Button, Checkbox, Radio, Search, Slider, TextArea, TextInput, Toggle]
+      any_attribute: [onBlur, onChange, onClick, onFocus, onTouch]
+
+  - id: has_layout
+    status: Active
+    description: 代码使用 ArkUI 布局组件
+    triggers:
+      any_component: [Column, Flex, Grid, GridCol, GridRow, RelativeContainer, Row, Stack]
+
+  - id: has_lifecycle
+    status: Active
+    description: 代码包含组件或页面生命周期符号
+    triggers:
+      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, onPageHide, onPageShow, onReady]
+
+  - id: has_list_render
+    status: Active
+    description: 代码包含列表组件或列表渲染符号
+    triggers:
+      any_component: [Grid, List, WaterFlow]
+      any_symbol: [ForEach, LazyForEach, Repeat]
+
+  - id: has_logging
+    status: Active
+    description: 代码使用 hilog API
+    triggers:
+      any_api_prefix: [hilog.]
+
+  - id: has_media
+    status: Active
+    description: 代码使用音频、相机、媒体 API 或媒体组件
+    triggers:
+      any_component: [Video, XComponent]
+      any_api_prefix: [audio., camera., media.]
+
+  - id: has_navigation
+    status: Active
+    description: 代码使用导航组件或 router API
+    triggers:
+      any_component: [NavDestination, Navigation]
+      any_api_prefix: [router.]
+
+  - id: has_network
+    status: Active
+    description: 代码使用 HTTP、Socket 或 RCP 网络 API
+    triggers:
+      any_api_prefix: [http., rcp., socket.]
+
+  - id: has_permission_request
+    status: Active
+    description: 代码请求权限或使用访问控制 API
+    triggers:
+      any_api: [requestPermissionsFromUser]
+      any_api_prefix: [abilityAccessCtrl.]
+
+  - id: has_relational_database
+    status: Draft
+    description: 候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）
+    triggers:
+      any_import_use: ['@kit.ArkData#relationalStore', '@ohos.data.rdb#default', '@ohos.data.relationalStore#default']
+
+  - id: has_resource_ref
+    status: Active
+    description: 代码使用资源引用 API 或结构化资源引用 occurrence
+    triggers:
+      any_api: [$r, $rawfile]
+      has_resource_reference: true
+
+  - id: has_responsive_api
+    status: Active
+    description: 代码使用响应式布局 API 或 GridRow/GridCol
+    triggers:
+      any_component: [GridCol, GridRow]
+      any_api_prefix: [display., mediaquery.]
+
+  - id: has_state_management
+    status: Active
+    description: 代码使用 ArkUI 状态管理装饰器
+    triggers:
+      any_decorator: ['@BuilderParam', '@Consume', '@Link', '@Local', '@ObjectLink', '@Observed', '@ObservedV2', '@Once', '@Param', '@Prop', '@Provide', '@Require', '@State', '@StorageLink', '@StorageProp', '@Trace', '@Watch']
+
+  - id: has_storage
+    status: Active
+    description: 代码使用偏好或关系数据库存储 API
+    triggers:
+      any_api_prefix: [preferences., relationalStore.]
+
+  - id: has_subscription
+    status: Active
+    description: 代码使用 emitter 或 sensor 的订阅 API
+    triggers:
+      any_api: [emitter.off, emitter.on, emitter.once, sensor.off, sensor.on, sensor.once]
+
+  - id: has_taskpool
+    status: Active
+    description: 代码使用 taskpool API
+    triggers:
+      any_api_prefix: [taskpool.]
+
+  - id: has_text_display
+    status: Active
+    description: 代码包含文本展示或输入组件
+    triggers:
+      any_component: [Search, Text, TextArea, TextInput]
+      any_attribute: [placeholder]
+
+  - id: has_timer
+    status: Active
+    description: 代码创建或清理定时器
+    triggers:
+      any_api: [clearInterval, clearTimeout, setInterval, setTimeout, systemTimer.setInterval]
+
+  - id: has_user_input
+    status: Active
+    description: 代码包含用户文本输入组件
+    triggers:
+      any_component: [Search, TextArea, TextInput]
+
+  - id: has_worker
+    status: Active
+    description: 代码使用 Worker API 或 ThreadWorker
+    triggers:
+      any_api_prefix: [worker.]
+      any_symbol: [ThreadWorker]

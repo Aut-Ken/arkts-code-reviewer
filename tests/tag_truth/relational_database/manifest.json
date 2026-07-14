@@ -1,0 +1,2829 @@
+{
+  "schema_version": "tag-truth-v1",
+  "suite_id": "tag-rdb-01a",
+  "description": "Provisional owner-level shadow evaluation for has_relational_database on the pinned applications_app_samples corpus.",
+  "annotation_policy_version": "rdb-domain-annotation-v1-provisional",
+  "truth_status": "provisional",
+  "repository": {
+    "source_id": "applications-app-samples",
+    "repository": "applications_app_samples",
+    "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3"
+  },
+  "base_feature_config_fingerprint": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "candidate": {
+    "tag_id": "has_relational_database",
+    "status": "Draft",
+    "description": "候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）",
+    "tag_config_version": "tags-rdb-shadow-v1",
+    "config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7",
+    "any_import_use": [
+      "@kit.ArkData#relationalStore",
+      "@ohos.data.rdb#default",
+      "@ohos.data.relationalStore#default"
+    ]
+  },
+  "gates": {
+    "min_positive_cases": 40,
+    "min_negative_cases": 60,
+    "min_hard_negative_cases": 300,
+    "min_holdout_positive_cases": 4,
+    "min_holdout_negative_cases": 4,
+    "min_precision": 0.99,
+    "min_recall": 0.95,
+    "max_false_positives": 0,
+    "max_file_hint_promotions": 0
+  },
+  "sources": [
+    {
+      "alias": "src001",
+      "path": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/constant/RdbConstant.ets",
+      "content_sha256": "sha256:d5ffcd341e54e650dc00a9ee2e1ca5a0d40255952dec65b8ca4f592251f615f1",
+      "line_count": 38,
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family"
+    },
+    {
+      "alias": "src002",
+      "path": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/view/DatabaseConnection.ets",
+      "content_sha256": "sha256:9219cd86792039826af1ca7057a70879ce0d3db3c5409361356a69991d2ada33",
+      "line_count": 312,
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family"
+    },
+    {
+      "alias": "src003",
+      "path": "code/ArkTS-Sta/OperaterdbintaskpoolSample/entry/src/main/ets/pages/view/TaskPool.ets",
+      "content_sha256": "sha256:a67d5631b6547bd98092a0ef3a949d4e53b27022e911a66aaf4040cc0b2ae1ec",
+      "line_count": 117,
+      "source_kind": "main",
+      "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
+      "source_family_id": "operate-rdb-taskpool-family"
+    },
+    {
+      "alias": "src004",
+      "path": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:5c8a6d231b915aa93c8340dff78415d136d39e23466a20acf90717e63e95ff56",
+      "line_count": 142,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500"
+    },
+    {
+      "alias": "src005",
+      "path": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/KVStoreTask.ets",
+      "content_sha256": "sha256:21c7ee5c342a99082bb4a7ac22a8f0f81e1ff0c1006c39704b4eaa3953eb3f44",
+      "line_count": 54,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500"
+    },
+    {
+      "alias": "src006",
+      "path": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/KvManagerUtilTask.ets",
+      "content_sha256": "sha256:b965378db1d17858733b2b8681947aa918aa320fb99ff09a5b518d8419418142",
+      "line_count": 36,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500"
+    },
+    {
+      "alias": "src007",
+      "path": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/startup/RdbStoreTask.ets",
+      "content_sha256": "sha256:1711b7a1208f9320c05fc013155edbb9ed5a9fffe7ab347ed0bec3ffe0f69a8b",
+      "line_count": 64,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500"
+    },
+    {
+      "alias": "src008",
+      "path": "code/BasicFeature/Ability/AppStartup/entry/src/main/ets/util/SingleKVStore.ts",
+      "content_sha256": "sha256:d4547619724c2d32e864c64b27950ec4d7197f635eddfd280a9e86a3183087a0",
+      "line_count": 104,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Ability/AppStartup",
+      "source_family_id": "family-32e1626ce500"
+    },
+    {
+      "alias": "src009",
+      "path": "code/BasicFeature/Connectivity/UploadAndDownLoad/features/uploadanddownload/src/main/ets/utils/UrlUtils.ets",
+      "content_sha256": "sha256:435c73c6f3690e993827eacab33afbe2b496203705b6377aa1dbf90968403dbb",
+      "line_count": 47,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Connectivity/UploadAndDownLoad",
+      "source_family_id": "url-utils-preferences-family"
+    },
+    {
+      "alias": "src010",
+      "path": "code/BasicFeature/DFX/FaultLogger/entry/src/main/ets/common/PreferencesManager.ets",
+      "content_sha256": "sha256:8358140cae468d222bb6e8a24b685b7177c270ded8a0be1ad381d28c5d9e9062",
+      "line_count": 94,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DFX/FaultLogger",
+      "source_family_id": "family-b10ed63a3522"
+    },
+    {
+      "alias": "src011",
+      "path": "code/BasicFeature/DataManagement/Preferences/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:6703eaf1d708560ce7f37eb1065d463e0cd94cb221f63b779b860bc193df10ff",
+      "line_count": 152,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/Preferences",
+      "source_family_id": "family-b65158ee9edd"
+    },
+    {
+      "alias": "src012",
+      "path": "code/BasicFeature/DataManagement/UDMF/UDMFDemo/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:000f441c7fa3351b0b1e8976155f1d37c865e0b53fb748012a977905d46225aa",
+      "line_count": 599,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UDMFDemo",
+      "source_family_id": "family-668456d27f39"
+    },
+    {
+      "alias": "src013",
+      "path": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType/entry/src/main/ets/pages/displayMediaFile.ets",
+      "content_sha256": "sha256:8e9805ae03c6379366aab46531cc9222839c23d8761c27f5eb715a65e060aa61",
+      "line_count": 162,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType",
+      "source_family_id": "family-e6d6dc29b171"
+    },
+    {
+      "alias": "src014",
+      "path": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType/entry/src/main/ets/pages/selectMediaType.ets",
+      "content_sha256": "sha256:f7a1b36854cc60399cb36f9dbc8df9af3e802da60b264b865dcfe14e3a0cf637",
+      "line_count": 264,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/UDMF/UniformTypeDescriptor/UTDType",
+      "source_family_id": "family-e6d6dc29b171"
+    },
+    {
+      "alias": "src015",
+      "path": "code/BasicFeature/DataManagement/pasteboard/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:3a47819e902676b41ae7c77c2f3e9b62f4f73be6204c0b927f30b321cbbdbf0b",
+      "line_count": 243,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/DataManagement/pasteboard",
+      "source_family_id": "family-71f8bcf589b4"
+    },
+    {
+      "alias": "src016",
+      "path": "code/BasicFeature/Media/AudioMusicPlayer/entry/src/main/ets/common/utils/PreferencesUtil.ets",
+      "content_sha256": "sha256:4248383d74bd8f9c73420521f3e6dde7d52394564803f1af4a30d4998f52e7cb",
+      "line_count": 88,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/AudioMusicPlayer",
+      "source_family_id": "family-104ecfa01e82"
+    },
+    {
+      "alias": "src017",
+      "path": "code/BasicFeature/Media/Camera_js/entry/src/main/ets/views/ModeSwitchPage.ets",
+      "content_sha256": "sha256:bee512e93e32a184a07536328e4cc2c2f7594977138c5ce53b76ff4a709f14ce",
+      "line_count": 548,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/Camera_js",
+      "source_family_id": "family-e806c69f29d6"
+    },
+    {
+      "alias": "src018",
+      "path": "code/BasicFeature/Media/CapturerApplication/entry/src/main/ets/common/utils/PreferencesUtil.ets",
+      "content_sha256": "sha256:526565f50724f863b8a025c7baa3548735e3a0edbc15b688bf1a6f0b87fd445c",
+      "line_count": 88,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/CapturerApplication",
+      "source_family_id": "family-1c142a38fe14"
+    },
+    {
+      "alias": "src019",
+      "path": "code/BasicFeature/Media/ImageShow/imagelibrary/src/main/ets/components/pages/ChoicePhotos.ets",
+      "content_sha256": "sha256:6e461cd964720b2e4d471a8cf1aa18c5454d3a5e3628ead67b4774501516a068",
+      "line_count": 332,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/ImageShow",
+      "source_family_id": "family-6f3704f1584d"
+    },
+    {
+      "alias": "src020",
+      "path": "code/BasicFeature/Media/QRCodeScan/Feature/src/main/ets/qrcodescan/QRCodeParser.ets",
+      "content_sha256": "sha256:308746dbc4c3592a7f3751e6fb00db8439850797c713806a9538a1ca8f80d320",
+      "line_count": 232,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/QRCodeScan",
+      "source_family_id": "family-203263bc6209"
+    },
+    {
+      "alias": "src021",
+      "path": "code/BasicFeature/Media/VideoTrimmer/entry/src/main/ets/utils/UrlUtils.ets",
+      "content_sha256": "sha256:6a6fe1ce0ad84840586a05794f74e1bd29bd38f13ce24c19b495f1ce957f9b89",
+      "line_count": 49,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Media/VideoTrimmer",
+      "source_family_id": "url-utils-preferences-family"
+    },
+    {
+      "alias": "src022",
+      "path": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/LauncherAbility/LauncherAbility.ts",
+      "content_sha256": "sha256:f2553e93b11cc3fd9ff0729103acb00e5161bfc84746cd262954ba5a3842d12b",
+      "line_count": 84,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e"
+    },
+    {
+      "alias": "src023",
+      "path": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/HistoryFeature.ts",
+      "content_sha256": "sha256:003803a02d03de8b74d276d79d2bccdf800c3eeb001197b35cb897180d39cdd6",
+      "line_count": 58,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e"
+    },
+    {
+      "alias": "src024",
+      "path": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/LaunchFeature.ts",
+      "content_sha256": "sha256:016b2a77be19fd991f4c44ddace2c60ce65f398e8ccc33b62b055227d8ebebe7",
+      "line_count": 181,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e"
+    },
+    {
+      "alias": "src025",
+      "path": "code/BasicFeature/Notification/CustomCommonEvent/entry/src/main/ets/feature/SettingFeature.ts",
+      "content_sha256": "sha256:195689b1cd48c8c66ac5b6fd0e07bd4d43664b4c933b2127e4eb66699eecb472",
+      "line_count": 76,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Notification/CustomCommonEvent",
+      "source_family_id": "family-59bbd5e15d3e"
+    },
+    {
+      "alias": "src026",
+      "path": "code/BasicFeature/Security/AppAccountManager/entry/src/main/ets/model/AccountData.ts",
+      "content_sha256": "sha256:188feb5d9ae489e194c67538bb7c82cd383859be504a7f820b876fb6314f952b",
+      "line_count": 100,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Security/AppAccountManager",
+      "source_family_id": "family-2b16893ff1c1"
+    },
+    {
+      "alias": "src027",
+      "path": "code/BasicFeature/TV/TVAIFace/entry/src/main/ets/pages/imageSelect.ets",
+      "content_sha256": "sha256:8ad6c70ed4ff1ba8add617bcff1a8f4c78043cf9cb5a2f53328f4e887701e0d7",
+      "line_count": 335,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/TV/TVAIFace",
+      "source_family_id": "family-1a7b3e405633"
+    },
+    {
+      "alias": "src028",
+      "path": "code/BasicFeature/Web/WebGetCameraImage/webgetcameraimage/src/main/ets/components/mainpage/MainPage.ets",
+      "content_sha256": "sha256:67072cbc3809d1c9301c2cf0e27ac536fbd909d53c4224f828ce01e9a3769a2d",
+      "line_count": 145,
+      "source_kind": "main",
+      "app_scope": "code/BasicFeature/Web/WebGetCameraImage",
+      "source_family_id": "family-61cb593ad2a7"
+    },
+    {
+      "alias": "src029",
+      "path": "code/DocsSample/ArkData/VectorStore/entry/src/main/ets/pages/crud/vectorStoreCTUD.ets",
+      "content_sha256": "sha256:f33b6e15d00e9b5948290c742d01d703952cc7c2aa6c53ba79d373402b66b86a",
+      "line_count": 220,
+      "source_kind": "docs_sample",
+      "app_scope": "code/DocsSample/ArkData/VectorStore",
+      "source_family_id": "family-6837894f067c"
+    },
+    {
+      "alias": "src030",
+      "path": "code/LanguageBaseClassLibrary/ZipLib/entry/src/main/ets/zlib/CompressFilesPage.ets",
+      "content_sha256": "sha256:e89488f6b11ec5fb0f238d4d3cf77dd731119fcc145b1322f2906d62de455c42",
+      "line_count": 246,
+      "source_kind": "main",
+      "app_scope": "code/LanguageBaseClassLibrary/ZipLib",
+      "source_family_id": "family-5f8b0adff4f4"
+    },
+    {
+      "alias": "src031",
+      "path": "code/LanguageBaseClassLibrary/ZipLib/entry/src/main/ets/zlib/ZipLibDecompressionPage.ets",
+      "content_sha256": "sha256:bd03dd5daa9043fa507acf1efb1f6aa19e530cbf067a91b5cb5f4306e9600164",
+      "line_count": 236,
+      "source_kind": "main",
+      "app_scope": "code/LanguageBaseClassLibrary/ZipLib",
+      "source_family_id": "family-5f8b0adff4f4"
+    },
+    {
+      "alias": "src032",
+      "path": "code/Performance/OperateRDBInTaskPool/casesfeature/operaterdbintaskpool/src/main/ets/constant/RdbConstant.ets",
+      "content_sha256": "sha256:82a82de00b8bf6d96ced66f0b0c959a24caab6584760c11806c22379009e9e2b",
+      "line_count": 30,
+      "source_kind": "main",
+      "app_scope": "code/Performance/OperateRDBInTaskPool",
+      "source_family_id": "operate-rdb-taskpool-family"
+    },
+    {
+      "alias": "src033",
+      "path": "code/Performance/OperateRDBInTaskPool/casesfeature/operaterdbintaskpool/src/main/ets/view/DatabaseConnection.ets",
+      "content_sha256": "sha256:62436acf2f99db78d89527fcaf128f793d45f15899a70f18b323e7009395a259",
+      "line_count": 345,
+      "source_kind": "main",
+      "app_scope": "code/Performance/OperateRDBInTaskPool",
+      "source_family_id": "operate-rdb-taskpool-family"
+    },
+    {
+      "alias": "src035",
+      "path": "code/Solutions/Game/DistributedDataGobang/entry/src/main/ets/Model/KvStoreModel.ts",
+      "content_sha256": "sha256:f2d62b6a1bc153bdd01798ae9bd69e5a20b091126a19857988b184b90458312f",
+      "line_count": 112,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Game/DistributedDataGobang",
+      "source_family_id": "family-58f33613a36c"
+    },
+    {
+      "alias": "src036",
+      "path": "code/Solutions/Game/Game2048/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:c6ce14ce5dbb40a5fc73d857df3a9a4f16446b83d3b51c211b78e6d653c5eead",
+      "line_count": 292,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Game/Game2048",
+      "source_family_id": "family-b9a6bade8d99"
+    },
+    {
+      "alias": "src037",
+      "path": "code/Solutions/Media/MultiMedia/entry/src/main/ets/model/MediaUtils.ts",
+      "content_sha256": "sha256:a97d792e4f9079bd33bc6c8dc5a385cd2ad97fcd61d86372198c30c07618cbdb",
+      "line_count": 216,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Media/MultiMedia",
+      "source_family_id": "family-d570136c493a"
+    },
+    {
+      "alias": "src038",
+      "path": "code/Solutions/TV/TVAIFace/entry/src/main/ets/pages/ImageSelect.ets",
+      "content_sha256": "sha256:f912714f3ec1a4f339c22f4e5cddfdf9c33998e701b98779b7d188eb389c657e",
+      "line_count": 333,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVAIFace",
+      "source_family_id": "family-34c36ada8f2a"
+    },
+    {
+      "alias": "src039",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/ConnectDatabaseHelperImpl.ets",
+      "content_sha256": "sha256:4666016268f9c58933185f2c48a9efe7da1a674ecaa6bb9ad6f77dd39bb04b22",
+      "line_count": 206,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src040",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/IDatabaseHelper.ets",
+      "content_sha256": "sha256:34ce98e3d8e5c6b979ca88ff1ea5a368e61e29af0276a58b104d19d1bdce05a4",
+      "line_count": 179,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src041",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/PreferencesHelper.ets",
+      "content_sha256": "sha256:e0280f0937ab1df7a0440a89ed47be88ee684b45ed81e504482a0f7b6aabb99b",
+      "line_count": 75,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src042",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/DeviceLibraryDao.ets",
+      "content_sha256": "sha256:fcffc1613a297a9b2ae93c8ab0ab84bae58b3eff589a6eedbf20a4bba3e92d41",
+      "line_count": 145,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src043",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/SceneLibraryDao.ets",
+      "content_sha256": "sha256:177a420a6132075ec97c158a3945d7b5d197f705c34f225b2b75f819e54faed3",
+      "line_count": 141,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src044",
+      "path": "code/Solutions/TV/TVConnect/common/src/main/ets/database/dao/UserLibraryDao.ets",
+      "content_sha256": "sha256:56b1a0dad1e21d91f4b252058f3a18fffbbd70f6cf5b02439b581cd78925573b",
+      "line_count": 491,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src045",
+      "path": "code/Solutions/TV/TVConnect/features/nearbydevice/src/main/ets/util/WifiPreferences.ets",
+      "content_sha256": "sha256:093c277d3a65db393d6b22285cb17e9e98544a0f90b41b8c3b4c23424783d0b1",
+      "line_count": 86,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src046",
+      "path": "code/Solutions/TV/TVConnect/features/nearbydevice/src/main/ets/viewmodel/PreferenceModel.ets",
+      "content_sha256": "sha256:8ed57b320e4633ba186e93b8af80a3f7e57d0e0e39ad1015ea3bd9f9b046ecd8",
+      "line_count": 119,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src047",
+      "path": "code/Solutions/TV/TVConnect/features/scenelibrary/src/main/ets/pages/AddScenePage.ets",
+      "content_sha256": "sha256:320c5e96ba6701123efbd2b1d5bbb2f55086df919f667cb214232fdfeb6bedbd",
+      "line_count": 704,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src048",
+      "path": "code/Solutions/TV/TVConnect/features/scenelibrary/src/main/ets/viewmodel/SceneModel.ets",
+      "content_sha256": "sha256:8e7a6b98ff1951ff44b0f6172ae2ce9adc7effa0d268133c758e6f460da8897e",
+      "line_count": 155,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src049",
+      "path": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/entryability/EntryAbility.ets",
+      "content_sha256": "sha256:48762f1ee49d2658850b5ce57e35a3e3ad164b0125e6a8baff92573a5342baf7",
+      "line_count": 141,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src050",
+      "path": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/pages/LauncherPage.ets",
+      "content_sha256": "sha256:ed803c21331315bdd6afb6117a932f078568474a2fb8d8703b2b1c748025c0a2",
+      "line_count": 149,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src051",
+      "path": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/pages/OrderExecution/Test.ets",
+      "content_sha256": "sha256:7f351c3341b5b2baf31ced4b298dddc9e0e7ae3212f053abc2f89bfa5587d73d",
+      "line_count": 358,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src052",
+      "path": "code/Solutions/TV/TVConnect/product/tv/src/main/ets/viewmodel/OrderExecution/netConfig.ets",
+      "content_sha256": "sha256:10224227e064751fccee3249957dd19f5774c818fc8331811c67dad1fd0cb774",
+      "line_count": 85,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/TV/TVConnect",
+      "source_family_id": "family-e12e90b431d9"
+    },
+    {
+      "alias": "src053",
+      "path": "code/Solutions/Tools/FlipClock/entry/src/main/ets/model/StorageModel.ets",
+      "content_sha256": "sha256:28fa2d437f3754798e17b8bcd9cff37b0175770d30d6f073ea61689e0f160a4a",
+      "line_count": 72,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Tools/FlipClock",
+      "source_family_id": "family-a4a56ec8a59d"
+    },
+    {
+      "alias": "src054",
+      "path": "code/Solutions/Tools/PatternLock/entry/src/main/ets/model/PreferencesUtils.ts",
+      "content_sha256": "sha256:60d522c878ae29b1e98b27929a8d531e55d4152127d40542e89a070efff22273",
+      "line_count": 43,
+      "source_kind": "main",
+      "app_scope": "code/Solutions/Tools/PatternLock",
+      "source_family_id": "family-ecda4f4f39fd"
+    },
+    {
+      "alias": "src055",
+      "path": "code/SuperFeature/DistributedAppDev/ArkTSDistributedCalc/entry/src/main/ets/model/KvStoreModel.ets",
+      "content_sha256": "sha256:f1c49f64f07027ed1011dba1fcd6eeab31402b9eea4b63b20ce946ae3a133cb1",
+      "line_count": 170,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/ArkTSDistributedCalc",
+      "source_family_id": "family-1463ec01f9a8"
+    },
+    {
+      "alias": "src056",
+      "path": "code/SuperFeature/DistributedAppDev/ArkTSDistributedMusicPlayer/entry/src/main/ets/model/KvStoreModel.ts",
+      "content_sha256": "sha256:03c5f3ea5f0dc7c3eca4607f950b059c1bcddc7fd9089847bbfcd55cb53523c6",
+      "line_count": 123,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/ArkTSDistributedMusicPlayer",
+      "source_family_id": "family-7d032fcc3bca"
+    },
+    {
+      "alias": "src057",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedFilemanager/entry/src/main/ets/model/DataObject.ets",
+      "content_sha256": "sha256:a6bc43fbf75d37fa63c254bb13efddade08b7409e938281a93e08d886f9c2f13",
+      "line_count": 150,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedFilemanager",
+      "source_family_id": "family-be3f80e072e9"
+    },
+    {
+      "alias": "src058",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedFilemanager/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:ad68fdddfd65e4af6e2f5cf913f46a90e042eba74da5e15e3562e486890aa513",
+      "line_count": 340,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedFilemanager",
+      "source_family_id": "family-be3f80e072e9"
+    },
+    {
+      "alias": "src059",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedJotNote/entry/src/main/ets/entryability/EntryAbility.ets",
+      "content_sha256": "sha256:b1e53323948e775302bf761392f95281fac176ea5042068628f4149a7a5afcfa",
+      "line_count": 374,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedJotNote",
+      "source_family_id": "family-e9e04ec37052"
+    },
+    {
+      "alias": "src060",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedNote/entry/src/main/ets/model/DistributedCanvasModel.ts",
+      "content_sha256": "sha256:53ccdfa3c0088b97d5254459b3714a446655c20000ecd5340a10d276bc1400bd",
+      "line_count": 87,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedNote",
+      "source_family_id": "family-b2d7e4446e87"
+    },
+    {
+      "alias": "src061",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedNote/entry/src/main/ets/model/DistributedObjectModel.ts",
+      "content_sha256": "sha256:6998e1be5fa1e5db2555048d5ae146155b9951cc382be19b52ce841354206f6c",
+      "line_count": 99,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedNote",
+      "source_family_id": "family-b2d7e4446e87"
+    },
+    {
+      "alias": "src062",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/LiteStore.ets",
+      "content_sha256": "sha256:b0860b1131c6ced688adbea596d563c008b3695dc51a8a68e79d65489818dc51",
+      "line_count": 70,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src063",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/RdbConst.ets",
+      "content_sha256": "sha256:cf21072d69073b0dbd8159cbb0e025f48b2a6a910fbf4513ce4e2fd67bca445c",
+      "line_count": 34,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src064",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/RdbModel.ets",
+      "content_sha256": "sha256:c742160fc8b7d8f38703aa89005c2d7915b0fe37c16be85c16801c0158fd13c6",
+      "line_count": 323,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src065",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/SearchModel.ets",
+      "content_sha256": "sha256:d0886de6bec94699087c516b22eb90b4575dad200aaeec8650ba26c44f780f7f",
+      "line_count": 265,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src066",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/pages/ContactEdit.ets",
+      "content_sha256": "sha256:1953da5bb4e4567a2b11954d7b5747a349706642be256183008301d299d78995",
+      "line_count": 185,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src067",
+      "path": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:697e129a5888e4031341f16b937dca12890260ce503573a7f161e6a5a6e90105",
+      "line_count": 341,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7"
+    },
+    {
+      "alias": "src068",
+      "path": "code/SuperFeature/DistributedAppDev/Kvstore/entry/src/main/ets/model/KvStoreModel.ets",
+      "content_sha256": "sha256:54547711849cc1c0f20c791f26aa12e4889679beaac054be2e35f6c837f275d8",
+      "line_count": 121,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/Kvstore",
+      "source_family_id": "family-30a134c198c5"
+    },
+    {
+      "alias": "src069",
+      "path": "code/SuperFeature/Widget/FormGame/entry/src/main/ets/FormAbility/FormAbility.ts",
+      "content_sha256": "sha256:ae9f1a36774ef659c64618ec6c923fe0246577a0ac39eb2b6ec98e0530dc7b2d",
+      "line_count": 251,
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/Widget/FormGame",
+      "source_family_id": "family-353f7cc98f7e"
+    },
+    {
+      "alias": "src070",
+      "path": "code/SystemFeature/ApplicationModels/CustomShare/ShareComponent/src/main/ets/feature/MediaUtils.ts",
+      "content_sha256": "sha256:f8154633d83fd42c6748837ad969cf8747711365a8ac1bcf3905558280ed179e",
+      "line_count": 50,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/CustomShare",
+      "source_family_id": "family-7fa716293389"
+    },
+    {
+      "alias": "src071",
+      "path": "code/SystemFeature/ApplicationModels/Launcher/base/src/main/ets/default/manager/RdbManager.ts",
+      "content_sha256": "sha256:b0afc2380174afc75b502b5f8212df5be52ed0359bd6292d543fc51e0d139b00",
+      "line_count": 202,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/Launcher",
+      "source_family_id": "family-7e05e49f5ff3"
+    },
+    {
+      "alias": "src072",
+      "path": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/DataShareExtensionAbility/DataShareExtAbility.ts",
+      "content_sha256": "sha256:2eebd3f3e40a67aeeafaf3690a397c8daa0b0c3698b7ea1ff5d6a4dcd5215371",
+      "line_count": 130,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba"
+    },
+    {
+      "alias": "src073",
+      "path": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/feature/DataShareHelper.ts",
+      "content_sha256": "sha256:ea60823f7f5f18941b468e91da762c4729357f90a59a12a44054f3a13a0e1f7e",
+      "line_count": 169,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba"
+    },
+    {
+      "alias": "src074",
+      "path": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/DataShareExtAbilityPage.ets",
+      "content_sha256": "sha256:f3c44a86776288f8c4834c62542fd2f2a6fdce9bb0e6e79517e5922fd626056b",
+      "line_count": 73,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba"
+    },
+    {
+      "alias": "src075",
+      "path": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/component/BookView.ets",
+      "content_sha256": "sha256:0b2ac51cf5d0757c88a14f4b396b45706ff7bc94f1572775ec116962112b69f8",
+      "line_count": 77,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba"
+    },
+    {
+      "alias": "src076",
+      "path": "code/SystemFeature/ApplicationModels/StageModel/entry/src/main/ets/pages/component/TitleBar.ets",
+      "content_sha256": "sha256:95f03863acfe25c593a6e7d1ed3d6ef74615aee98229f97c0eef81b998952f6e",
+      "line_count": 58,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/ApplicationModels/StageModel",
+      "source_family_id": "family-a0db529438ba"
+    },
+    {
+      "alias": "src077",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/common/src/main/ets/model/Contact.ts",
+      "content_sha256": "sha256:7668ec79fe45d0dc49901c589e6858a3a056cb72e89430a24b2e0f91fd8e204a",
+      "line_count": 70,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src078",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/common/src/main/ets/utils/Consts.ts",
+      "content_sha256": "sha256:ecba22eb4e4a8106347cfbabd02975dd5eadd4853810942a11d2458c21db9351",
+      "line_count": 40,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src079",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/dataProvider/src/main/ets/DataShareAbility/DataShareAbility.ts",
+      "content_sha256": "sha256:0cb0aedf8473411e457b44e73ab50c5dd3077bfd55dfd491df7e0a398f58237f",
+      "line_count": 127,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src080",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/feature/ContactStore.ets",
+      "content_sha256": "sha256:bae90272104351c72cdd812eacc942b16d5f19944e0b523768abafab30e426c9",
+      "line_count": 165,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src081",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/feature/SyncContact.ets",
+      "content_sha256": "sha256:3e703bb7632b8464d060a48dbf1ec66f22d21c39761a3e17cce1d15f674be04e",
+      "line_count": 119,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src082",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/constants/CommonConstants.ets",
+      "content_sha256": "sha256:ca038e5577dc21f2fd7786f8150a9a6a9bb605053707bf956195fa0dea1b9f84",
+      "line_count": 54,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src083",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/database/Account.ets",
+      "content_sha256": "sha256:7eb62da4d4b0bfd7287627df7c6427ba4e3a49f279d67dc76d61383c7e7bfe0a",
+      "line_count": 49,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src084",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/database/GlobalContext.ts",
+      "content_sha256": "sha256:c04ef7cea1d6ab8e7532a974e8615dde9c1f35f7d7b640199bd0a7818dd3c8e5",
+      "line_count": 39,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src085",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/common/utils/DatabaseUtils.ets",
+      "content_sha256": "sha256:c7164946f07b222e726271df7d12c6e1f84b9eb1df911b42d995be46671faf12",
+      "line_count": 127,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src086",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/distributedaccount/pages/DistributedAccountInfo.ets",
+      "content_sha256": "sha256:0ad5d16c363dd936a9a54643ad3a26a3adcdfbafc43a4598366d46cce616e39a",
+      "line_count": 143,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src087",
+      "path": "code/SystemFeature/DistributedAppDev/DistributedAccount/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:65f6f9d8081a28ac7da376ea61d7082bc074e597dd3154e8a052b1544bb7dfe0",
+      "line_count": 201,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DistributedAppDev/DistributedAccount",
+      "source_family_id": "family-81f13523461a"
+    },
+    {
+      "alias": "src088",
+      "path": "code/SystemFeature/TV/TVDemandPlayer/entry/src/main/ets/Model/Rdb.ets",
+      "content_sha256": "sha256:fbd1e1f8c8ba662fe42d6c0efd74a79e4c5c8bb96ae4d987f8e2626a80696d1f",
+      "line_count": 182,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb"
+    },
+    {
+      "alias": "src089",
+      "path": "code/SystemFeature/TV/TVDemandPlayer/entry/src/main/ets/components/ProjectionPopup.ets",
+      "content_sha256": "sha256:56180a198ac5daefcc124cba9ea425eef56bb4f0f8b850c85b873d21cbfb3d08",
+      "line_count": 110,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb"
+    },
+    {
+      "alias": "src090",
+      "path": "code/SystemFeature/TV/TVDemandPlayer/entry/src/ohosTest/ets/test/ComprehensiveContract.test.ets",
+      "content_sha256": "sha256:380bee002abdbe711c8e79aa25fce64efba795ef8027c07dfe779be010d760ee",
+      "line_count": 1052,
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb"
+    },
+    {
+      "alias": "src091",
+      "path": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/manager/RdbManager.ets",
+      "content_sha256": "sha256:1ad9385e247677efbb12a6a393a44e5168c99a1d973f165ee2ac732cce6b41f3",
+      "line_count": 282,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50"
+    },
+    {
+      "alias": "src092",
+      "path": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/manager/loader/MediaTasks.ets",
+      "content_sha256": "sha256:33269df2c8b032fc0428044beb34b2f26b74227a607243fc74eb82e43409b18b",
+      "line_count": 205,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50"
+    },
+    {
+      "alias": "src093",
+      "path": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/pages/Index.ets",
+      "content_sha256": "sha256:ff7471d36dc3b756dce15a27eaa35d9b96fe4112e5f924f25c3cdf9c4325fbaf",
+      "line_count": 1776,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50"
+    },
+    {
+      "alias": "src094",
+      "path": "code/SystemFeature/TV/TVSettings/common/utils/src/main/ets/default/baseUtil/RdbStoreUtil.ets",
+      "content_sha256": "sha256:9ccf8fbacd7c8c65ddd05c9347420d4de3c2fe78ffd03877f06499655348db65",
+      "line_count": 111,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettings",
+      "source_family_id": "family-0c4fc7722d20"
+    },
+    {
+      "alias": "src095",
+      "path": "code/SystemFeature/TV/TVSettingsData/entry/src/main/ets/DataAbility/DataExtAbility.ets",
+      "content_sha256": "sha256:ecb5a7bb420a7b104b1ac5e85dc9c05687e655476fe9cc69bd73e47c492f16d1",
+      "line_count": 387,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src096",
+      "path": "code/SystemFeature/TV/TVSettingsData/entry/src/main/ets/Utils/SettingsDBHelper.ets",
+      "content_sha256": "sha256:d60c65cd803ff22ca558508f4812e26eb61c6c8ed6dda41a3792c6727a2cbf2c",
+      "line_count": 377,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src097",
+      "path": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/SettingsDataOperationsOptimized.test.ets",
+      "content_sha256": "sha256:75250081532d172e71f083720e3bab757cbeb5edb3a0519b9b86a016594e8767",
+      "line_count": 317,
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src098",
+      "path": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/SettingsDataSmoke.test.ets",
+      "content_sha256": "sha256:8f30fc841ac1beaf61409e03369eea8fecc63587854641178646291cbfbc1fff",
+      "line_count": 116,
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src099",
+      "path": "code/SystemFeature/TV/TVSettingsData/entry/src/ohosTest/ets/test/TestUtils.ets",
+      "content_sha256": "sha256:a1dcd31bc306c6f4e0b4ce9d34ff55904516bb28d712ab274738e28d250ff55d",
+      "line_count": 401,
+      "source_kind": "ohos_test",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src100",
+      "path": "code/SystemFeature/TV/TVSettingsData/product/phone/src/main/ets/Utils/SettingsDBHelper.ets",
+      "content_sha256": "sha256:5b39dd54e2df3fa103b808a11da299b08a20a510d9cbe2ab224411ca535501c4",
+      "line_count": 290,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src101",
+      "path": "code/SystemFeature/TV/TVSettingsData/product/tv/src/main/ets/DataAbility/DataExtAbility.ets",
+      "content_sha256": "sha256:0d6394a6a29653a89ff29ff915b0b78860199d6d599be5cc2e53ef4e65e25932",
+      "line_count": 306,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src102",
+      "path": "code/SystemFeature/TV/TVSettingsData/product/tv/src/main/ets/Utils/SettingsDBHelper.ets",
+      "content_sha256": "sha256:1f47ebb3636ba8245aaaf5dc0d2f97000a914d2fadb72548ef4ec4a1bb47fd75",
+      "line_count": 371,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettingsData",
+      "source_family_id": "family-e64c51c4bce1"
+    },
+    {
+      "alias": "src103",
+      "path": "code/SystemFeature/Widget/FormExtAbility/persistentProxyForm/src/main/ets/dataShare/DataShare.ts",
+      "content_sha256": "sha256:440d528c0eaab6377349d6bead1bfc54917926c0dbabbe0d908388d8ce397d59",
+      "line_count": 79,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/Widget/FormExtAbility",
+      "source_family_id": "family-4c8b67a737dc"
+    },
+    {
+      "alias": "src104",
+      "path": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/utils/Preferences.ets",
+      "content_sha256": "sha256:11d3540107e5545b3f16dc93cafd169686df611ea323ef88a6e3645d313f4b53",
+      "line_count": 49,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc"
+    },
+    {
+      "alias": "src105",
+      "path": "code/SystemFeature/TV/TVApplicationManager/product/tv/src/main/ets/Utils/DiskCache.ets",
+      "content_sha256": "sha256:1911c79f70a3a2dd830ff392414aff19a2f1488e839c957043fd035b4273226c",
+      "line_count": 109,
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVApplicationManager",
+      "source_family_id": "family-6d4c0e66c122"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "RDB-N001",
+      "source_alias": "src004",
+      "changed_line": 61,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Index.getKvStoreData",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        61
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N002",
+      "source_alias": "src005",
+      "changed_line": 32,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "KVStoreTask.init",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        32
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N003",
+      "source_alias": "src006",
+      "changed_line": 28,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "KvManagerUtilTask.init",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        28
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N004",
+      "source_alias": "src008",
+      "changed_line": 38,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "SingleKVStoreUtil.getKVStore",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        38
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N005",
+      "source_alias": "src009",
+      "changed_line": 30,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "UrlUtil.getUrl",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        30
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N006",
+      "source_alias": "src010",
+      "changed_line": 22,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "PreferencesManager",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        22
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N007",
+      "source_alias": "src011",
+      "changed_line": 82,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Index.getPreferencesFromStorage",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        82
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N008",
+      "source_alias": "src012",
+      "changed_line": 204,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "getIconByType",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "evidence_lines": [
+        204
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N009",
+      "source_alias": "src013",
+      "changed_line": 73,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "selectMediaType.getFileIcon",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-udmf",
+      "evidence_lines": [
+        73
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N010",
+      "source_alias": "src014",
+      "changed_line": 86,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "selectMediaType.UpdateSelectedFiles",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-udmf",
+      "evidence_lines": [
+        86
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N011",
+      "source_alias": "src015",
+      "changed_line": 114,
+      "expected_unit_kind": "ui_block",
+      "expected_unit_symbol": "Index.build.Row.Column.Flex.Flex.Button",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "evidence_lines": [
+        114
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N012",
+      "source_alias": "src016",
+      "changed_line": 26,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "PreferencesUtil",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N013",
+      "source_alias": "src017",
+      "changed_line": 171,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ModeSwitchPage.initPhotoThumbnail",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        171
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N014",
+      "source_alias": "src018",
+      "changed_line": 26,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "PreferencesUtil",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N015",
+      "source_alias": "src019",
+      "changed_line": 82,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ChoicePhotos.getFileAssetsFromType",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        82
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N016",
+      "source_alias": "src020",
+      "changed_line": 167,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "QRCodeParser.getImageSource",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        167
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N017",
+      "source_alias": "src021",
+      "changed_line": 32,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "UrlUtil.getUrl",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        32
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N018",
+      "source_alias": "src022",
+      "changed_line": 43,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "LauncherAbility.onDestroy",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        43
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N019",
+      "source_alias": "src023",
+      "changed_line": 37,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "HistoryFeature.init",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        37
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N020",
+      "source_alias": "src024",
+      "changed_line": 26,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "LaunchFeature",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N021",
+      "source_alias": "src025",
+      "changed_line": 25,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "SettingFeature",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        25
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N022",
+      "source_alias": "src026",
+      "changed_line": 25,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "AccountData",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        25
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N023",
+      "source_alias": "src027",
+      "changed_line": 83,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ImageSelect.getThumbnail",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        83
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N024",
+      "source_alias": "src028",
+      "changed_line": 72,
+      "expected_unit_kind": "struct",
+      "expected_unit_symbol": "WebGetCameraImageView",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-udmf",
+      "evidence_lines": [
+        72
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N025",
+      "source_alias": "src030",
+      "changed_line": 68,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "CompressFilesPage.aboutToAppear",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        68
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N026",
+      "source_alias": "src031",
+      "changed_line": 67,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ZipLibDecompressionPage.aboutToAppear",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        67
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N027",
+      "source_alias": "src104",
+      "changed_line": 39,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "PreferencesStore.get",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        39
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N028",
+      "source_alias": "src035",
+      "changed_line": 27,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "KvStoreModel",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        27
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N029",
+      "source_alias": "src036",
+      "changed_line": 90,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Game2048.handleLocalData",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        90
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N030",
+      "source_alias": "src037",
+      "changed_line": 98,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "MediaUtils.getFileAssetsFromType",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        98
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N031",
+      "source_alias": "src038",
+      "changed_line": 80,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ImageSelect.getThumbnail",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        80
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N032",
+      "source_alias": "src041",
+      "changed_line": 22,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "PreferencesHelper",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        22
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N033",
+      "source_alias": "src104",
+      "changed_line": 27,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "PreferencesStore.put",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        27
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N034",
+      "source_alias": "src105",
+      "changed_line": 36,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DiskCache.getStore",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        36
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N035",
+      "source_alias": "src044",
+      "changed_line": 31,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "UserLibraryDao.setUserData",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        31
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N036",
+      "source_alias": "src045",
+      "changed_line": 22,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "WifiPreferences",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        22
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N037",
+      "source_alias": "src046",
+      "changed_line": 39,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "PreferenceModel.getPreferencesFromStorage",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        39
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N038",
+      "source_alias": "src047",
+      "changed_line": 116,
+      "expected_unit_kind": "struct",
+      "expected_unit_symbol": "AddScenePage",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        116
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N039",
+      "source_alias": "src048",
+      "changed_line": 41,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "SceneModel.getPreferencesFromStorage",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        41
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N040",
+      "source_alias": "src049",
+      "changed_line": 91,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "EntryAbility.getPrivacyAllowed",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        91
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N041",
+      "source_alias": "src050",
+      "changed_line": 73,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "LauncherPage.getDataPreferences",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        73
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N042",
+      "source_alias": "src051",
+      "changed_line": 211,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "start",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        211
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N043",
+      "source_alias": "src052",
+      "changed_line": 38,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Net.saveProperties",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        38
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N044",
+      "source_alias": "src053",
+      "changed_line": 20,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "StorageModel",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        20
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N045",
+      "source_alias": "src054",
+      "changed_line": 23,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "PreferencesUtils",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        23
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N046",
+      "source_alias": "src055",
+      "changed_line": 28,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "KvStoreModel",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        28
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N047",
+      "source_alias": "src056",
+      "changed_line": 24,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "KvStoreModel",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        24
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N048",
+      "source_alias": "src057",
+      "changed_line": 29,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "DataObject",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        29
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N049",
+      "source_alias": "src058",
+      "changed_line": 49,
+      "expected_unit_kind": "struct",
+      "expected_unit_symbol": "Index",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        49
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N050",
+      "source_alias": "src059",
+      "changed_line": 34,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "SourceObject",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        34
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N051",
+      "source_alias": "src060",
+      "changed_line": 27,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DistributedCanvasModel.constructor",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        27
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N052",
+      "source_alias": "src061",
+      "changed_line": 27,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DistributedObjectModel.constructor",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        27
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N053",
+      "source_alias": "src062",
+      "changed_line": 28,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "LiteStore",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-preferences",
+      "evidence_lines": [
+        28
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N054",
+      "source_alias": "src068",
+      "changed_line": 30,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "KvStoreModel",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-kv-store",
+      "evidence_lines": [
+        30
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N055",
+      "source_alias": "src069",
+      "changed_line": 32,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "FormAbility",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        32
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N056",
+      "source_alias": "src070",
+      "changed_line": 28,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "MediaUtils.getFileAssetsFromType",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        28
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N057",
+      "source_alias": "src073",
+      "changed_line": 30,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DataShareHelper.getDataShareHelper",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-data-share",
+      "evidence_lines": [
+        30
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N058",
+      "source_alias": "src074",
+      "changed_line": 70,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DataShareExtAbilityPage.aboutToAppear",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        70
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N059",
+      "source_alias": "src075",
+      "changed_line": 72,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "BookView.delete",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        72
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-N060",
+      "source_alias": "src076",
+      "changed_line": 55,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "TitleBar.add",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "hard-negative-related-data-api",
+      "evidence_lines": [
+        55
+      ],
+      "rationale": "Related ArkData or legacy data API is used in this owner, but no allowlisted RelationalStore identity is used.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P001",
+      "source_alias": "src002",
+      "changed_line": 50,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "DatabaseConnection",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        50
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P002",
+      "source_alias": "src004",
+      "changed_line": 80,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Index.getRdbStoreData",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        80
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P003",
+      "source_alias": "src007",
+      "changed_line": 41,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "RdbStoreTask.init",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        41
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P004",
+      "source_alias": "src008",
+      "changed_line": 83,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "RdbStoreUtil.getRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        83
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P005",
+      "source_alias": "src033",
+      "changed_line": 33,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "DatabaseConnection",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        33
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P006",
+      "source_alias": "src039",
+      "changed_line": 35,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "ConnectDatabaseHelperImpl",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        35
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P007",
+      "source_alias": "src040",
+      "changed_line": 33,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "IDatabaseHelper",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        33
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P008",
+      "source_alias": "src042",
+      "changed_line": 68,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DeviceLibraryDao.deleteAllDevice",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        68
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P009",
+      "source_alias": "src043",
+      "changed_line": 81,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "SceneLibraryDao.deleteAllScene",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        81
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P010",
+      "source_alias": "src064",
+      "changed_line": 26,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "RdbModel",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P011",
+      "source_alias": "src065",
+      "changed_line": 244,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "SearchModel.getData",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        244
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P012",
+      "source_alias": "src066",
+      "changed_line": 109,
+      "expected_unit_kind": "struct",
+      "expected_unit_symbol": "ContactEdit",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        109
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P013",
+      "source_alias": "src067",
+      "changed_line": 132,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Index.getData",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        132
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P014",
+      "source_alias": "src071",
+      "changed_line": 45,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "RdbManagerModel",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        45
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P015",
+      "source_alias": "src072",
+      "changed_line": 32,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DataShareExtAbility.onCreate",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        32
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P016",
+      "source_alias": "src077",
+      "changed_line": 46,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "getListFromResultSet",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        46
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P017",
+      "source_alias": "src079",
+      "changed_line": 27,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DataShareAbility.onCreate",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        27
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P018",
+      "source_alias": "src080",
+      "changed_line": 36,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ContactStore.getRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        36
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P019",
+      "source_alias": "src082",
+      "changed_line": 26,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "CommonConstants",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P020",
+      "source_alias": "src083",
+      "changed_line": 42,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Account.toValuesBucket",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        42
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P021",
+      "source_alias": "src084",
+      "changed_line": 28,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "GlobalContext.getrdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        28
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P022",
+      "source_alias": "src085",
+      "changed_line": 43,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DatabaseUtils.createRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        43
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P023",
+      "source_alias": "src086",
+      "changed_line": 40,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DistributedAccountInfo.aboutToAppear",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        40
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P024",
+      "source_alias": "src087",
+      "changed_line": 122,
+      "expected_unit_kind": "build_method",
+      "expected_unit_symbol": "Index.build",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        122
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P025",
+      "source_alias": "src088",
+      "changed_line": 60,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "RdbStoreLike",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        60
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P026",
+      "source_alias": "src091",
+      "changed_line": 48,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "RdbManager",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        48
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P027",
+      "source_alias": "src092",
+      "changed_line": 193,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "deleteDfsPhoto",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        193
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P028",
+      "source_alias": "src094",
+      "changed_line": 44,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "createRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-rdb",
+      "evidence_lines": [
+        44
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P029",
+      "source_alias": "src095",
+      "changed_line": 43,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "UserDsExtAbility",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        43
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P030",
+      "source_alias": "src096",
+      "changed_line": 80,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "SettingsDBHelper",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        80
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P031",
+      "source_alias": "src100",
+      "changed_line": 117,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "SettingsDBHelper.initRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        117
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P032",
+      "source_alias": "src101",
+      "changed_line": 39,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "UserDsExtAbility",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        39
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P033",
+      "source_alias": "src102",
+      "changed_line": 90,
+      "expected_unit_kind": "class",
+      "expected_unit_symbol": "SettingsDBHelper",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        90
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P034",
+      "source_alias": "src103",
+      "changed_line": 31,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DataShareExtAbility.onCreate",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        31
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P035",
+      "source_alias": "src002",
+      "changed_line": 82,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DatabaseConnection.initRdbStore",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        82
+      ],
+      "rationale": "Owner-aware exact import use of an allowlisted RelationalStore canonical identity.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-Q001",
+      "source_alias": "src029",
+      "changed_line": 37,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "getVectorStore",
+      "semantic_label": "needs_taxonomy_decision",
+      "expected_shadow_match": true,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "vector-store-quarantine",
+      "evidence_lines": [
+        37
+      ],
+      "rationale": "VectorStore uses the same relationalStore identity with StoreConfig.vector=true; taxonomy is unresolved.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-T001",
+      "source_alias": "src099",
+      "changed_line": 100,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DatabaseTestHelper.insertTestData",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "ohos-test-exact",
+      "evidence_lines": [
+        100
+      ],
+      "rationale": "Exact test-only owner regression; excluded from product metrics.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-T002",
+      "source_alias": "src090",
+      "changed_line": 127,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "MockInsertStoreLike.delete",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "ohos-test-parser-error",
+      "evidence_lines": [
+        127
+      ],
+      "rationale": "Parser ERROR-node regression; test-only and excluded from product metrics.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-T003",
+      "source_alias": "src097",
+      "changed_line": 39,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "settingsDataOperationsOptimizedTest",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "ohos-test-unused-binding",
+      "evidence_lines": [
+        39
+      ],
+      "rationale": "Unused RDB binding must not become an owner-aware match.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-T004",
+      "source_alias": "src098",
+      "changed_line": 44,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "settingsDataSmokeTest",
+      "semantic_label": "negative",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "ohos-test-unused-binding",
+      "evidence_lines": [
+        44
+      ],
+      "rationale": "Unused RDB binding must not become an owner-aware match.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-U001",
+      "source_alias": "src001",
+      "changed_line": 36,
+      "expected_unit_kind": "fallback",
+      "expected_unit_symbol": "hunk-L36-L36",
+      "semantic_label": "parser_control",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "evidence_lines": [
+        36
+      ],
+      "rationale": "File-level RDB occurrence has no eligible owner and must not be promoted to unit_exact.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-U002",
+      "source_alias": "src032",
+      "changed_line": 26,
+      "expected_unit_kind": "fallback",
+      "expected_unit_symbol": "hunk-L26-L26",
+      "semantic_label": "parser_control",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "evidence_lines": [
+        26
+      ],
+      "rationale": "File-level RDB occurrence has no eligible owner and must not be promoted to unit_exact.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-U003",
+      "source_alias": "src063",
+      "changed_line": 24,
+      "expected_unit_kind": "fallback",
+      "expected_unit_symbol": "hunk-L24-L24",
+      "semantic_label": "parser_control",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "evidence_lines": [
+        24
+      ],
+      "rationale": "File-level RDB occurrence has no eligible owner and must not be promoted to unit_exact.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-U004",
+      "source_alias": "src078",
+      "changed_line": 22,
+      "expected_unit_kind": "fallback",
+      "expected_unit_symbol": "hunk-L22-L22",
+      "semantic_label": "parser_control",
+      "expected_shadow_match": false,
+      "metric_eligible": false,
+      "split": "diagnostic",
+      "stratum": "unresolved-owner-control",
+      "evidence_lines": [
+        22
+      ],
+      "rationale": "File-level RDB occurrence has no eligible owner and must not be promoted to unit_exact.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-W001",
+      "source_alias": "src003",
+      "changed_line": 49,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "queryItem",
+      "semantic_label": "positive",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "indirect-wrapper",
+      "evidence_lines": [
+        49
+      ],
+      "rationale": "TaskPool queryItem reaches DatabaseConnection, which owns the RelationalStore calls.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-W002",
+      "source_alias": "src042",
+      "changed_line": 47,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "DeviceLibraryDao.addDeviceList",
+      "semantic_label": "positive",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "acceptance_holdout",
+      "stratum": "indirect-wrapper",
+      "evidence_lines": [
+        47
+      ],
+      "rationale": "DAO delegates to databaseHelper.batchInsert without a direct RelationalStore import use.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-W003",
+      "source_alias": "src081",
+      "changed_line": 22,
+      "expected_unit_kind": "function",
+      "expected_unit_symbol": "syncContact",
+      "semantic_label": "positive",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "evidence_lines": [
+        22
+      ],
+      "rationale": "Sync flow delegates persistence to the local ContactStore wrapper.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-W004",
+      "source_alias": "src089",
+      "changed_line": 42,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ProjectionPopup.equalTo",
+      "semantic_label": "positive",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "evidence_lines": [
+        42
+      ],
+      "rationale": "Method delegates predicate construction to a local Rdb wrapper; the platform default import is invalid and unused.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-W005",
+      "source_alias": "src093",
+      "changed_line": 173,
+      "expected_unit_kind": "struct",
+      "expected_unit_symbol": "PhotoIndex",
+      "semantic_label": "positive",
+      "expected_shadow_match": false,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "indirect-wrapper",
+      "evidence_lines": [
+        173
+      ],
+      "rationale": "Page delegates persistence to the local rdbManager wrapper.",
+      "review_status": "proposed"
+    }
+  ]
+}
