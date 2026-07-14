@@ -12,3 +12,4 @@ reports/parser_validation/
 node_modules/
 material/
 .vscode/
+.codex/

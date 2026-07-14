@@ -39,9 +39,7 @@ def _api_aliases(index: KnowledgeIndex) -> dict[str, str]:
         for name in (symbol.canonical_name, *symbol.aliases):
             candidates.setdefault(name, set()).add(symbol.canonical_name)
     return {
-        name: next(iter(canonical))
-        for name, canonical in candidates.items()
-        if len(canonical) == 1
+        name: next(iter(canonical)) for name, canonical in candidates.items() if len(canonical) == 1
     }
 
 
@@ -60,9 +58,7 @@ def search_exact(
     priorities = config.authority_priority_by_id
     hits: list[ExactHit] = []
     searchable_context = " ".join(
-        value
-        for value in (unit.intent_summary, unit.semantic_code_excerpt)
-        if value is not None
+        value for value in (unit.intent_summary, unit.semantic_code_excerpt) if value is not None
     ).casefold()
     for record in index.records:
         evaluation = evaluate_applicability(record.clause.applicability, target)
@@ -133,6 +129,3 @@ def search_exact(
         ),
     )[: config.exact_candidate_limit]
     return tuple(replace(item, rank=rank) for rank, item in enumerate(ordered, start=1))
-
-
-__all__ = ["ExactHit", "search_exact"]
