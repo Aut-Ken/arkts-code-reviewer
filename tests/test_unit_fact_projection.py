@@ -84,6 +84,16 @@ class UnitFactProjectionTest(unittest.TestCase):
             quality="recovered",
             provenance="recovered",
         )
+        self.recovered_import_use = _fact(
+            source_ref_id,
+            kind="import_use",
+            name="connectionAlias",
+            canonical_name="@ohos.net.connection#default",
+            exact_range=_range(6, 6, 55, 64),
+            owner=OwnerRef("declaration", self.method.declaration_id),
+            quality="recovered",
+            provenance="recovered",
+        )
         self.unresolved_api = _fact(
             source_ref_id,
             kind="api",
@@ -101,6 +111,24 @@ class UnitFactProjectionTest(unittest.TestCase):
             canonical_name="http.request",
             exact_range=_range(11, 11, 100, 105),
             owner=OwnerRef("declaration", self.sibling.declaration_id),
+        )
+        self.sibling_import_use = _fact(
+            source_ref_id,
+            kind="import_use",
+            name="requestClient",
+            canonical_name="@ohos.net.http#default",
+            exact_range=_range(11, 11, 106, 112),
+            owner=OwnerRef("declaration", self.sibling.declaration_id),
+        )
+        self.unresolved_import_use = _fact(
+            source_ref_id,
+            kind="import_use",
+            name="unresolvedClient",
+            canonical_name="@ohos.net.socket#default",
+            exact_range=_range(7, 7, 71, 79),
+            owner=None,
+            quality="unresolved",
+            provenance="L0",
         )
 
         self.file_hints = ScopedFacts(
@@ -122,8 +150,11 @@ class UnitFactProjectionTest(unittest.TestCase):
                 self.direct_api,
                 self.nested_component,
                 self.recovered_attribute,
+                self.recovered_import_use,
                 self.unresolved_api,
+                self.unresolved_import_use,
                 self.sibling_api,
+                self.sibling_import_use,
             ),
             file_hints=self.file_hints,
         )
@@ -142,8 +173,20 @@ class UnitFactProjectionTest(unittest.TestCase):
         self.assertEqual(scope.unit_exact.components, ("Column",))
         self.assertEqual(scope.unit_exact.apis, ("router.pushUrl",))
         self.assertEqual(scope.unit_exact.attributes, ("onClick",))
+        self.assertEqual(
+            scope.unit_exact.import_uses,
+            ("@ohos.net.connection#default",),
+        )
         self.assertNotIn("http.request", scope.unit_exact.apis)
         self.assertNotIn("sensor.on", scope.unit_exact.apis)
+        self.assertNotIn(
+            "@ohos.net.http#default",
+            scope.unit_exact.import_uses,
+        )
+        self.assertNotIn(
+            "@ohos.net.socket#default",
+            scope.unit_exact.import_uses,
+        )
         self.assertEqual(
             scope.exact_occurrence_ids,
             tuple(
@@ -152,6 +195,7 @@ class UnitFactProjectionTest(unittest.TestCase):
                         self.direct_api.occurrence_id,
                         self.nested_component.occurrence_id,
                         self.recovered_attribute.occurrence_id,
+                        self.recovered_import_use.occurrence_id,
                     }
                 )
             ),
@@ -177,8 +221,19 @@ class UnitFactProjectionTest(unittest.TestCase):
         self.assertEqual(scope.unit_exact.apis, ("http.request",))
         self.assertEqual(scope.unit_exact.components, ())
         self.assertEqual(
+            scope.unit_exact.import_uses,
+            ("@ohos.net.http#default",),
+        )
+        self.assertEqual(
             scope.exact_occurrence_ids,
-            (self.sibling_api.occurrence_id,),
+            tuple(
+                sorted(
+                    (
+                        self.sibling_api.occurrence_id,
+                        self.sibling_import_use.occurrence_id,
+                    )
+                )
+            ),
         )
 
     def test_projects_direct_review_region_facts_for_change_set_unit(self) -> None:
@@ -264,6 +319,10 @@ class UnitFactProjectionTest(unittest.TestCase):
 
         self.assertNotIn("sensor.on", scope.unit_exact.apis)
         self.assertNotIn(self.unresolved_api.occurrence_id, scope.exact_occurrence_ids)
+        self.assertNotIn(
+            self.unresolved_import_use.occurrence_id,
+            scope.exact_occurrence_ids,
+        )
         self.assertIn("sensor.on", scope.file_hints.apis)
 
     def test_fallback_and_ownerless_units_keep_only_file_hints(self) -> None:

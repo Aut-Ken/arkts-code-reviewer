@@ -174,7 +174,11 @@ class FeatureRouter:
         for definition in self.config.tags_by_id.values():
             if definition.status == "Deprecated":
                 continue
-            signals = _match_signals(definition, facts)
+            signals = _match_signals(
+                definition,
+                facts,
+                include_owner_aware_import_uses=scope == "unit_exact",
+            )
             if not signals:
                 continue
             matches.append(
@@ -269,10 +273,16 @@ def derive_active_dimensions(
 def _match_signals(
     definition: TagDefinition,
     facts: FeatureFacts,
+    *,
+    include_owner_aware_import_uses: bool = False,
 ) -> tuple[FeatureSignal, ...]:
     return tuple(
         FeatureSignal(kind=cast(FeatureSignalKind, kind), value=value)
-        for kind, value in match_signal_pairs(definition, facts)
+        for kind, value in match_signal_pairs(
+            definition,
+            facts,
+            include_owner_aware_import_uses=include_owner_aware_import_uses,
+        )
     )
 
 

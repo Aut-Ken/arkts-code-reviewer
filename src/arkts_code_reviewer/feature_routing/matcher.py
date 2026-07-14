@@ -35,6 +35,8 @@ class FeatureFacts(Protocol):
 def match_signal_pairs(
     definition: TagDefinition,
     facts: FeatureFacts,
+    *,
+    include_owner_aware_import_uses: bool = False,
 ) -> tuple[SignalPair, ...]:
     triggers = definition.triggers
     signals: set[SignalPair] = set()
@@ -42,6 +44,13 @@ def match_signal_pairs(
     _exact_signals(signals, "apis", facts.apis, triggers.any_api)
     _pattern_signals(signals, facts.apis, triggers, prefix=True)
     _pattern_signals(signals, facts.apis, triggers, prefix=False)
+    if include_owner_aware_import_uses:
+        _exact_signals(
+            signals,
+            "import_uses",
+            getattr(facts, "import_uses", ()),
+            triggers.any_import_use,
+        )
     _exact_signals(signals, "decorators", facts.decorators, triggers.any_decorator)
     _exact_signals(signals, "attributes", facts.attributes, triggers.any_attribute)
     _exact_signals(signals, "symbols", facts.symbols, triggers.any_symbol)

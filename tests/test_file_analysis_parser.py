@@ -490,6 +490,29 @@ line two`
             )
         )
 
+        ambiguous_import = copy.deepcopy(raw)
+        raw_import_use = next(
+            item
+            for item in ambiguous_import["raw_occurrences"]
+            if item["kind"] == "import_use"
+        )
+        raw_import_use["binding_status"] = "ambiguous"
+        ambiguous_import_result = ArktsFileAnalysisParser(
+            FixedSnapshotParser(ambiguous_import)
+        ).parse_file(source_ref, SAMPLE)
+        self.assertIn(
+            "ambiguous_binding_scope",
+            ambiguous_import_result.analysis.diagnostics,
+        )
+        self.assertFalse(
+            any(
+                item.kind == "import_use"
+                and item.canonical_name == raw_import_use["canonical_name"]
+                and item.span.start_line == raw_import_use["span"]["start_line"]
+                for item in ambiguous_import_result.analysis.fact_occurrences
+            )
+        )
+
     @unittest.skipUnless(
         SIDECAR_NODE_MODULE.is_file(),
         "ArkTS tree-sitter sidecar dependencies are not installed",

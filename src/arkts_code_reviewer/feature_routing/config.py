@@ -7,9 +7,17 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from types import MappingProxyType
-from typing import Literal, Protocol, Self
+from typing import Literal, Protocol, Self, cast
 
-from pydantic import BaseModel, ConfigDict, ValidationError, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    SerializerFunctionWrapHandler,
+    ValidationError,
+    field_validator,
+    model_serializer,
+    model_validator,
+)
 from ruamel.yaml import YAML
 from ruamel.yaml.error import YAMLError
 
@@ -69,17 +77,29 @@ class TagTriggers(_StrictModel):
     any_api: tuple[str, ...] = ()
     any_api_prefix: tuple[str, ...] = ()
     any_api_suffix: tuple[str, ...] = ()
+    any_import_use: tuple[str, ...] = ()
     any_decorator: tuple[str, ...] = ()
     any_attribute: tuple[str, ...] = ()
     any_symbol: tuple[str, ...] = ()
     any_syntax: tuple[str, ...] = ()
     has_resource_reference: bool = False
 
+    @model_serializer(mode="wrap")
+    def _serialize_without_empty_v2_fields(
+        self,
+        handler: SerializerFunctionWrapHandler,
+    ) -> dict[str, object]:
+        payload = dict(cast(dict[str, object], handler(self)))
+        if not self.any_import_use:
+            payload.pop("any_import_use", None)
+        return payload
+
     @field_validator(
         "any_component",
         "any_api",
         "any_api_prefix",
         "any_api_suffix",
+        "any_import_use",
         "any_decorator",
         "any_attribute",
         "any_symbol",
@@ -95,6 +115,7 @@ class TagTriggers(_StrictModel):
         "any_api",
         "any_api_prefix",
         "any_api_suffix",
+        "any_import_use",
         "any_decorator",
         "any_attribute",
         "any_symbol",
@@ -107,7 +128,21 @@ class TagTriggers(_StrictModel):
         info: object,
     ) -> tuple[str, ...]:
         field_name = getattr(info, "field_name", "trigger")
-        return _require_sorted_unique(value, f"TagTriggers.{field_name}")
+        validated = _require_sorted_unique(value, f"TagTriggers.{field_name}")
+        if field_name == "any_import_use":
+            for identity in validated:
+                if identity.count("#") != 1:
+                    raise ValueError(
+                        "TagTriggers.any_import_use values must use "
+                        "canonical module#importedName identities"
+                    )
+                module, imported_name = identity.split("#", 1)
+                _require_text(module, "TagTriggers.any_import_use module")
+                _require_text(
+                    imported_name,
+                    "TagTriggers.any_import_use importedName",
+                )
+        return validated
 
     @model_validator(mode="after")
     def _require_trigger(self) -> Self:
@@ -116,6 +151,7 @@ class TagTriggers(_StrictModel):
             self.any_api,
             self.any_api_prefix,
             self.any_api_suffix,
+            self.any_import_use,
             self.any_decorator,
             self.any_attribute,
             self.any_symbol,
@@ -147,7 +183,7 @@ class TagDefinition(_StrictModel):
 
 
 class TagConfig(_StrictModel):
-    schema_version: Literal["tag-config-v1"]
+    schema_version: Literal["tag-config-v1", "tag-config-v2"]
     version: str
     tags: tuple[TagDefinition, ...]
 
@@ -168,6 +204,10 @@ class TagConfig(_StrictModel):
         ids = [tag.id for tag in self.tags]
         if len(ids) != len(set(ids)):
             raise ValueError("TagConfig.tags contains duplicate IDs")
+        if self.schema_version == "tag-config-v1" and any(
+            "any_import_use" in tag.triggers.model_fields_set for tag in self.tags
+        ):
+            raise ValueError("tag-config-v1 does not support any_import_use")
         return self
 
 
@@ -402,7 +442,7 @@ def _feature_fingerprint(
         "tag_config": {
             **tag_config.model_dump(mode="json", exclude={"tags"}),
             "tags": [
-                item.model_dump(mode="json")
+                _tag_definition_payload(item, tag_config.schema_version)
                 for item in sorted(tag_config.tags, key=lambda value: value.id)
             ],
         },
@@ -434,6 +474,20 @@ def _feature_fingerprint(
         separators=(",", ":"),
     ).encode("utf-8")
     return f"feature-config:sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
+def _tag_definition_payload(
+    definition: TagDefinition,
+    schema_version: Literal["tag-config-v1", "tag-config-v2"],
+) -> dict[str, object]:
+    payload = definition.model_dump(mode="json")
+    triggers = dict(payload["triggers"])
+    if schema_version == "tag-config-v1":
+        triggers.pop("any_import_use", None)
+    else:
+        triggers["any_import_use"] = list(definition.triggers.any_import_use)
+    payload["triggers"] = triggers
+    return payload
 
 
 __all__ = [

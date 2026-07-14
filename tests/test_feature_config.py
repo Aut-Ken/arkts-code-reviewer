@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import io
-import re
 import tomllib
 from dataclasses import replace
 from pathlib import Path
@@ -43,6 +42,23 @@ def _reverse_sequence(path: Path, key: str) -> None:
     path.write_text(output.getvalue(), encoding="utf-8")
 
 
+def _set_tag_schema(path: Path, schema_version: str) -> None:
+    _replace(
+        path,
+        "schema_version: tag-config-v1\n",
+        f"schema_version: {schema_version}\n",
+    )
+
+
+def _add_network_import_uses(path: Path, yaml_value: str) -> None:
+    _replace(
+        path,
+        "      any_api_prefix: [http., rcp., socket.]\n",
+        "      any_api_prefix: [http., rcp., socket.]\n"
+        f"      any_import_use: {yaml_value}\n",
+    )
+
+
 def test_default_feature_config_freezes_v1_truth() -> None:
     config = load_feature_config()
 
@@ -63,7 +79,10 @@ def test_default_feature_config_freezes_v1_truth() -> None:
     assert all(
         item.status == "Active" for item in config.review_questions_by_id.values()
     )
-    assert re.fullmatch(r"feature-config:sha256:[0-9a-f]{64}", config.fingerprint)
+    assert config.fingerprint == (
+        "feature-config:sha256:"
+        "bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c"
+    )
 
     assert config.tags_by_id["has_timer"].triggers.any_api == (
         "clearInterval",
@@ -87,6 +106,17 @@ def test_default_feature_config_freezes_v1_truth() -> None:
         "onFocus",
         "onTouch",
     )
+
+
+def test_v1_tag_config_dump_round_trips_without_v2_fields() -> None:
+    config = load_feature_config()
+    payload = config.tag_config.model_dump(mode="json")
+
+    assert all(
+        "any_import_use" not in tag["triggers"]
+        for tag in payload["tags"]
+    )
+    assert type(config.tag_config).model_validate(payload) == config.tag_config
 
 
 def test_default_dimension_and_question_policies_are_frozen() -> None:
@@ -136,6 +166,133 @@ def test_duplicate_yaml_keys_are_rejected(tmp_path: Path) -> None:
     _replace(tags_path, "version: tags-v1\n", "version: tags-v1\nversion: tags-v2\n")
 
     with pytest.raises(ValueError, match="unable to load tag config"):
+        load_feature_config(tags_path, dimensions_path)
+
+
+def test_nested_duplicate_trigger_keys_are_rejected(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _replace(
+        tags_path,
+        "      any_api_prefix: [http., rcp., socket.]\n",
+        "      any_api_prefix: [http., rcp., socket.]\n"
+        "      any_api_prefix: [connection.]\n",
+    )
+
+    with pytest.raises(ValueError, match="unable to load tag config"):
+        load_feature_config(tags_path, dimensions_path)
+
+
+@pytest.mark.parametrize(
+    "yaml_value",
+    ["[]", "['@ohos.net.connection#default']"],
+)
+def test_tag_config_v1_rejects_explicit_import_use_operator(
+    tmp_path: Path,
+    yaml_value: str,
+) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _add_network_import_uses(tags_path, yaml_value)
+
+    with pytest.raises(ValueError, match="tag-config-v1 does not support any_import_use"):
+        load_feature_config(tags_path, dimensions_path)
+
+
+def test_tag_config_v2_fingerprints_import_use_semantics(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+
+    omitted = load_feature_config(tags_path, dimensions_path)
+    _add_network_import_uses(tags_path, "[]")
+    explicit_empty = load_feature_config(tags_path, dimensions_path)
+    _replace(
+        tags_path,
+        "      any_import_use: []\n",
+        "      any_import_use: ['@ohos.net.connection#default']\n",
+    )
+    populated = load_feature_config(tags_path, dimensions_path)
+
+    assert omitted.tag_config.schema_version == "tag-config-v2"
+    assert omitted.fingerprint == explicit_empty.fingerprint
+    assert populated.fingerprint != explicit_empty.fingerprint
+    assert populated.tags_by_id["has_network"].triggers.any_import_use == (
+        "@ohos.net.connection#default",
+    )
+    assert populated.tags_by_id["has_network"].model_dump(mode="json")["triggers"][
+        "any_import_use"
+    ] == ["@ohos.net.connection#default"]
+
+
+def test_tag_config_v2_fingerprint_ignores_definition_order(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+    _add_network_import_uses(tags_path, "['@ohos.net.connection#default']")
+    forward = load_feature_config(tags_path, dimensions_path)
+
+    _reverse_sequence(tags_path, "tags")
+    reverse = load_feature_config(tags_path, dimensions_path)
+
+    assert reverse.fingerprint == forward.fingerprint
+
+
+def test_tag_config_v2_accepts_import_use_as_the_only_trigger(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+    _replace(
+        tags_path,
+        "      any_api_prefix: [http., rcp., socket.]\n",
+        "      any_import_use: ['@ohos.net.connection#default']\n",
+    )
+
+    config = load_feature_config(tags_path, dimensions_path)
+
+    assert config.tags_by_id["has_network"].triggers.any_api_prefix == ()
+    assert config.tags_by_id["has_network"].triggers.any_import_use == (
+        "@ohos.net.connection#default",
+    )
+
+
+@pytest.mark.parametrize(
+    ("yaml_value", "message"),
+    [
+        ("['connection']", "canonical module#importedName"),
+        ("['#default']", "module"),
+        ("['@ohos.net.connection#']", "importedName"),
+        ("['@ohos#net#default']", "canonical module#importedName"),
+        ("[' @ohos.net.connection#default']", "trimmed"),
+        (
+            "['@ohos.net.socket#default', '@ohos.net.connection#default']",
+            "sorted and unique",
+        ),
+        (
+            "['@ohos.net.connection#default', '@ohos.net.connection#default']",
+            "sorted and unique",
+        ),
+    ],
+)
+def test_tag_config_v2_rejects_noncanonical_import_use_values(
+    tmp_path: Path,
+    yaml_value: str,
+    message: str,
+) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+    _add_network_import_uses(tags_path, yaml_value)
+
+    with pytest.raises(ValueError, match=message):
+        load_feature_config(tags_path, dimensions_path)
+
+
+def test_unknown_import_trigger_operator_is_rejected(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+    _replace(
+        tags_path,
+        "      any_api_prefix: [http., rcp., socket.]\n",
+        "      any_api_prefix: [http., rcp., socket.]\n"
+        "      any_import_source: ['@ohos.net.connection']\n",
+    )
+
+    with pytest.raises(ValueError, match="any_import_source"):
         load_feature_config(tags_path, dimensions_path)
 
 

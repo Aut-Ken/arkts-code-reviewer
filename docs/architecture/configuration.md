@@ -1,7 +1,7 @@
 ---
 title: 配置与版本规范
 status: canonical
-updated: 2026-07-13
+updated: 2026-07-14
 ---
 
 # 配置与版本规范
@@ -35,6 +35,10 @@ config/dimensions.yaml    dimension-config-v1 / dimensions-v1
 config/knowledge_seed_v1.yaml / knowledge_annotations.yaml / knowledge_model_export.yaml
 config/retrieval.yaml     retrieval-config-v1 / retrieval-v1
 ```
+
+Feature config loader 还支持显式注入 `tag-config-v2`，供合同测试和影子评估使用；仓库及
+wheel 中的默认 `tags.yaml` 仍是 `tag-config-v1/tags-v1`，`CodeAnalyzer` 的默认运行行为
+没有切换。
 
 Knowledge 三份配置分别固定首批 seed、确定性 annotation 和模型外发边界。Rules、Reviewer、
 Output、Evaluation 配置仍是目标设计，当前仓库没有对应运行时 loader。`tagger.py` 只保留
@@ -169,7 +173,7 @@ tags:
       any_api_prefix: [image.]
 ```
 
-支持的 trigger operator 当前冻结为：
+`tag-config-v1` 支持的 trigger operator 冻结为：
 
 ```text
 any_component
@@ -186,6 +190,40 @@ has_resource_reference
 Tag 是代码场景，不包含 severity 和最终问题描述。`has_resource_reference` 直接消费结构化
 resource occurrence，不需要把资源引用伪装为 `$r` API。全部触发数组必须排序去重；空规则、
 未知 operator、重复 YAML key 和未知字段都会失败。
+
+### 6.1 `tag-config-v2` 的 owner-aware import-use 能力
+
+`tag-config-v2` 在 v1 operator 之外增加：
+
+```text
+any_import_use
+```
+
+配置值使用 FileAnalysis 产生的 canonical identity：
+
+```yaml
+triggers:
+  any_import_use:
+    - '@ohos.net.connection#default'
+```
+
+匹配采用大小写敏感的完整字符串相等，不支持 local alias、substring、prefix、suffix、glob
+或 regex。default、namespace 和 named import 分别使用 `module#default`、`module#*` 和
+`module#ExportName`。
+
+该 operator 只消费 `UnitFactScope.unit_exact.import_uses`；即使调用方手工向 `file_hints`
+填入同名字段，也不得触发 `any_import_use`。`import_use` 只证明当前 Unit 的标识符或类型引用
+解析到了该 canonical import binding，不等于函数调用、运行时行为或 Finding。只有 import
+binding、unused import、shadowed/ambiguous binding、owner unresolved 和 fallback Unit 都
+不得因此提升为精确 Tag。
+
+`unit_exact` 的既有投影合同同时接受 quality 为 `exact` 和 `recovered` 的 occurrence；投影后
+Matcher 无法再区分两者。因此后续 Tag shadow truth 必须单独统计 recovered 样本，质量不足时
+继续保持 Draft，不能把 `exact_tags` 误解为只来自 `quality=exact`。
+
+`tag-config-v1` 对 `any_import_use` fail closed，包括显式空数组。当前默认 `tags-v1` 没有
+该 operator，新增 loader/matcher 能力本身不会改变任何正式 Tag、Dimension 或 Review
+Question。
 
 ## 7. 已实现的 dimensions.yaml
 
@@ -265,6 +303,10 @@ feature-config:sha256:<digest>
 
 `FeatureRoutingResult` 和每个 `UnitFeatureProfile` 同时记录该 fingerprint、`tags-v1` 和
 `dimensions-v1`。声明顺序变化不改变语义 fingerprint，内容或声明版本变化会改变它。
+
+仅增加 `tag-config-v2` loader 能力不得改变任何 v1 配置的规范化输出或 fingerprint。v1
+通用序列化不包含 v2-only 字段；v2 fingerprint 显式包含 `any_import_use`。只有正式切换配置
+版本或内容时，相关 profile/result identity 才随之改变。
 
 `pyproject.toml` 使用 wheel `force-include` 将仓库两份 YAML 安装为：
 
