@@ -19,17 +19,25 @@ from arkts_code_reviewer.feature_routing.matcher import (
 from arkts_code_reviewer.feature_routing.models import (
     FEATURE_ROUTING_SCHEMA_VERSION,
     FEATURE_ROUTING_V2_SCHEMA_VERSION,
+    FEATURE_ROUTING_V3_SCHEMA_VERSION,
     DimensionRoute,
     FeatureRoutingResult,
     FeatureRoutingSchemaVersion,
     FeatureSignal,
     FeatureSignalKind,
+    FileSymbolLeafFeatureSignal,
     NormalizedFeatureSignal,
     ReviewQuestionBinding,
     RouteSignalScope,
     SignalScope,
     TagMatch,
     UnitFeatureProfile,
+    UnitSymbolLeafOwnerRoleFeatureSignal,
+)
+from arkts_code_reviewer.feature_routing.owner_context import (
+    OwnerAwareRoutingInput,
+    UnitOwnerContext,
+    derive_unit_owner_context,
 )
 
 if TYPE_CHECKING:
@@ -51,6 +59,11 @@ class FeatureRouter:
         self,
         scopes: Sequence[UnitFactScope],
     ) -> FeatureRoutingResult:
+        if self.config.tag_config.schema_version == "tag-config-v4":
+            raise ValueError(
+                "FeatureRouter.route cannot evaluate tag-config-v4 without owner "
+                "inputs; use FeatureRouter.route_owner_aware_shadow(inputs)"
+            )
         # Keep the Feature Routing package importable without initializing the
         # Code Analysis package.  The concrete runtime type is needed only when
         # a route operation is actually requested.
@@ -64,12 +77,43 @@ class FeatureRouter:
         unit_ids = [scope.unit_id for scope in normalized]
         if len(unit_ids) != len(set(unit_ids)):
             raise ValueError("FeatureRouter scopes contain duplicate unit_id values")
-        schema_version = _routing_schema_version(
-            self.config.tag_config.schema_version
-        )
+        return self._route_scopes(normalized, {})
+
+    def route_owner_aware_shadow(
+        self,
+        inputs: Sequence[OwnerAwareRoutingInput],
+    ) -> FeatureRoutingResult:
+        if self.config.tag_config.schema_version != "tag-config-v4":
+            raise ValueError("FeatureRouter.route_owner_aware_shadow requires tag-config-v4")
+        if not isinstance(inputs, Sequence) or isinstance(inputs, str | bytes):
+            raise ValueError("FeatureRouter owner-aware inputs must be a sequence")
+        normalized_inputs = tuple(inputs)
+        if any(not isinstance(item, OwnerAwareRoutingInput) for item in normalized_inputs):
+            raise ValueError(
+                "FeatureRouter owner-aware inputs must contain OwnerAwareRoutingInput values"
+            )
+        unit_ids = [item.scope.unit_id for item in normalized_inputs]
+        if len(unit_ids) != len(set(unit_ids)):
+            raise ValueError("FeatureRouter owner-aware inputs contain duplicate units")
+        scopes = tuple(item.scope for item in normalized_inputs)
+        contexts = {
+            item.scope.unit_id: derive_unit_owner_context(
+                item.file_analysis,
+                item.unit,
+            )
+            for item in normalized_inputs
+        }
+        return self._route_scopes(scopes, contexts)
+
+    def _route_scopes(
+        self,
+        scopes: tuple[UnitFactScope, ...],
+        owner_contexts: dict[str, UnitOwnerContext],
+    ) -> FeatureRoutingResult:
+        schema_version = _routing_schema_version(self.config.tag_config.schema_version)
         profiles = tuple(
             sorted(
-                (self._profile(scope) for scope in normalized),
+                (self._profile(scope, owner_contexts.get(scope.unit_id)) for scope in scopes),
                 key=lambda profile: profile.unit_id,
             )
         )
@@ -97,11 +141,19 @@ class FeatureRouter:
             schema_version=schema_version,
         )
 
-    def _profile(self, scope: UnitFactScope) -> UnitFeatureProfile:
+    def _profile(
+        self,
+        scope: UnitFactScope,
+        owner_context: UnitOwnerContext | None = None,
+    ) -> UnitFeatureProfile:
         tag_matches = tuple(
             sorted(
                 (
-                    *self._tag_matches(scope.unit_exact, "unit_exact"),
+                    *self._tag_matches(
+                        scope.unit_exact,
+                        "unit_exact",
+                        owner_context=owner_context,
+                    ),
                     *self._tag_matches(scope.file_hints, "file_hint"),
                 ),
                 key=lambda match: (match.tag_id, match.status, match.scope),
@@ -138,9 +190,7 @@ class FeatureRouter:
             if definition.status == "Draft"
             and (
                 definition.always_check
-                or set(definition.triggers.any_tag).intersection(
-                    (*exact_tags, *shadow_exact_tags)
-                )
+                or set(definition.triggers.any_tag).intersection((*exact_tags, *shadow_exact_tags))
             )
         )
         review_question_ids, shadow_review_question_ids = self._questions(
@@ -170,13 +220,22 @@ class FeatureRouter:
             dimension_routes=routes,
             review_question_ids=review_question_ids,
             shadow_review_question_ids=shadow_review_question_ids,
-            diagnostics=tuple(scope.diagnostics),
+            diagnostics=tuple(
+                sorted(
+                    {
+                        *scope.diagnostics,
+                        *(() if owner_context is None else owner_context.diagnostics),
+                    }
+                )
+            ),
         )
 
     def _tag_matches(
         self,
         facts: FeatureFacts,
         scope: SignalScope,
+        *,
+        owner_context: UnitOwnerContext | None = None,
     ) -> tuple[TagMatch, ...]:
         matches: list[TagMatch] = []
         for definition in self.config.tags_by_id.values():
@@ -186,6 +245,8 @@ class FeatureRouter:
                 definition,
                 facts,
                 include_owner_aware_import_uses=scope == "unit_exact",
+                signal_scope=scope,
+                owner_context=owner_context,
             )
             if not signals:
                 continue
@@ -283,26 +344,59 @@ def _feature_signals(
     facts: FeatureFacts,
     *,
     include_owner_aware_import_uses: bool = False,
+    signal_scope: SignalScope | None = None,
+    owner_context: UnitOwnerContext | None = None,
 ) -> tuple[FeatureSignal, ...]:
     signals: list[FeatureSignal] = []
     for signal in match_signals(
         definition,
         facts,
         include_owner_aware_import_uses=include_owner_aware_import_uses,
+        signal_scope=signal_scope,
+        owner_context=owner_context,
     ):
         kind = cast(FeatureSignalKind, signal.kind)
         if signal.operator is None and signal.normalized_value is None:
             signals.append(FeatureSignal(kind=kind, value=signal.value))
-        elif (
-            signal.operator == "any_symbol_leaf"
-            and signal.normalized_value is not None
-        ):
+        elif signal.operator == "any_symbol_leaf" and signal.normalized_value is not None:
             signals.append(
                 NormalizedFeatureSignal(
                     kind=kind,
                     value=signal.value,
                     operator=signal.operator,
                     normalized_value=signal.normalized_value,
+                )
+            )
+        elif (
+            signal.operator == "any_file_symbol_leaf"
+            and signal.normalized_value is not None
+            and signal.owner_evidence is None
+        ):
+            signals.append(
+                FileSymbolLeafFeatureSignal(
+                    kind=kind,
+                    value=signal.value,
+                    operator=signal.operator,
+                    normalized_value=signal.normalized_value,
+                )
+            )
+        elif (
+            signal.operator == "any_unit_symbol_leaf_with_owner_role"
+            and signal.normalized_value is not None
+            and signal.owner_evidence is not None
+        ):
+            evidence = signal.owner_evidence
+            signals.append(
+                UnitSymbolLeafOwnerRoleFeatureSignal(
+                    kind=kind,
+                    value=signal.value,
+                    operator=signal.operator,
+                    normalized_value=signal.normalized_value,
+                    owner_role=evidence.owner_role,
+                    symbol_occurrence_id=evidence.symbol_occurrence_id,
+                    direct_owner_declaration_id=(evidence.direct_owner_declaration_id),
+                    enclosing_owner_declaration_id=(evidence.enclosing_owner_declaration_id),
+                    role_evidence_occurrence_ids=(evidence.role_evidence_occurrence_ids),
                 )
             )
         else:
@@ -317,9 +411,10 @@ def _routing_schema_version(
         return FEATURE_ROUTING_SCHEMA_VERSION
     if tag_config_schema_version == "tag-config-v3":
         return FEATURE_ROUTING_V2_SCHEMA_VERSION
+    if tag_config_schema_version == "tag-config-v4":
+        return FEATURE_ROUTING_V3_SCHEMA_VERSION
     raise ValueError(
-        f"unsupported Tag config schema for Feature Routing: "
-        f"{tag_config_schema_version}"
+        f"unsupported Tag config schema for Feature Routing: {tag_config_schema_version}"
     )
 
 

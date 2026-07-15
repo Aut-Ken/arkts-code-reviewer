@@ -5,6 +5,12 @@ import json
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Literal
 
+from arkts_code_reviewer.feature_routing.owner_context import (
+    OWNER_CONTEXT_DIAGNOSTICS,
+    OwnerAwareRoutingInput,
+    OwnerRole,
+)
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
@@ -13,7 +19,12 @@ if TYPE_CHECKING:
 
 FEATURE_ROUTING_SCHEMA_VERSION: Literal["feature-routing-v1"] = "feature-routing-v1"
 FEATURE_ROUTING_V2_SCHEMA_VERSION: Literal["feature-routing-v2"] = "feature-routing-v2"
-FeatureRoutingSchemaVersion = Literal["feature-routing-v1", "feature-routing-v2"]
+FEATURE_ROUTING_V3_SCHEMA_VERSION: Literal["feature-routing-v3"] = "feature-routing-v3"
+FeatureRoutingSchemaVersion = Literal[
+    "feature-routing-v1",
+    "feature-routing-v2",
+    "feature-routing-v3",
+]
 
 SignalScope = Literal["unit_exact", "file_hint"]
 RouteSignalScope = Literal["unit_exact", "file_hint", "mixed", "none"]
@@ -53,7 +64,7 @@ _SIGNAL_KINDS = {
 _ROUTE_SCOPES = {"unit_exact", "file_hint", "mixed", "none"}
 _RETRIEVAL_POLICIES = {"signal_required", "always", "disabled"}
 _STATUSES = {"Active", "Draft"}
-_PROFILE_DIAGNOSTICS = {"unit_owner_unresolved"}
+_PROFILE_DIAGNOSTICS = {"unit_owner_unresolved", *OWNER_CONTEXT_DIAGNOSTICS}
 _RESULT_DIAGNOSTICS: set[str] = set()
 
 
@@ -102,7 +113,7 @@ class FeatureSignal:
             raise ValueError(f"unsupported FeatureSignal.kind: {self.kind}")
         _non_empty(self.value, "FeatureSignal.value")
 
-    def to_dict(self) -> dict[str, str]:
+    def to_dict(self) -> dict[str, object]:
         return {"kind": self.kind, "value": self.value}
 
 
@@ -114,9 +125,7 @@ class NormalizedFeatureSignal(FeatureSignal):
     def __post_init__(self) -> None:
         super().__post_init__()
         if self.operator != "any_symbol_leaf":
-            raise ValueError(
-                f"unsupported NormalizedFeatureSignal.operator: {self.operator}"
-            )
+            raise ValueError(f"unsupported NormalizedFeatureSignal.operator: {self.operator}")
         if self.kind != "symbols":
             raise ValueError("NormalizedFeatureSignal.any_symbol_leaf requires kind=symbols")
         _non_empty(
@@ -124,15 +133,11 @@ class NormalizedFeatureSignal(FeatureSignal):
             "NormalizedFeatureSignal.normalized_value",
         )
         if "." in self.normalized_value:
-            raise ValueError(
-                "NormalizedFeatureSignal.normalized_value must be unqualified"
-            )
+            raise ValueError("NormalizedFeatureSignal.normalized_value must be unqualified")
         if self.value.rsplit(".", 1)[-1] != self.normalized_value:
-            raise ValueError(
-                "NormalizedFeatureSignal.normalized_value does not match value"
-            )
+            raise ValueError("NormalizedFeatureSignal.normalized_value does not match value")
 
-    def to_dict(self) -> dict[str, str]:
+    def to_dict(self) -> dict[str, object]:
         return {
             **super().to_dict(),
             "operator": self.operator,
@@ -140,7 +145,114 @@ class NormalizedFeatureSignal(FeatureSignal):
         }
 
 
-def _feature_signal_key(signal: FeatureSignal) -> tuple[str, str, str, str]:
+@dataclass(frozen=True)
+class FileSymbolLeafFeatureSignal(FeatureSignal):
+    operator: Literal["any_file_symbol_leaf"]
+    normalized_value: str
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.kind != "symbols":
+            raise ValueError(
+                "FileSymbolLeafFeatureSignal.any_file_symbol_leaf requires kind=symbols"
+            )
+        if self.operator != "any_file_symbol_leaf":
+            raise ValueError(f"unsupported FileSymbolLeafFeatureSignal.operator: {self.operator}")
+        _validate_symbol_leaf(
+            self.value,
+            self.normalized_value,
+            "FileSymbolLeafFeatureSignal",
+        )
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            **super().to_dict(),
+            "operator": self.operator,
+            "normalized_value": self.normalized_value,
+        }
+
+
+@dataclass(frozen=True)
+class UnitSymbolLeafOwnerRoleFeatureSignal(FeatureSignal):
+    operator: Literal["any_unit_symbol_leaf_with_owner_role"]
+    normalized_value: str
+    owner_role: OwnerRole
+    symbol_occurrence_id: str
+    direct_owner_declaration_id: str
+    enclosing_owner_declaration_id: str
+    role_evidence_occurrence_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.kind != "symbols":
+            raise ValueError(
+                "UnitSymbolLeafOwnerRoleFeatureSignal."
+                "any_unit_symbol_leaf_with_owner_role requires kind=symbols"
+            )
+        if self.operator != "any_unit_symbol_leaf_with_owner_role":
+            raise ValueError(
+                f"unsupported UnitSymbolLeafOwnerRoleFeatureSignal.operator: {self.operator}"
+            )
+        _validate_symbol_leaf(
+            self.value,
+            self.normalized_value,
+            "UnitSymbolLeafOwnerRoleFeatureSignal",
+        )
+        if self.owner_role not in {
+            "arkui_custom_component",
+            "arkui_router_page",
+        }:
+            raise ValueError("UnitSymbolLeafOwnerRoleFeatureSignal.owner_role is unsupported")
+        if not self.symbol_occurrence_id.startswith("occurrence:"):
+            raise ValueError(
+                "UnitSymbolLeafOwnerRoleFeatureSignal requires symbol occurrence identity"
+            )
+        for declaration_id in (
+            self.direct_owner_declaration_id,
+            self.enclosing_owner_declaration_id,
+        ):
+            if not declaration_id.startswith("declaration:"):
+                raise ValueError(
+                    "UnitSymbolLeafOwnerRoleFeatureSignal owner IDs must use declaration identity"
+                )
+        if self.direct_owner_declaration_id == self.enclosing_owner_declaration_id:
+            raise ValueError(
+                "UnitSymbolLeafOwnerRoleFeatureSignal direct and enclosing owners must differ"
+            )
+        _sorted_unique(
+            self.role_evidence_occurrence_ids,
+            "UnitSymbolLeafOwnerRoleFeatureSignal.role_evidence_occurrence_ids",
+        )
+        if not self.role_evidence_occurrence_ids or any(
+            not occurrence_id.startswith("occurrence:")
+            for occurrence_id in self.role_evidence_occurrence_ids
+        ):
+            raise ValueError(
+                "UnitSymbolLeafOwnerRoleFeatureSignal role evidence must use occurrence identities"
+            )
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            **super().to_dict(),
+            "operator": self.operator,
+            "normalized_value": self.normalized_value,
+            "owner_role": self.owner_role,
+            "symbol_occurrence_id": self.symbol_occurrence_id,
+            "direct_owner_declaration_id": self.direct_owner_declaration_id,
+            "enclosing_owner_declaration_id": self.enclosing_owner_declaration_id,
+            "role_evidence_occurrence_ids": list(self.role_evidence_occurrence_ids),
+        }
+
+
+def _validate_symbol_leaf(value: str, leaf: str, context: str) -> None:
+    _non_empty(leaf, f"{context}.normalized_value")
+    if "." in leaf:
+        raise ValueError(f"{context}.normalized_value must be unqualified")
+    if value.rsplit(".", 1)[-1] != leaf:
+        raise ValueError(f"{context}.normalized_value does not match value")
+
+
+def _feature_signal_key(signal: FeatureSignal) -> tuple[str, ...]:
     if type(signal) is FeatureSignal:
         return (signal.kind, signal.value, "", "")
     if type(signal) is NormalizedFeatureSignal:
@@ -150,6 +262,27 @@ def _feature_signal_key(signal: FeatureSignal) -> tuple[str, str, str, str]:
             normalized.value,
             normalized.operator,
             normalized.normalized_value,
+        )
+    if type(signal) is FileSymbolLeafFeatureSignal:
+        file_hint = signal
+        return (
+            file_hint.kind,
+            file_hint.value,
+            file_hint.operator,
+            file_hint.normalized_value,
+        )
+    if type(signal) is UnitSymbolLeafOwnerRoleFeatureSignal:
+        owner_aware = signal
+        return (
+            owner_aware.kind,
+            owner_aware.value,
+            owner_aware.operator,
+            owner_aware.normalized_value,
+            owner_aware.owner_role,
+            owner_aware.symbol_occurrence_id,
+            owner_aware.direct_owner_declaration_id,
+            owner_aware.enclosing_owner_declaration_id,
+            *owner_aware.role_evidence_occurrence_ids,
         )
     raise ValueError("unsupported FeatureSignal implementation")
 
@@ -171,6 +304,18 @@ class TagMatch:
             raise ValueError("TagMatch.signals must not be empty")
         if any(not isinstance(signal, FeatureSignal) for signal in self.signals):
             raise ValueError("TagMatch.signals must contain FeatureSignal values")
+        if (
+            any(type(signal) is FileSymbolLeafFeatureSignal for signal in self.signals)
+            and self.scope != "file_hint"
+        ):
+            raise ValueError("FileSymbolLeafFeatureSignal is restricted to file_hint scope")
+        if (
+            any(type(signal) is UnitSymbolLeafOwnerRoleFeatureSignal for signal in self.signals)
+            and self.scope != "unit_exact"
+        ):
+            raise ValueError(
+                "UnitSymbolLeafOwnerRoleFeatureSignal is restricted to unit_exact scope"
+            )
         keys = [_feature_signal_key(signal) for signal in self.signals]
         if keys != sorted(set(keys)):
             raise ValueError("TagMatch.signals must be sorted and unique")
@@ -427,9 +572,7 @@ class UnitFeatureProfile:
         if not isinstance(self.tag_matches, tuple) or any(
             not isinstance(match, TagMatch) for match in self.tag_matches
         ):
-            raise ValueError(
-                "UnitFeatureProfile.tag_matches must contain TagMatch values"
-            )
+            raise ValueError("UnitFeatureProfile.tag_matches must contain TagMatch values")
         match_keys = [(match.tag_id, match.status, match.scope) for match in self.tag_matches]
         if match_keys != sorted(set(match_keys)):
             raise ValueError("UnitFeatureProfile.tag_matches must be sorted and unique")
@@ -602,7 +745,10 @@ class FeatureRoutingResult:
             "question_bindings": question_bindings,
             "diagnostics": diagnostics,
         }
-        if schema_version == FEATURE_ROUTING_V2_SCHEMA_VERSION:
+        if schema_version in {
+            FEATURE_ROUTING_V2_SCHEMA_VERSION,
+            FEATURE_ROUTING_V3_SCHEMA_VERSION,
+        }:
             payload["schema_version"] = schema_version
         return payload
 
@@ -610,6 +756,7 @@ class FeatureRoutingResult:
         if self.schema_version not in {
             FEATURE_ROUTING_SCHEMA_VERSION,
             FEATURE_ROUTING_V2_SCHEMA_VERSION,
+            FEATURE_ROUTING_V3_SCHEMA_VERSION,
         }:
             raise ValueError("FeatureRoutingResult.schema_version is unsupported")
         if not self.feature_config_version.startswith("feature-config:sha256:"):
@@ -626,16 +773,25 @@ class FeatureRoutingResult:
         unit_ids = [unit.unit_id for unit in self.units]
         if unit_ids != sorted(set(unit_ids)):
             raise ValueError("FeatureRoutingResult.units must use stable unit_id order")
-        if any(
-            unit.feature_config_version != self.feature_config_version
-            for unit in self.units
-        ):
+        if any(unit.feature_config_version != self.feature_config_version for unit in self.units):
             raise ValueError("FeatureRoutingResult profile config versions disagree")
-        allowed_signal_types = (
-            {FeatureSignal}
-            if self.schema_version == FEATURE_ROUTING_SCHEMA_VERSION
-            else {FeatureSignal, NormalizedFeatureSignal}
-        )
+        allowed_signal_types_by_schema: dict[
+            FeatureRoutingSchemaVersion,
+            set[type[FeatureSignal]],
+        ] = {
+            FEATURE_ROUTING_SCHEMA_VERSION: {FeatureSignal},
+            FEATURE_ROUTING_V2_SCHEMA_VERSION: {
+                FeatureSignal,
+                NormalizedFeatureSignal,
+            },
+            FEATURE_ROUTING_V3_SCHEMA_VERSION: {
+                FeatureSignal,
+                NormalizedFeatureSignal,
+                FileSymbolLeafFeatureSignal,
+                UnitSymbolLeafOwnerRoleFeatureSignal,
+            },
+        }
+        allowed_signal_types = allowed_signal_types_by_schema[self.schema_version]
         if any(
             type(signal) not in allowed_signal_types
             for unit in self.units
@@ -650,8 +806,7 @@ class FeatureRoutingResult:
         if not set(self.diagnostics).issubset(_RESULT_DIAGNOSTICS):
             raise ValueError("FeatureRoutingResult.diagnostics contains unknown codes")
         if not isinstance(self.question_bindings, tuple) or any(
-            not isinstance(binding, ReviewQuestionBinding)
-            for binding in self.question_bindings
+            not isinstance(binding, ReviewQuestionBinding) for binding in self.question_bindings
         ):
             raise ValueError("FeatureRoutingResult.question_bindings has invalid type")
         binding_keys = [
@@ -703,9 +858,7 @@ class FeatureRoutingResult:
             "dimensions_config_version": self.dimensions_config_version,
             "units": [unit.to_dict() for unit in self.units],
             "mr_dimensions": list(self.mr_dimensions),
-            "question_bindings": [
-                binding.to_dict() for binding in self.question_bindings
-            ],
+            "question_bindings": [binding.to_dict() for binding in self.question_bindings],
             "diagnostics": list(self.diagnostics),
         }
 
@@ -716,19 +869,33 @@ class FeatureRoutingResult:
     ) -> None:
         from arkts_code_reviewer.feature_routing.engine import FeatureRouter
 
+        if self.schema_version == FEATURE_ROUTING_V3_SCHEMA_VERSION:
+            raise ValueError("feature-routing-v3 requires validate_owner_aware_replay")
+
         expected = FeatureRouter(config).route(scopes)
         if self != expected:
-            raise ValueError(
-                "FeatureRoutingResult does not replay from its UnitFactScopes"
-            )
+            raise ValueError("FeatureRoutingResult does not replay from its UnitFactScopes")
+
+    def validate_owner_aware_replay(
+        self,
+        inputs: Sequence[OwnerAwareRoutingInput],
+        config: FeatureConfig | None = None,
+    ) -> None:
+        from arkts_code_reviewer.feature_routing.engine import FeatureRouter
+
+        expected = FeatureRouter(config).route_owner_aware_shadow(inputs)
+        if self != expected:
+            raise ValueError("FeatureRoutingResult does not replay from owner-aware inputs")
 
 
 __all__ = [
     "FEATURE_ROUTING_SCHEMA_VERSION",
     "FEATURE_ROUTING_V2_SCHEMA_VERSION",
+    "FEATURE_ROUTING_V3_SCHEMA_VERSION",
     "DimensionRoute",
     "FeatureRoutingResult",
     "FeatureSignal",
+    "FileSymbolLeafFeatureSignal",
     "FeatureRoutingSchemaVersion",
     "FeatureStatus",
     "NormalizedFeatureSignal",
@@ -736,5 +903,6 @@ __all__ = [
     "ReviewQuestionBinding",
     "SignalScope",
     "TagMatch",
+    "UnitSymbolLeafOwnerRoleFeatureSignal",
     "UnitFeatureProfile",
 ]

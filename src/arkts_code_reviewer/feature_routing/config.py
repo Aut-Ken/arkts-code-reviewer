@@ -23,6 +23,7 @@ from ruamel.yaml.error import YAMLError
 
 type FeatureStatus = Literal["Active", "Draft", "Deprecated"]
 type RetrievalPolicy = Literal["signal_required", "always", "disabled"]
+type OwnerRole = Literal["arkui_custom_component", "arkui_router_page"]
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _PACKAGED_DEFAULTS = Path(__file__).resolve().parent / "defaults"
@@ -72,6 +73,19 @@ def _require_sorted_unique(values: tuple[str, ...], context: str) -> tuple[str, 
     return values
 
 
+class UnitSymbolLeafOwnerRoleTrigger(_StrictModel):
+    symbol_leaf: str
+    owner_role: OwnerRole
+
+    @field_validator("symbol_leaf")
+    @classmethod
+    def _validate_symbol_leaf(cls, value: str) -> str:
+        value = _require_text(value, "UnitSymbolLeafOwnerRoleTrigger.symbol_leaf")
+        if "." in value:
+            raise ValueError("UnitSymbolLeafOwnerRoleTrigger.symbol_leaf must be unqualified")
+        return value
+
+
 class TagTriggers(_StrictModel):
     any_component: tuple[str, ...] = ()
     any_api: tuple[str, ...] = ()
@@ -82,6 +96,8 @@ class TagTriggers(_StrictModel):
     any_attribute: tuple[str, ...] = ()
     any_symbol: tuple[str, ...] = ()
     any_symbol_leaf: tuple[str, ...] = ()
+    any_unit_symbol_leaf_with_owner_role: tuple[UnitSymbolLeafOwnerRoleTrigger, ...] = ()
+    any_file_symbol_leaf: tuple[str, ...] = ()
     any_syntax: tuple[str, ...] = ()
     has_resource_reference: bool = False
 
@@ -95,6 +111,10 @@ class TagTriggers(_StrictModel):
             payload.pop("any_import_use", None)
         if not self.any_symbol_leaf:
             payload.pop("any_symbol_leaf", None)
+        if not self.any_unit_symbol_leaf_with_owner_role:
+            payload.pop("any_unit_symbol_leaf_with_owner_role", None)
+        if not self.any_file_symbol_leaf:
+            payload.pop("any_file_symbol_leaf", None)
         return payload
 
     @field_validator(
@@ -107,6 +127,7 @@ class TagTriggers(_StrictModel):
         "any_attribute",
         "any_symbol",
         "any_symbol_leaf",
+        "any_file_symbol_leaf",
         "any_syntax",
         mode="before",
     )
@@ -124,6 +145,7 @@ class TagTriggers(_StrictModel):
         "any_attribute",
         "any_symbol",
         "any_symbol_leaf",
+        "any_file_symbol_leaf",
         "any_syntax",
     )
     @classmethod
@@ -147,13 +169,29 @@ class TagTriggers(_StrictModel):
                     imported_name,
                     "TagTriggers.any_import_use importedName",
                 )
-        elif field_name == "any_symbol_leaf" and any(
+        elif field_name in {"any_symbol_leaf", "any_file_symbol_leaf"} and any(
             "." in symbol_leaf for symbol_leaf in validated
         ):
-            raise ValueError(
-                "TagTriggers.any_symbol_leaf values must be unqualified symbol leaves"
-            )
+            raise ValueError(f"TagTriggers.{field_name} values must be unqualified symbol leaves")
         return validated
+
+    @field_validator("any_unit_symbol_leaf_with_owner_role", mode="before")
+    @classmethod
+    def _coerce_owner_role_triggers(cls, value: object) -> tuple[object, ...]:
+        return _string_tuple(value)
+
+    @field_validator("any_unit_symbol_leaf_with_owner_role")
+    @classmethod
+    def _validate_owner_role_triggers(
+        cls,
+        value: tuple[UnitSymbolLeafOwnerRoleTrigger, ...],
+    ) -> tuple[UnitSymbolLeafOwnerRoleTrigger, ...]:
+        keys = [(item.symbol_leaf, item.owner_role) for item in value]
+        if keys != sorted(set(keys)):
+            raise ValueError(
+                "TagTriggers.any_unit_symbol_leaf_with_owner_role must be sorted and unique"
+            )
+        return value
 
     @model_validator(mode="after")
     def _require_trigger(self) -> Self:
@@ -167,6 +205,8 @@ class TagTriggers(_StrictModel):
             self.any_attribute,
             self.any_symbol,
             self.any_symbol_leaf,
+            self.any_unit_symbol_leaf_with_owner_role,
+            self.any_file_symbol_leaf,
             self.any_syntax,
         )
         if not self.has_resource_reference and not any(sequences):
@@ -195,7 +235,12 @@ class TagDefinition(_StrictModel):
 
 
 class TagConfig(_StrictModel):
-    schema_version: Literal["tag-config-v1", "tag-config-v2", "tag-config-v3"]
+    schema_version: Literal[
+        "tag-config-v1",
+        "tag-config-v2",
+        "tag-config-v3",
+        "tag-config-v4",
+    ]
     version: str
     tags: tuple[TagDefinition, ...]
 
@@ -217,17 +262,26 @@ class TagConfig(_StrictModel):
         if len(ids) != len(set(ids)):
             raise ValueError("TagConfig.tags contains duplicate IDs")
         unsupported_by_schema = {
-            "tag-config-v1": ("any_import_use", "any_symbol_leaf"),
-            "tag-config-v2": ("any_symbol_leaf",),
-            "tag-config-v3": (),
+            "tag-config-v1": (
+                "any_import_use",
+                "any_symbol_leaf",
+                "any_unit_symbol_leaf_with_owner_role",
+                "any_file_symbol_leaf",
+            ),
+            "tag-config-v2": (
+                "any_symbol_leaf",
+                "any_unit_symbol_leaf_with_owner_role",
+                "any_file_symbol_leaf",
+            ),
+            "tag-config-v3": (
+                "any_unit_symbol_leaf_with_owner_role",
+                "any_file_symbol_leaf",
+            ),
+            "tag-config-v4": (),
         }
         for field_name in unsupported_by_schema[self.schema_version]:
-            if any(
-                field_name in tag.triggers.model_fields_set for tag in self.tags
-            ):
-                raise ValueError(
-                    f"{self.schema_version} does not support {field_name}"
-                )
+            if any(field_name in tag.triggers.model_fields_set for tag in self.tags):
+                raise ValueError(f"{self.schema_version} does not support {field_name}")
         return self
 
 
@@ -421,10 +475,7 @@ def _sorted_mapping[DefinitionT: _Identified](
     values: tuple[DefinitionT, ...],
 ) -> MappingProxyType[str, DefinitionT]:
     return MappingProxyType(
-        {
-            str(value.id): value
-            for value in sorted(values, key=lambda item: str(item.id))
-        }
+        {str(value.id): value for value in sorted(values, key=lambda item: str(item.id))}
     )
 
 
@@ -438,19 +489,14 @@ def _validate_references(
             referenced_ids = definition.triggers.any_tag
             unknown = sorted(set(referenced_ids) - set(tags))
             if unknown:
-                raise ValueError(
-                    f"{kind} {definition.id} references unknown tags: {unknown}"
-                )
+                raise ValueError(f"{kind} {definition.id} references unknown tags: {unknown}")
             if definition.status == "Active":
                 non_active = sorted(
-                    tag_id
-                    for tag_id in referenced_ids
-                    if tags[tag_id].status != "Active"
+                    tag_id for tag_id in referenced_ids if tags[tag_id].status != "Active"
                 )
                 if non_active:
                     raise ValueError(
-                        f"Active {kind} {definition.id} depends on non-Active tags: "
-                        f"{non_active}"
+                        f"Active {kind} {definition.id} depends on non-Active tags: {non_active}"
                     )
 
 
@@ -498,19 +544,38 @@ def _feature_fingerprint(
 
 def _tag_definition_payload(
     definition: TagDefinition,
-    schema_version: Literal["tag-config-v1", "tag-config-v2", "tag-config-v3"],
+    schema_version: Literal[
+        "tag-config-v1",
+        "tag-config-v2",
+        "tag-config-v3",
+        "tag-config-v4",
+    ],
 ) -> dict[str, object]:
     payload = definition.model_dump(mode="json")
     triggers = dict(payload["triggers"])
     if schema_version == "tag-config-v1":
         triggers.pop("any_import_use", None)
         triggers.pop("any_symbol_leaf", None)
+        triggers.pop("any_unit_symbol_leaf_with_owner_role", None)
+        triggers.pop("any_file_symbol_leaf", None)
     elif schema_version == "tag-config-v2":
         triggers["any_import_use"] = list(definition.triggers.any_import_use)
         triggers.pop("any_symbol_leaf", None)
+        triggers.pop("any_unit_symbol_leaf_with_owner_role", None)
+        triggers.pop("any_file_symbol_leaf", None)
+    elif schema_version == "tag-config-v3":
+        triggers["any_import_use"] = list(definition.triggers.any_import_use)
+        triggers["any_symbol_leaf"] = list(definition.triggers.any_symbol_leaf)
+        triggers.pop("any_unit_symbol_leaf_with_owner_role", None)
+        triggers.pop("any_file_symbol_leaf", None)
     else:
         triggers["any_import_use"] = list(definition.triggers.any_import_use)
         triggers["any_symbol_leaf"] = list(definition.triggers.any_symbol_leaf)
+        triggers["any_unit_symbol_leaf_with_owner_role"] = [
+            item.model_dump(mode="json")
+            for item in definition.triggers.any_unit_symbol_leaf_with_owner_role
+        ]
+        triggers["any_file_symbol_leaf"] = list(definition.triggers.any_file_symbol_leaf)
     payload["triggers"] = triggers
     return payload
 
@@ -523,11 +588,13 @@ __all__ = [
     "DimensionTriggers",
     "FeatureConfig",
     "FeatureStatus",
+    "OwnerRole",
     "RetrievalPolicy",
     "ReviewQuestionDefinition",
     "TagConfig",
     "TagDefinition",
     "TagTriggers",
+    "UnitSymbolLeafOwnerRoleTrigger",
     "load_default_feature_config",
     "load_feature_config",
 ]
