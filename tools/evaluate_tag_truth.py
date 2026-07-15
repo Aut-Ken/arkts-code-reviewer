@@ -15,9 +15,9 @@ from arkts_code_reviewer.feature_routing_validation.tag_truth import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = REPO_ROOT / "tests/tag_truth/relational_database/manifest.json"
+DEFAULT_MANIFEST = REPO_ROOT / "tests/tag_truth/relational_store_api/manifest.json"
 DEFAULT_TAGS_CONFIG = (
-    REPO_ROOT / "tests/fixtures/feature_routing/tag_config_rdb_shadow_v1.yaml"
+    REPO_ROOT / "tests/fixtures/feature_routing/tag_config_relational_store_api_shadow_v1.yaml"
 )
 
 

@@ -1,9 +1,9 @@
 {
   "schema_version": "tag-truth-baseline-v1",
-  "suite_id": "tag-rdb-01a",
+  "suite_id": "tag-rdb-01b",
   "truth_status": "provisional",
-  "annotation_policy_version": "rdb-domain-annotation-v1-provisional",
-  "suite_fingerprint": "tag-truth-suite:sha256:80bff8ae2c2a2dccee095e19238be65549007f67087315349be733dde44e417d",
+  "annotation_policy_version": "relational-store-api-annotation-v1-provisional",
+  "suite_fingerprint": "tag-truth-suite:sha256:9d940fab19f665065944511c488cb61279c410fc35d7cf9e961740b74424a31d",
   "repository": {
     "source_id": "applications-app-samples",
     "repository": "applications_app_samples",
@@ -11,72 +11,72 @@
   },
   "base_feature_config_fingerprint": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
   "candidate": {
-    "tag_id": "has_relational_database",
+    "tag_id": "has_relational_store_api",
     "status": "Draft",
-    "description": "候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）",
-    "tag_config_version": "tags-rdb-shadow-v1",
-    "config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7",
+    "description": "候选：当前 ReviewUnit 直接使用 RelationalStore API、类型或配置（仅作 shadow 评测）",
+    "tag_config_version": "tags-relational-store-api-shadow-v1",
+    "config_fingerprint": "feature-config:sha256:8d2bf1f9e0d61da169353c93f5744727b5d35dbbbc57cccbd92f0a3a4afb143c",
     "any_import_use": [
       "@kit.ArkData#relationalStore",
       "@ohos.data.rdb#default",
       "@ohos.data.relationalStore#default"
     ],
-    "observed_config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7"
+    "observed_config_fingerprint": "feature-config:sha256:8d2bf1f9e0d61da169353c93f5744727b5d35dbbbc57cccbd92f0a3a4afb143c"
   },
   "source_count": 104,
-  "case_count": 109,
+  "case_count": 114,
   "contract": {
-    "matched_case_count": 109,
+    "matched_case_count": 114,
     "mismatched_case_count": 0,
     "mismatched_case_ids": [],
     "file_hint_promotion_count": 0,
     "perfect": true
   },
   "provisional_semantic_metrics": {
-    "eligible_case_count": 100,
+    "eligible_case_count": 105,
     "positive_case_count": 40,
-    "negative_case_count": 60,
-    "true_positive": 35,
+    "negative_case_count": 65,
+    "true_positive": 40,
     "false_positive": 0,
-    "false_negative": 5,
-    "true_negative": 60,
+    "false_negative": 0,
+    "true_negative": 65,
     "precision": 1.0,
-    "recall": 0.875,
-    "f1": 0.9333333333333333,
-    "hard_negative_case_count": 60
+    "recall": 1.0,
+    "f1": 1.0,
+    "hard_negative_case_count": 65
   },
   "provisional_semantic_metrics_by_split": {
     "calibration": {
-      "eligible_case_count": 70,
-      "positive_case_count": 26,
-      "negative_case_count": 44,
-      "true_positive": 23,
+      "eligible_case_count": 75,
+      "positive_case_count": 28,
+      "negative_case_count": 47,
+      "true_positive": 28,
       "false_positive": 0,
-      "false_negative": 3,
-      "true_negative": 44,
+      "false_negative": 0,
+      "true_negative": 47,
       "precision": 1.0,
-      "recall": 0.8846153846153846,
-      "f1": 0.9387755102040816
+      "recall": 1.0,
+      "f1": 1.0
     },
     "acceptance_holdout": {
       "eligible_case_count": 30,
-      "positive_case_count": 14,
-      "negative_case_count": 16,
+      "positive_case_count": 12,
+      "negative_case_count": 18,
       "true_positive": 12,
       "false_positive": 0,
-      "false_negative": 2,
-      "true_negative": 16,
+      "false_negative": 0,
+      "true_negative": 18,
       "precision": 1.0,
-      "recall": 0.8571428571428571,
-      "f1": 0.923076923076923
+      "recall": 1.0,
+      "f1": 1.0
     }
   },
   "provisional_semantic_metrics_by_stratum": {
     "direct-legacy-rdb": {
-      "eligible_case_count": 1,
-      "positive_case_count": 1,
+      "eligible_case_count": 2,
+      "positive_case_count": 2,
       "negative_case_count": 0,
-      "true_positive": 1,
+      "true_positive": 2,
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 0,
@@ -85,10 +85,10 @@
       "f1": 1.0
     },
     "direct-legacy-relational-store": {
-      "eligible_case_count": 26,
-      "positive_case_count": 26,
+      "eligible_case_count": 28,
+      "positive_case_count": 28,
       "negative_case_count": 0,
-      "true_positive": 26,
+      "true_positive": 28,
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 0,
@@ -97,10 +97,10 @@
       "f1": 1.0
     },
     "direct-modern": {
-      "eligible_case_count": 8,
-      "positive_case_count": 8,
+      "eligible_case_count": 10,
+      "positive_case_count": 10,
       "negative_case_count": 0,
-      "true_positive": 8,
+      "true_positive": 10,
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 0,
@@ -116,6 +116,18 @@
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 8,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "hard-negative-indirect-wrapper": {
+      "eligible_case_count": 5,
+      "positive_case_count": 0,
+      "negative_case_count": 5,
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 5,
       "precision": null,
       "recall": null,
       "f1": null
@@ -167,32 +179,20 @@
       "precision": null,
       "recall": null,
       "f1": null
-    },
-    "indirect-wrapper": {
-      "eligible_case_count": 5,
-      "positive_case_count": 5,
-      "negative_case_count": 0,
-      "true_positive": 0,
-      "false_positive": 0,
-      "false_negative": 5,
-      "true_negative": 0,
-      "precision": null,
-      "recall": 0.0,
-      "f1": null
     }
   },
   "provisional_semantic_metrics_by_app_scope": {
     "code/ArkTS-Sta/OperaterdbintaskpoolSample": {
       "eligible_case_count": 3,
-      "positive_case_count": 3,
-      "negative_case_count": 0,
+      "positive_case_count": 2,
+      "negative_case_count": 1,
       "true_positive": 2,
       "false_positive": 0,
-      "false_negative": 1,
-      "true_negative": 0,
+      "false_negative": 0,
+      "true_negative": 1,
       "precision": 1.0,
-      "recall": 0.6666666666666666,
-      "f1": 0.8
+      "recall": 1.0,
+      "f1": 1.0
     },
     "code/BasicFeature/Ability/AppStartup": {
       "eligible_case_count": 7,
@@ -472,15 +472,15 @@
     },
     "code/Solutions/TV/TVConnect": {
       "eligible_case_count": 15,
-      "positive_case_count": 5,
-      "negative_case_count": 10,
+      "positive_case_count": 4,
+      "negative_case_count": 11,
       "true_positive": 4,
       "false_positive": 0,
-      "false_negative": 1,
-      "true_negative": 10,
+      "false_negative": 0,
+      "true_negative": 11,
       "precision": 1.0,
-      "recall": 0.8,
-      "f1": 0.888888888888889
+      "recall": 1.0,
+      "f1": 1.0
     },
     "code/Solutions/Tools/FlipClock": {
       "eligible_case_count": 1,
@@ -567,10 +567,10 @@
       "f1": null
     },
     "code/SuperFeature/DistributedAppDev/DistributedRdb": {
-      "eligible_case_count": 5,
-      "positive_case_count": 4,
+      "eligible_case_count": 6,
+      "positive_case_count": 5,
       "negative_case_count": 1,
-      "true_positive": 4,
+      "true_positive": 5,
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 1,
@@ -639,16 +639,16 @@
       "f1": 1.0
     },
     "code/SystemFeature/DataManagement/CrossAppDataShare": {
-      "eligible_case_count": 6,
+      "eligible_case_count": 7,
       "positive_case_count": 4,
-      "negative_case_count": 2,
-      "true_positive": 3,
+      "negative_case_count": 3,
+      "true_positive": 4,
       "false_positive": 0,
-      "false_negative": 1,
-      "true_negative": 2,
+      "false_negative": 0,
+      "true_negative": 3,
       "precision": 1.0,
-      "recall": 0.75,
-      "f1": 0.8571428571428571
+      "recall": 1.0,
+      "f1": 1.0
     },
     "code/SystemFeature/DistributedAppDev/DistributedAccount": {
       "eligible_case_count": 6,
@@ -675,34 +675,34 @@
       "f1": null
     },
     "code/SystemFeature/TV/TVDemandPlayer": {
+      "eligible_case_count": 3,
+      "positive_case_count": 2,
+      "negative_case_count": 1,
+      "true_positive": 2,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/TV/TVPhotos": {
+      "eligible_case_count": 4,
+      "positive_case_count": 3,
+      "negative_case_count": 1,
+      "true_positive": 3,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "code/SystemFeature/TV/TVSettings": {
       "eligible_case_count": 2,
       "positive_case_count": 2,
       "negative_case_count": 0,
-      "true_positive": 1,
-      "false_positive": 0,
-      "false_negative": 1,
-      "true_negative": 0,
-      "precision": 1.0,
-      "recall": 0.5,
-      "f1": 0.6666666666666666
-    },
-    "code/SystemFeature/TV/TVPhotos": {
-      "eligible_case_count": 3,
-      "positive_case_count": 3,
-      "negative_case_count": 0,
       "true_positive": 2,
-      "false_positive": 0,
-      "false_negative": 1,
-      "true_negative": 0,
-      "precision": 1.0,
-      "recall": 0.6666666666666666,
-      "f1": 0.8
-    },
-    "code/SystemFeature/TV/TVSettings": {
-      "eligible_case_count": 1,
-      "positive_case_count": 1,
-      "negative_case_count": 0,
-      "true_positive": 1,
       "false_positive": 0,
       "false_negative": 0,
       "true_negative": 0,
@@ -737,33 +737,30 @@
   },
   "cohorts": {
     "semantic_labels": {
-      "needs_taxonomy_decision": 1,
-      "negative": 62,
+      "negative": 67,
       "parser_control": 4,
-      "positive": 42
+      "positive": 43
     },
     "strata": {
-      "direct-legacy-rdb": 1,
-      "direct-legacy-relational-store": 26,
-      "direct-modern": 8,
+      "direct-legacy-rdb": 2,
+      "direct-legacy-relational-store": 28,
+      "direct-modern": 10,
+      "direct-vector-store-api-diagnostic": 1,
       "hard-negative-data-share": 8,
+      "hard-negative-indirect-wrapper": 5,
       "hard-negative-kv-store": 8,
       "hard-negative-preferences": 30,
       "hard-negative-related-data-api": 9,
       "hard-negative-udmf": 5,
-      "indirect-wrapper": 5,
       "ohos-test-exact": 1,
       "ohos-test-parser-error": 1,
       "ohos-test-unused-binding": 2,
-      "unresolved-owner-control": 4,
-      "vector-store-quarantine": 1
+      "unresolved-owner-control": 4
     },
     "review_status": {
-      "proposed": 109
+      "proposed": 114
     },
-    "taxonomy_conflict_case_ids": [
-      "RDB-Q001"
-    ],
+    "taxonomy_conflict_case_ids": [],
     "parser_risk_case_ids": [],
     "recovered_signal_case_ids": []
   },
@@ -772,11 +769,8 @@
     "dataset_ready_for_human_review": true,
     "activation_ready": false,
     "activation_failures": [
-      "holdout_recall_below_gate",
       "insufficient_hard_negatives",
-      "recall_below_gate",
-      "truth_v1_is_provisional_only",
-      "unresolved_taxonomy_conflict"
+      "truth_v1_is_provisional_only"
     ]
   },
   "cases": [
@@ -2521,7 +2515,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2564,7 +2558,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2607,7 +2601,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2650,7 +2644,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2695,7 +2689,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2738,7 +2732,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2781,7 +2775,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2824,7 +2818,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2867,7 +2861,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2912,7 +2906,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -2957,7 +2951,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3002,7 +2996,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3047,7 +3041,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3092,7 +3086,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3137,7 +3131,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3182,7 +3176,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3227,7 +3221,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3272,7 +3266,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3315,7 +3309,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3358,7 +3352,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3401,7 +3395,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3446,7 +3440,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3491,7 +3485,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3536,7 +3530,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3581,7 +3575,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3626,7 +3620,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3669,7 +3663,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3714,7 +3708,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3759,7 +3753,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3804,7 +3798,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3849,7 +3843,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3894,7 +3888,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3939,7 +3933,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -3984,7 +3978,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -4029,7 +4023,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -4042,14 +4036,239 @@
       ]
     },
     {
+      "case_id": "RDB-P036",
+      "source_alias": "src064",
+      "source_kind": "main",
+      "app_scope": "code/SuperFeature/DistributedAppDev/DistributedRdb",
+      "source_family_id": "family-914055ee9ed7",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SuperFeature/DistributedAppDev/DistributedRdb/entry/src/main/ets/model/RdbModel.ets@method:RdbModel.insertData:L75-L93",
+      "unit_kind": "method",
+      "unit_symbol": "RdbModel.insertData",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_store_api",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P037",
+      "source_alias": "src080",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
+      "source_family_id": "family-ba449943d2fc",
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/DataManagement/CrossAppDataShare/dataUser/src/main/ets/feature/ContactStore.ets@method:ContactStore.batchInsert:L89-L116",
+      "unit_kind": "method",
+      "unit_symbol": "ContactStore.batchInsert",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_store_api",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.relationalStore#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P038",
+      "source_alias": "src088",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
+      "source_family_id": "family-9f3f909c22bb",
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVDemandPlayer/entry/src/main/ets/Model/Rdb.ets@method:Rdb.createRdb:L95-L115",
+      "unit_kind": "method",
+      "unit_symbol": "Rdb.createRdb",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_store_api",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P039",
+      "source_alias": "src091",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVPhotos",
+      "source_family_id": "family-db50bc1b5a50",
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVPhotos/entry/src/main/ets/manager/RdbManager.ets@method:RdbManager.init:L54-L66",
+      "unit_kind": "method",
+      "unit_symbol": "RdbManager.init",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_store_api",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@kit.ArkData#relationalStore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "RDB-P040",
+      "source_alias": "src094",
+      "source_kind": "main",
+      "app_scope": "code/SystemFeature/TV/TVSettings",
+      "source_family_id": "family-0c4fc7722d20",
+      "split": "calibration",
+      "stratum": "direct-legacy-rdb",
+      "semantic_label": "positive",
+      "metric_eligible": true,
+      "review_status": "proposed",
+      "expected_shadow_match": true,
+      "actual_shadow_match": true,
+      "contract_matched": true,
+      "file_hint_match": false,
+      "unit_id": "code/SystemFeature/TV/TVSettings/common/utils/src/main/ets/default/baseUtil/RdbStoreUtil.ets@method:getRdbPredicates:L97-L102",
+      "unit_kind": "method",
+      "unit_symbol": "getRdbPredicates",
+      "parser_layer": "L1",
+      "parser_error_nodes": 0,
+      "parser_missing_nodes": 0,
+      "file_diagnostics": [
+        "unresolved_fact_owner"
+      ],
+      "scope_diagnostics": [],
+      "candidate_occurrence_qualities": [
+        "exact"
+      ],
+      "candidate_occurrence_provenance": [
+        "L1"
+      ],
+      "candidate_matches": [
+        {
+          "tag_id": "has_relational_store_api",
+          "status": "Draft",
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "import_uses",
+              "value": "@ohos.data.rdb#default"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "case_id": "RDB-Q001",
       "source_alias": "src029",
       "source_kind": "docs_sample",
       "app_scope": "code/DocsSample/ArkData/VectorStore",
       "source_family_id": "family-6837894f067c",
       "split": "diagnostic",
-      "stratum": "vector-store-quarantine",
-      "semantic_label": "needs_taxonomy_decision",
+      "stratum": "direct-vector-store-api-diagnostic",
+      "semantic_label": "positive",
       "metric_eligible": false,
       "review_status": "proposed",
       "expected_shadow_match": true,
@@ -4074,7 +4293,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -4117,7 +4336,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -4162,7 +4381,7 @@
       ],
       "candidate_matches": [
         {
-          "tag_id": "has_relational_database",
+          "tag_id": "has_relational_store_api",
           "status": "Draft",
           "scope": "unit_exact",
           "signals": [
@@ -4351,8 +4570,8 @@
       "app_scope": "code/ArkTS-Sta/OperaterdbintaskpoolSample",
       "source_family_id": "operate-rdb-taskpool-family",
       "split": "acceptance_holdout",
-      "stratum": "indirect-wrapper",
-      "semantic_label": "positive",
+      "stratum": "hard-negative-indirect-wrapper",
+      "semantic_label": "negative",
       "metric_eligible": true,
       "review_status": "proposed",
       "expected_shadow_match": false,
@@ -4380,8 +4599,8 @@
       "app_scope": "code/Solutions/TV/TVConnect",
       "source_family_id": "family-e12e90b431d9",
       "split": "acceptance_holdout",
-      "stratum": "indirect-wrapper",
-      "semantic_label": "positive",
+      "stratum": "hard-negative-indirect-wrapper",
+      "semantic_label": "negative",
       "metric_eligible": true,
       "review_status": "proposed",
       "expected_shadow_match": false,
@@ -4407,8 +4626,8 @@
       "app_scope": "code/SystemFeature/DataManagement/CrossAppDataShare",
       "source_family_id": "family-ba449943d2fc",
       "split": "calibration",
-      "stratum": "indirect-wrapper",
-      "semantic_label": "positive",
+      "stratum": "hard-negative-indirect-wrapper",
+      "semantic_label": "negative",
       "metric_eligible": true,
       "review_status": "proposed",
       "expected_shadow_match": false,
@@ -4436,8 +4655,8 @@
       "app_scope": "code/SystemFeature/TV/TVDemandPlayer",
       "source_family_id": "family-9f3f909c22bb",
       "split": "calibration",
-      "stratum": "indirect-wrapper",
-      "semantic_label": "positive",
+      "stratum": "hard-negative-indirect-wrapper",
+      "semantic_label": "negative",
       "metric_eligible": true,
       "review_status": "proposed",
       "expected_shadow_match": false,
@@ -4465,8 +4684,8 @@
       "app_scope": "code/SystemFeature/TV/TVPhotos",
       "source_family_id": "family-db50bc1b5a50",
       "split": "calibration",
-      "stratum": "indirect-wrapper",
-      "semantic_label": "positive",
+      "stratum": "hard-negative-indirect-wrapper",
+      "semantic_label": "negative",
       "metric_eligible": true,
       "review_status": "proposed",
       "expected_shadow_match": false,

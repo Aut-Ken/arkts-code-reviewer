@@ -19,11 +19,11 @@ from arkts_code_reviewer.feature_routing_validation.tag_truth import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = REPO_ROOT / "tests/tag_truth/relational_database/manifest.json"
+MANIFEST = REPO_ROOT / "tests/tag_truth/relational_store_api/manifest.json"
 TAGS_CONFIG = (
-    REPO_ROOT / "tests/fixtures/feature_routing/tag_config_rdb_shadow_v1.yaml"
+    REPO_ROOT / "tests/fixtures/feature_routing/tag_config_relational_store_api_shadow_v1.yaml"
 )
-BASELINE = REPO_ROOT / "tests/tag_truth/relational_database/baselines/current.json"
+BASELINE = REPO_ROOT / "tests/tag_truth/relational_store_api/baselines/current.json"
 SIDECAR_NODE_MODULE = (
     REPO_ROOT
     / "sidecars"
@@ -115,18 +115,40 @@ def test_real_tag_truth_manifest_has_approved_provisional_shape() -> None:
     suite = load_tag_truth_suite(MANIFEST)
 
     eligible = [case for case in suite.cases if case.metric_eligible]
+    sources_by_alias = {source.alias: source for source in suite.sources}
+    added_ids = {"RDB-P036", "RDB-P037", "RDB-P038", "RDB-P039", "RDB-P040"}
+    added = [case for case in suite.cases if case.case_id in added_ids]
+    wrapper_ids = {"RDB-W001", "RDB-W002", "RDB-W003", "RDB-W004", "RDB-W005"}
+    wrappers = [case for case in suite.cases if case.case_id in wrapper_ids]
+    vector_store = next(case for case in suite.cases if case.case_id == "RDB-Q001")
     assert suite.truth_status == "provisional"
+    assert suite.suite_id == "tag-rdb-01b"
+    assert suite.candidate.tag_id == "has_relational_store_api"
     assert len(suite.sources) == 104
-    assert len(suite.cases) == 109
+    assert len(suite.cases) == 114
+    assert len(eligible) == 105
     assert sum(case.semantic_label == "positive" for case in eligible) == 40
-    assert sum(case.semantic_label == "negative" for case in eligible) == 60
-    assert sum(case.stratum == "indirect-wrapper" for case in eligible) == 5
+    assert sum(case.semantic_label == "negative" for case in eligible) == 65
+    assert sum(case.stratum == "hard-negative-indirect-wrapper" for case in eligible) == 5
+    assert suite.gates.min_negative_cases == 65
     assert all(case.review_status == "proposed" for case in suite.cases)
-    assert {
-        case.case_id
-        for case in suite.cases
-        if case.semantic_label == "needs_taxonomy_decision"
-    } == {"RDB-Q001"}
+    assert not any(case.semantic_label == "needs_taxonomy_decision" for case in suite.cases)
+    assert vector_store.semantic_label == "positive"
+    assert vector_store.metric_eligible is False
+    assert vector_store.split == "diagnostic"
+    assert vector_store.stratum == "direct-vector-store-api-diagnostic"
+    assert {case.case_id for case in added} == added_ids
+    assert all(case.semantic_label == "positive" for case in added)
+    assert all(case.expected_shadow_match is True for case in added)
+    assert all(case.metric_eligible is True for case in added)
+    assert all(case.split == "calibration" for case in added)
+    assert all(sources_by_alias[case.source_alias].source_kind == "main" for case in added)
+    assert len({sources_by_alias[case.source_alias].source_family_id for case in added}) == 5
+    assert {case.case_id for case in wrappers} == wrapper_ids
+    assert all(case.semantic_label == "negative" for case in wrappers)
+    assert all(case.expected_shadow_match is False for case in wrappers)
+    assert all(case.metric_eligible is True for case in wrappers)
+    assert all(case.stratum == "hard-negative-indirect-wrapper" for case in wrappers)
 
 
 def test_behavior_baseline_is_bound_to_current_truth_suite() -> None:
@@ -145,12 +167,10 @@ def test_shadow_config_is_only_base_plus_unbound_draft_candidate() -> None:
 
     assert base.fingerprint == suite.base_feature_config_fingerprint
     assert shadow.fingerprint == suite.candidate.config_fingerprint
-    assert set(shadow.tags_by_id) == set(base.tags_by_id) | {
-        "has_relational_database"
-    }
-    assert shadow.tags_by_id["has_relational_database"].status == "Draft"
+    assert set(shadow.tags_by_id) == set(base.tags_by_id) | {"has_relational_store_api"}
+    assert shadow.tags_by_id["has_relational_store_api"].status == "Draft"
     assert all(
-        "has_relational_database" not in definition.triggers.any_tag
+        "has_relational_store_api" not in definition.triggers.any_tag
         for definition in (
             *shadow.dimension_config.dimensions,
             *shadow.dimension_config.review_questions,
@@ -172,12 +192,7 @@ def test_manifest_loader_rejects_duplicate_json_keys(tmp_path: Path) -> None:
 def test_manifest_rejects_metric_case_outside_main_source() -> None:
     suite = load_tag_truth_suite(MANIFEST)
     payload = suite.model_dump(mode="json")
-    quarantined = next(
-        case
-        for case in payload["cases"]
-        if case["semantic_label"] == "needs_taxonomy_decision"
-    )
-    quarantined["semantic_label"] = "positive"
+    quarantined = next(case for case in payload["cases"] if case["case_id"] == "RDB-Q001")
     quarantined["metric_eligible"] = True
     quarantined["split"] = "calibration"
 
@@ -272,7 +287,7 @@ def test_report_keeps_contract_and_semantic_quality_separate() -> None:
         },
         {
             **common,
-            "case_id": "RDB-W001",
+            "case_id": "RDB-P002",
             "parser_error_nodes": 1,
             "metric_eligible": True,
             "split": "calibration",
@@ -280,7 +295,7 @@ def test_report_keeps_contract_and_semantic_quality_separate() -> None:
             "actual_shadow_match": False,
             "contract_matched": True,
             "file_hint_match": False,
-            "stratum": "indirect-wrapper",
+            "stratum": "direct-modern",
             "review_status": "proposed",
         },
         {

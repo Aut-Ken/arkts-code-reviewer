@@ -1,5 +1,5 @@
 schema_version: tag-config-v2
-version: tags-rdb-shadow-v1
+version: tags-relational-store-api-shadow-v1
 tags:
   - id: has_animation
     status: Active
@@ -92,9 +92,9 @@ tags:
       any_api: [requestPermissionsFromUser]
       any_api_prefix: [abilityAccessCtrl.]
 
-  - id: has_relational_database
+  - id: has_relational_store_api
     status: Draft
-    description: 候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）
+    description: 候选：当前 ReviewUnit 直接使用 RelationalStore API、类型或配置（仅作 shadow 评测）
     triggers:
       any_import_use: ['@kit.ArkData#relationalStore', '@ohos.data.rdb#default', '@ohos.data.relationalStore#default']
 

@@ -1,8 +1,8 @@
 {
   "schema_version": "tag-truth-v1",
-  "suite_id": "tag-rdb-01a",
-  "description": "Provisional owner-level shadow evaluation for has_relational_database on the pinned applications_app_samples corpus.",
-  "annotation_policy_version": "rdb-domain-annotation-v1-provisional",
+  "suite_id": "tag-rdb-01b",
+  "description": "Provisional owner-level shadow evaluation for has_relational_store_api on the pinned applications_app_samples corpus.",
+  "annotation_policy_version": "relational-store-api-annotation-v1-provisional",
   "truth_status": "provisional",
   "repository": {
     "source_id": "applications-app-samples",
@@ -11,11 +11,11 @@
   },
   "base_feature_config_fingerprint": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
   "candidate": {
-    "tag_id": "has_relational_database",
+    "tag_id": "has_relational_store_api",
     "status": "Draft",
-    "description": "候选：当前 ReviewUnit 使用关系数据库 API（仅作 shadow 评测，import-use 尚不能排除 VectorStore）",
-    "tag_config_version": "tags-rdb-shadow-v1",
-    "config_fingerprint": "feature-config:sha256:c9efcaee685c5ceb22a6b1817aeebf5a409732dbed493ac56cfda7a11603eae7",
+    "description": "候选：当前 ReviewUnit 直接使用 RelationalStore API、类型或配置（仅作 shadow 评测）",
+    "tag_config_version": "tags-relational-store-api-shadow-v1",
+    "config_fingerprint": "feature-config:sha256:8d2bf1f9e0d61da169353c93f5744727b5d35dbbbc57cccbd92f0a3a4afb143c",
     "any_import_use": [
       "@kit.ArkData#relationalStore",
       "@ohos.data.rdb#default",
@@ -24,7 +24,7 @@
   },
   "gates": {
     "min_positive_cases": 40,
-    "min_negative_cases": 60,
+    "min_negative_cases": 65,
     "min_hard_negative_cases": 300,
     "min_holdout_positive_cases": 4,
     "min_holdout_negative_cases": 4,
@@ -2588,20 +2588,107 @@
       "review_status": "proposed"
     },
     {
+      "case_id": "RDB-P036",
+      "source_alias": "src064",
+      "changed_line": 90,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "RdbModel.insertData",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        90
+      ],
+      "rationale": "Direct owner-aware API enum use from the RelationalStore family in the ReviewUnit.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P037",
+      "source_alias": "src080",
+      "changed_line": 97,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "ContactStore.batchInsert",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-relational-store",
+      "evidence_lines": [
+        97
+      ],
+      "rationale": "Direct owner-aware ValuesBucket type use from the RelationalStore family in the ReviewUnit.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P038",
+      "source_alias": "src088",
+      "changed_line": 97,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "Rdb.createRdb",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        97,
+        99
+      ],
+      "rationale": "Direct owner-aware StoreConfig, getRdbStore, and RdbStore uses from the RelationalStore family.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P039",
+      "source_alias": "src091",
+      "changed_line": 56,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "RdbManager.init",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-modern",
+      "evidence_lines": [
+        56
+      ],
+      "rationale": "Direct owner-aware getRdbStore use from the RelationalStore family in the ReviewUnit.",
+      "review_status": "proposed"
+    },
+    {
+      "case_id": "RDB-P040",
+      "source_alias": "src094",
+      "changed_line": 99,
+      "expected_unit_kind": "method",
+      "expected_unit_symbol": "getRdbPredicates",
+      "semantic_label": "positive",
+      "expected_shadow_match": true,
+      "metric_eligible": true,
+      "split": "calibration",
+      "stratum": "direct-legacy-rdb",
+      "evidence_lines": [
+        99
+      ],
+      "rationale": "Direct owner-aware RdbPredicates construction from the legacy RDB identity.",
+      "review_status": "proposed"
+    },
+    {
       "case_id": "RDB-Q001",
       "source_alias": "src029",
       "changed_line": 37,
       "expected_unit_kind": "function",
       "expected_unit_symbol": "getVectorStore",
-      "semantic_label": "needs_taxonomy_decision",
+      "semantic_label": "positive",
       "expected_shadow_match": true,
       "metric_eligible": false,
       "split": "diagnostic",
-      "stratum": "vector-store-quarantine",
+      "stratum": "direct-vector-store-api-diagnostic",
       "evidence_lines": [
-        37
+        37,
+        46
       ],
-      "rationale": "VectorStore uses the same relationalStore identity with StoreConfig.vector=true; taxonomy is unresolved.",
+      "rationale": "The Unit directly uses the RelationalStore API family in VectorStore mode; DocsSample evidence remains diagnostic-only.",
       "review_status": "proposed"
     },
     {
@@ -2746,15 +2833,15 @@
       "changed_line": 49,
       "expected_unit_kind": "function",
       "expected_unit_symbol": "queryItem",
-      "semantic_label": "positive",
+      "semantic_label": "negative",
       "expected_shadow_match": false,
       "metric_eligible": true,
       "split": "acceptance_holdout",
-      "stratum": "indirect-wrapper",
+      "stratum": "hard-negative-indirect-wrapper",
       "evidence_lines": [
-        49
+        50
       ],
-      "rationale": "TaskPool queryItem reaches DatabaseConnection, which owns the RelationalStore calls.",
+      "rationale": "The Unit only calls the local DatabaseConnection wrapper and contains no direct RelationalStore API, type, or config use.",
       "review_status": "proposed"
     },
     {
@@ -2763,15 +2850,15 @@
       "changed_line": 47,
       "expected_unit_kind": "method",
       "expected_unit_symbol": "DeviceLibraryDao.addDeviceList",
-      "semantic_label": "positive",
+      "semantic_label": "negative",
       "expected_shadow_match": false,
       "metric_eligible": true,
       "split": "acceptance_holdout",
-      "stratum": "indirect-wrapper",
+      "stratum": "hard-negative-indirect-wrapper",
       "evidence_lines": [
-        47
+        57
       ],
-      "rationale": "DAO delegates to databaseHelper.batchInsert without a direct RelationalStore import use.",
+      "rationale": "The Unit only calls the local databaseHelper wrapper and contains no direct RelationalStore API, type, or config use.",
       "review_status": "proposed"
     },
     {
@@ -2780,15 +2867,15 @@
       "changed_line": 22,
       "expected_unit_kind": "function",
       "expected_unit_symbol": "syncContact",
-      "semantic_label": "positive",
+      "semantic_label": "negative",
       "expected_shadow_match": false,
       "metric_eligible": true,
       "split": "calibration",
-      "stratum": "indirect-wrapper",
+      "stratum": "hard-negative-indirect-wrapper",
       "evidence_lines": [
-        22
+        25
       ],
-      "rationale": "Sync flow delegates persistence to the local ContactStore wrapper.",
+      "rationale": "The Unit only calls the local ContactStore wrapper and contains no direct RelationalStore API, type, or config use.",
       "review_status": "proposed"
     },
     {
@@ -2797,15 +2884,15 @@
       "changed_line": 42,
       "expected_unit_kind": "method",
       "expected_unit_symbol": "ProjectionPopup.equalTo",
-      "semantic_label": "positive",
+      "semantic_label": "negative",
       "expected_shadow_match": false,
       "metric_eligible": true,
       "split": "calibration",
-      "stratum": "indirect-wrapper",
+      "stratum": "hard-negative-indirect-wrapper",
       "evidence_lines": [
-        42
+        43
       ],
-      "rationale": "Method delegates predicate construction to a local Rdb wrapper; the platform default import is invalid and unused.",
+      "rationale": "The Unit only calls the local Rdb wrapper; the file-level relationalStore import is unused by this owner.",
       "review_status": "proposed"
     },
     {
@@ -2814,15 +2901,15 @@
       "changed_line": 173,
       "expected_unit_kind": "struct",
       "expected_unit_symbol": "PhotoIndex",
-      "semantic_label": "positive",
+      "semantic_label": "negative",
       "expected_shadow_match": false,
       "metric_eligible": true,
       "split": "calibration",
-      "stratum": "indirect-wrapper",
+      "stratum": "hard-negative-indirect-wrapper",
       "evidence_lines": [
         173
       ],
-      "rationale": "Page delegates persistence to the local rdbManager wrapper.",
+      "rationale": "The Unit only calls the local rdbManager wrapper and contains no direct RelationalStore API, type, or config use.",
       "review_status": "proposed"
     }
   ]

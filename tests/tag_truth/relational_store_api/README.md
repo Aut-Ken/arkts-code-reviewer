@@ -1,8 +1,10 @@
-# TAG-RDB-01a provisional shadow truth
+# TAG-RDB-01b provisional shadow truth
 
-This package evaluates the proposed `has_relational_database` Tag without changing
-the default Feature Routing configuration. It is deliberately independent from the
-synthetic Feature Routing Golden.
+This package evaluates the proposed `has_relational_store_api` Tag without changing
+the default Feature Routing configuration. The Tag means that the current
+ReviewUnit directly uses a RelationalStore API, type, or configuration binding. It
+does not mean that an indirect wrapper participates in a database business flow.
+The package is deliberately independent from the synthetic Feature Routing Golden.
 
 ## What is frozen
 
@@ -11,7 +13,8 @@ synthetic Feature Routing Golden.
 - Unit of truth: one immutable source file plus one 1-based changed line resolving
   to exactly one ReviewUnit owner.
 - Candidate: Draft-only `any_import_use` matching the three canonical identities
-  listed in `manifest.json`.
+  listed in `manifest.json`. VectorStore is intentionally inside this API-family
+  semantic.
 - Existing 24 Tags, Dimensions, Review Questions, default fingerprint, Parser v1,
   existing Golden, Knowledge and E2E stay unchanged.
 
@@ -29,44 +32,47 @@ count before parsing. It never checks out, cleans or writes the external reposit
 behavior. `baselines/current.json` is only a snapshot of current executable
 behavior. A baseline must never generate or overwrite semantic labels.
 
-All 109 cases currently have `review_status: proposed`, and the suite has
+All 114 cases currently have `review_status: proposed`, and the suite has
 `truth_status: provisional`. Consequently its Precision/Recall are exploratory;
 they are not human-adjudicated product quality proof and cannot qualify the Tag for
 Active status.
 
-The provisional review cohort contains exactly 40 positive and 60 hard-negative
+The provisional review cohort contains exactly 40 positive and 65 hard-negative
 owner cases:
 
-- 35 direct import-use positives;
-- 5 semantically positive wrapper cases that v1 intentionally does not match;
+- 40 direct API/type/config positives from `src/main` owners;
 - 60 related-domain hard negatives;
+- 5 indirect-wrapper hard negatives;
 - 4 unresolved-owner controls, 4 isolated `ohosTest` controls, and one VectorStore
-  taxonomy quarantine outside the product metrics.
+  API-family positive outside the product metrics.
 
-VectorStore is quarantined because official VectorStore code also imports
-`@kit.ArkData#relationalStore` and distinguishes the mode with
-`StoreConfig.vector: true`. Import-use alone cannot decide whether the proposed Tag
-means relational mode or the broader RelationalStore API family.
+VectorStore directly imports and calls `@kit.ArkData#relationalStore`, so it is a
+positive boundary case for this API-family Tag. It remains diagnostic-only because
+`DocsSample` sources cannot enter product metrics. A future traditional relational
+database-mode Tag would still need `StoreConfig.vector` dataflow and separate truth.
 
-The five wrapper cases expose the opposite boundary: they are semantically in the
-database path but do not contain a direct Unit-owned import use. Until the product
-chooses a direct API-family Tag or a broader business-path Tag, the reported P/R is
-diagnostic evidence for that decision, not evidence that this Tag ID should ship.
+The five wrapper cases call local DAO, manager, or helper abstractions but contain no
+direct Unit-owned RelationalStore use. They are hard negatives for this Tag and are
+retained as seeds for a future relation-aware business-flow truth package.
+
+The five new direct positives were added only to calibration. The existing
+acceptance holdout was not expanded after observing current behavior, so this
+semantic migration does not present post-hoc selected cases as independent holdout
+evidence.
 
 ## Run
 
 ```bash
 PYTHONPATH=src .venv/bin/python tools/evaluate_tag_truth.py \
   --source-root /home/autken/Code/applications_app_samples \
-  --strict-baseline tests/tag_truth/relational_database/baselines/current.json \
+  --strict-baseline tests/tag_truth/relational_store_api/baselines/current.json \
   --require-contract-perfect \
   --require-review-package-ready
 ```
 
 `--require-review-package-ready` means only that this provisional package has a
-mechanically complete 40/60 review cohort and executable contract stability. It
+mechanically complete 40/65 review cohort and executable contract stability. It
 does not mean the candidate is safe to activate. `tag-truth-v1` is intentionally
 provisional-only, so `--require-activation-ready` must fail. Activation requires a
 receipt-bearing successor schema, a larger independent holdout with confidence
-bounds, at least 300 hard negatives, the Precision/Recall gates, and a resolved
-VectorStore taxonomy.
+bounds, at least 300 hard negatives, and the Precision/Recall gates.
