@@ -154,9 +154,31 @@ EXPECTED_BY_TAG_AND_SPLIT = {
 def test_truth_manifest_has_provisional_balanced_shape() -> None:
     suite = load_tag_retrieval_truth(TRUTH_MANIFEST)
 
+    assert suite.schema_version == "tag-retrieval-truth-v2"
     assert suite.truth_status == "provisional"
+    assert suite.evaluation_boundary.dataset_role == "development_regression"
+    assert suite.evaluation_boundary.legacy_acceptance_holdout_is_independent is False
+    assert suite.evaluation_boundary.independent_blind_holdout_available is False
     assert len(suite.sources) == 36
     assert len(suite.cases) == 48
+    assert [adjudication.case_id for adjudication in suite.cross_target_tag_adjudications] == [
+        "TR-NET-008",
+        "TR-STATE-007",
+        "TR-STATE-009",
+        "TR-STATE-010",
+        "TR-STATE-012",
+        "TR-TIMER-004",
+        "TR-TIMER-010",
+    ]
+    assert all(
+        adjudication.tag_id == "has_lifecycle"
+        and adjudication.semantic_label == "positive"
+        and adjudication.expected_exact_tag is True
+        and adjudication.review_status == "product_decision_recorded"
+        and adjudication.receipt.independently_adjudicated is False
+        and adjudication.receipt.candidate_output_blinded is False
+        for adjudication in suite.cross_target_tag_adjudications
+    )
     assert all(case.review_status == "proposed" for case in suite.cases)
     assert all("/src/main/" in source.path for source in suite.sources)
     assert not any(source.path.startswith("code/DocsSample/") for source in suite.sources)
@@ -221,6 +243,35 @@ def test_truth_cannot_claim_adjudication_without_review_receipts() -> None:
     payload["truth_status"] = "adjudicated"
 
     with pytest.raises(ValueError, match="provisional"):
+        TagRetrievalTruthSuite.model_validate(payload)
+
+
+def test_truth_rejects_cross_target_decision_derived_from_candidate_contract() -> None:
+    suite = load_tag_retrieval_truth(TRUTH_MANIFEST)
+    payload = suite.model_dump(mode="json")
+    adjudication = payload["cross_target_tag_adjudications"][0]
+    adjudication["semantic_label"] = "negative"
+
+    with pytest.raises(ValueError, match="contradicts expected_exact_tag"):
+        TagRetrievalTruthSuite.model_validate(payload)
+
+
+def test_truth_rejects_missing_or_substituted_cross_target_decision() -> None:
+    suite = load_tag_retrieval_truth(TRUTH_MANIFEST)
+    payload = suite.model_dump(mode="json")
+    payload["cross_target_tag_adjudications"] = payload["cross_target_tag_adjudications"][1:]
+
+    with pytest.raises(ValueError, match="adjudication case set drift"):
+        TagRetrievalTruthSuite.model_validate(payload)
+
+
+def test_truth_receipt_cannot_claim_independent_blind_review() -> None:
+    suite = load_tag_retrieval_truth(TRUTH_MANIFEST)
+    payload = suite.model_dump(mode="json")
+    receipt = payload["cross_target_tag_adjudications"][0]["receipt"]
+    receipt["independently_adjudicated"] = True
+
+    with pytest.raises(ValueError, match="False"):
         TagRetrievalTruthSuite.model_validate(payload)
 
 

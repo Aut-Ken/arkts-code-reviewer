@@ -36,9 +36,10 @@ config/knowledge_seed_v1.yaml / knowledge_annotations.yaml / knowledge_model_exp
 config/retrieval.yaml     retrieval-config-v1 / retrieval-v1
 ```
 
-Feature config loader 还支持显式注入的 `tag-config-v2` 和 `tag-config-v3`。v1/v2
-schema 语义已冻结：v2 只在 v1 上增加 `any_import_use`；v3 再增加
-`any_symbol_leaf`，当前仅用于 FR-02 candidate 的显式影子评估。仓库及 wheel
+Feature config loader 还支持显式注入的 `tag-config-v2/v3/v4`。v1/v2 schema
+语义已冻结：v2 只在 v1 上增加 `any_import_use`；v3 增加纯 leaf 归一化，保留为
+FR-02 development regression；v4 再增加 per-symbol owner-role 约束，当前仅用于
+FR-02B owner-aware shadow candidate。仓库及 wheel
 中的默认 `tags.yaml` 仍是 `tag-config-v1/tags-v1`，`CodeAnalyzer` 的默认运行行为
 没有切换。
 
@@ -243,14 +244,50 @@ any_symbol_leaf
 
 该 operator 只证明名称分段命中，不证明 owner 是 ArkUI component/page。当前
 `UnitFactScope` 不能排除 `Helper.aboutToAppear` 这类普通 class 同名方法，因此
-v3 仍是 candidate-only，不得据此激活默认配置。这里的 candidate 隔离来自显式配置
-注入，不是把 `has_lifecycle` 改成 Draft。
+v3 只保留为 development regression，不再作为待激活候选。这里的运行隔离来自显式配置
+注入，不是把 `has_lifecycle` 改成 Draft；不得据此激活默认配置。
 
 | Tag config schema | 新增 operator | Feature output | 当前角色 |
 |---|---|---|---|
 | `tag-config-v1` | 无 | `feature-routing-v1` | 默认生产配置，冻结 |
 | `tag-config-v2` | `any_import_use` | `feature-routing-v1` | 已冻结；仅显式注入，默认未启用 |
-| `tag-config-v3` | `any_symbol_leaf` | `feature-routing-v2` | FR-02 candidate-only |
+| `tag-config-v3` | `any_symbol_leaf` | `feature-routing-v2` | FR-02 development regression |
+| `tag-config-v4` | `any_unit_symbol_leaf_with_owner_role`, `any_file_symbol_leaf` | `feature-routing-v3` | FR-02B candidate-only |
+
+### 6.3 `tag-config-v4` 的 owner-aware lifecycle candidate
+
+FR-02B fixture `tests/fixtures/feature_routing/tag_config_lifecycle_owner_role_shadow_v1.yaml`
+使用 `tag-config-v4/tags-lifecycle-owner-role-shadow-v1`，增加 exact-only
+`any_unit_symbol_leaf_with_owner_role`。每个配置项是
+`{symbol_leaf, owner_role}`；它不再只问“symbol 的最后一段是什么”，而是对每个
+exact symbol 同时要求 owner-role evidence 与配置映射相符。FR-02B 的 lifecycle
+leaf-to-role 语义为：
+
+| Lifecycle leaf | 允许的 owner role |
+|---|---|
+| `aboutToAppear`, `aboutToDisappear` | `arkui_custom_component` |
+| `onBackPress`, `onPageHide`, `onPageShow` | `arkui_router_page` |
+
+`onReady` 明确不在 v4 owner-aware exact 映射中；`Canvas.onReady` 是组件事件回调，不是页面或
+自定义组件生命周期。它只保留在 `any_file_symbol_leaf` 中作为保守 routing hint。这个 exact
+排除只属于 v4 candidate，不回写默认 `tags-v1`。
+
+Owner role 由既有 FileAnalysis declaration/decorator/owner 合同在 Feature Routing 边界上派生，
+不修改 Parser schema 或 Parser v1 行为。`feature-routing-v3` 对每个 normalized symbol
+保留原始 symbol、leaf、owner role 及其 evidence/provenance，不允许用同文件其他 owner 的
+decorator 为当前 symbol 背书。普通 class 的同名方法因没有允许的 ArkUI owner role
+而不得产生 exact lifecycle Tag。`arkui_custom_component` 只接受承载 struct 的结构化
+`@Component/@ComponentV2` evidence；`@CustomDialog` 暂不映射任何 owner role，必须
+abstain。`arkui_router_page` 还需要同一 struct 的 `@Entry` evidence。Method Unit 可以绑定
+其自身 method declaration；struct Unit
+只允许绑定该 ArkUI struct 的直接 lifecycle method 子声明。嵌套普通 class 的同名方法不是
+struct 的直接 lifecycle 子声明，必须 abstain，不能继承外层 struct 的 role。
+
+V4 同时提供 routing-only `any_file_symbol_leaf`，其值是包含 `onReady` 在内的排序去重 leaf 数组。
+Matcher 只在 `file_hint` scope 求值该 operator，`unit_exact` 必须忽略它；反过来，
+`any_unit_symbol_leaf_with_owner_role` 只能在 `unit_exact` 求值。因此 file hint 仍只能
+产生 routing Tag，不能为当前 Unit 声称 owner role、绑定专项 Review Question 或成为
+Finding evidence。两类 trace 保留各自的 operator，不得混合。
 
 ## 7. 已实现的 dimensions.yaml
 
@@ -332,10 +369,11 @@ feature-config:sha256:<digest>
 `tags-v1` 和 `dimensions-v1`；显式 candidate 结果必须记录它实际使用的 Tag config
 version。声明顺序变化不改变语义 fingerprint，内容或声明版本变化会改变它。
 
-增加 v2/v3 loader 能力不得改变任何 v1 配置的规范化输出或 fingerprint。v1
+增加 v2/v3/v4 loader 能力不得改变任何 v1 配置的规范化输出或 fingerprint。v1
 通用序列化不包含后续 schema 字段；v2 fingerprint 显式包含 `any_import_use`
-且不包含 `any_symbol_leaf`；v3 fingerprint 包含两者。v1/v2 配置继续输出
-`feature-routing-v1`，v3 配置必须输出 `feature-routing-v2`。只有切换配置版本或
+且不包含 `any_symbol_leaf`；v3 fingerprint 包含纯 leaf 归一化；v4 fingerprint 还必须包含
+leaf-to-role 映射和 routing-only file leaf 集合。v1/v2 配置继续输出 `feature-routing-v1`，v3 输出
+`feature-routing-v2`，v4 输出 `feature-routing-v3`。只有切换配置版本或
 内容时，相关 profile/result identity 才随之改变。
 
 `pyproject.toml` 使用 wheel `force-include` 将仓库两份 YAML 安装为：

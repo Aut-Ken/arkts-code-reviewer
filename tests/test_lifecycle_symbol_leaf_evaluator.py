@@ -11,15 +11,15 @@ import pytest
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
 from arkts_code_reviewer.feature_routing.models import (
     FEATURE_ROUTING_SCHEMA_VERSION,
-    FEATURE_ROUTING_V2_SCHEMA_VERSION,
+    FEATURE_ROUTING_V3_SCHEMA_VERSION,
 )
 from arkts_code_reviewer.retrieval_validation.lifecycle_symbol_leaf import (
-    LIFECYCLE_SYMBOL_LEAF_CANDIDATE_FINGERPRINT,
-    LIFECYCLE_SYMBOL_LEAF_CANDIDATE_VERSION,
+    LIFECYCLE_OWNER_ROLE_CANDIDATE_FINGERPRINT,
+    LIFECYCLE_OWNER_ROLE_CANDIDATE_VERSION,
     build_lifecycle_symbol_leaf_comparison,
 )
 from arkts_code_reviewer.retrieval_validation.tag_retrieval_fixture import (
-    TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION,
+    TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION,
     TARGET_TAGS,
     TagRetrievalTruthSuite,
     load_tag_retrieval_truth,
@@ -54,7 +54,7 @@ LIFECYCLE_TARGET_ADDITIONS = (
     "TR-LIFE-012",
 )
 DECLARED_CO_TAG_ADDITIONS = ("TR-TIMER-008",)
-UNADJUDICATED_ADDITIONS = (
+ADJUDICATED_CROSS_TARGET_ADDITIONS = (
     "TR-NET-008",
     "TR-STATE-007",
     "TR-STATE-009",
@@ -68,7 +68,7 @@ ALL_LIFECYCLE_ADDITIONS = tuple(
         (
             *LIFECYCLE_TARGET_ADDITIONS,
             *DECLARED_CO_TAG_ADDITIONS,
-            *UNADJUDICATED_ADDITIONS,
+            *ADJUDICATED_CROSS_TARGET_ADDITIONS,
         )
     )
 )
@@ -88,18 +88,32 @@ def _legacy_match(tag_id: str, scope: str) -> dict[str, object]:
 
 
 def _lifecycle_match(scope: str, symbol: str) -> dict[str, object]:
+    normalized = symbol.rsplit(".", 1)[-1]
+    signal: dict[str, object]
+    if scope == "file_hint":
+        signal = {
+            "kind": "symbols",
+            "value": symbol,
+            "operator": "any_file_symbol_leaf",
+            "normalized_value": normalized,
+        }
+    else:
+        signal = {
+            "kind": "symbols",
+            "value": symbol,
+            "operator": "any_unit_symbol_leaf_with_owner_role",
+            "normalized_value": normalized,
+            "owner_role": "arkui_custom_component",
+            "symbol_occurrence_id": f"occurrence:sha256:{'a' * 64}",
+            "direct_owner_declaration_id": f"declaration:sha256:{'b' * 64}",
+            "enclosing_owner_declaration_id": f"declaration:sha256:{'c' * 64}",
+            "role_evidence_occurrence_ids": [f"occurrence:sha256:{'d' * 64}"],
+        }
     return {
         "tag_id": "has_lifecycle",
         "status": "Active",
         "scope": scope,
-        "signals": [
-            {
-                "kind": "symbols",
-                "value": symbol,
-                "operator": "any_symbol_leaf",
-                "normalized_value": symbol.rsplit(".", 1)[-1],
-            }
-        ],
+        "signals": [signal],
     }
 
 
@@ -186,6 +200,7 @@ def _row(case: Any, *, candidate: bool) -> dict[str, object]:
         "parser_missing_nodes": 0,
         "file_diagnostics": [],
         "scope_diagnostics": [],
+        "profile_diagnostics": [],
     }
 
 
@@ -234,19 +249,17 @@ def _observation(*, candidate: bool) -> dict[str, object]:
 
     base = load_default_feature_config()
     return {
-        "schema_version": TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION,
+        "schema_version": TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION,
         "suite_id": truth.suite_id,
         "truth_status": truth.truth_status,
         "truth_suite_fingerprint": tag_retrieval_truth_fingerprint(truth),
         "feature_config_fingerprint": (
-            LIFECYCLE_SYMBOL_LEAF_CANDIDATE_FINGERPRINT if candidate else base.fingerprint
+            LIFECYCLE_OWNER_ROLE_CANDIDATE_FINGERPRINT if candidate else base.fingerprint
         ),
-        "tags_config_schema_version": "tag-config-v3" if candidate else "tag-config-v1",
-        "tags_config_version": (
-            LIFECYCLE_SYMBOL_LEAF_CANDIDATE_VERSION if candidate else "tags-v1"
-        ),
+        "tags_config_schema_version": "tag-config-v4" if candidate else "tag-config-v1",
+        "tags_config_version": (LIFECYCLE_OWNER_ROLE_CANDIDATE_VERSION if candidate else "tags-v1"),
         "feature_routing_schema_version": (
-            FEATURE_ROUTING_V2_SCHEMA_VERSION if candidate else FEATURE_ROUTING_SCHEMA_VERSION
+            FEATURE_ROUTING_V3_SCHEMA_VERSION if candidate else FEATURE_ROUTING_SCHEMA_VERSION
         ),
         "source_count": len(truth.sources),
         "case_count": len(rows),
@@ -260,6 +273,8 @@ def _observation(*, candidate: bool) -> dict[str, object]:
         "co_tag_mismatch_case_ids": co_tag_mismatches,
         "case_contract_mismatch_case_ids": contract_mismatches,
         "parser_risk_case_ids": [],
+        "profile_diagnostic_case_counts": {},
+        "owner_context_abstain_case_ids": [],
         "cases": rows,
     }
 
@@ -277,15 +292,43 @@ def _case(observation: dict[str, object], case_id: str) -> dict[str, object]:
     return next(row for row in rows if row["case_id"] == case_id)
 
 
-def test_hermetic_comparison_separates_declared_and_unadjudicated_additions() -> None:
+def test_hermetic_comparison_uses_explicit_cross_target_adjudications() -> None:
     comparison = _comparison()
 
+    assert comparison["schema_version"] == "lifecycle-owner-role-comparison-v1"
+    assert comparison["candidate_kind"] == "owner_aware_shadow"
     assert comparison["lifecycle_target_addition_case_ids"] == list(LIFECYCLE_TARGET_ADDITIONS)
     assert comparison["declared_required_co_tag_lifecycle_addition_case_ids"] == list(
         DECLARED_CO_TAG_ADDITIONS
     )
-    assert comparison["unadjudicated_cross_target_lifecycle_addition_case_ids"] == list(
-        UNADJUDICATED_ADDITIONS
+    assert comparison["adjudicated_positive_cross_target_lifecycle_addition_case_ids"] == list(
+        ADJUDICATED_CROSS_TARGET_ADDITIONS
+    )
+    assert comparison["adjudicated_negative_cross_target_lifecycle_addition_case_ids"] == []
+    assert comparison["unadjudicated_cross_target_lifecycle_addition_case_ids"] == []
+    assert comparison["evaluation_boundary"] == {
+        "dataset_role": "development_regression",
+        "legacy_acceptance_holdout_is_independent": False,
+        "independent_blind_holdout_available": False,
+        "rationale": (
+            "All 48 cases and both legacy split labels were visible during candidate "
+            "development, so they can freeze behavior but cannot provide independent "
+            "activation evidence."
+        ),
+    }
+    assert [
+        item["case_id"]
+        for item in cast(
+            list[dict[str, object]],
+            comparison["cross_target_tag_adjudications"],
+        )
+    ] == list(ADJUDICATED_CROSS_TARGET_ADDITIONS)
+    assert all(
+        cast(dict[str, object], item["receipt"])["independently_adjudicated"] is False
+        for item in cast(
+            list[dict[str, object]],
+            comparison["cross_target_tag_adjudications"],
+        )
     )
     assert comparison["all_lifecycle_exact_addition_case_ids"] == list(ALL_LIFECYCLE_ADDITIONS)
     assert comparison["symbol_leaf_provenance_failure_case_ids"] == []
@@ -304,12 +347,32 @@ def test_hermetic_comparison_separates_declared_and_unadjudicated_additions() ->
         "precision": 1.0,
         "recall": 1.0,
     }
+    assert comparison["development_regression_lifecycle_exact_metrics"] == {
+        "positive_case_count": 15,
+        "negative_case_count": 5,
+        "true_positive": 15,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 5,
+        "precision": 1.0,
+        "recall": 1.0,
+    }
     assert comparison["declared_contract_gate"] == {"passed": True, "failures": []}
     evidence_gate = cast(dict[str, object], comparison["candidate_evidence_gate"])
     assert evidence_gate["passed"] is False
-    assert "unadjudicated_cross_target_lifecycle_additions" in cast(
+    assert "development_regression_only" in cast(
         list[str],
         evidence_gate["failures"],
+    )
+    assert "independent_adjudicated_holdout_missing" in cast(
+        list[str],
+        evidence_gate["failures"],
+    )
+    assert "unadjudicated_cross_target_lifecycle_additions" not in cast(
+        list[str], evidence_gate["failures"]
+    )
+    assert "ordinary_class_same_name_owner_not_distinguishable" not in cast(
+        list[str], evidence_gate["failures"]
     )
 
 
@@ -412,9 +475,8 @@ def test_declared_gate_rejects_invalid_file_hint_leaf_provenance() -> None:
     ("candidate_side", "key", "bad_value"),
     [
         (False, "feature_config_fingerprint", "feature-config:sha256:" + "0" * 64),
-        (False, "feature_routing_schema_version", FEATURE_ROUTING_V2_SCHEMA_VERSION),
+        (False, "feature_routing_schema_version", FEATURE_ROUTING_V3_SCHEMA_VERSION),
         (True, "tags_config_version", "wrong-candidate-version"),
-        (True, "tags_config_schema_version", "tag-config-v1"),
     ],
 )
 def test_comparison_rejects_wrong_config_identity(
@@ -486,7 +548,7 @@ def test_comparison_rejects_internally_inconsistent_summary() -> None:
 
 def _cli_report(*, declared_passed: bool, evidence_passed: bool) -> dict[str, object]:
     return {
-        "schema_version": "lifecycle-symbol-leaf-evaluation-v2",
+        "schema_version": "lifecycle-owner-role-evaluation-v1",
         "comparison": {
             "declared_contract_gate": {
                 "passed": declared_passed,

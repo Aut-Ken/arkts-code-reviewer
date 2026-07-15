@@ -25,19 +25,24 @@ from arkts_code_reviewer.feature_routing.config import (
     load_default_feature_config,
 )
 from arkts_code_reviewer.feature_routing.engine import FeatureRouter
+from arkts_code_reviewer.feature_routing.owner_context import OwnerAwareRoutingInput
 from arkts_code_reviewer.knowledge.models import Applicability, SourceSpan
 
-TAG_RETRIEVAL_TRUTH_SCHEMA_VERSION = "tag-retrieval-truth-v1"
+TAG_RETRIEVAL_TRUTH_SCHEMA_VERSION = "tag-retrieval-truth-v2"
 TAG_RETRIEVAL_KNOWLEDGE_SCHEMA_VERSION = "tag-retrieval-knowledge-fixture-v1"
-TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION: Literal[
+TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION: Literal["tag-retrieval-truth-observation-v1"] = (
     "tag-retrieval-truth-observation-v1"
-] = "tag-retrieval-truth-observation-v1"
-TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION: Literal[
+)
+TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION: Literal["tag-retrieval-truth-observation-v2"] = (
     "tag-retrieval-truth-observation-v2"
-] = "tag-retrieval-truth-observation-v2"
+)
+TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION: Literal["tag-retrieval-truth-observation-v3"] = (
+    "tag-retrieval-truth-observation-v3"
+)
 TagRetrievalTruthObservationSchemaVersion = Literal[
     "tag-retrieval-truth-observation-v1",
     "tag-retrieval-truth-observation-v2",
+    "tag-retrieval-truth-observation-v3",
 ]
 
 _OBSERVATION_V1_CASE_FIELDS = (
@@ -84,6 +89,16 @@ CaseStratum = Literal[
     "multi_tag_positive",
 ]
 Split = Literal["calibration", "acceptance_holdout"]
+
+_EXPECTED_LIFECYCLE_CROSS_TARGET_ADJUDICATION_CASE_IDS = (
+    "TR-NET-008",
+    "TR-STATE-007",
+    "TR-STATE-009",
+    "TR-STATE-010",
+    "TR-STATE-012",
+    "TR-TIMER-004",
+    "TR-TIMER-010",
+)
 
 _CASE_PREFIX_BY_TAG = {
     "has_lifecycle": "TR-LIFE-",
@@ -293,12 +308,65 @@ class TagRetrievalTruthCase(_FrozenModel):
         return self
 
 
+class TagRetrievalEvaluationBoundary(_FrozenModel):
+    dataset_role: Literal["development_regression"]
+    legacy_acceptance_holdout_is_independent: Literal[False]
+    independent_blind_holdout_available: Literal[False]
+    rationale: Annotated[str, Field(min_length=1)]
+
+    @field_validator("rationale")
+    @classmethod
+    def validate_rationale(cls, value: str) -> str:
+        if value != value.strip() or any(ord(character) < 32 for character in value):
+            raise ValueError("truth evaluation boundary rationale must be trimmed single-line text")
+        return value
+
+
+class TagRetrievalAdjudicationReceipt(_FrozenModel):
+    decision_id: Annotated[
+        str,
+        Field(pattern=r"^FR-02B-TR-(?:NET|STATE|TIMER)-[0-9]{3}-HAS-LIFECYCLE$"),
+    ]
+    reviewer_role: Literal["product_owner"]
+    decision_source: Literal["interactive_product_confirmation"]
+    recorded_on: Annotated[str, Field(pattern=r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")]
+    independently_adjudicated: Literal[False]
+    candidate_output_blinded: Literal[False]
+
+
+class TagRetrievalCrossTargetAdjudication(_FrozenModel):
+    case_id: Annotated[str, Field(pattern=r"^TR-(?:NET|STATE|TIMER)-[0-9]{3}$")]
+    tag_id: Literal["has_lifecycle"]
+    semantic_label: Literal["positive", "negative"]
+    expected_exact_tag: bool
+    rationale: Annotated[str, Field(min_length=1)]
+    review_status: Literal["product_decision_recorded"]
+    receipt: TagRetrievalAdjudicationReceipt
+
+    @field_validator("rationale")
+    @classmethod
+    def validate_rationale(cls, value: str) -> str:
+        if value != value.strip() or any(ord(character) < 32 for character in value):
+            raise ValueError("cross-target adjudication rationale must be trimmed single-line text")
+        return value
+
+    @model_validator(mode="after")
+    def validate_adjudication(self) -> TagRetrievalCrossTargetAdjudication:
+        if self.expected_exact_tag != (self.semantic_label == "positive"):
+            raise ValueError("cross-target adjudication label contradicts expected_exact_tag")
+        expected_decision_id = f"FR-02B-{self.case_id}-HAS-LIFECYCLE"
+        if self.receipt.decision_id != expected_decision_id:
+            raise ValueError("cross-target adjudication receipt does not match case_id")
+        return self
+
+
 class TagRetrievalTruthSuite(_FrozenModel):
-    schema_version: Literal["tag-retrieval-truth-v1"]
+    schema_version: Literal["tag-retrieval-truth-v2"]
     suite_id: Literal["active-tag-retrieval-pilot-v1"]
     description: Annotated[str, Field(min_length=1)]
     annotation_policy_version: Annotated[str, Field(min_length=1)]
     truth_status: Literal["provisional"]
+    evaluation_boundary: TagRetrievalEvaluationBoundary
     repository: FixtureRepository
     feature_config_fingerprint: Annotated[
         str,
@@ -306,8 +374,9 @@ class TagRetrievalTruthSuite(_FrozenModel):
     ]
     sources: tuple[TagRetrievalTruthSource, ...]
     cases: tuple[TagRetrievalTruthCase, ...]
+    cross_target_tag_adjudications: tuple[TagRetrievalCrossTargetAdjudication, ...]
 
-    @field_validator("sources", "cases", mode="before")
+    @field_validator("sources", "cases", "cross_target_tag_adjudications", mode="before")
     @classmethod
     def parse_sequences(cls, value: object, info: object) -> tuple[object, ...]:
         return _sequence(value, f"truth suite {getattr(info, 'field_name', 'sequence')}")
@@ -334,13 +403,26 @@ class TagRetrievalTruthSuite(_FrozenModel):
         aliases = [source.alias for source in self.sources]
         paths = [source.path for source in self.sources]
         case_ids = [case.case_id for case in self.cases]
+        adjudication_keys = [
+            (adjudication.case_id, adjudication.tag_id)
+            for adjudication in self.cross_target_tag_adjudications
+        ]
         if aliases != sorted(set(aliases)):
             raise ValueError("truth sources must be sorted by unique alias")
         if len(paths) != len(set(paths)):
             raise ValueError("truth source paths must be unique")
         if case_ids != sorted(set(case_ids)):
             raise ValueError("truth cases must be sorted by unique case_id")
+        if adjudication_keys != sorted(set(adjudication_keys)):
+            raise ValueError("cross-target adjudications must be sorted and unique")
+        expected_adjudication_keys = [
+            (case_id, "has_lifecycle")
+            for case_id in _EXPECTED_LIFECYCLE_CROSS_TARGET_ADJUDICATION_CASE_IDS
+        ]
+        if adjudication_keys != expected_adjudication_keys:
+            raise ValueError("lifecycle cross-target adjudication case set drift")
         sources_by_alias = {source.alias: source for source in self.sources}
+        cases_by_id = {case.case_id: case for case in self.cases}
         referenced = {case.source_alias for case in self.cases}
         unknown = sorted(referenced - set(sources_by_alias))
         if unknown:
@@ -348,6 +430,19 @@ class TagRetrievalTruthSuite(_FrozenModel):
         unused = sorted(set(sources_by_alias) - referenced)
         if unused:
             raise ValueError(f"truth sources are unused: {unused!r}")
+        for adjudication in self.cross_target_tag_adjudications:
+            case = cases_by_id.get(adjudication.case_id)
+            if case is None:
+                raise ValueError(
+                    f"cross-target adjudication references unknown case: {adjudication.case_id}"
+                )
+            if (
+                case.target_tag == adjudication.tag_id
+                or adjudication.tag_id in case.required_co_tags
+            ):
+                raise ValueError("cross-target adjudication must add an independent secondary Tag")
+            if adjudication.semantic_label != "positive":
+                raise ValueError("confirmed lifecycle cross-target adjudications must be positive")
         locations: set[tuple[str, int, str]] = set()
         for case in self.cases:
             source = sources_by_alias[case.source_alias]
@@ -791,6 +886,7 @@ def observe_tag_retrieval_truth(
     if observation_schema_version not in {
         TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION,
         TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION,
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION,
     }:
         raise ValueError("unsupported Tag Retrieval observation schema")
     if (
@@ -798,8 +894,17 @@ def observe_tag_retrieval_truth(
         and active_config != default_config
     ):
         raise ValueError("observation-v1 supports only the frozen default Feature config")
+    if (
+        active_config.tag_config.schema_version == "tag-config-v4"
+        and observation_schema_version != TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION
+    ):
+        raise ValueError("tag-config-v4 requires owner-aware observation-v3")
     router = FeatureRouter(active_config)
-    routing_schema_version = router.route([]).schema_version
+    routing_schema_version = (
+        router.route_owner_aware_shadow([]).schema_version
+        if active_config.tag_config.schema_version == "tag-config-v4"
+        else router.route([]).schema_version
+    )
     sources_by_alias = {source.alias: source for source in suite.sources}
     cases_by_source: dict[str, list[TagRetrievalTruthCase]] = {}
     for case in suite.cases:
@@ -865,48 +970,61 @@ def observe_tag_retrieval_truth(
                 )
             observed_units.add(unit_target)
             scope = project(parsed.analysis, unit)
-            routing = router.route([scope])
+            routing = (
+                router.route_owner_aware_shadow(
+                    [
+                        OwnerAwareRoutingInput(
+                            scope=scope,
+                            unit=unit,
+                            file_analysis=parsed.analysis,
+                        )
+                    ]
+                )
+                if active_config.tag_config.schema_version == "tag-config-v4"
+                else router.route([scope])
+            )
             if routing.schema_version != routing_schema_version:
                 raise ValueError("Feature Routing schema changed within one observation")
             profile = routing.units[0]
             actual_exact = case.target_tag in profile.exact_tags
             actual_routing = case.target_tag in profile.routing_tags
             missing_co_tags = sorted(set(case.required_co_tags) - set(profile.exact_tags))
-            rows.append(
-                {
-                    "case_id": case.case_id,
-                    "source_alias": case.source_alias,
-                    "changed_line": case.changed_line,
-                    "target_tag": case.target_tag,
-                    "split": case.split,
-                    "stratum": case.stratum,
-                    "review_status": case.review_status,
-                    "evidence_lines": list(case.evidence_lines),
-                    "expected_exact_tag": case.expected_exact_tag,
-                    "actual_exact_tag": actual_exact,
-                    "expected_routing_tag": case.expected_routing_tag,
-                    "actual_routing_tag": actual_routing,
-                    "required_co_tags": list(case.required_co_tags),
-                    "exact_matches_truth": actual_exact == case.expected_exact_tag,
-                    "routing_matches_truth": actual_routing == case.expected_routing_tag,
-                    "missing_required_co_tags": missing_co_tags,
-                    "exact_tags": list(profile.exact_tags),
-                    "routing_tags": list(profile.routing_tags),
-                    "exact_symbols": list(scope.unit_exact.symbols),
-                    "file_hint_symbols": list(scope.file_hints.symbols),
-                    "tag_matches": [match.to_dict() for match in profile.tag_matches],
-                    "unit_id": unit.unit_id,
-                    "unit_kind": unit.unit_kind,
-                    "unit_symbol": unit.unit_symbol,
-                    "expected_source_span": expected_source_span,
-                    "actual_source_span": actual_source_span,
-                    "parser_layer": parsed.analysis.parser_quality.layer,
-                    "parser_error_nodes": parsed.analysis.parser_quality.error_nodes,
-                    "parser_missing_nodes": parsed.analysis.parser_quality.missing_nodes,
-                    "file_diagnostics": list(parsed.analysis.diagnostics),
-                    "scope_diagnostics": list(scope.diagnostics),
-                }
-            )
+            row: dict[str, object] = {
+                "case_id": case.case_id,
+                "source_alias": case.source_alias,
+                "changed_line": case.changed_line,
+                "target_tag": case.target_tag,
+                "split": case.split,
+                "stratum": case.stratum,
+                "review_status": case.review_status,
+                "evidence_lines": list(case.evidence_lines),
+                "expected_exact_tag": case.expected_exact_tag,
+                "actual_exact_tag": actual_exact,
+                "expected_routing_tag": case.expected_routing_tag,
+                "actual_routing_tag": actual_routing,
+                "required_co_tags": list(case.required_co_tags),
+                "exact_matches_truth": actual_exact == case.expected_exact_tag,
+                "routing_matches_truth": actual_routing == case.expected_routing_tag,
+                "missing_required_co_tags": missing_co_tags,
+                "exact_tags": list(profile.exact_tags),
+                "routing_tags": list(profile.routing_tags),
+                "exact_symbols": list(scope.unit_exact.symbols),
+                "file_hint_symbols": list(scope.file_hints.symbols),
+                "tag_matches": [match.to_dict() for match in profile.tag_matches],
+                "unit_id": unit.unit_id,
+                "unit_kind": unit.unit_kind,
+                "unit_symbol": unit.unit_symbol,
+                "expected_source_span": expected_source_span,
+                "actual_source_span": actual_source_span,
+                "parser_layer": parsed.analysis.parser_quality.layer,
+                "parser_error_nodes": parsed.analysis.parser_quality.error_nodes,
+                "parser_missing_nodes": parsed.analysis.parser_quality.missing_nodes,
+                "file_diagnostics": list(parsed.analysis.diagnostics),
+                "scope_diagnostics": list(scope.diagnostics),
+            }
+            if observation_schema_version == TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION:
+                row["profile_diagnostics"] = list(profile.diagnostics)
+            rows.append(row)
     rows.sort(key=lambda row: str(row["case_id"]))
 
     def summarize(selected: list[dict[str, object]]) -> dict[str, int]:
@@ -939,12 +1057,8 @@ def observe_tag_retrieval_truth(
             for split in ("calibration", "acceptance_holdout")
         }
     serialized_rows = (
-        [
-            {key: row[key] for key in _OBSERVATION_V1_CASE_FIELDS}
-            for row in rows
-        ]
-        if observation_schema_version
-        == TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
+        [{key: row[key] for key in _OBSERVATION_V1_CASE_FIELDS} for row in rows]
+        if observation_schema_version == TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
         else rows
     )
     observation: dict[str, object] = {
@@ -1001,10 +1115,10 @@ def observe_tag_retrieval_truth(
         ],
         "cases": serialized_rows,
     }
-    if (
-        observation_schema_version
-        == TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION
-    ):
+    if observation_schema_version in {
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION,
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION,
+    }:
         observation.update(
             {
                 "truth_suite_fingerprint": tag_retrieval_truth_fingerprint(suite),
@@ -1012,6 +1126,28 @@ def observe_tag_retrieval_truth(
                 "tags_config_schema_version": active_config.tag_config.schema_version,
                 "tags_config_version": active_config.tag_config.version,
                 "feature_routing_schema_version": routing_schema_version,
+            }
+        )
+    if observation_schema_version == TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION:
+        observation.update(
+            {
+                "profile_diagnostic_case_counts": dict(
+                    sorted(
+                        Counter(
+                            str(diagnostic)
+                            for row in rows
+                            for diagnostic in cast(list[str], row["profile_diagnostics"])
+                        ).items()
+                    )
+                ),
+                "owner_context_abstain_case_ids": [
+                    str(row["case_id"])
+                    for row in rows
+                    if any(
+                        diagnostic.startswith("owner_context_")
+                        for diagnostic in cast(list[str], row["profile_diagnostics"])
+                    )
+                ],
             }
         )
     return observation
@@ -1044,6 +1180,7 @@ __all__ = [
     "TAG_RETRIEVAL_KNOWLEDGE_SCHEMA_VERSION",
     "TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION",
     "TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION",
+    "TAG_RETRIEVAL_TRUTH_OBSERVATION_V3_SCHEMA_VERSION",
     "TAG_RETRIEVAL_TRUTH_SCHEMA_VERSION",
     "TagRetrievalTruthObservationSchemaVersion",
     "TARGET_TAGS",
@@ -1051,6 +1188,9 @@ __all__ = [
     "HashedSourceSpan",
     "FixtureRepository",
     "ProposedKnowledgeClause",
+    "TagRetrievalAdjudicationReceipt",
+    "TagRetrievalCrossTargetAdjudication",
+    "TagRetrievalEvaluationBoundary",
     "TagRetrievalKnowledgeFixture",
     "TagRetrievalTruthCase",
     "TagRetrievalTruthSource",

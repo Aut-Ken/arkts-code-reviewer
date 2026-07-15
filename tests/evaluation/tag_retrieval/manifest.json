@@ -1,9 +1,15 @@
 {
-  "schema_version": "tag-retrieval-truth-v1",
+  "schema_version": "tag-retrieval-truth-v2",
   "suite_id": "active-tag-retrieval-pilot-v1",
-  "description": "Provisional owner-level Truth for the first Active Tag to Retrieval pilot on pinned applications_app_samples code.",
-  "annotation_policy_version": "active-tag-retrieval-pilot-policy-v1-provisional",
+  "description": "Provisional owner-level development-regression Truth for the first Active Tag to Retrieval pilot on pinned applications_app_samples code.",
+  "annotation_policy_version": "active-tag-retrieval-pilot-policy-v2-partial-adjudication",
   "truth_status": "provisional",
+  "evaluation_boundary": {
+    "dataset_role": "development_regression",
+    "legacy_acceptance_holdout_is_independent": false,
+    "independent_blind_holdout_available": false,
+    "rationale": "All 48 cases and both legacy split labels were visible during candidate development, so they can freeze behavior but cannot provide independent activation evidence."
+  },
   "repository": {
     "source_id": "applications-app-samples",
     "repository": "applications_app_samples",
@@ -11,6 +17,120 @@
     "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3"
   },
   "feature_config_fingerprint": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "cross_target_tag_adjudications": [
+    {
+      "case_id": "TR-NET-008",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The NetMonitor struct ReviewUnit directly owns NetMonitor.aboutToAppear, so lifecycle is a relevant secondary exact characteristic in addition to network and state management.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-NET-008-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-STATE-007",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The Index struct ReviewUnit directly owns Index.aboutToAppear, so lifecycle is a relevant secondary exact characteristic alongside state management.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-STATE-007-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-STATE-009",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The PicturePreview struct ReviewUnit directly owns PicturePreview.aboutToAppear, so lifecycle is a relevant secondary exact characteristic alongside state management.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-STATE-009-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-STATE-010",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The HomePage struct ReviewUnit directly owns HomePage.aboutToAppear and HomePage.aboutToDisappear, so lifecycle is a relevant secondary exact characteristic alongside state management.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-STATE-010-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-STATE-012",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The VideoPlayView struct ReviewUnit directly owns VideoPlayView.aboutToDisappear, so lifecycle is a relevant secondary exact characteristic alongside state management and responsive behavior.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-STATE-012-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-TIMER-004",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The ReviewUnit is the OperateRDBInTaskPool.aboutToAppear lifecycle method itself, so lifecycle is an exact characteristic in addition to its timer behavior.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-TIMER-004-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    },
+    {
+      "case_id": "TR-TIMER-010",
+      "tag_id": "has_lifecycle",
+      "semantic_label": "positive",
+      "expected_exact_tag": true,
+      "rationale": "The ReviewUnit is the Index.aboutToAppear lifecycle method itself, so lifecycle is an exact characteristic in addition to its timer behavior.",
+      "review_status": "product_decision_recorded",
+      "receipt": {
+        "decision_id": "FR-02B-TR-TIMER-010-HAS-LIFECYCLE",
+        "reviewer_role": "product_owner",
+        "decision_source": "interactive_product_confirmation",
+        "recorded_on": "2026-07-15",
+        "independently_adjudicated": false,
+        "candidate_output_blinded": false
+      }
+    }
+  ],
   "sources": [
     {
       "alias": "src001",

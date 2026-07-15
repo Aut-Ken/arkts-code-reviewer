@@ -256,7 +256,7 @@ def test_candidate_against_provisional_tag_retrieval_truth() -> None:
         "precision": 1.0,
         "recall": 1.0,
     }
-    assert comparison["candidate_lifecycle_target_case_metrics_by_split"] == {
+    assert comparison["candidate_lifecycle_target_case_metrics_by_legacy_split"] == {
         "calibration": {
             "positive_case_count": 4,
             "negative_case_count": 4,
@@ -291,7 +291,7 @@ def test_candidate_against_provisional_tag_retrieval_truth() -> None:
         "TR-LIFE-012",
     ]
     assert comparison["declared_required_co_tag_lifecycle_addition_case_ids"] == ["TR-TIMER-008"]
-    assert comparison["unadjudicated_cross_target_lifecycle_addition_case_ids"] == [
+    assert comparison["adjudicated_positive_cross_target_lifecycle_addition_case_ids"] == [
         "TR-NET-008",
         "TR-STATE-007",
         "TR-STATE-009",
@@ -300,6 +300,7 @@ def test_candidate_against_provisional_tag_retrieval_truth() -> None:
         "TR-TIMER-004",
         "TR-TIMER-010",
     ]
+    assert comparison["unadjudicated_cross_target_lifecycle_addition_case_ids"] == []
     assert comparison["all_lifecycle_exact_addition_case_ids"] == [
         "TR-LIFE-001",
         "TR-LIFE-003",
@@ -333,7 +334,7 @@ def test_candidate_against_provisional_tag_retrieval_truth() -> None:
     assert declared_gate == {"passed": True, "failures": []}
     evidence_gate = cast(dict[str, object], comparison["candidate_evidence_gate"])
     assert evidence_gate["passed"] is False
-    assert "unadjudicated_cross_target_lifecycle_additions" in cast(
+    assert "development_regression_only" in cast(
         list[str],
         evidence_gate["failures"],
     )
@@ -343,7 +344,7 @@ def test_candidate_against_provisional_tag_retrieval_truth() -> None:
         list[str],
         quality["activation_failures"],
     )
-    assert "unadjudicated_cross_target_lifecycle_additions" in cast(
+    assert "independent_adjudicated_holdout_missing" in cast(
         list[str],
         quality["activation_failures"],
     )

@@ -42,7 +42,7 @@ ArkTS AI Code Reviewer
 | 输入与编排 | `partial` | 已实现结构化 `change-set-v1` / `change-normalizer-v1`；CLI 仍走手工 hunk，无 Git diff parser、Webhook、队列和服务 |
 | Parser | `partial` | Parser v1 继续冻结；显式 `file-analysis-v1` 已提供 occurrence owner/span、quality/provenance 和独立 Golden |
 | ReviewUnit | `complete` | RU-0～RU-5 已完成：精确 ChangeSet、parse-once、完整 Primary、typed relation、多 bundle 和真实源码预算 |
-| Feature Routing | `complete` | 默认 `tags-v1/dimensions-v1 + feature-routing-v1` 已冻结 24 Tags、12 Dimensions、12 Review Questions；`tag-config-v3 -> feature-routing-v2` 仅为 FR-02 candidate，未激活 |
+| Feature Routing | `complete` | 默认 `tags-v1/dimensions-v1 + feature-routing-v1` 已冻结 24 Tags、12 Dimensions、12 Review Questions；FR-02B `tag-config-v4 -> feature-routing-v3` owner-aware candidate 仅影子运行，未激活 |
 | 知识库构建 | `partial` | Registry、首批 Adapter/Clause、annotation、双审/人工 curation/publication 合同已实现；真实 round-2 为 20/21，无正式 consensus 或 `PublishedKnowledgeBuild` |
 | Retrieval | `partial` | core/runtime 已实现：正式 request/evidence、精确+向量/RRF、适用性和预算、36-case Golden、本地 Jina code embedding、PostgreSQL/pgvector fixture runtime；无生产知识索引 |
 | Rules | `designed` | 无代码 |
@@ -242,9 +242,17 @@ UnitFactScope
 ```
 
 上述仍是唯一默认链。`tag-config-v1/v2` 和 `feature-routing-v1` 的已有合同继续
-冻结；`tag-config-v3` 只能由 FR-02 评测工具显式调用 `FeatureRouter`，并以
-`feature-routing-v2` 保留 normalized signal provenance。它不会进入 `CodeAnalyzer`
-默认产物，也不代表候选规则已获得生产激活资格。
+冻结；`tag-config-v3 -> feature-routing-v2` 保留为 FR-02 development regression。FR-02B
+`tag-config-v4` 只能由评测工具显式调用 owner-aware Feature Routing 入口，并以
+`feature-routing-v3` 保留 per-symbol owner-role evidence。它复用当前 FileAnalysis，不修改
+Parser；只接受 method Unit 自身或 struct Unit 的直接 lifecycle method 子声明，嵌套普通 class
+同名方法会 abstain。该路径不会进入 `CodeAnalyzer` 默认产物，也不代表候选规则已获得生产
+激活资格。
+
+FR-02B 已对原 7 个 cross-target lifecycle additions 记录人工正裁决（非 blind、非独立）；
+它们可以作为 development regression，不再是未标注预测。但当前 48-case 集合已参与规则设计与
+迭代，不再具有 blind holdout 资格；独立 blind holdout 仍缺失，因此
+`activation_ready` 必须保持 `false`。
 
 `dimensions` 表示实际评审方向，`retrieval_dimensions` 只接受满足 policy 的 exact signal，
 `routing_dimensions` 还可包含 file-hint 保守候选，`mr_dimensions` 是 Unit review/routing 结果并集。

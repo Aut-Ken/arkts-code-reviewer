@@ -21,7 +21,8 @@ expanding the Clause boundary.
 
 ## Code Truth
 
-`manifest.json` contains 48 proposed owner-level cases for four current Active Tags:
+`manifest.json` contains 48 owner-level development-regression cases for four current
+Active Tags:
 
 | Tag | Direct positive | Hint-only hard negative | Ownership/lookalike negative | Multi-Tag positive | Total |
 |---|---:|---:|---:|---:|---:|
@@ -30,11 +31,14 @@ expanding the Clause boundary.
 | `has_state_management` | 6 | 3 | 2 | 1 | 12 |
 | `has_lifecycle` | 6 | 3 | 2 | 1 | 12 |
 
-Each Tag has eight calibration cases and four acceptance-holdout cases. A source
-family cannot cross that split. All metric cases are non-DocsSample `src/main` code.
+Each Tag has eight cases under the historical `calibration` split name and four under
+the historical `acceptance_holdout` split name. A source family cannot cross that split,
+and all metric cases are non-DocsSample `src/main` code. The complete 48-case suite has
+now participated in matcher/routing design and iteration, so neither split is an
+independent blind holdout.
 
 Truth labels describe the desired ReviewUnit semantics; they are not generated from
-current Matcher output. In particular, seven lifecycle cases remain expected exact
+current Matcher output. In particular, seven lifecycle-target cases remain expected exact
 positives even though the current owner projection exposes qualified symbols such as
 `Index.aboutToAppear` and the current Tag configuration contains bare symbols.
 Each case freezes the expected ReviewUnit kind, symbol, and 1-based inclusive source
@@ -74,8 +78,9 @@ PYTHONPATH=src .venv/bin/python tools/check_tag_retrieval_fixture.py \
 The checker does not write either checkout. It verifies the Git `origin`, revision, and
 cleanliness, all hashes and spans, ReviewUnit owner identity, Parser quality, and current
 exact vs. routing observations. Its default summary reports every Tag separately for the
-calibration and acceptance-holdout splits, so holdout behavior remains visible instead of
-being absorbed into an aggregate. For a multi-Tag case, every `required_co_tags` entry is
+historical calibration and acceptance-holdout split names, so legacy split behavior remains
+visible instead of being absorbed into an aggregate; this reporting does not restore blind
+holdout status. For a multi-Tag case, every `required_co_tags` entry is
 part of the case contract: a missing required exact co-Tag is counted as a case-contract
 mismatch even when the target Tag itself matches. FileAnalysis and UnitFactScope
 diagnostics remain visible as separate risk counts and case IDs. A zero checker exit code
@@ -89,30 +94,64 @@ exercise only the repository verifier's basic `origin`, revision, and cleanlines
 branches and do not replace the pinned-corpus integration check.
 
 Stage 1 proves that the proposed inputs are reproducible and that current Tag behavior
-can be measured against independent labels. It does not yet run the planned A/B/C
-Retrieval ablation, build an EvidencePack baseline, test vector retrieval, or establish
-Finding quality. Those belong to the next separately reviewed stage.
+can be measured against human-authored development-regression labels. It does not yet
+run the planned A/B/C Retrieval ablation, build an EvidencePack baseline, test vector
+retrieval, or establish Finding quality. Those belong to the next separately reviewed
+stage.
 
-## FR-02 lifecycle symbol-leaf candidate
+## FR-02/FR-02B lifecycle candidates
 
 The explicit `tag-config-v3` fixture at
 `tests/fixtures/feature_routing/tag_config_lifecycle_symbol_leaf_shadow_v1.yaml`
-replaces only `has_lifecycle.any_symbol` with `any_symbol_leaf`. This operator compares
-the final dot-delimited segment exactly and case-sensitively. Its `feature-routing-v2`
-trace preserves the raw symbol (including the full name when qualified, for example
-`Index.aboutToAppear`),
-`operator=any_symbol_leaf`, and the normalized leaf. The default `config/tags.yaml`,
-`tags-v1/feature-routing-v1` output, and the frozen Feature Routing Golden remain
-unchanged.
+replaces only `has_lifecycle.any_symbol` with `any_symbol_leaf`. Its
+`feature-routing-v2` trace preserves the raw symbol, `operator=any_symbol_leaf`, and the
+case-sensitive final dot-delimited leaf. This pure-leaf route is retained as a
+development regression: it cannot distinguish an ArkUI lifecycle owner from an ordinary
+class that happens to declare the same method name.
 
-Both baseline and candidate runs use `tag-retrieval-truth-observation-v2`. The observation
-records the feature-config identity, `feature_routing_schema_version`, exact/routing Tag
-sets, symbols from both `unit_exact` and `file_hints`, and the complete `tag_matches` trace
-for every case.
-`tag-retrieval-truth-observation-v1` remains frozen; these fields are not backfilled into
-the v1 schema.
+FR-02B evaluates the separate
+`tests/fixtures/feature_routing/tag_config_lifecycle_owner_role_shadow_v1.yaml` fixture
+(`tag-config-v4/tags-lifecycle-owner-role-shadow-v1`, output `feature-routing-v3`) as an
+owner-aware shadow candidate. Its exact operator is
+`any_unit_symbol_leaf_with_owner_role`; every configured item binds a leaf to one allowed
+owner role:
 
-Run the read-only baseline/candidate comparison with:
+| Lifecycle leaf | Required owner role |
+|---|---|
+| `aboutToAppear`, `aboutToDisappear` | `arkui_custom_component` |
+| `onBackPress`, `onPageHide`, `onPageShow` | `arkui_router_page` |
+
+`onReady` is intentionally excluded from owner-aware exact matching because
+`Canvas.onReady` is a component callback, not a page/custom-component lifecycle method;
+it remains available only through `any_file_symbol_leaf` as a conservative routing hint.
+Each exact signal binds the raw symbol and normalized leaf to its own
+`symbol_occurrence_id`, `direct_owner_declaration_id`,
+`enclosing_owner_declaration_id`, `owner_role`, and
+`role_evidence_occurrence_ids`. Evidence from another declaration in the same file cannot
+be borrowed. The role derivation reuses existing FileAnalysis declarations, decorators,
+owners, and occurrence identities; it does not change Parser schema or Parser v1
+behavior. A method Unit may bind its own method declaration, while a struct Unit may bind
+only direct lifecycle method children of that ArkUI struct. A same-named method inside a
+nested ordinary class must abstain instead of inheriting the outer struct's role.
+`arkui_custom_component` accepts only `@Component/@ComponentV2`; `@CustomDialog` does not
+map to an owner role and must abstain.
+
+V4 uses the separate `any_file_symbol_leaf` operator for routing-only file hints. It is
+evaluated only in `file_hint`, while `any_unit_symbol_leaf_with_owner_role` is evaluated
+only in `unit_exact`. A file-hint match cannot claim the current Unit's owner role, bind a
+specialized Review Question, or become Finding evidence. The default `config/tags.yaml`,
+`tags-v1/feature-routing-v1` output, frozen Feature Routing Golden, and CodeAnalyzer path
+remain unchanged.
+
+FR-02 v3 uses `tag-retrieval-truth-observation-v2`; FR-02B v4 requires
+`tag-retrieval-truth-observation-v3`. Both record the feature-config identity,
+`feature_routing_schema_version`, exact/routing Tag sets, symbols from both
+`unit_exact/file_hints`, and complete `tag_matches` traces. Observation-v3 additionally
+records owner-context diagnostics and the owner-aware evidence above.
+`tag-retrieval-truth-observation-v1` remains frozen; candidate-only fields are not
+backfilled into the v1 schema.
+
+Run the read-only baseline/candidate E2E comparison with:
 
 ```bash
 PYTHONPATH=src .venv/bin/python \
@@ -121,20 +160,66 @@ PYTHONPATH=src .venv/bin/python \
   --require-declared-contract
 ```
 
-The candidate gate requires all seven proposed lifecycle-target positives, all five
-proposed lifecycle-target negatives, both data splits, all routing expectations, all
-required co-Tags, and `any_symbol_leaf` provenance to match the current 48-case
-provisional suite without changing another Tag's observed behavior. Passing this gate is
-candidate contract evidence only; the resulting selected-label metrics are not the
-candidate's overall Precision/Recall or a production activation gate.
+The current pinned E2E run returns exit code 0 with this decision summary:
 
-The suite provides complete positive/negative labels for each declared target Tag and
-positive-only contracts through `required_co_tags`. `TR-TIMER-008` is therefore a
-contract-expected lifecycle addition. The remaining seven cross-target lifecycle
-additions are unadjudicated rather than silently counted as correct. The current fact
-scope also cannot distinguish an ArkUI component lifecycle method from an ordinary class
-method with the same leaf name (for example `Helper.aboutToAppear`), and the Truth labels
-have not completed independent adjudication. Because Truth is provisional, ordinary-class
-owners remain ambiguous, an independent adjudicated holdout is missing, and seven
-cross-target additions remain unadjudicated, the report always marks production
-activation as not ready.
+```jsonc
+{
+  "schema_version": "lifecycle-owner-role-evaluation-v1",
+  "comparison": {
+    "candidate_kind": "owner_aware_shadow",
+    "candidate_config": {
+      "feature_config_fingerprint": "feature-config:sha256:844418e3d7938c816fd3b64b62cdae3d1753d286d50a6a103406838ed6db01e7"
+    },
+    "development_regression_lifecycle_exact_metrics": {
+      "true_positive": 15,
+      "true_negative": 5,
+      "false_positive": 0,
+      "false_negative": 0
+    },
+    "declared_contract_gate": {"passed": true, "failures": []},
+    "candidate_evidence_gate": {
+      "passed": false,
+      "failures": [
+        "truth_is_provisional",
+        "development_regression_only",
+        "independent_adjudicated_holdout_missing"
+      ]
+    },
+    "quality_decision": {"activation_ready": false}
+  }
+}
+```
+
+The development-regression contract covers seven lifecycle-target additions, the
+declared `TR-TIMER-008` lifecycle co-Tag, and these seven human-adjudicated positive
+cross-target additions (recorded product decisions, not blinded independent adjudication):
+
+```text
+TR-NET-008
+TR-STATE-007
+TR-STATE-009
+TR-STATE-010
+TR-STATE-012
+TR-TIMER-004
+TR-TIMER-010
+```
+
+The declared-contract gate also checks the five lifecycle-target negatives,
+routing expectations, required co-Tags, operator/scope separation, per-symbol owner-role
+provenance, and the absence of unrelated Tag behavior changes. Passing it proves only
+that the known 48-case development-regression contract can be replayed. Metrics over the
+seven target positives/five target negatives, or over the 15 declared/adjudicated exact
+additions, are selected-label fixture metrics—not the candidate's overall
+Precision/Recall.
+
+The historical `calibration` and `acceptance_holdout` split names remain in the manifest
+for deterministic reporting, but the whole suite has participated in design and
+iteration. An independent blind holdout is still missing, so the report must keep
+`activation_ready=false` even when every known contract and provenance check passes. The
+owner-aware candidate is not a production-complete route and does not activate the
+default v1 configuration.
+
+The report therefore keeps the separate `candidate_evidence_gate` closed. Running the
+same command with `--require-candidate-evidence` is expected to return exit code 1 until
+the provisional/development-regression and independent-holdout blockers are removed;
+that flag is a release-evidence gate, not the known-contract E2E success criterion.

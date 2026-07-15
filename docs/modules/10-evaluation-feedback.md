@@ -154,19 +154,48 @@ Unit/MR Dimension precision/recall、case exact accuracy 和 input-order stabili
 结果 replay 还由模型/配置测试与 package gate 独立 fail-closed。后续增加真实场景时应扩大
 Golden 分母，而不是只更新 baseline。
 
-FR-02 lifecycle symbol-leaf 评估与 FR-0 Golden 分离。
-`tag-retrieval-truth-observation-v1` 保持冻结；FR-02 的 baseline 和 candidate 都使用
-`tag-retrieval-truth-observation-v2`。v2 显式记录 feature-config identity、
+FR-02/FR-02B lifecycle 评估与 FR-0 Golden 分离。
+`tag-retrieval-truth-observation-v1` 保持冻结；FR-02 v3 使用 observation-v2，FR-02B v4
+必须使用 `tag-retrieval-truth-observation-v3`。后两者记录 feature-config identity、
 `feature_routing_schema_version`、每 case 的 exact/routing Tag 集合、`unit_exact/file_hints`
-两层 symbols 和完整 `tag_matches` trace。这是新 schema，不得把这些字段回填到 v1
-artifact；通用 fixture checker 默认仍输出冻结的 observation-v1，只有 FR-02 显式请求 v2。
+两层 symbols 和完整 `tag_matches` trace；observation-v3 还必须保存 owner-context diagnostics 及
+per-symbol owner role、symbol occurrence、direct/enclosing owner declaration 和 role evidence
+occurrence IDs。这些字段不得回填到 v1 artifact；默认 checker 和正式 v1 结果不变。
 
-FR-02 contract gate 只证明当前 provisional fixture 可重放。7 个 lifecycle-target 正例和
-5 个 lifecycle-target 反例产生的 selected-label 指标不是候选规则的整体
-Precision/Recall。`TR-TIMER-008` 是明确要求 lifecycle co-Tag 的 contract-expected
-addition；其余 7 个 cross-target lifecycle additions 尚未裁决。加上普通 class 同名方法
-无法区分和缺少独立 adjudicated holdout，该 candidate 必须继续报告
-`activation_ready=false`。
+`tag-config-v3 + feature-routing-v2` 的纯 leaf 结果只保留为 development regression。
+FR-02B 使用 `tag-config-v4 + feature-routing-v3`：exact operator
+`any_unit_symbol_leaf_with_owner_role` 按以下映射求值：
+
+```text
+aboutToAppear/aboutToDisappear -> arkui_custom_component
+onBackPress/onPageHide/onPageShow -> arkui_router_page
+onReady -> excluded from owner-aware exact; retained as routing-only file hint
+```
+
+Routing-only `any_file_symbol_leaf` 只在 `file_hint` 求值，不能为当前 Unit 声称 owner
+role、绑定专项 Review Question 或成为 Finding evidence。Owner role 由既有 FileAnalysis
+证据在 Feature Routing 边界派生，Parser schema 与 Parser v1 行为不变。E2E 必须同时覆盖
+method Unit、自定义组件 struct Unit 的直接 lifecycle method 子声明，以及嵌套 ordinary
+class 同名 method 的 abstain。
+
+原 7 个 cross-target lifecycle additions 已记录人工正裁决（非 blind、非独立）；
+`TR-TIMER-008` 仍是明确要求 lifecycle co-Tag 的 case contract。它们现在可以作为
+development regression truth，而不是未标注预测。但当前 48 case 全部已参与 matcher、
+routing 和报告合同设计；历史
+`calibration/acceptance_holdout` 只是 fixture split 名称，任何一组都不能再充当独立 blind
+holdout。7 个 lifecycle-target 正例、5 个 lifecycle-target 反例及上述正裁决可以证明已知
+合同重放，却不能给出候选规则的总体 Precision/Recall。
+
+Owner-aware 约束修复了纯 leaf 无法区分普通 class 同名方法的已知合同缺口，但独立 blind
+holdout 仍缺失。因此 FR-02B report 必须继续给出 `activation_ready=false`；candidate
+contract 通过不等于生产质量合格或默认配置已切换。
+
+当前 pinned E2E 的 `lifecycle-owner-role-evaluation-v1` 结果是：15 个已声明/已裁决
+lifecycle exact additions 与 5 个已知 negative 在 selected regression 上得到
+`15 TP / 5 TN / 0 FP / 0 FN`，`declared_contract_gate.passed=true`；同时
+`candidate_evidence_gate.passed=false`、`activation_ready=false`，关闭原因固定为
+`truth_is_provisional`、`development_regression_only` 和
+`independent_adjudicated_holdout_missing`。这组结果应成对报告，不能只展示前一个通过项。
 
 ## 7. Retrieval Golden Set
 
