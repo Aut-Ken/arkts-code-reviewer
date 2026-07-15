@@ -7,7 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from arkts_code_reviewer.feature_routing.config import load_default_feature_config
+from arkts_code_reviewer.feature_routing import DEFAULT_DIMENSIONS_PATH
+from arkts_code_reviewer.feature_routing.config import (
+    load_default_feature_config,
+    load_feature_config,
+)
 from arkts_code_reviewer.feature_routing_validation.tag_truth import (
     TagTruthSuite,
     build_tag_truth_report,
@@ -176,6 +180,26 @@ def test_shadow_config_is_only_base_plus_unbound_draft_candidate() -> None:
             *shadow.dimension_config.review_questions,
         )
     )
+
+
+def test_rdb_shadow_loader_rejects_v3_even_with_bound_identity(
+    tmp_path: Path,
+) -> None:
+    tags_path = tmp_path / "tags.yaml"
+    source = TAGS_CONFIG.read_text(encoding="utf-8")
+    source = source.replace(
+        "schema_version: tag-config-v2\n",
+        "schema_version: tag-config-v3\n",
+        1,
+    )
+    tags_path.write_text(source, encoding="utf-8")
+    candidate_config = load_feature_config(tags_path, DEFAULT_DIMENSIONS_PATH)
+    suite_payload = load_tag_truth_suite(MANIFEST).model_dump(mode="json")
+    suite_payload["candidate"]["config_fingerprint"] = candidate_config.fingerprint
+    suite = TagTruthSuite.model_validate(suite_payload)
+
+    with pytest.raises(ValueError, match="must use frozen tag-config-v2"):
+        load_tag_truth_feature_config(suite, tags_path)
 
 
 def test_manifest_loader_rejects_duplicate_json_keys(tmp_path: Path) -> None:

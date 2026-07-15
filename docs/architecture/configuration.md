@@ -1,7 +1,7 @@
 ---
 title: 配置与版本规范
 status: canonical
-updated: 2026-07-14
+updated: 2026-07-15
 ---
 
 # 配置与版本规范
@@ -36,8 +36,10 @@ config/knowledge_seed_v1.yaml / knowledge_annotations.yaml / knowledge_model_exp
 config/retrieval.yaml     retrieval-config-v1 / retrieval-v1
 ```
 
-Feature config loader 还支持显式注入 `tag-config-v2`，供合同测试和影子评估使用；仓库及
-wheel 中的默认 `tags.yaml` 仍是 `tag-config-v1/tags-v1`，`CodeAnalyzer` 的默认运行行为
+Feature config loader 还支持显式注入的 `tag-config-v2` 和 `tag-config-v3`。v1/v2
+schema 语义已冻结：v2 只在 v1 上增加 `any_import_use`；v3 再增加
+`any_symbol_leaf`，当前仅用于 FR-02 candidate 的显式影子评估。仓库及 wheel
+中的默认 `tags.yaml` 仍是 `tag-config-v1/tags-v1`，`CodeAnalyzer` 的默认运行行为
 没有切换。
 
 Knowledge 三份配置分别固定首批 seed、确定性 annotation 和模型外发边界。Rules、Reviewer、
@@ -221,9 +223,34 @@ binding、unused import、shadowed/ambiguous binding、owner unresolved 和 fall
 Matcher 无法再区分两者。因此后续 Tag shadow truth 必须单独统计 recovered 样本，质量不足时
 继续保持 Draft，不能把 `exact_tags` 误解为只来自 `quality=exact`。
 
-`tag-config-v1` 对 `any_import_use` fail closed，包括显式空数组。当前默认 `tags-v1` 没有
-该 operator，新增 loader/matcher 能力本身不会改变任何正式 Tag、Dimension 或 Review
-Question。
+`tag-config-v1` 对 `any_import_use` fail closed，包括显式空数组。`tag-config-v2`
+的 operator 集合已冻结，它同样对 `any_symbol_leaf` fail closed。当前默认 `tags-v1`
+没有 `any_import_use`，新增 loader/matcher 能力本身不会改变任何正式 Tag、
+Dimension 或 Review Question。
+
+### 6.2 `tag-config-v3` 的 symbol-leaf candidate 能力
+
+`tag-config-v3` 在冻结的 v2 operator 集合上增加：
+
+```text
+any_symbol_leaf
+```
+
+`any_symbol_leaf` 对 symbol 最后一个点分段执行大小写敏感的完整相等。配置值必须是
+非 qualified leaf；例如 `Index.aboutToAppear` 可以命中 `aboutToAppear`，
+`Index.notaboutToAppear` 不会命中。`feature-routing-v2` trace 同时保留原始 symbol
+（qualified 时保留完整名称）、`operator=any_symbol_leaf` 和 normalized leaf。
+
+该 operator 只证明名称分段命中，不证明 owner 是 ArkUI component/page。当前
+`UnitFactScope` 不能排除 `Helper.aboutToAppear` 这类普通 class 同名方法，因此
+v3 仍是 candidate-only，不得据此激活默认配置。这里的 candidate 隔离来自显式配置
+注入，不是把 `has_lifecycle` 改成 Draft。
+
+| Tag config schema | 新增 operator | Feature output | 当前角色 |
+|---|---|---|---|
+| `tag-config-v1` | 无 | `feature-routing-v1` | 默认生产配置，冻结 |
+| `tag-config-v2` | `any_import_use` | `feature-routing-v1` | 已冻结；仅显式注入，默认未启用 |
+| `tag-config-v3` | `any_symbol_leaf` | `feature-routing-v2` | FR-02 candidate-only |
 
 ## 7. 已实现的 dimensions.yaml
 
@@ -301,12 +328,15 @@ Loader 对按 ID 排序规范化后的两份配置计算：
 feature-config:sha256:<digest>
 ```
 
-`FeatureRoutingResult` 和每个 `UnitFeatureProfile` 同时记录该 fingerprint、`tags-v1` 和
-`dimensions-v1`。声明顺序变化不改变语义 fingerprint，内容或声明版本变化会改变它。
+默认 `FeatureRoutingResult` 和每个 `UnitFeatureProfile` 同时记录该 fingerprint、
+`tags-v1` 和 `dimensions-v1`；显式 candidate 结果必须记录它实际使用的 Tag config
+version。声明顺序变化不改变语义 fingerprint，内容或声明版本变化会改变它。
 
-仅增加 `tag-config-v2` loader 能力不得改变任何 v1 配置的规范化输出或 fingerprint。v1
-通用序列化不包含 v2-only 字段；v2 fingerprint 显式包含 `any_import_use`。只有正式切换配置
-版本或内容时，相关 profile/result identity 才随之改变。
+增加 v2/v3 loader 能力不得改变任何 v1 配置的规范化输出或 fingerprint。v1
+通用序列化不包含后续 schema 字段；v2 fingerprint 显式包含 `any_import_use`
+且不包含 `any_symbol_leaf`；v3 fingerprint 包含两者。v1/v2 配置继续输出
+`feature-routing-v1`，v3 配置必须输出 `feature-routing-v2`。只有切换配置版本或
+内容时，相关 profile/result identity 才随之改变。
 
 `pyproject.toml` 使用 wheel `force-include` 将仓库两份 YAML 安装为：
 

@@ -81,17 +81,20 @@ class TagTriggers(_StrictModel):
     any_decorator: tuple[str, ...] = ()
     any_attribute: tuple[str, ...] = ()
     any_symbol: tuple[str, ...] = ()
+    any_symbol_leaf: tuple[str, ...] = ()
     any_syntax: tuple[str, ...] = ()
     has_resource_reference: bool = False
 
     @model_serializer(mode="wrap")
-    def _serialize_without_empty_v2_fields(
+    def _serialize_without_empty_versioned_fields(
         self,
         handler: SerializerFunctionWrapHandler,
     ) -> dict[str, object]:
         payload = dict(cast(dict[str, object], handler(self)))
         if not self.any_import_use:
             payload.pop("any_import_use", None)
+        if not self.any_symbol_leaf:
+            payload.pop("any_symbol_leaf", None)
         return payload
 
     @field_validator(
@@ -103,6 +106,7 @@ class TagTriggers(_StrictModel):
         "any_decorator",
         "any_attribute",
         "any_symbol",
+        "any_symbol_leaf",
         "any_syntax",
         mode="before",
     )
@@ -119,6 +123,7 @@ class TagTriggers(_StrictModel):
         "any_decorator",
         "any_attribute",
         "any_symbol",
+        "any_symbol_leaf",
         "any_syntax",
     )
     @classmethod
@@ -142,6 +147,12 @@ class TagTriggers(_StrictModel):
                     imported_name,
                     "TagTriggers.any_import_use importedName",
                 )
+        elif field_name == "any_symbol_leaf" and any(
+            "." in symbol_leaf for symbol_leaf in validated
+        ):
+            raise ValueError(
+                "TagTriggers.any_symbol_leaf values must be unqualified symbol leaves"
+            )
         return validated
 
     @model_validator(mode="after")
@@ -155,6 +166,7 @@ class TagTriggers(_StrictModel):
             self.any_decorator,
             self.any_attribute,
             self.any_symbol,
+            self.any_symbol_leaf,
             self.any_syntax,
         )
         if not self.has_resource_reference and not any(sequences):
@@ -183,7 +195,7 @@ class TagDefinition(_StrictModel):
 
 
 class TagConfig(_StrictModel):
-    schema_version: Literal["tag-config-v1", "tag-config-v2"]
+    schema_version: Literal["tag-config-v1", "tag-config-v2", "tag-config-v3"]
     version: str
     tags: tuple[TagDefinition, ...]
 
@@ -204,10 +216,18 @@ class TagConfig(_StrictModel):
         ids = [tag.id for tag in self.tags]
         if len(ids) != len(set(ids)):
             raise ValueError("TagConfig.tags contains duplicate IDs")
-        if self.schema_version == "tag-config-v1" and any(
-            "any_import_use" in tag.triggers.model_fields_set for tag in self.tags
-        ):
-            raise ValueError("tag-config-v1 does not support any_import_use")
+        unsupported_by_schema = {
+            "tag-config-v1": ("any_import_use", "any_symbol_leaf"),
+            "tag-config-v2": ("any_symbol_leaf",),
+            "tag-config-v3": (),
+        }
+        for field_name in unsupported_by_schema[self.schema_version]:
+            if any(
+                field_name in tag.triggers.model_fields_set for tag in self.tags
+            ):
+                raise ValueError(
+                    f"{self.schema_version} does not support {field_name}"
+                )
         return self
 
 
@@ -478,14 +498,19 @@ def _feature_fingerprint(
 
 def _tag_definition_payload(
     definition: TagDefinition,
-    schema_version: Literal["tag-config-v1", "tag-config-v2"],
+    schema_version: Literal["tag-config-v1", "tag-config-v2", "tag-config-v3"],
 ) -> dict[str, object]:
     payload = definition.model_dump(mode="json")
     triggers = dict(payload["triggers"])
     if schema_version == "tag-config-v1":
         triggers.pop("any_import_use", None)
+        triggers.pop("any_symbol_leaf", None)
+    elif schema_version == "tag-config-v2":
+        triggers["any_import_use"] = list(definition.triggers.any_import_use)
+        triggers.pop("any_symbol_leaf", None)
     else:
         triggers["any_import_use"] = list(definition.triggers.any_import_use)
+        triggers["any_symbol_leaf"] = list(definition.triggers.any_symbol_leaf)
     payload["triggers"] = triggers
     return payload
 

@@ -20,12 +20,50 @@ from arkts_code_reviewer.code_analysis.models import FileHunk
 from arkts_code_reviewer.code_analysis.review_unit_contract import REVIEW_UNIT_KINDS
 from arkts_code_reviewer.code_analysis.review_units import ReviewUnitBuilder
 from arkts_code_reviewer.code_analysis.unit_facts import project
-from arkts_code_reviewer.feature_routing.config import load_default_feature_config
+from arkts_code_reviewer.feature_routing.config import (
+    FeatureConfig,
+    load_default_feature_config,
+)
 from arkts_code_reviewer.feature_routing.engine import FeatureRouter
 from arkts_code_reviewer.knowledge.models import Applicability, SourceSpan
 
 TAG_RETRIEVAL_TRUTH_SCHEMA_VERSION = "tag-retrieval-truth-v1"
 TAG_RETRIEVAL_KNOWLEDGE_SCHEMA_VERSION = "tag-retrieval-knowledge-fixture-v1"
+TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION: Literal[
+    "tag-retrieval-truth-observation-v1"
+] = "tag-retrieval-truth-observation-v1"
+TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION: Literal[
+    "tag-retrieval-truth-observation-v2"
+] = "tag-retrieval-truth-observation-v2"
+TagRetrievalTruthObservationSchemaVersion = Literal[
+    "tag-retrieval-truth-observation-v1",
+    "tag-retrieval-truth-observation-v2",
+]
+
+_OBSERVATION_V1_CASE_FIELDS = (
+    "case_id",
+    "target_tag",
+    "split",
+    "stratum",
+    "review_status",
+    "expected_exact_tag",
+    "actual_exact_tag",
+    "expected_routing_tag",
+    "actual_routing_tag",
+    "exact_matches_truth",
+    "routing_matches_truth",
+    "missing_required_co_tags",
+    "unit_id",
+    "unit_kind",
+    "unit_symbol",
+    "expected_source_span",
+    "actual_source_span",
+    "parser_layer",
+    "parser_error_nodes",
+    "parser_missing_nodes",
+    "file_diagnostics",
+    "scope_diagnostics",
+)
 
 TARGET_TAGS = (
     "has_lifecycle",
@@ -739,12 +777,29 @@ def observe_tag_retrieval_truth(
     suite: TagRetrievalTruthSuite,
     checkout: VerifiedTruthCheckout,
     *,
+    feature_config: FeatureConfig | None = None,
+    observation_schema_version: TagRetrievalTruthObservationSchemaVersion = (
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
+    ),
     file_parser: FileAnalysisParser | None = None,
     unit_builder: ReviewUnitBuilder | None = None,
 ) -> dict[str, object]:
     parser = file_parser or ArktsFileAnalysisParser()
     builder = unit_builder or ReviewUnitBuilder()
-    router = FeatureRouter(load_default_feature_config())
+    default_config = load_default_feature_config()
+    active_config = default_config if feature_config is None else feature_config
+    if observation_schema_version not in {
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION,
+        TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION,
+    }:
+        raise ValueError("unsupported Tag Retrieval observation schema")
+    if (
+        observation_schema_version == TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
+        and active_config != default_config
+    ):
+        raise ValueError("observation-v1 supports only the frozen default Feature config")
+    router = FeatureRouter(active_config)
+    routing_schema_version = router.route([]).schema_version
     sources_by_alias = {source.alias: source for source in suite.sources}
     cases_by_source: dict[str, list[TagRetrievalTruthCase]] = {}
     for case in suite.cases:
@@ -810,24 +865,36 @@ def observe_tag_retrieval_truth(
                 )
             observed_units.add(unit_target)
             scope = project(parsed.analysis, unit)
-            profile = router.route([scope]).units[0]
+            routing = router.route([scope])
+            if routing.schema_version != routing_schema_version:
+                raise ValueError("Feature Routing schema changed within one observation")
+            profile = routing.units[0]
             actual_exact = case.target_tag in profile.exact_tags
             actual_routing = case.target_tag in profile.routing_tags
             missing_co_tags = sorted(set(case.required_co_tags) - set(profile.exact_tags))
             rows.append(
                 {
                     "case_id": case.case_id,
+                    "source_alias": case.source_alias,
+                    "changed_line": case.changed_line,
                     "target_tag": case.target_tag,
                     "split": case.split,
                     "stratum": case.stratum,
                     "review_status": case.review_status,
+                    "evidence_lines": list(case.evidence_lines),
                     "expected_exact_tag": case.expected_exact_tag,
                     "actual_exact_tag": actual_exact,
                     "expected_routing_tag": case.expected_routing_tag,
                     "actual_routing_tag": actual_routing,
+                    "required_co_tags": list(case.required_co_tags),
                     "exact_matches_truth": actual_exact == case.expected_exact_tag,
                     "routing_matches_truth": actual_routing == case.expected_routing_tag,
                     "missing_required_co_tags": missing_co_tags,
+                    "exact_tags": list(profile.exact_tags),
+                    "routing_tags": list(profile.routing_tags),
+                    "exact_symbols": list(scope.unit_exact.symbols),
+                    "file_hint_symbols": list(scope.file_hints.symbols),
+                    "tag_matches": [match.to_dict() for match in profile.tag_matches],
                     "unit_id": unit.unit_id,
                     "unit_kind": unit.unit_kind,
                     "unit_symbol": unit.unit_symbol,
@@ -871,8 +938,17 @@ def observe_tag_retrieval_truth(
             split: summarize([row for row in tagged if row["split"] == split])
             for split in ("calibration", "acceptance_holdout")
         }
-    return {
-        "schema_version": "tag-retrieval-truth-observation-v1",
+    serialized_rows = (
+        [
+            {key: row[key] for key in _OBSERVATION_V1_CASE_FIELDS}
+            for row in rows
+        ]
+        if observation_schema_version
+        == TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
+        else rows
+    )
+    observation: dict[str, object] = {
+        "schema_version": observation_schema_version,
         "suite_id": suite.suite_id,
         "truth_status": suite.truth_status,
         "source_count": len(suite.sources),
@@ -923,8 +999,22 @@ def observe_tag_retrieval_truth(
             or bool(row["file_diagnostics"])
             or bool(row["scope_diagnostics"])
         ],
-        "cases": rows,
+        "cases": serialized_rows,
     }
+    if (
+        observation_schema_version
+        == TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION
+    ):
+        observation.update(
+            {
+                "truth_suite_fingerprint": tag_retrieval_truth_fingerprint(suite),
+                "feature_config_fingerprint": active_config.fingerprint,
+                "tags_config_schema_version": active_config.tag_config.schema_version,
+                "tags_config_version": active_config.tag_config.version,
+                "feature_routing_schema_version": routing_schema_version,
+            }
+        )
+    return observation
 
 
 def tag_retrieval_truth_fingerprint(suite: TagRetrievalTruthSuite) -> str:
@@ -952,7 +1042,10 @@ def tag_retrieval_knowledge_fingerprint(
 __all__ = [
     "ALLOWED_DOCUMENT_ROOTS",
     "TAG_RETRIEVAL_KNOWLEDGE_SCHEMA_VERSION",
+    "TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION",
+    "TAG_RETRIEVAL_TRUTH_OBSERVATION_V2_SCHEMA_VERSION",
     "TAG_RETRIEVAL_TRUTH_SCHEMA_VERSION",
+    "TagRetrievalTruthObservationSchemaVersion",
     "TARGET_TAGS",
     "KnowledgeFixtureDocument",
     "HashedSourceSpan",

@@ -59,6 +59,29 @@ def _add_network_import_uses(path: Path, yaml_value: str) -> None:
     )
 
 
+def _replace_lifecycle_symbols_with_leaf_operator(
+    path: Path,
+    yaml_value: str,
+) -> None:
+    _replace(
+        path,
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n",
+        f"      any_symbol_leaf: {yaml_value}\n",
+    )
+
+
+def _add_lifecycle_symbol_leaves(path: Path, yaml_value: str) -> None:
+    _replace(
+        path,
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n",
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n"
+        f"      any_symbol_leaf: {yaml_value}\n",
+    )
+
+
 def test_default_feature_config_freezes_v1_truth() -> None:
     config = load_feature_config()
 
@@ -114,6 +137,10 @@ def test_v1_tag_config_dump_round_trips_without_v2_fields() -> None:
 
     assert all(
         "any_import_use" not in tag["triggers"]
+        for tag in payload["tags"]
+    )
+    assert all(
+        "any_symbol_leaf" not in tag["triggers"]
         for tag in payload["tags"]
     )
     assert type(config.tag_config).model_validate(payload) == config.tag_config
@@ -249,6 +276,86 @@ def test_tag_config_v2_accepts_import_use_as_the_only_trigger(tmp_path: Path) ->
     assert config.tags_by_id["has_network"].triggers.any_import_use == (
         "@ohos.net.connection#default",
     )
+
+
+@pytest.mark.parametrize(
+    "yaml_value",
+    [
+        "[]",
+        "[aboutToAppear, aboutToDisappear, onBackPress, onPageHide, onPageShow, onReady]",
+    ],
+)
+def test_tag_config_v1_rejects_explicit_symbol_leaf_operator(
+    tmp_path: Path,
+    yaml_value: str,
+) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _add_lifecycle_symbol_leaves(tags_path, yaml_value)
+
+    with pytest.raises(ValueError, match="tag-config-v1 does not support any_symbol_leaf"):
+        load_feature_config(tags_path, dimensions_path)
+
+
+@pytest.mark.parametrize("yaml_value", ["[]", "[aboutToAppear]"])
+def test_tag_config_v2_rejects_explicit_symbol_leaf_operator(
+    tmp_path: Path,
+    yaml_value: str,
+) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v2")
+    _add_lifecycle_symbol_leaves(tags_path, yaml_value)
+
+    with pytest.raises(ValueError, match="tag-config-v2 does not support any_symbol_leaf"):
+        load_feature_config(tags_path, dimensions_path)
+
+
+def test_tag_config_v3_fingerprints_symbol_leaf_semantics(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v3")
+    omitted = load_feature_config(tags_path, dimensions_path)
+
+    _replace(
+        tags_path,
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n",
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n"
+        "      any_symbol_leaf: []\n",
+    )
+    explicit_empty = load_feature_config(tags_path, dimensions_path)
+    _replace(
+        tags_path,
+        "      any_symbol: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n"
+        "      any_symbol_leaf: []\n",
+        "      any_symbol_leaf: [aboutToAppear, aboutToDisappear, onBackPress, "
+        "onPageHide, onPageShow, onReady]\n",
+    )
+    populated = load_feature_config(tags_path, dimensions_path)
+
+    assert omitted.fingerprint == explicit_empty.fingerprint
+    assert populated.fingerprint != explicit_empty.fingerprint
+    assert populated.tags_by_id["has_lifecycle"].triggers.any_symbol == ()
+    assert populated.tags_by_id["has_lifecycle"].triggers.any_symbol_leaf == (
+        "aboutToAppear",
+        "aboutToDisappear",
+        "onBackPress",
+        "onPageHide",
+        "onPageShow",
+        "onReady",
+    )
+
+
+def test_symbol_leaf_operator_rejects_qualified_configuration(tmp_path: Path) -> None:
+    tags_path, dimensions_path = _copy_default_configs(tmp_path)
+    _set_tag_schema(tags_path, "tag-config-v3")
+    _replace_lifecycle_symbols_with_leaf_operator(
+        tags_path,
+        "[Index.aboutToAppear]",
+    )
+
+    with pytest.raises(ValueError, match="unqualified symbol leaves"):
+        load_feature_config(tags_path, dimensions_path)
 
 
 @pytest.mark.parametrize(

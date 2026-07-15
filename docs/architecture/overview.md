@@ -1,7 +1,7 @@
 ---
 title: ArkTS Code Reviewer 整体架构
 status: canonical
-updated: 2026-07-13
+updated: 2026-07-15
 ---
 
 # ArkTS Code Reviewer 整体架构
@@ -42,7 +42,7 @@ ArkTS AI Code Reviewer
 | 输入与编排 | `partial` | 已实现结构化 `change-set-v1` / `change-normalizer-v1`；CLI 仍走手工 hunk，无 Git diff parser、Webhook、队列和服务 |
 | Parser | `partial` | Parser v1 继续冻结；显式 `file-analysis-v1` 已提供 occurrence owner/span、quality/provenance 和独立 Golden |
 | ReviewUnit | `complete` | RU-0～RU-5 已完成：精确 ChangeSet、parse-once、完整 Primary、typed relation、多 bundle 和真实源码预算 |
-| Feature Routing | `complete` | `tags-v1/dimensions-v1` 已冻结 24 Tags、12 Dimensions、12 Review Questions；正式结果可重放并通过独立 Golden |
+| Feature Routing | `complete` | 默认 `tags-v1/dimensions-v1 + feature-routing-v1` 已冻结 24 Tags、12 Dimensions、12 Review Questions；`tag-config-v3 -> feature-routing-v2` 仅为 FR-02 candidate，未激活 |
 | 知识库构建 | `partial` | Registry、首批 Adapter/Clause、annotation、双审/人工 curation/publication 合同已实现；真实 round-2 为 20/21，无正式 consensus 或 `PublishedKnowledgeBuild` |
 | Retrieval | `partial` | core/runtime 已实现：正式 request/evidence、精确+向量/RRF、适用性和预算、36-case Golden、本地 Jina code embedding、PostgreSQL/pgvector fixture runtime；无生产知识索引 |
 | Rules | `designed` | 无代码 |
@@ -240,6 +240,11 @@ UnitFactScope
 -> FeatureRoutingResult
 -> ReviewQuestionBinding[]
 ```
+
+上述仍是唯一默认链。`tag-config-v1/v2` 和 `feature-routing-v1` 的已有合同继续
+冻结；`tag-config-v3` 只能由 FR-02 评测工具显式调用 `FeatureRouter`，并以
+`feature-routing-v2` 保留 normalized signal provenance。它不会进入 `CodeAnalyzer`
+默认产物，也不代表候选规则已获得生产激活资格。
 
 `dimensions` 表示实际评审方向，`retrieval_dimensions` 只接受满足 policy 的 exact signal，
 `routing_dimensions` 还可包含 file-hint 保守候选，`mr_dimensions` 是 Unit review/routing 结果并集。

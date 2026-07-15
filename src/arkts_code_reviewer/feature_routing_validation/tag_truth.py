@@ -403,6 +403,8 @@ def load_tag_truth_feature_config(
             f"expected {suite.base_feature_config_fingerprint}, got {base.fingerprint}"
         )
     shadow = load_feature_config(tags_path, DEFAULT_DIMENSIONS_PATH)
+    if shadow.tag_config.schema_version != "tag-config-v2":
+        raise ValueError("RDB shadow config must use frozen tag-config-v2")
     if shadow.fingerprint != suite.candidate.config_fingerprint:
         raise ValueError("shadow Feature config fingerprint does not match manifest")
     if shadow.tag_config.version != suite.candidate.tag_config_version:
@@ -428,6 +430,7 @@ def load_tag_truth_feature_config(
             triggers.any_decorator,
             triggers.any_attribute,
             triggers.any_symbol,
+            triggers.any_symbol_leaf,
             triggers.any_syntax,
         )
     ) or triggers.has_resource_reference:

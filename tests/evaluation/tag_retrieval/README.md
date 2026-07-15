@@ -92,3 +92,49 @@ Stage 1 proves that the proposed inputs are reproducible and that current Tag be
 can be measured against independent labels. It does not yet run the planned A/B/C
 Retrieval ablation, build an EvidencePack baseline, test vector retrieval, or establish
 Finding quality. Those belong to the next separately reviewed stage.
+
+## FR-02 lifecycle symbol-leaf candidate
+
+The explicit `tag-config-v3` fixture at
+`tests/fixtures/feature_routing/tag_config_lifecycle_symbol_leaf_shadow_v1.yaml`
+replaces only `has_lifecycle.any_symbol` with `any_symbol_leaf`. This operator compares
+the final dot-delimited segment exactly and case-sensitively. Its `feature-routing-v2`
+trace preserves the raw symbol (including the full name when qualified, for example
+`Index.aboutToAppear`),
+`operator=any_symbol_leaf`, and the normalized leaf. The default `config/tags.yaml`,
+`tags-v1/feature-routing-v1` output, and the frozen Feature Routing Golden remain
+unchanged.
+
+Both baseline and candidate runs use `tag-retrieval-truth-observation-v2`. The observation
+records the feature-config identity, `feature_routing_schema_version`, exact/routing Tag
+sets, symbols from both `unit_exact` and `file_hints`, and the complete `tag_matches` trace
+for every case.
+`tag-retrieval-truth-observation-v1` remains frozen; these fields are not backfilled into
+the v1 schema.
+
+Run the read-only baseline/candidate comparison with:
+
+```bash
+PYTHONPATH=src .venv/bin/python \
+  tools/evaluate_lifecycle_symbol_leaf_candidate.py \
+  --source-root /home/autken/Code/applications_app_samples \
+  --require-declared-contract
+```
+
+The candidate gate requires all seven proposed lifecycle-target positives, all five
+proposed lifecycle-target negatives, both data splits, all routing expectations, all
+required co-Tags, and `any_symbol_leaf` provenance to match the current 48-case
+provisional suite without changing another Tag's observed behavior. Passing this gate is
+candidate contract evidence only; the resulting selected-label metrics are not the
+candidate's overall Precision/Recall or a production activation gate.
+
+The suite provides complete positive/negative labels for each declared target Tag and
+positive-only contracts through `required_co_tags`. `TR-TIMER-008` is therefore a
+contract-expected lifecycle addition. The remaining seven cross-target lifecycle
+additions are unadjudicated rather than silently counted as correct. The current fact
+scope also cannot distinguish an ArkUI component lifecycle method from an ordinary class
+method with the same leaf name (for example `Helper.aboutToAppear`), and the Truth labels
+have not completed independent adjudication. Because Truth is provisional, ordinary-class
+owners remain ambiguous, an independent adjudicated holdout is missing, and seven
+cross-target additions remain unadjudicated, the report always marks production
+activation as not ready.

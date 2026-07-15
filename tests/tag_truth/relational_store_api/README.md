@@ -12,8 +12,9 @@ The package is deliberately independent from the synthetic Feature Routing Golde
   `8255a2987f70317cc3a2a4d46044c6b55f092bb3`.
 - Unit of truth: one immutable source file plus one 1-based changed line resolving
   to exactly one ReviewUnit owner.
-- Candidate: Draft-only `any_import_use` matching the three canonical identities
-  listed in `manifest.json`. VectorStore is intentionally inside this API-family
+- Candidate: frozen `tag-config-v2`, Draft-only `any_import_use` matching the three
+  canonical identities listed in `manifest.json`. A v3 config is rejected even if it
+  declares no v3-only operator. VectorStore is intentionally inside this API-family
   semantic.
 - Existing 24 Tags, Dimensions, Review Questions, default fingerprint, Parser v1,
   existing Golden, Knowledge and E2E stay unchanged.

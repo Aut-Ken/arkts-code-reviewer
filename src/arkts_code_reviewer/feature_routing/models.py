@@ -11,7 +11,9 @@ if TYPE_CHECKING:
     from arkts_code_reviewer.code_analysis.file_analysis_models import UnitFactScope
     from arkts_code_reviewer.feature_routing.config import FeatureConfig
 
-FEATURE_ROUTING_SCHEMA_VERSION = "feature-routing-v1"
+FEATURE_ROUTING_SCHEMA_VERSION: Literal["feature-routing-v1"] = "feature-routing-v1"
+FEATURE_ROUTING_V2_SCHEMA_VERSION: Literal["feature-routing-v2"] = "feature-routing-v2"
+FeatureRoutingSchemaVersion = Literal["feature-routing-v1", "feature-routing-v2"]
 
 SignalScope = Literal["unit_exact", "file_hint"]
 RouteSignalScope = Literal["unit_exact", "file_hint", "mixed", "none"]
@@ -105,6 +107,54 @@ class FeatureSignal:
 
 
 @dataclass(frozen=True)
+class NormalizedFeatureSignal(FeatureSignal):
+    operator: Literal["any_symbol_leaf"]
+    normalized_value: str
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.operator != "any_symbol_leaf":
+            raise ValueError(
+                f"unsupported NormalizedFeatureSignal.operator: {self.operator}"
+            )
+        if self.kind != "symbols":
+            raise ValueError("NormalizedFeatureSignal.any_symbol_leaf requires kind=symbols")
+        _non_empty(
+            self.normalized_value,
+            "NormalizedFeatureSignal.normalized_value",
+        )
+        if "." in self.normalized_value:
+            raise ValueError(
+                "NormalizedFeatureSignal.normalized_value must be unqualified"
+            )
+        if self.value.rsplit(".", 1)[-1] != self.normalized_value:
+            raise ValueError(
+                "NormalizedFeatureSignal.normalized_value does not match value"
+            )
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            **super().to_dict(),
+            "operator": self.operator,
+            "normalized_value": self.normalized_value,
+        }
+
+
+def _feature_signal_key(signal: FeatureSignal) -> tuple[str, str, str, str]:
+    if type(signal) is FeatureSignal:
+        return (signal.kind, signal.value, "", "")
+    if type(signal) is NormalizedFeatureSignal:
+        normalized = signal
+        return (
+            normalized.kind,
+            normalized.value,
+            normalized.operator,
+            normalized.normalized_value,
+        )
+    raise ValueError("unsupported FeatureSignal implementation")
+
+
+@dataclass(frozen=True)
 class TagMatch:
     tag_id: str
     status: FeatureStatus
@@ -121,7 +171,7 @@ class TagMatch:
             raise ValueError("TagMatch.signals must not be empty")
         if any(not isinstance(signal, FeatureSignal) for signal in self.signals):
             raise ValueError("TagMatch.signals must contain FeatureSignal values")
-        keys = [(signal.kind, signal.value) for signal in self.signals]
+        keys = [_feature_signal_key(signal) for signal in self.signals]
         if keys != sorted(set(keys)):
             raise ValueError("TagMatch.signals must be sorted and unique")
 
@@ -494,7 +544,7 @@ class FeatureRoutingResult:
     mr_dimensions: tuple[str, ...]
     question_bindings: tuple[ReviewQuestionBinding, ...]
     diagnostics: tuple[str, ...] = ()
-    schema_version: str = FEATURE_ROUTING_SCHEMA_VERSION
+    schema_version: FeatureRoutingSchemaVersion = FEATURE_ROUTING_SCHEMA_VERSION
 
     @classmethod
     def create(
@@ -507,6 +557,7 @@ class FeatureRoutingResult:
         mr_dimensions: tuple[str, ...],
         question_bindings: tuple[ReviewQuestionBinding, ...],
         diagnostics: tuple[str, ...] = (),
+        schema_version: FeatureRoutingSchemaVersion = FEATURE_ROUTING_SCHEMA_VERSION,
     ) -> FeatureRoutingResult:
         payload = cls.identity_payload(
             feature_config_version=feature_config_version,
@@ -516,6 +567,7 @@ class FeatureRoutingResult:
             mr_dimensions=mr_dimensions,
             question_bindings=question_bindings,
             diagnostics=diagnostics,
+            schema_version=schema_version,
         )
         return cls(
             feature_routing_id=_stable_id("feature-routing", payload),
@@ -526,6 +578,7 @@ class FeatureRoutingResult:
             mr_dimensions=mr_dimensions,
             question_bindings=question_bindings,
             diagnostics=diagnostics,
+            schema_version=schema_version,
         )
 
     @staticmethod
@@ -538,8 +591,9 @@ class FeatureRoutingResult:
         mr_dimensions: tuple[str, ...],
         question_bindings: tuple[ReviewQuestionBinding, ...],
         diagnostics: tuple[str, ...],
+        schema_version: FeatureRoutingSchemaVersion = FEATURE_ROUTING_SCHEMA_VERSION,
     ) -> dict[str, object]:
-        return {
+        payload: dict[str, object] = {
             "feature_config_version": feature_config_version,
             "tags_config_version": tags_config_version,
             "dimensions_config_version": dimensions_config_version,
@@ -548,9 +602,15 @@ class FeatureRoutingResult:
             "question_bindings": question_bindings,
             "diagnostics": diagnostics,
         }
+        if schema_version == FEATURE_ROUTING_V2_SCHEMA_VERSION:
+            payload["schema_version"] = schema_version
+        return payload
 
     def __post_init__(self) -> None:
-        if self.schema_version != FEATURE_ROUTING_SCHEMA_VERSION:
+        if self.schema_version not in {
+            FEATURE_ROUTING_SCHEMA_VERSION,
+            FEATURE_ROUTING_V2_SCHEMA_VERSION,
+        }:
             raise ValueError("FeatureRoutingResult.schema_version is unsupported")
         if not self.feature_config_version.startswith("feature-config:sha256:"):
             raise ValueError("FeatureRoutingResult requires a feature config fingerprint")
@@ -571,6 +631,20 @@ class FeatureRoutingResult:
             for unit in self.units
         ):
             raise ValueError("FeatureRoutingResult profile config versions disagree")
+        allowed_signal_types = (
+            {FeatureSignal}
+            if self.schema_version == FEATURE_ROUTING_SCHEMA_VERSION
+            else {FeatureSignal, NormalizedFeatureSignal}
+        )
+        if any(
+            type(signal) not in allowed_signal_types
+            for unit in self.units
+            for match in unit.tag_matches
+            for signal in match.signals
+        ):
+            raise ValueError(
+                "FeatureRoutingResult schema does not support its FeatureSignal values"
+            )
         _sorted_unique(self.mr_dimensions, "FeatureRoutingResult.mr_dimensions")
         _sorted_unique(self.diagnostics, "FeatureRoutingResult.diagnostics")
         if not set(self.diagnostics).issubset(_RESULT_DIAGNOSTICS):
@@ -614,6 +688,7 @@ class FeatureRoutingResult:
                 mr_dimensions=self.mr_dimensions,
                 question_bindings=self.question_bindings,
                 diagnostics=self.diagnostics,
+                schema_version=self.schema_version,
             ),
         )
         if self.feature_routing_id != expected_id:
@@ -650,10 +725,13 @@ class FeatureRoutingResult:
 
 __all__ = [
     "FEATURE_ROUTING_SCHEMA_VERSION",
+    "FEATURE_ROUTING_V2_SCHEMA_VERSION",
     "DimensionRoute",
     "FeatureRoutingResult",
     "FeatureSignal",
+    "FeatureRoutingSchemaVersion",
     "FeatureStatus",
+    "NormalizedFeatureSignal",
     "RouteSignalScope",
     "ReviewQuestionBinding",
     "SignalScope",

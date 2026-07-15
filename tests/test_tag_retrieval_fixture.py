@@ -8,6 +8,7 @@ from typing import cast
 import pytest
 
 from arkts_code_reviewer.retrieval_validation.tag_retrieval_fixture import (
+    TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION,
     FixtureRepository,
     TagRetrievalKnowledgeFixture,
     TagRetrievalTruthSuite,
@@ -336,6 +337,50 @@ def test_pinned_external_sources_and_current_tag_observation() -> None:
     assert len(code.source_text_by_alias) == 36
     assert len(docs.document_bytes_by_alias) == 18
     observation = observe_tag_retrieval_truth(suite, code)
+    assert observation["schema_version"] == TAG_RETRIEVAL_TRUTH_OBSERVATION_SCHEMA_VERSION
+    assert set(observation) == {
+        "schema_version",
+        "suite_id",
+        "truth_status",
+        "source_count",
+        "case_count",
+        "parse_count",
+        "by_tag",
+        "by_tag_and_split",
+        "file_diagnostic_case_counts",
+        "scope_diagnostic_case_counts",
+        "exact_mismatch_case_ids",
+        "routing_mismatch_case_ids",
+        "co_tag_mismatch_case_ids",
+        "case_contract_mismatch_case_ids",
+        "parser_risk_case_ids",
+        "cases",
+    }
+    legacy_rows = cast(list[dict[str, object]], observation["cases"])
+    assert set(legacy_rows[0]) == {
+        "case_id",
+        "target_tag",
+        "split",
+        "stratum",
+        "review_status",
+        "expected_exact_tag",
+        "actual_exact_tag",
+        "expected_routing_tag",
+        "actual_routing_tag",
+        "exact_matches_truth",
+        "routing_matches_truth",
+        "missing_required_co_tags",
+        "unit_id",
+        "unit_kind",
+        "unit_symbol",
+        "expected_source_span",
+        "actual_source_span",
+        "parser_layer",
+        "parser_error_nodes",
+        "parser_missing_nodes",
+        "file_diagnostics",
+        "scope_diagnostics",
+    }
     assert observation["case_count"] == 48
     assert observation["parse_count"] == 36
     assert observation["file_diagnostic_case_counts"] == {"unresolved_fact_owner": 34}

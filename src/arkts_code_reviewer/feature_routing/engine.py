@@ -14,13 +14,17 @@ from arkts_code_reviewer.feature_routing.matcher import (
     FeatureFacts,
     active_dimension_ids,
     active_tag_ids,
-    match_signal_pairs,
+    match_signals,
 )
 from arkts_code_reviewer.feature_routing.models import (
+    FEATURE_ROUTING_SCHEMA_VERSION,
+    FEATURE_ROUTING_V2_SCHEMA_VERSION,
     DimensionRoute,
     FeatureRoutingResult,
+    FeatureRoutingSchemaVersion,
     FeatureSignal,
     FeatureSignalKind,
+    NormalizedFeatureSignal,
     ReviewQuestionBinding,
     RouteSignalScope,
     SignalScope,
@@ -60,6 +64,9 @@ class FeatureRouter:
         unit_ids = [scope.unit_id for scope in normalized]
         if len(unit_ids) != len(set(unit_ids)):
             raise ValueError("FeatureRouter scopes contain duplicate unit_id values")
+        schema_version = _routing_schema_version(
+            self.config.tag_config.schema_version
+        )
         profiles = tuple(
             sorted(
                 (self._profile(scope) for scope in normalized),
@@ -87,6 +94,7 @@ class FeatureRouter:
             units=profiles,
             mr_dimensions=mr_dimensions,
             question_bindings=question_bindings,
+            schema_version=schema_version,
         )
 
     def _profile(self, scope: UnitFactScope) -> UnitFeatureProfile:
@@ -174,7 +182,7 @@ class FeatureRouter:
         for definition in self.config.tags_by_id.values():
             if definition.status == "Deprecated":
                 continue
-            signals = _match_signals(
+            signals = _feature_signals(
                 definition,
                 facts,
                 include_owner_aware_import_uses=scope == "unit_exact",
@@ -270,19 +278,48 @@ def derive_active_dimensions(
     return active_dimension_ids(tags, active_config)
 
 
-def _match_signals(
+def _feature_signals(
     definition: TagDefinition,
     facts: FeatureFacts,
     *,
     include_owner_aware_import_uses: bool = False,
 ) -> tuple[FeatureSignal, ...]:
-    return tuple(
-        FeatureSignal(kind=cast(FeatureSignalKind, kind), value=value)
-        for kind, value in match_signal_pairs(
-            definition,
-            facts,
-            include_owner_aware_import_uses=include_owner_aware_import_uses,
-        )
+    signals: list[FeatureSignal] = []
+    for signal in match_signals(
+        definition,
+        facts,
+        include_owner_aware_import_uses=include_owner_aware_import_uses,
+    ):
+        kind = cast(FeatureSignalKind, signal.kind)
+        if signal.operator is None and signal.normalized_value is None:
+            signals.append(FeatureSignal(kind=kind, value=signal.value))
+        elif (
+            signal.operator == "any_symbol_leaf"
+            and signal.normalized_value is not None
+        ):
+            signals.append(
+                NormalizedFeatureSignal(
+                    kind=kind,
+                    value=signal.value,
+                    operator=signal.operator,
+                    normalized_value=signal.normalized_value,
+                )
+            )
+        else:
+            raise ValueError("Feature matcher returned invalid operator provenance")
+    return tuple(signals)
+
+
+def _routing_schema_version(
+    tag_config_schema_version: str,
+) -> FeatureRoutingSchemaVersion:
+    if tag_config_schema_version in {"tag-config-v1", "tag-config-v2"}:
+        return FEATURE_ROUTING_SCHEMA_VERSION
+    if tag_config_schema_version == "tag-config-v3":
+        return FEATURE_ROUTING_V2_SCHEMA_VERSION
+    raise ValueError(
+        f"unsupported Tag config schema for Feature Routing: "
+        f"{tag_config_schema_version}"
     )
 
 

@@ -2,7 +2,7 @@
 title: 10 评测与反馈闭环模块
 status: canonical
 implementation: designed
-updated: 2026-07-12
+updated: 2026-07-15
 ---
 
 # 10 评测与反馈闭环模块
@@ -153,6 +153,20 @@ Unit/MR Dimension precision/recall、case exact accuracy 和 input-order stabili
 正式 activation trace；Active/Draft/Deprecated、完整 Dimension policy 矩阵、wheel defaults 和
 结果 replay 还由模型/配置测试与 package gate 独立 fail-closed。后续增加真实场景时应扩大
 Golden 分母，而不是只更新 baseline。
+
+FR-02 lifecycle symbol-leaf 评估与 FR-0 Golden 分离。
+`tag-retrieval-truth-observation-v1` 保持冻结；FR-02 的 baseline 和 candidate 都使用
+`tag-retrieval-truth-observation-v2`。v2 显式记录 feature-config identity、
+`feature_routing_schema_version`、每 case 的 exact/routing Tag 集合、`unit_exact/file_hints`
+两层 symbols 和完整 `tag_matches` trace。这是新 schema，不得把这些字段回填到 v1
+artifact；通用 fixture checker 默认仍输出冻结的 observation-v1，只有 FR-02 显式请求 v2。
+
+FR-02 contract gate 只证明当前 provisional fixture 可重放。7 个 lifecycle-target 正例和
+5 个 lifecycle-target 反例产生的 selected-label 指标不是候选规则的整体
+Precision/Recall。`TR-TIMER-008` 是明确要求 lifecycle co-Tag 的 contract-expected
+addition；其余 7 个 cross-target lifecycle additions 尚未裁决。加上普通 class 同名方法
+无法区分和缺少独立 adjudicated holdout，该 candidate 必须继续报告
+`activation_ready=false`。
 
 ## 7. Retrieval Golden Set
 
