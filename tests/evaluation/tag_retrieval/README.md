@@ -223,3 +223,18 @@ The report therefore keeps the separate `candidate_evidence_gate` closed. Runnin
 same command with `--require-candidate-evidence` is expected to return exit code 1 until
 the provisional/development-regression and independent-holdout blockers are removed;
 that flag is a release-evidence gate, not the known-contract E2E success criterion.
+
+The separate, fail-closed process for obtaining genuinely post-seal evidence is documented in
+`tests/evaluation/lifecycle_blind_holdout_v1/README.md`. Candidate design was exposed to the
+entire tracked `applications_app_samples` tree at
+`8255a2987f70317cc3a2a4d46044c6b55f092bb3`; the same revision is therefore ineligible, and a
+future selection must use a later descendant with new family/path/content relative to that tree.
+The 48 cases in this directory remain the canonical, non-replaceable development Truth and must
+not be copied into that artifact chain as blind evidence.
+
+Holdout v1 is fixed at 32 cases/32 families: 4 component-v1 positives, 4 component-v2 positives,
+8 router positives, and 4 cases in each of four negative strata. It is a purposive stratified
+challenge holdout, not a random or natural-prevalence sample. The currently eligible corpus has
+no independent non-DocsSample `@ComponentV2` family, so no conforming selection can be built
+today. The repository contains no independent selection, two human receipts, sealed consensus,
+or real holdout result, and the holdout candidate has not been run.

@@ -731,6 +731,65 @@ Feature Routing 拥有 Question registry 和适用性选择；ReviewUnit/Context
 把上面的二字段 binding 转换为现有 Context Planner `QuestionBinding`；兼容入参若出现，只能
 验证相等，不能覆盖正式结果。
 
+### 11.3 Lifecycle blind holdout artifacts
+
+FR-02B 的独立质量证据不写入 `FeatureRoutingResult`，也不升级现有
+`tag-retrieval-truth-v2`。它使用四类独立、closed-schema、自哈希 artifact：
+
+| Schema | 内容 | 明确禁止 |
+|---|---|---|
+| `lifecycle-holdout-selection-v1` | 无标签 case、source family/path/hash、candidate runtime/environment、evaluation harness、development exclusions、固定 strata/quality gates、selector attestation | expected/actual label、candidate output |
+| `lifecycle-holdout-review-packet-v1` | canonical Tag contract/review policy、selection 对应 source span、opaque case ID | candidate identity/output、selection stratum/rank、expected/actual 字段 |
+| `lifecycle-holdout-review-receipt-v1` | 一名 human reviewer 的完整 case decision、ReviewUnit identity/evidence、blind attestation | 缺 case、第二 reviewer 内容、自动生成标签 |
+| `lifecycle-holdout-consensus-v1` | 恰好两份不同 receipt 的逐 case votes、agreed/unresolved、release blockers | 丢弃 disagreement、揭盲后第三票 |
+
+Selection 绑定候选 commit `9b7a828449cbe760ce9374d222f75c48b6f5c852`、
+`feature-config:sha256:844418e3d7938c816fd3b64b62cdae3d1753d286d50a6a103406838ed6db01e7`
+和 `tag-config-v4/feature-routing-v3`。Runtime snapshot 覆盖 candidate commit 下完整
+`src/arkts_code_reviewer` Python tree、默认 tags/dimensions、Parser
+sidecar、candidate config；`runtime_environment` 另外固定 Python version/packages/platform、
+Node version/executable hash 和 `node_modules` tree fingerprint。`evaluation_harness_commit`、
+`evaluation_harness_files`、`evaluation_harness_fingerprint` 单独冻结 contract、evaluator、
+manifest 和 CLI 工具。
+
+Candidate freeze 同时声明其设计期 corpus exposure 是
+`applications_app_samples@8255a2987f70317cc3a2a4d46044c6b55f092bb3` 的
+`entire_tracked_repository`。因此 selection repository 必须是该 revision 的严格后继 descendant，
+且每个 selected source 相对 exposure tree 都必须同时使用全新 path-derived family、全新 path、
+全新 Git blob/content；同 revision 永远不满足独立性。现有 canonical development Truth 还提供
+不可替换的 `source_family_ids/source_paths/content_sha256` 排除集。
+
+Selection policy 的 `dataset_kind` 固定为 `purposive_stratified_challenge_holdout`，不是随机样本，
+没有 inclusion-probability 或 natural-prevalence 声明。V1 固定 32 case/32 family：
+`component_v1_positive=4`、`component_v2_positive=4`、`router_page_positive=8`，以及
+`nested_owner_negative/non_entry_page_negative/ordinary_owner_negative/routing_only_negative`
+各 4。当前 eligible corpus 没有独立 non-DocsSample `@ComponentV2` family，因此尚不能构造真实
+selection，不能弱化或替换该 stratum。
+
+Packet builder 从仓库固定路径加载 `tag_contract.md/review_policy.md`，没有调用方可替换的 CLI
+参数。Post-seal evaluator 会用 sealed selection、verified checkout 和 canonical 文本重建 packet，
+再由两份 receipt 重建 consensus；任一对象不相等都 fail closed。Artifact 中的独立/盲审字段、
+negative stratum 和“first run”顺序只是 human-process attestation，不是身份或密码学证明。
+
+正式 CLI 必须在全新 seal checkout 中，用仓库外、非 editable 的隔离 virtualenv 以 `-P -B -S`
+和空 `PYTHONPATH` 启动。纯标准库 preflight 会验证 Git seal、五份 artifact 的 committed bytes、
+完整 `src` import closure、candidate runtime/environment 和 evaluation harness，并拒绝 ignored
+bytecode、native extension、symlink 或额外源码，成功前不把仓库路径加入 `sys.path`。随后才 import typed evaluator；
+由于包存在 eager import，此时会执行已经验证过的项目源码，但仍不会加载 candidate config、实例化
+或运行 `FeatureRouter`。Typed validation 再检查 complete consensus、source checkout、policy、
+development exclusions、exposure boundary，并重建 packet/consensus；全部相等后才运行候选。正式
+进程还要求 `HEAD == seal_revision`、clean worktree、source bytes 与 pinned revision Git blob
+完全相等。Parser、ReviewUnit、UnitFactScope、owner provenance、
+challenge-owner、file-hint promotion 和 routing-only risk gate 均固定为 0。
+
+报告可给出 `evidence_ready`；`--omit-cases` 时仍必须输出 `case_details_omitted=true` marker，最终
+输出形状由 `evaluation_id` 绑定：它是去掉自身字段后 canonical JSON 的
+`lifecycle-owner-role-holdout-evaluation:sha256:*` hash，但不认证 runner 身份。
+无论证据是否通过，`production_activation.activation_ready` 固定为 `false`，任何 artifact 或门禁
+都不会自动修改默认 `tags-v1`。当前没有真实 selection、receipt、consensus 或 result，candidate
+尚未通过该链运行；生产级执行还需要独立 CI/container 与外部身份/权限控制。冻结的 Python
+直接/传递依赖版本不等于依赖 bytes 的密码学证明，后者仍属于可信外部环境边界。
+
 ## 12. 兼容 RetrievalQuery 与正式 Retrieval 输入
 
 当前 `AnalysisResult.retrieval_query` 是早期 CLI 的 compatibility-only 视图。它仍保留

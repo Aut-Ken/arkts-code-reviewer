@@ -175,6 +175,28 @@ V4 的 `any_file_symbol_leaf` 只保留同文件 weak routing signal。它可以
 Question 或 v1 Golden；candidate 必须再经过独立 blind holdout 与真实 P/R 门禁，才能讨论
 正式配置迁移。
 
+独立 holdout 的代码合同现已实现，但真实证据尚未产生。该链单独使用
+`lifecycle-holdout-selection-v1`、`lifecycle-holdout-review-packet-v1`、两份
+`lifecycle-holdout-review-receipt-v1` 和 `lifecycle-holdout-consensus-v1`；必须先由外部独立
+人员完成无标签选样和双审共识并提交 seal，post-seal evaluator 才能首次运行 v4 candidate。
+候选设计已看过 `applications_app_samples@8255a2987f70317cc3a2a4d46044c6b55f092bb3`
+整棵 tracked tree；该 revision 不能作为独立样本，未来 selection 必须来自严格后继 descendant，
+且相对 exposure tree 和 canonical development Truth 都满足全新/排除的 family、path、content
+边界。
+
+V1 policy 固定为 32 case/32 family 的 `purposive_stratified_challenge_holdout`：component v1/v2
+正例各 4、router 正例 8、nested/non-entry/ordinary/routing-only 四类 negative 各 4，不声明
+随机抽样、inclusion probability 或 natural prevalence。当前 eligible corpus 没有独立
+non-DocsSample `@ComponentV2` family，所以真实 selection 尚不可构造，不能通过缩减 stratum 或
+复用 development case 绕过。
+
+Selection 同时冻结 candidate commit 的完整 Python tree、tags/dimensions、Parser sidecar、
+candidate config、Python/Node/`node_modules` environment 和 evaluation harness。Packet 只能从
+canonical contract/policy、selection 与 verified checkout 重建；Parser、ReviewUnit、
+UnitFactScope、owner/file-hint/routing-only safety counts 均要求为 0。即使未来报告得到
+`evidence_ready=true`，也只表示迁移证据通过，不会自动切换默认 `tags-v1`。流程、工具与当前缺口见
+`tests/evaluation/lifecycle_blind_holdout_v1/README.md`。
+
 新增或修改触发器必须升级 Git 中的配置、重跑 Golden，并记录新的组合 fingerprint；外部文档、
 Skills 或代码语料不能在运行时自行创建 Tag。
 

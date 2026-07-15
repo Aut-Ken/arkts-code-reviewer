@@ -157,6 +157,20 @@ V4 支持 method Unit 自身与 struct Unit 的直接 lifecycle method 子声明
 `acceptance_holdout` split 不再是 blind holdout。独立 blind holdout 仍缺失，所以 FR-02B
 必须保持 `activation_ready=false`，不能把 candidate contract 写成生产完成。
 
+仓库现已实现独立 holdout 的 fail-closed 基础设施：无标签 selection、候选盲审 packet、两份
+人工 receipt、consensus、完整 candidate runtime/environment + evaluation-harness freeze、Git seal
+和 post-seal evaluator。设计期已暴露
+`applications_app_samples@8255a2987f70317cc3a2a4d46044c6b55f092bb3` 的完整 tracked tree，
+所以同 revision 不能作为独立 holdout；未来 source 必须来自严格后继 descendant，并同时满足
+全新 family/path/content 和 canonical development Truth 排除。
+
+V1 固定为 32 case/32 family 的 `purposive_stratified_challenge_holdout`，不声明随机抽样、
+inclusion probability 或 natural prevalence。当前 eligible corpus 没有独立 non-DocsSample
+`@ComponentV2` family，因此真实 selection 暂不可构造；仓库也没有 receipt、consensus 或真实
+result，未运行 holdout candidate。完整流程见
+`tests/evaluation/lifecycle_blind_holdout_v1/README.md`。基础设施完成或未来
+`evidence_ready=true` 都不等于默认配置自动激活。
+
 `unit_exact` 只生成 exact Tags、正式检索维度和专项问题；`file_hints` 只生成 routing Tags 与
 保守 routing/MR Dimensions。hint-only signal 不绑定专项 RQ，也不能成为 Finding evidence。
 Active 配置进入正式输出，Draft 只进入 `shadow_*`，Deprecated 不参与运行时匹配。旧
