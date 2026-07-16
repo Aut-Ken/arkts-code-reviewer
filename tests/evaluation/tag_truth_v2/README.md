@@ -307,13 +307,15 @@ candidate-project reference is the current tree necessarily reports
 resource abstention, not a qualified result. A later calibrated policy must solve it through a
 reviewed streaming/resource design or a new limit; the blind campaign cannot tune it away.
 
-At pre-Stage2D commit `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a`, a read-only scan found 554
-tracked entries, 552 loaded UTF-8 documents, 549 unique texts and 15,161,916 candidate-project path
-NFC characters. Applying the ArkTS-like tokenizer to all tracked text flags 54 Markdown, Python,
-JavaScript and other documents. A 24-case file+Unit campaign would also exceed 727 million pair-side
-NFC characters from the candidate-project reference alone. Thus the current tree has oversize,
-tokenizer-media and work-budget abstentions independently; none may be hidden by excluding non-ETS
-files after seeing the blind sample.
+At pre-Stage2D commit `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a`, the read-only snapshot
+reported 554 tracked entries, 54 tokenizer issues and approximately 727 million pair-side NFC
+characters for the 48-probe candidate-project-reference estimate. Those numbers describe the old
+tree, not the current HEAD. A read-only recomputation at
+`d16b5f9d9bbac7040af9d315e52a98c016197d33` found 563 regular blobs, 561 loaded UTF-8 documents,
+560 unique blobs, 558 unique texts and 56 tokenizer issues. The same 48-probe
+candidate-project-reference lower bound is 743,761,104 pair-side NFC characters. The current tree
+therefore still has independent oversize, tokenizer-media and work-budget abstentions; none may be
+hidden by excluding non-ETS files after seeing the blind sample.
 
 The CLI removes inherited `GIT_*` routing/configuration variables and disables repository-configured
 `core.fsmonitor`. It still trusts the local `git` executable, `PATH`, protected Git configuration and
@@ -329,6 +331,77 @@ This stage does not run Parser, Matcher, FeatureRouter or a candidate. It does n
 make an activation decision. No real five-artifact campaign or independently dual-reviewed
 duplicate/independent/ambiguous pair Truth currently exists, so current evidence remains
 `not_qualified` and candidate execution remains `not_run`.
+
+## EVAL-01B Stage-2D1b-1 Pair-Truth and calibration-contract boundary
+
+Stage 2D1b-1 adds only closed, self-hashed contracts and full-rebuild helpers for calibrating a
+future near-duplicate policy:
+
+```text
+component-aware PairSelection
+-> path-redacted PairReviewPacket
+-> human Receipt A + human Receipt B
+-> PairConsensus
+-> exhaustive canonical Oracle
+-> PolicyCandidateFreeze
+-> HoldoutReleaseReceipt
+-> CalibrationReport
+-> full-chain-verified PolicyApprovalReceipt
+```
+
+Pair Truth uses exactly three human labels: `duplicate`, `independent` and `ambiguous`. Selection
+connects cases into leakage components through shared members, raw and normalized content
+identities, template clusters, source families and explicit related groups. A connected component
+cannot cross `calibration` and `acceptance_holdout`. The review packet omits split, component,
+selection rank/stratum, explicit repository/path identity and policy output. It still contains the
+complete review text, whose identifiers and imports may reveal provenance, so the packet is
+path-redacted and candidate-blind, not anonymous.
+
+Exactly two distinct human reviewers in distinct rounds must cover every packet case. Consensus
+preserves both original labels, evidence lines and rationales. Disagreement stays unresolved and is
+excluded from binary metrics; an agreed `ambiguous` case is retained as an explicit safety-guard
+class rather than silently becoming positive or negative.
+
+The exhaustive canonical Oracle evaluates each manifest Pair directly with the frozen Stage-2D1 v1
+canonical similarity semantics and no candidate prefilter. File/file and Unit/Unit pairs are
+bidirectional; Unit/file evaluates the Unit against the file; the Pair reducer is
+`duplicate > gray > abstain > clear`. Its `oracle_semantics_fingerprint` identifies this declared
+behavior only. It is not a hash of Python files, imports or runtime code.
+
+`PolicyCandidateFreeze.verifier_closure` records a self-hashed list of claimed Git blob identities,
+but Stage 2D1b-1 has no standard-library preflight that reads the candidate commit, verifies those
+blob IDs or byte-checks the current checkout. Formal qualification must add that future preflight;
+neither a semantics fingerprint nor a self-declared closure is code identity.
+
+The calibration report keeps separate calibration and acceptance-holdout confusion matrices,
+precision/recall, Wilson lower bounds, duplicate-block recall, ambiguous safety guards, raw
+reviewer agreement and Cohen kappa. Only acceptance-holdout results drive the calibration gate.
+Each result retains its component ID, cross-split components are rejected, duplicate and
+independent Truth each require at least 80 distinct components, and every binary metric Pair must
+occupy its own component. The Pair denominator therefore equals the component count for the binary
+acceptance set, preventing repeated correlated Pairs from inflating Wilson confidence. This remains
+a conservative one-Pair-per-component gate, not a general clustered effective-sample-size model.
+
+`PolicyCandidateFreeze` binds the policy candidate, Oracle semantics, gate, candidate commit and
+declared verifier closure while recording that holdout labels were unseen. A subsequent
+`HoldoutReleaseReceipt` binds the same selection and freeze and requires release after the freeze
+timestamp. A formal Approval receipt is trustworthy only after rebuilding Selection, Packet, both
+Receipts, Consensus, Oracle predictions and CalibrationReport, and then verifying all
+freeze/release/report/approver bindings. Parsing a report or receipt and checking its self-hash is
+identity validation only.
+
+Selection-process provenance and all reviewer, holdout-custodian and approver identities and
+timestamps are still self-attested. There is no external identity authentication, signature,
+Git-host attestation or executable organizational-separation proof. Consequently
+`calibration_gate_status=passed`
+means only `eligible_for_human_review`; every report remains
+`policy_approval_status=not_approved`, and overall evidence remains `not_qualified`.
+
+The repository contains no real PairSelection, Packet, reviewer Receipt, Consensus,
+PolicyCandidateFreeze, HoldoutRelease, CalibrationReport or ApprovalReceipt. This stage does not
+approve a real policy, implement policy v2, screening v2 or publication v2, run a real campaign or
+candidate, or alter any Stage-2D1/Stage-2D2a v1 contract, Tag/Dimension/RQ, Parser, Matcher, Golden
+or Feature-config fingerprint.
 
 ## EVAL-01B Stage-2D2a consensus-publication boundary
 

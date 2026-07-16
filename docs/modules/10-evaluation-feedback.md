@@ -514,14 +514,15 @@ candidate project reference 的真实报告都会得到 `candidate_project:overs
 后续只有在独立资源基准和人工 pair Truth 完成后，才能通过新 policy 版本选择流式扫描或调整上限，
 不得在看到 blind sample 后临时排除该文件或放宽阈值。
 
-对同一 `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a` tree 的只读盘点还得到 554 个 tracked
-entry、552 个已加载 UTF-8 document、549 份 unique text；candidate-project path text 合计
-15,161,916 个 NFC 字符。因为 scope 是全部 tracked UTF-8 text，而 tokenizer 使用 ArkTS-like
-引号/comment/template 规则，54 个 Markdown、Python、JavaScript 等 document 被标为 tokenizer
-issue。因此当前真实 tree 除 oversize 外还必有 `reference_tokenization_issues`；若按 24 case ×
-file/Unit 共 48 probe 估算，仅 candidate-project reference 一侧就超过 7.27 亿 pair NFC 字符，也会
-触发当前 2.5 亿预算。三者都是可见 abstain，不是质量通过。正式 policy 必须先解决 media-aware
-tokenization/streaming 与资源基准，不能为了得到 clean 临时忽略非 `.ets` 文件。
+历史 `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a` 快照曾记录 554 个 tracked entry、54 个
+tokenizer issue，以及 48-probe 只计算 candidate-project reference 就约 7.27 亿 pair NFC 字符；
+这些数字只描述旧 tree，不再代表当前 HEAD。对当前
+`d16b5f9d9bbac7040af9d315e52a98c016197d33` 的只读重算得到 563 个 regular blob、561 个已加载
+UTF-8 document、560 个 unique blob、558 份 unique text、56 个 tokenizer issue；同一 48-probe
+口径的 candidate-project reference lower bound 是 743,761,104 pair NFC 字符。当前真实 tree
+因此仍同时存在 oversize、tokenizer 和 work-budget abstain；这些都是可见 abstain，不是质量通过。
+正式 policy 必须先解决 media-aware tokenization/streaming 与资源基准，不能为了得到 clean
+临时忽略非 `.ets` 文件。
 
 CLI 的 0/1/2 语义保留为：0 只允许未来 approved+calibrated policy 的无 blocker 结果；当前合法
 shadow clear、duplicate、gray、短 Unit、inventory blocker 或 unresolved 都写出报告并返回 1；
@@ -539,7 +540,66 @@ byte。Inventory entry cap 仍是在 `git ls-tree` 输出返回后检查，NFC w
 cap 也发生在 sealed JSON/Git blob 已加载之后；它们保护 comparison 阶段，不是 OS 级输入内存
 sandbox，超大受信仓库仍需受控容器/资源限制。
 
-### 6.7 EVAL-01B Stage 2D2a：双审共识的版本化发布
+### 6.7 EVAL-01B Stage 2D1b-1：Pair Truth 与校准治理合同
+
+Stage 2D1b-1 只增加 near-duplicate 校准所需的 closed schema、self-hash、builder 和 full
+rebuild verifier，不修改 Stage 2D1 shadow 算法或 policy。合同链是：
+
+```text
+component-aware PairSelection
+-> path-redacted PairReviewPacket
+-> human Receipt A + human Receipt B
+-> PairConsensus
+-> exhaustive canonical Oracle
+-> PolicyCandidateFreeze
+-> HoldoutReleaseReceipt
+-> CalibrationReport
+-> full-chain-verified PolicyApprovalReceipt
+```
+
+Pair Truth 只允许 `duplicate / independent / ambiguous`。Selection 根据 member identity、原文
+hash、normalized-body hash、template cluster、source family 和人工 related group 计算 leakage
+component；任何连通 component 跨 `calibration / acceptance_holdout` 都 fail-closed。Packet 不包含
+split、component、selection rank/stratum、显式 repository/path 或 policy output；但完整源码仍可能
+通过 identifier/import 暴露来源，所以它只是 path-redacted/candidate-blind，不是匿名材料。两份
+Receipt 必须来自不同 reviewer、不同 round，并完整覆盖同一 packet；Consensus 保留两票各自的
+label、evidence line 和 rationale，不一致的 Pair 不进入二元指标。
+
+Exhaustive canonical Oracle 对 manifest 中每个 Pair 按冻结的方向规则直接调用 Stage 2D1 v1
+canonical similarity，不使用 candidate prefilter：file/file 和 Unit/Unit 双向比较，Unit/file
+只比较 Unit 到 file，再以 `duplicate > gray > abstain > clear` 聚合。它的
+`oracle_semantics_fingerprint` 只标识这组声明语义，不是 Python 文件或 import closure 的代码
+identity。`PolicyCandidateFreeze.verifier_closure` 当前也只是调用方提交的 Git blob 清单；本阶段
+没有 standard-library preflight 去读取 candidate commit、核对这些 blob 或证明当前 checkout
+字节一致。未来正式 qualification 必须补齐该 preflight，不能把 semantics fingerprint 或一份
+self-hashed closure 声明当成代码冻结证明。
+
+Calibration report 同时保存 calibration/acceptance-holdout 两套 confusion、P/R、Wilson lower
+bound、duplicate-block recall、ambiguous guard，以及双审 raw agreement/Cohen kappa。Gate 只根据
+acceptance holdout 决定 `passed / failed`；component ID 会随每个 case 进入 report，并同时要求
+duplicate/independent 各至少 80 个独立 component、每个二元指标 Pair 独占一个 component。这样
+Wilson 的 Pair 分母在二元验收集合中与 component 数一一对应，不能用同一 component 的相关 Pair
+虚增样本；但它仍不是针对任意聚类结构的 component-adjusted effective-sample-size 模型。
+
+`PolicyCandidateFreeze` 先绑定 policy candidate、Oracle semantics、gate、candidate commit 和声明
+closure，并固定 `acceptance_holdout_labels_seen=false`；`HoldoutReleaseReceipt` 再绑定同一 selection
+与 freeze，并要求 `released_at > frozen_at`。正式 Approval receipt 必须在完整重建 Selection、
+Packet、两份 Receipt、Consensus、Oracle predictions 和 CalibrationReport 后，再核对
+freeze/release/report/approver 的全部绑定；单独 parse report/receipt 或重算 self-hash 不构成
+verified approval。
+
+Selection 对 selector/process 的来源声明，以及 reviewer/custodian/approver identity 和时间声明，
+目前都只是 artifact 内自证，没有外部身份认证、签名、Git-host attestation 或可执行的组织隔离
+证明。因此即使
+`calibration_gate_status=passed`，也只表示 `eligible_for_human_review`；Report 自身固定
+`policy_approval_status=not_approved`，整体 evidence 继续是 `not_qualified`。
+
+仓库当前没有真实 PairSelection、Packet、双审 Receipt、Consensus、PolicyCandidateFreeze、
+HoldoutRelease、CalibrationReport 或 ApprovalReceipt。本阶段不批准真实 policy，不实现 policy v2、
+screening v2、publication v2，不运行真实 campaign/candidate，也不改变 Stage 2D1/2D2a v1、
+Tag/Dimension/RQ、Parser、Matcher、Golden 或 Feature config fingerprint。
+
+### 6.8 EVAL-01B Stage 2D2a：双审共识的版本化发布
 
 Stage 2D2a 新增独立的 `tag-truth-v2-publication-v1`，不放宽 Stage 1
 `TagTruthV2Suite`。它在 candidate 运行前消费：

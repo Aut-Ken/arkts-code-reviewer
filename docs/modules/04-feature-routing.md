@@ -308,9 +308,54 @@ Git、path、binding 或 rebuild 返回 2。当前没有真实 Stage-2D1 campaig
 independent / ambiguous pair Truth。该基础设施不修改 Tag/Dimension/RQ、Matcher、Parser、Golden、
 `TagTruthV2Suite` 或 Feature Routing fingerprint。
 Report self-hash 只绑定 identity；正式消费必须以 sealed policy/inventory/五件套完整 rebuild。
-当前 `fdac0fc` 项目 tree 已知同时存在 24,144,840-byte oversize generated blob、54 个 all-text
-ArkTS-like tokenizer issue，且 48-probe 估算只算项目 reference 就超过 727M pair NFC chars，因而
-真实运行会保守 abstain，不能宣称 near-duplicate 已 qualified。
+历史 `fdac0fc` 快照曾记录 554 个 tracked entry、54 个 all-text ArkTS-like tokenizer issue，以及
+48-probe 只计算项目 reference 就约 727M pair NFC chars。当前
+`d16b5f9d9bbac7040af9d315e52a98c016197d33` 的只读重算是 563 个 regular blob、561 个 UTF-8
+document、560 个 unique blob、558 份 unique text、56 个 tokenizer issue；同口径 48-probe lower
+bound 为 743,761,104 pair NFC chars。旧数字只是旧 tree 快照；当前真实运行仍会因为 oversize、
+tokenizer 和 work budget 保守 abstain，不能宣称 near-duplicate 已 qualified。
+
+EVAL-01B Stage 2D1b-1 在 shadow screening 和真实 policy v2 之间增加 Pair Truth/校准治理合同：
+
+```text
+component-aware PairSelection
+-> path-redacted PairReviewPacket
+-> two human Receipts
+-> PairConsensus
+-> exhaustive canonical Oracle
+-> PolicyCandidateFreeze
+-> HoldoutReleaseReceipt
+-> CalibrationReport
+-> full-chain-verified PolicyApprovalReceipt
+```
+
+Pair Selection 把共享 member、原文/normalized-body hash、template cluster、source family 和人工
+related group 连成 leakage component；同一 component 跨 calibration/acceptance holdout 必须拒绝。
+Packet 删除 split、component、rank/stratum、显式 repository/path 和 policy output，但源码本身仍可
+暴露来源，所以这里只能称 path-redacted/candidate-blind，不能称匿名。两名不同 reviewer 必须在不同
+round 完整覆盖同一 packet；Consensus 无损保留两票，disagreement 不进入二元指标。
+
+Exhaustive canonical Oracle 不调用 FeatureRouter，也不使用 candidate prefilter，只对 manifest Pair
+按 Stage 2D1 v1 canonical similarity 和冻结方向逐对比较。`oracle_semantics_fingerprint` 只绑定声明
+语义，不是代码 identity；`PolicyCandidateFreeze.verifier_closure` 目前也只是 self-hashed Git blob
+声明，本阶段没有 preflight 读取 candidate commit 并验证 closure/current-checkout bytes。未来正式
+qualification 必须补该验证，不能用 semantics fingerprint 冒充代码冻结。
+
+Calibration gate 只使用 acceptance holdout 的 confusion、P/R、Wilson、duplicate-block recall、
+ambiguous guard 和 reviewer agreement；除阻止 split leakage 外，还要求 duplicate/independent 各至少
+80 个独立 component，并要求每个二元指标 Pair 独占一个 component，避免相关 Pair 重复放大样本量。
+区间仍以 Pair case 为统计分母，但在二元验收集合里 Pair 数与 component 数必须一一对应；这仍不等于
+已实现任意 component 聚类下的 effective-sample-size 估计。
+`PolicyCandidateFreeze -> HoldoutReleaseReceipt` 冻结 policy/gate/Oracle 后才允许释放 holdout；
+正式 ApprovalReceipt 必须建立在完整 report rebuild 和 freeze/release binding 验证上。单独 parse
+self-hash 不够。
+
+当前 selection 的 selector/process 来源，以及 reviewer/custodian/approver identity，均为 artifact
+内自证，没有外部认证。因此
+`passed` 只表示 `eligible_for_human_review`，不表示 approved/qualified；Report 固定
+`policy_approval_status=not_approved`，整体 evidence 仍为 `not_qualified`。仓库没有真实 Pair Truth
+artifact，也没有 policy v2、screening v2、publication v2；Stage 2D1/2D2a v1、默认 Feature Routing
+行为和 fingerprint 均不改变。
 
 EVAL-01B Stage 2D2a 在此后增加独立的 consensus publication bridge。它完整重建 Stage 2C/2D1
 后，只允许两种输出：complete consensus 且所有 file/Unit screen 均 clear 时生成
