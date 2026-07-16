@@ -360,8 +360,58 @@ family、proxy stratum、selection rank、repository revision、原始 source ha
 身份、配置、预测、输出和诊断；否则 selector/candidate 信号会污染人工 Truth。该视图是
 candidate-blind/path-redacted，不是匿名视图；源码内部标识符仍可能暴露来源。
 
-Stage 2A 之后仍需要单独审核 receipt 封存、双人 consensus、Git seal、预期首次 candidate
-run 和质量门禁；在这些事实完成前，不得把“infrastructure 已实现”改写为“Tag 已验证”。
+Stage 2A 在 packet 边界停止；下述 Stage 2B 只补齐 receipt/consensus 的通用 schema/CLI，
+没有执行真实人工流程。Git seal、预期首次 candidate run 和质量门禁仍属于后续阶段。
+在这些事实全部完成前，不得把“infrastructure 已实现”改写为“Tag 已验证”。
+
+### 6.4 EVAL-01B Stage 2B：通用双人 receipt 与双轴 consensus
+
+Stage 2B 实现 Stage-2A packet 后的通用人工审核合同，但不运行候选：
+
+```text
+self-hashed Stage-2A packet
+-> human reviewer A full-case receipt
+-> human reviewer B full-case receipt
+-> exact/routing dual-axis consensus
+```
+
+`tag-truth-v2-review-receipt-v1` 将 self-hashed packet、其中记录的 `selection_id`、目标 Tag
+contract、完整 review-policy fingerprint、reviewer/round/blinding 声明和全部 case 决策冻结在
+同一 self-hashed artifact 中。
+每名 reviewer 必须从隐去路径的整文件正文自行确定 ReviewUnit，再分别判断 exact applicability
+与 routing-hint applicability；receipt 不接收 candidate prediction，也不运行 Parser、Matcher 或
+FeatureRouter 来代替人工判断。Consensus 恰好消费同一 packet 的两份不同 human reviewer
+receipt，并保留两票原始 rationale/evidence。
+
+共识先比较 ReviewUnit identity：kind、qualified symbol 或 inclusive span 任一不一致，整个 case
+的两条轴都 unresolved。Unit 一致后 exact 与 routing 分轴处理；一轴 disagreement/abstain 不能
+让另一轴已经一致的 judgement 消失。两位 reviewer 对 taxonomy abstention 达成一致时记录
+`agreed_abstain`，它仍是非指标 blocker，不能转成 negative 或从 campaign 删除。
+
+CLI 语义冻结为：
+
+- `tools/seal_tag_truth_v2_review_receipt.py`：成功封存合法 receipt 返回 0，非法输入返回 2；
+- `tools/build_tag_truth_v2_consensus.py`：完整且无 unresolved/abstain 返回 0，合法但存在任一
+  unresolved axis 或 `agreed_abstain` 返回 1，非法 schema/binding/coverage/reviewer 输入返回 2。
+
+返回 1 代表成功保存了可审计的未决共识，不是 artifact 损坏。Consensus 只定义
+`complete/unresolved` 审核状态，不定义 release 或 activation 字段；即使
+`consensus_status=complete`，也只证明两名 reviewer 完整一致，不证明样本独立、near-duplicate
+合格、证据质量达标、candidate 行为正确或可以激活。
+
+当前没有真实 selection、packet、receipt 或 consensus；也没有满足暴露边界的已登记
+strict-descendant revision。Selection/review policy 仍未批准，external selector/reviewer identity
+仍是未认证声明，near-duplicate qualification、Git seal 和 post-seal first candidate run 均未
+完成。因此当前 Tag evidence 保持 `not_qualified`。本阶段不修改 Matcher、默认
+Tag/Dimension/RQ、Parser、Golden 或组合 fingerprint，也不执行 candidate。
+
+Stage-2B CLI 会验证 packet 自哈希，并把 receipt 绑定到 packet 内记录的 `selection_id`；它不接收
+外部 Stage-2A selection artifact，因此不会在本阶段重新验证 selection/checkout provenance。
+该 provenance bridge 仍属于后续独立阶段。
+
+后续必须分阶段补齐：consensus 到 `TagTruthV2Suite` 的完整 provenance bridge、版本化
+near-duplicate qualification、外部 policy/selection 与 Git seal、sealed first-run runner、质量
+门禁计算和独立 activation 决策。任何一个后续步骤都不能由 `complete` consensus 自动替代。
 
 ## 7. Retrieval Golden Set
 

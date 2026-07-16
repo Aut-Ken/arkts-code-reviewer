@@ -230,6 +230,32 @@ selector 预选的 span 或 proxy 类别变成人工 Truth；它是 candidate-bl
 不是匿名化保证，源码内部标识符仍可能暴露来源。
 本阶段不修改 Matcher、默认 Tag/Dimension/RQ 或任何组合 fingerprint。
 
+EVAL-01B Stage 2B 在上述 packet 后增加通用双人审核基础设施：
+`tag-truth-v2-review-receipt-v1` 把 self-hashed packet、其中记录的 `selection_id`、Tag contract、
+完整 review policy fingerprint 与一名 human reviewer 对全部 case 的 ReviewUnit/exact/routing
+决策绑定；
+`tag-truth-v2-consensus-v1` 只接受同一 packet 的两份不同 reviewer receipt，并保留两票原始
+rationale/evidence。ReviewUnit identity 不一致时该 case 的 exact/routing 两轴都 unresolved；
+Unit 一致后两轴独立形成共识，一轴分歧或 abstain 不得删除另一轴已经一致的 judgement。
+双方一致要求 taxonomy decision 时输出 `agreed_abstain` blocker，不得改写成 negative。
+
+`tools/seal_tag_truth_v2_review_receipt.py` 对合法 receipt 返回 0、非法输入返回 2；
+`tools/build_tag_truth_v2_consensus.py` 对无 unresolved/abstain 的完整共识返回 0，对合法但含
+unresolved 或 `agreed_abstain` 的共识返回 1，对非法 schema/binding/coverage/reviewer 输入返回 2。
+两者都不加载或运行 candidate。`consensus_status=complete` 只证明两份有效人工 receipt 对所有
+axis 已形成共识，不表示 evidence qualified、candidate qualified 或 activation ready。
+
+Stage 2B 没有生成真实 selection、packet、receipt 或 consensus；当前仍没有合格的
+strict-descendant source revision，selection/review policy 仍未批准，near-duplicate qualification
+和 sealed first candidate run 也不存在，所以真实证据继续是 `not_qualified`。本阶段不修改
+Matcher、默认 Tag/Dimension/RQ、Parser、Golden 或任何组合 fingerprint。后续还需分别实现
+consensus 到 `TagTruthV2Suite` 的 provenance bridge、版本化 near-duplicate 判定、外部 policy/
+selection 与 Git seal、post-seal first-run runner 和质量门禁，不能从 receipt/consensus schema
+直接跳到配置激活。
+
+Stage-2B CLI 只验证 packet 自哈希和其中记录的 `selection_id`，不接收外部 Stage-2A selection
+artifact，也不在本阶段重新验证 selection/checkout provenance；该桥接属于上述后续工作。
+
 只读 `tools/report_tag_truth_coverage.py` 会把当前 24 个正式 Tag 的 synthetic exact/routing
 正例、真实 development 正/负例、family、review status、Parser-risk availability 以及
 blind/prevalence 缺口分栏输出。缺失数据必须显示 `not_measured` 或 `not_qualified`，不能用 0 或

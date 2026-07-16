@@ -111,8 +111,71 @@ unapproved drafts, the selector record is an unauthenticated attestation, extern
 not been verified, and human review, near-duplicate qualification and the first candidate run are
 still absent.
 
-Stage 2A stops at this packet boundary. Receipt sealing, two-reviewer consensus, post-seal first
-candidate execution and quality-gate calculation remain later reviewed stages.
+Stage 2A stops at this packet boundary. Stage 2B below adds receipt sealing and two-reviewer
+consensus; post-seal first-candidate execution and quality-gate calculation remain later reviewed
+stages.
+
+## EVAL-01B Stage-2B implementation boundary
+
+Stage 2B adds the generic human-review layer immediately after the Stage-2A packet:
+
+- closed, self-hashed `tag-truth-v2-review-receipt-v1` and
+  `tag-truth-v2-consensus-v1` artifacts;
+- a receipt sealer that binds the self-hashed packet, its recorded `selection_id`, target Tag
+  contract and complete review-policy fingerprint to one human reviewer's full-case decisions;
+- exactly two distinct human receipts for one consensus, with reviewer identity, round and blinding
+  declarations checked fail-closed;
+- reviewer-owned ReviewUnit identity plus exact-applicability and routing-hint decisions preserved
+  as two independent axes;
+- canonical consensus output that retains both original votes, rationales and evidence rather than
+  overwriting disagreement.
+
+If the reviewers select different ReviewUnit identities, neither axis is publishable for that case.
+Once the Unit identity agrees, each axis is resolved independently: an exact-axis disagreement or
+abstention does not discard an agreed routing judgement, and a routing-axis disagreement or
+abstention does not discard an agreed exact judgement. Matching taxonomy abstentions become an
+explicit `agreed_abstain` blocker; they are not converted to negative labels or removed from the
+campaign.
+
+The receipt CLI is:
+
+```bash
+PYTHONPATH=src .venv/bin/python tools/seal_tag_truth_v2_review_receipt.py \
+  --packet PACKET.json --draft REVIEW_DRAFT.json > RECEIPT.json
+```
+
+It exits `0` after writing a valid canonical receipt and `2` for invalid input. It never evaluates
+a candidate. Consensus requires exactly two `--receipt` arguments:
+
+```bash
+PYTHONPATH=src .venv/bin/python tools/build_tag_truth_v2_consensus.py \
+  --packet PACKET.json \
+  --receipt REVIEWER_A.json --receipt REVIEWER_B.json > CONSENSUS.json
+```
+
+The consensus command exits `0` only for a valid complete consensus with no unresolved or abstained
+axis, `1` after writing a valid consensus that contains an unresolved axis or `agreed_abstain`, and
+`2` for invalid schema, binding, coverage or reviewer inputs. Exit `1` is an auditable review
+outcome, not a malformed artifact.
+
+Stage 2B is still infrastructure, not evidence. No real selection, packet, receipt or consensus has
+been created. There is still no eligible strict-descendant source revision; selection and review
+policies remain unapproved, external selection and reviewer identity are attestations rather than
+authenticated facts, near-duplicate qualification is absent, and no sealed first candidate run has
+occurred. Consequently even `consensus_status=complete` would mean only that two valid receipts
+resolved every axis. It does **not** mean the dataset, evidence, Tag candidate or activation is
+qualified.
+
+The Stage-2B CLIs validate the packet's self-hash and bind receipts to the `selection_id` recorded
+inside it. They do not accept the external Stage-2A selection artifact and therefore do not
+re-verify selection/checkout provenance; that separate provenance bridge remains a later stage.
+
+This stage does not change the Matcher, Tag/Dimension/Review Question configuration, any combined
+configuration fingerprint, Parser, Golden or candidate behavior, and neither CLI imports or runs a
+candidate. Later reviewed stages must still provide the consensus-to-`TagTruthV2Suite` provenance
+bridge, versioned near-duplicate qualification, externally controlled policy/selection and Git
+seals, a post-seal first-run candidate evaluator, and separate quality-gate and activation
+decisions.
 
 ## Dataset roles
 
