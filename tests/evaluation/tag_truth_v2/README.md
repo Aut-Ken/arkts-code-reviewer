@@ -330,6 +330,74 @@ make an activation decision. No real five-artifact campaign or independently dua
 duplicate/independent/ambiguous pair Truth currently exists, so current evidence remains
 `not_qualified` and candidate execution remains `not_run`.
 
+## EVAL-01B Stage-2D2a consensus-publication boundary
+
+Stage 2D2a adds a deterministic publication bridge after Stage 2D1:
+
+```text
+sealed Selection / Packet / two Receipts / Consensus
++ rebuilt Stage-2C provenance
++ rebuilt Stage-2D1 near-duplicate screening
+-> tag-truth-v2-publication-v1
+```
+
+It creates a new, independent publication schema instead of relaxing the Stage-1
+`tag-truth-v2` loader. The old loader still rejects independent-blind and qualified
+near-duplicate claims. Publication v1 has exactly two valid outcomes:
+
+| Outcome | Published consensus suite | Meaning |
+|---|---|---|
+| `published_consensus_not_qualified` | present | Human consensus was projected without loss, but evidence remains unqualified |
+| `blocked_no_suite` | absent | Consensus or screening prevents publication |
+
+A published suite preserves the complete Tag contract, registered repository and source
+identities, the agreed ReviewUnit, exact/routing labels and merged evidence, and both reviewers'
+complete original votes including their separate evidence lines and rationales. Its
+`chain_binding_id` self-hashes the five sealed artifacts, candidate freeze, Feature config
+fingerprint, Stage-2C verification, Stage-2D1 screening, source/exposure trees and all three
+reference-inventory summaries, so the suite fingerprint cannot be detached from that lineage.
+
+Publication deliberately does not invent fields that the sealed inputs did not freeze. It does
+not assign critical-negative status, normalize ReviewUnit bodies, create template clusters,
+calculate quality gates, run a candidate or decide activation. The selection proxy stratum remains
+selection metadata and never becomes a Truth label.
+
+Run the publisher from the same dedicated checkout at the exact seal commit:
+
+```bash
+.venv/bin/python -I -B tools/build_tag_truth_v2_publication.py \
+  --selection path/in/repo/selection.json \
+  --packet path/in/repo/review_packet.json \
+  --receipt path/in/repo/reviewer-a.json \
+  --receipt path/in/repo/reviewer-b.json \
+  --consensus path/in/repo/consensus.json \
+  --source-root /path/to/clean-selection-revision-applications_app_samples \
+  --seal-revision <full-seal-commit> \
+  --provenance-verification /path/to/stage-2c-report.json \
+  --near-duplicate-policy tests/evaluation/tag_truth_v2/near_duplicate_shadow_policy_v1.json \
+  --near-duplicate-verification /path/to/stage-2d1-report.json
+```
+
+Before project imports, the publication preflight repeats the complete Stage-2D1 preflight,
+verifies that the publication core/preflight/CLI have identical Git blobs at candidate freeze and
+seal, and captures the external screening report once through a bounded nonblocking regular-file
+descriptor. The typed layer then rebuilds Stage 2C, rescans all three reference inventories,
+rebuilds Stage 2D1 and only then constructs publication output. Report IDs and self-hashes cannot
+replace those rebuilds. A parsed `publication_id` or nested suite fingerprint proves JSON identity
+only; formal consumption must call the full publication verifier against the sealed Git/source
+inputs.
+
+Exit `0` means only that a `published_consensus_not_qualified` Truth projection was created. Exit
+`1` writes a valid `blocked_no_suite` report for unresolved/abstained consensus, duplicate, gray or
+screening abstention. Invalid schema, Git, path, hash, source, artifact or rebuild input exits `2`
+without a partial JSON result.
+
+The current shadow policy remains `snapshot_only_not_approved`, so both publication outcomes carry
+the same top-level readiness envelope: policy/calibration and external-identity evidence blockers,
+candidate `not_run`, and quality-gate/activation `not_evaluated`.
+The known real project-tree oversize, tokenizer and work-budget abstentions also mean the current
+real campaign would remain `blocked_no_suite`; Stage 2D2a does not change that fact.
+
 ## Dataset roles
 
 The contract reserves these real-code roles:

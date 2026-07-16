@@ -539,6 +539,47 @@ byte。Inventory entry cap 仍是在 `git ls-tree` 输出返回后检查，NFC w
 cap 也发生在 sealed JSON/Git blob 已加载之后；它们保护 comparison 阶段，不是 OS 级输入内存
 sandbox，超大受信仓库仍需受控容器/资源限制。
 
+### 6.7 EVAL-01B Stage 2D2a：双审共识的版本化发布
+
+Stage 2D2a 新增独立的 `tag-truth-v2-publication-v1`，不放宽 Stage 1
+`TagTruthV2Suite`。它在 candidate 运行前消费：
+
+```text
+sealed 五件套
++ Stage-2C full rebuild
++ Stage-2D1 policy/inventory/full rebuild
+-> published_consensus_not_qualified | blocked_no_suite
+```
+
+只有 complete consensus、全部 ReviewUnit/两轴均 resolved，且每个 case 的 file/Unit
+near-duplicate 决策均为 `clear` 时，publication 才包含
+`tag-truth-v2-published-consensus-v1`。该 suite 原样保留两名 reviewer 的完整 vote，包括每票各自
+的 label、evidence line、rationale 和 ReviewUnit，并同时保留 consensus 合并后的 exact/routing
+结果。Suite 的 `chain_binding_id` 自哈希五件套、seal、candidate freeze、Feature config、
+Stage-2C/2D1 ID、source/exposure tree 和三份 inventory summary，不能脱离 lineage 单独换壳。
+Proxy stratum 仍只是选样元数据，不是正负 Truth。
+
+若 consensus disagreement/abstain，或 screening 为 duplicate、gray、resource/tokenizer/inventory
+abstain，则输出 `blocked_no_suite`，不得删除 case 后发布剩余子集。Schema、Git、path、hash、tree、
+artifact 或 full rebuild 不一致属于非法输入，不生成 publication artifact。
+
+本阶段不臆造 sealed 输入没有定义的 critical-negative、normalized body、template cluster 或 gate
+policy，也不运行 Parser、Matcher、FeatureRouter/candidate，不计算 P/R/Wilson，不写
+`activation_ready`。Published/blocked 两种状态都保留同一个 readiness envelope：evidence
+`not_qualified` 及其 selection/review/near-duplicate/外部身份 blocker、candidate `not_run`、
+quality gate/activation `not_evaluated`。
+
+`tools/build_tag_truth_v2_publication.py` 必须使用 `-I -B`。Preflight 先完整复用 Stage 2D1
+preflight，再验证 publication core/preflight/CLI 在 candidate/seal 的 Git blob 相同，并通过有界
+nonblocking regular fd 捕获外置 screening report；typed 层重新构建 Stage 2C、重新扫描三份
+inventory 并重建 Stage 2D1 后才能投影 Truth。返回 0 只表示成功生成
+`published_consensus_not_qualified`，返回 1 表示合法 `blocked_no_suite`，返回 2 表示输入或重建
+非法；0 不代表真实 Tag 质量合格。`publication_id`/suite fingerprint 只证明 JSON identity，正式
+消费仍必须调用 full verifier 重建 sealed/source/inventory 输入。
+
+当前仍没有真实五件套 campaign，且 Stage 2D1 的已知真实 tree blocker 不变，所以 Stage 2D2a
+只补齐 publication 合同，不产生真实 P/R 或 production-qualified Tag。
+
 ## 7. Retrieval Golden Set
 
 每条：

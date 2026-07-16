@@ -312,6 +312,21 @@ Report self-hash 只绑定 identity；正式消费必须以 sealed policy/invent
 ArkTS-like tokenizer issue，且 48-probe 估算只算项目 reference 就超过 727M pair NFC chars，因而
 真实运行会保守 abstain，不能宣称 near-duplicate 已 qualified。
 
+EVAL-01B Stage 2D2a 在此后增加独立的 consensus publication bridge。它完整重建 Stage 2C/2D1
+后，只允许两种输出：complete consensus 且所有 file/Unit screen 均 clear 时生成
+`published_consensus_not_qualified`；disagreement、taxonomy abstain、duplicate、gray 或任何
+screening/inventory/resource blocker 则生成 `blocked_no_suite`，suite 必须为空。发布内容无损保留
+exact/routing 两轴、agreed ReviewUnit 和两名 reviewer 的完整原始 vote，包括各自 evidence line
+与 rationale；suite 通过自哈希 `chain_binding_id` 绑定五件套、seal、candidate/source/exposure
+tree、Feature config、Stage-2C/2D1 ID 和 inventory fingerprint。
+
+该 schema 不替换或放宽 Stage 1 `TagTruthV2Suite`，不从 proxy stratum 猜正负标签，也不补造
+critical-negative、normalized-body、template-cluster 或 quality gate。它不运行 candidate、不计算
+P/R、不修改 Tag/Dimension/RQ、Matcher、Parser、Golden 或 Feature Routing fingerprint。即使
+publication CLI 返回 0，也只表示共识 Truth 投影成功；evidence 仍是 `not_qualified`，candidate
+仍是 `not_run`，quality gate/activation 仍是 `not_evaluated`。两种 publication 状态都携带同一
+readiness envelope；单独 parse self-hash 或 suite fingerprint 不能替代 full verifier。
+
 只读 `tools/report_tag_truth_coverage.py` 会把当前 24 个正式 Tag 的 synthetic exact/routing
 正例、真实 development 正/负例、family、review status、Parser-risk availability 以及
 blind/prevalence 缺口分栏输出。缺失数据必须显示 `not_measured` 或 `not_qualified`，不能用 0 或
