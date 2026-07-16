@@ -459,6 +459,86 @@ Git remote 真实性、host 或“首次运行”。多次 filesystem/Git 检查
 重验。Near-duplicate、policy approval、`TagTruthV2Suite` publication、candidate runtime/
 environment/harness、P/R、质量门禁和 activation 均不属于本阶段。
 
+### 6.6 EVAL-01B Stage 2D1：版本化 near-duplicate shadow screening
+
+Stage 2D1 只补齐一个 post-seal、pre-candidate 的影子筛查层：
+
+```text
+Stage-2C five-artifact provenance rebuild
+-> candidate/seal-frozen shadow policy
+-> agreed ReviewUnit + full-file extraction
+-> pinned reference inventories
+-> deterministic two-channel token/shingle comparison
+-> self-hashed tag-truth-v2-near-duplicate-screening-v1 report
+```
+
+筛查器同时检查两条独立污染轴：exact Truth 使用 reviewer-agreed ReviewUnit；routing Truth 使用
+整文件。Reference 不是只取旧 48 case，而是覆盖 candidate project commit 的完整 tracked text、
+source exposure revision 的完整 tracked text、development Truth source 在其原 revision 的 bytes，
+以及 campaign 内其他 case 的 Unit/文件。Git blob 可去重计算，但每条 path/revision provenance
+必须保留。含 NUL 的 binary blob 不属于 `all_tracked_utf8_text`，必须显式计数并进入 inventory
+fingerprint 后才可排除；non-regular、oversize、non-UTF-8、invalid/unterminated token 或其他未评估
+输入必须计数并进入 blocker，不能静默跳过后声称 qualified。
+
+算法不调用 Parser v1。`lexical-content-v1` 丢弃空白和注释，保留 keyword/operator/identifier，
+并将字符串、数字和 template literal 归一化；`lexical-shape-v1` 再抽象普通 identifier，只能触发
+灰区。比较量冻结为 7-token content shingle、11-token shape shingle、双向 containment、对称
+Jaccard、content/shape normalized token-stream equality 和最长连续 token run；连续覆盖率也同时
+检查 selected/reference 两个方向，防止旧文件或旧 Unit 被嵌入更大的新文件后因分母稀释而漏检。
+阈值以整数分子/分母比较，避免浮点边界漂移，shingle hash 命中不能代替 canonical token tuple
+核对。Gray content 至少要求 16 个共享 shingle，避免一个 7-token 小片段把大文件拖入灰区；
+Shape equality/containment 只能进入灰区，不能单独 hard reject。
+
+比较前还会按 `nfc-character-work-v1` 冻结并记录 probe 数、selected NFC 字符数、unique reference
+NFC 字符数、eligible pair 数以及 pair 两侧 NFC 字符总量。当前 shadow 上限分别是 16,000,000、
+64,000,000、2,000,000 和 250,000,000，最多记录 10,000 个 match。预估超限时不做任何 pair
+比较；运行中若 match 记录超限，则丢弃全部 partial match。两种情况都会令所有 case axis abstain，
+报告 `attempted_similarity_pair_count` 和 resource blocker，绝不把已评估子集写成 `clear`。
+`probe_evaluation_status=not_run_resource_limit` 时 token/shingle count 的 0 表示“未运行”，不是实测
+为零。Inventory 不完整或任一 reference tokenizer 失败时，同样只有已发现的 duplicate/gray 可以
+保留；其余 axis 必须 abstain。
+
+当前 `near_duplicate_shadow_policy_v1.json` 明确是 `snapshot_only_not_approved`：hard/gray
+阈值只是 calibration seed，不是已证明的 P/R 门禁。Policy 必须在 candidate commit 已存在，且
+candidate 与 seal commit 的 Git blob 完全一致；screening core、preflight 和 CLI 也必须在 candidate/
+seal 保持同一 blob，防止看到 blind selection 后通过调参或改实现语义。完整 screening report 绑定
+Stage-2C verification ID、seal/source/candidate tree、五件套逻辑 ID、policy 和 reference inventory
+fingerprint，并固定 overall evidence `not_qualified`、candidate `not_run`。
+`screening_id` 的 self-hash 只证明 JSON identity；正式消费必须调用完整 verifier，用 policy、三份
+pinned inventory 和五件套重新构建逐字段相等的 report，不能把 parse/self-hash 当语义验证。
+
+当前 shadow policy 的单 blob 上限是 2 MiB，而本项目当前 commit 中冻结的 generated
+`third_party/tree-sitter-arkts/src/parser.c` 为 24,144,840 bytes。因此任何以当前项目 tree 作为
+candidate project reference 的真实报告都会得到 `candidate_project:oversize_entries` 并至少是
+`review_required`。这是当前 shadow policy 的有意保守 abstain，不是 near-duplicate clean 已可用；
+后续只有在独立资源基准和人工 pair Truth 完成后，才能通过新 policy 版本选择流式扫描或调整上限，
+不得在看到 blind sample 后临时排除该文件或放宽阈值。
+
+对同一 `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a` tree 的只读盘点还得到 554 个 tracked
+entry、552 个已加载 UTF-8 document、549 份 unique text；candidate-project path text 合计
+15,161,916 个 NFC 字符。因为 scope 是全部 tracked UTF-8 text，而 tokenizer 使用 ArkTS-like
+引号/comment/template 规则，54 个 Markdown、Python、JavaScript 等 document 被标为 tokenizer
+issue。因此当前真实 tree 除 oversize 外还必有 `reference_tokenization_issues`；若按 24 case ×
+file/Unit 共 48 probe 估算，仅 candidate-project reference 一侧就超过 7.27 亿 pair NFC 字符，也会
+触发当前 2.5 亿预算。三者都是可见 abstain，不是质量通过。正式 policy 必须先解决 media-aware
+tokenization/streaming 与资源基准，不能为了得到 clean 临时忽略非 `.ets` 文件。
+
+CLI 的 0/1/2 语义保留为：0 只允许未来 approved+calibrated policy 的无 blocker 结果；当前合法
+shadow clear、duplicate、gray、短 Unit、inventory blocker 或 unresolved 都写出报告并返回 1；
+schema、Git、path、policy freeze、artifact binding 或 rebuild 错误返回 2。Stage 2D1 没有运行真实
+campaign、没有创建人工 pair Truth，也不实现 `TagTruthV2Suite` publication、candidate runner、
+P/R、quality gate 或 activation。要批准正式 policy，仍需独立双审冻结 duplicate、independent、
+ambiguous pair Truth 后另开版本；不能根据本次 blind sample 调低阈值。
+
+CLI 会清除继承的 `GIT_*` 重定向/配置变量，并显式关闭 `core.fsmonitor`，防止只读 Git 检查被
+环境或 repository fsmonitor 命令改写。它仍信任本机 `git`、`PATH`、受保护的 Git config 和独占
+checkout；`git status` clean 也不能单独证明 assume-unchanged/skip-worktree 文件逐字节一致，
+所以关键 artifacts、policy 和 verifier closure 仍必须单独按 Git blob/bytes 复核。外置 Stage-2C
+report 会校验打开前后 device/inode，并通过同一 nonblocking regular fd 最多读取 16 MiB + 1
+byte。Inventory entry cap 仍是在 `git ls-tree` 输出返回后检查，NFC work
+cap 也发生在 sealed JSON/Git blob 已加载之后；它们保护 comparison 阶段，不是 OS 级输入内存
+sandbox，超大受信仓库仍需受控容器/资源限制。
+
 ## 7. Retrieval Golden Set
 
 每条：

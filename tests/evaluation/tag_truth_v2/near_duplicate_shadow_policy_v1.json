@@ -1,0 +1,57 @@
+{
+  "approval_status": "snapshot_only_not_approved",
+  "calibration_truth_fingerprint": null,
+  "calibration_truth_status": "not_available",
+  "content_containment_direction": "bidirectional",
+  "content_shingle_width": 7,
+  "content_tokenizer_version": "lexical-content-v1",
+  "contiguous_coverage_direction": "bidirectional",
+  "gray_action": "replace_re_review_reseal",
+  "gray_content_containment": {
+    "denominator": 5,
+    "numerator": 3
+  },
+  "gray_content_jaccard": {
+    "denominator": 2,
+    "numerator": 1
+  },
+  "gray_minimum_shared_content_shingles": 16,
+  "gray_minimum_shared_shape_shingles": 48,
+  "gray_shape_containment": {
+    "denominator": 10,
+    "numerator": 9
+  },
+  "hard_content_containment": {
+    "denominator": 5,
+    "numerator": 4
+  },
+  "hard_content_jaccard": {
+    "denominator": 10,
+    "numerator": 7
+  },
+  "hard_contiguous_minimum_tokens": 64,
+  "hard_contiguous_selected_coverage": {
+    "denominator": 5,
+    "numerator": 3
+  },
+  "hard_minimum_shared_content_shingles": 32,
+  "maximum_blob_bytes": 2097152,
+  "maximum_inventory_entries": 100000,
+  "maximum_recorded_matches": 10000,
+  "maximum_selected_nfc_characters": 16000000,
+  "maximum_similarity_pair_nfc_characters": 250000000,
+  "maximum_similarity_pairs": 2000000,
+  "maximum_total_reference_bytes": 268435456,
+  "maximum_unique_reference_nfc_characters": 64000000,
+  "minimum_informative_content_shingles": 32,
+  "policy_fingerprint": "tag-truth-near-duplicate-policy:sha256:f93df505839e054474eec5bc942304c7d6701f3f8dbec50d31e39b3eac47041c",
+  "policy_version": "near-duplicate-shadow-v1",
+  "reference_scope": "all_tracked_utf8_text",
+  "scan_failure_action": "abstain",
+  "schema_version": "tag-truth-near-duplicate-policy-v1",
+  "shape_containment_direction": "bidirectional",
+  "shape_shingle_width": 11,
+  "shape_tokenizer_version": "lexical-shape-v1",
+  "unicode_normalization": "NFC",
+  "work_estimate_version": "nfc-character-work-v1"
+}

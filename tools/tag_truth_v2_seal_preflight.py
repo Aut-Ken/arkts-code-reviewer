@@ -86,7 +86,9 @@ def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]
 
 
 def _git_environment() -> dict[str, str]:
-    environment = dict(os.environ)
+    environment = {
+        key: value for key, value in os.environ.items() if not key.upper().startswith("GIT_")
+    }
     environment["GIT_NO_REPLACE_OBJECTS"] = "1"
     environment["GIT_LITERAL_PATHSPECS"] = "1"
     environment["GIT_OPTIONAL_LOCKS"] = "0"
@@ -96,7 +98,16 @@ def _git_environment() -> dict[str, str]:
 def _run_git_bytes(root: Path, *arguments: str) -> bytes:
     try:
         completed = subprocess.run(
-            ["git", "-c", "core.commitGraph=false", "-C", str(root), *arguments],
+            [
+                "git",
+                "-c",
+                "core.commitGraph=false",
+                "-c",
+                "core.fsmonitor=false",
+                "-C",
+                str(root),
+                *arguments,
+            ],
             check=False,
             capture_output=True,
             env=_git_environment(),
@@ -129,6 +140,8 @@ def _is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
                 "git",
                 "-c",
                 "core.commitGraph=false",
+                "-c",
+                "core.fsmonitor=false",
                 "-C",
                 str(root),
                 "merge-base",
@@ -318,6 +331,7 @@ def _verify_import_candidate_safety(root: Path) -> None:
                 ("tag_truth_v2_selection", "tag_truth_v2_selection.py"),
                 ("tag_truth_v2_review", "tag_truth_v2_review.py"),
                 ("tag_truth_v2_provenance", "tag_truth_v2_provenance.py"),
+                ("tag_truth_v2_near_duplicate", "tag_truth_v2_near_duplicate.py"),
             ),
         ),
     )

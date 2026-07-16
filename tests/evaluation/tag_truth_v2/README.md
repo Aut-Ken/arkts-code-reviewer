@@ -240,6 +240,96 @@ selection, review chain or seal is created by Stage 2C, and near-duplicate quali
 `TagTruthV2Suite` publication, policy approval, candidate runtime/environment/harness freeze, P/R,
 quality gates and activation remain separate stages.
 
+## EVAL-01B Stage-2D1 shadow-screening boundary
+
+Stage 2D1 adds a deterministic post-seal near-duplicate screen without changing any Stage-2A,
+Stage-2B or Stage-2C artifact. Run it only after saving the Stage-2C report, from the same fresh
+checkout at the exact seal commit:
+
+```bash
+.venv/bin/python -I -B tools/screen_tag_truth_v2_near_duplicates.py \
+  --selection path/in/repo/selection.json \
+  --packet path/in/repo/review_packet.json \
+  --receipt path/in/repo/reviewer-a.json \
+  --receipt path/in/repo/reviewer-b.json \
+  --consensus path/in/repo/consensus.json \
+  --provenance-verification /path/to/stage-2c-report.json \
+  --policy tests/evaluation/tag_truth_v2/near_duplicate_shadow_policy_v1.json \
+  --source-root /path/to/clean-selection-revision-applications_app_samples \
+  --seal-revision <full-seal-commit>
+```
+
+Before typed imports, the standard-library preflight repeats the Stage-2C seal checks, captures the
+five committed artifacts and the external self-hashed Stage-2C report, and verifies the screening
+policy already existed at `candidate_commit` with the same Git blob later present at the seal. It
+also requires the screening core and both screening tools to have identical Git blobs at candidate
+freeze and seal, then byte-checks the current checkout against the seal. The typed layer rebuilds
+the Stage-2C report instead of trusting the supplied JSON. This closes post-freeze tuning through
+either policy fields or implementation semantics.
+
+The screen has two axes: the agreed ReviewUnit protects exact-Tag Truth, while the complete selected
+file protects routing-hint Truth. Both are compared against all UTF-8 tracked text at the candidate
+project commit and exposure revision, every registered development-Truth source at its pinned
+revision, and the other files/Units in the blind campaign. NUL-bearing binary blobs are outside the
+`all_tracked_utf8_text` scope but remain explicitly counted and fingerprinted. Non-regular,
+over-budget, non-UTF-8 and otherwise unevaluable entries become blockers; none is silently treated
+as independent code.
+
+The committed policy uses deterministic `lexical-content-v1` and `lexical-shape-v1` token channels,
+7/11-token shingles, bidirectional containment, Jaccard and bidirectional
+longest-contiguous-run coverage. Long normalized shape-stream equality and shape containment can
+only request review; neither can reject a sample on its own. Gray content similarity also requires
+at least 16 shared shingles, so a single seven-token fragment cannot gray a large file. The
+threshold values are calibration seeds under `snapshot_only_not_approved`, not measured quality
+gates.
+
+Before tokenization/comparison, `nfc-character-work-v1` records probe count, selected and unique
+reference NFC characters, eligible pair count, and the sum of NFC characters on both sides of every
+pair. The shadow limits are 16,000,000 selected characters, 64,000,000 unique reference characters,
+2,000,000 pairs, 250,000,000 pair-side characters and 10,000 recorded matches. A preflight limit
+abstains before comparing; a runtime match overflow discards every partial match. Both paths report
+their planned/attempted work, set every axis to abstain and exit `1`. A case with
+`probe_evaluation_status=not_run_resource_limit` uses zero token/shingle counts as an explicit
+not-run sentinel, not as a measurement. Incomplete inventories and reference-tokenizer failures
+likewise prevent an otherwise unmatched axis from becoming `clear`.
+
+The `screening_id` self-hash binds report identity only. A consumer must call the complete verifier
+and rebuild the report from the sealed policy, five artifacts and three pinned inventories before
+trusting its semantics; parsing or recomputing the self-hash is insufficient. Consequently every valid
+Stage-2D1 report exits `1`, whether its shadow outcome is clear, duplicate or review-required.
+Exit `0` is reserved for a separately reviewed future approved policy, and invalid schema, Git,
+path, freeze or binding exits `2`.
+
+The shadow policy deliberately caps one blob at 2 MiB. The current project commit contains the
+24,144,840-byte generated `third_party/tree-sitter-arkts/src/parser.c`, so a real screen whose
+candidate-project reference is the current tree necessarily reports
+`candidate_project:oversize_entries` and cannot have a clean shadow outcome. This is a visible
+resource abstention, not a qualified result. A later calibrated policy must solve it through a
+reviewed streaming/resource design or a new limit; the blind campaign cannot tune it away.
+
+At pre-Stage2D commit `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a`, a read-only scan found 554
+tracked entries, 552 loaded UTF-8 documents, 549 unique texts and 15,161,916 candidate-project path
+NFC characters. Applying the ArkTS-like tokenizer to all tracked text flags 54 Markdown, Python,
+JavaScript and other documents. A 24-case file+Unit campaign would also exceed 727 million pair-side
+NFC characters from the candidate-project reference alone. Thus the current tree has oversize,
+tokenizer-media and work-budget abstentions independently; none may be hidden by excluding non-ETS
+files after seeing the blind sample.
+
+The CLI removes inherited `GIT_*` routing/configuration variables and disables repository-configured
+`core.fsmonitor`. It still trusts the local `git` executable, `PATH`, protected Git configuration and
+an exclusive checkout. Critical artifacts, policy and verifier-closure bytes are compared directly;
+a clean `git status` alone is not treated as byte-for-byte proof. The external Stage-2C report binds
+pre-open and opened device/inode, then reads at most 16 MiB + 1 byte from the same nonblocking regular
+file descriptor. Inventory entry limits are checked after `git ls-tree` returns,
+and NFC work limits apply after sealed inputs are loaded, so these are comparison-stage guards rather
+than an OS-level memory sandbox for arbitrarily large trusted repositories.
+
+This stage does not run Parser, Matcher, FeatureRouter or a candidate. It does not publish a
+`TagTruthV2Suite`, clear the Selection's historical not-qualified reasons, calculate Tag P/R, or
+make an activation decision. No real five-artifact campaign or independently dual-reviewed
+duplicate/independent/ambiguous pair Truth currently exists, so current evidence remains
+`not_qualified` and candidate execution remains `not_run`.
+
 ## Dataset roles
 
 The contract reserves these real-code roles:
