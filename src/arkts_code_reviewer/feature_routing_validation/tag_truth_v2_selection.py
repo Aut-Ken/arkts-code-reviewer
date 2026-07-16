@@ -864,7 +864,7 @@ def verify_tag_truth_v2_development_exclusions(
 def _run_git_text(root: Path, *arguments: str) -> str:
     try:
         completed = subprocess.run(
-            ["git", "-C", str(root), *arguments],
+            ["git", "-c", "core.commitGraph=false", "-C", str(root), *arguments],
             check=False,
             capture_output=True,
             text=True,
@@ -882,7 +882,17 @@ def _run_git_text(root: Path, *arguments: str) -> str:
 def _git_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
     try:
         completed = subprocess.run(
-            ["git", "-C", str(root), "merge-base", "--is-ancestor", ancestor, descendant],
+            [
+                "git",
+                "-c",
+                "core.commitGraph=false",
+                "-C",
+                str(root),
+                "merge-base",
+                "--is-ancestor",
+                ancestor,
+                descendant,
+            ],
             check=False,
             capture_output=True,
             timeout=30,
@@ -898,7 +908,17 @@ def _git_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
 def _git_tree_entries(root: Path, revision: str) -> tuple[_GitTreeEntry, ...]:
     try:
         raw = subprocess.run(
-            ["git", "-C", str(root), "ls-tree", "-r", "-z", revision],
+            [
+                "git",
+                "-c",
+                "core.commitGraph=false",
+                "-C",
+                str(root),
+                "ls-tree",
+                "-r",
+                "-z",
+                revision,
+            ],
             check=True,
             capture_output=True,
             timeout=60,
@@ -1084,7 +1104,15 @@ def _safe_file(root: Path, relative_path: str, context: str) -> Path:
 def _git_file_bytes(root: Path, revision: str, path: str) -> bytes:
     try:
         completed = subprocess.run(
-            ["git", "-C", str(root), "show", f"{revision}:{path}"],
+            [
+                "git",
+                "-c",
+                "core.commitGraph=false",
+                "-C",
+                str(root),
+                "show",
+                f"{revision}:{path}",
+            ],
             check=True,
             capture_output=True,
             timeout=30,

@@ -361,7 +361,8 @@ family、proxy stratum、selection rank、repository revision、原始 source ha
 candidate-blind/path-redacted，不是匿名视图；源码内部标识符仍可能暴露来源。
 
 Stage 2A 在 packet 边界停止；下述 Stage 2B 只补齐 receipt/consensus 的通用 schema/CLI，
-没有执行真实人工流程。Git seal、预期首次 candidate run 和质量门禁仍属于后续阶段。
+没有执行真实人工流程。Stage 2C 再补齐五产物 Git seal 的通用验证基础设施；真实 seal、预期
+首次 candidate run 和质量门禁仍属于后续流程。
 在这些事实全部完成前，不得把“infrastructure 已实现”改写为“Tag 已验证”。
 
 ### 6.4 EVAL-01B Stage 2B：通用双人 receipt 与双轴 consensus
@@ -409,9 +410,54 @@ Stage-2B CLI 会验证 packet 自哈希，并把 receipt 绑定到 packet 内记
 外部 Stage-2A selection artifact，因此不会在本阶段重新验证 selection/checkout provenance。
 该 provenance bridge 仍属于后续独立阶段。
 
-后续必须分阶段补齐：consensus 到 `TagTruthV2Suite` 的完整 provenance bridge、版本化
-near-duplicate qualification、外部 policy/selection 与 Git seal、sealed first-run runner、质量
+后续必须分阶段补齐：consensus 到 `TagTruthV2Suite` 的 publication bridge、版本化
+near-duplicate qualification、真实外部 policy/selection 与 seal、sealed first-run runner、质量
 门禁计算和独立 activation 决策。任何一个后续步骤都不能由 `complete` consensus 自动替代。
+
+### 6.5 EVAL-01B Stage 2C：五产物 provenance 与 Git seal 验证
+
+Stage 2C 不改变 Stage 2A/2B artifact，而是在人工审核完成后重新验证完整链：
+
+```text
+Selection + Packet + Receipt A + Receipt B + Consensus
+-> exact Git seal tree
+-> standard-library-only preflight
+-> typed source/artifact chain rebuild
+-> tag-truth-v2-provenance-verification-v1
+```
+
+`tools/verify_tag_truth_v2_git_seal.py` 要求指定完整小写 seal commit 和恰好五份 artifact。Preflight
+在 import 任何项目模块前验证 project Git top-level、`HEAD == seal_revision`、clean worktree、
+candidate commit 是 seal 的严格祖先，以及五条路径唯一、仓内、regular、non-symlink、已提交。
+每份当前 bytes 必须与 `git show seal:path` 完全一致；Git ancestry/tree/blob 检查禁用 replace
+objects、关闭本地 commit-graph cache，并拒绝 project/source Git common directory 中的 legacy
+`info/grafts`。只有这些条件通过后，typed verifier 才解析本次捕获的内存 bytes，并重新执行：
+
+- Selection self-hash、development Truth exclusions、source HEAD/remote/clean/blob/hash/line-count；
+- exposure strict-descendant 及整棵 exposure tree 的 path/family/blob 边界；
+- 从 Selection + verified checkout 重建 Packet；
+- 两份 Receipt 的 binding、完整 case coverage 和 reviewer/round 独立性；
+- 从 Packet + Receipt 确定性重建 Consensus。
+
+Seal 证明五份 artifact 同时存在于指定 tree，并不证明它们都由该 commit 引入，也不限制该
+commit 的其他 diff。Preflight 会同时逐字节验证 frozen typed-verifier closure，拒绝其中的
+symlink、bytecode cache、同名模块和顶层 import shadow；CLI 在 typed import 前移除仓库内其他
+Python 搜索路径，并强制以 isolated mode (`-I`) 启动，防止脚本目录、当前目录或 `PYTHONPATH`
+在 preflight 前覆盖标准库。Python startup、解释器、标准库和 site-packages 仍是明确的 host
+trust boundary，不在 seal 内。
+
+输出 report 冻结 seal revision/tree、source revision/tree、五份 artifact 的路径、Git blob、原始
+byte SHA-256 与全部逻辑 ID。Report 在 seal 后生成，不声称包含自己的 seal commit；如需留存，
+只能进入后续审计 commit。完整 consensus 返回 0，合法但 unresolved/abstain 返回 1，任何
+schema、Git、路径、checkout、byte 或 binding 错误返回 2。返回 0 仍只表示受检 provenance
+完整，不表示 evidence qualified 或 candidate ready；report 固定记录 evidence `not_qualified`、
+candidate `not_run`。
+
+Stage 2C 没有生成真实 selection/packet/receipt/consensus/seal，也不验证 reviewer/selector 身份、
+Git remote 真实性、host 或“首次运行”。多次 filesystem/Git 检查仍存在 host-level TOCTOU
+边界，因此正式使用要求全新、独占、最好只读的 checkout，后续 candidate runner 还必须自行
+重验。Near-duplicate、policy approval、`TagTruthV2Suite` publication、candidate runtime/
+environment/harness、P/R、质量门禁和 activation 均不属于本阶段。
 
 ## 7. Retrieval Golden Set
 

@@ -172,10 +172,73 @@ re-verify selection/checkout provenance; that separate provenance bridge remains
 
 This stage does not change the Matcher, Tag/Dimension/Review Question configuration, any combined
 configuration fingerprint, Parser, Golden or candidate behavior, and neither CLI imports or runs a
-candidate. Later reviewed stages must still provide the consensus-to-`TagTruthV2Suite` provenance
-bridge, versioned near-duplicate qualification, externally controlled policy/selection and Git
-seals, a post-seal first-run candidate evaluator, and separate quality-gate and activation
-decisions.
+candidate. Stage 2C below supplies only the generic five-artifact provenance/Git-seal verifier.
+Later reviewed stages must still provide the consensus-to-`TagTruthV2Suite` publication bridge,
+versioned near-duplicate qualification, real externally controlled policy/selection and seal, a
+post-seal first-run candidate evaluator, and separate quality-gate and activation decisions.
+
+## EVAL-01B Stage-2C implementation boundary
+
+Stage 2C verifies the immutable relationship among exactly five final review artifacts that are
+all present in one exact Git seal tree:
+
+```text
+selection + packet + receipt A + receipt B + consensus
+-> exact Git seal tree
+-> provenance verification report
+```
+
+Run the verifier only from a fresh dedicated checkout at the exact seal commit:
+
+```bash
+.venv/bin/python -I -B tools/verify_tag_truth_v2_git_seal.py \
+  --selection path/in/repo/selection.json \
+  --packet path/in/repo/review_packet.json \
+  --receipt path/in/repo/reviewer-a.json \
+  --receipt path/in/repo/reviewer-b.json \
+  --consensus path/in/repo/consensus.json \
+  --source-root /path/to/clean-selection-revision-applications_app_samples \
+  --seal-revision <full-seal-commit>
+```
+
+The CLI requires Python isolated mode (`-I`) before its first standard-library import so the
+script directory, current directory and `PYTHONPATH` cannot shadow the bootstrap modules. Before
+loading typed project code,
+its preflight requires a full lowercase seal revision, `HEAD == seal_revision`, a clean project
+worktree, and five unique in-repository regular non-symlink artifacts. Each current artifact byte
+stream must equal `git show seal:path`; the candidate commit recorded by Selection must be a strict
+ancestor of the seal. Git replacement objects are disabled, and ancestry checks disable the local
+commit-graph cache.
+Legacy `info/grafts` in either the project or source Git common directory fail closed because they
+can rewrite ancestry independently of replacement objects.
+
+The seal proves that all five artifacts coexist at the specified tree; it does not prove that the
+seal commit introduced all five paths or that its diff contains no unrelated paths. Preflight also
+byte-verifies the frozen typed-verifier closure and rejects bytecode caches, symlinks and import
+shadows. Before typed imports, the CLI removes other repository-local Python search paths. The
+Python startup, the interpreter, standard library and site-packages remain an explicit host trust
+boundary outside this seal.
+
+Typed verification then re-runs the canonical development exclusions, clean pinned source
+checkout, exposure path/family/blob boundary, Packet rebuild, both Receipt validations and
+Consensus rebuild. It parses only the artifact bytes captured by preflight. The deterministic,
+self-hashed `tag-truth-v2-provenance-verification-v1` report records project/source tree identities,
+the five Git blob and raw-byte hashes, logical IDs, consensus status and blockers. The report is
+created after the seal and is not part of that same commit; committing it requires a later audit
+commit.
+
+A complete consensus returns `0`; a valid sealed chain with unresolved/abstained review returns
+`1` while preserving the report; malformed schema, unsafe path, Git drift, source drift or binding
+failure returns `2`. Neither success code qualifies evidence: the report explicitly remains
+`not_qualified` with candidate execution `not_run`.
+
+This verifier proves only the integrity and internal provenance of the bytes and Git relationships
+it inspected. It does not authenticate the selector, reviewers, Git host, remote, runtime host or
+runner, and it cannot prove candidate first-execution ordering. Formal use needs a fresh,
+exclusive, preferably read-only checkout; the later candidate runner must verify again. No real
+selection, review chain or seal is created by Stage 2C, and near-duplicate qualification,
+`TagTruthV2Suite` publication, policy approval, candidate runtime/environment/harness freeze, P/R,
+quality gates and activation remain separate stages.
 
 ## Dataset roles
 
