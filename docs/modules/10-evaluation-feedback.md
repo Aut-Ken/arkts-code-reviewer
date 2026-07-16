@@ -327,6 +327,42 @@ synthetic、development、adjudicated、blind、prevalence、family 和 Parser-r
 未覆盖 Tag 固定为 `not_qualified`，不得从 macro/micro 分母静默删除。操作合同见
 `tests/evaluation/tag_truth_v2/README.md`。
 
+### 6.3 EVAL-01B Stage 2A：无标签选样可构造性与通用盲审 packet
+
+Stage 2A 实现的边界只到“候选运行之前的通用基础设施”：无标签 selection
+verifier、针对冻结 policy/exposure 边界的 fail-closed policy-sized structural
+selection-capacity lower-bound assessment，以及从已验证 source revision 构建的
+path-redacted candidate-blind full-file dual-axis review packet。本阶段没有生成
+真实 selection/packet，也没有 label、receipt、consensus、post-seal runner 或激活结论。
+它不修改 Matcher、Tag/Dimension/RQ 配置或旧 Truth。
+
+独立性边界不能由 schema 或名称制造。候选开发已暴露于
+`applications_app_samples@8255a2987f70317cc3a2a4d46044c6b55f092bb3` 整棵 tracked tree；
+该 revision 无论如何重分层都不是 blind。截至本阶段现场盘点，本地没有已登记且可用的
+strict descendant，因此真实 blind selection 状态必须是 `not_constructible`，对应 Tag 的证据
+仍是 `not_qualified`。未来只能在登记一个满足完整 exposure 和 development
+family/path/content 排除边界的 strict-descendant revision 后，由独立 dataset custodian
+在候选团队外准备和封存 selection。Verifier 只能拒绝不满足的输入，不能用暴露样本补齐
+缺口。
+
+容量下界只计 regular Git file、safe path、非空 UTF-8、unique content 和保守的互不包含
+family 集合，宁可少报也不允许重复 content/嵌套 family 造成假容量。下界达到 policy 总 case
+数时也只报告 `inventory_capacity_only`，proxy-stratum
+capacity 固定为 `not_measured`，因此不能把 preflight 写成“完整 selection 已可构造”。Selection
+中的 proxy strata、rank 和 constructibility count 只是挑战样本 coverage
+control，不是 exact/routing Truth，不能直接进入 P/R 分子或分母。它们即使来自 import、
+call 或 symbol 信号，也只能说明“值得人工审核”，不能代替 reviewer judgement。
+
+通用 packet 需要同时支持 exact 和 routing-hint 两条独立轴。Routing 需要整文件上下文，
+所以每个 review item 展示 opaque identity 和隐去仓库路径的整文件正文，由 reviewer 自己确定
+ReviewUnit，而不是接受 selector 预选的 span。Packet 必须隐藏 repository path、source
+family、proxy stratum、selection rank、repository revision、原始 source hash 及 candidate
+身份、配置、预测、输出和诊断；否则 selector/candidate 信号会污染人工 Truth。该视图是
+candidate-blind/path-redacted，不是匿名视图；源码内部标识符仍可能暴露来源。
+
+Stage 2A 之后仍需要单独审核 receipt 封存、双人 consensus、Git seal、预期首次 candidate
+run 和质量门禁；在这些事实完成前，不得把“infrastructure 已实现”改写为“Tag 已验证”。
+
 ## 7. Retrieval Golden Set
 
 每条：

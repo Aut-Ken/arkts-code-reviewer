@@ -43,6 +43,77 @@ candidate runner, production-prevalence sampler, or activation command. Those re
 reviewed stages. Lifecycle holdout v1 remains the only implemented post-seal candidate runner and
 is not modified by this package.
 
+## EVAL-01B Stage-2A implementation boundary
+
+Stage 2A adds only the reusable infrastructure needed *before* independent human labelling:
+
+- a generic, label-free selection contract and verifier;
+- a fail-closed, policy-sized structural-selection-capacity lower bound against a frozen selection
+  policy and exposure boundary; proxy-stratum capacity remains `not_measured`;
+- a candidate-blind, dual-axis review packet built from a verified source revision;
+- a path-redacted full-file review view in which the reviewer, rather than the selector, identifies
+  the ReviewUnit to judge.
+
+This stage deliberately does **not** create a real selection or review packet. It also does not
+create labels, reviewer receipts, consensus, a post-seal candidate runner or an activation
+decision, and it does not change any Tag, Dimension or Review Question configuration. A schema or
+verifier being implemented is not evidence that the independent process described by that schema
+has occurred.
+
+The current independence boundary is fail-closed. Candidate development has already been exposed
+to the complete tracked `applications_app_samples` tree at revision
+`8255a2987f70317cc3a2a4d46044c6b55f092bb3`, so that revision cannot be renamed or resampled into
+blind evidence. At the time of this stage there is no registered, locally available strict
+descendant that can satisfy the boundary. Consequently a real blind selection is currently
+`not_constructible`, and the target-Tag evidence status remains `not_qualified`.
+
+Removing the current `not_constructible` result requires both:
+
+1. a newly registered `applications_app_samples` revision that is a strict descendant of the
+   exposure revision and satisfies the frozen family/path/content exclusions; and
+2. an independent dataset custodian, outside the candidate-development process, to prepare and
+   seal the unlabeled selection.
+
+The verifier cannot manufacture either condition. It counts only regular Git files with safe
+paths, non-empty UTF-8 content, unique content identities and a conservative pairwise-compatible
+family set. The resulting value is a verified lower bound, so it may abstain even when a more
+complex selector could find a larger set, but it cannot overstate capacity from duplicate content
+or nested families. Even when that lower bound reaches the policy total, its most positive result
+is `inventory_capacity_only`: it does not prove that every neutral proxy stratum has enough cases.
+It reports that separate status as `not_measured` instead of weakening the selection design or
+borrowing exposed development samples.
+
+### Proxy strata are not Truth
+
+Selection-time proxy strata, ranks and constructibility counts are coverage controls only. They
+may help an independent custodian obtain a deliberately varied challenge set, but they are not
+exact-positive, exact-negative, routing-positive or routing-negative labels. They cannot be used
+as metric denominators, imported into a receipt, or treated as an automatic substitute for human
+judgement. The same rule applies even when a proxy was derived from an import, call, symbol or
+other apparently strong code signal.
+
+### Path-redacted full file and reviewer-owned ReviewUnit
+
+Routing-hint applicability depends on file context, so a generic packet cannot show only a
+selector-chosen source span. Each review item instead carries an opaque identity and the complete
+source-file text with its repository path redacted. The reviewer view also omits repository
+revision and the original source content hash, plus source family, proxy stratum, selection rank
+and all candidate identity, configuration, output and diagnostic fields.
+
+The reviewer selects the ReviewUnit from that file and records the exact-applicability and
+routing-hint judgements as two independent axes under the embedded Tag contract. This prevents a
+selector's proposed span or proxy category from silently becoming Truth. This is candidate-blind
+and path-redacted, not anonymous: identifiers inside full source text can still suggest or reveal
+their origin.
+
+Every Stage-2A selection remains `not_qualified`: both selection and review policies are explicitly
+unapproved drafts, the selector record is an unauthenticated attestation, external selection has
+not been verified, and human review, near-duplicate qualification and the first candidate run are
+still absent.
+
+Stage 2A stops at this packet boundary. Receipt sealing, two-reviewer consensus, post-seal first
+candidate execution and quality-gate calculation remain later reviewed stages.
+
 ## Dataset roles
 
 The contract reserves these real-code roles:

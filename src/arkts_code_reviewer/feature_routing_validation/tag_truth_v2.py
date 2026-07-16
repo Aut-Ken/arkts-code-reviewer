@@ -9,10 +9,25 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
 
-from arkts_code_reviewer.code_analysis.review_unit_contract import REVIEW_UNIT_V2_KINDS
-
 TAG_TRUTH_V2_SCHEMA_VERSION = "tag-truth-v2"
 TAG_TRUTH_V2_FINGERPRINT_PREFIX = "tag-truth-v2:sha256:"
+
+# Tag Truth v2 freezes the ReviewUnit v2 vocabulary as evaluation data. Keeping
+# this snapshot local prevents contract parsing from importing the production
+# analysis/routing graph; any future ReviewUnit vocabulary requires a versioned
+# Tag Truth migration rather than silently changing existing Truth semantics.
+_TAG_TRUTH_V2_REVIEW_UNIT_KINDS = (
+    "struct",
+    "class",
+    "function",
+    "method",
+    "build_method",
+    "builder",
+    "ui_block",
+    "field_region",
+    "import_region",
+    "fallback",
+)
 
 DatasetRole = Literal[
     "development_regression",
@@ -313,7 +328,7 @@ class TagTruthV2Case(_FrozenModel):
     @field_validator("expected_unit_kind")
     @classmethod
     def validate_unit_kind(cls, value: str) -> str:
-        if value not in REVIEW_UNIT_V2_KINDS:
+        if value not in _TAG_TRUTH_V2_REVIEW_UNIT_KINDS:
             raise ValueError(f"unsupported expected_unit_kind: {value}")
         return value
 

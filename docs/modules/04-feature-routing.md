@@ -208,6 +208,28 @@ coverage adapter 报告为 development/provisional，不能自动升级为独立
 Stage 1 loader 也会拒绝自称 blind/prevalence 的 manifest，直到后续存在外部 selector、seal 与
 版本化 verifier。
 
+EVAL-01B Stage 2A 只向前补齐 generic unlabeled selection verifier、policy-sized structural
+selection-capacity lower-bound assessment 和 dual-axis review packet infrastructure，不产生真实 selection、packet、label、
+receipt、consensus 或 candidate result。候选团队已经看过
+`applications_app_samples@8255a2987f70317cc3a2a4d46044c6b55f092bb3` 的完整 tracked tree，
+因此同一 revision 不能被重抽样后宣称为 blind。当前本地也没有已登记、可验证的
+strict descendant；真实 blind selection 因此是 `not_constructible`，质量证据仍是
+`not_qualified`。未来必须先登记符合排除边界的 strict-descendant revision，再由独立
+dataset custodian 在候选开发流程外生成和封存无标签 selection。
+
+容量下界只计 regular Git file、safe path、非空 UTF-8、unique content 和保守的互不包含
+family 集合；它允许少报但不允许因重复 content 或嵌套 family 误报。即使该下界达到 policy
+的总 case 数，报告也只允许写 `inventory_capacity_only`；各 proxy
+stratum 的容量仍是 `not_measured`，不能宣称完整 selection 已可构造。Stage 2A 中的 proxy
+stratum/rank 只用于控制挑战样本的多样性，不是 Tag Truth；
+即使 proxy 来自 import、call 或 symbol 也不能自动成为 positive/negative。通用 packet
+为了同时审核 exact 和 routing-hint 两条轴，展示隐去仓库路径的整文件正文，由 reviewer 自己确定
+ReviewUnit；它隐藏 path、family、proxy stratum、selection rank 和 candidate 身份、配置、
+输出与诊断，也不向 reviewer 暴露 repository revision 或原始 source hash。这个设计防止
+selector 预选的 span 或 proxy 类别变成人工 Truth；它是 candidate-blind/path-redacted，
+不是匿名化保证，源码内部标识符仍可能暴露来源。
+本阶段不修改 Matcher、默认 Tag/Dimension/RQ 或任何组合 fingerprint。
+
 只读 `tools/report_tag_truth_coverage.py` 会把当前 24 个正式 Tag 的 synthetic exact/routing
 正例、真实 development 正/负例、family、review status、Parser-risk availability 以及
 blind/prevalence 缺口分栏输出。缺失数据必须显示 `not_measured` 或 `not_qualified`，不能用 0 或
