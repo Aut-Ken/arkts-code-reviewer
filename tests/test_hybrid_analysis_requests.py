@@ -179,11 +179,11 @@ def test_default_catalog_prompt_and_policy_are_frozen_development_contracts() ->
     )
     assert policy.model_policy_fingerprint == (
         "ai-tag-policy:sha256:"
-        "24aeb4937d622dbc1745183c9fcd916af62db48785e86e291571a21a32a7a695"
+        "b82e8dc43cff2a92bad3159bbeb5f6ba35e3dbdd6ed878dbdc37cbff0fc801ae"
     )
     assert policy.dispatch_mode == "disabled_no_budget_no_approval"
-    assert policy.user_payload_renderer_version == "not_implemented-v1"
-    assert policy.wire_output_contract_version == "not_implemented-v1"
+    assert policy.user_payload_renderer_version == "ai-tag-user-payload-renderer-v1"
+    assert policy.wire_output_contract_version == "ai-tag-wire-output-v1"
     assert "direct_unit_semantic_evidence" in prompt.text
     assert "global fail-closed condition" in prompt.text
     assert "strictly increasing" in prompt.text
@@ -265,7 +265,7 @@ def test_full_taxonomy_request_builder_is_deterministic_and_rebuild_verified() -
     )
     assert request.request_id == (
         "ai-tag-request:sha256:"
-        "e45f12e1e4d3158785804c56ea40be85f611fd560ec5d586188b125ed86cada7"
+        "e177ec728a08e2652f934b711c7b1cbc97c6706e5ccd3c128d54f8dcb10d5f79"
     )
     verify_full_taxonomy_request(
         request,

@@ -210,7 +210,10 @@ class _AITagModelPolicyPayload(FrozenModel):
     response_format: Literal["json_object"]
     taxonomy_delivery_mode: Literal["full_single"]
     user_payload_renderer_version: Annotated[str, Field(min_length=1, max_length=100)]
-    wire_output_contract_version: Literal["not_implemented-v1"]
+    wire_output_contract_version: Literal[
+        "not_implemented-v1",
+        "ai-tag-wire-output-v1",
+    ]
     strict_json_validation: Literal[True]
     dispatch_mode: Literal["disabled_no_budget_no_approval"]
 
@@ -371,7 +374,7 @@ def default_ai_tag_model_policy() -> AITagModelPolicy:
     return seal_ai_tag_model_policy(
         {
             "schema_version": AI_TAG_MODEL_POLICY_SCHEMA_VERSION,
-            "policy_version": "deepseek-tag-policy-v1-disabled",
+            "policy_version": "deepseek-tag-policy-v1-render-only",
             "provider": "deepseek",
             "base_url": "https://api.deepseek.com",
             "protocol": "openai_chat_completions",
@@ -384,8 +387,8 @@ def default_ai_tag_model_policy() -> AITagModelPolicy:
             "tools": None,
             "response_format": "json_object",
             "taxonomy_delivery_mode": "full_single",
-            "user_payload_renderer_version": "not_implemented-v1",
-            "wire_output_contract_version": "not_implemented-v1",
+            "user_payload_renderer_version": "ai-tag-user-payload-renderer-v1",
+            "wire_output_contract_version": "ai-tag-wire-output-v1",
             "strict_json_validation": True,
             "dispatch_mode": "disabled_no_budget_no_approval",
         }

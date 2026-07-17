@@ -72,11 +72,9 @@ def seal_payload[PayloadT: BaseModel, SealedT: BaseModel](
         raise ValueError(f"invalid {context} payload: {exc}") from exc
 
 
-def load_json_model[ModelT: BaseModel](
-    raw: str | bytes,
-    model_type: type[ModelT],
-    context: str,
-) -> ModelT:
+def load_json_object(raw: str | bytes, context: str) -> dict[str, object]:
+    """Load one strict JSON object without duplicate keys or non-finite numbers."""
+
     if isinstance(raw, bytes):
         try:
             text = raw.decode("utf-8")
@@ -97,6 +95,15 @@ def load_json_model[ModelT: BaseModel](
         raise ValueError(f"invalid {context} JSON: {exc}") from exc
     if not isinstance(payload, dict):
         raise ValueError(f"invalid {context} JSON: top-level value must be an object")
+    return payload
+
+
+def load_json_model[ModelT: BaseModel](
+    raw: str | bytes,
+    model_type: type[ModelT],
+    context: str,
+) -> ModelT:
+    payload = load_json_object(raw, context)
     try:
         return model_type.model_validate(payload)
     except ValidationError as exc:
@@ -108,6 +115,7 @@ __all__ = [
     "canonical_hash",
     "canonical_json",
     "identity_payload",
+    "load_json_object",
     "load_json_model",
     "seal_payload",
 ]

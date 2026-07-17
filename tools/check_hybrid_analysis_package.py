@@ -26,6 +26,7 @@ def main() -> int:
             [
                 "uv",
                 "build",
+                "--no-config",
                 "--wheel",
                 "--out-dir",
                 str(dist),
@@ -56,7 +57,10 @@ def main() -> int:
                     "from pathlib import Path; "
                     "import arkts_code_reviewer; "
                     "from arkts_code_reviewer.hybrid_analysis import "
+                    "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION, "
+                    "AI_TAG_WIRE_RENDERER_VERSION, "
                     "DEFAULT_AI_TAG_CONTRACTS_PATH, DEFAULT_AI_TAG_PROMPT_PATH, "
+                    "AITagDispatchEnvelopeBuilder, DryRunTagAnalysisClient, "
                     "FullTaxonomyRequestBuilder; "
                     "package = Path(arkts_code_reviewer.__file__).resolve(); "
                     "assert package.is_relative_to(Path.cwd() / 'unpacked'); "
@@ -68,6 +72,12 @@ def main() -> int:
                     "'development_not_qualified'; "
                     "assert builder.model_policy.dispatch_mode == "
                     "'disabled_no_budget_no_approval'; "
+                    "assert builder.model_policy.user_payload_renderer_version == "
+                    "AI_TAG_WIRE_RENDERER_VERSION; "
+                    "assert builder.model_policy.wire_output_contract_version == "
+                    "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION; "
+                    "assert AITagDispatchEnvelopeBuilder.default(); "
+                    "assert DryRunTagAnalysisClient(); "
                     "print(builder.catalog.catalog_fingerprint); "
                     "print(builder.prompt.prompt_hash)"
                 ),
