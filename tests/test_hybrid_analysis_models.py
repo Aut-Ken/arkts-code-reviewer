@@ -294,7 +294,7 @@ def _judgments(
                     "tag_id": tag_id,
                     "decision": "positive",
                     "evidence_lines": [positive_evidence_line],
-                    "reason_code": "direct_network_connection_semantics",
+                    "reason_code": "direct_unit_semantic_evidence",
                     "reason": "当前 Unit 创建网络连接。",
                 }
             )
@@ -700,15 +700,15 @@ def test_content_identity_known_answers_lock_canonicalization() -> None:
     )
     assert result.result_id == (
         "ai-tag-result:sha256:"
-        "2dd2e5b70a8c3834bc43a8beeea3fbfa718034e61c11cc8eb0f0ce8c2c262eec"
+        "3f82a4519950781acc86a60e2a40e159f83c466906411d5a45e1b50811d6ff28"
     )
     assert outcome.outcome_id == (
         "ai-tag-outcome:sha256:"
-        "90ad4fe19efd38df7b04c2d93bddf84328d6d9d0290dbfd2006125d6e12da13c"
+        "08e13c422f7112b6a8feee91347bf5e7dd7c07257d984432398dd5818928ee53"
     )
     assert hybrid.analysis_id == (
         "hybrid-analysis:sha256:"
-        "c5af6aba9cd885bbeed197abcaa89430b9a96ec1e9022ff154adfcca3aba83cb"
+        "8730194b740c62fada4aa2f5a24456196b2ff7763521559571621d3dee62e961"
     )
 
 
@@ -746,10 +746,11 @@ def test_full_24_request_binds_contract_contents_and_registry_snapshot() -> None
 @pytest.mark.parametrize(
     ("decision", "evidence", "reason_code", "reason", "valid"),
     [
-        ("positive", [153], "direct_network_semantics", "调用网络 API。", True),
+        ("positive", [153], "direct_unit_semantic_evidence", "调用网络 API。", True),
         ("not_supported", [], "no_support_in_complete_view", None, True),
         ("abstain", [], "insufficient_context", "需要更多上下文。", True),
-        ("positive", [], "direct_network_semantics", "调用网络 API。", False),
+        ("positive", [], "direct_unit_semantic_evidence", "调用网络 API。", False),
+        ("positive", [153], "made_up_code", "调用网络 API。", False),
         ("positive", [153], "view_truncated", "调用网络 API。", False),
         ("not_supported", [153], "no_support_in_complete_view", None, False),
         ("not_supported", [], "insufficient_context", None, False),
@@ -1402,7 +1403,7 @@ def test_nested_models_reject_unknown_fields_and_noncanonical_sequences() -> Non
                 "tag_id": "has_network",
                 "decision": "positive",
                 "evidence_lines": [1],
-                "reason_code": "direct_network_semantics",
+                "reason_code": "direct_unit_semantic_evidence",
                 "reason": "调用网络 API。",
                 "finding": "这不是 Finding。",
             }

@@ -619,6 +619,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
     ]
 
     assert force_include == {
+        "config/ai_tag_contracts.yaml": (
+            "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml"
+        ),
         "config/dimensions.yaml": (
             "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
         ),
@@ -646,6 +649,10 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         ),
         "prompts/knowledge/grok-knowledge-auditor-v4.md": (
             "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v4.md"
+        ),
+        "prompts/hybrid-analysis/deepseek-tag-analysis-v1.md": (
+            "arkts_code_reviewer/hybrid_analysis/defaults/"
+            "deepseek-tag-analysis-v1.md"
         ),
     }
     assert DEFAULT_TAGS_PATH.is_file()

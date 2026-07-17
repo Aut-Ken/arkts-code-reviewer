@@ -1,0 +1,296 @@
+schema_version: ai-tag-contract-catalog-v1
+version: ai-tag-contracts-v1
+qualification: development_not_qualified
+source_taxonomy:
+  schema_version: tag-config-v1
+  version: tags-v1
+  active_registry_fingerprint: ai-active-tag-registry:sha256:1a83948ef2f07332bb12b7137739464b83d458fb67f3ae27fb6bb206c4de9262
+active_tag_count: 24
+contracts:
+  - tag_id: has_animation
+    definition: 当前 ReviewUnit 显式建立、配置或执行 ArkUI 视觉动画或组件状态过渡。
+    inclusions:
+      - 为组件进入、退出或状态切换配置可见的过渡效果。
+      - 通过框架动画事务使一个或多个可视属性随时间变化。
+    exclusions:
+      - 仅保存时长、进度或坐标数值，但没有建立视觉动画行为。
+      - 仅播放音视频或展示静态图片，不等于 ArkUI 组件动画。
+    hard_negatives:
+      - 同文件其他 Unit 存在动画，而当前 Unit 只有文件级相关提示。
+      - 标识符、字符串或注释中出现动画相关文字，但没有对应行为。
+
+  - tag_id: has_async
+    definition: 当前 ReviewUnit 声明或执行基于异步函数、等待点或 Promise 的异步控制流。
+    inclusions:
+      - 当前 Unit 创建、返回、组合或消费 Promise 值。
+      - 当前 Unit 声明异步函数或等待异步结果后继续控制流。
+    exclusions:
+      - 仅注册普通回调或 UI 事件处理器，没有异步控制流语义。
+      - 同步函数立即返回普通值，即使其名称暗示异步。
+    hard_negatives:
+      - 同文件其他 Unit 存在异步代码，而当前 Unit 只有文件级相关提示。
+      - 标识符、字符串或注释中出现异步相关文字。
+
+  - tag_id: has_builder
+    definition: 当前 ReviewUnit 声明、接收或使用具有 ArkUI 自定义 UI 构建语义的函数。
+    inclusions:
+      - 当前 Unit 声明可复用的 ArkUI 声明式 UI 构建函数。
+      - 当前 Unit 接收或使用能够确认具有 ArkUI 构建语义的构建参数。
+    exclusions:
+      - ArkUI 组件普通的默认构建方法本身不等于自定义 Builder 语义。
+      - 普通工厂函数、对象构造器或 Builder 设计模式不属于本 Tag。
+    hard_negatives:
+      - 同文件其他 Unit 声明 Builder，而当前 Unit 只有文件级相关提示。
+      - 类、函数或变量名称含 Builder，但没有 ArkUI UI 构建语义。
+
+  - tag_id: has_file_io
+    definition: 当前 ReviewUnit 通过平台文件系统能力读取、写入或管理本地文件与目录。
+    inclusions:
+      - 创建、删除、复制、移动、重命名或查询文件与目录。
+      - 打开、读取、写入、刷新或关闭本地文件、流或文件描述符。
+    exclusions:
+      - 仅使用应用资源引用或打包资源，不执行文件系统操作。
+      - 仅访问偏好设置或关系数据库，不属于文件系统 I/O。
+    hard_negatives:
+      - 只出现文件路径、扩展名或 URI 字符串。
+      - 同文件其他 Unit 执行文件 I/O，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_image
+    definition: 当前 ReviewUnit 展示、加载、解码、处理或控制静态图像及图像序列。
+    inclusions:
+      - 在 UI 中创建或配置图片、行内图片或图像序列展示。
+      - 通过图像子系统加载、解码、转换、裁剪或处理图像数据。
+    exclusions:
+      - 只有资源引用，但当前 Unit 没有把资源作为图片使用。
+      - 只进行相机、音频或视频操作，没有静态图像语义。
+    hard_negatives:
+      - 只出现图片文件名、URL 或 MIME 类型字符串。
+      - 同文件其他 Unit 使用图片，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_interactive_component
+    definition: 当前 ReviewUnit 创建可交互 UI 控件，或处理用户对 UI 的直接操作。
+    inclusions:
+      - 为 UI 组件绑定点击、触摸、焦点或用户驱动的值变化处理。
+      - 创建按钮、选择、切换、滑动、搜索或输入类交互控件。
+    exclusions:
+      - 仅展示文本、图片或其他只读内容，没有用户交互入口。
+      - 普通数据、网络或生命周期回调不等于 UI 交互。
+    hard_negatives:
+      - 同文件其他 Unit 存在交互组件，而当前 Unit 只有文件级相关提示。
+      - 普通方法恰好使用事件式名称，但未绑定到 UI 交互。
+
+  - tag_id: has_layout
+    definition: 当前 ReviewUnit 使用 ArkUI 布局容器或布局结构安排 UI 子节点的空间关系。
+    inclusions:
+      - 以行、列、弹性、堆叠、相对或网格结构组织 UI 子节点。
+      - 当前 Unit 建立嵌套布局或明确的父子空间组织结构。
+    exclusions:
+      - 仅设置单个叶子组件的颜色、文字或内容属性。
+      - 普通数组、矩阵或数据网格计算不属于 UI 布局。
+    hard_negatives:
+      - 同文件其他 Unit 构建布局，而当前 Unit 只有文件级相关提示。
+      - 类、变量、字符串或注释含布局相关词，但不是 ArkUI 布局。
+
+  - tag_id: has_lifecycle
+    definition: 当前 ReviewUnit 实现由其 ArkUI 组件或页面语义所有者合法拥有的框架生命周期行为。
+    inclusions:
+      - '@Component 或 @ComponentV2 自定义组件实现 aboutToAppear 或 aboutToDisappear。'
+      - '@Entry router page 实现 onPageShow、onPageHide 或 onBackPress。'
+    exclusions:
+      - '@CustomDialog、普通类、未装饰结构或非 @Entry 组件中的同名方法。'
+      - onReady、属性回调或合同列举范围之外的框架 hook。
+    hard_negatives:
+      - 嵌套普通类、同文件 sibling、字符串或注释中的同名文字。
+      - 文件级提示存在生命周期符号，但当前 Unit 没有可证明的 owner-qualified 生命周期行为。
+
+  - tag_id: has_list_render
+    definition: 当前 ReviewUnit 构建列表、网格、瀑布流或基于集合的重复 UI 渲染。
+    inclusions:
+      - 创建承担集合内容展示职责的列表、网格或瀑布流 UI 容器。
+      - 对数据集合重复、延迟或增量实例化声明式 UI 模板。
+    exclusions:
+      - 固定布局中手写多个不同子节点，且没有集合或列表语义。
+      - 普通数组循环只进行计算，没有生成声明式 UI 项。
+    hard_negatives:
+      - 同文件其他 Unit 执行列表渲染，而当前 Unit 只有文件级相关提示。
+      - 普通语言级集合循环与 ArkUI 重复渲染无关。
+
+  - tag_id: has_logging
+    definition: 当前 ReviewUnit 通过平台系统日志能力发出诊断、调试或运行记录。
+    inclusions:
+      - 发出带严重级别、领域或标签的系统日志记录。
+      - 将运行状态、异常或诊断数据写入平台日志设施。
+    exclusions:
+      - 在 UI 中显示文本或错误信息，不等于系统日志。
+      - 普通控制台输出、分析埋点或遥测上报不自动归入本 Tag。
+    hard_negatives:
+      - 只导入日志能力或持有 logger 对象，当前 Unit 没有记录日志。
+      - 同文件其他 Unit 记录系统日志，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_media
+    definition: 当前 ReviewUnit 通过平台媒体能力捕获、播放、录制或控制音频、视频、相机及媒体会话。
+    inclusions:
+      - 创建或控制音频、视频播放器及其播放状态。
+      - 创建相机、录音、录制或媒体捕获会话。
+    exclusions:
+      - 仅下载、上传或读取媒体文件，当前 Unit 没有媒体处理行为。
+      - 只展示或处理静态图片，没有音视频、相机或媒体会话。
+    hard_negatives:
+      - 只出现媒体文件名、URL、MIME 类型或相关变量名。
+      - 同文件其他 Unit 使用媒体能力，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_navigation
+    definition: 当前 ReviewUnit 定义应用内导航结构、导航目的地，或执行页面前进、替换与返回。
+    inclusions:
+      - 创建导航容器或声明可到达的应用内导航目的地。
+      - 发起页面前进、替换、返回或导航栈操作。
+    exclusions:
+      - 打开外部网络链接但没有应用内页面导航语义。
+      - 普通数组栈、状态机或路径计算不属于 UI 导航。
+    hard_negatives:
+      - 只出现路由路径字符串、页面名称或导航目标常量。
+      - 同文件其他 Unit 执行导航，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_network
+    definition: 当前 ReviewUnit 通过网络协议、套接字或平台连接能力发送、接收或管理网络通信。
+    inclusions:
+      - 创建、配置或发送网络请求并处理响应。
+      - 创建、连接、监听、发送、接收或关闭套接字或平台网络连接。
+    exclusions:
+      - 仅访问本地文件、资源、偏好设置或数据库。
+      - 只构造 URL、请求参数或响应形状，没有执行或管理网络通信。
+    hard_negatives:
+      - 同文件其他 Unit 使用网络，而当前 Unit 只有文件级相关提示。
+      - 字符串、变量或普通方法名出现网络相关词，但没有网络行为。
+
+  - tag_id: has_permission_request
+    definition: 当前 ReviewUnit 通过平台访问控制能力请求、检查或管理应用权限与授权状态。
+    inclusions:
+      - 向用户或系统发起应用运行时权限申请。
+      - 查询权限授予状态或执行平台授权校验。
+    exclusions:
+      - 仅在配置或清单中声明权限，当前 Unit 没有访问控制操作。
+      - 用户登录、业务角色检查或文件读写模式不等于平台应用权限。
+    hard_negatives:
+      - 只出现权限名称字符串或权限常量。
+      - 同文件其他 Unit 处理权限，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_resource_ref
+    definition: 当前 ReviewUnit 使用由应用资源系统解析的结构化资源引用或打包原始资源。
+    inclusions:
+      - 引用本地化字符串、颜色、尺寸、媒体等应用资源并交给框架能力。
+      - 引用应用包内的原始资源，而不是运行时文件路径。
+    exclusions:
+      - 普通字符串、数字、对象字面量或 URL 不属于结构化资源引用。
+      - 通过文件系统读取运行时文件不属于应用资源引用。
+    hard_negatives:
+      - 普通对象具有相似字段，但无法证明框架资源身份。
+      - 同文件其他 Unit 使用资源引用，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_responsive_api
+    definition: 当前 ReviewUnit 根据显示区域、设备特征或断点条件调整 UI 布局与呈现。
+    inclusions:
+      - 建立媒体条件、断点或尺寸变化监听以选择不同布局。
+      - 查询显示、窗口、方向或屏幕特征并据此改变 UI。
+    exclusions:
+      - 固定尺寸和固定位置布局没有设备或容器适配语义。
+      - 音视频媒体处理与响应式媒体条件无关。
+    hard_negatives:
+      - 同文件其他 Unit 使用响应式能力，而当前 Unit 只有文件级相关提示。
+      - 只出现设备、宽度或断点相关文字，当前 Unit 没有适配行为。
+
+  - tag_id: has_state_management
+    definition: 当前 ReviewUnit 声明或使用 ArkUI 响应式状态的所有权、绑定、观察与组件间传递语义。
+    inclusions:
+      - 声明驱动 UI 自动更新的本地、组件或可观察状态。
+      - 建立组件间状态输入、双向链接、提供与消费或变化监听关系。
+    exclusions:
+      - 偏好设置、关系数据库或文件持久化不等于响应式状态管理。
+      - 普通类字段、局部变量或手动赋值不自动构成 ArkUI 状态管理。
+    hard_negatives:
+      - 同名装饰器来自其他库或无法证明属于 ArkUI 状态语义。
+      - 同文件其他 Unit 使用状态管理，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_storage
+    definition: 当前 ReviewUnit 使用应用偏好存储或关系数据库持久化、查询和管理应用数据。
+    inclusions:
+      - 创建、打开、升级、查询或修改关系数据库及其数据。
+      - 读取、写入、删除或刷新持久化的键值偏好数据。
+    exclusions:
+      - ArkUI 响应式状态绑定不自动证明偏好或数据库操作。
+      - 普通内存 Map、数组、缓存或文件系统 I/O 不属于本 Tag。
+    hard_negatives:
+      - 只导入、声明或持有存储对象，当前 Unit 没有持久化操作。
+      - 同文件其他 Unit 使用持久化存储，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_subscription
+    definition: 当前 ReviewUnit 通过平台事件总线或传感器服务创建、移除或执行一次性订阅。
+    inclusions:
+      - 向平台事件总线注册或取消持续、一次性事件监听。
+      - 订阅或取消传感器数据流并接收采样事件。
+    exclusions:
+      - Promise 回调、普通函数回调或生命周期方法不是平台订阅。
+      - UI 点击、触摸、焦点等组件事件处理不属于本 Tag。
+    hard_negatives:
+      - 同文件其他 Unit 建立订阅，而当前 Unit 只有文件级相关提示。
+      - 通用对象具有 on、off、once 等方法，但平台语义无法证明。
+
+  - tag_id: has_taskpool
+    definition: 当前 ReviewUnit 使用平台任务池调度、管理或取消可并行执行的后台任务。
+    inclusions:
+      - 创建可提交给平台任务池执行的任务或任务组。
+      - 向任务池提交、等待、取消任务或管理其优先级与状态。
+    exclusions:
+      - 专用 Worker 线程与平台任务池是不同的执行模型。
+      - 普通异步函数、Promise、对象池或连接池不属于平台任务池。
+    hard_negatives:
+      - 只导入任务池能力，当前 Unit 没有创建或调度任务。
+      - 同文件其他 Unit 使用任务池，而当前 Unit 只有文件级相关提示。
+
+  - tag_id: has_text_display
+    definition: 当前 ReviewUnit 在 UI 中展示文字，或创建能够呈现输入值、提示文字的文本类组件。
+    inclusions:
+      - 为文本类控件配置可见的内容、占位、提示或说明文字。
+      - 创建用于展示静态、动态或用户输入文字内容的 UI。
+    exclusions:
+      - 只处理、拼接或比较字符串，没有把文字呈现在 UI 中。
+      - 只写入系统日志、文件或网络，不属于 UI 文本展示。
+    hard_negatives:
+      - 同文件其他 Unit 展示文字，而当前 Unit 只有文件级相关提示。
+      - 注释、字符串常量或异常消息存在，但没有显示组件。
+
+  - tag_id: has_timer
+    definition: 当前 ReviewUnit 创建、调度、重复执行或取消基于时间的回调任务。
+    inclusions:
+      - 安排回调在指定延迟后执行一次或按间隔重复执行。
+      - 清理、取消或停止已创建的延迟或周期定时任务。
+    exclusions:
+      - 只读取当前时间、计算耗时或比较时间戳，没有调度回调。
+      - 普通异步任务、传感器订阅或事件监听不自动构成定时器。
+    hard_negatives:
+      - 同文件其他 Unit 使用定时器，而当前 Unit 只有文件级相关提示。
+      - 网络超时配置或变量名中的 timeout 不等于创建定时回调。
+
+  - tag_id: has_user_input
+    definition: 当前 ReviewUnit 提供允许用户输入、编辑或搜索文本的 UI。
+    inclusions:
+      - 创建单行或多行文本控件并接收用户编辑内容。
+      - 创建搜索输入控件并读取或处理用户提交的查询文本。
+    exclusions:
+      - 按钮、开关、单选、复选或滑块交互不属于文本输入。
+      - 只显示文本或提示文字，但用户不能编辑或输入。
+    hard_negatives:
+      - 同文件其他 Unit 提供文本输入，而当前 Unit 只有文件级相关提示。
+      - 变量或参数名称含 input、query、search，但没有可编辑 UI。
+
+  - tag_id: has_worker
+    definition: 当前 ReviewUnit 创建、通信或管理具有独立执行上下文的平台 Worker 线程。
+    inclusions:
+      - 在主执行上下文与 Worker 之间发送或接收消息。
+      - 创建、终止或处理普通或线程型 Worker 的错误与生命周期。
+    exclusions:
+      - 平台任务池与专用 Worker 是不同的执行模型。
+      - 普通异步函数、Promise 或事件循环任务不是独立 Worker。
+    hard_negatives:
+      - 只导入 Worker 能力或名称含 worker，当前 Unit 没有对应行为。
+      - 同文件其他 Unit 使用 Worker，而当前 Unit 只有文件级相关提示。

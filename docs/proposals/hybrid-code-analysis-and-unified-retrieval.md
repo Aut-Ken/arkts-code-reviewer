@@ -1,7 +1,7 @@
 ---
 title: 混合代码特征分析与统一知识检索架构提案
 status: proposal
-implementation: builder_slice_implemented
+implementation: full_taxonomy_request_slice_implemented
 decision: revised_after_external_review_pending_pilot
 updated: 2026-07-17
 ---
@@ -13,12 +13,35 @@ updated: 2026-07-17
 本文是供外部 AI 和项目维护者评审的**目标设计提案**，不是当前 canonical 架构合同。当前运行
 事实仍以 `docs/architecture/`、`docs/modules/`、配置和代码为准。
 
-截至 2026-07-17，`src/arkts_code_reviewer/hybrid_analysis/` 已实现两批能力：第一批是第
+截至 2026-07-17，`src/arkts_code_reviewer/hybrid_analysis/` 已实现三批能力：第一批是第
 8.1～8.5 节的 closed Pydantic schemas、内容寻址 identity、duplicate-key-safe JSON loader、
 static exact × AI decision reducer 和跨产物引用 verifier；第二批是确定性的 Analysis Card Builder、
-`ai-tag-model-view-v2` 白名单投影 Builder，以及针对调用方提供上游图的重建 verifier。DeepSeek
-client/prompt、运行配置、RetrievalRequestV2、Retriever 接线、真实模型评测和生产启用仍未实现；
-合同和 Builder 测试通过不代表真实 Tag 或文档检索质量已经证明。
+`ai-tag-model-view-v2` 白名单投影 Builder，以及针对调用方提供上游图的重建 verifier；第三批是
+`development_not_qualified` 的 24-Tag 语义 Catalog、冻结 Prompt asset、typed no-dispatch 模型
+策略、full-24 Request Builder，以及从实际 Catalog/Prompt/policy/Card/ModelView 重建 Request 的
+verifier；高层 Hybrid 闭包入口会先执行该可信 Request 重建，再验证其余 artifact graph。Catalog 与
+Prompt 已进入 wheel 资源映射，并由 `tools/check_hybrid_analysis_package.py` 构建、解包和隔离导入
+验证。DeepSeek client、wire payload renderer、dispatch
+envelope、运行预算与合规批准、RetrievalRequestV2、Retriever 接线、真实模型评测和生产启用仍未
+实现；合同和 Builder 测试通过不代表真实 Tag 或文档检索质量已经证明。
+
+当前 `ai-tag-analysis-request-v1` 只绑定 `model_view_id`，不携带 ModelView 正文；Prompt asset 也只以
+版本和哈希进入 Request。因此它是可重放的分析请求身份，不是可直接发给供应方的 wire payload。
+未来 client 必须消费另行定义且验证过的 dispatch envelope，不能仅凭 Request ID 自行查找或拼接
+未受 identity 约束的代码、Prompt 和合同。当前 typed policy 使用
+`dispatch_mode=disabled_no_budget_no_approval`，并将 renderer/output contract 标为
+`not_implemented-v1`，不会形成真实网络调用路径。
+
+当前 Catalog 的 source registry fingerprint 绑定 `tag-config` schema/version 以及 24 个 Active Tag
+的 ID、status、description，不绑定 static trigger 实现，也不证明配置的 Git provenance。其语义文本
+是待人工评审的开发候选；除 lifecycle 采用现有 owner-qualified blind Truth 合同方向外，其余边界
+仍没有通用 blind Tag Truth 支撑。尤其不能把 Catalog fingerprint、24 项完整性或 synthetic 测试
+通过解释为 taxonomy 已 qualified。
+
+现有通用 `verify_hybrid_chain` 仍保留“调用方提供 registry snapshot”的底层合同，单独调用它不证明
+Request 来自当前受信 Catalog/Prompt/policy。需要完整 full-24 闭包时必须使用
+`verify_hybrid_chain_with_trusted_request`；该入口仍以调用方提供的 sealed Analysis Card 为信任根，
+Card 之前的 Parser/ReviewUnit 闭包继续由 `verify_analysis_card_against_upstream` 负责。
 
 Analysis Card Builder 要求完整 `review-unit-build-v3` `AnalysisResult`、`ContextPlanResult` 和
 精确覆盖 `ChangeSet` 的全量 source snapshots。它会验证 snapshot 内容哈希，用仓库内正式 Parser
@@ -473,6 +496,12 @@ AITagContractView
 路由目标和第一层实现细节泄漏给分类器。合同不能由在线模型临时生成；它必须来源于配置和人工
 评审材料，并与 Tag Truth 版本绑定。
 
+当前实现的是上述目标的最小 delivery slice：`config/ai_tag_contracts.yaml` 只保存模型语义定义、
+纳入、排除和 hard negative，并以 `development_not_qualified` 明示尚未成为人工 Truth。它没有把
+Dimension、Review Question 或 static trigger 复制进 Catalog。Loader 要求三个边界集合非空、有界、
+唯一，规范化为 canonical 顺序，并验证恰好覆盖当前 24 个 Active Tag；随后逐字段投影和 seal
+`AITagContractView`。这证明 delivery 合同闭合，不证明这些自然语言边界正确。
+
 ### 7.5 DeepSeek V4 Pro Tag Analyzer
 
 DeepSeek V4 Pro 每次接收：
@@ -509,11 +538,13 @@ DeepSeek V4 Pro 每次接收：
 官方 thinking 模式默认开启，且 thinking 模式下 temperature/top_p 等参数不生效。因此 thinking
 必须显式关闭或进入独立实验臂，不能用 `temperature=0` 宣称远程结果确定性。
 
-推荐使用独立的 `TagAnalysisModelClient` Protocol 隔离供应方：
+未来应使用独立的 `TagAnalysisModelClient` Protocol 隔离供应方，但 client 不能只接收当前
+`AITagAnalysisRequest`，因为该 artifact 不携带 ModelView 与 Prompt 正文。需要先新增一个把 Request、
+ModelView、实际 Prompt、合同投影和 renderer policy 一起验证并内容寻址的 dispatch envelope：
 
 ```python
 class TagAnalysisModelClient(Protocol):
-    def analyze(self, request: AITagAnalysisRequest) -> AITagAnalysisResult: ...
+    def analyze(self, envelope: VerifiedAITagDispatchEnvelope) -> AITagAnalysisResult: ...
 ```
 
 DeepSeek 官方已确认 OpenAI-compatible Chat Completions；adapter 可以使用该协议，但仍须隔离在
@@ -1137,6 +1168,11 @@ Validator 必须检查：
 
 官方 JSON Object 模式只保证合法 JSON，不保证符合本地 schema，并且可能返回空 content。因此
 Pydantic closed validation、缺项检查和 empty/truncated 处理仍是正式合同。
+
+当前本地 schema 已把 positive reason code 收紧为唯一的
+`direct_unit_semantic_evidence`；positive 必须同时包含升序去重的可见 evidence lines 和非空简短
+reason。任何全局 view degradation 都禁止 `not_supported`：仍有直接证据的 Tag 可以 positive，
+其余 Tag 必须 abstain。该一致性只证明 Prompt 与本地 validator 合同相符，不证明模型会稳定遵守。
 
 ## 10. 配置提案
 
@@ -1839,7 +1875,10 @@ token/latency/retry/cache/cost diagnostics
 
 - Analysis Card + canonical upstream replay Builder（已实现）；
 - AITagModelView v2 白名单 Builder（已实现）；
-- full-24 contract delivery Builder（未实现；纯合同已存在）；
+- development-not-qualified 24-Tag Catalog + closed projection（已实现；语义质量未证明）；
+- frozen Prompt asset + typed no-dispatch model policy（已实现；wire renderer 未实现）；
+- full-24 contract delivery Request Builder + trusted-input rebuild verifier（已实现）；
+- trusted Request + Hybrid artifact graph 高层闭包（已实现；Card upstream 仍需单独验证）；
 - fake/DryRun DeepSeek client；
 - AITagExecutionOutcome closed contract（已实现）；
 - closed schemas（已实现）；
@@ -1884,6 +1923,8 @@ user-visible 路径前的硬阻断，历史 S0 只能隔离 replay。
 | Static Feature Routing | 默认 v1 已实现 | 作为独立 static signal source |
 | Analysis Card Builder/upstream verifier | 已实现本地 deterministic slice | 全量 Parser + canonical ReviewUnit replay；不证明 Git provenance |
 | AITagModelView | v2 白名单 Builder 已实现 | 含 `source_role`；不含 static Tag/Dimension/RQ |
+| 24-Tag Catalog/Prompt/policy | 已实现 development slice | no-dispatch；合同语义和模型质量均未 qualified |
+| Full-24 Request Builder | 已实现 deterministic slice | 可信输入重建；不是供应方 wire payload |
 | DeepSeek V4 Pro Tag 判断 | 未实现 | 新增独立旁路 |
 | Direct code vector | 已有基础实现 | 保留为无 Tag 主动路径 |
 | Unified signal provenance | 部分存在 | 扩展为 static/AI/disagreement 字段 |

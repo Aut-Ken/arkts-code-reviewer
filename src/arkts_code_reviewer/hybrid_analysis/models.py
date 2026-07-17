@@ -89,6 +89,7 @@ _ABSTAIN_REASON_CODES = {
     "view_truncated",
 }
 _NO_SUPPORT_REASON_CODES = {"no_support_in_complete_view"}
+_POSITIVE_REASON_CODES = {"direct_unit_semantic_evidence"}
 
 _OUTCOME_REASON_CODES: dict[ExecutionStatus, set[str]] = {
     "valid_result": {"provider_response_valid"},
@@ -1098,8 +1099,8 @@ class AITagJudgment(FrozenModel):
         if self.decision == "positive":
             if not self.evidence_lines or self.reason is None:
                 raise ValueError("positive judgment requires evidence lines and reason")
-            if self.reason_code in _ABSTAIN_REASON_CODES | _NO_SUPPORT_REASON_CODES:
-                raise ValueError("positive judgment uses an incompatible reason code")
+            if self.reason_code not in _POSITIVE_REASON_CODES:
+                raise ValueError("positive judgment uses an unsupported reason code")
         elif self.decision == "not_supported":
             if self.evidence_lines or self.reason is not None:
                 raise ValueError(
