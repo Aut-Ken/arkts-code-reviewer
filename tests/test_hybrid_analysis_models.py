@@ -10,6 +10,7 @@ from pydantic import ValidationError
 
 from arkts_code_reviewer.feature_routing.config import load_default_feature_config
 from arkts_code_reviewer.hybrid_analysis import (
+    DEFAULT_AI_MODEL_VIEW_POLICY_FINGERPRINT,
     AIModelCode,
     AITagAnalysisRequest,
     AITagAnalysisResult,
@@ -198,10 +199,11 @@ def _model_view_payload(
     **updates: object,
 ) -> dict[str, object]:
     payload: dict[str, object] = {
-        "schema_version": "ai-tag-model-view-v1",
+        "schema_version": "ai-tag-model-view-v2",
         "card_id": card.card_id,
         "unit_id": card.unit_id,
         "source_ref_id": card.source_ref_id,
+        "source_role": card.source_role,
         "code": {
             "mode": card.code.mode,
             "numbered_text": (
@@ -217,7 +219,7 @@ def _model_view_payload(
         ),
         "scoped_facts": card.facts.model_dump(mode="json"),
         "quality": card.quality.model_dump(mode="json"),
-        "projection_policy_fingerprint": _hash_id("ai-model-view-policy", "5"),
+        "projection_policy_fingerprint": DEFAULT_AI_MODEL_VIEW_POLICY_FINGERPRINT,
     }
     payload.update(updates)
     return payload
@@ -509,6 +511,7 @@ def test_closed_schema_field_sets_are_frozen() -> None:
         "card_id",
         "unit_id",
         "source_ref_id",
+        "source_role",
         "code",
         "owner_summary",
         "scoped_facts",
@@ -685,7 +688,7 @@ def test_content_identity_known_answers_lock_canonicalization() -> None:
     )
     assert view.model_view_id == (
         "ai-tag-model-view:sha256:"
-        "5be3c2fac26773e3ec6ed085d29bafc6d2352c02b1eb39a948f5461662f93054"
+        "1416fd52b6b6ff5b60222434716c6509eb22f13dee748337d61ef6923cea9369"
     )
     assert contracts[0].contract_fingerprint == (
         "ai-tag-contract-view:sha256:"
@@ -693,19 +696,19 @@ def test_content_identity_known_answers_lock_canonicalization() -> None:
     )
     assert request.request_id == (
         "ai-tag-request:sha256:"
-        "e9f0f8ebb9d953a613af44c28fcdad13dfbdd3b894440f2c2c8875cd70c3c324"
+        "453ac4b6cb7b44b040acaf1027e5dd0a37712b0691e9ccfdde1428486c2e1302"
     )
     assert result.result_id == (
         "ai-tag-result:sha256:"
-        "022b976213456ff6c22182e856addc867521947176a4e8c1b28f8e400e5464ff"
+        "2dd2e5b70a8c3834bc43a8beeea3fbfa718034e61c11cc8eb0f0ce8c2c262eec"
     )
     assert outcome.outcome_id == (
         "ai-tag-outcome:sha256:"
-        "f83cfccc31e36d03d93611592d3d8c96025b6cb10c197e017133f6fd8fd12a64"
+        "90ad4fe19efd38df7b04c2d93bddf84328d6d9d0290dbfd2006125d6e12da13c"
     )
     assert hybrid.analysis_id == (
         "hybrid-analysis:sha256:"
-        "6116f011a1a17d3222b3b99043b6d95f65b162ae1867dba3efcfe56ee9f5c44a"
+        "c5af6aba9cd885bbeed197abcaa89430b9a96ec1e9022ff154adfcca3aba83cb"
     )
 
 

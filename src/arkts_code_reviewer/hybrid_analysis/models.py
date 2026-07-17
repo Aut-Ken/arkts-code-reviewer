@@ -15,7 +15,7 @@ from arkts_code_reviewer.hybrid_analysis._canonical import (
 )
 
 REVIEW_UNIT_ANALYSIS_CARD_SCHEMA_VERSION = "review-unit-analysis-card-v1"
-AI_TAG_MODEL_VIEW_SCHEMA_VERSION = "ai-tag-model-view-v1"
+AI_TAG_MODEL_VIEW_SCHEMA_VERSION = "ai-tag-model-view-v2"
 AI_TAG_CONTRACT_VIEW_SCHEMA_VERSION = "ai-tag-contract-view-v1"
 AI_TAG_ANALYSIS_REQUEST_SCHEMA_VERSION = "ai-tag-analysis-request-v1"
 AI_TAG_ANALYSIS_RESULT_SCHEMA_VERSION = "ai-tag-analysis-result-v1"
@@ -23,6 +23,15 @@ AI_TAG_EXECUTION_OUTCOME_SCHEMA_VERSION = "ai-tag-execution-outcome-v1"
 HYBRID_FEATURE_ANALYSIS_RESULT_SCHEMA_VERSION = "hybrid-feature-analysis-result-v1"
 
 ACTIVE_TAG_COUNT_V1 = 24
+
+DEFAULT_AI_MODEL_VIEW_POLICY_FINGERPRINT = canonical_hash(
+    "ai-model-view-policy",
+    {
+        "builder_version": "ai-model-view-builder-v2",
+        "field_projection": "source_role_code_owner_facts_quality_only",
+        "line_rendering": "absolute_line_colon_space",
+    },
+)
 
 TagDecision = Literal["positive", "not_supported", "abstain"]
 StaticDecision = Literal["positive", "unknown"]
@@ -168,7 +177,7 @@ def _revalidate[ModelT: FrozenModel](
 
 class AnalysisCode(FrozenModel):
     mode: Literal["full_unit", "changed_window", "deletion_base"]
-    text: Annotated[str, Field(min_length=1)]
+    text: str
     line_start: Annotated[int, Field(ge=1)]
     line_end: Annotated[int, Field(ge=1)]
     changed_line_numbers: tuple[Annotated[int, Field(ge=1)], ...]
@@ -190,7 +199,7 @@ class AnalysisCode(FrozenModel):
     def validate_lines(self) -> Self:
         if self.line_end < self.line_start:
             raise ValueError("AnalysisCode line range is inverted")
-        if len(self.text.splitlines()) != self.line_end - self.line_start + 1:
+        if len(self.text.split("\n")) != self.line_end - self.line_start + 1:
             raise ValueError("AnalysisCode text line count must match its declared range")
         if not self.changed_line_numbers:
             raise ValueError("AnalysisCode.changed_line_numbers must not be empty")
@@ -929,7 +938,7 @@ class AIModelCode(FrozenModel):
             raise ValueError("AIModelCode.line_numbers must not be empty")
         if self.line_numbers != tuple(sorted(set(self.line_numbers))):
             raise ValueError("AIModelCode.line_numbers must be sorted and unique")
-        rendered_lines = self.numbered_text.splitlines()
+        rendered_lines = self.numbered_text.split("\n")
         prefixes = tuple(f"{line}:" for line in self.line_numbers)
         if len(rendered_lines) != len(prefixes) or any(
             not rendered.startswith(prefix)
@@ -943,10 +952,11 @@ class AIModelCode(FrozenModel):
 
 
 class _AITagModelViewPayload(FrozenModel):
-    schema_version: Literal["ai-tag-model-view-v1"]
+    schema_version: Literal["ai-tag-model-view-v2"]
     card_id: Annotated[str, Field(pattern=_CARD_ID)]
     unit_id: Annotated[str, Field(min_length=1)]
     source_ref_id: Annotated[str, Field(pattern=_SOURCE_REF_ID)]
+    source_role: Literal["base", "head"]
     code: AIModelCode
     owner_summary: AIModelOwnerSummary
     scoped_facts: ScopedCodeFacts
@@ -1469,6 +1479,7 @@ def verify_model_view_against_card(
         model_view.card_id != card.card_id
         or model_view.unit_id != card.unit_id
         or model_view.source_ref_id != card.source_ref_id
+        or model_view.source_role != card.source_role
     ):
         raise ValueError("AI Tag Model View does not reference the supplied Analysis Card")
     if model_view.code.mode != card.code.mode or model_view.code.truncated != card.code.truncated:
@@ -1480,7 +1491,7 @@ def verify_model_view_against_card(
         f"{line}: {text}"
         for line, text in zip(
             expected_lines,
-            card.code.text.splitlines(),
+            card.code.text.split("\n"),
             strict=True,
         )
     )
@@ -1490,6 +1501,11 @@ def verify_model_view_against_card(
         raise ValueError("AI Tag Model View owner summary differs from its Analysis Card")
     if model_view.scoped_facts != card.facts or model_view.quality != card.quality:
         raise ValueError("AI Tag Model View facts or quality differ from its Analysis Card")
+    if (
+        model_view.projection_policy_fingerprint
+        != DEFAULT_AI_MODEL_VIEW_POLICY_FINGERPRINT
+    ):
+        raise ValueError("AI Tag Model View uses an unsupported projection policy")
 
 
 def verify_request_against_model_view(
@@ -1679,6 +1695,7 @@ __all__ = [
     "AI_TAG_CONTRACT_VIEW_SCHEMA_VERSION",
     "AI_TAG_EXECUTION_OUTCOME_SCHEMA_VERSION",
     "AI_TAG_MODEL_VIEW_SCHEMA_VERSION",
+    "DEFAULT_AI_MODEL_VIEW_POLICY_FINGERPRINT",
     "HYBRID_FEATURE_ANALYSIS_RESULT_SCHEMA_VERSION",
     "REVIEW_UNIT_ANALYSIS_CARD_SCHEMA_VERSION",
     "AITagAnalysisRequest",

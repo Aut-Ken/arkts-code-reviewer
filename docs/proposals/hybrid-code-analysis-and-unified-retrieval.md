@@ -1,7 +1,7 @@
 ---
 title: 混合代码特征分析与统一知识检索架构提案
 status: proposal
-implementation: contract_slice_implemented
+implementation: builder_slice_implemented
 decision: revised_after_external_review_pending_pilot
 updated: 2026-07-17
 ---
@@ -13,22 +13,32 @@ updated: 2026-07-17
 本文是供外部 AI 和项目维护者评审的**目标设计提案**，不是当前 canonical 架构合同。当前运行
 事实仍以 `docs/architecture/`、`docs/modules/`、配置和代码为准。
 
-截至 2026-07-17，提案的第一批纯合同切片已经实现于
-`src/arkts_code_reviewer/hybrid_analysis/`：覆盖第 8.1～8.5 节的 closed Pydantic schemas、内容
-寻址 identity、duplicate-key-safe JSON loader、static exact × AI decision reducer 和跨产物引用
-verifier。Analysis Card Builder、DeepSeek client/prompt、运行配置、RetrievalRequestV2、Retriever
-接线、Golden、真实模型评测和生产启用仍未实现；合同测试通过不代表这些能力已经存在，也不
-代表真实 Tag 或文档检索质量已经证明。
+截至 2026-07-17，`src/arkts_code_reviewer/hybrid_analysis/` 已实现两批能力：第一批是第
+8.1～8.5 节的 closed Pydantic schemas、内容寻址 identity、duplicate-key-safe JSON loader、
+static exact × AI decision reducer 和跨产物引用 verifier；第二批是确定性的 Analysis Card Builder、
+`ai-tag-model-view-v2` 白名单投影 Builder，以及针对调用方提供上游图的重建 verifier。DeepSeek
+client/prompt、运行配置、RetrievalRequestV2、Retriever 接线、真实模型评测和生产启用仍未实现；
+合同和 Builder 测试通过不代表真实 Tag 或文档检索质量已经证明。
 
-本切片中的 self-hash 只证明某个 artifact 的规范化内容 identity。`source_ref_id`、
-`feature_profile_id`、`feature_routing_id`、`context_plan_id`、`analysis_run_id`、policy/config
-fingerprint 和 budget snapshot 等引用会进入各自 artifact 的 self-hash，也接受格式约束，但当前
-切片没有读取或重建被引用的上游 artifact，因此不证明这些引用真实存在、来自某个 Git revision
-或确实具有调用方声明的 provenance。跨产物 verifier 只验证调用方同时提供的 sealed artifact
-图；它同样不把引用格式升级为来源证明。
-尤其是 `verify_hybrid_chain` 的闭包从调用方提供、self-hash 有效的 Analysis Card 开始；当前没有
-`verify_card_against_upstream` 或 builder-only construction boundary 去重建
-`UnitFactScope -> FeatureProfile -> FeatureRoutingResult -> Card`。
+Analysis Card Builder 要求完整 `review-unit-build-v3` `AnalysisResult`、`ContextPlanResult` 和
+精确覆盖 `ChangeSet` 的全量 source snapshots。它会验证 snapshot 内容哈希，用仓库内正式 Parser
+重放全部 `FileParseResult`，再用默认 `ReviewUnitBuilder` 重建完整 `ReviewUnitBuildResult`；随后从可信
+FileAnalysis 重建 UnitFactScope，并用默认 Feature Routing 重放正式 static route。因此，既不能用
+“范围合法但源码中并不存在”的伪造 occurrence 生成可信 Card，也不能通过自定义 ReviewUnit
+窗口把 fallback Unit 扩成整文件。`AnalysisContextPolicy` 以
+`parser_verification=trusted_file_parser_replay` 和
+`review_unit_verification=canonical_review_unit_replay` 明确绑定这两个重放边界。Builder 还只暴露
+能够从 base/head Unit 与共享 ChangeAtom 独立重建的
+`change_correspondence` context ref。其他调用关系即使在一个 self-consistent ContextPlan 中存在，
+当前也不会被升级成可供模型请求的 verified context。
+
+这仍不是 Git provenance 证明。调用方仍负责提供真实的 repository/revision 与 source snapshot；
+`CodeSourceRef` 的内容哈希只证明所给文本与所给引用一致，不能证明该 revision 确实存在于某个
+远端仓库。公开的生产 Builder 固定使用仓库内正式 Parser 和默认 ReviewUnit Builder，不开放
+调用方替换这两个信任根。Card 中的 `context_plan_id` 是对调用方所给完整计划的审计绑定，不表示
+所有非 `change_correspondence` relation 都已被独立重建或获得语义 provenance；这些 relation 当前
+不会进入 ModelView。`verify_hybrid_chain` 仍只闭合 Card 之后的 artifact 图；Card 之前的闭包必须
+显式调用 `verify_analysis_card_against_upstream`，不能只验证 self-hash。
 
 本文讨论的是从 `ReviewUnit + UnitFactScope` 到 `RetrievalRequest/EvidencePack` 之间的混合分析
 能力，目标是解决真实代码中静态 Tag 召回不足的问题，同时避免把模型推断伪装成确定性代码事实。
@@ -282,6 +292,17 @@ EvidencePack
 
 职责是把完整审计对象压缩成“一张 ReviewUnit 小卡片”。它不是摘要模型，而是确定性构造器。
 
+当前 Builder 切片已经实现这一确定性构造边界。它只接受完整的 v3 上游对象和精确覆盖
+`ChangeSet.source_refs` 的 snapshot mapping；默认对整张 Parser/ReviewUnit 图执行 canonical
+replay，并按调用方提供的 typed policy 冻结代码窗口、token budget、context-ref 与 redaction
+状态。`build_many` 会一次验证上游图、每个 source 只重放一次 Parser，再按 Unit 生成 Card，避免
+常见的逐 Unit 全图重放。当前 redaction policy 明确是 `none_no_provider_dispatch`，所以这些 Card
+只能停留在本地合同/测试边界，不能据此向外部 provider 发送真实代码。
+
+当前实现仍是“每个 base/head ReviewUnit 各自一张 Card”，不会把 replacement 两侧合并进同一个
+ModelView；`ai-tag-model-view-v2` 通过必填 `source_role` 防止把 base 旧代码误当成 head 当前代码。
+紧凑 base diff 属于后续模型输入版本，不是本切片已实现能力。
+
 卡片包含：
 
 - Unit kind、symbol、source role 和 owner 摘要；
@@ -291,7 +312,7 @@ EvidencePack
 - generic calls、import uses、field reads/writes 和 resource references；
 - 与当前 Unit 有关的 file hints 摘要；
 - Parser/ReviewUnit/ContextPlan 质量诊断；
-- 可选的一跳 Supporting Context 引用；
+- 由共享 ChangeAtom 独立重建的 `change_correspondence` 引用；
 - 全部输入 identity 和内容 fingerprint。
 
 卡片不包含：
@@ -764,27 +785,28 @@ decorator 本来就在 struct span 内，可以同时具有 Unit-exact 与 owner
 强制两组 occurrence identity 不相交。
 
 这仍只是 Card 内部 provenance：它证明 match 引用的值出现在 Card 声明的 fact scope，并绑定
-operator/owner evidence 字段；它不证明调用方把某个事实映射到了正确 Tag。例如把 `async_fn`
-谎报成 `has_network` 仍需要未来用实际 Tag config、FeatureProfile、UnitFactScope 和
-FeatureRoutingResult 重建后才能拒绝。因此在 Card Builder/upstream verifier 实现前，不能把任意
-调用方提供的 sealed Card 称为生产可信 static exact 结果。
+operator/owner evidence 字段。当前 Builder 会先通过 `AnalysisResult.validate()` 从可信 Parser
+重放结果重建 UnitFactScope，再以默认 Feature Routing 重放 Tag 配置，因此把 `async_fn` 自行
+谎报成 `has_network` 会被拒绝。不过，脱离该 Builder/upstream verifier 的任意 sealed Card 仍然
+只具有 self-hash，不能称为生产可信 static exact 结果。
 
 `owner_summary.resolution` 描述 owner-role 上下文的解析状态，不等于 ReviewUnit identity 是否存在。
 因此 top-level function 等不适用 owner-role 分析的 Unit 可以是 `not_applicable` 且仍保留
 `unit_owner`；`method/struct/class` 不允许使用该状态。`partial` 表示已验证一部分 owner role，但仍
 保留明确 diagnostics；它不能被当作无条件完整解析。
 
-### 8.2 `ai-tag-model-view-v1`
+### 8.2 `ai-tag-model-view-v2`
 
 这是 `ReviewUnitAnalysisCard` 的严格白名单投影，不允许调用方手工拼接：
 
 ```jsonc
 {
-  "schema_version": "ai-tag-model-view-v1",
+  "schema_version": "ai-tag-model-view-v2",
   "model_view_id": "ai-tag-model-view:sha256:...",
   "card_id": "analysis-card:sha256:...",
   "unit_id": "...",
   "source_ref_id": "code-source:sha256:...",
+  "source_role": "head",
   "code": {
     "mode": "full_unit | changed_window | deletion_base",
     "numbered_text": "152: ...",
@@ -1813,14 +1835,15 @@ token/latency/retry/cache/cost diagnostics
 
 ## 19. 推荐实施分层（不代表已经完成）
 
-### Phase A：纯合同骨架
+### Phase A：合同与本地 Builder 骨架
 
-- Analysis Card；
-- AITagModelView + full-24 contract delivery；
+- Analysis Card + canonical upstream replay Builder（已实现）；
+- AITagModelView v2 白名单 Builder（已实现）；
+- full-24 contract delivery Builder（未实现；纯合同已存在）；
 - fake/DryRun DeepSeek client；
-- AITagExecutionOutcome；
-- closed schemas；
-- Reconciler；
+- AITagExecutionOutcome closed contract（已实现）；
+- closed schemas（已实现）；
+- Reconciler pure reducer（已实现）；
 - RetrievalRequestV2 Builder；
 - 不改变当前 Retrieval 结果。
 
@@ -1859,6 +1882,8 @@ user-visible 路径前的硬阻断，历史 S0 只能隔离 replay。
 | Parser/FileAnalysis | 已实现 | 复用，不改 Parser v1 行为 |
 | ReviewUnit/UnitFactScope | 已实现 | 作为卡片来源 |
 | Static Feature Routing | 默认 v1 已实现 | 作为独立 static signal source |
+| Analysis Card Builder/upstream verifier | 已实现本地 deterministic slice | 全量 Parser + canonical ReviewUnit replay；不证明 Git provenance |
+| AITagModelView | v2 白名单 Builder 已实现 | 含 `source_role`；不含 static Tag/Dimension/RQ |
 | DeepSeek V4 Pro Tag 判断 | 未实现 | 新增独立旁路 |
 | Direct code vector | 已有基础实现 | 保留为无 Tag 主动路径 |
 | Unified signal provenance | 部分存在 | 扩展为 static/AI/disagreement 字段 |
