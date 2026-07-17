@@ -310,12 +310,13 @@ reviewed streaming/resource design or a new limit; the blind campaign cannot tun
 At pre-Stage2D commit `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a`, the read-only snapshot
 reported 554 tracked entries, 54 tokenizer issues and approximately 727 million pair-side NFC
 characters for the 48-probe candidate-project-reference estimate. Those numbers describe the old
-tree, not the current HEAD. A read-only recomputation at
+tree. The pinned pre-D1b-1 implementation snapshot
 `d16b5f9d9bbac7040af9d315e52a98c016197d33` found 563 regular blobs, 561 loaded UTF-8 documents,
 560 unique blobs, 558 unique texts and 56 tokenizer issues. The same 48-probe
-candidate-project-reference lower bound is 743,761,104 pair-side NFC characters. The current tree
-therefore still has independent oversize, tokenizer-media and work-budget abstentions; none may be
-hidden by excluding non-ETS files after seeing the blind sample.
+candidate-project-reference lower bound is 743,761,104 pair-side NFC characters. These are pinned
+historical facts, not rolling "current HEAD" metrics. Every formal campaign must rebuild the
+inventory for its actual candidate commit; oversize, tokenizer-media and work-budget abstentions
+must remain visible rather than being hidden by excluding non-ETS files after seeing the sample.
 
 The CLI removes inherited `GIT_*` routing/configuration variables and disables repository-configured
 `core.fsmonitor`. It still trusts the local `git` executable, `PATH`, protected Git configuration and
@@ -342,11 +343,12 @@ component-aware PairSelection
 -> path-redacted PairReviewPacket
 -> human Receipt A + human Receipt B
 -> PairConsensus
--> exhaustive canonical Oracle
+-> exhaustive canonical OraclePredictionSet
+-> frozen CalibrationGate
 -> PolicyCandidateFreeze
 -> HoldoutReleaseReceipt
 -> CalibrationReport
--> full-chain-verified PolicyApprovalReceipt
+-> typed-artifact-chain-verified PolicyApprovalReceipt
 ```
 
 Pair Truth uses exactly three human labels: `duplicate`, `independent` and `ambiguous`. Selection
@@ -385,10 +387,19 @@ a conservative one-Pair-per-component gate, not a general clustered effective-sa
 `PolicyCandidateFreeze` binds the policy candidate, Oracle semantics, gate, candidate commit and
 declared verifier closure while recording that holdout labels were unseen. A subsequent
 `HoldoutReleaseReceipt` binds the same selection and freeze and requires release after the freeze
-timestamp. A formal Approval receipt is trustworthy only after rebuilding Selection, Packet, both
-Receipts, Consensus, Oracle predictions and CalibrationReport, and then verifying all
-freeze/release/report/approver bindings. Parsing a report or receipt and checking its self-hash is
-identity validation only.
+timestamp. A formal Approval receipt is internally typed-chain-verified only after rebuilding
+Selection, Packet, both Receipts, Consensus, Oracle predictions and CalibrationReport, and then
+verifying all freeze/release/report/approver bindings. Parsing a report or receipt and checking its
+self-hash is identity validation only. The rebuild starts from a caller-supplied, self-hash-valid
+PairSelection; it verifies the typed artifact chain, not Pair source Git provenance or the claimed
+verifier-closure blob bytes.
+
+The holdout custodian cannot also be a Pair reviewer. The policy approver cannot be a reviewer or
+the custodian. Approval attestation and recording timestamps cannot be earlier than holdout release;
+the current second-resolution contract permits equality. A failed or not-eligible report cannot
+support `decision=approved`. Even an approved receipt is scoped only to
+`future_verified_near_duplicate_screening_policy_semantics`; it does not approve the current v1
+policy, activate screening, or qualify Pair/Tag evidence.
 
 Selection-process provenance and all reviewer, holdout-custodian and approver identities and
 timestamps are still self-attested. There is no external identity authentication, signature,
@@ -402,6 +413,40 @@ PolicyCandidateFreeze, HoldoutRelease, CalibrationReport or ApprovalReceipt. Thi
 approve a real policy, implement policy v2, screening v2 or publication v2, run a real campaign or
 candidate, or alter any Stage-2D1/Stage-2D2a v1 contract, Tag/Dimension/RQ, Parser, Matcher, Golden
 or Feature-config fingerprint.
+
+Implementation and synthetic contract tests:
+
+```text
+src/arkts_code_reviewer/feature_routing_validation/
+  tag_truth_v2_near_duplicate_pair_truth.py
+  tag_truth_v2_near_duplicate_calibration.py
+
+tests/
+  test_tag_truth_v2_near_duplicate_calibration.py
+  test_tag_truth_v2_near_duplicate_oracle_semantics.py
+```
+
+Stage 2D1b-1 deliberately has no CLI. Re-run its synthetic/negative contract checks with:
+
+```bash
+PYTHONPATH=src .venv/bin/python -m pytest -q \
+  tests/test_tag_truth_v2_near_duplicate_calibration.py \
+  tests/test_tag_truth_v2_near_duplicate_oracle_semantics.py
+```
+
+At commit `a83eeb6` this produced `28 passed`. The result proves deterministic contract rebuilding,
+fail-closed guards and Oracle semantics only; it does not prove real Pair precision/recall, identity,
+holdout access control or production quality.
+
+Stage 2D1b-1 and Stage 2D2a are parallel descendants of Stage 2D1:
+
+```text
+Stage 2D1
+├── Stage 2D1b-1  future-policy Pair Truth and calibration governance
+└── Stage 2D2a    consensus publication for the existing v1 screening chain
+```
+
+Stage 2D2a does not consume Stage 2D1b-1.
 
 ## EVAL-01B Stage-2D2a consensus-publication boundary
 
@@ -560,7 +605,9 @@ removed from aggregate denominators.
 The minimum blind pilot discussed for a single Tag is 16 consensus positives and 16 consensus
 negatives from distinct families. Zero error yields a Wilson lower bound of about `0.806`. A
 stronger production target can require 40/40 independent cases (zero-error lower bound about
-`0.912`) without rewriting an older frozen campaign.
+`0.912`) without rewriting an older frozen campaign. These are per-Tag exact/routing quality
+samples. They are separate from Stage 2D1b-1's `80 duplicate + 80 independent` component minimum,
+which calibrates the near-duplicate screening policy itself rather than a Tag candidate.
 
 ## Current evidence adapters
 

@@ -1,7 +1,7 @@
 ---
 title: 配置与版本规范
 status: canonical
-updated: 2026-07-15
+updated: 2026-07-16
 ---
 
 # 配置与版本规范
@@ -46,6 +46,12 @@ FR-02B owner-aware shadow candidate。仓库及 wheel
 Knowledge 三份配置分别固定首批 seed、确定性 annotation 和模型外发边界。Rules、Reviewer、
 Output、Evaluation 配置仍是目标设计，当前仓库没有对应运行时 loader。`tagger.py` 只保留
 调用配置引擎的兼容函数，不再维护第二份硬编码 Tag/Dimension 语义。
+
+EVAL-01B Stage 2D1b-1 新增的 `NearDuplicateCalibrationGateV1` 是 Python 中的 closed、
+self-hashed 评测 artifact，不是 `config/evaluation.yaml` loader，也不属于线上 Feature 配置。
+`tests/evaluation/tag_truth_v2/near_duplicate_shadow_policy_v1.json` 同样只是
+`snapshot_only_not_approved` 的测试政策快照。二者都不会改变 `tags.yaml`、`dimensions.yaml`、
+默认 `feature-config` fingerprint 或 `CodeAnalyzer` 行为。
 
 外部仓库不写进这个 `config/`。它们由
 `/home/autken/Code/arkts-knowledge/registry/sources.yaml` 登记，具体契约见
@@ -509,6 +515,11 @@ gates:
 ```
 
 阈值必须由真实数据确定，示例中的 `0.90` 不是当前验收结论。
+
+当前已实现的 Tag Truth/near-duplicate 门禁通过版本化 Python 模型和测试 JSON snapshot
+冻结，用于离线治理与 fail-closed 重放；它们没有汇总到统一 `evaluation.yaml`，也没有生产
+运行时 loader。Calibration gate 通过只表示其 acceptance-holdout 指标达到冻结阈值，不表示
+near-duplicate policy 已获生产批准；当前无真实 Pair Truth，Evidence 仍为 `not_qualified`。
 
 ## 14. 配置版本记录
 

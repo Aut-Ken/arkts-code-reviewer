@@ -1,8 +1,8 @@
 ---
 title: 10 评测与反馈闭环模块
 status: canonical
-implementation: designed
-updated: 2026-07-15
+implementation: partial
+updated: 2026-07-16
 ---
 
 # 10 评测与反馈闭环模块
@@ -34,16 +34,26 @@ updated: 2026-07-15
   Golden；RU-2～RU-5 门禁已完成。
 - 16-case Feature Routing Golden；正式 `FeatureRouter` 的 strict baseline 与 require-perfect
   均为 16/16。
+- 36-case Retrieval Golden；strict baseline 与 require-perfect 均通过。
+- 通用 Tag Truth 的 immutable contract、无标签 selection、candidate-blind review packet、
+  两轮独立人工 Receipt、Consensus、五产物 Git/provenance seal、近重复 shadow screening 和
+  consensus publication 合同。
+- Near-duplicate Pair Truth、exhaustive Oracle、component-aware calibration、
+  PolicyCandidateFreeze、HoldoutReleaseReceipt 和 typed-artifact full-rebuild approval 合同。
+- 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
+  `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
+  machine attestation。
 - 4 个固定 revision 的代码语料来源：`arkui-ace-engine`、`xts-acts`、
   `applications-app-samples`、`codelabs`。
 - 11 个知识来源和 4 个分析工具的来源登记，可用于后续分层评测和结果追溯。
 
 缺失：
 
-- Retrieval Golden Set。
-- Rule precision 数据。
-- Final Finding 人工标注。
-- 统一运行记录、评测数据库和质量门禁。
+- 真实通用 Tag blind campaign、production-prevalence Truth 和总体 Tag Precision/Recall。
+- 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
+- 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
+- Rule precision 数据、Final Finding 人工标注和最终评审闭环。
+- 统一运行证明 artifact、评测数据库、外部身份认证和跨模块最终质量门禁。
 
 ## 3. 分层评测
 
@@ -76,6 +86,9 @@ tests/golden/
 ├── rules/
 ├── review/
 └── output/
+
+tests/evaluation/
+└── tag_truth_v2/             # Tag Truth 选样、双审、seal、近重复、校准和 publication 治理
 ```
 
 Golden 数据应使用开源、合成或获准内部样本，并记录来源和许可范围。
@@ -516,13 +529,13 @@ candidate project reference 的真实报告都会得到 `candidate_project:overs
 
 历史 `fdac0fcc2a003f4aa1e4e00aac88b871f7ba602a` 快照曾记录 554 个 tracked entry、54 个
 tokenizer issue，以及 48-probe 只计算 candidate-project reference 就约 7.27 亿 pair NFC 字符；
-这些数字只描述旧 tree，不再代表当前 HEAD。对当前
-`d16b5f9d9bbac7040af9d315e52a98c016197d33` 的只读重算得到 563 个 regular blob、561 个已加载
+这些数字只描述旧 tree。D1b-1 开始实现前冻结的
+`d16b5f9d9bbac7040af9d315e52a98c016197d33` 只读快照得到 563 个 regular blob、561 个已加载
 UTF-8 document、560 个 unique blob、558 份 unique text、56 个 tokenizer issue；同一 48-probe
-口径的 candidate-project reference lower bound 是 743,761,104 pair NFC 字符。当前真实 tree
-因此仍同时存在 oversize、tokenizer 和 work-budget abstain；这些都是可见 abstain，不是质量通过。
-正式 policy 必须先解决 media-aware tokenization/streaming 与资源基准，不能为了得到 clean
-临时忽略非 `.ets` 文件。
+口径的 candidate-project reference lower bound 是 743,761,104 pair NFC 字符。该值是 pinned
+历史证据，不是滚动的 “current HEAD” 指标；任何正式 campaign 必须对实际 candidate commit
+重新计算 inventory。已知 oversize、tokenizer 和 work-budget 风险仍必须显式 abstain，不能为了
+得到 clean 临时忽略非 `.ets` 文件。
 
 CLI 的 0/1/2 语义保留为：0 只允许未来 approved+calibrated policy 的无 blocker 结果；当前合法
 shadow clear、duplicate、gray、短 Unit、inventory blocker 或 unresolved 都写出报告并返回 1；
@@ -550,11 +563,12 @@ component-aware PairSelection
 -> path-redacted PairReviewPacket
 -> human Receipt A + human Receipt B
 -> PairConsensus
--> exhaustive canonical Oracle
+-> exhaustive canonical OraclePredictionSet
+-> frozen CalibrationGate
 -> PolicyCandidateFreeze
 -> HoldoutReleaseReceipt
 -> CalibrationReport
--> full-chain-verified PolicyApprovalReceipt
+-> typed-artifact-chain-verified PolicyApprovalReceipt
 ```
 
 Pair Truth 只允许 `duplicate / independent / ambiguous`。Selection 根据 member identity、原文
@@ -586,7 +600,16 @@ closure，并固定 `acceptance_holdout_labels_seen=false`；`HoldoutReleaseRece
 与 freeze，并要求 `released_at > frozen_at`。正式 Approval receipt 必须在完整重建 Selection、
 Packet、两份 Receipt、Consensus、Oracle predictions 和 CalibrationReport 后，再核对
 freeze/release/report/approver 的全部绑定；单独 parse report/receipt 或重算 self-hash 不构成
-verified approval。
+verified approval。这里的 full rebuild 从已提供并通过 self-hash 校验的 PairSelection 根开始，
+只验证 typed artifact chain；它不验证 Pair source Git provenance，也不验证声明的 verifier
+closure blob 与 candidate/current checkout 字节相同。
+
+Holdout custodian 不得同时担任 Pair reviewer；policy approver 不得是 reviewer 或 custodian，
+审批证明和记录时间不得早于 holdout release，当前秒级 timestamp 合同允许相等。failed 或
+`not_eligible` 的 report 不能支持 `decision=approved`。即使 PolicyApprovalReceipt 的
+decision 为 approved，其 scope 也仅是
+`future_verified_near_duplicate_screening_policy_semantics`：它不批准当前 v1 policy、不激活
+screening，也不会使 Pair Truth 或 Tag Evidence qualified。
 
 Selection 对 selector/process 的来源声明，以及 reviewer/custodian/approver identity 和时间声明，
 目前都只是 artifact 内自证，没有外部身份认证、签名、Git-host attestation 或可执行的组织隔离
@@ -598,6 +621,25 @@ Selection 对 selector/process 的来源声明，以及 reviewer/custodian/appro
 HoldoutRelease、CalibrationReport 或 ApprovalReceipt。本阶段不批准真实 policy，不实现 policy v2、
 screening v2、publication v2，不运行真实 campaign/candidate，也不改变 Stage 2D1/2D2a v1、
 Tag/Dimension/RQ、Parser、Matcher、Golden 或 Feature config fingerprint。
+
+本阶段没有 CLI。合成合同和负向行为可用以下命令复核：
+
+```bash
+PYTHONPATH=src .venv/bin/python -m pytest -q \
+  tests/test_tag_truth_v2_near_duplicate_calibration.py \
+  tests/test_tag_truth_v2_near_duplicate_oracle_semantics.py
+```
+
+提交 `a83eeb6` 上该命令为 `28 passed`。它证明 schema、full rebuild、fail-closed 门禁与
+Oracle 语义，不证明真实 Pair P/R、人员身份、holdout 访问控制或生产质量。
+
+Stage 2D1 之后存在两条并行治理分支，不是串行依赖：
+
+```text
+Stage 2D1
+├── Stage 2D1b-1  Pair Truth / calibration governance for a future policy v2
+└── Stage 2D2a    consensus publication for the existing v1 screening chain
+```
 
 ### 6.8 EVAL-01B Stage 2D2a：双审共识的版本化发布
 
@@ -764,6 +806,9 @@ RU-5 required-context、relation 和 distractor 指标达到人工 Golden 门禁
 Feature Routing Golden 16/16；正式引擎 require-perfect 与 strict baseline 均通过
 Feature exact Tag 不得由 file hint 或 sibling Unit 泄漏；结果必须能从 UnitFactScopes 重放
 Feature QuestionBinding 只由 Active exact Tags/always_bind 产生；hint-only 不绑定专项问题
+Near-duplicate acceptance holdout 至少 80 duplicate components + 80 independent components
+Near-duplicate 每个二元指标 Pair 独占 component；fatal false-clear/hard-reject/binary-abstain 为 0
+Near-duplicate Report passed 不得自动变成 policy approved 或 evidence qualified
 高严重级 Rules 不允许已知误报
 Retrieval Recall@5 达到基线
 引用合法率 100%
@@ -806,7 +851,7 @@ Embedding、Reranker、Prompt 和模型变更使用：
 
 ## 15. 配置
 
-`config/evaluation.yaml`：
+目标 `config/evaluation.yaml`（尚未实现 loader）：
 
 ```text
 启用指标
@@ -829,10 +874,13 @@ CI 质量门禁
 
 ## 17. 下一步
 
-1. RU-2 已达到现有 ReviewUnit v1 Golden 的 `14/16` phase target，并保留两个后续阶段红灯。
-2. RU-3 已建立 Parser v2 FactOccurrence 和 parse-once 独立门禁，Parser v1 Golden 无漂移。
-3. RU-4 已建立 ChangeSet Golden 与 ReviewUnit v2 Golden。
-4. RU-5 已建立 16-case Context Golden，Planner 已通过 require-perfect、strict baseline 和预算门禁。
-5. Feature Routing 已建立 16-case Golden、版本化配置、可重放 profile/result 和问题绑定。
-6. 下一阶段分别建立 relation discovery、Retrieval、Rules 和 Final Review Golden；不得反向
-   改变 `ContextPlanResult` 或 `FeatureRoutingResult` truth。
+1. 优先执行 `TAG-CORPUS-01`：固定 `applications_app_samples` 的实时 revision，只读统计允许
+   范围内全部 `.ets/.ts` 的 component/API/decorator/call/import-use/symbol 等事实。
+2. 生成现有 24 个 Active Tag 的覆盖/漏覆盖表和候选 Tag 清单；每个候选必须列出真实代码样本、
+   应用/family 多样性、trigger、Dimension/RQ、hard negative 和 Parser/owner 风险。
+3. 候选发现不自动修改 `tags.yaml`。一次只评审一个候选，先冻结人工 Truth，再 shadow 运行并
+   量化 exact/routing Precision/Recall，之后才决定 Reject、Draft 或 Active。
+4. 独立推进真实 Pair Truth campaign 和 near-duplicate policy 校准；它用于保护后续 blind
+   campaign，不阻塞当前的只读候选发现。
+5. Tag 质量门禁建立后，再扩充真实 Context/Retrieval/Rule/Final Finding Truth；不得反向改变
+   `ContextPlanResult`、`FeatureRoutingResult` 或人工 expected。
