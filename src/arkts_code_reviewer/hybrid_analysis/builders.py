@@ -72,6 +72,9 @@ from arkts_code_reviewer.hybrid_analysis.models import (
 ANALYSIS_CARD_BUILDER_VERSION: Literal["analysis-card-builder-v1"] = (
     "analysis-card-builder-v1"
 )
+PROVIDER_EGRESS_ANALYSIS_CARD_BUILDER_VERSION: Literal[
+    "analysis-card-builder-v2-provider-egress"
+] = "analysis-card-builder-v2-provider-egress"
 AI_MODEL_VIEW_BUILDER_VERSION: Literal["ai-model-view-builder-v2"] = (
     "ai-model-view-builder-v2"
 )
@@ -81,7 +84,10 @@ AI_MODEL_VIEW_BUILDER_VERSION: Literal["ai-model-view-builder-v2"] = (
 class AnalysisContextPolicy:
     """Typed, reproducible policy for deterministic Analysis Card construction."""
 
-    builder_version: Literal["analysis-card-builder-v1"] = ANALYSIS_CARD_BUILDER_VERSION
+    builder_version: Literal[
+        "analysis-card-builder-v1",
+        "analysis-card-builder-v2-provider-egress",
+    ] = ANALYSIS_CARD_BUILDER_VERSION
     token_estimator_version: Literal["arkts-code-token-v1"] = "arkts-code-token-v1"
     code_token_budget: int = 2_400
     max_full_unit_lines: int = 160
@@ -91,7 +97,10 @@ class AnalysisContextPolicy:
     context_ref_policy: Literal["verified_change_correspondence_only"] = (
         "verified_change_correspondence_only"
     )
-    redaction_policy: Literal["none_no_provider_dispatch"] = "none_no_provider_dispatch"
+    redaction_policy: Literal[
+        "none_no_provider_dispatch",
+        "none_requires_exact_body_runtime_approval",
+    ] = "none_no_provider_dispatch"
     parser_verification: Literal["trusted_file_parser_replay"] = (
         "trusted_file_parser_replay"
     )
@@ -100,7 +109,10 @@ class AnalysisContextPolicy:
     )
 
     def __post_init__(self) -> None:
-        if self.builder_version != ANALYSIS_CARD_BUILDER_VERSION:
+        if self.builder_version not in {
+            ANALYSIS_CARD_BUILDER_VERSION,
+            PROVIDER_EGRESS_ANALYSIS_CARD_BUILDER_VERSION,
+        }:
             raise ValueError("AnalysisContextPolicy.builder_version is unsupported")
         if self.token_estimator_version != TOKEN_ESTIMATOR_VERSION:
             raise ValueError("AnalysisContextPolicy.token_estimator_version is unsupported")
@@ -108,8 +120,15 @@ class AnalysisContextPolicy:
             raise ValueError("AnalysisContextPolicy.signature_retention is unsupported")
         if self.context_ref_policy != "verified_change_correspondence_only":
             raise ValueError("AnalysisContextPolicy.context_ref_policy is unsupported")
-        if self.redaction_policy != "none_no_provider_dispatch":
-            raise ValueError("AnalysisContextPolicy.redaction_policy is unsupported")
+        expected_redaction = (
+            "none_no_provider_dispatch"
+            if self.builder_version == ANALYSIS_CARD_BUILDER_VERSION
+            else "none_requires_exact_body_runtime_approval"
+        )
+        if self.redaction_policy != expected_redaction:
+            raise ValueError(
+                "AnalysisContextPolicy redaction policy does not match its builder version"
+            )
         if self.parser_verification != "trusted_file_parser_replay":
             raise ValueError("AnalysisContextPolicy.parser_verification is unsupported")
         if self.review_unit_verification != "canonical_review_unit_replay":
@@ -1093,6 +1112,7 @@ def _revalidate_card(card: ReviewUnitAnalysisCard) -> ReviewUnitAnalysisCard:
 __all__ = [
     "AI_MODEL_VIEW_BUILDER_VERSION",
     "ANALYSIS_CARD_BUILDER_VERSION",
+    "PROVIDER_EGRESS_ANALYSIS_CARD_BUILDER_VERSION",
     "DEFAULT_AI_MODEL_VIEW_PROJECTION_POLICY",
     "DEFAULT_ANALYSIS_CONTEXT_POLICY",
     "AIModelViewProjectionPolicy",

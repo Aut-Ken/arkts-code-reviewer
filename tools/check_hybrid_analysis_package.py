@@ -13,6 +13,11 @@ PACKAGED_ASSETS = {
     "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml",
     "arkts_code_reviewer/hybrid_analysis/defaults/deepseek-tag-analysis-v1.md",
 }
+PACKAGED_MODULES = {
+    "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
+    "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
+    "arkts_code_reviewer/hybrid_analysis/shadow_runtime.py",
+}
 
 
 def main() -> int:
@@ -45,6 +50,20 @@ def main() -> int:
                 raise RuntimeError(
                     f"Hybrid Analysis wheel is missing assets: {sorted(missing)}"
                 )
+            missing_modules = PACKAGED_MODULES - names
+            if missing_modules:
+                raise RuntimeError(
+                    f"Hybrid Analysis wheel is missing provider modules: {sorted(missing_modules)}"
+                )
+            metadata_names = tuple(name for name in names if name.endswith(".dist-info/METADATA"))
+            if len(metadata_names) != 1:
+                raise RuntimeError("expected exactly one wheel METADATA file")
+            metadata = archive.read(metadata_names[0]).decode("utf-8")
+            if "Provides-Extra: deepseek" not in metadata or not any(
+                line.startswith("Requires-Dist: httpx") and "deepseek" in line
+                for line in metadata.splitlines()
+            ):
+                raise RuntimeError("wheel does not isolate httpx in the deepseek extra")
             archive.extractall(unpacked)
 
         environment = os.environ.copy()
@@ -55,6 +74,7 @@ def main() -> int:
                 "-c",
                 (
                     "from pathlib import Path; "
+                    "import sys; "
                     "import arkts_code_reviewer; "
                     "from arkts_code_reviewer.hybrid_analysis import "
                     "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION, "
@@ -62,6 +82,11 @@ def main() -> int:
                     "DEFAULT_AI_TAG_CONTRACTS_PATH, DEFAULT_AI_TAG_PROMPT_PATH, "
                     "AITagDispatchEnvelopeBuilder, DryRunTagAnalysisClient, "
                     "FullTaxonomyRequestBuilder; "
+                    "from arkts_code_reviewer.hybrid_analysis.provider_receipts "
+                    "import AITagShadowDispatchPlan; "
+                    "from arkts_code_reviewer.hybrid_analysis.shadow_runtime "
+                    "import AITagShadowAuthorizationGate; "
+                    "assert 'httpx' not in sys.modules; "
                     "package = Path(arkts_code_reviewer.__file__).resolve(); "
                     "assert package.is_relative_to(Path.cwd() / 'unpacked'); "
                     "builder = FullTaxonomyRequestBuilder.default(); "
@@ -78,6 +103,8 @@ def main() -> int:
                     "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION; "
                     "assert AITagDispatchEnvelopeBuilder.default(); "
                     "assert DryRunTagAnalysisClient(); "
+                    "assert AITagShadowDispatchPlan; "
+                    "assert AITagShadowAuthorizationGate; "
                     "print(builder.catalog.catalog_fingerprint); "
                     "print(builder.prompt.prompt_hash)"
                 ),
