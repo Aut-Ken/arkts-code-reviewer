@@ -13,6 +13,7 @@ from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
     DeepSeekCredentialUnavailableError,
     DeepSeekHttpResponse,
     DeepSeekHttpTransportError,
+    DeepSeekOuterResponseDiagnostic,
     DeepSeekOuterResponseError,
     DeepSeekShadowHttpTransport,
     _HttpxDeepSeekShadowTransport,
@@ -29,15 +30,15 @@ from arkts_code_reviewer.hybrid_analysis.execution import (
 from arkts_code_reviewer.hybrid_analysis.models import ReviewUnitAnalysisCard
 from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
     AI_TAG_DISPATCH_ATTEMPT_RECEIPT_SCHEMA_VERSION,
-    AI_TAG_SHADOW_EXECUTION_OBSERVATION_SCHEMA_VERSION,
+    AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION,
     AITagDispatchAttemptReceipt,
     AITagObservedProviderResponseReceipt,
     AITagShadowDispatchClaims,
     AITagShadowDispatchPlan,
-    AITagShadowExecutionObservation,
+    AITagShadowExecutionObservationV2,
     build_ai_tag_shadow_dispatch_plan,
     seal_ai_tag_dispatch_attempt_receipt,
-    seal_ai_tag_shadow_execution_observation,
+    seal_ai_tag_shadow_execution_observation_v2,
     verify_ai_tag_dispatch_attempt_receipt,
     verify_ai_tag_shadow_dispatch_plan,
 )
@@ -331,7 +332,8 @@ class AITagShadowRunArtifacts:
     attempt_receipt: AITagDispatchAttemptReceipt
     provider_response_receipt: AITagObservedProviderResponseReceipt | None
     response_validation: AITagResponseValidation | None
-    observation: AITagShadowExecutionObservation
+    outer_response_diagnostic: DeepSeekOuterResponseDiagnostic | None
+    observation: AITagShadowExecutionObservationV2
 
 
 class DeepSeekShadowRunner:
@@ -398,6 +400,7 @@ class DeepSeekShadowRunner:
                     attempt_receipt=attempt,
                     provider_response_receipt=None,
                     response_validation=None,
+                    outer_response_diagnostic=None,
                     observation=observation,
                 ),
                 plan=plan,
@@ -430,6 +433,7 @@ class DeepSeekShadowRunner:
                     attempt_receipt=attempt,
                     provider_response_receipt=None,
                     response_validation=None,
+                    outer_response_diagnostic=None,
                     observation=observation,
                 ),
                 plan=plan,
@@ -462,6 +466,7 @@ class DeepSeekShadowRunner:
                     attempt_receipt=attempt,
                     provider_response_receipt=None,
                     response_validation=None,
+                    outer_response_diagnostic=None,
                     observation=observation,
                 ),
                 plan=plan,
@@ -491,6 +496,7 @@ class DeepSeekShadowRunner:
                     attempt_receipt=attempt,
                     provider_response_receipt=None,
                     response_validation=None,
+                    outer_response_diagnostic=None,
                     observation=observation,
                 ),
                 plan=plan,
@@ -504,13 +510,15 @@ class DeepSeekShadowRunner:
                 attempt_receipt=attempt,
                 raw_body=response.body,
             )
-        except DeepSeekOuterResponseError:
+        except DeepSeekOuterResponseError as exc:
+            outer_diagnostic = exc.diagnostic
             observation = _observation(
                 plan=plan,
                 claims=claims,
                 attempt=attempt,
                 response_receipt=None,
                 validation=None,
+                outer_diagnostic=outer_diagnostic,
                 status="invalid_output",
                 reason_code="provider_outer_contract_invalid",
             )
@@ -519,6 +527,7 @@ class DeepSeekShadowRunner:
                     attempt_receipt=attempt,
                     provider_response_receipt=None,
                     response_validation=None,
+                    outer_response_diagnostic=outer_diagnostic,
                     observation=observation,
                 ),
                 plan=plan,
@@ -550,6 +559,7 @@ class DeepSeekShadowRunner:
                 attempt_receipt=attempt,
                 provider_response_receipt=response_receipt,
                 response_validation=validation,
+                outer_response_diagnostic=None,
                 observation=observation,
             ),
             plan=plan,
@@ -707,12 +717,13 @@ def _observation(
     attempt: AITagDispatchAttemptReceipt,
     response_receipt: AITagObservedProviderResponseReceipt | None,
     validation: AITagResponseValidation | None,
+    outer_diagnostic: DeepSeekOuterResponseDiagnostic | None = None,
     status: str,
     reason_code: str,
-) -> AITagShadowExecutionObservation:
-    return seal_ai_tag_shadow_execution_observation(
+) -> AITagShadowExecutionObservationV2:
+    return seal_ai_tag_shadow_execution_observation_v2(
         {
-            "schema_version": AI_TAG_SHADOW_EXECUTION_OBSERVATION_SCHEMA_VERSION,
+            "schema_version": AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION,
             "plan_id": plan.plan_id,
             "claims_id": claims.claims_id,
             "attempt_receipt_id": attempt.receipt_id,
@@ -720,6 +731,9 @@ def _observation(
                 None if response_receipt is None else response_receipt.receipt_id
             ),
             "response_validation_id": (None if validation is None else validation.validation_id),
+            "outer_diagnostic_id": (
+                None if outer_diagnostic is None else outer_diagnostic.diagnostic_id
+            ),
             "status": status,
             "reason_code": reason_code,
             "qualification": "unattested_shadow_not_formal",
@@ -746,7 +760,7 @@ def verify_deepseek_shadow_run_artifacts(
         claims=claims,
     )
     attempt = artifacts.attempt_receipt
-    observation = AITagShadowExecutionObservation.model_validate(
+    observation = AITagShadowExecutionObservationV2.model_validate(
         artifacts.observation.model_dump(mode="json")
     )
     if (
@@ -757,15 +771,24 @@ def verify_deepseek_shadow_run_artifacts(
         raise ValueError("shadow observation graph differs from plan, claims, or attempt")
     response_receipt = artifacts.provider_response_receipt
     validation = artifacts.response_validation
-    if observation.provider_response_receipt_id != (
-        None if response_receipt is None else response_receipt.receipt_id
-    ) or observation.response_validation_id != (
-        None if validation is None else validation.validation_id
+    outer_diagnostic = artifacts.outer_response_diagnostic
+    if (
+        observation.provider_response_receipt_id
+        != (None if response_receipt is None else response_receipt.receipt_id)
+        or observation.response_validation_id
+        != (None if validation is None else validation.validation_id)
+        or observation.outer_diagnostic_id
+        != (None if outer_diagnostic is None else outer_diagnostic.diagnostic_id)
     ):
         raise ValueError("shadow observation graph differs from response artifacts")
 
     if attempt.transport_status != "response_received":
-        if raw_response_body is not None or response_receipt is not None or validation is not None:
+        if (
+            raw_response_body is not None
+            or response_receipt is not None
+            or validation is not None
+            or outer_diagnostic is not None
+        ):
             raise ValueError("transport failure cannot carry raw or parsed response artifacts")
         if observation.status != attempt.transport_status:
             raise ValueError("transport failure observation status differs from attempt")
@@ -782,7 +805,7 @@ def verify_deepseek_shadow_run_artifacts(
         if attempt.http_status is None:
             raise ValueError("response-received attempt is missing HTTP status")
         expected_status, expected_reason = _http_failure(attempt.http_status)
-        if response_receipt is not None or validation is not None:
+        if response_receipt is not None or validation is not None or outer_diagnostic is not None:
             raise ValueError("non-200 response cannot carry parsed completion artifacts")
         if observation.status != expected_status or observation.reason_code != expected_reason:
             raise ValueError("HTTP failure observation differs from attempt status")
@@ -791,6 +814,17 @@ def verify_deepseek_shadow_run_artifacts(
     if response_receipt is None:
         if validation is not None:
             raise ValueError("outer-invalid response cannot carry inner validation")
+        if outer_diagnostic is None:
+            raise ValueError("outer-invalid response requires a structural diagnostic")
+        outer_diagnostic = DeepSeekOuterResponseDiagnostic.model_validate(
+            outer_diagnostic.model_dump(mode="json")
+        )
+        if (
+            outer_diagnostic.plan_id != plan.plan_id
+            or outer_diagnostic.response_body_sha256 != raw_hash
+            or outer_diagnostic.response_body_size_bytes != len(raw_response_body)
+        ):
+            raise ValueError("outer diagnostic differs from plan or response bytes")
         if (
             observation.status != "invalid_output"
             or observation.reason_code != "provider_outer_contract_invalid"
@@ -802,10 +836,16 @@ def verify_deepseek_shadow_run_artifacts(
                 plan=plan,
                 latency_ms=attempt.latency_ms,
             )
-        except DeepSeekOuterResponseError:
+        except DeepSeekOuterResponseError as exc:
+            if exc.diagnostic != outer_diagnostic:
+                raise ValueError(
+                    "outer diagnostic differs from trusted raw-response rebuild"
+                ) from None
             return
         raise ValueError("parseable provider response cannot be marked outer-invalid")
 
+    if outer_diagnostic is not None:
+        raise ValueError("parsed provider response cannot carry an outer diagnostic")
     if validation is None:
         raise ValueError("observed provider response requires inner validation")
     verify_deepseek_observed_provider_response_receipt(

@@ -35,12 +35,13 @@ from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
     load_ai_tag_observed_provider_response_receipt,
     load_ai_tag_shadow_dispatch_claims,
     load_ai_tag_shadow_dispatch_plan,
-    load_ai_tag_shadow_execution_observation,
+    load_ai_tag_shadow_execution_observation_v2,
     seal_ai_tag_dispatch_attempt_receipt,
     seal_ai_tag_observed_provider_response_receipt,
     seal_ai_tag_shadow_dispatch_claims,
     seal_ai_tag_shadow_dispatch_plan,
-    seal_ai_tag_shadow_execution_observation,
+    seal_ai_tag_shadow_execution_observation_v2,
+    seal_ai_tag_shadow_provider_policy,
     verify_ai_tag_dispatch_attempt_receipt,
     verify_ai_tag_shadow_dispatch_plan,
 )
@@ -390,6 +391,48 @@ def test_shadow_plan_is_deterministic_canonical_and_adds_only_bounded_output() -
     policy_unbound["wall_clock_timeout_ms"] = 61_000
     with pytest.raises(ValueError, match="provider policy"):
         seal_ai_tag_shadow_dispatch_plan(policy_unbound)
+
+
+def test_r1_provider_snapshot_remains_readable_but_cannot_pass_current_rebuild() -> None:
+    card, envelope, current, policy = _plan()
+    old_policy_payload = current.shadow_provider_policy.model_dump(
+        mode="json",
+        exclude={"policy_fingerprint"},
+    )
+    old_policy_payload["provider_contract_snapshot"] = "deepseek-chat-completions-2026-07-18"
+    old_policy = seal_ai_tag_shadow_provider_policy(old_policy_payload)
+    old_plan_payload = current.model_dump(mode="json", exclude={"plan_id"})
+    old_plan_payload["shadow_provider_policy"] = old_policy.model_dump(mode="json")
+    old_plan = seal_ai_tag_shadow_dispatch_plan(old_plan_payload)
+
+    assert load_ai_tag_shadow_dispatch_plan(old_plan.model_dump_json()) == old_plan
+    assert old_plan.shadow_provider_policy.provider_contract_snapshot == (
+        "deepseek-chat-completions-2026-07-18"
+    )
+    assert current.shadow_provider_policy.provider_contract_snapshot == (
+        "deepseek-chat-completions-2026-07-18-r2"
+    )
+    assert old_plan.wire_body_sha256 == current.wire_body_sha256
+    assert old_plan.shadow_provider_policy.policy_fingerprint != (
+        current.shadow_provider_policy.policy_fingerprint
+    )
+    assert old_plan.plan_id != current.plan_id
+    with pytest.raises(ValueError, match="current provider contract snapshot"):
+        parse_deepseek_chat_completion(
+            _provider_body(envelope),
+            plan=old_plan,
+            latency_ms=1,
+        )
+    with pytest.raises(ValueError, match="deterministic rebuild"):
+        verify_ai_tag_shadow_dispatch_plan(
+            old_plan,
+            envelope=envelope,
+            card=card,
+            context_policy=policy,
+            trusted_max_output_tokens=4_096,
+            trusted_timeout_ms=60_000,
+            trusted_max_response_bytes=2_000_000,
+        )
 
 
 def test_default_v1_card_policy_cannot_be_promoted_to_a_send_plan() -> None:
@@ -923,7 +966,7 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
         == artifacts.provider_response_receipt
     )
     assert (
-        load_ai_tag_shadow_execution_observation(artifacts.observation.model_dump_json())
+        load_ai_tag_shadow_execution_observation_v2(artifacts.observation.model_dump_json())
         == artifacts.observation
     )
 
@@ -1011,6 +1054,14 @@ def test_http_200_with_invalid_outer_has_attempt_only_and_no_claimed_response() 
     assert artifacts.attempt_receipt.http_status == 200
     assert artifacts.provider_response_receipt is None
     assert artifacts.response_validation is None
+    assert artifacts.outer_response_diagnostic is not None
+    assert artifacts.outer_response_diagnostic.stage == "schema"
+    assert artifacts.outer_response_diagnostic.error_type == "missing_field"
+    assert artifacts.outer_response_diagnostic.field_path == ("$", "id")
+    assert (
+        artifacts.observation.outer_diagnostic_id
+        == artifacts.outer_response_diagnostic.diagnostic_id
+    )
     assert artifacts.observation.status == "invalid_output"
     assert artifacts.observation.reason_code == "provider_outer_contract_invalid"
     verify_deepseek_shadow_run_artifacts(
@@ -1020,6 +1071,41 @@ def test_http_200_with_invalid_outer_has_attempt_only_and_no_claimed_response() 
         envelope=envelope,
         raw_response_body=b'{"error":"not a completion"}',
     )
+
+    with pytest.raises(ValueError, match="observation graph"):
+        verify_deepseek_shadow_run_artifacts(
+            replace(artifacts, outer_response_diagnostic=None),
+            plan=plan,
+            claims=claims,
+            envelope=envelope,
+            raw_response_body=b'{"error":"not a completion"}',
+        )
+
+    second_raw_body = b'{"different":"private-provider-value"}'
+    with pytest.raises(DeepSeekOuterResponseError) as second_error:
+        parse_deepseek_chat_completion(
+            second_raw_body,
+            plan=plan,
+            latency_ms=artifacts.attempt_receipt.latency_ms,
+        )
+    crossed_observation_payload = artifacts.observation.model_dump(
+        mode="json",
+        exclude={"observation_id"},
+    )
+    crossed_observation_payload["outer_diagnostic_id"] = second_error.value.diagnostic.diagnostic_id
+    crossed = replace(
+        artifacts,
+        outer_response_diagnostic=second_error.value.diagnostic,
+        observation=seal_ai_tag_shadow_execution_observation_v2(crossed_observation_payload),
+    )
+    with pytest.raises(ValueError, match="diagnostic differs"):
+        verify_deepseek_shadow_run_artifacts(
+            crossed,
+            plan=plan,
+            claims=claims,
+            envelope=envelope,
+            raw_response_body=b'{"error":"not a completion"}',
+        )
 
 
 @pytest.mark.parametrize(
@@ -1226,7 +1312,7 @@ def test_semantically_tampered_self_hashed_response_receipt_is_rejected() -> Non
     tampered_artifacts = replace(
         artifacts,
         provider_response_receipt=tampered_receipt,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="trusted raw-response rebuild"):
@@ -1266,7 +1352,7 @@ def test_http_status_tamper_is_rejected_by_complete_rebuild() -> None:
     )
     tampered_artifacts = replace(
         artifacts,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="HTTP failure observation"):
@@ -1319,7 +1405,7 @@ def test_cross_response_validation_is_rejected_even_when_each_artifact_is_valid(
     crossed = replace(
         first,
         response_validation=second.response_validation,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="inner validation differs"):
@@ -1370,7 +1456,7 @@ def test_self_hashed_judgment_tamper_is_rejected_by_raw_response_rebuild() -> No
     tampered_artifacts = replace(
         artifacts,
         response_validation=tampered_validation,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="trusted raw-response rebuild"):
@@ -1435,7 +1521,7 @@ def test_cross_envelope_validation_is_rejected_before_status_can_be_trusted() ->
     crossed = replace(
         first,
         response_validation=second.response_validation,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="does not reference its envelope"):
@@ -1469,12 +1555,12 @@ def test_success_observation_cannot_be_relabelled_as_invalid_output() -> None:
     observation_payload.update(
         {
             "status": "invalid_output",
-            "reason_code": "judgment_set_incomplete",
+            "reason_code": "incomplete_taxonomy",
         }
     )
     relabelled = replace(
         artifacts,
-        observation=seal_ai_tag_shadow_execution_observation(observation_payload),
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
     )
 
     with pytest.raises(ValueError, match="inner validation differs"):
@@ -1580,14 +1666,15 @@ def test_self_hashed_response_receipt_cannot_exceed_frozen_plan_budget() -> None
             "qualification": ("synthetic_or_untrusted_transport_not_network_evidence"),
         }
     )
-    observation = seal_ai_tag_shadow_execution_observation(
+    observation = seal_ai_tag_shadow_execution_observation_v2(
         {
-            "schema_version": "ai-tag-shadow-execution-observation-v1",
+            "schema_version": "ai-tag-shadow-execution-observation-v2",
             "plan_id": plan.plan_id,
             "claims_id": claims.claims_id,
             "attempt_receipt_id": attempt.receipt_id,
             "provider_response_receipt_id": None,
             "response_validation_id": None,
+            "outer_diagnostic_id": None,
             "status": "provider_rate_limited",
             "reason_code": "provider_rate_limited",
             "qualification": "unattested_shadow_not_formal",
@@ -1597,6 +1684,7 @@ def test_self_hashed_response_receipt_cannot_exceed_frozen_plan_budget() -> None
         attempt_receipt=attempt,
         provider_response_receipt=None,
         response_validation=None,
+        outer_response_diagnostic=None,
         observation=observation,
     )
 

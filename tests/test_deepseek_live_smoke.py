@@ -24,7 +24,6 @@ from arkts_code_reviewer.hybrid_analysis.live_smoke import (
     build_local_exact_body_approval,
     build_local_one_attempt_reservation,
     build_repository_synthetic_smoke_bundle,
-    build_run_summary,
     main,
     run_repository_synthetic_smoke,
 )
@@ -175,6 +174,12 @@ def _authorization_reason(callable_) -> str:  # type: ignore[no-untyped-def]
     return "accepted"
 
 
+def test_terminal_summary_formatter_is_not_a_public_verification_api() -> None:
+    assert "build_run_summary" not in live_smoke.__all__
+    assert "_build_run_summary" not in live_smoke.__all__
+    assert not hasattr(live_smoke, "build_run_summary")
+
+
 def test_repository_synthetic_bundle_is_closed_deterministic_and_redacted() -> None:
     first = build_repository_synthetic_smoke_bundle()
     second = build_repository_synthetic_smoke_bundle()
@@ -183,17 +188,11 @@ def test_repository_synthetic_bundle_is_closed_deterministic_and_redacted() -> N
     assert first == second
     assert first.manifest == second.manifest
     assert first.manifest.origin == "repository_authored_synthetic"
-    assert first.manifest.data_classification == (
-        "repository_contained_synthetic_no_user_code"
-    )
+    assert first.manifest.data_classification == ("repository_contained_synthetic_no_user_code")
     assert first.manifest.source_policy == "closed_package_assets_no_external_input"
-    assert first.manifest.outbound_asset_scope == (
-        "repository_prompt_taxonomy_and_synthetic_code"
-    )
+    assert first.manifest.outbound_asset_scope == ("repository_prompt_taxonomy_and_synthetic_code")
     assert first.manifest.prompt_hash == first.envelope.prompt.prompt_hash
-    assert first.manifest.catalog_fingerprint.startswith(
-        "ai-tag-contract-catalog:sha256:"
-    )
+    assert first.manifest.catalog_fingerprint.startswith("ai-tag-contract-catalog:sha256:")
     assert first.manifest.plan_id == first.plan.plan_id
     assert first.manifest.wire_body_sha256 == first.plan.wire_body_sha256
     assert first.plan.max_attempts == 1
@@ -318,12 +317,8 @@ def test_exact_approval_and_attempt_cap_are_content_addressed() -> None:
     assert approval.approval_id.startswith("ai-egress-approval:sha256:")
     assert reservation.reservation_id.startswith("ai-budget-reservation:sha256:")
     assert approval.plan_id == reservation.plan_id == bundle.plan.plan_id
-    assert approval.qualification == (
-        "local_operator_control_not_deployment_compliance_approval"
-    )
-    assert reservation.qualification == (
-        "local_attempt_cap_not_currency_or_provider_budget"
-    )
+    assert approval.qualification == ("local_operator_control_not_deployment_compliance_approval")
+    assert reservation.qualification == ("local_attempt_cap_not_currency_or_provider_budget")
 
     with pytest.raises(SmokePreflightError) as wrong_plan:
         build_local_exact_body_approval(
@@ -526,9 +521,11 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
     assert first["network_attempted"] is None
     assert first["transport_evidence"] == "injected_untrusted_transport"
     assert first["raw_response_retained"] is False
-    assert first["outbound_asset_scope"] == (
-        "repository_prompt_taxonomy_and_synthetic_code"
-    )
+    assert first["outer_diagnostic_id"] is None
+    assert first["outer_diagnostic_stage"] is None
+    assert first["outer_diagnostic_error_type"] is None
+    assert first["outer_diagnostic_field_path"] is None
+    assert first["outbound_asset_scope"] == ("repository_prompt_taxonomy_and_synthetic_code")
     assert first["prompt_hash"] == bundle.manifest.prompt_hash
     assert first["catalog_fingerprint"] == bundle.manifest.catalog_fingerprint
     assert transport.calls == 1
@@ -599,6 +596,16 @@ def test_attempt_failures_are_single_shot_and_do_not_echo_raw_bodies(
     assert summary["raw_response_retained"] is False
     assert transport.calls == 1
     assert "do-not-echo" not in output
+    if expected_status == "invalid_output":
+        assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v2"
+        assert summary["outer_diagnostic_id"].startswith(
+            "deepseek-outer-response-diagnostic:sha256:"
+        )
+        assert summary["outer_diagnostic_stage"] == "schema"
+        assert summary["outer_diagnostic_error_type"] == "missing_field"
+        assert summary["outer_diagnostic_field_path"] == ["$", "id"]
+        assert summary["response_body_sha256"].startswith("sha256:")
+        assert summary["response_body_size_bytes"] == len(outcome.body)  # type: ignore[union-attr]
 
 
 def test_inner_invalid_response_remains_non_formal_and_redacted(tmp_path: Path) -> None:
@@ -614,7 +621,7 @@ def test_inner_invalid_response_remains_non_formal_and_redacted(tmp_path: Path) 
         credential_provider=_Credential(),
         transport=_Transport(DeepSeekHttpResponse(200, raw_body, None, 11)),
     )
-    summary = build_run_summary(run)
+    summary = live_smoke._build_run_summary(run)
 
     assert run.artifacts.observation.status == "invalid_output"
     assert run.artifacts.response_validation is not None

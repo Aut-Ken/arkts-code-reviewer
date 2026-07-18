@@ -34,6 +34,7 @@ AI_TAG_SHADOW_DISPATCH_CLAIMS_SCHEMA_VERSION = "ai-tag-shadow-dispatch-claims-v1
 AI_TAG_DISPATCH_ATTEMPT_RECEIPT_SCHEMA_VERSION = "ai-tag-dispatch-attempt-receipt-v1"
 AI_TAG_OBSERVED_RESPONSE_RECEIPT_SCHEMA_VERSION = "ai-tag-observed-response-receipt-v1"
 AI_TAG_SHADOW_EXECUTION_OBSERVATION_SCHEMA_VERSION = "ai-tag-shadow-execution-observation-v1"
+AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION = "ai-tag-shadow-execution-observation-v2"
 
 _HASH = r"[0-9a-f]{64}"
 _PLAN_ID = rf"^ai-tag-shadow-plan:sha256:{_HASH}$"
@@ -43,6 +44,7 @@ _CLAIMS_ID = rf"^ai-tag-shadow-claims:sha256:{_HASH}$"
 _ATTEMPT_RECEIPT_ID = rf"^ai-tag-attempt-receipt:sha256:{_HASH}$"
 _RESPONSE_RECEIPT_ID = rf"^ai-tag-observed-response:sha256:{_HASH}$"
 _OBSERVATION_ID = rf"^ai-tag-shadow-observation:sha256:{_HASH}$"
+_OUTER_DIAGNOSTIC_ID = rf"^deepseek-outer-response-diagnostic:sha256:{_HASH}$"
 _ENVELOPE_ID = rf"^ai-tag-dispatch-envelope:sha256:{_HASH}$"
 _REQUEST_ID = rf"^ai-tag-request:sha256:{_HASH}$"
 _CARD_ID = rf"^analysis-card:sha256:{_HASH}$"
@@ -116,7 +118,10 @@ class _AITagShadowProviderPolicyPayload(FrozenModel):
     ]
     upstream_dispatch_mode_required: Literal["disabled_no_budget_no_approval"]
     provider: Literal["deepseek"]
-    provider_contract_snapshot: Literal["deepseek-chat-completions-2026-07-18"]
+    provider_contract_snapshot: Literal[
+        "deepseek-chat-completions-2026-07-18",
+        "deepseek-chat-completions-2026-07-18-r2",
+    ]
     endpoint_url: Literal["https://api.deepseek.com/chat/completions"]
     model: Literal["deepseek-v4-pro"]
     thinking: Literal["disabled"]
@@ -281,7 +286,7 @@ def build_ai_tag_shadow_dispatch_plan(
             "upstream_render_policy_fingerprint": (envelope.model_policy.model_policy_fingerprint),
             "upstream_dispatch_mode_required": "disabled_no_budget_no_approval",
             "provider": "deepseek",
-            "provider_contract_snapshot": "deepseek-chat-completions-2026-07-18",
+            "provider_contract_snapshot": "deepseek-chat-completions-2026-07-18-r2",
             "endpoint_url": DEEPSEEK_CHAT_COMPLETIONS_ENDPOINT,
             "model": envelope.model_policy.model,
             "thinking": envelope.model_policy.thinking,
@@ -719,6 +724,121 @@ def load_ai_tag_shadow_execution_observation(
     )
 
 
+class _AITagShadowExecutionObservationV2Payload(FrozenModel):
+    schema_version: Literal["ai-tag-shadow-execution-observation-v2"]
+    plan_id: Annotated[str, Field(pattern=_PLAN_ID)]
+    claims_id: Annotated[str, Field(pattern=_CLAIMS_ID)]
+    attempt_receipt_id: Annotated[str, Field(pattern=_ATTEMPT_RECEIPT_ID)]
+    provider_response_receipt_id: Annotated[
+        str | None,
+        Field(pattern=_RESPONSE_RECEIPT_ID),
+    ]
+    response_validation_id: Annotated[str | None, Field(pattern=_VALIDATION_ID)]
+    outer_diagnostic_id: Annotated[str | None, Field(pattern=_OUTER_DIAGNOSTIC_ID)]
+    status: ShadowObservationStatus
+    reason_code: Annotated[str, Field(min_length=1, max_length=100)]
+    qualification: Literal["unattested_shadow_not_formal"]
+
+    @field_validator("reason_code")
+    @classmethod
+    def validate_reason_code(cls, value: str) -> str:
+        value = _single_line(value, "reason_code", max_length=100)
+        if not value.replace("_", "").isalnum() or not value.islower():
+            raise ValueError("reason_code must be lowercase alphanumeric snake case")
+        return value
+
+    @model_validator(mode="after")
+    def validate_observation_matrix(self) -> Self:
+        provider_failures = {
+            "provider_client_error",
+            "provider_rate_limited",
+            "provider_server_error",
+            "provider_timeout",
+            "provider_transport_error",
+            "provider_response_too_large",
+        }
+        if self.status == "valid_shape":
+            if (
+                self.provider_response_receipt_id is None
+                or self.response_validation_id is None
+                or self.reason_code != "response_shape_valid"
+            ):
+                raise ValueError("valid shadow observation requires response and validation")
+            if self.outer_diagnostic_id is not None:
+                raise ValueError("valid shadow observation cannot carry an outer diagnostic")
+        elif self.status == "invalid_output":
+            artifacts_present = (
+                self.provider_response_receipt_id is not None,
+                self.response_validation_id is not None,
+            )
+            if artifacts_present == (False, False):
+                if self.reason_code != "provider_outer_contract_invalid":
+                    raise ValueError("outer-invalid observation uses an invalid reason")
+                if self.outer_diagnostic_id is None:
+                    raise ValueError("outer-invalid observation requires an outer diagnostic")
+            elif artifacts_present == (True, True):
+                if self.reason_code not in {
+                    "evidence_out_of_range",
+                    "incomplete_taxonomy",
+                    "invalid_json",
+                    "non_stop_finish_reason",
+                    "response_empty",
+                    "schema_invalid",
+                }:
+                    raise ValueError("inner-invalid observation uses an invalid reason")
+                if self.outer_diagnostic_id is not None:
+                    raise ValueError("inner-invalid observation cannot carry an outer diagnostic")
+            else:
+                raise ValueError("inner-invalid observation requires both response artifacts")
+        elif self.status in provider_failures:
+            if self.reason_code != self.status:
+                raise ValueError("provider failure observation reason must equal status")
+            if (
+                self.provider_response_receipt_id is not None
+                or self.response_validation_id is not None
+                or self.outer_diagnostic_id is not None
+            ):
+                raise ValueError("provider failure cannot carry response artifacts")
+        return self
+
+
+class AITagShadowExecutionObservationV2(_AITagShadowExecutionObservationV2Payload):
+    observation_id: Annotated[str, Field(pattern=_OBSERVATION_ID)]
+
+    @model_validator(mode="after")
+    def validate_identity(self) -> Self:
+        expected = canonical_hash(
+            "ai-tag-shadow-observation",
+            identity_payload(self, "observation_id"),
+        )
+        if self.observation_id != expected:
+            raise ValueError("shadow observation ID does not match its contents")
+        return self
+
+
+def seal_ai_tag_shadow_execution_observation_v2(
+    payload: Mapping[str, object],
+) -> AITagShadowExecutionObservationV2:
+    return seal_payload(
+        payload,
+        payload_type=_AITagShadowExecutionObservationV2Payload,
+        sealed_type=AITagShadowExecutionObservationV2,
+        identity_field="observation_id",
+        identity_prefix="ai-tag-shadow-observation",
+        context="AI Tag Shadow Execution Observation V2",
+    )
+
+
+def load_ai_tag_shadow_execution_observation_v2(
+    raw: str | bytes,
+) -> AITagShadowExecutionObservationV2:
+    return load_json_model(
+        raw,
+        AITagShadowExecutionObservationV2,
+        "AI Tag Shadow Execution Observation V2",
+    )
+
+
 def verify_ai_tag_dispatch_attempt_receipt(
     receipt: AITagDispatchAttemptReceipt,
     *,
@@ -778,12 +898,14 @@ __all__ = [
     "AI_TAG_SHADOW_DISPATCH_PLAN_SCHEMA_VERSION",
     "AI_TAG_SHADOW_PROVIDER_POLICY_SCHEMA_VERSION",
     "AI_TAG_SHADOW_EXECUTION_OBSERVATION_SCHEMA_VERSION",
+    "AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION",
     "AITagDispatchAttemptReceipt",
     "AITagObservedProviderResponseReceipt",
     "AITagShadowDispatchClaims",
     "AITagShadowDispatchPlan",
     "AITagShadowProviderPolicy",
     "AITagShadowExecutionObservation",
+    "AITagShadowExecutionObservationV2",
     "AttemptTransportStatus",
     "DeepSeekShadowChatPayload",
     "ShadowObservationStatus",
@@ -793,12 +915,14 @@ __all__ = [
     "load_ai_tag_shadow_dispatch_claims",
     "load_ai_tag_shadow_dispatch_plan",
     "load_ai_tag_shadow_execution_observation",
+    "load_ai_tag_shadow_execution_observation_v2",
     "seal_ai_tag_dispatch_attempt_receipt",
     "seal_ai_tag_observed_provider_response_receipt",
     "seal_ai_tag_shadow_dispatch_claims",
     "seal_ai_tag_shadow_dispatch_plan",
     "seal_ai_tag_shadow_provider_policy",
     "seal_ai_tag_shadow_execution_observation",
+    "seal_ai_tag_shadow_execution_observation_v2",
     "verify_ai_tag_dispatch_attempt_receipt",
     "verify_ai_tag_shadow_dispatch_plan",
 ]

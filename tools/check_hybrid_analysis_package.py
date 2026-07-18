@@ -48,9 +48,7 @@ def main() -> int:
             names = set(archive.namelist())
             missing = PACKAGED_ASSETS - names
             if missing:
-                raise RuntimeError(
-                    f"Hybrid Analysis wheel is missing assets: {sorted(missing)}"
-                )
+                raise RuntimeError(f"Hybrid Analysis wheel is missing assets: {sorted(missing)}")
             missing_modules = PACKAGED_MODULES - names
             if missing_modules:
                 raise RuntimeError(
@@ -84,7 +82,10 @@ def main() -> int:
                     "AITagDispatchEnvelopeBuilder, DryRunTagAnalysisClient, "
                     "FullTaxonomyRequestBuilder; "
                     "from arkts_code_reviewer.hybrid_analysis.provider_receipts "
-                    "import AITagShadowDispatchPlan; "
+                    "import AITagShadowDispatchPlan, AITagShadowExecutionObservationV2; "
+                    "from arkts_code_reviewer.hybrid_analysis.deepseek_adapter "
+                    "import DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION, "
+                    "DeepSeekOuterResponseDiagnostic; "
                     "from arkts_code_reviewer.hybrid_analysis.shadow_runtime "
                     "import AITagShadowAuthorizationGate; "
                     "from arkts_code_reviewer.hybrid_analysis.live_smoke "
@@ -107,6 +108,10 @@ def main() -> int:
                     "assert AITagDispatchEnvelopeBuilder.default(); "
                     "assert DryRunTagAnalysisClient(); "
                     "assert AITagShadowDispatchPlan; "
+                    "assert AITagShadowExecutionObservationV2; "
+                    "assert DeepSeekOuterResponseDiagnostic; "
+                    "assert DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION == "
+                    "'deepseek-outer-response-diagnostic-v1'; "
                     "assert AITagShadowAuthorizationGate; "
                     "smoke = build_repository_synthetic_smoke_bundle(); "
                     "assert smoke.manifest.data_classification == "

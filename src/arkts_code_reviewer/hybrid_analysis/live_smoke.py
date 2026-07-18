@@ -57,7 +57,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
 AI_TAG_REPOSITORY_SMOKE_CASE_SCHEMA_VERSION = "ai-tag-repository-smoke-case-v1"
 AI_TAG_LOCAL_EGRESS_APPROVAL_SCHEMA_VERSION = "ai-tag-local-egress-approval-v1"
 AI_TAG_LOCAL_BUDGET_RESERVATION_SCHEMA_VERSION = "ai-tag-local-budget-reservation-v1"
-AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v1"
+AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v2"
 
 REPOSITORY_SYNTHETIC_SMOKE_CASE = "repository-synthetic-timer-log-v1"
 REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT = "YES_REPOSITORY_PROMPT_TAXONOMY_AND_SYNTHETIC_CODE"
@@ -740,10 +740,13 @@ def build_inspection_summary(bundle: RepositorySyntheticSmokeBundle) -> dict[str
     }
 
 
-def build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
+def _build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
+    """Format a Runner-verified run; this is not an artifact verification API."""
+
     artifacts = run.artifacts
     attempt = artifacts.attempt_receipt
     validation = artifacts.response_validation
+    outer_diagnostic = artifacts.outer_response_diagnostic
     decision_counts: dict[str, int] = {}
     usage: Mapping[str, object] | None = None
     if validation is not None:
@@ -754,9 +757,7 @@ def build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
         "schema_version": AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION,
         "mode": "live_shadow_attempt",
         "network_attempted": (
-            True
-            if attempt.network_observation == "observed_by_fixed_httpx_transport"
-            else None
+            True if attempt.network_observation == "observed_by_fixed_httpx_transport" else None
         ),
         "case_id": run.manifest.case_id,
         "case_name": run.manifest.case_name,
@@ -775,13 +776,26 @@ def build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
         "transport_status": attempt.transport_status,
         "http_status": attempt.http_status,
         "latency_ms": attempt.latency_ms,
+        "response_body_sha256": attempt.response_body_sha256,
+        "response_body_size_bytes": attempt.response_body_size_bytes,
         "provider_response_receipt_id": (
             None
             if artifacts.provider_response_receipt is None
             else artifacts.provider_response_receipt.receipt_id
         ),
-        "response_validation_id": (
-            None if validation is None else validation.validation_id
+        "response_validation_id": (None if validation is None else validation.validation_id),
+        "outer_diagnostic_id": (
+            None if outer_diagnostic is None else outer_diagnostic.diagnostic_id
+        ),
+        "outer_diagnostic_parser_contract_version": (
+            None if outer_diagnostic is None else outer_diagnostic.parser_contract_version
+        ),
+        "outer_diagnostic_stage": (None if outer_diagnostic is None else outer_diagnostic.stage),
+        "outer_diagnostic_error_type": (
+            None if outer_diagnostic is None else outer_diagnostic.error_type
+        ),
+        "outer_diagnostic_field_path": (
+            None if outer_diagnostic is None else list(outer_diagnostic.field_path)
         ),
         "observation_id": artifacts.observation.observation_id,
         "status": artifacts.observation.status,
@@ -884,7 +898,7 @@ def main(
     except Exception:
         print(canonical_json(_safe_error_summary(code="smoke_runtime_error", attempted=None)))
         return 3
-    summary = build_run_summary(run)
+    summary = _build_run_summary(run)
     print(canonical_json(summary))
     return 0 if run.artifacts.observation.status == "valid_shape" else 3
 
@@ -911,7 +925,6 @@ __all__ = [
     "build_local_exact_body_approval",
     "build_local_one_attempt_reservation",
     "build_repository_synthetic_smoke_bundle",
-    "build_run_summary",
     "main",
     "run_repository_synthetic_smoke",
 ]

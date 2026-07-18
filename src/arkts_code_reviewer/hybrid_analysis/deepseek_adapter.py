@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import time
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Annotated, Literal, Protocol, Self, cast
+from typing import TYPE_CHECKING, Annotated, Literal, NoReturn, Protocol, Self, cast
 
 from pydantic import Field, SecretStr, ValidationError, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -12,7 +13,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from arkts_code_reviewer.hybrid_analysis._canonical import (
     FrozenModel,
     canonical_hash,
-    load_json_object,
+    load_json_model,
 )
 from arkts_code_reviewer.hybrid_analysis.execution import (
     AITagRawCompletion,
@@ -330,7 +331,10 @@ class _DeepSeekAssistantMessage(FrozenModel):
     def validate_non_thinking_contract(self) -> Self:
         if self.reasoning_content not in {None, ""}:
             raise ValueError("thinking-disabled response contains reasoning content")
-        if self.tool_calls is not None:
+        # DeepSeek may serialize an empty array for a tool-disabled response.
+        # Empty and absent both mean that no call occurred; any actual call is
+        # still a frozen request-profile violation.
+        if self.tool_calls not in (None, ()):
             raise ValueError("tool-disabled response contains tool_calls")
         return self
 
@@ -393,8 +397,348 @@ class ParsedDeepSeekChatCompletion:
     raw_completion: AITagRawCompletion
 
 
+DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION = "deepseek-outer-response-diagnostic-v1"
+DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION = "deepseek-outer-response-parser-v1"
+_CURRENT_DEEPSEEK_PROVIDER_CONTRACT_SNAPSHOT = "deepseek-chat-completions-2026-07-18-r2"
+
+DeepSeekOuterResponseStage = Literal["utf8", "json", "top_level", "schema"]
+DeepSeekOuterResponseErrorType = Literal[
+    "invalid_utf8",
+    "invalid_json_syntax",
+    "duplicate_json_key",
+    "non_finite_json_number",
+    "json_nesting_too_deep",
+    "top_level_not_object",
+    "missing_field",
+    "unknown_field",
+    "unexpected_literal",
+    "type_mismatch",
+    "constraint_violation",
+    "contract_violation",
+    "schema_validation_error",
+]
+
+_OUTER_RESPONSE_SCHEMA_FIELDS = frozenset(
+    (
+        "arguments",
+        "choices",
+        "completion_tokens",
+        "completion_tokens_details",
+        "content",
+        "created",
+        "finish_reason",
+        "function",
+        "id",
+        "index",
+        "logprobs",
+        "message",
+        "model",
+        "name",
+        "object",
+        "prompt_cache_hit_tokens",
+        "prompt_cache_miss_tokens",
+        "prompt_tokens",
+        "reasoning_content",
+        "reasoning_tokens",
+        "role",
+        "system_fingerprint",
+        "tool_calls",
+        "total_tokens",
+        "type",
+        "usage",
+    )
+)
+_OUTER_RESPONSE_MAX_PATH_COMPONENTS = 12
+_SHA256_PATTERN = r"^sha256:[0-9a-f]{64}$"
+_SHADOW_PLAN_ID_PATTERN = r"^ai-tag-shadow-plan:sha256:[0-9a-f]{64}$"
+_OUTER_DIAGNOSTIC_ID_PATTERN = r"^deepseek-outer-response-diagnostic:sha256:[0-9a-f]{64}$"
+_SAFE_PATH_MARKERS = frozenset(("$", "<unknown-field>", "<unknown-location>", "<truncated>"))
+_STAGE_ERROR_TYPES: dict[str, frozenset[str]] = {
+    "utf8": frozenset(("invalid_utf8",)),
+    "json": frozenset(
+        (
+            "invalid_json_syntax",
+            "duplicate_json_key",
+            "non_finite_json_number",
+            "json_nesting_too_deep",
+        )
+    ),
+    "top_level": frozenset(("top_level_not_object",)),
+    "schema": frozenset(
+        (
+            "missing_field",
+            "unknown_field",
+            "unexpected_literal",
+            "type_mismatch",
+            "constraint_violation",
+            "contract_violation",
+            "schema_validation_error",
+        )
+    ),
+}
+
+
+class DeepSeekOuterResponseDiagnostic(FrozenModel):
+    """Bounded provider-contract diagnostic that never retains response values."""
+
+    schema_version: Literal["deepseek-outer-response-diagnostic-v1"]
+    parser_contract_version: Literal["deepseek-outer-response-parser-v1"]
+    plan_id: Annotated[str, Field(pattern=_SHADOW_PLAN_ID_PATTERN)]
+    response_body_sha256: Annotated[str, Field(pattern=_SHA256_PATTERN)]
+    response_body_size_bytes: Annotated[int, Field(ge=0, le=8_000_000)]
+    stage: DeepSeekOuterResponseStage
+    error_type: DeepSeekOuterResponseErrorType
+    field_path: Annotated[
+        tuple[str, ...],
+        Field(min_length=1, max_length=_OUTER_RESPONSE_MAX_PATH_COMPONENTS),
+    ]
+    qualification: Literal["privacy_safe_structure_only_not_provider_truth"]
+    diagnostic_id: Annotated[str, Field(pattern=_OUTER_DIAGNOSTIC_ID_PATTERN)]
+
+    @field_validator("field_path", mode="before")
+    @classmethod
+    def parse_field_path(cls, value: object) -> object:
+        if isinstance(value, list | tuple):
+            return tuple(value)
+        return value
+
+    @field_validator("field_path")
+    @classmethod
+    def validate_safe_field_path(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if value[0] != "$":
+            raise ValueError("invalid DeepSeek outer response diagnostic field path")
+        for component in value:
+            if (
+                component not in _SAFE_PATH_MARKERS
+                and component not in _OUTER_RESPONSE_SCHEMA_FIELDS
+                and not (
+                    component.startswith("[")
+                    and component.endswith("]")
+                    and component[1:-1].isdigit()
+                    and 0 <= int(component[1:-1]) <= 999
+                )
+            ):
+                raise ValueError("unsafe DeepSeek outer response diagnostic field path")
+        return value
+
+    @model_validator(mode="after")
+    def validate_contract_and_identity(self) -> Self:
+        if self.error_type not in _STAGE_ERROR_TYPES[self.stage]:
+            raise ValueError("DeepSeek outer response diagnostic stage and error type differ")
+        if self.stage != "schema" and self.field_path != ("$",):
+            raise ValueError("non-schema DeepSeek diagnostic cannot carry a field path")
+        payload = self.model_dump(mode="json", exclude={"diagnostic_id"})
+        expected = canonical_hash("deepseek-outer-response-diagnostic", payload)
+        if self.diagnostic_id != expected:
+            raise ValueError("DeepSeek outer response diagnostic ID does not match its contents")
+        return self
+
+
 class DeepSeekOuterResponseError(ValueError):
+    def __init__(self, diagnostic: DeepSeekOuterResponseDiagnostic) -> None:
+        super().__init__("DeepSeek outer response violates the frozen provider contract")
+        self.diagnostic = diagnostic
+
+
+def load_deepseek_outer_response_diagnostic(
+    raw: str | bytes,
+) -> DeepSeekOuterResponseDiagnostic:
+    try:
+        return load_json_model(
+            raw,
+            DeepSeekOuterResponseDiagnostic,
+            "DeepSeek outer response diagnostic",
+        )
+    except (TypeError, ValueError):
+        raise ValueError("invalid DeepSeek outer response diagnostic") from None
+
+
+class _DeepSeekDuplicateJsonKeyError(ValueError):
     pass
+
+
+class _DeepSeekNonFiniteJsonNumberError(ValueError):
+    pass
+
+
+def _build_outer_response_diagnostic(
+    *,
+    plan: AITagShadowDispatchPlan,
+    raw_body: bytes,
+    stage: DeepSeekOuterResponseStage,
+    error_type: DeepSeekOuterResponseErrorType,
+    field_path: tuple[str, ...] = ("$",),
+) -> DeepSeekOuterResponseDiagnostic:
+    payload: dict[str, object] = {
+        "schema_version": DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION,
+        "parser_contract_version": DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION,
+        "plan_id": plan.plan_id,
+        "response_body_sha256": "sha256:" + hashlib.sha256(raw_body).hexdigest(),
+        "response_body_size_bytes": len(raw_body),
+        "stage": stage,
+        "error_type": error_type,
+        "field_path": field_path,
+        "qualification": "privacy_safe_structure_only_not_provider_truth",
+    }
+    payload["diagnostic_id"] = canonical_hash("deepseek-outer-response-diagnostic", payload)
+    return DeepSeekOuterResponseDiagnostic.model_validate(payload)
+
+
+def _raise_outer_response_error(
+    *,
+    plan: AITagShadowDispatchPlan,
+    raw_body: bytes,
+    stage: DeepSeekOuterResponseStage,
+    error_type: DeepSeekOuterResponseErrorType,
+    field_path: tuple[str, ...] = ("$",),
+) -> NoReturn:
+    raise DeepSeekOuterResponseError(
+        _build_outer_response_diagnostic(
+            plan=plan,
+            raw_body=raw_body,
+            stage=stage,
+            error_type=error_type,
+            field_path=field_path,
+        )
+    ) from None
+
+
+def _reject_provider_duplicate_keys(
+    pairs: list[tuple[str, object]],
+) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise _DeepSeekDuplicateJsonKeyError
+        result[key] = value
+    return result
+
+
+def _reject_provider_non_finite_number(_value: str) -> object:
+    raise _DeepSeekNonFiniteJsonNumberError
+
+
+def _load_deepseek_outer_object(
+    raw_body: bytes,
+    *,
+    plan: AITagShadowDispatchPlan,
+) -> dict[str, object]:
+    if not isinstance(raw_body, bytes):
+        raise TypeError("DeepSeek raw response body must use bytes")
+    decode_error: DeepSeekOuterResponseErrorType | None = None
+    try:
+        text = raw_body.decode("utf-8")
+    except UnicodeDecodeError:
+        decode_error = "invalid_utf8"
+    if decode_error is not None:
+        _raise_outer_response_error(
+            plan=plan,
+            raw_body=raw_body,
+            stage="utf8",
+            error_type=decode_error,
+        )
+    json_error: DeepSeekOuterResponseErrorType | None = None
+    try:
+        payload = json.loads(
+            text,
+            object_pairs_hook=_reject_provider_duplicate_keys,
+            parse_constant=_reject_provider_non_finite_number,
+        )
+    except _DeepSeekDuplicateJsonKeyError:
+        json_error = "duplicate_json_key"
+    except _DeepSeekNonFiniteJsonNumberError:
+        json_error = "non_finite_json_number"
+    except json.JSONDecodeError:
+        json_error = "invalid_json_syntax"
+    except RecursionError:
+        json_error = "json_nesting_too_deep"
+    except ValueError:
+        # CPython can reject otherwise well-formed JSON integers that exceed its
+        # configured digit limit.  Keep every decoder rejection inside the same
+        # value-free, content-addressed diagnostic boundary.
+        json_error = "invalid_json_syntax"
+    if json_error is not None:
+        _raise_outer_response_error(
+            plan=plan,
+            raw_body=raw_body,
+            stage="json",
+            error_type=json_error,
+        )
+    if not isinstance(payload, dict):
+        _raise_outer_response_error(
+            plan=plan,
+            raw_body=raw_body,
+            stage="top_level",
+            error_type="top_level_not_object",
+        )
+    return payload
+
+
+def _schema_error_type(raw_error_type: str) -> DeepSeekOuterResponseErrorType:
+    if raw_error_type == "missing":
+        return "missing_field"
+    if raw_error_type == "extra_forbidden":
+        return "unknown_field"
+    if raw_error_type == "literal_error":
+        return "unexpected_literal"
+    if raw_error_type == "value_error":
+        return "contract_violation"
+    if raw_error_type == "none_required":
+        return "contract_violation"
+    if raw_error_type.endswith(("_type", "_parsing")):
+        return "type_mismatch"
+    if raw_error_type in {
+        "greater_than",
+        "greater_than_equal",
+        "less_than",
+        "less_than_equal",
+        "string_too_long",
+        "string_too_short",
+        "too_long",
+        "too_short",
+    }:
+        return "constraint_violation"
+    return "schema_validation_error"
+
+
+def _safe_schema_field_path(location: tuple[object, ...]) -> tuple[str, ...]:
+    path = ["$"]
+    max_location_components = _OUTER_RESPONSE_MAX_PATH_COMPONENTS - 1
+    for component in location[:max_location_components]:
+        if isinstance(component, str):
+            path.append(
+                component if component in _OUTER_RESPONSE_SCHEMA_FIELDS else "<unknown-field>"
+            )
+        elif type(component) is int and 0 <= component <= 999:
+            path.append(f"[{component}]")
+        else:
+            path.append("<unknown-location>")
+    if len(location) > max_location_components:
+        path[-1] = "<truncated>"
+    return tuple(path)
+
+
+def _schema_diagnostic_parts(
+    error: ValidationError,
+) -> tuple[DeepSeekOuterResponseErrorType, tuple[str, ...]]:
+    details = error.errors(
+        include_url=False,
+        include_context=False,
+        include_input=False,
+    )
+    if not details:
+        return "schema_validation_error", ("$",)
+    first = details[0]
+    raw_error_type = first.get("type")
+    location = first.get("loc")
+    return (
+        (
+            _schema_error_type(raw_error_type)
+            if isinstance(raw_error_type, str)
+            else "schema_validation_error"
+        ),
+        (_safe_schema_field_path(location) if isinstance(location, tuple) else ("$",)),
+    )
 
 
 def parse_deepseek_chat_completion(
@@ -405,13 +749,30 @@ def parse_deepseek_chat_completion(
 ) -> ParsedDeepSeekChatCompletion:
     """Parse one provider outer response without promoting it to a formal result."""
 
-    try:
-        payload = load_json_object(raw_body, "DeepSeek Chat Completion response")
-        response = _DeepSeekChatCompletion.model_validate(payload)
-    except (TypeError, ValueError, ValidationError):
-        raise DeepSeekOuterResponseError(
-            "DeepSeek outer response violates the frozen provider contract"
+    if (
+        plan.shadow_provider_policy.provider_contract_snapshot
+        != _CURRENT_DEEPSEEK_PROVIDER_CONTRACT_SNAPSHOT
+    ):
+        raise ValueError(
+            "DeepSeek outer response parser requires the current provider contract snapshot"
         ) from None
+    payload = _load_deepseek_outer_object(raw_body, plan=plan)
+    diagnostic_parts: tuple[DeepSeekOuterResponseErrorType, tuple[str, ...]] | None = None
+    try:
+        response = _DeepSeekChatCompletion.model_validate(payload)
+    except ValidationError as exc:
+        diagnostic_parts = _schema_diagnostic_parts(exc)
+    except (TypeError, ValueError):
+        diagnostic_parts = "schema_validation_error", ("$",)
+    if diagnostic_parts is not None:
+        error_type, field_path = diagnostic_parts
+        _raise_outer_response_error(
+            plan=plan,
+            raw_body=raw_body,
+            stage="schema",
+            error_type=error_type,
+            field_path=field_path,
+        )
     choice = response.choices[0]
     usage = response.usage
     raw_usage = None
@@ -513,14 +874,20 @@ def verify_deepseek_observed_provider_response_receipt(
 
 
 __all__ = [
+    "DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION",
+    "DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION",
     "DeepSeekCredentialProvider",
     "DeepSeekCredentialUnavailableError",
     "DeepSeekHttpResponse",
     "DeepSeekHttpTransportError",
+    "DeepSeekOuterResponseDiagnostic",
     "DeepSeekOuterResponseError",
+    "DeepSeekOuterResponseErrorType",
+    "DeepSeekOuterResponseStage",
     "DeepSeekShadowHttpTransport",
     "EnvironmentDeepSeekCredentialProvider",
     "ParsedDeepSeekChatCompletion",
+    "load_deepseek_outer_response_diagnostic",
     "observe_deepseek_chat_completion",
     "parse_deepseek_chat_completion",
     "verify_deepseek_observed_provider_response_receipt",
