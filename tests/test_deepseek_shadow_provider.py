@@ -630,6 +630,125 @@ def test_capability_is_opaque_non_serializable_and_single_use() -> None:
     assert transport.calls == 1
 
 
+def test_gate_has_no_plan_only_real_credential_send_path(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _, _, plan, _ = _plan()
+    credential = _Credential()
+    claims = _claims(plan, credential_scope_id=credential.credential_scope_id)
+    events: list[str] = []
+    gate = AITagShadowAuthorizationGate(
+        trust_domain_id=claims.trust_domain_id,
+        credential_provider=credential,
+        trusted_plan_inputs=_default_trusted_inputs(plan),
+        egress_verifier=_EgressVerifier(events),
+        budget_ledger=_BudgetLedger(events),
+    )
+    send_calls: list[tuple[str, str]] = []
+
+    def fixed_send(
+        _transport: object,
+        sent_plan: AITagShadowDispatchPlan,
+        *,
+        api_key: str,
+    ) -> DeepSeekHttpResponse:
+        send_calls.append((sent_plan.plan_id, api_key))
+        return DeepSeekHttpResponse(503, b'{"error":"unavailable"}', None, 1)
+
+    monkeypatch.setattr(
+        deepseek_adapter._HttpxDeepSeekShadowTransport,  # noqa: SLF001
+        "send",
+        fixed_send,
+    )
+    transport = deepseek_adapter._HttpxDeepSeekShadowTransport()  # noqa: SLF001
+
+    assert not hasattr(gate, "_send_with_fixed_transport")
+    assert not hasattr(gate, "consume")
+    with pytest.raises(AITagShadowAuthorizationError) as rejected:
+        gate.dispatch_once(
+            capability=object(),  # type: ignore[arg-type]
+            plan=plan,
+            claims=claims,
+            transport=transport,
+        )
+
+    assert rejected.value.reason_code == "capability_invalid"
+    assert credential.events == []
+    assert send_calls == []
+
+
+def test_gate_dispatch_once_binds_claims_then_consumes_capability_before_key_access(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _, _, plan, _ = _plan()
+    credential = _Credential(secret="fixed-transport-secret")
+    authorized_claims = _claims(
+        plan,
+        credential_scope_id=credential.credential_scope_id,
+    )
+    events: list[str] = []
+    gate = AITagShadowAuthorizationGate(
+        trust_domain_id=authorized_claims.trust_domain_id,
+        credential_provider=credential,
+        trusted_plan_inputs=_default_trusted_inputs(plan),
+        egress_verifier=_EgressVerifier(events),
+        budget_ledger=_BudgetLedger(events),
+    )
+    capability = gate.authorize(plan=plan, claims=authorized_claims)
+    send_calls: list[tuple[str, str]] = []
+
+    def fixed_send(
+        _transport: object,
+        sent_plan: AITagShadowDispatchPlan,
+        *,
+        api_key: str,
+    ) -> DeepSeekHttpResponse:
+        send_calls.append((sent_plan.plan_id, api_key))
+        return DeepSeekHttpResponse(503, b'{"error":"unavailable"}', None, 1)
+
+    monkeypatch.setattr(
+        deepseek_adapter._HttpxDeepSeekShadowTransport,  # noqa: SLF001
+        "send",
+        fixed_send,
+    )
+    transport = deepseek_adapter._HttpxDeepSeekShadowTransport()  # noqa: SLF001
+    swapped_payload = authorized_claims.model_dump(mode="json", exclude={"claims_id"})
+    swapped_payload["egress_approval_id"] = _hash_id("ai-egress-approval", "e")
+    swapped_claims = seal_ai_tag_shadow_dispatch_claims(swapped_payload)
+
+    with pytest.raises(AITagShadowAuthorizationError) as wrong_binding:
+        gate.dispatch_once(
+            capability=capability,
+            plan=plan,
+            claims=swapped_claims,
+            transport=transport,
+        )
+    assert wrong_binding.value.reason_code == "capability_invalid"
+    assert credential.events == ["credential"]
+    assert send_calls == []
+
+    response = gate.dispatch_once(
+        capability=capability,
+        plan=plan,
+        claims=authorized_claims,
+        transport=transport,
+    )
+    assert response.status_code == 503
+    assert credential.events == ["credential", "get_api_key"]
+    assert send_calls == [(plan.plan_id, "fixed-transport-secret")]
+
+    with pytest.raises(AITagShadowAuthorizationError) as replayed:
+        gate.dispatch_once(
+            capability=capability,
+            plan=plan,
+            claims=authorized_claims,
+            transport=transport,
+        )
+    assert replayed.value.reason_code == "capability_replayed"
+    assert credential.events == ["credential", "get_api_key"]
+    assert send_calls == [(plan.plan_id, "fixed-transport-secret")]
+
+
 def test_capability_cannot_be_reused_with_different_self_hashed_claims() -> None:
     _, envelope, plan, _ = _plan()
     transport = _ScriptedTransport(DeepSeekHttpResponse(503, b'{"error":"unavailable"}', None, 7))

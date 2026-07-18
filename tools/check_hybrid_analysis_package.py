@@ -15,6 +15,7 @@ PACKAGED_ASSETS = {
 }
 PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
+    "arkts_code_reviewer/hybrid_analysis/live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_runtime.py",
 }
@@ -86,6 +87,8 @@ def main() -> int:
                     "import AITagShadowDispatchPlan; "
                     "from arkts_code_reviewer.hybrid_analysis.shadow_runtime "
                     "import AITagShadowAuthorizationGate; "
+                    "from arkts_code_reviewer.hybrid_analysis.live_smoke "
+                    "import build_repository_synthetic_smoke_bundle; "
                     "assert 'httpx' not in sys.modules; "
                     "package = Path(arkts_code_reviewer.__file__).resolve(); "
                     "assert package.is_relative_to(Path.cwd() / 'unpacked'); "
@@ -105,6 +108,10 @@ def main() -> int:
                     "assert DryRunTagAnalysisClient(); "
                     "assert AITagShadowDispatchPlan; "
                     "assert AITagShadowAuthorizationGate; "
+                    "smoke = build_repository_synthetic_smoke_bundle(); "
+                    "assert smoke.manifest.data_classification == "
+                    "'repository_contained_synthetic_no_user_code'; "
+                    "assert smoke.plan.max_attempts == 1; "
                     "print(builder.catalog.catalog_fingerprint); "
                     "print(builder.prompt.prompt_hash)"
                 ),

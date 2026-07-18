@@ -5,7 +5,7 @@ import re
 import secrets
 import threading
 from dataclasses import dataclass
-from typing import Literal, NoReturn, Protocol, cast
+from typing import Literal, NoReturn, Protocol
 
 from arkts_code_reviewer.hybrid_analysis.builders import AnalysisContextPolicy
 from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
@@ -261,7 +261,7 @@ class AITagShadowAuthorizationGate:
             claims_id=claims.claims_id,
         )
 
-    def consume(
+    def _consume_capability(
         self,
         capability: AITagShadowDispatchCapability,
         *,
@@ -284,24 +284,46 @@ class AITagShadowAuthorizationGate:
         if issued_binding != (plan.plan_id, claims.claims_id):
             raise AITagShadowAuthorizationError("capability_invalid")
 
-    def _send_with_fixed_transport(
+    def dispatch_once(
         self,
-        transport: _HttpxDeepSeekShadowTransport,
         *,
+        capability: AITagShadowDispatchCapability,
         plan: AITagShadowDispatchPlan,
+        claims: AITagShadowDispatchClaims,
+        transport: DeepSeekShadowHttpTransport,
     ) -> DeepSeekHttpResponse:
-        """Keep the real provider credential inside the fixed transport boundary."""
+        """Consume one capability and keep real credentials inside the fixed boundary."""
 
+        plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
+        claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
+        self._verify_trusted_plan(plan)
         if (
-            type(transport) is not _HttpxDeepSeekShadowTransport
-            or not transport.establishes_fixed_tls_network_evidence
+            claims.plan_id != plan.plan_id
+            or claims.trust_domain_id != self.trust_domain_id
+            or claims.credential_scope_id != self._credential_provider.credential_scope_id
         ):
-            raise AITagShadowAuthorizationError("capability_invalid")
-        try:
-            api_key = self._credential_provider.get_api_key()
-        except DeepSeekCredentialUnavailableError:
-            raise AITagShadowAuthorizationError("credential_not_configured") from None
-        return transport.send(plan, api_key=api_key)
+            raise AITagShadowAuthorizationError("claims_mismatch")
+        self._consume_capability(
+            capability,
+            plan=plan,
+            claims=claims,
+        )
+        if (
+            type(transport) is _HttpxDeepSeekShadowTransport
+            and transport.establishes_fixed_tls_network_evidence
+        ):
+            try:
+                api_key = self._credential_provider.get_api_key()
+            except DeepSeekCredentialUnavailableError:
+                raise AITagShadowAuthorizationError("credential_not_configured") from None
+            return transport.send(
+                plan,
+                api_key=api_key,
+            )
+        return transport.send(
+            plan,
+            api_key=_SYNTHETIC_INJECTED_TRANSPORT_API_KEY,
+        )
 
 
 @dataclass(frozen=True)
@@ -339,11 +361,6 @@ class DeepSeekShadowRunner:
         _verify_plan_envelope(plan=plan, envelope=envelope)
         if claims.plan_id != plan.plan_id or claims.trust_domain_id != self._gate.trust_domain_id:
             raise AITagShadowAuthorizationError("claims_mismatch")
-        self._gate.consume(
-            capability,
-            plan=plan,
-            claims=claims,
-        )
         transport_evidence: Literal[
             "httpx_tls_fixed_endpoint",
             "injected_untrusted_transport",
@@ -354,16 +371,12 @@ class DeepSeekShadowRunner:
             else "injected_untrusted_transport"
         )
         try:
-            if transport_evidence == "httpx_tls_fixed_endpoint":
-                response = self._gate._send_with_fixed_transport(  # noqa: SLF001
-                    cast(_HttpxDeepSeekShadowTransport, self._transport),
-                    plan=plan,
-                )
-            else:
-                response = self._transport.send(
-                    plan,
-                    api_key=_SYNTHETIC_INJECTED_TRANSPORT_API_KEY,
-                )
+            response = self._gate.dispatch_once(
+                capability=capability,
+                plan=plan,
+                claims=claims,
+                transport=self._transport,
+            )
         except DeepSeekHttpTransportError as exc:
             attempt = _attempt_failure_receipt(
                 plan=plan,
