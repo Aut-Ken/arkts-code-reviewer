@@ -46,6 +46,14 @@ updated: 2026-07-19
   Unit/report。该链不 dispatch、不构造 formal Result/Outcome/Hybrid、不进入 Retrieval，固定
   not-qualified；当前 input set 未绑定 sealed campaign manifest，Card 上游 provenance 也不在该
   verifier closure。
+- Evaluation-only 的多 ReviewUnit shadow campaign 准备合同：从调用方提供的
+  `AnalysisResult + ContextPlanResult + ChangeSet + SourceSnapshotBundle` 与显式 Unit selection
+  重建每个 Card/ModelView/full-24 Request/Envelope/Plan，生成内容寻址 manifest 和不含源码、Prompt、
+  wire body、credential 或 response 的 inspect-only 投影；full verifier 会从上游 roots 重建整个
+  campaign。campaign-aware adapter 要求 caller-keyed Plan ID coverage 完整，并验证每个既有
+  ResponseValidation 绑定对应 Envelope，再复用上述 v1 evaluator；Validation 不绑定 Plan execution，
+  adapter 不 dispatch、不读取 credential，仍固定 not-qualified，也不改变 v1 report 的
+  `caller_supplied_input_set_not_campaign_bound` 语义。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -57,7 +65,11 @@ updated: 2026-07-19
 
 - 真实通用 Tag blind campaign、production-prevalence Truth 和总体 Tag Precision/Recall。
 - 真实代码的 multi-Unit DeepSeek campaign、人工 Unit-exact Truth、重复运行稳定性和模型 Tag P/R；
-  当前固定合成样例的单次 valid-shape observation 与多 Unit 合成合同都不能替代这些证据。
+  当前固定合成样例的单次 valid-shape observation、多 Unit 合成合同与 inspect-only campaign
+  manifest 都不能替代这些证据。
+- 能完整记录 planned、attempted、skipped-budget、not-run 和 transport/outer-invalid Unit 的 sealed
+  campaign execution-result artifact；当前 adapter 对缺少 ResponseValidation 的 Plan fail-closed，
+  不会把零 attempt Unit 静默省略或伪造成 negative。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
@@ -72,6 +84,7 @@ updated: 2026-07-19
 | ReviewUnit owner | ChangeSet+Facts -> Primary Units | owner precision/recall、changed-line coverage、诊断传播、确定性 |
 | Context Planner | Primary+relations+budget -> ContextPlanResult | required-context recall、relation precision/recall、distractor rejection、预算合规 |
 | Feature Routing | UnitFactScope -> Tags/Dimensions/Questions | exact/routing Tag precision/recall、Unit/MR Dimension precision/recall、串扰率、问题绑定覆盖 |
+| AI Tag shadow campaign preparation | upstream graph + Unit selection -> manifest/inspection/per-Unit Plans | selection/identity/rebuild 完整性、跨 Unit splice 拒绝、安全投影；不执行 provider、不计算 P/R |
 | AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |

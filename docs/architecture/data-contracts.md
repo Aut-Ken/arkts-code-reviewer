@@ -897,6 +897,55 @@ Dimension、RQ、Result/Outcome、RetrievalRequest、Evidence 或 Finding 字段
 诊断状态，不能产生 TP/FP/FN/TN、Precision/Recall、模型稳定性或生产启用结论。Card 之前的 Parser、
 ReviewUnit、Feature Routing 与 Git provenance 仍不在该 verifier closure 内。
 
+### 11.6 当前 AI Tag shadow campaign 准备与 inspection artifacts
+
+`ai-tag-shadow-campaign-manifest-v1` 是已经实现的 evaluation-only campaign **准备合同**。它从调用方
+提供的 `AnalysisResult + ContextPlanResult + ChangeSet + SourceSnapshotBundle` 和显式选中的
+ReviewUnit 集合开始，使用 provider-egress Card policy、当前 24-Tag Catalog/Prompt/model policy、
+shadow provider policy 与 limits，逐 Unit 确定性重建：
+
+```text
+caller-supplied upstream graph + selected Unit IDs
+-> AnalysisCardBuilder.build_many
+-> AITagModelView
+-> full-24 AITagAnalysisRequest
+-> VerifiedAITagDispatchEnvelope
+-> per-Unit AITagShadowDispatchPlan
+-> AITagShadowCampaignManifest
+```
+
+Manifest 只冻结同一次 selection 中的上游 graph/source identities、共享 policy/assets fingerprints 和
+每个 Unit 的 Card/View/Request/Envelope/Plan 引用。选中 Unit 使用 canonical 排序，因此调用方输入
+顺序不改变 campaign identity；重复或未知 Unit、跨 Unit artifact 拼接、共享配置漂移和 limits 漂移
+均 fail-closed。`verify_against_upstream` 会从调用方提供的完整上游对象重新执行整条 Builder 链，而
+不把 manifest self-hash 当作上游 Git provenance 或 source authenticity 证明。
+
+`ai-tag-shadow-campaign-inspection-v1` 是由 manifest/bundle 派生的 metadata-only 只读投影，不是第二份
+dispatch 真值。它不输出可能携带源码路径、qualified symbol 和行号的明文 `unit_id`，只包含 opaque
+source/Card/View/Request/Envelope/Plan identities、最终 wire body hash/byte
+length、endpoint/model、timeout/output/response limits 和汇总数量；不包含源码、Prompt 正文、Tag
+合同正文、wire JSON、credential、响应或 Tag judgment。repo-only
+`tools/inspect_ai_tag_shadow_campaign.py` 只校验并规范化该 inspection JSON，不读取环境 credential，
+没有 execute/live/approval/state 参数，并固定声明 `network_attempted=false`、
+`credential_accessed=false`。这些字段是本地 inspection 合同，不是外部不可否认证明。
+
+Campaign-aware evaluation adapter 要求调用方提供与 manifest Plan ID 集合完全相等的 mapping，并验证
+每个 `AITagResponseValidation` 绑定对应 Unit 的 Envelope；缺失、额外或跨 Unit 调换均拒绝。Validation
+本身不绑定 Plan ID、timeout/output/response limits 或 Plan execution receipt，因此该 mapping 只证明
+caller-keyed Plan coverage + Envelope-bound validation，不能证明 response 来自对应 Plan 的实际执行。
+adapter 随后复用 11.5 的 v1 evaluator，而不是创造第二套 report schema。生成的 report 因而仍明确记录
+`collection_scope=caller_supplied_input_set_not_campaign_bound` 与既有 qualification blockers；manifest
+只加强本次 adapter 的输入映射和 full rebuild closure，不会把 v1 report 升级为 sealed execution
+campaign、provider attribution、人工 Truth 或 qualified evidence。当前合同不能表示零 attempt 的
+`skipped_budget/not_run` Unit；这类 Unit 缺少 ResponseValidation 时必须 fail-closed，不能静默省略或
+伪造为 `not_supported`。
+
+该链没有发送 DeepSeek 请求，没有读取 `.env`，没有访问 Retrieval/Knowledge，也不产生 formal
+Result/Outcome、Hybrid、Evidence 或 Finding。它证明的是多 Unit selection、逐 Unit outbound plan、
+不含路径/符号明文的 inspection 和 fake/non-formal validation 到既有 report 的确定性连接；仓库仍没有真实代码
+multi-Unit campaign、完整 execution-result artifact、人工 Unit-exact Truth、真实 P/R 或 N-run
+稳定性证据。
+
 ## 12. 兼容 RetrievalQuery 与正式 Retrieval 输入
 
 当前 `AnalysisResult.retrieval_query` 是早期 CLI 的 compatibility-only 视图。它仍保留
