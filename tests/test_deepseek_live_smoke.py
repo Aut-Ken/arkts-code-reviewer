@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 from concurrent.futures import ThreadPoolExecutor
@@ -214,12 +215,10 @@ def test_repository_synthetic_bundle_is_closed_deterministic_and_redacted() -> N
     assert first.manifest.plan_id == first.plan.plan_id
     assert first.manifest.wire_body_sha256 == first.plan.wire_body_sha256
     assert first.plan.plan_id == (
-        "ai-tag-shadow-plan:sha256:"
-        "20d55d4ac2310f267dd972a5dad9025041e78408a40be0e8d2aa7e7d96d936d9"
+        "ai-tag-shadow-plan:sha256:20d55d4ac2310f267dd972a5dad9025041e78408a40be0e8d2aa7e7d96d936d9"
     )
     assert first.plan.plan_id != (
-        "ai-tag-shadow-plan:sha256:"
-        "0c62a34c9a100b155e3d768ed8cd391e325490cac972e6fd5c02863dac733dc7"
+        "ai-tag-shadow-plan:sha256:0c62a34c9a100b155e3d768ed8cd391e325490cac972e6fd5c02863dac733dc7"
     )
     assert first.plan.wire_body_sha256 == (
         "sha256:9165e9853d1a907546a6c6c786de849c1d8b7cc041202f172ba83d43d5f622d0"
@@ -524,6 +523,32 @@ def test_missing_credential_does_not_consume_budget_or_send(
     assert summary["error_code"] == "credential_not_configured"
     assert transport.calls == 0
     assert credential.configured_checks == 1
+    assert credential.key_reads == 0
+    assert not state_dir.exists()
+
+
+def test_live_process_preflight_occurs_before_single_smoke_reservation(
+    tmp_path: Path,
+) -> None:
+    bundle = build_repository_synthetic_smoke_bundle()
+    credential = _Credential()
+    state_dir = tmp_path / "state"
+
+    async def execute_inside_active_loop() -> None:
+        run_repository_synthetic_smoke(
+            bundle=bundle,
+            approved_plan_id=bundle.plan.plan_id,
+            approved_wire_body_sha256=bundle.plan.wire_body_sha256,
+            reserved_max_output_tokens=bundle.plan.wire_payload.max_tokens,
+            acknowledgement=REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+            state_dir=state_dir,
+            credential_provider=credential,
+        )
+
+    with pytest.raises(RuntimeError, match="active event loop"):
+        asyncio.run(execute_inside_active_loop())
+
+    assert credential.configured_checks == 0
     assert credential.key_reads == 0
     assert not state_dir.exists()
 

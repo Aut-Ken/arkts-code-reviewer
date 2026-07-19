@@ -622,6 +622,11 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "config/ai_tag_contracts.yaml": (
             "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml"
         ),
+        "src/arkts_code_reviewer/hybrid_analysis/defaults/"
+        "repository_synthetic_campaign_file_analysis.json": (
+            "arkts_code_reviewer/hybrid_analysis/defaults/"
+            "repository_synthetic_campaign_file_analysis.json"
+        ),
         "config/dimensions.yaml": (
             "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
         ),

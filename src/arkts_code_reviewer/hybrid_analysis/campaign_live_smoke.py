@@ -6,7 +6,7 @@ import os
 import stat
 import sys
 import threading
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, Literal, NoReturn, Protocol, Self
@@ -27,6 +27,7 @@ from arkts_code_reviewer.hybrid_analysis._canonical import (
     canonical_hash,
     canonical_json,
     identity_payload,
+    load_json_object,
     seal_payload,
 )
 from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
@@ -35,14 +36,31 @@ from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
     DeepSeekShadowHttpTransport,
     EnvironmentDeepSeekCredentialProvider,
 )
+from arkts_code_reviewer.hybrid_analysis.execution import (
+    AITagResponseValidation,
+    verify_ai_tag_response_validation,
+)
 from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
     AITagShadowDispatchClaims,
     AITagShadowDispatchPlan,
     seal_ai_tag_shadow_dispatch_claims,
 )
+from arkts_code_reviewer.hybrid_analysis.repository_campaign_parser import (
+    REPOSITORY_SYNTHETIC_CAMPAIGN_BASE_CODE_SHA256,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_BASE_REVISION,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_HEAD_CODE_SHA256,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_HEAD_REVISION,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_PARSER_PROFILE,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_PATH,
+    REPOSITORY_SYNTHETIC_CAMPAIGN_REPOSITORY,
+    RepositorySyntheticCampaignFileParser,
+    RepositorySyntheticCampaignParserError,
+)
 from arkts_code_reviewer.hybrid_analysis.shadow_campaign import (
     AITagShadowCampaignBundle,
     build_ai_tag_shadow_campaign,
+    build_ai_tag_shadow_campaign_evaluation_report,
+    verify_ai_tag_shadow_campaign_evaluation_report,
 )
 from arkts_code_reviewer.hybrid_analysis.shadow_campaign_execution import (
     AITagShadowCampaignExecutionBundle,
@@ -50,6 +68,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_campaign_execution import (
     AITagShadowCampaignLiveHarness,
     AITagShadowCampaignRuntimeBinding,
     AITagShadowCampaignTrustedUpstream,
+    verify_ai_tag_shadow_campaign_execution_result,
 )
 from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
     AITagShadowAuthorizationError,
@@ -67,8 +86,8 @@ AI_TAG_LOCAL_CAMPAIGN_PLAN_RESERVATION_SCHEMA_VERSION: Literal[
     "ai-tag-local-campaign-plan-reservation-v1"
 ] = "ai-tag-local-campaign-plan-reservation-v1"
 AI_TAG_CAMPAIGN_LIVE_SMOKE_SUMMARY_SCHEMA_VERSION: Literal[
-    "ai-tag-campaign-live-smoke-summary-v1"
-] = "ai-tag-campaign-live-smoke-summary-v1"
+    "ai-tag-campaign-live-smoke-summary-v2"
+] = "ai-tag-campaign-live-smoke-summary-v2"
 
 REPOSITORY_SYNTHETIC_CAMPAIGN_CASE = "repository-synthetic-multi-unit-campaign-v1"
 REPOSITORY_SYNTHETIC_CAMPAIGN_ACKNOWLEDGEMENT = (
@@ -79,10 +98,10 @@ DEFAULT_CAMPAIGN_PLAN_MAX_OUTPUT_TOKENS = 4_096
 DEFAULT_CAMPAIGN_PLAN_TIMEOUT_MS = 60_000
 DEFAULT_CAMPAIGN_PLAN_MAX_RESPONSE_BYTES = 2_000_000
 
-_FIXED_REPOSITORY = "arkts-code-reviewer-fixed-synthetic"
-_FIXED_BASE_REVISION = "repository-synthetic-campaign-base-v1"
-_FIXED_HEAD_REVISION = "repository-synthetic-campaign-head-v1"
-_FIXED_PATH = "fixtures/repository_synthetic_campaign.ets"
+_FIXED_REPOSITORY = REPOSITORY_SYNTHETIC_CAMPAIGN_REPOSITORY
+_FIXED_BASE_REVISION = REPOSITORY_SYNTHETIC_CAMPAIGN_BASE_REVISION
+_FIXED_HEAD_REVISION = REPOSITORY_SYNTHETIC_CAMPAIGN_HEAD_REVISION
+_FIXED_PATH = REPOSITORY_SYNTHETIC_CAMPAIGN_PATH
 _FIXED_CHANGED_LINES = (5, 9)
 _FIXED_CONTEXT_BUDGET = 20_000
 
@@ -112,12 +131,8 @@ struct CampaignProbe {
   }
 }
 """
-_FIXED_BASE_CODE_SHA256 = (
-    "sha256:a40fa0c5ab4a2ba3486686d8ad2ef65f6f3d6dbf3497dd84d08fc95e14413a1d"
-)
-_FIXED_HEAD_CODE_SHA256 = (
-    "sha256:8b4f74c2986d3214f5883dbba482292511958422024797cc481b900843751b09"
-)
+_FIXED_BASE_CODE_SHA256 = REPOSITORY_SYNTHETIC_CAMPAIGN_BASE_CODE_SHA256
+_FIXED_HEAD_CODE_SHA256 = REPOSITORY_SYNTHETIC_CAMPAIGN_HEAD_CODE_SHA256
 
 _HASH = r"[0-9a-f]{64}"
 _SHA256 = rf"^sha256:{_HASH}$"
@@ -175,9 +190,7 @@ class _RepositorySyntheticCampaignCasePayload(FrozenModel):
     origin: Literal["repository_authored_synthetic"]
     data_classification: Literal["repository_contained_synthetic_no_user_code"]
     source_policy: Literal["closed_package_assets_no_external_input"]
-    outbound_asset_scope: Literal[
-        "repository_prompt_taxonomy_and_fixed_synthetic_campaign_code"
-    ]
+    outbound_asset_scope: Literal["repository_prompt_taxonomy_and_fixed_synthetic_campaign_code"]
     base_code_sha256: Annotated[str, Field(pattern=_SHA256)]
     head_code_sha256: Annotated[str, Field(pattern=_SHA256)]
     source_bundle_id: Annotated[str, Field(pattern=_SOURCE_BUNDLE_ID)]
@@ -215,12 +228,8 @@ class _LocalCampaignEgressApprovalPayload(FrozenModel):
     max_total_output_tokens: Annotated[int, Field(ge=256, le=262_144)]
     max_total_response_bytes: Annotated[int, Field(ge=1_024, le=128_000_000)]
     campaign_wall_clock_cap_ms: Annotated[int, Field(ge=1_000, le=3_600_000)]
-    operator_acknowledgement: Literal[
-        "YES_REPOSITORY_PROMPT_TAXONOMY_AND_FIXED_SYNTHETIC_CAMPAIGN"
-    ]
-    outbound_asset_scope: Literal[
-        "repository_prompt_taxonomy_and_fixed_synthetic_campaign_code"
-    ]
+    operator_acknowledgement: Literal["YES_REPOSITORY_PROMPT_TAXONOMY_AND_FIXED_SYNTHETIC_CAMPAIGN"]
+    outbound_asset_scope: Literal["repository_prompt_taxonomy_and_fixed_synthetic_campaign_code"]
     approval_scope: Literal["one_process_exact_repository_campaign_plan_set"]
     qualification: Literal["local_operator_control_not_deployment_compliance_approval"]
 
@@ -403,13 +412,46 @@ def build_repository_synthetic_campaign_bundle() -> RepositorySyntheticCampaignB
         base.source_ref.source_ref_id: base,
         head.source_ref.source_ref_id: head,
     }
-    analyzer = CodeAnalyzer()
+    try:
+        file_parser = RepositorySyntheticCampaignFileParser()
+    except RepositorySyntheticCampaignParserError as exc:
+        raise CampaignSmokePreflightError(str(exc)) from None
+    analyzer = CodeAnalyzer(file_parser=file_parser)
     analysis = analyzer.analyze_change_set(change_set, snapshots)
+    if any(
+        parse_result.analysis.parser_quality.layer != "L1"
+        or parse_result.analysis.parser_quality.error_nodes != 0
+        or parse_result.analysis.parser_quality.missing_nodes != 0
+        or parse_result.analysis.parser_quality.warnings
+        for parse_result in analysis.file_parse_results
+    ):
+        raise CampaignSmokePreflightError("fixed_campaign_parser_quality_mismatch")
     context_plan = analyzer.plan_context(
         analysis,
         source_snapshots=snapshots,
         code_context_budget=_FIXED_CONTEXT_BUDGET,
     )
+    expected_units = (
+        ("base", "CampaignProbe.first", "method", 4, 6, False),
+        ("base", "CampaignProbe.second", "method", 7, 11, False),
+        ("head", "CampaignProbe.first", "method", 4, 6, False),
+        ("head", "CampaignProbe.second", "method", 7, 11, False),
+    )
+    actual_units = tuple(
+        sorted(
+            (
+                unit.source_role,
+                unit.unit_symbol,
+                unit.unit_kind,
+                unit.source_span.start_line,
+                unit.source_span.end_line,
+                unit.context_degraded,
+            )
+            for unit in analysis.review_units
+        )
+    )
+    if actual_units != expected_units:
+        raise CampaignSmokePreflightError("fixed_campaign_unit_semantics_mismatch")
     unit_ids = tuple(sorted(unit.unit_id for unit in analysis.review_units))
     if len(unit_ids) != 4:
         raise CampaignSmokePreflightError("fixed_campaign_unit_count_mismatch")
@@ -421,6 +463,7 @@ def build_repository_synthetic_campaign_bundle() -> RepositorySyntheticCampaignB
         max_output_tokens=DEFAULT_CAMPAIGN_PLAN_MAX_OUTPUT_TOKENS,
         timeout_ms=DEFAULT_CAMPAIGN_PLAN_TIMEOUT_MS,
         max_response_bytes=DEFAULT_CAMPAIGN_PLAN_MAX_RESPONSE_BYTES,
+        parser_profile=REPOSITORY_SYNTHETIC_CAMPAIGN_PARSER_PROFILE,
     )
     if any(unit.plan.max_attempts != 1 for unit in campaign.units):
         raise CampaignSmokePreflightError("fixed_campaign_plan_attempt_cap_invalid")
@@ -467,6 +510,7 @@ def build_repository_synthetic_campaign_bundle() -> RepositorySyntheticCampaignB
         max_output_tokens=DEFAULT_CAMPAIGN_PLAN_MAX_OUTPUT_TOKENS,
         timeout_ms=DEFAULT_CAMPAIGN_PLAN_TIMEOUT_MS,
         max_response_bytes=DEFAULT_CAMPAIGN_PLAN_MAX_RESPONSE_BYTES,
+        parser_profile=REPOSITORY_SYNTHETIC_CAMPAIGN_PARSER_PROFILE,
     )
     return RepositorySyntheticCampaignBundle(
         case=case,
@@ -605,9 +649,7 @@ def build_local_campaign_plan_reservations(
         reservations.append(
             seal_payload(
                 {
-                    "schema_version": (
-                        AI_TAG_LOCAL_CAMPAIGN_PLAN_RESERVATION_SCHEMA_VERSION
-                    ),
+                    "schema_version": (AI_TAG_LOCAL_CAMPAIGN_PLAN_RESERVATION_SCHEMA_VERSION),
                     "case_id": bundle.case.case_id,
                     "campaign_id": bundle.case.campaign_id,
                     "plan_set_digest": bundle.case.plan_set_digest,
@@ -621,9 +663,7 @@ def build_local_campaign_plan_reservations(
                     "max_attempts": plan.max_attempts,
                     "reservation_scope": "one_local_fixed_campaign_plan_attempt",
                     "replay_guard": "per_plan_atomic_local_marker",
-                    "qualification": (
-                        "local_attempt_cap_not_currency_or_provider_budget"
-                    ),
+                    "qualification": ("local_attempt_cap_not_currency_or_provider_budget"),
                 },
                 payload_type=_LocalCampaignPlanReservationPayload,
                 sealed_type=LocalCampaignPlanReservation,
@@ -677,12 +717,10 @@ class OneShotCampaignPlanApprovalVerifier:
             or approval.caps_id != self._caps.caps_id
             or approval.max_units != self._caps.max_units
             or approval.max_total_attempts != self._caps.max_total_attempts
-            or approval.max_total_wire_body_bytes
-            != self._caps.max_total_wire_body_bytes
+            or approval.max_total_wire_body_bytes != self._caps.max_total_wire_body_bytes
             or approval.max_total_output_tokens != self._caps.max_total_output_tokens
             or approval.max_total_response_bytes != self._caps.max_total_response_bytes
-            or approval.campaign_wall_clock_cap_ms
-            != self._caps.campaign_wall_clock_cap_ms
+            or approval.campaign_wall_clock_cap_ms != self._caps.campaign_wall_clock_cap_ms
         ):
             raise AITagShadowAuthorizationError("egress_not_approved")
         with self._lock:
@@ -719,8 +757,7 @@ class AtomicCampaignPlanBudgetLedger:
 
     @property
     def marker_path(self) -> Path:
-        digest = self._reservation.reservation_id.rsplit(":", 1)[-1]
-        return self._state_dir / f"{digest}.consumed.json"
+        return self._state_dir / _campaign_marker_name(self._reservation)
 
     def consume_one_attempt_reservation(
         self,
@@ -749,14 +786,6 @@ class AtomicCampaignPlanBudgetLedger:
             self._consume_marker(plan)
 
     def _consume_marker(self, plan: AITagShadowDispatchPlan) -> None:
-        try:
-            self._ensure_state_dir()
-            flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC
-            if hasattr(os, "O_NOFOLLOW"):
-                flags |= os.O_NOFOLLOW
-            descriptor = os.open(self.marker_path, flags, 0o600)
-        except (FileExistsError, OSError, ValueError):
-            raise AITagShadowAuthorizationError("budget_not_reserved") from None
         marker = canonical_json(
             {
                 "schema_version": "ai-tag-local-campaign-attempt-consumption-v1",
@@ -765,33 +794,245 @@ class AtomicCampaignPlanBudgetLedger:
                 "plan_id": plan.plan_id,
                 "wire_body_sha256": plan.wire_body_sha256,
                 "reservation_id": self._reservation.reservation_id,
-                "qualification": (
-                    "local_replay_guard_not_provider_or_cost_evidence"
-                ),
+                "qualification": ("local_replay_guard_not_provider_or_cost_evidence"),
             }
         ).encode("utf-8")
+        state_descriptor: int | None = None
+        marker_descriptor: int | None = None
         try:
-            if os.write(descriptor, marker) != len(marker):
+            opened_state_descriptor = _open_campaign_state_directory(
+                self._state_dir,
+                create=True,
+            )
+            if opened_state_descriptor is None:  # pragma: no cover - create=True invariant
+                raise OSError("Campaign state directory was not created")
+            state_descriptor = opened_state_descriptor
+            flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC
+            if hasattr(os, "O_NOFOLLOW"):
+                flags |= os.O_NOFOLLOW
+            marker_descriptor = os.open(
+                _campaign_marker_name(self._reservation),
+                flags,
+                0o600,
+                dir_fd=state_descriptor,
+            )
+            os.fchmod(marker_descriptor, 0o600)
+        except (FileExistsError, OSError, ValueError):
+            if marker_descriptor is not None:
+                os.close(marker_descriptor)
+            if state_descriptor is not None:
+                os.close(state_descriptor)
+            raise AITagShadowAuthorizationError("budget_not_reserved") from None
+        assert marker_descriptor is not None
+        assert state_descriptor is not None
+        try:
+            if os.write(marker_descriptor, marker) != len(marker):
                 raise OSError("incomplete local reservation marker")
-            os.fsync(descriptor)
+            os.fsync(marker_descriptor)
+            os.fsync(state_descriptor)
         except OSError:
             raise AITagShadowAuthorizationError("budget_not_reserved") from None
         finally:
-            os.close(descriptor)
+            os.close(marker_descriptor)
+            os.close(state_descriptor)
 
-    def _ensure_state_dir(self) -> None:
-        state_dir = self._state_dir
-        if state_dir.exists():
-            if state_dir.is_symlink() or not state_dir.is_dir():
-                raise ValueError("unsafe Campaign state directory")
-        else:
-            parent = state_dir.parent
-            if not parent.is_dir() or parent.is_symlink():
-                raise ValueError("Campaign state parent must be an existing real directory")
-            os.mkdir(state_dir, mode=0o700)
-        metadata = os.stat(state_dir, follow_symlinks=False)
-        if not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) & 0o077:
-            raise ValueError("Campaign state directory must not be group/world accessible")
+
+def _campaign_marker_name(reservation: LocalCampaignPlanReservation) -> str:
+    digest = reservation.reservation_id.rsplit(":", 1)[-1]
+    if len(digest) != 64 or any(character not in "0123456789abcdef" for character in digest):
+        raise ValueError("invalid Campaign reservation digest")
+    return f"{digest}.consumed.json"
+
+
+def _campaign_result_artifact_name(execution_result_id: str) -> str:
+    digest = execution_result_id.rsplit(":", 1)[-1]
+    if len(digest) != 64 or any(character not in "0123456789abcdef" for character in digest):
+        raise ValueError("invalid Campaign Execution Result digest")
+    return f"{digest}.campaign-result.json"
+
+
+def _seal_campaign_run_summary(payload: Mapping[str, object]) -> dict[str, object]:
+    if "summary_id" in payload:
+        raise ValueError("unsealed Campaign run summary cannot contain summary_id")
+    sealed = dict(payload)
+    sealed["summary_id"] = canonical_hash(
+        "ai-tag-campaign-live-smoke-summary",
+        sealed,
+    )
+    _verify_campaign_run_summary(sealed)
+    return sealed
+
+
+def _verify_campaign_run_summary(summary: Mapping[str, object]) -> None:
+    if (
+        summary.get("schema_version") != AI_TAG_CAMPAIGN_LIVE_SMOKE_SUMMARY_SCHEMA_VERSION
+        or summary.get("mode") != "live_shadow_campaign_result"
+    ):
+        raise ValueError("Campaign run summary has an unsupported contract")
+    execution_result_id = summary.get("execution_result_id")
+    summary_id = summary.get("summary_id")
+    if not isinstance(execution_result_id, str) or not isinstance(summary_id, str):
+        raise ValueError("Campaign run summary identities are missing")
+    if summary.get("result_artifact_name") != _campaign_result_artifact_name(execution_result_id):
+        raise ValueError("Campaign run summary artifact name is invalid")
+    summary_identity_payload = dict(summary)
+    summary_identity_payload.pop("summary_id", None)
+    if summary_id != canonical_hash(
+        "ai-tag-campaign-live-smoke-summary",
+        summary_identity_payload,
+    ):
+        raise ValueError("Campaign run summary identity does not match its contents")
+
+
+def load_campaign_run_summary(raw: str | bytes) -> dict[str, object]:
+    summary = load_json_object(raw, "AI Tag Campaign Live Smoke Summary")
+    _verify_campaign_run_summary(summary)
+    return summary
+
+
+def _campaign_state_entry(state_dir: Path) -> tuple[Path, str]:
+    state_dir = Path(state_dir)
+    entry_name = state_dir.name
+    if not entry_name or entry_name in {".", ".."}:
+        raise ValueError("unsafe Campaign state directory")
+    return state_dir.parent, entry_name
+
+
+def _open_real_directory(path: str | Path, *, dir_fd: int | None = None) -> int:
+    flags = os.O_RDONLY | os.O_CLOEXEC
+    if hasattr(os, "O_DIRECTORY"):
+        flags |= os.O_DIRECTORY
+    has_nofollow = hasattr(os, "O_NOFOLLOW")
+    if has_nofollow:
+        flags |= os.O_NOFOLLOW
+
+    before: os.stat_result | None = None
+    if not has_nofollow:
+        before = os.stat(path, dir_fd=dir_fd, follow_symlinks=False)
+        if not stat.S_ISDIR(before.st_mode):
+            raise ValueError("unsafe Campaign directory")
+
+    descriptor = os.open(path, flags, dir_fd=dir_fd)
+    try:
+        after = os.fstat(descriptor)
+        if not stat.S_ISDIR(after.st_mode):
+            raise ValueError("unsafe Campaign directory")
+        if before is not None and (before.st_dev, before.st_ino) != (
+            after.st_dev,
+            after.st_ino,
+        ):
+            raise ValueError("Campaign directory changed while opening")
+    except BaseException:
+        os.close(descriptor)
+        raise
+    return descriptor
+
+
+def _validate_private_state_directory(descriptor: int) -> None:
+    metadata = os.fstat(descriptor)
+    if not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) & 0o077:
+        raise ValueError("Campaign state directory must not be group/world accessible")
+    if hasattr(os, "geteuid") and metadata.st_uid != os.geteuid():
+        raise ValueError("Campaign state directory must be owned by the current user")
+
+
+def _open_campaign_state_directory(
+    state_dir: Path,
+    *,
+    create: bool,
+) -> int | None:
+    parent_path, entry_name = _campaign_state_entry(state_dir)
+    parent_descriptor = _open_real_directory(parent_path)
+    try:
+        try:
+            state_descriptor = _open_real_directory(
+                entry_name,
+                dir_fd=parent_descriptor,
+            )
+        except FileNotFoundError:
+            if not create:
+                return None
+            try:
+                os.mkdir(entry_name, mode=0o700, dir_fd=parent_descriptor)
+                os.fsync(parent_descriptor)
+            except FileExistsError:
+                # A concurrent creator is acceptable only if the resulting entry
+                # is itself a private, real directory.
+                pass
+            state_descriptor = _open_real_directory(
+                entry_name,
+                dir_fd=parent_descriptor,
+            )
+        try:
+            _validate_private_state_directory(state_descriptor)
+        except BaseException:
+            os.close(state_descriptor)
+            raise
+        return state_descriptor
+    finally:
+        os.close(parent_descriptor)
+
+
+def _persist_campaign_run_summary(
+    *,
+    state_dir: Path,
+    summary: dict[str, object],
+    execution_result_id: str,
+) -> None:
+    _verify_campaign_run_summary(summary)
+    artifact_name = _campaign_result_artifact_name(execution_result_id)
+    if (
+        summary.get("execution_result_id") != execution_result_id
+        or summary.get("result_artifact_name") != artifact_name
+    ):
+        raise ValueError("Campaign result summary differs from its artifact identity")
+    encoded = canonical_json(summary).encode("utf-8")
+    temporary_name = f".{artifact_name}.tmp"
+    state_descriptor: int | None = None
+    artifact_descriptor: int | None = None
+    temporary_created = False
+    try:
+        state_descriptor = _open_campaign_state_directory(state_dir, create=True)
+        if state_descriptor is None:  # pragma: no cover - create=True invariant
+            raise OSError("Campaign state directory was not created")
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC
+        if hasattr(os, "O_NOFOLLOW"):
+            flags |= os.O_NOFOLLOW
+        artifact_descriptor = os.open(
+            temporary_name,
+            flags,
+            0o600,
+            dir_fd=state_descriptor,
+        )
+        temporary_created = True
+        os.fchmod(artifact_descriptor, 0o600)
+        written = 0
+        while written < len(encoded):
+            count = os.write(artifact_descriptor, encoded[written:])
+            if count <= 0:
+                raise OSError("incomplete Campaign result artifact")
+            written += count
+        os.fsync(artifact_descriptor)
+        os.link(
+            temporary_name,
+            artifact_name,
+            src_dir_fd=state_descriptor,
+            dst_dir_fd=state_descriptor,
+            follow_symlinks=False,
+        )
+        os.unlink(temporary_name, dir_fd=state_descriptor)
+        temporary_created = False
+        os.fsync(state_descriptor)
+    finally:
+        if artifact_descriptor is not None:
+            os.close(artifact_descriptor)
+        if temporary_created and state_descriptor is not None:
+            try:
+                os.unlink(temporary_name, dir_fd=state_descriptor)
+            except OSError:
+                pass
+        if state_descriptor is not None:
+            os.close(state_descriptor)
 
 
 class _InjectedTransportCredentialProvider:
@@ -811,24 +1052,69 @@ class _InjectedTransportCredentialProvider:
         )
 
 
+class _CampaignScopedCredentialProvider:
+    """Bind one Campaign to one credential deployment identity snapshot."""
+
+    def __init__(self, provider: DeepSeekCredentialProvider) -> None:
+        self._provider = provider
+        self._credential_scope_id = provider.credential_scope_id
+
+    @property
+    def credential_scope_id(self) -> str:
+        return self._credential_scope_id
+
+    def is_configured(self) -> bool:
+        return self._provider.is_configured()
+
+    def get_api_key(self) -> str:
+        return self._provider.get_api_key()
+
+
 def _validate_state_preflight(
     state_dir: Path,
     reservations: tuple[LocalCampaignPlanReservation, ...],
 ) -> None:
-    if state_dir.exists():
-        if state_dir.is_symlink() or not state_dir.is_dir():
-            raise CampaignSmokePreflightError("unsafe_state_directory")
-        metadata = os.stat(state_dir, follow_symlinks=False)
-        if stat.S_IMODE(metadata.st_mode) & 0o077:
-            raise CampaignSmokePreflightError("unsafe_state_directory")
-        for reservation in reservations:
-            digest = reservation.reservation_id.rsplit(":", 1)[-1]
-            if (state_dir / f"{digest}.consumed.json").exists():
+    state_descriptor: int | None = None
+    try:
+        state_descriptor = _open_campaign_state_directory(
+            state_dir,
+            create=False,
+        )
+        if state_descriptor is not None:
+            for reservation in reservations:
+                marker_name = _campaign_marker_name(reservation)
+                try:
+                    os.stat(
+                        marker_name,
+                        dir_fd=state_descriptor,
+                        follow_symlinks=False,
+                    )
+                except FileNotFoundError:
+                    continue
                 raise CampaignSmokePreflightError("campaign_plan_already_reserved")
+            return
+
+        # Opening the real parent is part of _open_campaign_state_directory even
+        # when the state entry does not exist. No path-based check is repeated.
         return
-    parent = state_dir.parent
-    if not parent.is_dir() or parent.is_symlink():
-        raise CampaignSmokePreflightError("unsafe_state_directory")
+    except CampaignSmokePreflightError:
+        raise
+    except (OSError, ValueError):
+        raise CampaignSmokePreflightError("unsafe_state_directory") from None
+    finally:
+        if state_descriptor is not None:
+            os.close(state_descriptor)
+
+
+def _campaign_trust_domain_id(bundle: RepositorySyntheticCampaignBundle) -> str:
+    return canonical_hash(
+        "ai-shadow-trust-domain",
+        {
+            "scope": "local-repository-synthetic-campaign-v1",
+            "case_id": bundle.case.case_id,
+            "campaign_id": bundle.case.campaign_id,
+        },
+    )
 
 
 def _build_claims(
@@ -839,19 +1125,11 @@ def _build_claims(
     reservation: LocalCampaignPlanReservation,
     credential_scope_id: str,
 ) -> AITagShadowDispatchClaims:
-    trust_domain_id = canonical_hash(
-        "ai-shadow-trust-domain",
-        {
-            "scope": "local-repository-synthetic-campaign-v1",
-            "case_id": bundle.case.case_id,
-            "campaign_id": bundle.case.campaign_id,
-        },
-    )
     return seal_ai_tag_shadow_dispatch_claims(
         {
             "schema_version": "ai-tag-shadow-dispatch-claims-v1",
             "plan_id": plan.plan_id,
-            "trust_domain_id": trust_domain_id,
+            "trust_domain_id": _campaign_trust_domain_id(bundle),
             "egress_approval_id": approval.approval_id,
             "budget_reservation_id": reservation.reservation_id,
             "credential_scope_id": credential_scope_id,
@@ -873,18 +1151,12 @@ def _build_runtime_bindings(
 ) -> dict[str, AITagShadowCampaignRuntimeBinding]:
     if len(reservations) != len(bundle.campaign.units):
         raise CampaignSmokePreflightError("campaign_reservation_coverage_mismatch")
+    scoped_credential_provider = _CampaignScopedCredentialProvider(credential_provider)
     bindings: dict[str, AITagShadowCampaignRuntimeBinding] = {}
     for unit, reservation in zip(bundle.campaign.units, reservations, strict=True):
         plan = unit.plan
         if reservation.plan_id != plan.plan_id:
             raise CampaignSmokePreflightError("campaign_reservation_order_mismatch")
-        claims = _build_claims(
-            bundle=bundle,
-            plan=plan,
-            approval=approval,
-            reservation=reservation,
-            credential_scope_id=credential_provider.credential_scope_id,
-        )
         trusted_plan_inputs = AITagShadowTrustedPlanInputs(
             envelope=unit.envelope,
             card=unit.card,
@@ -894,8 +1166,8 @@ def _build_runtime_bindings(
             max_response_bytes=plan.max_response_bytes,
         )
         gate = AITagShadowAuthorizationGate(
-            trust_domain_id=claims.trust_domain_id,
-            credential_provider=credential_provider,
+            trust_domain_id=_campaign_trust_domain_id(bundle),
+            credential_provider=scoped_credential_provider,
             trusted_plan_inputs=trusted_plan_inputs,
             egress_verifier=OneShotCampaignPlanApprovalVerifier(
                 bundle=bundle,
@@ -908,6 +1180,13 @@ def _build_runtime_bindings(
                 expected_plan=plan,
                 state_dir=state_dir,
             ),
+        )
+        claims = _build_claims(
+            bundle=bundle,
+            plan=plan,
+            approval=approval,
+            reservation=reservation,
+            credential_scope_id=gate.credential_scope_id,
         )
         bindings[plan.plan_id] = AITagShadowCampaignRuntimeBinding(
             claims=claims,
@@ -1045,37 +1324,97 @@ def _network_attempted_from_execution(
 
 def _build_run_summary(run: RepositorySyntheticCampaignRun) -> dict[str, object]:
     result = run.execution.result
-    plans = tuple(
-        {
-            "ordinal": ordinal,
-            "plan_id": unit.plan_id,
-            "dispatch_disposition": unit.dispatch_disposition,
-            "attempt_outcome": unit.attempt_outcome,
-            "attempt_count": unit.attempt_count,
-            "transport_evidence": unit.transport_evidence,
-            "network_observation": unit.network_observation,
-        }
-        for ordinal, unit in enumerate(result.units, start=1)
+    evidence_by_plan_id = {item.plan_id: item for item in run.execution.unit_evidence}
+    verify_ai_tag_shadow_campaign_execution_result(
+        result,
+        trusted_upstream=run.bundle.trusted_upstream,
+        expected_limits=run.bundle.caps.execution_limits(),
+        evidence_by_plan_id=evidence_by_plan_id,
     )
-    return {
-        "schema_version": AI_TAG_CAMPAIGN_LIVE_SMOKE_SUMMARY_SCHEMA_VERSION,
-        "mode": "live_shadow_campaign_result",
-        "network_attempted": _network_attempted_from_execution(run.execution),
-        "network_observation_scope": (
-            "fixed_httpx_observation_or_unknown_for_injected_transport"
-        ),
-        "dispatch_attempted": result.counts.attempted_unit_count > 0,
-        "case_id": run.bundle.case.case_id,
-        "campaign_id": result.campaign_id,
-        "plan_set_digest": run.bundle.case.plan_set_digest,
-        "execution_result_id": result.execution_result_id,
-        "counts": result.counts.model_dump(mode="json"),
-        "plans": plans,
-        "raw_response_retained": False,
-        "output_scope": "metadata_only_no_code_prompt_body_response_reason_key_or_state_path",
-        "evidence_qualification_status": result.evidence_qualification_status,
-        "production_qualified": result.production_qualified,
-    }
+    campaign_units = {item.plan.plan_id: item for item in run.bundle.campaign.units}
+    response_validations: dict[str, AITagResponseValidation] = {}
+    plans: list[dict[str, object]] = []
+    for ordinal, unit in enumerate(result.units, start=1):
+        evidence = evidence_by_plan_id[unit.plan_id]
+        campaign_unit = campaign_units[unit.plan_id]
+        validation = (
+            None if evidence.run_artifacts is None else evidence.run_artifacts.response_validation
+        )
+        decisions: list[dict[str, str]] = []
+        if validation is not None:
+            verify_ai_tag_response_validation(validation, campaign_unit.envelope)
+            response_validations[unit.plan_id] = validation
+            if validation.status == "valid_shape":
+                decisions = [
+                    {"tag_id": judgment.tag_id, "decision": judgment.decision}
+                    for judgment in validation.judgments
+                ]
+        if (unit.attempt_outcome == "valid_shape") != (len(decisions) == 24):
+            raise ValueError("Campaign summary Tag decisions differ from execution status")
+        decision_counts: dict[str, int] = {}
+        for decision in decisions:
+            value = decision["decision"]
+            decision_counts[value] = decision_counts.get(value, 0) + 1
+        plans.append(
+            {
+                "ordinal": ordinal,
+                "plan_id": unit.plan_id,
+                "card_id": campaign_unit.card.card_id,
+                "source_role": campaign_unit.card.source_role,
+                "unit_kind": campaign_unit.card.unit_kind,
+                "unit_symbol": campaign_unit.card.unit_symbol,
+                "dispatch_disposition": unit.dispatch_disposition,
+                "attempt_outcome": unit.attempt_outcome,
+                "attempt_count": unit.attempt_count,
+                "transport_evidence": unit.transport_evidence,
+                "network_observation": unit.network_observation,
+                "response_validation_id": (
+                    None if validation is None else validation.validation_id
+                ),
+                "validated_tag_decision_count": len(decisions),
+                "decision_counts": decision_counts,
+                "validated_tag_decisions": decisions,
+            }
+        )
+    evaluation_report_id: str | None = None
+    if len(response_validations) == len(run.bundle.campaign.units):
+        report = build_ai_tag_shadow_campaign_evaluation_report(
+            run.bundle.campaign,
+            response_validations,
+        )
+        verify_ai_tag_shadow_campaign_evaluation_report(
+            report,
+            run.bundle.campaign,
+            response_validations,
+        )
+        evaluation_report_id = report.report_id
+    return _seal_campaign_run_summary(
+        {
+            "schema_version": AI_TAG_CAMPAIGN_LIVE_SMOKE_SUMMARY_SCHEMA_VERSION,
+            "mode": "live_shadow_campaign_result",
+            "network_attempted": _network_attempted_from_execution(run.execution),
+            "network_observation_scope": (
+                "fixed_httpx_observation_or_unknown_for_injected_transport"
+            ),
+            "dispatch_attempted": result.counts.attempted_unit_count > 0,
+            "case_id": run.bundle.case.case_id,
+            "campaign_id": result.campaign_id,
+            "plan_set_digest": run.bundle.case.plan_set_digest,
+            "execution_result_id": result.execution_result_id,
+            "result_artifact_name": _campaign_result_artifact_name(result.execution_result_id),
+            "result_artifact_scope": "safe_summary_not_full_evidence_graph",
+            "evaluation_report_id": evaluation_report_id,
+            "counts": result.counts.model_dump(mode="json"),
+            "plans": tuple(plans),
+            "raw_response_retained": False,
+            "output_scope": (
+                "metadata_and_validated_tag_decisions_no_code_prompt_body_response_"
+                "reason_key_or_state_path"
+            ),
+            "evidence_qualification_status": result.evidence_qualification_status,
+            "production_qualified": result.production_qualified,
+        }
+    )
 
 
 def _safe_error_summary(*, code: str, attempted: bool | None) -> dict[str, object]:
@@ -1147,11 +1486,7 @@ def main(
         )
         return 2
     if test_transport is not None and args.allow_real_transport:
-        print(
-            canonical_json(
-                _safe_error_summary(code="transport_mode_conflict", attempted=False)
-            )
-        )
+        print(canonical_json(_safe_error_summary(code="transport_mode_conflict", attempted=False)))
         return 2
     required = (
         args.approve_campaign_id,
@@ -1246,6 +1581,22 @@ def main(
             )
         )
         return 3
+    try:
+        _persist_campaign_run_summary(
+            state_dir=args.state_dir,
+            summary=summary,
+            execution_result_id=run.execution.result.execution_result_id,
+        )
+    except (OSError, TypeError, ValueError):
+        print(
+            canonical_json(
+                _safe_error_summary(
+                    code="campaign_result_persistence_failed",
+                    attempted=_network_attempted_from_execution(run.execution),
+                )
+            )
+        )
+        return 3
     print(canonical_json(summary))
     counts = run.execution.result.counts
     if (
@@ -1279,6 +1630,7 @@ __all__ = [
     "build_local_campaign_egress_approval",
     "build_local_campaign_plan_reservations",
     "build_repository_synthetic_campaign_bundle",
+    "load_campaign_run_summary",
     "main",
     "run_repository_synthetic_campaign",
 ]

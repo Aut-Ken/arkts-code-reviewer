@@ -20,11 +20,11 @@ from arkts_code_reviewer.hybrid_analysis._canonical import (
 from arkts_code_reviewer.hybrid_analysis.builders import (
     AIModelViewProjectionPolicy,
     AnalysisContextPolicy,
+    AnalysisParserProfile,
 )
 from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
     DeepSeekOuterResponseDiagnostic,
     DeepSeekShadowHttpTransport,
-    _HttpxDeepSeekShadowTransport,
 )
 from arkts_code_reviewer.hybrid_analysis.execution import (
     AITagResponseValidation,
@@ -50,6 +50,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
     AITagShadowRunArtifacts,
     AITagShadowTrustedPlanInputs,
     DeepSeekShadowRunner,
+    preflight_deepseek_shadow_live_transport,
     verify_deepseek_shadow_run_artifacts,
 )
 
@@ -200,9 +201,7 @@ class _AITagShadowCampaignNonAttemptReceiptPayload(FrozenModel):
     observed_control_stage: NonAttemptControlStage
     campaign_elapsed_ms: Annotated[int | None, Field(ge=0, le=86_400_000)]
     attempt_count: Literal[0]
-    control_evidence_scope: Literal[
-        "process_local_observation_not_external_authority"
-    ]
+    control_evidence_scope: Literal["process_local_observation_not_external_authority"]
 
     @model_validator(mode="after")
     def validate_non_attempt_matrix(self) -> Self:
@@ -240,9 +239,7 @@ class _AITagShadowCampaignNonAttemptReceiptPayload(FrozenModel):
         return self
 
 
-class AITagShadowCampaignNonAttemptReceipt(
-    _AITagShadowCampaignNonAttemptReceiptPayload
-):
+class AITagShadowCampaignNonAttemptReceipt(_AITagShadowCampaignNonAttemptReceiptPayload):
     receipt_id: Annotated[str, Field(pattern=_NON_ATTEMPT_RECEIPT_ID)]
 
     @model_validator(mode="after")
@@ -297,28 +294,31 @@ class _AITagShadowCampaignUnitExecutionPayload(FrozenModel):
     outer_diagnostic_id: Annotated[str | None, Field(pattern=_OUTER_DIAGNOSTIC_ID)]
     observation_id: Annotated[str | None, Field(pattern=_OBSERVATION_ID)]
     attempt_transport_status: AttemptTransportStatus | None
-    transport_evidence: Literal[
-        "httpx_tls_fixed_endpoint",
-        "injected_untrusted_transport",
-    ] | None
-    network_observation: Literal[
-        "observed_by_fixed_httpx_transport",
-        "not_established_by_injected_transport",
-    ] | None
+    transport_evidence: (
+        Literal[
+            "httpx_tls_fixed_endpoint",
+            "injected_untrusted_transport",
+        ]
+        | None
+    )
+    network_observation: (
+        Literal[
+            "observed_by_fixed_httpx_transport",
+            "not_established_by_injected_transport",
+        ]
+        | None
+    )
     observation_status: ObservationStatus | None
     observation_reason_code: Annotated[str | None, Field(min_length=1, max_length=100)]
     attempt_count: Annotated[int, Field(ge=0, le=1)]
-    local_control_scope: Literal[
-        "self_reported_process_local_gate_not_external_authority"
-    ]
+    local_control_scope: Literal["self_reported_process_local_gate_not_external_authority"]
     execution_evidence_scope: Literal["unattested_shadow_not_formal"]
 
     @field_validator("unit_id")
     @classmethod
     def validate_unit_id(cls, value: str) -> str:
-        if (
-            value != value.strip()
-            or any(ord(character) < 32 or ord(character) == 127 for character in value)
+        if value != value.strip() or any(
+            ord(character) < 32 or ord(character) == 127 for character in value
         ):
             raise ValueError("campaign Unit execution unit_id must be trimmed and single-line")
         return value
@@ -501,9 +501,7 @@ def _execution_counts(
 class _AITagShadowCampaignExecutionResultPayload(FrozenModel):
     schema_version: Literal["ai-tag-shadow-campaign-execution-result-v1"]
     campaign_id: Annotated[str, Field(pattern=_CAMPAIGN_ID)]
-    execution_policy_version: Literal[
-        "canonical_order_per_plan_single_attempt_no_retry_v1"
-    ]
+    execution_policy_version: Literal["canonical_order_per_plan_single_attempt_no_retry_v1"]
     execution_limits: AITagShadowCampaignExecutionLimits
     units: tuple[AITagShadowCampaignUnitExecution, ...]
     counts: AITagShadowCampaignExecutionCounts
@@ -515,18 +513,10 @@ class _AITagShadowCampaignExecutionResultPayload(FrozenModel):
     raw_response_rebuild_scope: Literal[
         "caller_supplied_raw_bytes_required_for_offline_full_rebuild"
     ]
-    event_identity_scope: Literal[
-        "content_identity_not_unique_occurrence_attestation"
-    ]
-    local_control_scope: Literal[
-        "process_local_gate_observation_not_external_authority"
-    ]
-    provider_evidence_scope: Literal[
-        "local_runtime_observation_not_provider_signature"
-    ]
-    source_provenance_scope: Literal[
-        "content_hash_replayed_git_attestation_not_verified"
-    ]
+    event_identity_scope: Literal["content_identity_not_unique_occurrence_attestation"]
+    local_control_scope: Literal["process_local_gate_observation_not_external_authority"]
+    provider_evidence_scope: Literal["local_runtime_observation_not_provider_signature"]
+    source_provenance_scope: Literal["content_hash_replayed_git_attestation_not_verified"]
     evidence_qualification_status: Literal["not_qualified"]
     production_qualified: Literal[False]
     qualification_blockers: tuple[CampaignExecutionQualificationBlocker, ...]
@@ -657,6 +647,7 @@ class AITagShadowCampaignTrustedUpstream:
     max_output_tokens: int = 4_096
     timeout_ms: int = 60_000
     max_response_bytes: int = 2_000_000
+    parser_profile: AnalysisParserProfile = "default"
 
     def __post_init__(self) -> None:
         if not isinstance(self.bundle, AITagShadowCampaignBundle):
@@ -680,6 +671,7 @@ class AITagShadowCampaignTrustedUpstream:
             max_output_tokens=self.max_output_tokens,
             timeout_ms=self.timeout_ms,
             max_response_bytes=self.max_response_bytes,
+            parser_profile=self.parser_profile,
         )
 
 
@@ -773,9 +765,7 @@ def _common_unit_payload(
         "plan_id": unit.plan.plan_id,
         "wire_body_sha256": unit.plan.wire_body_sha256,
         "claims_id": claims.claims_id,
-        "local_control_scope": (
-            "self_reported_process_local_gate_not_external_authority"
-        ),
+        "local_control_scope": ("self_reported_process_local_gate_not_external_authority"),
         "execution_evidence_scope": "unattested_shadow_not_formal",
     }
 
@@ -792,9 +782,7 @@ def _non_attempt_receipt(
 ) -> AITagShadowCampaignNonAttemptReceipt:
     return seal_ai_tag_shadow_campaign_non_attempt_receipt(
         {
-            "schema_version": (
-                AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION
-            ),
+            "schema_version": (AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION),
             "campaign_id": campaign_id,
             "plan_id": plan_id,
             "claims_id": claims_id,
@@ -803,9 +791,7 @@ def _non_attempt_receipt(
             "observed_control_stage": observed_control_stage,
             "campaign_elapsed_ms": campaign_elapsed_ms,
             "attempt_count": 0,
-            "control_evidence_scope": (
-                "process_local_observation_not_external_authority"
-            ),
+            "control_evidence_scope": ("process_local_observation_not_external_authority"),
         }
     )
 
@@ -899,9 +885,7 @@ def _seal_execution_result(
         {
             "schema_version": AI_TAG_SHADOW_CAMPAIGN_EXECUTION_RESULT_SCHEMA_VERSION,
             "campaign_id": campaign_id,
-            "execution_policy_version": (
-                "canonical_order_per_plan_single_attempt_no_retry_v1"
-            ),
+            "execution_policy_version": ("canonical_order_per_plan_single_attempt_no_retry_v1"),
             "execution_limits": limits.model_dump(mode="json"),
             "units": tuple(item.model_dump(mode="json") for item in units),
             "counts": _execution_counts(units).model_dump(mode="json"),
@@ -913,18 +897,10 @@ def _seal_execution_result(
             "raw_response_rebuild_scope": (
                 "caller_supplied_raw_bytes_required_for_offline_full_rebuild"
             ),
-            "event_identity_scope": (
-                "content_identity_not_unique_occurrence_attestation"
-            ),
-            "local_control_scope": (
-                "process_local_gate_observation_not_external_authority"
-            ),
-            "provider_evidence_scope": (
-                "local_runtime_observation_not_provider_signature"
-            ),
-            "source_provenance_scope": (
-                "content_hash_replayed_git_attestation_not_verified"
-            ),
+            "event_identity_scope": ("content_identity_not_unique_occurrence_attestation"),
+            "local_control_scope": ("process_local_gate_observation_not_external_authority"),
+            "provider_evidence_scope": ("local_runtime_observation_not_provider_signature"),
+            "source_provenance_scope": ("content_hash_replayed_git_attestation_not_verified"),
             "evidence_qualification_status": "not_qualified",
             "production_qualified": False,
             "qualification_blockers": _QUALIFICATION_BLOCKERS,
@@ -1012,10 +988,7 @@ def _verify_persistent_run_graph(
             expected_status = "provider_client_error"
         if response_receipt is not None or validation is not None or diagnostic is not None:
             raise ValueError("Campaign non-200 Attempt cannot carry parsed response artifacts")
-        if (
-            observation.status != expected_status
-            or observation.reason_code != expected_status
-        ):
+        if observation.status != expected_status or observation.reason_code != expected_status:
             raise ValueError("Campaign HTTP failure differs from its Observation")
         return
 
@@ -1065,8 +1038,7 @@ def _verify_persistent_run_graph(
         validation.source_kind != "unverified_raw"
         or validation.raw_content_sha256 != response_receipt.content_sha256
         or validation.model != response_receipt.model
-        or validation.system_fingerprint
-        != (response_receipt.system_fingerprint or "not_reported")
+        or validation.system_fingerprint != (response_receipt.system_fingerprint or "not_reported")
         or validation.finish_reason != response_receipt.finish_reason
         or validation.latency_ms != attempt.latency_ms
         or validation.attempt_count != 1
@@ -1083,19 +1055,30 @@ def verify_ai_tag_shadow_campaign_execution_result(
     result: AITagShadowCampaignExecutionResult,
     *,
     trusted_upstream: AITagShadowCampaignTrustedUpstream,
+    expected_limits: AITagShadowCampaignExecutionLimits,
     evidence_by_plan_id: Mapping[str, AITagShadowCampaignUnitEvidence],
     raw_response_body_by_plan_id: Mapping[str, bytes] | None = None,
 ) -> None:
-    """Verify the durable graph and optionally rebuild every response-received attempt."""
+    """Verify a Result against caller-owned roots and optionally rebuild responses.
+
+    ``expected_limits`` is deliberately supplied by the verifier caller.  The
+    limits embedded in a self-sealed Result are evidence, not authority: using
+    them as their own verification root would allow a Result to widen or shrink
+    its approved execution budget and then simply recompute its content hash.
+    """
 
     if not isinstance(trusted_upstream, AITagShadowCampaignTrustedUpstream):
         raise TypeError("campaign execution verifier requires trusted upstream roots")
+    if not isinstance(expected_limits, AITagShadowCampaignExecutionLimits):
+        raise TypeError("campaign execution verifier requires expected execution limits")
     trusted_upstream.verify()
     canonical = AITagShadowCampaignExecutionResult.model_validate(result.model_dump(mode="json"))
     campaign = trusted_upstream.bundle
     if canonical.campaign_id != campaign.manifest.campaign_id:
         raise ValueError("Campaign Execution Result refers to a different Manifest")
-    _verify_execution_limits(campaign, canonical.execution_limits)
+    if canonical.execution_limits != expected_limits:
+        raise ValueError("Campaign Execution Result differs from expected execution limits")
+    _verify_execution_limits(campaign, expected_limits)
 
     expected_plan_ids = tuple(item.plan.plan_id for item in campaign.units)
     if set(evidence_by_plan_id) != set(expected_plan_ids):
@@ -1145,12 +1128,14 @@ def verify_ai_tag_shadow_campaign_execution_result(
         evidence = evidence_by_plan_id[unit.plan.plan_id]
         if not isinstance(evidence, AITagShadowCampaignUnitEvidence):
             raise TypeError("campaign execution evidence mapping contains an invalid value")
-        claims = AITagShadowDispatchClaims.model_validate(
-            evidence.claims.model_dump(mode="json")
-        )
+        claims = AITagShadowDispatchClaims.model_validate(evidence.claims.model_dump(mode="json"))
         if recorded.claims_id != claims.claims_id or claims.plan_id != unit.plan.plan_id:
             raise ValueError("Campaign Unit execution differs from its Claims")
         if recorded.dispatch_disposition == "attempted":
+            if unit.plan.wall_clock_timeout_ms > expected_limits.campaign_wall_clock_cap_ms:
+                raise ValueError(
+                    "attempted Campaign Unit Plan timeout exceeds expected wall-clock cap"
+                )
             if evidence.run_artifacts is None:
                 raise ValueError("attempted Campaign Unit lacks Runner artifacts")
             if evidence.non_attempt_receipt is not None:
@@ -1196,12 +1181,10 @@ def verify_ai_tag_shadow_campaign_execution_result(
                 or receipt.claims_id != claims.claims_id
             ):
                 raise ValueError("Campaign non-attempt receipt differs from its graph")
-            if receipt.local_non_attempt_reason == (
-                "campaign_wall_clock_budget_insufficient"
-            ) and (
+            if receipt.local_non_attempt_reason == ("campaign_wall_clock_budget_insufficient") and (
                 receipt.campaign_elapsed_ms is None
                 or receipt.campaign_elapsed_ms + unit.plan.wall_clock_timeout_ms
-                <= canonical.execution_limits.campaign_wall_clock_cap_ms
+                <= expected_limits.campaign_wall_clock_cap_ms
             ):
                 raise ValueError("Campaign deadline receipt does not prove insufficient time")
             rebuilt = _non_attempt_unit_execution(
@@ -1217,7 +1200,7 @@ def verify_ai_tag_shadow_campaign_execution_result(
     expected_result = _seal_execution_result(
         campaign_id=campaign.manifest.campaign_id,
         units=tuple(rebuilt_units),
-        limits=canonical.execution_limits,
+        limits=expected_limits,
     )
     if canonical != expected_result:
         raise ValueError("Campaign Execution Result differs from its full graph rebuild")
@@ -1268,20 +1251,19 @@ class AITagShadowCampaignLiveHarness:
                 raise
             except ValueError:
                 raise AITagShadowAuthorizationError("plan_not_trusted") from None
-            uses_repository_live_transport = binding.transport is None or (
-                type(binding.transport) is _HttpxDeepSeekShadowTransport
-                and binding.transport.establishes_fixed_tls_network_evidence
-            )
+            uses_repository_live_transport = binding.transport is None
             if uses_repository_live_transport and not allow_live_transport:
                 raise ValueError(
                     "real Campaign transport requires explicit allow_live_transport=True"
                 )
             if not uses_repository_live_transport and not allow_injected_transport:
                 raise ValueError(
-                    "injected Campaign transport requires explicit "
-                    "allow_injected_transport=True"
+                    "injected Campaign transport requires explicit allow_injected_transport=True"
                 )
             bindings[unit.plan.plan_id] = binding
+
+        if any(binding.transport is None for binding in bindings.values()):
+            preflight_deepseek_shadow_live_transport()
 
         started_ns = time.monotonic_ns()
         records: list[AITagShadowCampaignUnitExecution] = []
@@ -1466,6 +1448,7 @@ class AITagShadowCampaignLiveHarness:
         verify_ai_tag_shadow_campaign_execution_result(
             result,
             trusted_upstream=trusted_upstream,
+            expected_limits=limits,
             evidence_by_plan_id={item.plan_id: item for item in evidence_rows},
         )
         return execution_bundle

@@ -51,6 +51,7 @@ packages = ["src/arkts_code_reviewer"]
 "config/tags.yaml" = "arkts_code_reviewer/feature_routing/defaults/tags.yaml"
 "config/dimensions.yaml" = "arkts_code_reviewer/feature_routing/defaults/dimensions.yaml"
 "config/ai_tag_contracts.yaml" = "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml"
+"src/arkts_code_reviewer/hybrid_analysis/defaults/repository_synthetic_campaign_file_analysis.json" = "arkts_code_reviewer/hybrid_analysis/defaults/repository_synthetic_campaign_file_analysis.json"
 "config/knowledge_seed_v1.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_seed_v1.yaml"
 "config/knowledge_annotations.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_annotations.yaml"
 "config/knowledge_model_export.yaml" = "arkts_code_reviewer/knowledge/defaults/knowledge_model_export.yaml"

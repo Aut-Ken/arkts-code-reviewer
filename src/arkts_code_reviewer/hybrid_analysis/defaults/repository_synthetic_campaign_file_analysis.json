@@ -1,0 +1,610 @@
+{
+  "base": {
+    "attributes": [],
+    "calls": [
+      "console.info",
+      "setTimeout"
+    ],
+    "components": [],
+    "declarations": [
+      {
+        "kind": "struct",
+        "name": "CampaignProbe",
+        "parent_name": null,
+        "qualified_name": "CampaignProbe",
+        "span": {
+          "end_col": 2,
+          "end_line": 12,
+          "start_col": 1,
+          "start_line": 1
+        }
+      },
+      {
+        "kind": "method",
+        "name": "first",
+        "parent_name": "CampaignProbe",
+        "qualified_name": "CampaignProbe.first",
+        "span": {
+          "end_col": 4,
+          "end_line": 6,
+          "start_col": 3,
+          "start_line": 4
+        }
+      },
+      {
+        "kind": "method",
+        "name": "second",
+        "parent_name": "CampaignProbe",
+        "qualified_name": "CampaignProbe.second",
+        "span": {
+          "end_col": 4,
+          "end_line": 11,
+          "start_col": 3,
+          "start_line": 7
+        }
+      }
+    ],
+    "declarations_v2": [
+      {
+        "end_offset": 228,
+        "kind": "struct",
+        "local_id": "declaration:struct:0-228:CampaignProbe",
+        "name": "CampaignProbe",
+        "parent": null,
+        "qualified_name": "CampaignProbe",
+        "span": {
+          "end_line": 12,
+          "start_line": 1
+        },
+        "start_offset": 0
+      },
+      {
+        "end_offset": 113,
+        "kind": "method",
+        "local_id": "declaration:method:43-113:CampaignProbe.first",
+        "name": "first",
+        "parent": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "qualified_name": "CampaignProbe.first",
+        "span": {
+          "end_line": 6,
+          "start_line": 4
+        },
+        "start_offset": 43
+      },
+      {
+        "end_offset": 226,
+        "kind": "method",
+        "local_id": "declaration:method:116-226:CampaignProbe.second",
+        "name": "second",
+        "parent": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "qualified_name": "CampaignProbe.second",
+        "span": {
+          "end_line": 11,
+          "start_line": 7
+        },
+        "start_offset": 116
+      }
+    ],
+    "decorators": [
+      "@Component",
+      "@Entry"
+    ],
+    "error_nodes": 0,
+    "error_spans": [],
+    "missing_nodes": 0,
+    "missing_spans": [],
+    "node_count": 79,
+    "offset_unit": "utf16_code_unit",
+    "output_schema": "file-analysis-v1",
+    "parser": "tree-sitter-arkts",
+    "parser_version": "0.2.0",
+    "path": "fixtures/repository_synthetic_campaign.ets",
+    "producer_version": "arkts-parser-sidecar-v2.0.0",
+    "raw_occurrences": [
+      {
+        "canonical_name": "@Entry",
+        "end_offset": 6,
+        "kind": "decorator",
+        "local_id": "occurrence:decorator:0-6:%40Entry",
+        "name": "@Entry",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 1,
+          "start_line": 1
+        },
+        "start_offset": 0
+      },
+      {
+        "canonical_name": "@Component",
+        "end_offset": 17,
+        "kind": "decorator",
+        "local_id": "occurrence:decorator:7-17:%40Component",
+        "name": "@Component",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 2,
+          "start_line": 2
+        },
+        "start_offset": 7
+      },
+      {
+        "canonical_name": "CampaignProbe",
+        "end_offset": 38,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:25-38:CampaignProbe",
+        "name": "CampaignProbe",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 3,
+          "start_line": 3
+        },
+        "start_offset": 25
+      },
+      {
+        "canonical_name": "CampaignProbe.first",
+        "end_offset": 48,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:43-48:CampaignProbe.first",
+        "name": "first",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "span": {
+          "end_line": 4,
+          "start_line": 4
+        },
+        "start_offset": 43
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 75,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:63-75:console.info",
+        "name": "console.info",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "root_name": "console",
+        "span": {
+          "end_line": 5,
+          "start_line": 5
+        },
+        "start_offset": 63
+      },
+      {
+        "canonical_name": null,
+        "end_offset": 108,
+        "kind": "string_literal",
+        "local_id": "occurrence:string_literal:76-108:%22repository%20synthetic%20old%20first%22",
+        "name": "\"repository synthetic old first\"",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "span": {
+          "end_line": 5,
+          "start_line": 5
+        },
+        "start_offset": 76
+      },
+      {
+        "canonical_name": "CampaignProbe.second",
+        "end_offset": 122,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:116-122:CampaignProbe.second",
+        "name": "second",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 7,
+          "start_line": 7
+        },
+        "start_offset": 116
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 147,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:137-147:setTimeout",
+        "name": "setTimeout",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "root_name": "setTimeout",
+        "span": {
+          "end_line": 8,
+          "start_line": 8
+        },
+        "start_offset": 137
+      },
+      {
+        "canonical_name": "arrow_fn",
+        "end_offset": 153,
+        "kind": "syntax",
+        "local_id": "occurrence:syntax:151-153:arrow_fn",
+        "name": "=>",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 8,
+          "start_line": 8
+        },
+        "start_offset": 151
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 174,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:162-174:console.info",
+        "name": "console.info",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "root_name": "console",
+        "span": {
+          "end_line": 9,
+          "start_line": 9
+        },
+        "start_offset": 162
+      },
+      {
+        "canonical_name": null,
+        "end_offset": 208,
+        "kind": "string_literal",
+        "local_id": "occurrence:string_literal:175-208:%22repository%20synthetic%20old%20second%22",
+        "name": "\"repository synthetic old second\"",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 9,
+          "start_line": 9
+        },
+        "start_offset": 175
+      }
+    ],
+    "review_regions": [],
+    "root_type": "program",
+    "symbols": [
+      "CampaignProbe",
+      "CampaignProbe.first",
+      "CampaignProbe.second",
+      "first",
+      "second"
+    ],
+    "syntax": [
+      "arrow_fn"
+    ]
+  },
+  "head": {
+    "attributes": [],
+    "calls": [
+      "console.info",
+      "setTimeout"
+    ],
+    "components": [],
+    "declarations": [
+      {
+        "kind": "struct",
+        "name": "CampaignProbe",
+        "parent_name": null,
+        "qualified_name": "CampaignProbe",
+        "span": {
+          "end_col": 2,
+          "end_line": 12,
+          "start_col": 1,
+          "start_line": 1
+        }
+      },
+      {
+        "kind": "method",
+        "name": "first",
+        "parent_name": "CampaignProbe",
+        "qualified_name": "CampaignProbe.first",
+        "span": {
+          "end_col": 4,
+          "end_line": 6,
+          "start_col": 3,
+          "start_line": 4
+        }
+      },
+      {
+        "kind": "method",
+        "name": "second",
+        "parent_name": "CampaignProbe",
+        "qualified_name": "CampaignProbe.second",
+        "span": {
+          "end_col": 4,
+          "end_line": 11,
+          "start_col": 3,
+          "start_line": 7
+        }
+      }
+    ],
+    "declarations_v2": [
+      {
+        "end_offset": 228,
+        "kind": "struct",
+        "local_id": "declaration:struct:0-228:CampaignProbe",
+        "name": "CampaignProbe",
+        "parent": null,
+        "qualified_name": "CampaignProbe",
+        "span": {
+          "end_line": 12,
+          "start_line": 1
+        },
+        "start_offset": 0
+      },
+      {
+        "end_offset": 113,
+        "kind": "method",
+        "local_id": "declaration:method:43-113:CampaignProbe.first",
+        "name": "first",
+        "parent": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "qualified_name": "CampaignProbe.first",
+        "span": {
+          "end_line": 6,
+          "start_line": 4
+        },
+        "start_offset": 43
+      },
+      {
+        "end_offset": 226,
+        "kind": "method",
+        "local_id": "declaration:method:116-226:CampaignProbe.second",
+        "name": "second",
+        "parent": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "qualified_name": "CampaignProbe.second",
+        "span": {
+          "end_line": 11,
+          "start_line": 7
+        },
+        "start_offset": 116
+      }
+    ],
+    "decorators": [
+      "@Component",
+      "@Entry"
+    ],
+    "error_nodes": 0,
+    "error_spans": [],
+    "missing_nodes": 0,
+    "missing_spans": [],
+    "node_count": 79,
+    "offset_unit": "utf16_code_unit",
+    "output_schema": "file-analysis-v1",
+    "parser": "tree-sitter-arkts",
+    "parser_version": "0.2.0",
+    "path": "fixtures/repository_synthetic_campaign.ets",
+    "producer_version": "arkts-parser-sidecar-v2.0.0",
+    "raw_occurrences": [
+      {
+        "canonical_name": "@Entry",
+        "end_offset": 6,
+        "kind": "decorator",
+        "local_id": "occurrence:decorator:0-6:%40Entry",
+        "name": "@Entry",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 1,
+          "start_line": 1
+        },
+        "start_offset": 0
+      },
+      {
+        "canonical_name": "@Component",
+        "end_offset": 17,
+        "kind": "decorator",
+        "local_id": "occurrence:decorator:7-17:%40Component",
+        "name": "@Component",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 2,
+          "start_line": 2
+        },
+        "start_offset": 7
+      },
+      {
+        "canonical_name": "CampaignProbe",
+        "end_offset": 38,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:25-38:CampaignProbe",
+        "name": "CampaignProbe",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:struct:0-228:CampaignProbe"
+        },
+        "span": {
+          "end_line": 3,
+          "start_line": 3
+        },
+        "start_offset": 25
+      },
+      {
+        "canonical_name": "CampaignProbe.first",
+        "end_offset": 48,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:43-48:CampaignProbe.first",
+        "name": "first",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "span": {
+          "end_line": 4,
+          "start_line": 4
+        },
+        "start_offset": 43
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 75,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:63-75:console.info",
+        "name": "console.info",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "root_name": "console",
+        "span": {
+          "end_line": 5,
+          "start_line": 5
+        },
+        "start_offset": 63
+      },
+      {
+        "canonical_name": null,
+        "end_offset": 108,
+        "kind": "string_literal",
+        "local_id": "occurrence:string_literal:76-108:%22repository%20synthetic%20new%20first%22",
+        "name": "\"repository synthetic new first\"",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:43-113:CampaignProbe.first"
+        },
+        "span": {
+          "end_line": 5,
+          "start_line": 5
+        },
+        "start_offset": 76
+      },
+      {
+        "canonical_name": "CampaignProbe.second",
+        "end_offset": 122,
+        "kind": "symbol",
+        "local_id": "occurrence:symbol:116-122:CampaignProbe.second",
+        "name": "second",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 7,
+          "start_line": 7
+        },
+        "start_offset": 116
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 147,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:137-147:setTimeout",
+        "name": "setTimeout",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "root_name": "setTimeout",
+        "span": {
+          "end_line": 8,
+          "start_line": 8
+        },
+        "start_offset": 137
+      },
+      {
+        "canonical_name": "arrow_fn",
+        "end_offset": 153,
+        "kind": "syntax",
+        "local_id": "occurrence:syntax:151-153:arrow_fn",
+        "name": "=>",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 8,
+          "start_line": 8
+        },
+        "start_offset": 151
+      },
+      {
+        "binding_status": "clear",
+        "canonical_name": null,
+        "end_offset": 174,
+        "kind": "raw_call",
+        "local_id": "occurrence:raw_call:162-174:console.info",
+        "name": "console.info",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "root_name": "console",
+        "span": {
+          "end_line": 9,
+          "start_line": 9
+        },
+        "start_offset": 162
+      },
+      {
+        "canonical_name": null,
+        "end_offset": 208,
+        "kind": "string_literal",
+        "local_id": "occurrence:string_literal:175-208:%22repository%20synthetic%20new%20second%22",
+        "name": "\"repository synthetic new second\"",
+        "owner": {
+          "kind": "declaration",
+          "local_id": "declaration:method:116-226:CampaignProbe.second"
+        },
+        "span": {
+          "end_line": 9,
+          "start_line": 9
+        },
+        "start_offset": 175
+      }
+    ],
+    "review_regions": [],
+    "root_type": "program",
+    "symbols": [
+      "CampaignProbe",
+      "CampaignProbe.first",
+      "CampaignProbe.second",
+      "first",
+      "second"
+    ],
+    "syntax": [
+      "arrow_fn"
+    ]
+  }
+}

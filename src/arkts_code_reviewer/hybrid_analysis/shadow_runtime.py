@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import re
 import secrets
@@ -44,6 +45,7 @@ from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
 )
 
 _TRUST_DOMAIN_PATTERN = re.compile(r"^ai-shadow-trust-domain:sha256:[0-9a-f]{64}$")
+_CREDENTIAL_SCOPE_PATTERN = re.compile(r"^deepseek-credential-scope:sha256:[0-9a-f]{64}$")
 _SYNTHETIC_INJECTED_TRANSPORT_API_KEY = "synthetic-injected-transport-no-provider-credential"
 
 
@@ -206,6 +208,16 @@ class AITagShadowAuthorizationGate:
         self.trust_domain_id = trust_domain_id
         self._trusted_plan_inputs = trusted_plan_inputs
         self._credential_provider = credential_provider
+        credential_scope_id = credential_provider.credential_scope_id
+        if (
+            not isinstance(credential_scope_id, str)
+            or _CREDENTIAL_SCOPE_PATTERN.fullmatch(credential_scope_id) is None
+        ):
+            raise ValueError("invalid DeepSeek credential-scope identity")
+        # Credential scope is deployment identity, not mutable request state. Snapshot it
+        # once so Claims, capabilities, and dispatch all bind the same value even when a
+        # broken or adversarial provider changes its property between reads.
+        self._credential_scope_id = credential_scope_id
         self._egress_verifier = (
             DenyAllAITagEgressApprovalVerifier() if egress_verifier is None else egress_verifier
         )
@@ -218,6 +230,12 @@ class AITagShadowAuthorizationGate:
     @property
     def trusted_plan_inputs(self) -> AITagShadowTrustedPlanInputs:
         return self._trusted_plan_inputs
+
+    @property
+    def credential_scope_id(self) -> str:
+        """Return the immutable deployment scope captured at Gate construction."""
+
+        return self._credential_scope_id
 
     def _verify_trusted_plan(self, plan: AITagShadowDispatchPlan) -> None:
         try:
@@ -239,7 +257,7 @@ class AITagShadowAuthorizationGate:
         if (
             claims.plan_id != plan.plan_id
             or claims.trust_domain_id != self.trust_domain_id
-            or claims.credential_scope_id != self._credential_provider.credential_scope_id
+            or claims.credential_scope_id != self._credential_scope_id
         ):
             raise AITagShadowAuthorizationError("claims_mismatch")
 
@@ -270,7 +288,7 @@ class AITagShadowAuthorizationGate:
             gate_nonce=nonce,
             plan_id=plan.plan_id,
             trust_domain_id=self.trust_domain_id,
-            credential_scope_id=self._credential_provider.credential_scope_id,
+            credential_scope_id=self._credential_scope_id,
             claims_id=claims.claims_id,
         )
 
@@ -286,7 +304,7 @@ class AITagShadowAuthorizationGate:
         if (
             capability._trust_domain_id != self.trust_domain_id
             or capability._plan_id != plan.plan_id
-            or capability._credential_scope_id != self._credential_provider.credential_scope_id
+            or capability._credential_scope_id != self._credential_scope_id
             or capability._claims_id != claims.claims_id
         ):
             raise AITagShadowAuthorizationError("capability_invalid")
@@ -321,7 +339,7 @@ class AITagShadowAuthorizationGate:
         capability: AITagShadowDispatchCapability,
         plan: AITagShadowDispatchPlan,
         claims: AITagShadowDispatchClaims,
-        transport: DeepSeekShadowHttpTransport,
+        transport: DeepSeekShadowHttpTransport | None = None,
     ) -> DeepSeekHttpResponse:
         """Consume one capability and keep real credentials inside the fixed boundary."""
 
@@ -333,22 +351,36 @@ class AITagShadowAuthorizationGate:
             plan=plan,
             claims=claims,
         )
-        if (
-            type(transport) is _HttpxDeepSeekShadowTransport
-            and transport.establishes_fixed_tls_network_evidence
-        ):
+        if transport is None:
             try:
                 api_key = self._credential_provider.get_api_key()
             except DeepSeekCredentialUnavailableError:
                 raise AITagShadowAuthorizationError("credential_not_configured") from None
+            fixed_transport = _HttpxDeepSeekShadowTransport()
+            try:
+                return fixed_transport.send(
+                    plan,
+                    api_key=api_key,
+                )
+            except AITagShadowAuthorizationError:
+                # Control has already entered transport.send(). An exception merely
+                # shaped like a Gate denial must not be reclassified as a non-attempt.
+                raise DeepSeekHttpTransportError(
+                    "provider_transport_error",
+                    latency_ms=0,
+                ) from None
+        try:
             return transport.send(
                 plan,
-                api_key=api_key,
+                api_key=_SYNTHETIC_INJECTED_TRANSPORT_API_KEY,
             )
-        return transport.send(
-            plan,
-            api_key=_SYNTHETIC_INJECTED_TRANSPORT_API_KEY,
-        )
+        except AITagShadowAuthorizationError:
+            # Injected transports are untrusted code. Once send() starts, even an
+            # authorization-shaped exception represents an attempted transport call.
+            raise DeepSeekHttpTransportError(
+                "provider_transport_error",
+                latency_ms=0,
+            ) from None
 
 
 @dataclass(frozen=True)
@@ -370,7 +402,10 @@ class DeepSeekShadowRunner:
         transport: DeepSeekShadowHttpTransport | None = None,
     ) -> None:
         self._gate = gate
-        self._transport = _HttpxDeepSeekShadowTransport() if transport is None else transport
+        # None is the sole repository-owned live transport path. Any supplied object,
+        # including an exact mutable _HttpxDeepSeekShadowTransport instance, remains an
+        # injected transport and receives only the synthetic token.
+        self._transport = transport
 
     def run(
         self,
@@ -387,13 +422,14 @@ class DeepSeekShadowRunner:
         _verify_plan_envelope(plan=plan, envelope=envelope)
         if claims.plan_id != plan.plan_id or claims.trust_domain_id != self._gate.trust_domain_id:
             raise AITagShadowAuthorizationError("claims_mismatch")
+        if self._transport is None:
+            preflight_deepseek_shadow_live_transport()
         transport_evidence: Literal[
             "httpx_tls_fixed_endpoint",
             "injected_untrusted_transport",
         ] = (
             "httpx_tls_fixed_endpoint"
-            if type(self._transport) is _HttpxDeepSeekShadowTransport
-            and self._transport.establishes_fixed_tls_network_evidence
+            if self._transport is None
             else "injected_untrusted_transport"
         )
         try:
@@ -628,6 +664,23 @@ class DeepSeekShadowRunner:
             trusted_plan_inputs=self._gate.trusted_plan_inputs,
             raw_response_body=response.body,
         )
+
+
+def preflight_deepseek_shadow_live_transport() -> None:
+    """Reject known process-local failures before issuing a transport attempt."""
+
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        pass
+    else:
+        raise RuntimeError("synchronous DeepSeek transport cannot run inside an active event loop")
+    try:
+        import httpx  # noqa: F401
+    except ImportError:
+        raise RuntimeError(
+            "DeepSeek transport requires the optional 'deepseek' dependency"
+        ) from None
 
 
 def _verify_plan_envelope(
@@ -988,5 +1041,6 @@ __all__ = [
     "DeepSeekShadowRunner",
     "DenyAllAITagBudgetReservationLedger",
     "DenyAllAITagEgressApprovalVerifier",
+    "preflight_deepseek_shadow_live_transport",
     "verify_deepseek_shadow_run_artifacts",
 ]

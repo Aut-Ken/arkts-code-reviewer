@@ -16,6 +16,7 @@ from arkts_code_reviewer.hybrid_analysis.campaign_live_smoke import (
     build_local_campaign_egress_approval,
     build_local_campaign_plan_reservations,
     build_repository_synthetic_campaign_bundle,
+    load_campaign_run_summary,
     main,
     run_repository_synthetic_campaign,
 )
@@ -193,11 +194,9 @@ def test_fixed_campaign_is_deterministic_multi_unit_and_inspection_is_safe() -> 
     assert [unit.plan.plan_id for unit in first.campaign.units] == sorted(
         unit.plan.plan_id for unit in first.campaign.units
     ) or [
-        (unit.card.unit_id, unit.card.card_id, unit.plan.plan_id)
-        for unit in first.campaign.units
+        (unit.card.unit_id, unit.card.card_id, unit.plan.plan_id) for unit in first.campaign.units
     ] == sorted(
-        (unit.card.unit_id, unit.card.card_id, unit.plan.plan_id)
-        for unit in first.campaign.units
+        (unit.card.unit_id, unit.card.card_id, unit.plan.plan_id) for unit in first.campaign.units
     )
     assert summary["mode"] == "inspect_only"
     assert summary["network_attempted"] is False
@@ -345,6 +344,25 @@ def test_valid_injected_campaign_is_canonical_single_attempt_and_replay_guarded(
     assert all(key.startswith("synthetic-injected-transport-") for key in transport.seen_keys)
     assert summary["counts"]["attempted_unit_count"] == 4
     assert summary["counts"]["valid_shape_count"] == 4
+    assert summary["evaluation_report_id"].startswith("ai-tag-shadow-evaluation-report:sha256:")
+    assert all(
+        plan["validated_tag_decision_count"] == 24
+        and len(plan["validated_tag_decisions"]) == 24
+        and plan["decision_counts"] == {"not_supported": 23, "positive": 1}
+        for plan in summary["plans"]
+    )
+    assert all(
+        {item["tag_id"] for item in plan["validated_tag_decisions"]}
+        == {contract.tag_id for contract in bundle.campaign.units[0].request.tag_contract_views}
+        for plan in summary["plans"]
+    )
+    assert [
+        (plan["card_id"], plan["source_role"], plan["unit_kind"], plan["unit_symbol"])
+        for plan in summary["plans"]
+    ] == [
+        (unit.card.card_id, unit.card.source_role, unit.card.unit_kind, unit.card.unit_symbol)
+        for unit in bundle.campaign.units
+    ]
     assert summary["network_attempted"] is None
     assert summary["network_observation_scope"] == (
         "fixed_httpx_observation_or_unknown_for_injected_transport"
@@ -354,7 +372,6 @@ def test_valid_injected_campaign_is_canonical_single_attempt_and_replay_guarded(
     for forbidden in (
         str(state_dir),
         "fixtures/repository_synthetic_campaign.ets",
-        "CampaignProbe",
         "repository synthetic old first",
         "repository synthetic new second",
         _API_KEY_SECRET,
@@ -362,11 +379,24 @@ def test_valid_injected_campaign_is_canonical_single_attempt_and_replay_guarded(
         _MODEL_REASON_SECRET,
     ):
         assert forbidden not in rendered
+    assert "CampaignProbe.first" in rendered
+    assert "CampaignProbe.second" in rendered
 
     markers = sorted(state_dir.glob("*.consumed.json"))
+    result_artifacts = sorted(state_dir.glob("*.campaign-result.json"))
     assert len(markers) == 4
+    assert len(result_artifacts) == 1
+    assert result_artifacts[0].name == summary["result_artifact_name"]
+    assert json.loads(result_artifacts[0].read_text()) == summary
+    assert load_campaign_run_summary(result_artifacts[0].read_bytes()) == summary
+    tampered = json.loads(result_artifacts[0].read_text())
+    tampered["plans"][0]["validated_tag_decisions"][0]["decision"] = "abstain"
+    with pytest.raises(ValueError, match="identity does not match"):
+        load_campaign_run_summary(json.dumps(tampered))
     assert _stat_mode(state_dir) == 0o700
     assert all(_stat_mode(marker) == 0o600 for marker in markers)
+    assert _stat_mode(result_artifacts[0]) == 0o600
+    assert not tuple(state_dir.glob("*.tmp"))
     marker_text = "".join(marker.read_text() for marker in markers)
     for forbidden in (
         "CampaignProbe",
@@ -399,6 +429,9 @@ def test_partial_attempt_returns_three_without_retry_or_sensitive_output(
     assert summary["counts"]["attempted_unit_count"] == 4
     assert summary["counts"]["valid_shape_count"] == 3
     assert summary["counts"]["inner_invalid_count"] == 1
+    assert summary["evaluation_report_id"].startswith("ai-tag-shadow-evaluation-report:sha256:")
+    assert [plan["validated_tag_decision_count"] for plan in summary["plans"]].count(0) == 1
+    assert [plan["validated_tag_decision_count"] for plan in summary["plans"]].count(24) == 3
     assert _MODEL_REASON_SECRET not in captured.out + captured.err
     assert _RAW_SECRET not in captured.out + captured.err
 

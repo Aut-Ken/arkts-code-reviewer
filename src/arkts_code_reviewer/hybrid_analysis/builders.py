@@ -69,15 +69,15 @@ from arkts_code_reviewer.hybrid_analysis.models import (
     verify_model_view_against_card,
 )
 
-ANALYSIS_CARD_BUILDER_VERSION: Literal["analysis-card-builder-v1"] = (
-    "analysis-card-builder-v1"
-)
+ANALYSIS_CARD_BUILDER_VERSION: Literal["analysis-card-builder-v1"] = "analysis-card-builder-v1"
 PROVIDER_EGRESS_ANALYSIS_CARD_BUILDER_VERSION: Literal[
     "analysis-card-builder-v2-provider-egress"
 ] = "analysis-card-builder-v2-provider-egress"
-AI_MODEL_VIEW_BUILDER_VERSION: Literal["ai-model-view-builder-v2"] = (
-    "ai-model-view-builder-v2"
-)
+AI_MODEL_VIEW_BUILDER_VERSION: Literal["ai-model-view-builder-v2"] = "ai-model-view-builder-v2"
+AnalysisParserProfile = Literal[
+    "default",
+    "repository-synthetic-campaign-file-analysis-v1",
+]
 
 
 @dataclass(frozen=True)
@@ -101,9 +101,7 @@ class AnalysisContextPolicy:
         "none_no_provider_dispatch",
         "none_requires_exact_body_runtime_approval",
     ] = "none_no_provider_dispatch"
-    parser_verification: Literal["trusted_file_parser_replay"] = (
-        "trusted_file_parser_replay"
-    )
+    parser_verification: Literal["trusted_file_parser_replay"] = "trusted_file_parser_replay"
     review_unit_verification: Literal["canonical_review_unit_replay"] = (
         "canonical_review_unit_replay"
     )
@@ -132,9 +130,7 @@ class AnalysisContextPolicy:
         if self.parser_verification != "trusted_file_parser_replay":
             raise ValueError("AnalysisContextPolicy.parser_verification is unsupported")
         if self.review_unit_verification != "canonical_review_unit_replay":
-            raise ValueError(
-                "AnalysisContextPolicy.review_unit_verification is unsupported"
-            )
+            raise ValueError("AnalysisContextPolicy.review_unit_verification is unsupported")
         for value, context, minimum in (
             (self.code_token_budget, "AnalysisContextPolicy.code_token_budget", 1),
             (self.max_full_unit_lines, "AnalysisContextPolicy.max_full_unit_lines", 1),
@@ -187,8 +183,18 @@ DEFAULT_AI_MODEL_VIEW_PROJECTION_POLICY = AIModelViewProjectionPolicy()
 class AnalysisCardBuilder:
     """Build a sealed Analysis Card from one complete, replay-validated upstream graph."""
 
-    def __init__(self) -> None:
-        self._file_parser: FileAnalysisParser = ArktsFileAnalysisParser()
+    def __init__(self, *, parser_profile: AnalysisParserProfile = "default") -> None:
+        if parser_profile == "default":
+            file_parser: FileAnalysisParser = ArktsFileAnalysisParser()
+        elif parser_profile == "repository-synthetic-campaign-file-analysis-v1":
+            from arkts_code_reviewer.hybrid_analysis.repository_campaign_parser import (
+                RepositorySyntheticCampaignFileParser,
+            )
+
+            file_parser = RepositorySyntheticCampaignFileParser()
+        else:
+            raise ValueError("unsupported Analysis Card Parser profile")
+        self._file_parser = file_parser
         self._parse_replay_cache: dict[str, FileParseResult] = {}
 
     def build(
@@ -468,8 +474,7 @@ def _validate_upstream_bundle(
     if (
         analysis_result.change_set is None
         or analysis_result.review_unit_build_result is None
-        or analysis_result.review_unit_build_result.schema_version
-        != "review-unit-build-v3"
+        or analysis_result.review_unit_build_result.schema_version != "review-unit-build-v3"
     ):
         raise ValueError(
             "Analysis Card construction requires a complete review-unit-build-v3 AnalysisResult"
@@ -508,8 +513,7 @@ def _validate_upstream_bundle(
             parse_replay_cache[source_ref_id] = replayed
         if replayed != upstream_parse_result:
             raise ValueError(
-                "FileAnalysis facts differ from trusted Parser replay over the source "
-                "snapshot"
+                "FileAnalysis facts differ from trusted Parser replay over the source snapshot"
             )
         parse_results_by_source[source_ref_id] = upstream_parse_result
 
@@ -520,9 +524,7 @@ def _validate_upstream_bundle(
         review_unit_builder=ReviewUnitBuilder(),
     )
     if canonical_build_result != analysis_result.review_unit_build_result:
-        raise ValueError(
-            "ReviewUnit graph differs from canonical ReviewUnit Builder replay"
-        )
+        raise ValueError("ReviewUnit graph differs from canonical ReviewUnit Builder replay")
 
     return _ValidatedUpstream(
         analysis_result=analysis_result,
@@ -572,9 +574,7 @@ def _resolve_validated_graph(
     ):
         raise ValueError("Unit, Scope, Profile, FileAnalysis, and snapshot sources disagree")
     if unit.unit_kind != "fallback" and unit.context_span != unit.source_span:
-        raise ValueError(
-            "non-fallback ReviewUnit context span must equal its source span"
-        )
+        raise ValueError("non-fallback ReviewUnit context span must equal its source span")
     expected_text = extract_lines(
         snapshot.content,
         unit.context_span.start_line,
@@ -646,9 +646,7 @@ def _validate_exact_range(
     except KeyError as exc:
         raise ValueError("FileAnalysis exact range is not on UTF-16 source boundaries") from exc
     ends_after_declared_newline = (
-        end_index > 0
-        and source[end_index - 1] == "\n"
-        and mapped_end_line == span.end_line + 1
+        end_index > 0 and source[end_index - 1] == "\n" and mapped_end_line == span.end_line + 1
     )
     if start_line != span.start_line or not (
         mapped_end_line == span.end_line or ends_after_declared_newline
@@ -698,10 +696,7 @@ def _build_analysis_code(
             changed_lines,
             policy,
         )
-    truncated = (
-        line_start != unit.context_span.start_line
-        or line_end != unit.context_span.end_line
-    )
+    truncated = line_start != unit.context_span.start_line or line_end != unit.context_span.end_line
     if estimate_code_tokens(text) > policy.code_token_budget:
         raise ValueError("Analysis Card code exceeds its declared token budget")
     deletion_base = _is_deleted_file_base(unit, analysis_result)
@@ -738,9 +733,7 @@ def _select_changed_window(
             and estimate_code_tokens(text) <= policy.code_token_budget
         ):
             return line_start, line_end, text
-    raise ValueError(
-        "minimum continuous changed-line window exceeds Analysis Card policy limits"
-    )
+    raise ValueError("minimum continuous changed-line window exceeds Analysis Card policy limits")
 
 
 def _is_deleted_file_base(unit: ReviewUnit, analysis_result: AnalysisResult) -> bool:
@@ -868,9 +861,7 @@ def _resolve_unit_owner(unit: ReviewUnit, file_analysis: FileAnalysis) -> OwnerI
         identity = _declaration_identity(declaration)
     else:
         region_matches = [
-            item
-            for item in file_analysis.review_regions
-            if item.region_id == owner_ref.ref_id
+            item for item in file_analysis.review_regions if item.region_id == owner_ref.ref_id
         ]
         if len(region_matches) != 1:
             raise ValueError("ReviewUnit owner_ref does not resolve to one review region")
@@ -1058,9 +1049,7 @@ def _available_context_refs(
                     strength="strong",
                     quality="exact",
                     evidence_refs=tuple(
-                        sorted(
-                            set(base.change_atom_ids).intersection(head.change_atom_ids)
-                        )
+                        sorted(set(base.change_atom_ids).intersection(head.change_atom_ids))
                     ),
                     provenance_ref=change_set_id,
                 )
@@ -1118,6 +1107,7 @@ __all__ = [
     "AIModelViewProjectionPolicy",
     "AnalysisCardBuilder",
     "AnalysisContextPolicy",
+    "AnalysisParserProfile",
     "ModelViewBuilder",
     "build_ai_tag_model_view",
     "build_review_unit_analysis_card",

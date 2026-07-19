@@ -59,6 +59,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
     AITagShadowRunArtifacts,
     AITagShadowTrustedPlanInputs,
     DeepSeekShadowRunner,
+    preflight_deepseek_shadow_live_transport,
 )
 
 AI_TAG_REPOSITORY_SMOKE_CASE_SCHEMA_VERSION = "ai-tag-repository-smoke-case-v1"
@@ -629,6 +630,16 @@ class AtomicLocalOneAttemptBudgetLedger:
             raise ValueError("smoke state directory must not be group/world accessible")
 
 
+def _smoke_trust_domain_id(bundle: RepositorySyntheticSmokeBundle) -> str:
+    return canonical_hash(
+        "ai-shadow-trust-domain",
+        {
+            "scope": "local-repository-synthetic-smoke-v1",
+            "case_id": bundle.manifest.case_id,
+        },
+    )
+
+
 def _build_claims(
     *,
     bundle: RepositorySyntheticSmokeBundle,
@@ -636,18 +647,11 @@ def _build_claims(
     reservation: LocalOneAttemptBudgetReservation,
     credential_scope_id: str,
 ) -> AITagShadowDispatchClaims:
-    trust_domain_id = canonical_hash(
-        "ai-shadow-trust-domain",
-        {
-            "scope": "local-repository-synthetic-smoke-v1",
-            "case_id": bundle.manifest.case_id,
-        },
-    )
     return seal_ai_tag_shadow_dispatch_claims(
         {
             "schema_version": "ai-tag-shadow-dispatch-claims-v1",
             "plan_id": bundle.plan.plan_id,
-            "trust_domain_id": trust_domain_id,
+            "trust_domain_id": _smoke_trust_domain_id(bundle),
             "egress_approval_id": approval.approval_id,
             "budget_reservation_id": reservation.reservation_id,
             "credential_scope_id": credential_scope_id,
@@ -680,14 +684,8 @@ def run_repository_synthetic_smoke(
         bundle,
         reserved_max_output_tokens=reserved_max_output_tokens,
     )
-    claims = _build_claims(
-        bundle=bundle,
-        approval=approval,
-        reservation=reservation,
-        credential_scope_id=credential_provider.credential_scope_id,
-    )
     gate = AITagShadowAuthorizationGate(
-        trust_domain_id=claims.trust_domain_id,
+        trust_domain_id=_smoke_trust_domain_id(bundle),
         credential_provider=credential_provider,
         trusted_plan_inputs=bundle.trusted_plan_inputs,
         egress_verifier=OneShotExactBodyApprovalVerifier(
@@ -700,6 +698,14 @@ def run_repository_synthetic_smoke(
             state_dir=state_dir,
         ),
     )
+    claims = _build_claims(
+        bundle=bundle,
+        approval=approval,
+        reservation=reservation,
+        credential_scope_id=gate.credential_scope_id,
+    )
+    if transport is None:
+        preflight_deepseek_shadow_live_transport()
     capability = gate.authorize(plan=bundle.plan, claims=claims)
     runner = DeepSeekShadowRunner(gate=gate, transport=transport)
     artifacts = runner.run(

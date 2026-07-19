@@ -12,12 +12,14 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 PACKAGED_ASSETS = {
     "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml",
     "arkts_code_reviewer/hybrid_analysis/defaults/deepseek-tag-analysis-v1.md",
+    "arkts_code_reviewer/hybrid_analysis/defaults/repository_synthetic_campaign_file_analysis.json",
 }
 PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/campaign_live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
     "arkts_code_reviewer/hybrid_analysis/live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
+    "arkts_code_reviewer/hybrid_analysis/repository_campaign_parser.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_campaign.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_campaign_execution.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_evaluation.py",
@@ -71,6 +73,9 @@ def main() -> int:
 
         environment = os.environ.copy()
         environment["PYTHONPATH"] = str(unpacked)
+        environment["ARKTS_PARSER_NODE"] = "/does/not/exist/hostile-node"
+        environment["ARKTS_PARSER_SIDECAR"] = "/does/not/exist/hostile-sidecar"
+        environment["ARKTS_PARSER_TIMEOUT"] = "not-a-number"
         completed = subprocess.run(
             [
                 sys.executable,
@@ -147,6 +152,16 @@ def main() -> int:
                     "campaign_smoke = build_repository_synthetic_campaign_bundle(); "
                     "assert len(campaign_smoke.campaign.units) == 4; "
                     "assert campaign_smoke.caps.max_total_attempts == 4; "
+                    "assert campaign_smoke.case.campaign_id == "
+                    "'ai-tag-shadow-campaign:sha256:"
+                    "fbd8806371109fef38f5f771ace444305335e4fe6b330580da166bbee8a06c30'; "
+                    "assert campaign_smoke.case.plan_set_digest == "
+                    "'ai-tag-shadow-campaign-plan-set:sha256:"
+                    "a7eb2b575421101df2357b0e6236fda0bbae25a4bd70c8a5ce06f28483eaa273'; "
+                    "assert campaign_smoke.caps.caps_id == "
+                    "'ai-tag-shadow-campaign-caps:sha256:"
+                    "784a37f26088435e5b4ddc25ed3c48a5d6469d081489aced7388caeaad9c7ffa'; "
+                    "assert campaign_smoke.caps.max_total_wire_body_bytes == 104226; "
                     "assert AI_TAG_SHADOW_CAMPAIGN_EXECUTION_RESULT_SCHEMA_VERSION == "
                     "'ai-tag-shadow-campaign-execution-result-v1'; "
                     "assert AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION == "

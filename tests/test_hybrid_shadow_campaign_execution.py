@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 from dataclasses import dataclass, field
@@ -295,13 +296,9 @@ def _campaign_setup() -> _CampaignSetup:
         max_total_wire_body_bytes=sum(
             len(item.plan.wire_body_json.encode()) for item in campaign.units
         ),
-        max_total_output_tokens=sum(
-            item.plan.wire_payload.max_tokens for item in campaign.units
-        ),
+        max_total_output_tokens=sum(item.plan.wire_payload.max_tokens for item in campaign.units),
         max_total_response_bytes=sum(item.plan.max_response_bytes for item in campaign.units),
-        campaign_wall_clock_cap_ms=sum(
-            item.plan.wall_clock_timeout_ms for item in campaign.units
-        ),
+        campaign_wall_clock_cap_ms=sum(item.plan.wall_clock_timeout_ms for item in campaign.units),
     )
     trusted_upstream = AITagShadowCampaignTrustedUpstream(
         bundle=campaign,
@@ -504,9 +501,7 @@ def _mixed_states(setup: _CampaignSetup) -> dict[str, _RuntimeState]:
                 _provider_body(
                     unit,
                     response_marker=f"unused-or-final-{index}",
-                    diagnostic_reason=(
-                        _MODEL_REASON_SECRET if index == len(units) - 1 else None
-                    ),
+                    diagnostic_reason=(_MODEL_REASON_SECRET if index == len(units) - 1 else None),
                 ),
                 None,
                 15 + index,
@@ -539,10 +534,7 @@ def _raw_response_mapping(mixed: _MixedExecution) -> dict[str, bytes]:
         for item in mixed.execution.result.units
         if item.attempt_transport_status == "response_received"
     }
-    return {
-        plan_id: cast(bytes, mixed.states[plan_id].raw_body)
-        for plan_id in expected
-    }
+    return {plan_id: cast(bytes, mixed.states[plan_id].raw_body) for plan_id in expected}
 
 
 @pytest.fixture(scope="module")
@@ -656,8 +648,7 @@ def test_mixed_campaign_continues_canonically_and_enforces_zero_attempt_matrix(
     assert "console.info" not in durable_json
     assert _MODEL_REASON_SECRET not in repr(mixed_execution.execution)
     assert all(
-        _MODEL_REASON_SECRET not in repr(item)
-        for item in mixed_execution.execution.unit_evidence
+        _MODEL_REASON_SECRET not in repr(item) for item in mixed_execution.execution.unit_evidence
     )
 
 
@@ -706,15 +697,13 @@ def test_full_raw_rebuild_accepts_exact_bytes_and_rejects_wrong_or_wrong_cover(
 ) -> None:
     execution = mixed_execution.execution
     upstream = mixed_execution.setup.trusted_upstream
-    evidence = {
-        item.plan_id: item
-        for item in execution.unit_evidence
-    }
+    evidence = {item.plan_id: item for item in execution.unit_evidence}
     raw = _raw_response_mapping(mixed_execution)
 
     verify_ai_tag_shadow_campaign_execution_result(
         execution.result,
         trusted_upstream=upstream,
+        expected_limits=mixed_execution.setup.limits,
         evidence_by_plan_id=evidence,
         raw_response_body_by_plan_id=raw,
     )
@@ -726,6 +715,7 @@ def test_full_raw_rebuild_accepts_exact_bytes_and_rejects_wrong_or_wrong_cover(
         verify_ai_tag_shadow_campaign_execution_result(
             execution.result,
             trusted_upstream=upstream,
+            expected_limits=mixed_execution.setup.limits,
             evidence_by_plan_id=evidence,
             raw_response_body_by_plan_id=wrong_bytes,
         )
@@ -736,6 +726,7 @@ def test_full_raw_rebuild_accepts_exact_bytes_and_rejects_wrong_or_wrong_cover(
         verify_ai_tag_shadow_campaign_execution_result(
             execution.result,
             trusted_upstream=upstream,
+            expected_limits=mixed_execution.setup.limits,
             evidence_by_plan_id=evidence,
             raw_response_body_by_plan_id=missing,
         )
@@ -746,6 +737,7 @@ def test_full_raw_rebuild_accepts_exact_bytes_and_rejects_wrong_or_wrong_cover(
         verify_ai_tag_shadow_campaign_execution_result(
             execution.result,
             trusted_upstream=upstream,
+            expected_limits=mixed_execution.setup.limits,
             evidence_by_plan_id=evidence,
             raw_response_body_by_plan_id=extra,
         )
@@ -787,6 +779,7 @@ def test_result_reference_and_counter_tampering_is_rejected(
         verify_ai_tag_shadow_campaign_execution_result(
             forged_result,
             trusted_upstream=mixed_execution.setup.trusted_upstream,
+            expected_limits=mixed_execution.setup.limits,
             evidence_by_plan_id={
                 item.plan_id: item for item in mixed_execution.execution.unit_evidence
             },
@@ -801,6 +794,7 @@ def test_result_reference_and_counter_tampering_is_rejected(
         verify_ai_tag_shadow_campaign_execution_result(
             forged_zero_result,
             trusted_upstream=mixed_execution.setup.trusted_upstream,
+            expected_limits=mixed_execution.setup.limits,
             evidence_by_plan_id={
                 item.plan_id: item for item in mixed_execution.execution.unit_evidence
             },
@@ -824,9 +818,7 @@ def test_runtime_binding_mapping_must_be_exact_before_any_runtime_effect(
     if mapping_change == "missing":
         bindings.pop(next(iter(bindings)))
     else:
-        bindings[_hash_id("ai-tag-shadow-plan", "extra-runtime")] = next(
-            iter(bindings.values())
-        )
+        bindings[_hash_id("ai-tag-shadow-plan", "extra-runtime")] = next(iter(bindings.values()))
 
     with pytest.raises(ValueError, match="exactly cover"):
         AITagShadowCampaignLiveHarness().execute(
@@ -840,35 +832,32 @@ def test_runtime_binding_mapping_must_be_exact_before_any_runtime_effect(
     assert all(state.credential.configured_checks == 0 for state in states.values())
     assert all(state.credential.key_reads == 0 for state in states.values())
     assert all(
-        state.transport is not None and state.transport.calls == 0
-        for state in states.values()
+        state.transport is not None and state.transport.calls == 0 for state in states.values()
     )
 
 
-def test_all_claims_bindings_preflight_before_any_unit_attempt(
+def test_credential_scope_mutation_after_gate_construction_does_not_change_binding(
     campaign_setup: _CampaignSetup,
 ) -> None:
+    baseline_states = _mixed_states(campaign_setup)
+    baseline = AITagShadowCampaignLiveHarness().execute(
+        trusted_upstream=campaign_setup.trusted_upstream,
+        runtime_bindings_by_plan_id=_bindings(baseline_states),
+        limits=campaign_setup.limits,
+        allow_injected_transport=True,
+    )
     states = _mixed_states(campaign_setup)
     last_state = next(reversed(states.values()))
     last_state.credential.marker = "credential-scope-drift"
 
-    with pytest.raises(AITagShadowAuthorizationError) as exc_info:
-        AITagShadowCampaignLiveHarness().execute(
-            trusted_upstream=campaign_setup.trusted_upstream,
-            runtime_bindings_by_plan_id=_bindings(states),
-            limits=campaign_setup.limits,
-            allow_injected_transport=True,
-        )
-
-    assert exc_info.value.reason_code == "claims_mismatch"
-    assert all(state.egress.calls == 0 for state in states.values())
-    assert all(state.budget.calls == 0 for state in states.values())
-    assert all(state.credential.configured_checks == 0 for state in states.values())
-    assert all(state.credential.key_reads == 0 for state in states.values())
-    assert all(
-        state.transport is not None and state.transport.calls == 0
-        for state in states.values()
+    execution = AITagShadowCampaignLiveHarness().execute(
+        trusted_upstream=campaign_setup.trusted_upstream,
+        runtime_bindings_by_plan_id=_bindings(states),
+        limits=campaign_setup.limits,
+        allow_injected_transport=True,
     )
+
+    assert execution.result == baseline.result
 
 
 def test_live_credential_disappearing_after_authorize_is_recorded_without_network(
@@ -991,9 +980,65 @@ def test_default_injected_transport_denial_preflights_before_runtime_effects(
     assert all(state.credential.configured_checks == 0 for state in states.values())
     assert all(state.credential.key_reads == 0 for state in states.values())
     assert all(
-        state.transport is not None and state.transport.calls == 0
-        for state in states.values()
+        state.transport is not None and state.transport.calls == 0 for state in states.values()
     )
+
+
+def test_externally_supplied_exact_httpx_transport_requires_injected_allow_flag(
+    campaign_setup: _CampaignSetup,
+) -> None:
+    states = _mixed_states(campaign_setup)
+    bindings = {
+        plan_id: AITagShadowCampaignRuntimeBinding(
+            claims=state.binding.claims,
+            gate=state.binding.gate,
+            transport=deepseek_adapter._HttpxDeepSeekShadowTransport(),  # noqa: SLF001
+        )
+        for plan_id, state in states.items()
+    }
+
+    with pytest.raises(ValueError, match="allow_injected_transport=True"):
+        AITagShadowCampaignLiveHarness().execute(
+            trusted_upstream=campaign_setup.trusted_upstream,
+            runtime_bindings_by_plan_id=bindings,
+            limits=campaign_setup.limits,
+            allow_live_transport=True,
+        )
+
+    assert all(state.egress.calls == 0 for state in states.values())
+    assert all(state.budget.calls == 0 for state in states.values())
+    assert all(state.credential.configured_checks == 0 for state in states.values())
+    assert all(state.credential.key_reads == 0 for state in states.values())
+
+
+def test_live_transport_process_preflight_occurs_before_any_authorization_effect(
+    campaign_setup: _CampaignSetup,
+) -> None:
+    states: dict[str, _RuntimeState] = {}
+    for index, unit in enumerate(campaign_setup.trusted_upstream.bundle.units):
+        states[unit.plan.plan_id] = _runtime_state(
+            campaign_setup,
+            unit,
+            index=index,
+            outcome=DeepSeekHttpResponse(503, b"{}", None, 1),
+            include_transport=False,
+        )
+
+    async def execute_inside_active_loop() -> None:
+        AITagShadowCampaignLiveHarness().execute(
+            trusted_upstream=campaign_setup.trusted_upstream,
+            runtime_bindings_by_plan_id=_bindings(states),
+            limits=campaign_setup.limits,
+            allow_live_transport=True,
+        )
+
+    with pytest.raises(RuntimeError, match="active event loop"):
+        asyncio.run(execute_inside_active_loop())
+
+    assert all(state.egress.calls == 0 for state in states.values())
+    assert all(state.budget.calls == 0 for state in states.values())
+    assert all(state.credential.configured_checks == 0 for state in states.values())
+    assert all(state.credential.key_reads == 0 for state in states.values())
 
 
 def test_campaign_deadline_can_stop_all_units_before_runtime_controls(
@@ -1023,8 +1068,7 @@ def test_campaign_deadline_can_stop_all_units_before_runtime_controls(
     assert all(state.credential.configured_checks == 0 for state in states.values())
     assert all(state.credential.key_reads == 0 for state in states.values())
     assert all(
-        state.transport is not None and state.transport.calls == 0
-        for state in states.values()
+        state.transport is not None and state.transport.calls == 0 for state in states.values()
     )
 
 
@@ -1060,8 +1104,7 @@ def test_campaign_deadline_is_rechecked_after_authorization_before_dispatch(
     assert first_receipt is not None
     assert first_receipt.observed_control_stage == "campaign_deadline_post_authorization"
     assert all(
-        state.transport is not None and state.transport.calls == 0
-        for state in states.values()
+        state.transport is not None and state.transport.calls == 0 for state in states.values()
     )
     first_state = next(iter(states.values()))
     assert first_state.egress.calls == 1
@@ -1113,13 +1156,13 @@ def test_strict_loaders_round_trip_and_reject_duplicate_nonfinite_and_extra_fiel
 
     assert load_ai_tag_shadow_campaign_execution_result(result_json) == result
     assert load_ai_tag_shadow_campaign_unit_execution(unit_json) == unit
+    assert load_ai_tag_shadow_campaign_non_attempt_receipt(receipt_json) == non_attempt_receipt
     assert (
-        load_ai_tag_shadow_campaign_non_attempt_receipt(receipt_json)
+        seal_ai_tag_shadow_campaign_non_attempt_receipt(
+            non_attempt_receipt.model_dump(mode="json", exclude={"receipt_id"})
+        )
         == non_attempt_receipt
     )
-    assert seal_ai_tag_shadow_campaign_non_attempt_receipt(
-        non_attempt_receipt.model_dump(mode="json", exclude={"receipt_id"})
-    ) == non_attempt_receipt
 
     duplicate = result_json[:-1] + ',"schema_version":"duplicate"}'
     with pytest.raises(ValueError, match="duplicate JSON key"):

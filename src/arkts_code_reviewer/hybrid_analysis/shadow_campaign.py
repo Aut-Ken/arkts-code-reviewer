@@ -22,6 +22,7 @@ from arkts_code_reviewer.hybrid_analysis.builders import (
     AIModelViewProjectionPolicy,
     AnalysisCardBuilder,
     AnalysisContextPolicy,
+    AnalysisParserProfile,
     ModelViewBuilder,
     verify_model_view_against_card_and_policy,
 )
@@ -51,19 +52,15 @@ from arkts_code_reviewer.hybrid_analysis.shadow_evaluation import (
     AITagShadowEvaluationReport,
 )
 
-AI_TAG_SHADOW_CAMPAIGN_MANIFEST_SCHEMA_VERSION: Literal[
-    "ai-tag-shadow-campaign-manifest-v1"
-] = (
+AI_TAG_SHADOW_CAMPAIGN_MANIFEST_SCHEMA_VERSION: Literal["ai-tag-shadow-campaign-manifest-v1"] = (
     "ai-tag-shadow-campaign-manifest-v1"
 )
 AI_TAG_SHADOW_CAMPAIGN_INSPECTION_SCHEMA_VERSION: Literal[
     "ai-tag-shadow-campaign-inspection-v1"
-] = (
-    "ai-tag-shadow-campaign-inspection-v1"
-)
-AI_TAG_SHADOW_CAMPAIGN_BUILDER_VERSION: Literal[
+] = "ai-tag-shadow-campaign-inspection-v1"
+AI_TAG_SHADOW_CAMPAIGN_BUILDER_VERSION: Literal["ai-tag-shadow-campaign-builder-v1"] = (
     "ai-tag-shadow-campaign-builder-v1"
-] = "ai-tag-shadow-campaign-builder-v1"
+)
 
 DEFAULT_PROVIDER_EGRESS_ANALYSIS_CONTEXT_POLICY = AnalysisContextPolicy(
     builder_version="analysis-card-builder-v2-provider-egress",
@@ -124,8 +121,7 @@ def _trimmed_single_line(value: str, context: str, maximum: int = 2_000) -> str:
         or any(ord(character) < 32 or ord(character) == 127 for character in value)
     ):
         raise ValueError(
-            f"{context} must be non-empty, trimmed, single-line, and at most "
-            f"{maximum} characters"
+            f"{context} must be non-empty, trimmed, single-line, and at most {maximum} characters"
         )
     return value
 
@@ -216,9 +212,7 @@ class _AITagShadowCampaignManifestPayload(FrozenModel):
     verification_root_scope: Literal[
         "caller_supplied_analysis_context_snapshots_and_builder_assets"
     ]
-    source_provenance_scope: Literal[
-        "content_hash_replayed_git_attestation_not_verified"
-    ]
+    source_provenance_scope: Literal["content_hash_replayed_git_attestation_not_verified"]
     evidence_qualification_status: Literal["not_qualified"]
     production_qualified: Literal[False]
     qualification_blockers: tuple[CampaignQualificationBlocker, ...]
@@ -287,6 +281,7 @@ class AITagShadowCampaignInspectionUnit(FrozenModel):
     max_response_bytes: Annotated[int, Field(ge=1_024, le=8_000_000)]
     max_attempts: Literal[1]
 
+
 class AITagShadowCampaignInspection(FrozenModel):
     schema_version: Literal["ai-tag-shadow-campaign-inspection-v1"]
     mode: Literal["inspect_only"]
@@ -331,13 +326,9 @@ class AITagShadowCampaignInspection(FrozenModel):
                 raise ValueError(f"campaign inspection contains duplicate {attribute}")
         if self.planned_attempt_cap_sum != sum(item.max_attempts for item in self.units):
             raise ValueError("campaign inspection attempt cap does not rebuild")
-        if self.planned_output_token_cap_sum != sum(
-            item.max_output_tokens for item in self.units
-        ):
+        if self.planned_output_token_cap_sum != sum(item.max_output_tokens for item in self.units):
             raise ValueError("campaign inspection output token cap does not rebuild")
-        if self.total_wire_body_size_bytes != sum(
-            item.wire_body_size_bytes for item in self.units
-        ):
+        if self.total_wire_body_size_bytes != sum(item.wire_body_size_bytes for item in self.units):
             raise ValueError("campaign inspection body byte total does not rebuild")
         return self
 
@@ -548,15 +539,12 @@ class AITagShadowCampaignBuilder:
         context_plan: ContextPlanResult,
         source_snapshots: Mapping[str, CodeSourceSnapshot],
         unit_ids: tuple[str, ...],
-        context_policy: AnalysisContextPolicy = (
-            DEFAULT_PROVIDER_EGRESS_ANALYSIS_CONTEXT_POLICY
-        ),
-        projection_policy: AIModelViewProjectionPolicy = (
-            DEFAULT_CAMPAIGN_PROJECTION_POLICY
-        ),
+        context_policy: AnalysisContextPolicy = (DEFAULT_PROVIDER_EGRESS_ANALYSIS_CONTEXT_POLICY),
+        projection_policy: AIModelViewProjectionPolicy = (DEFAULT_CAMPAIGN_PROJECTION_POLICY),
         max_output_tokens: int = 4_096,
         timeout_ms: int = 60_000,
         max_response_bytes: int = 2_000_000,
+        parser_profile: AnalysisParserProfile = "default",
     ) -> AITagShadowCampaignBundle:
         if not isinstance(analysis_result, AnalysisResult):
             raise TypeError("campaign analysis_result has an unsupported type")
@@ -572,10 +560,7 @@ class AITagShadowCampaignBuilder:
             not isinstance(unit_ids, tuple)
             or not unit_ids
             or any(
-                not isinstance(item, str)
-                or not item
-                or item != item.strip()
-                for item in unit_ids
+                not isinstance(item, str) or not item or item != item.strip() for item in unit_ids
             )
             or len(unit_ids) != len(set(unit_ids))
         ):
@@ -592,7 +577,7 @@ class AITagShadowCampaignBuilder:
         if context_plan.change_set_id != analysis_result.change_set.change_set_id:
             raise ValueError("campaign ContextPlan and AnalysisResult ChangeSet differ")
 
-        cards = AnalysisCardBuilder().build_many(
+        cards = AnalysisCardBuilder(parser_profile=parser_profile).build_many(
             analysis_result=analysis_result,
             context_plan=context_plan,
             source_snapshots=source_snapshots,
@@ -600,9 +585,7 @@ class AITagShadowCampaignBuilder:
             policy=context_policy,
         )
         model_view_builder = ModelViewBuilder()
-        envelope_builder = AITagDispatchEnvelopeBuilder(
-            request_builder=self.request_builder
-        )
+        envelope_builder = AITagDispatchEnvelopeBuilder(request_builder=self.request_builder)
         prepared: list[AITagShadowCampaignUnitArtifacts] = []
         for card in cards:
             model_view = model_view_builder.build(
@@ -658,9 +641,7 @@ class AITagShadowCampaignBuilder:
                 "feature_config_fingerprint": first.card.feature_config_fingerprint,
                 "context_policy_fingerprint": context_policy.fingerprint,
                 "projection_policy_fingerprint": projection_policy.fingerprint,
-                "active_taxonomy_fingerprint": (
-                    first.request.active_taxonomy_fingerprint
-                ),
+                "active_taxonomy_fingerprint": (first.request.active_taxonomy_fingerprint),
                 "catalog_fingerprint": self.request_builder.catalog.catalog_fingerprint,
                 "prompt_hash": self.request_builder.prompt.prompt_hash,
                 "model_policy_fingerprint": (
@@ -678,9 +659,7 @@ class AITagShadowCampaignBuilder:
                 "verification_root_scope": (
                     "caller_supplied_analysis_context_snapshots_and_builder_assets"
                 ),
-                "source_provenance_scope": (
-                    "content_hash_replayed_git_attestation_not_verified"
-                ),
+                "source_provenance_scope": ("content_hash_replayed_git_attestation_not_verified"),
                 "evidence_qualification_status": "not_qualified",
                 "production_qualified": False,
                 "qualification_blockers": _QUALIFICATION_BLOCKERS,
@@ -722,14 +701,9 @@ class AITagShadowCampaignBuilder:
             raise ValueError("campaign context policy differs from Manifest")
         if bundle.projection_policy.fingerprint != manifest.projection_policy_fingerprint:
             raise ValueError("campaign projection policy differs from Manifest")
-        if any(
-            item.card.context_plan_id != manifest.context_plan_id
-            for item in units
-        ):
+        if any(item.card.context_plan_id != manifest.context_plan_id for item in units):
             raise ValueError("campaign Cards differ from Manifest ContextPlan")
-        envelope_builder = AITagDispatchEnvelopeBuilder(
-            request_builder=self.request_builder
-        )
+        envelope_builder = AITagDispatchEnvelopeBuilder(request_builder=self.request_builder)
         for item in units:
             verify_model_view_against_card_and_policy(
                 item.model_view,
@@ -769,12 +743,9 @@ class AITagShadowCampaignBuilder:
         first = units[0]
         if (
             manifest.feature_routing_id != first.card.feature_routing_id
-            or manifest.feature_config_fingerprint
-            != first.card.feature_config_fingerprint
-            or manifest.active_taxonomy_fingerprint
-            != first.request.active_taxonomy_fingerprint
-            or manifest.catalog_fingerprint
-            != self.request_builder.catalog.catalog_fingerprint
+            or manifest.feature_config_fingerprint != first.card.feature_config_fingerprint
+            or manifest.active_taxonomy_fingerprint != first.request.active_taxonomy_fingerprint
+            or manifest.catalog_fingerprint != self.request_builder.catalog.catalog_fingerprint
             or manifest.prompt_hash != self.request_builder.prompt.prompt_hash
             or manifest.model_policy_fingerprint
             != self.request_builder.model_policy.model_policy_fingerprint
@@ -788,13 +759,11 @@ class AITagShadowCampaignBuilder:
         )
         for field_name in shared_fields:
             if any(
-                getattr(item.card, field_name) != getattr(first.card, field_name)
-                for item in units
+                getattr(item.card, field_name) != getattr(first.card, field_name) for item in units
             ):
                 raise ValueError(f"campaign mixes Units with different {field_name}")
         if any(
-            item.request.active_taxonomy_fingerprint
-            != first.request.active_taxonomy_fingerprint
+            item.request.active_taxonomy_fingerprint != first.request.active_taxonomy_fingerprint
             or item.plan.shadow_provider_policy.policy_fingerprint
             != first.plan.shadow_provider_policy.policy_fingerprint
             for item in units
@@ -809,15 +778,12 @@ class AITagShadowCampaignBuilder:
         context_plan: ContextPlanResult,
         source_snapshots: Mapping[str, CodeSourceSnapshot],
         unit_ids: tuple[str, ...],
-        context_policy: AnalysisContextPolicy = (
-            DEFAULT_PROVIDER_EGRESS_ANALYSIS_CONTEXT_POLICY
-        ),
-        projection_policy: AIModelViewProjectionPolicy = (
-            DEFAULT_CAMPAIGN_PROJECTION_POLICY
-        ),
+        context_policy: AnalysisContextPolicy = (DEFAULT_PROVIDER_EGRESS_ANALYSIS_CONTEXT_POLICY),
+        projection_policy: AIModelViewProjectionPolicy = (DEFAULT_CAMPAIGN_PROJECTION_POLICY),
         max_output_tokens: int = 4_096,
         timeout_ms: int = 60_000,
         max_response_bytes: int = 2_000_000,
+        parser_profile: AnalysisParserProfile = "default",
     ) -> None:
         self.verify_bundle_graph(bundle)
         expected = self.build(
@@ -830,6 +796,7 @@ class AITagShadowCampaignBuilder:
             max_output_tokens=max_output_tokens,
             timeout_ms=timeout_ms,
             max_response_bytes=max_response_bytes,
+            parser_profile=parser_profile,
         )
         if bundle != expected:
             raise ValueError("campaign Bundle differs from full upstream rebuild")
@@ -863,9 +830,9 @@ class AITagShadowCampaignBuilder:
                     response_validation=validation,
                 )
             )
-        return AITagShadowEvaluationBuilder(
-            request_builder=self.request_builder
-        ).build_report(inputs)
+        return AITagShadowEvaluationBuilder(request_builder=self.request_builder).build_report(
+            inputs
+        )
 
     def verify_evaluation_report(
         self,
@@ -897,6 +864,7 @@ def build_ai_tag_shadow_campaign(
     max_output_tokens: int = 4_096,
     timeout_ms: int = 60_000,
     max_response_bytes: int = 2_000_000,
+    parser_profile: AnalysisParserProfile = "default",
 ) -> AITagShadowCampaignBundle:
     return AITagShadowCampaignBuilder.default().build(
         analysis_result=analysis_result,
@@ -908,6 +876,7 @@ def build_ai_tag_shadow_campaign(
         max_output_tokens=max_output_tokens,
         timeout_ms=timeout_ms,
         max_response_bytes=max_response_bytes,
+        parser_profile=parser_profile,
     )
 
 
@@ -923,6 +892,7 @@ def verify_ai_tag_shadow_campaign_against_upstream(
     max_output_tokens: int = 4_096,
     timeout_ms: int = 60_000,
     max_response_bytes: int = 2_000_000,
+    parser_profile: AnalysisParserProfile = "default",
 ) -> None:
     AITagShadowCampaignBuilder.default().verify_against_upstream(
         bundle,
@@ -935,6 +905,7 @@ def verify_ai_tag_shadow_campaign_against_upstream(
         max_output_tokens=max_output_tokens,
         timeout_ms=timeout_ms,
         max_response_bytes=max_response_bytes,
+        parser_profile=parser_profile,
     )
 
 

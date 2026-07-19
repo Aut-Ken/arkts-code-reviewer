@@ -729,7 +729,7 @@ def test_gate_has_no_plan_only_real_credential_send_path(
     assert send_calls == []
 
 
-def test_gate_dispatch_once_binds_claims_then_consumes_capability_before_key_access(
+def test_gate_dispatch_once_keeps_credentials_inside_internal_transport_boundary(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     _, _, plan, _ = _plan()
@@ -786,8 +786,8 @@ def test_gate_dispatch_once_binds_claims_then_consumes_capability_before_key_acc
         transport=transport,
     )
     assert response.status_code == 503
-    assert credential.events == ["credential", "get_api_key"]
-    assert send_calls == [(plan.plan_id, "fixed-transport-secret")]
+    assert credential.events == ["credential"]
+    assert send_calls == [(plan.plan_id, "synthetic-injected-transport-no-provider-credential")]
 
     with pytest.raises(AITagShadowAuthorizationError) as replayed:
         gate.dispatch_once(
@@ -797,8 +797,8 @@ def test_gate_dispatch_once_binds_claims_then_consumes_capability_before_key_acc
             transport=transport,
         )
     assert replayed.value.reason_code == "capability_replayed"
-    assert credential.events == ["credential", "get_api_key"]
-    assert send_calls == [(plan.plan_id, "fixed-transport-secret")]
+    assert credential.events == ["credential"]
+    assert send_calls == [(plan.plan_id, "synthetic-injected-transport-no-provider-credential")]
 
 
 def test_capability_cannot_be_reused_with_different_self_hashed_claims() -> None:
@@ -988,9 +988,7 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
         },
     )
     historical_receipt_payload["schema_version"] = "ai-tag-observed-response-receipt-v1"
-    historical_receipt = seal_ai_tag_observed_provider_response_receipt(
-        historical_receipt_payload
-    )
+    historical_receipt = seal_ai_tag_observed_provider_response_receipt(historical_receipt_payload)
     assert (
         load_ai_tag_observed_provider_response_receipt(historical_receipt.model_dump_json())
         == historical_receipt
@@ -1000,9 +998,7 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
             artifacts.provider_response_receipt.model_dump_json()
         )
     with pytest.raises(ValueError, match="Observed Provider Response Receipt V2"):
-        load_ai_tag_observed_provider_response_receipt_v2(
-            historical_receipt.model_dump_json()
-        )
+        load_ai_tag_observed_provider_response_receipt_v2(historical_receipt.model_dump_json())
     assert (
         load_ai_tag_shadow_execution_observation_v2(artifacts.observation.model_dump_json())
         == artifacts.observation
@@ -1059,9 +1055,7 @@ def test_usage_extensions_are_bound_by_v2_receipt_and_tamper_fails_rebuild() -> 
     assert receipt.outer_parser_contract_version == "deepseek-outer-response-parser-v2"
     assert receipt.usage_extension_policy == "direct_unknown_usage_fields_discarded-v1"
     assert receipt.ignored_usage_extension_count == 2
-    assert receipt.usage_extension_disposition == (
-        "discarded_without_name_or_value_retention"
-    )
+    assert receipt.usage_extension_disposition == ("discarded_without_name_or_value_retention")
     retained_artifacts = "|".join(
         artifact.model_dump_json()
         for artifact in (

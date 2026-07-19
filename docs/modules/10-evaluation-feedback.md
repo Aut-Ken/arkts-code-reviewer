@@ -64,9 +64,13 @@ updated: 2026-07-19
   graph，可选 caller-owned raw response bytes 再触发单 Plan raw-byte full rebuild。该 Result 固定
   not-qualified、shadow-only，不进入 Hybrid/Retrieval/Evidence/Finding，也不是 provider/runner signature。
 - 固定 repository-synthetic multi-Unit smoke 入口：hash-locked 的 4-ReviewUnit 合成 Campaign 可经默认
-  inspect-only CLI 查看 metadata；执行必须精确绑定 Campaign ID、Plan-set digest、全部 caps、固定确认文本和
-  per-Plan 原子本地 marker。自动化测试只用 injected transport，终端 summary 脱敏；当前没有执行真实
-  multi-Unit DeepSeek live run，也不接受任意真实代码 Campaign。
+  inspect-only CLI 查看 metadata。Campaign 的 base/head `file-analysis-v1` 来自随 wheel 打包且整包
+  hash 校验的冻结 snapshot；构建、Card replay 和 verifier 均不读取 `ARKTS_PARSER_*`，也不启动 Parser
+  子进程。执行必须精确绑定 Campaign ID、Plan-set digest、全部 caps、固定确认文本和 per-Plan 原子本地
+  marker。自动化测试只用 injected transport；valid-shape Unit 的 24 项 `tag_id + decision` 会连同
+  `source_role/unit_kind/unit_symbol` 写入带 self-hash 的 `0600` 安全 summary artifact，reason、证据行、代码、
+  路径、Prompt/body、raw response、credential 和 state path 均不写入。该 summary 不是完整 evidence graph，
+  当前没有执行真实 multi-Unit DeepSeek live run，也不接受任意真实代码 Campaign。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
