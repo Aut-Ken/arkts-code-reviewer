@@ -5,6 +5,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, replace
 from pathlib import Path
+from typing import cast
 
 import pytest
 
@@ -79,11 +80,24 @@ class _Transport:
         return self.outcome
 
 
-def _provider_body(*, invalid_inner: bool = False) -> bytes:
+def _provider_body(
+    *,
+    invalid_inner: bool = False,
+    abstain_tag_id: str | None = None,
+    system_fingerprint: str | None = "fp-repository-synthetic-smoke",
+) -> bytes:
     bundle = build_repository_synthetic_smoke_bundle()
     judgments: list[dict[str, object]] = []
     for contract in bundle.request.tag_contract_views:
-        if contract.tag_id == "has_timer" and not invalid_inner:
+        if contract.tag_id == abstain_tag_id and not invalid_inner:
+            judgment = {
+                "tag_id": contract.tag_id,
+                "decision": "abstain",
+                "evidence_lines": [],
+                "reason_code": "insufficient_context",
+                "reason": "PRIVATE_ABSTAIN_REASON",
+            }
+        elif contract.tag_id == "has_timer" and not invalid_inner:
             judgment = {
                 "tag_id": contract.tag_id,
                 "decision": "positive",
@@ -134,7 +148,7 @@ def _provider_body(*, invalid_inner: bool = False) -> bytes:
             "created": 1_750_000_000,
             "model": "deepseek-v4-pro",
             "object": "chat.completion",
-            "system_fingerprint": "fp-repository-synthetic-smoke",
+            "system_fingerprint": system_fingerprint,
             "usage": {
                 "completion_tokens": 200,
                 "prompt_tokens": 1_000,
@@ -197,7 +211,9 @@ def test_repository_synthetic_bundle_is_closed_deterministic_and_redacted() -> N
     assert first.manifest.wire_body_sha256 == first.plan.wire_body_sha256
     assert first.plan.max_attempts == 1
     assert first.plan.execution_mode == "shadow_only_no_hybrid_no_retrieval"
+    assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
     assert summary["network_attempted"] is False
+    assert summary["validated_tag_decisions"] == []
     rendered = json.dumps(summary, ensure_ascii=False)
     assert "repository synthetic smoke tick" not in rendered
     assert "messages" not in rendered
@@ -409,6 +425,7 @@ def test_default_cli_is_inspect_only_and_never_reads_credentials(
     summary = json.loads(capsys.readouterr().out)
     assert summary["mode"] == "inspect_only"
     assert summary["network_attempted"] is False
+    assert summary["validated_tag_decisions"] == []
     assert calls == 0
 
 
@@ -466,6 +483,7 @@ def test_live_preflight_failures_are_redacted_and_do_not_send(
     summary = json.loads(capsys.readouterr().out)
     assert summary["error_code"] == error_code
     assert summary["network_attempted"] is False
+    assert summary["validated_tag_decisions"] == []
     assert transport.calls == 0
 
 
@@ -516,8 +534,25 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
     first_output = capsys.readouterr().out
     first = json.loads(first_output)
     assert first["status"] == "valid_shape"
+    assert first["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
     assert first["judgment_count"] == 24
     assert first["decision_counts"] == {"not_supported": 22, "positive": 2}
+    expected_tag_decisions = [
+        {
+            "tag_id": contract.tag_id,
+            "decision": (
+                "positive" if contract.tag_id in {"has_logging", "has_timer"} else "not_supported"
+            ),
+        }
+        for contract in bundle.request.tag_contract_views
+    ]
+    assert first["validated_tag_decisions"] == expected_tag_decisions
+    assert all(set(item) == {"tag_id", "decision"} for item in first["validated_tag_decisions"])
+    projected_counts: dict[str, int] = {}
+    for item in first["validated_tag_decisions"]:
+        decision = item["decision"]
+        projected_counts[decision] = projected_counts.get(decision, 0) + 1
+    assert projected_counts == first["decision_counts"]
     assert first["network_attempted"] is None
     assert first["transport_evidence"] == "injected_untrusted_transport"
     assert first["raw_response_retained"] is False
@@ -535,10 +570,14 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
         credential.secret,
         "repository synthetic smoke tick",
         "The Unit starts and clears a timer.",
+        "The Unit writes a log message.",
+        "direct_unit_semantic_evidence",
+        "evidence_lines",
         raw_body.decode(),
         "wire_body_json",
     )
     marker_text = "\n".join(path.read_text() for path in state_dir.iterdir())
+    assert "validated_tag_decisions" not in marker_text
     for forbidden in secret_material:
         assert forbidden not in first_output
         assert forbidden not in marker_text
@@ -556,6 +595,121 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
     assert replay["error_code"] == "budget_not_reserved"
     assert replay["network_attempted"] is False
     assert transport.calls == 1
+
+
+def test_valid_abstain_is_projected_without_model_reason(
+    tmp_path: Path,
+) -> None:
+    bundle = build_repository_synthetic_smoke_bundle()
+    raw_body = _provider_body(abstain_tag_id="has_network")
+    run = run_repository_synthetic_smoke(
+        bundle=bundle,
+        approved_plan_id=bundle.plan.plan_id,
+        approved_wire_body_sha256=bundle.plan.wire_body_sha256,
+        reserved_max_output_tokens=bundle.plan.wire_payload.max_tokens,
+        acknowledgement=REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+        state_dir=tmp_path / "state",
+        credential_provider=_Credential(),
+        transport=_Transport(DeepSeekHttpResponse(200, raw_body, None, 9)),
+    )
+
+    summary = live_smoke._build_run_summary(run, bundle=bundle)
+    tag_decisions = cast(
+        list[dict[str, str]],
+        summary["validated_tag_decisions"],
+    )
+    decisions = {item["tag_id"]: item["decision"] for item in tag_decisions}
+
+    assert decisions["has_network"] == "abstain"
+    assert summary["decision_counts"] == {
+        "abstain": 1,
+        "not_supported": 21,
+        "positive": 2,
+    }
+    rendered = json.dumps(summary, ensure_ascii=False)
+    assert "PRIVATE_ABSTAIN_REASON" not in rendered
+    assert "insufficient_context" not in rendered
+
+
+def test_valid_missing_system_fingerprint_still_projects_complete_decisions(
+    tmp_path: Path,
+) -> None:
+    bundle = build_repository_synthetic_smoke_bundle()
+    raw_body = _provider_body(system_fingerprint=None)
+    run = run_repository_synthetic_smoke(
+        bundle=bundle,
+        approved_plan_id=bundle.plan.plan_id,
+        approved_wire_body_sha256=bundle.plan.wire_body_sha256,
+        reserved_max_output_tokens=bundle.plan.wire_payload.max_tokens,
+        acknowledgement=REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+        state_dir=tmp_path / "state",
+        credential_provider=_Credential(),
+        transport=_Transport(DeepSeekHttpResponse(200, raw_body, None, 9)),
+    )
+
+    summary = live_smoke._build_run_summary(run, bundle=bundle)
+
+    assert run.artifacts.provider_response_receipt is not None
+    assert run.artifacts.provider_response_receipt.system_fingerprint is None
+    assert run.artifacts.response_validation is not None
+    assert run.artifacts.response_validation.system_fingerprint == "not_reported"
+    assert summary["judgment_count"] == 24
+    assert len(cast(list[dict[str, str]], summary["validated_tag_decisions"])) == 24
+
+
+def test_summary_projection_revalidates_in_memory_objects(tmp_path: Path) -> None:
+    bundle = build_repository_synthetic_smoke_bundle()
+    raw_body = _provider_body()
+    run = run_repository_synthetic_smoke(
+        bundle=bundle,
+        approved_plan_id=bundle.plan.plan_id,
+        approved_wire_body_sha256=bundle.plan.wire_body_sha256,
+        reserved_max_output_tokens=bundle.plan.wire_payload.max_tokens,
+        acknowledgement=REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+        state_dir=tmp_path / "state",
+        credential_provider=_Credential(),
+        transport=_Transport(DeepSeekHttpResponse(200, raw_body, None, 9)),
+    )
+    validation = run.artifacts.response_validation
+    assert validation is not None
+    forged_validation = validation.model_copy(
+        update={"judgments": tuple(reversed(validation.judgments))}
+    )
+    forged_run = replace(
+        run,
+        artifacts=replace(run.artifacts, response_validation=forged_validation),
+    )
+
+    with pytest.raises(ValueError) as reordered:
+        live_smoke._build_run_summary(forged_run, bundle=bundle)
+    assert str(reordered.value) == ("invalid validated smoke Tag decision projection inputs")
+
+    invalid_decision = validation.judgments[0].model_copy(
+        update={"decision": "PRIVATE_INVALID_DECISION"}
+    )
+    forged_validation = validation.model_copy(
+        update={
+            "judgments": (invalid_decision, *validation.judgments[1:]),
+        }
+    )
+    forged_run = replace(
+        run,
+        artifacts=replace(run.artifacts, response_validation=forged_validation),
+    )
+    with pytest.raises(ValueError) as invalid:
+        live_smoke._build_run_summary(forged_run, bundle=bundle)
+    assert str(invalid.value) == ("invalid validated smoke Tag decision projection inputs")
+    assert "PRIVATE_INVALID_DECISION" not in repr(invalid.value)
+
+    forged_request = bundle.request.model_copy(
+        update={
+            "tag_contract_views": tuple(reversed(bundle.request.tag_contract_views)),
+        }
+    )
+    forged_bundle = replace(bundle, request=forged_request)
+    with pytest.raises(ValueError) as untrusted_bundle:
+        live_smoke._build_run_summary(run, bundle=forged_bundle)
+    assert str(untrusted_bundle.value) == ("invalid validated smoke Tag decision projection inputs")
 
 
 @pytest.mark.parametrize(
@@ -593,11 +747,12 @@ def test_attempt_failures_are_single_shot_and_do_not_echo_raw_bodies(
     output = capsys.readouterr().out
     summary = json.loads(output)
     assert summary["status"] == expected_status
+    assert summary["validated_tag_decisions"] == []
     assert summary["raw_response_retained"] is False
     assert transport.calls == 1
     assert "do-not-echo" not in output
     if expected_status == "invalid_output":
-        assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v2"
+        assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
         assert summary["outer_diagnostic_id"].startswith(
             "deepseek-outer-response-diagnostic:sha256:"
         )
@@ -621,13 +776,14 @@ def test_inner_invalid_response_remains_non_formal_and_redacted(tmp_path: Path) 
         credential_provider=_Credential(),
         transport=_Transport(DeepSeekHttpResponse(200, raw_body, None, 11)),
     )
-    summary = live_smoke._build_run_summary(run)
+    summary = live_smoke._build_run_summary(run, bundle=bundle)
 
     assert run.artifacts.observation.status == "invalid_output"
     assert run.artifacts.response_validation is not None
     assert run.artifacts.response_validation.judgments == ()
     assert summary["status"] == "invalid_output"
     assert summary["judgment_count"] == 0
+    assert summary["validated_tag_decisions"] == []
     assert summary["qualification"] == (
         "local_unattested_shadow_smoke_not_formal_or_quality_evidence"
     )

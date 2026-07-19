@@ -33,6 +33,10 @@ from arkts_code_reviewer.hybrid_analysis.dispatch import (
     AITagDispatchEnvelopeBuilder,
     VerifiedAITagDispatchEnvelope,
 )
+from arkts_code_reviewer.hybrid_analysis.execution import (
+    AITagResponseValidation,
+    verify_ai_tag_response_validation,
+)
 from arkts_code_reviewer.hybrid_analysis.models import (
     AITagAnalysisRequest,
     AITagModelView,
@@ -40,8 +44,10 @@ from arkts_code_reviewer.hybrid_analysis.models import (
     seal_review_unit_analysis_card,
 )
 from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
+    AITagObservedProviderResponseReceipt,
     AITagShadowDispatchClaims,
     AITagShadowDispatchPlan,
+    AITagShadowExecutionObservationV2,
     build_ai_tag_shadow_dispatch_plan,
     seal_ai_tag_shadow_dispatch_claims,
 )
@@ -57,7 +63,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
 AI_TAG_REPOSITORY_SMOKE_CASE_SCHEMA_VERSION = "ai-tag-repository-smoke-case-v1"
 AI_TAG_LOCAL_EGRESS_APPROVAL_SCHEMA_VERSION = "ai-tag-local-egress-approval-v1"
 AI_TAG_LOCAL_BUDGET_RESERVATION_SCHEMA_VERSION = "ai-tag-local-budget-reservation-v1"
-AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v2"
+AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v3"
 
 REPOSITORY_SYNTHETIC_SMOKE_CASE = "repository-synthetic-timer-log-v1"
 REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT = "YES_REPOSITORY_PROMPT_TAXONOMY_AND_SYNTHETIC_CODE"
@@ -736,23 +742,96 @@ def build_inspection_summary(bundle: RepositorySyntheticSmokeBundle) -> dict[str
         "max_response_bytes": plan.max_response_bytes,
         "max_attempts": plan.max_attempts,
         "required_acknowledgement": REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+        "validated_tag_decisions": [],
         "qualification": "inspect_only_connectivity_contract_smoke_not_tag_truth",
     }
 
 
-def _build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
+def _project_validated_tag_decisions(
+    run: RepositorySyntheticSmokeRun,
+    *,
+    bundle: RepositorySyntheticSmokeBundle,
+) -> list[dict[str, str]]:
+    try:
+        bundle = _require_canonical_repository_bundle(bundle)
+        artifacts = run.artifacts
+        observation = AITagShadowExecutionObservationV2.model_validate(
+            artifacts.observation.model_dump(mode="json")
+        )
+        validation = (
+            None
+            if artifacts.response_validation is None
+            else AITagResponseValidation.model_validate(
+                artifacts.response_validation.model_dump(mode="json")
+            )
+        )
+    except (AttributeError, SmokePreflightError, TypeError, ValueError):
+        raise ValueError("invalid validated smoke Tag decision projection inputs") from None
+    validation_is_valid = validation is not None and validation.status == "valid_shape"
+    observation_is_valid = observation.status == "valid_shape"
+    if not validation_is_valid and not observation_is_valid:
+        return []
+    if not validation_is_valid or not observation_is_valid or validation is None:
+        raise ValueError("validated smoke Tag decision statuses differ")
+    if observation.response_validation_id != validation.validation_id:
+        raise ValueError("validated smoke Tag decision references differ")
+    if run.manifest != bundle.manifest:
+        raise ValueError("validated smoke Tag decision manifests differ")
+    if artifacts.provider_response_receipt is None:
+        raise ValueError("validated smoke Tag decision response graph is incomplete")
+    try:
+        verify_ai_tag_response_validation(validation, bundle.envelope)
+        provider_receipt = AITagObservedProviderResponseReceipt.model_validate(
+            artifacts.provider_response_receipt.model_dump(mode="json")
+        )
+    except (AttributeError, TypeError, ValueError):
+        raise ValueError("invalid validated smoke Tag decision response graph") from None
+    if (
+        artifacts.outer_response_diagnostic is not None
+        or observation.plan_id != bundle.plan.plan_id
+        or observation.claims_id != run.claims.claims_id
+        or observation.attempt_receipt_id != artifacts.attempt_receipt.receipt_id
+        or observation.provider_response_receipt_id != provider_receipt.receipt_id
+        or provider_receipt.plan_id != bundle.plan.plan_id
+        or provider_receipt.attempt_receipt_id != artifacts.attempt_receipt.receipt_id
+        or provider_receipt.response_body_sha256 != artifacts.attempt_receipt.response_body_sha256
+        or provider_receipt.response_body_size_bytes
+        != artifacts.attempt_receipt.response_body_size_bytes
+        or provider_receipt.content_sha256 != validation.raw_content_sha256
+        or provider_receipt.model != validation.model
+        or (provider_receipt.system_fingerprint or "not_reported") != validation.system_fingerprint
+        or provider_receipt.finish_reason != validation.finish_reason
+    ):
+        raise ValueError("validated smoke Tag decision response graph differs")
+    expected_tag_ids = tuple(contract.tag_id for contract in bundle.request.tag_contract_views)
+    actual_tag_ids = tuple(judgment.tag_id for judgment in validation.judgments)
+    if actual_tag_ids != expected_tag_ids:
+        raise ValueError("validated smoke Tag decisions differ from the closed request")
+    return [
+        {"tag_id": judgment.tag_id, "decision": judgment.decision}
+        for judgment in validation.judgments
+    ]
+
+
+def _build_run_summary(
+    run: RepositorySyntheticSmokeRun,
+    *,
+    bundle: RepositorySyntheticSmokeBundle,
+) -> dict[str, object]:
     """Format a Runner-verified run; this is not an artifact verification API."""
 
     artifacts = run.artifacts
     attempt = artifacts.attempt_receipt
     validation = artifacts.response_validation
     outer_diagnostic = artifacts.outer_response_diagnostic
+    validated_tag_decisions = _project_validated_tag_decisions(run, bundle=bundle)
     decision_counts: dict[str, int] = {}
     usage: Mapping[str, object] | None = None
     if validation is not None:
-        for judgment in validation.judgments:
-            decision_counts[judgment.decision] = decision_counts.get(judgment.decision, 0) + 1
         usage = validation.usage.model_dump(mode="json")
+    for item in validated_tag_decisions:
+        decision = item["decision"]
+        decision_counts[decision] = decision_counts.get(decision, 0) + 1
     return {
         "schema_version": AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION,
         "mode": "live_shadow_attempt",
@@ -800,8 +879,9 @@ def _build_run_summary(run: RepositorySyntheticSmokeRun) -> dict[str, object]:
         "observation_id": artifacts.observation.observation_id,
         "status": artifacts.observation.status,
         "reason_code": artifacts.observation.reason_code,
-        "judgment_count": 0 if validation is None else len(validation.judgments),
+        "judgment_count": len(validated_tag_decisions),
         "decision_counts": decision_counts,
+        "validated_tag_decisions": validated_tag_decisions,
         "usage": usage,
         "raw_response_retained": False,
         "rebuild_scope": "verified_in_process_only",
@@ -815,6 +895,7 @@ def _safe_error_summary(*, code: str, attempted: bool | None) -> dict[str, objec
         "mode": "live_shadow_preflight" if attempted is False else "live_shadow_attempt",
         "network_attempted": attempted,
         "error_code": code,
+        "validated_tag_decisions": [],
         "qualification": "local_smoke_error_not_formal_or_quality_evidence",
     }
 
@@ -898,7 +979,11 @@ def main(
     except Exception:
         print(canonical_json(_safe_error_summary(code="smoke_runtime_error", attempted=None)))
         return 3
-    summary = _build_run_summary(run)
+    try:
+        summary = _build_run_summary(run, bundle=bundle)
+    except (TypeError, ValueError):
+        print(canonical_json(_safe_error_summary(code="smoke_summary_invalid", attempted=True)))
+        return 3
     print(canonical_json(summary))
     return 0 if run.artifacts.observation.status == "valid_shape" else 3
 
