@@ -1,7 +1,7 @@
 ---
 title: 跨模块数据契约
 status: canonical
-updated: 2026-07-16
+updated: 2026-07-19
 ---
 
 # 跨模块数据契约
@@ -36,6 +36,7 @@ updated: 2026-07-16
 | `CodeFacts/FileAnalysis` | Parser | ReviewUnit、Feature Routing、Rules |
 | `ReviewUnit/UnitFactScope` | ReviewUnit | Feature Routing、Context Planner、Evaluation |
 | `UnitFeatureProfile/FeatureRoutingResult` | Feature Routing | Context Planner、Retrieval、Rules、Prompt、Evaluation |
+| `AITagShadowUnitEvaluation/AITagShadowEvaluationReport` | Hybrid Analysis Evaluation | Evaluation、Audit；禁止作为 Feature Routing/Hybrid/Retrieval 输入 |
 | `TagTruthSelection/ReviewPacket/ReviewReceipt/Consensus/Publication` | Evaluation Governance | Tag candidate evaluation、Audit |
 | `NearDuplicatePairSelection/Consensus/CalibrationReport/PolicyApprovalReceipt` | Evaluation Governance | Near-duplicate policy calibration、Tag Truth release review、Audit |
 | `EvidencePack` | Retrieval | Prompt、Finding Validator、Evaluation |
@@ -853,6 +854,48 @@ PairSelection
 当前仓库只有合同和合成/负向测试，没有真实 PairSelection、人工 Receipt、Consensus、
 Freeze/Release、CalibrationReport 或 ApprovalReceipt。该链不实现 policy v2、screening v2，
 也不修改默认 Tag/Dimension/RQ、Feature config fingerprint、Golden 或 candidate runtime。
+
+### 11.5 当前 AI Tag shadow evaluation artifacts
+
+`ai-tag-shadow-unit-evaluation-v1` 与 `ai-tag-shadow-evaluation-report-v1` 是已经实现的
+evaluation/audit 产物，不是 Feature Routing 或正式 Hybrid 运行产物。输入闭包从调用方提供的 sealed
+`ReviewUnitAnalysisCard` 开始，使用 Builder 绑定的 Catalog/Prompt/model policy 确定性重建 full-24
+Request 与 `VerifiedAITagDispatchEnvelope`；默认 wrapper 使用当前仓库默认资产。随后核对 non-formal
+`AITagResponseValidation`：
+
+```text
+caller-supplied AnalysisCard
+-> Builder-bound full-24 Request/Envelope deterministic rebuild
+-> sealed ResponseValidation against-envelope verification
+-> AITagShadowUnitEvaluation
+-> canonical multi-Unit AITagShadowEvaluationReport
+```
+
+每个 Unit 记录 static exact、static routing 和 `validated_content_decision` 三个独立轴；
+`unit_comparison_status` 只由 static exact × validated-content decision 的既有 reducer 产生。Routing
+仍是 file hint，不参与 `agreement_positive/disagreement`。只有 `valid_shape` 才能携带完整 24 项
+decision；`invalid_output/unavailable_claim` 的 decision 全部为空，不能被解释成
+`not_supported` 或 `abstain`。沿用 reducer 的 `*_due_execution` 名称只表示没有可用的 validated
+content decision，不证明 provider attempt 实际发生；产物因此使用 `reported_attempt_count`，其数值仍是
+ResponseValidation 携带的 caller claim。
+
+Batch report 按稳定 Unit identity 排序，拒绝重复 Unit/Card/View/Request/Envelope/Validation，并要求
+feature config、context/projection policy、taxonomy、Catalog、Prompt 和 model policy 一致。它从嵌入的
+Unit 明细重建 response/source counts、decision/comparison counts、24 个逐 Tag aggregate、reported
+usage 和 reported latency；完整 verifier 还会从调用方 roots 重建每个 Unit 和整个 report，不能用
+self-hash 代替输入闭包。V1 的 `collection_scope=caller_supplied_input_set_not_campaign_bound`，没有绑定
+sealed selection、dataset、ChangeSet 或 analysis-run manifest，因此只是任意调用方输入集合的机械
+汇总，不是可重放的正式 campaign artifact。
+
+两个 artifact 都固定为 `evidence_qualification_status=not_qualified`、
+`production_qualified=false`，并保留 provider attribution、独立 Tag Truth、production prevalence
+和文档 Retrieval Truth 缺失的 blockers；另有
+`analysis_card_upstream_provenance_not_rebuilt` 与 `evaluation_campaign_manifest_not_bound` 明确限制
+verifier closure。它们没有 `exact_tags/routing_tags/ai_inferred_tags`、
+Dimension、RQ、Result/Outcome、RetrievalRequest、Evidence 或 Finding 字段；builder 不访问 provider
+或 credential，也不构造 `HybridFeatureAnalysisResult`。因此这些分布只能证明聚合合同和当前输入的
+诊断状态，不能产生 TP/FP/FN/TN、Precision/Recall、模型稳定性或生产启用结论。Card 之前的 Parser、
+ReviewUnit、Feature Routing 与 Git provenance 仍不在该 verifier closure 内。
 
 ## 12. 兼容 RetrievalQuery 与正式 Retrieval 输入
 

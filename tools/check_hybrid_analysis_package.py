@@ -17,6 +17,7 @@ PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
     "arkts_code_reviewer/hybrid_analysis/live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
+    "arkts_code_reviewer/hybrid_analysis/shadow_evaluation.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_runtime.py",
 }
 
@@ -78,8 +79,10 @@ def main() -> int:
                     "from arkts_code_reviewer.hybrid_analysis import "
                     "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION, "
                     "AI_TAG_WIRE_RENDERER_VERSION, "
+                    "AI_TAG_SHADOW_EVALUATION_REPORT_SCHEMA_VERSION, "
                     "DEFAULT_AI_TAG_CONTRACTS_PATH, DEFAULT_AI_TAG_PROMPT_PATH, "
-                    "AITagDispatchEnvelopeBuilder, DryRunTagAnalysisClient, "
+                    "AITagDispatchEnvelopeBuilder, AITagShadowEvaluationBuilder, "
+                    "DryRunTagAnalysisClient, "
                     "FullTaxonomyRequestBuilder; "
                     "from arkts_code_reviewer.hybrid_analysis.provider_receipts "
                     "import AITagObservedProviderResponseReceiptV2, "
@@ -108,6 +111,9 @@ def main() -> int:
                     "assert builder.model_policy.wire_output_contract_version == "
                     "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION; "
                     "assert AITagDispatchEnvelopeBuilder.default(); "
+                    "assert AITagShadowEvaluationBuilder.default(); "
+                    "assert AI_TAG_SHADOW_EVALUATION_REPORT_SCHEMA_VERSION == "
+                    "'ai-tag-shadow-evaluation-report-v1'; "
                     "assert DryRunTagAnalysisClient(); "
                     "assert AITagShadowDispatchPlan; "
                     "assert AITagShadowExecutionObservationV2; "

@@ -2,7 +2,7 @@
 title: 10 评测与反馈闭环模块
 status: canonical
 implementation: partial
-updated: 2026-07-16
+updated: 2026-07-19
 ---
 
 # 10 评测与反馈闭环模块
@@ -40,6 +40,12 @@ updated: 2026-07-16
   consensus publication 合同。
 - Near-duplicate Pair Truth、exhaustive Oracle、component-aware calibration、
   PolicyCandidateFreeze、HoldoutReleaseReceipt 和 typed-artifact full-rebuild approval 合同。
+- Evaluation-only 的多 ReviewUnit AI Tag shadow 诊断合同：逐 Unit 绑定 Card、full-24
+  Request/Envelope 和 non-formal ResponseValidation，并以内容寻址 report 汇总 status/source、
+  decision/comparison、逐 Tag 分布、reported usage/latency；完整 verifier 从调用方 roots 重建全部
+  Unit/report。该链不 dispatch、不构造 formal Result/Outcome/Hybrid、不进入 Retrieval，固定
+  not-qualified；当前 input set 未绑定 sealed campaign manifest，Card 上游 provenance 也不在该
+  verifier closure。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -50,6 +56,8 @@ updated: 2026-07-16
 缺失：
 
 - 真实通用 Tag blind campaign、production-prevalence Truth 和总体 Tag Precision/Recall。
+- 真实代码的 multi-Unit DeepSeek campaign、人工 Unit-exact Truth、重复运行稳定性和模型 Tag P/R；
+  当前固定合成样例的单次 valid-shape observation 与多 Unit 合成合同都不能替代这些证据。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
@@ -64,6 +72,7 @@ updated: 2026-07-16
 | ReviewUnit owner | ChangeSet+Facts -> Primary Units | owner precision/recall、changed-line coverage、诊断传播、确定性 |
 | Context Planner | Primary+relations+budget -> ContextPlanResult | required-context recall、relation precision/recall、distractor rejection、预算合规 |
 | Feature Routing | UnitFactScope -> Tags/Dimensions/Questions | exact/routing Tag precision/recall、Unit/MR Dimension precision/recall、串扰率、问题绑定覆盖 |
+| AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |
 | Rules | code -> RuleFinding | precision、recall、diff relevance |
