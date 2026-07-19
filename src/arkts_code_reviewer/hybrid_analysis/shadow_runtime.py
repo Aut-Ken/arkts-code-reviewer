@@ -225,12 +225,14 @@ class AITagShadowAuthorizationGate:
         except ValueError:
             raise AITagShadowAuthorizationError("plan_not_trusted") from None
 
-    def authorize(
+    def verify_claims_binding(
         self,
         *,
         plan: AITagShadowDispatchPlan,
         claims: AITagShadowDispatchClaims,
-    ) -> AITagShadowDispatchCapability:
+    ) -> None:
+        """Validate immutable Plan/Claims/Gate identity without consuming controls."""
+
         plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
         claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
         self._verify_trusted_plan(plan)
@@ -240,6 +242,16 @@ class AITagShadowAuthorizationGate:
             or claims.credential_scope_id != self._credential_provider.credential_scope_id
         ):
             raise AITagShadowAuthorizationError("claims_mismatch")
+
+    def authorize(
+        self,
+        *,
+        plan: AITagShadowDispatchPlan,
+        claims: AITagShadowDispatchClaims,
+    ) -> AITagShadowDispatchCapability:
+        plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
+        claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
+        self.verify_claims_binding(plan=plan, claims=claims)
         self._egress_verifier.verify_exact_body_egress(
             plan=plan,
             approval_id=claims.egress_approval_id,
@@ -285,6 +297,24 @@ class AITagShadowAuthorizationGate:
         if issued_binding != (plan.plan_id, claims.claims_id):
             raise AITagShadowAuthorizationError("capability_invalid")
 
+    def revoke_unused_capability(
+        self,
+        *,
+        capability: AITagShadowDispatchCapability,
+        plan: AITagShadowDispatchPlan,
+        claims: AITagShadowDispatchClaims,
+    ) -> None:
+        """Consume an issued capability without allowing a transport dispatch."""
+
+        plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
+        claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
+        self.verify_claims_binding(plan=plan, claims=claims)
+        self._consume_capability(
+            capability,
+            plan=plan,
+            claims=claims,
+        )
+
     def dispatch_once(
         self,
         *,
@@ -297,13 +327,7 @@ class AITagShadowAuthorizationGate:
 
         plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
         claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
-        self._verify_trusted_plan(plan)
-        if (
-            claims.plan_id != plan.plan_id
-            or claims.trust_domain_id != self.trust_domain_id
-            or claims.credential_scope_id != self._credential_provider.credential_scope_id
-        ):
-            raise AITagShadowAuthorizationError("claims_mismatch")
+        self.verify_claims_binding(plan=plan, claims=claims)
         self._consume_capability(
             capability,
             plan=plan,
@@ -394,6 +418,43 @@ class DeepSeekShadowRunner:
                 validation=None,
                 status=exc.kind,
                 reason_code=exc.kind,
+            )
+            return _finalize_run_artifacts(
+                AITagShadowRunArtifacts(
+                    attempt_receipt=attempt,
+                    provider_response_receipt=None,
+                    response_validation=None,
+                    outer_response_diagnostic=None,
+                    observation=observation,
+                ),
+                plan=plan,
+                claims=claims,
+                trusted_plan_inputs=self._gate.trusted_plan_inputs,
+                raw_response_body=None,
+            )
+        except AITagShadowAuthorizationError:
+            raise
+        except Exception:
+            if transport_evidence != "injected_untrusted_transport":
+                raise
+            failure = DeepSeekHttpTransportError(
+                "provider_transport_error",
+                latency_ms=0,
+            )
+            attempt = _attempt_failure_receipt(
+                plan=plan,
+                claims=claims,
+                failure=failure,
+                transport_evidence=transport_evidence,
+            )
+            observation = _observation(
+                plan=plan,
+                claims=claims,
+                attempt=attempt,
+                response_receipt=None,
+                validation=None,
+                status=failure.kind,
+                reason_code=failure.kind,
             )
             return _finalize_run_artifacts(
                 AITagShadowRunArtifacts(

@@ -54,6 +54,19 @@ updated: 2026-07-19
   ResponseValidation 绑定对应 Envelope，再复用上述 v1 evaluator；Validation 不绑定 Plan execution，
   adapter 不 dispatch、不读取 credential，仍固定 not-qualified，也不改变 v1 report 的
   `caller_supplied_input_set_not_campaign_bound` 语义。
+- 多 ReviewUnit shadow campaign execution 合同：从完整 upstream roots 重建 Campaign，要求每个 Plan
+  都有唯一 runtime binding，并按 canonical Plan 顺序逐个执行；每个 Plan 最多一次 attempt、固定无重试。
+  真实固定 HTTP transport 与 injected test transport 默认都禁止，必须分别显式 opt-in 才会 dispatch。
+  每个 Unit 分开记录 `attempted/skipped_budget/not_run`，attempted 再区分 valid、inner-invalid、
+  outer-invalid、4xx/429/5xx、timeout、transport 和 response-too-large，不会把缺失或失败判断伪造成
+  24 个 negative。零 attempt 由独立内容寻址的 local non-attempt receipt 绑定 reason/control stage；
+  内容寻址 Result 从 Unit 明细重建 counts；persistent verifier 核对完整运行 artifact
+  graph，可选 caller-owned raw response bytes 再触发单 Plan raw-byte full rebuild。该 Result 固定
+  not-qualified、shadow-only，不进入 Hybrid/Retrieval/Evidence/Finding，也不是 provider/runner signature。
+- 固定 repository-synthetic multi-Unit smoke 入口：hash-locked 的 4-ReviewUnit 合成 Campaign 可经默认
+  inspect-only CLI 查看 metadata；执行必须精确绑定 Campaign ID、Plan-set digest、全部 caps、固定确认文本和
+  per-Plan 原子本地 marker。自动化测试只用 injected transport，终端 summary 脱敏；当前没有执行真实
+  multi-Unit DeepSeek live run，也不接受任意真实代码 Campaign。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -65,11 +78,11 @@ updated: 2026-07-19
 
 - 真实通用 Tag blind campaign、production-prevalence Truth 和总体 Tag Precision/Recall。
 - 真实代码的 multi-Unit DeepSeek campaign、人工 Unit-exact Truth、重复运行稳定性和模型 Tag P/R；
-  当前固定合成样例的单次 valid-shape observation、多 Unit 合成合同与 inspect-only campaign
-  manifest 都不能替代这些证据。
-- 能完整记录 planned、attempted、skipped-budget、not-run 和 transport/outer-invalid Unit 的 sealed
-  campaign execution-result artifact；当前 adapter 对缺少 ResponseValidation 的 Plan fail-closed，
-  不会把零 attempt Unit 静默省略或伪造成 negative。
+  当前固定合成样例的单次 valid-shape observation、多 Unit execution 合成合同与 inspect-only campaign
+  manifest 都不能替代这些证据；当前没有真实 multi-Unit live run，也没有任意真实 Campaign 的
+  multi-Unit live CLI。
+- provider/runner signature、外部授权 attestation、source Git provenance attestation、生产预算 ledger 与
+  部署合规证明；当前 Campaign Execution Result 明确只保存本地 process/runtime observation。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
@@ -85,6 +98,7 @@ updated: 2026-07-19
 | Context Planner | Primary+relations+budget -> ContextPlanResult | required-context recall、relation precision/recall、distractor rejection、预算合规 |
 | Feature Routing | UnitFactScope -> Tags/Dimensions/Questions | exact/routing Tag precision/recall、Unit/MR Dimension precision/recall、串扰率、问题绑定覆盖 |
 | AI Tag shadow campaign preparation | upstream graph + Unit selection -> manifest/inspection/per-Unit Plans | selection/identity/rebuild 完整性、跨 Unit splice 拒绝、安全投影；不执行 provider、不计算 P/R |
+| AI Tag shadow campaign execution | manifest + trusted upstream + per-Plan runtime bindings -> per-Unit executions/result | canonical sequential 单次无重试、attempted/skipped/not-run、non-attempt receipt 与 inner/outer/provider failure 状态矩阵、persistent graph rebuild、可选 raw-byte full rebuild；固定 synthetic CLI 只证明控制合同，不计算 P/R、不进入 Hybrid/Retrieval |
 | AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |

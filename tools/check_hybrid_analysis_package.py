@@ -14,10 +14,12 @@ PACKAGED_ASSETS = {
     "arkts_code_reviewer/hybrid_analysis/defaults/deepseek-tag-analysis-v1.md",
 }
 PACKAGED_MODULES = {
+    "arkts_code_reviewer/hybrid_analysis/campaign_live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
     "arkts_code_reviewer/hybrid_analysis/live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_campaign.py",
+    "arkts_code_reviewer/hybrid_analysis/shadow_campaign_execution.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_evaluation.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_runtime.py",
 }
@@ -98,6 +100,12 @@ def main() -> int:
                     "import AITagShadowAuthorizationGate; "
                     "from arkts_code_reviewer.hybrid_analysis.live_smoke "
                     "import build_repository_synthetic_smoke_bundle; "
+                    "from arkts_code_reviewer.hybrid_analysis.campaign_live_smoke "
+                    "import build_repository_synthetic_campaign_bundle; "
+                    "from arkts_code_reviewer.hybrid_analysis.shadow_campaign_execution "
+                    "import AI_TAG_SHADOW_CAMPAIGN_EXECUTION_RESULT_SCHEMA_VERSION, "
+                    "AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION, "
+                    "AITagShadowCampaignLiveHarness; "
                     "assert 'httpx' not in sys.modules; "
                     "package = Path(arkts_code_reviewer.__file__).resolve(); "
                     "assert package.is_relative_to(Path.cwd() / 'unpacked'); "
@@ -136,6 +144,14 @@ def main() -> int:
                     "assert smoke.plan.max_attempts == 1; "
                     "assert smoke.plan.shadow_provider_policy.provider_contract_snapshot == "
                     "'deepseek-chat-completions-2026-07-19-r3'; "
+                    "campaign_smoke = build_repository_synthetic_campaign_bundle(); "
+                    "assert len(campaign_smoke.campaign.units) == 4; "
+                    "assert campaign_smoke.caps.max_total_attempts == 4; "
+                    "assert AI_TAG_SHADOW_CAMPAIGN_EXECUTION_RESULT_SCHEMA_VERSION == "
+                    "'ai-tag-shadow-campaign-execution-result-v1'; "
+                    "assert AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION == "
+                    "'ai-tag-shadow-campaign-non-attempt-receipt-v1'; "
+                    "assert AITagShadowCampaignLiveHarness; "
                     "print(builder.catalog.catalog_fingerprint); "
                     "print(builder.prompt.prompt_hash)"
                 ),
