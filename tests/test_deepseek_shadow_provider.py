@@ -33,11 +33,13 @@ from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
     build_ai_tag_shadow_dispatch_plan,
     load_ai_tag_dispatch_attempt_receipt,
     load_ai_tag_observed_provider_response_receipt,
+    load_ai_tag_observed_provider_response_receipt_v2,
     load_ai_tag_shadow_dispatch_claims,
     load_ai_tag_shadow_dispatch_plan,
     load_ai_tag_shadow_execution_observation_v2,
     seal_ai_tag_dispatch_attempt_receipt,
     seal_ai_tag_observed_provider_response_receipt,
+    seal_ai_tag_observed_provider_response_receipt_v2,
     seal_ai_tag_shadow_dispatch_claims,
     seal_ai_tag_shadow_dispatch_plan,
     seal_ai_tag_shadow_execution_observation_v2,
@@ -393,24 +395,31 @@ def test_shadow_plan_is_deterministic_canonical_and_adds_only_bounded_output() -
         seal_ai_tag_shadow_dispatch_plan(policy_unbound)
 
 
-def test_r1_provider_snapshot_remains_readable_but_cannot_pass_current_rebuild() -> None:
+@pytest.mark.parametrize(
+    "historical_snapshot",
+    [
+        "deepseek-chat-completions-2026-07-18",
+        "deepseek-chat-completions-2026-07-18-r2",
+    ],
+)
+def test_historical_provider_snapshot_remains_readable_but_cannot_pass_current_rebuild(
+    historical_snapshot: str,
+) -> None:
     card, envelope, current, policy = _plan()
     old_policy_payload = current.shadow_provider_policy.model_dump(
         mode="json",
         exclude={"policy_fingerprint"},
     )
-    old_policy_payload["provider_contract_snapshot"] = "deepseek-chat-completions-2026-07-18"
+    old_policy_payload["provider_contract_snapshot"] = historical_snapshot
     old_policy = seal_ai_tag_shadow_provider_policy(old_policy_payload)
     old_plan_payload = current.model_dump(mode="json", exclude={"plan_id"})
     old_plan_payload["shadow_provider_policy"] = old_policy.model_dump(mode="json")
     old_plan = seal_ai_tag_shadow_dispatch_plan(old_plan_payload)
 
     assert load_ai_tag_shadow_dispatch_plan(old_plan.model_dump_json()) == old_plan
-    assert old_plan.shadow_provider_policy.provider_contract_snapshot == (
-        "deepseek-chat-completions-2026-07-18"
-    )
+    assert old_plan.shadow_provider_policy.provider_contract_snapshot == historical_snapshot
     assert current.shadow_provider_policy.provider_contract_snapshot == (
-        "deepseek-chat-completions-2026-07-18-r2"
+        "deepseek-chat-completions-2026-07-19-r3"
     )
     assert old_plan.wire_body_sha256 == current.wire_body_sha256
     assert old_plan.shadow_provider_policy.policy_fingerprint != (
@@ -930,6 +939,8 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
     assert artifacts.provider_response_receipt.qualification == (
         "synthetic_or_untrusted_transport_not_provider_observation"
     )
+    assert artifacts.provider_response_receipt.ignored_usage_extension_count == 0
+    assert artifacts.provider_response_receipt.usage_extension_disposition == "none_observed"
     assert artifacts.response_validation is not None
     assert artifacts.response_validation.status == "valid_shape"
     assert artifacts.response_validation.qualification == ("synthetic_or_unattributed_not_formal")
@@ -960,11 +971,38 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
         == artifacts.attempt_receipt
     )
     assert (
-        load_ai_tag_observed_provider_response_receipt(
+        load_ai_tag_observed_provider_response_receipt_v2(
             artifacts.provider_response_receipt.model_dump_json()
         )
         == artifacts.provider_response_receipt
     )
+    historical_receipt_payload = artifacts.provider_response_receipt.model_dump(
+        mode="json",
+        exclude={
+            "receipt_id",
+            "provider_contract_snapshot",
+            "outer_parser_contract_version",
+            "usage_extension_policy",
+            "ignored_usage_extension_count",
+            "usage_extension_disposition",
+        },
+    )
+    historical_receipt_payload["schema_version"] = "ai-tag-observed-response-receipt-v1"
+    historical_receipt = seal_ai_tag_observed_provider_response_receipt(
+        historical_receipt_payload
+    )
+    assert (
+        load_ai_tag_observed_provider_response_receipt(historical_receipt.model_dump_json())
+        == historical_receipt
+    )
+    with pytest.raises(ValueError, match="Observed Provider Response Receipt"):
+        load_ai_tag_observed_provider_response_receipt(
+            artifacts.provider_response_receipt.model_dump_json()
+        )
+    with pytest.raises(ValueError, match="Observed Provider Response Receipt V2"):
+        load_ai_tag_observed_provider_response_receipt_v2(
+            historical_receipt.model_dump_json()
+        )
     assert (
         load_ai_tag_shadow_execution_observation_v2(artifacts.observation.model_dump_json())
         == artifacts.observation
@@ -991,6 +1029,78 @@ def test_valid_http_200_produces_receipts_and_only_non_formal_validation() -> No
     assert secret not in receipt_json
     assert envelope.model_view.code.numbered_text not in receipt_json
     assert _wire_content(_judgments(envelope)) not in receipt_json
+
+
+def test_usage_extensions_are_bound_by_v2_receipt_and_tamper_fails_rebuild() -> None:
+    _, envelope, plan, _ = _plan()
+    provider_payload = json.loads(_provider_body(envelope))
+    provider_payload["usage"]["PRIVATE_EXTENSION_ONE"] = {  # type: ignore[index]
+        "PRIVATE_SECRET": "PRIVATE_VALUE"
+    }
+    provider_payload["usage"]["PRIVATE_EXTENSION_TWO"] = [1, 2, 3]  # type: ignore[index]
+    raw_body = json.dumps(provider_payload, separators=(",", ":")).encode()
+    transport = _ScriptedTransport(DeepSeekHttpResponse(200, raw_body, None, 5))
+    runner, capability, _, claims = _authorized_runner(
+        plan=plan,
+        transport=transport,
+    )
+
+    artifacts = runner.run(
+        plan=plan,
+        claims=claims,
+        capability=capability,
+        envelope=envelope,
+    )
+
+    assert artifacts.provider_response_receipt is not None
+    receipt = artifacts.provider_response_receipt
+    assert receipt.schema_version == "ai-tag-observed-response-receipt-v2"
+    assert receipt.provider_contract_snapshot == "deepseek-chat-completions-2026-07-19-r3"
+    assert receipt.outer_parser_contract_version == "deepseek-outer-response-parser-v2"
+    assert receipt.usage_extension_policy == "direct_unknown_usage_fields_discarded-v1"
+    assert receipt.ignored_usage_extension_count == 2
+    assert receipt.usage_extension_disposition == (
+        "discarded_without_name_or_value_retention"
+    )
+    retained_artifacts = "|".join(
+        artifact.model_dump_json()
+        for artifact in (
+            receipt,
+            artifacts.response_validation,
+            artifacts.observation,
+        )
+        if artifact is not None
+    )
+    assert "PRIVATE_EXTENSION" not in retained_artifacts
+    assert "PRIVATE_SECRET" not in retained_artifacts
+    assert "PRIVATE_VALUE" not in retained_artifacts
+
+    impossible_payload = receipt.model_dump(mode="json", exclude={"receipt_id"})
+    impossible_payload["usage"] = None
+    with pytest.raises(ValueError, match="parsed known usage"):
+        seal_ai_tag_observed_provider_response_receipt_v2(impossible_payload)
+
+    tampered_payload = receipt.model_dump(mode="json", exclude={"receipt_id"})
+    tampered_payload["ignored_usage_extension_count"] = 1
+    tampered_receipt = seal_ai_tag_observed_provider_response_receipt_v2(tampered_payload)
+    observation_payload = artifacts.observation.model_dump(
+        mode="json",
+        exclude={"observation_id"},
+    )
+    observation_payload["provider_response_receipt_id"] = tampered_receipt.receipt_id
+    tampered_artifacts = replace(
+        artifacts,
+        provider_response_receipt=tampered_receipt,
+        observation=seal_ai_tag_shadow_execution_observation_v2(observation_payload),
+    )
+    with pytest.raises(ValueError, match="trusted raw-response rebuild"):
+        verify_deepseek_shadow_run_artifacts(
+            tampered_artifacts,
+            plan=plan,
+            claims=claims,
+            envelope=envelope,
+            raw_response_body=raw_body,
+        )
 
 
 def test_http_200_with_valid_outer_but_invalid_inner_stays_non_formal() -> None:
@@ -1303,7 +1413,7 @@ def test_semantically_tampered_self_hashed_response_receipt_is_rejected() -> Non
         exclude={"receipt_id"},
     )
     receipt_payload["created"] = receipt_payload["created"] + 1  # type: ignore[operator]
-    tampered_receipt = seal_ai_tag_observed_provider_response_receipt(receipt_payload)
+    tampered_receipt = seal_ai_tag_observed_provider_response_receipt_v2(receipt_payload)
     observation_payload = artifacts.observation.model_dump(
         mode="json",
         exclude={"observation_id"},

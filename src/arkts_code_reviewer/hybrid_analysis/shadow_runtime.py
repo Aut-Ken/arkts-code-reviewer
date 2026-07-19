@@ -32,7 +32,7 @@ from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
     AI_TAG_DISPATCH_ATTEMPT_RECEIPT_SCHEMA_VERSION,
     AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION,
     AITagDispatchAttemptReceipt,
-    AITagObservedProviderResponseReceipt,
+    AITagObservedProviderResponseReceiptV2,
     AITagShadowDispatchClaims,
     AITagShadowDispatchPlan,
     AITagShadowExecutionObservationV2,
@@ -330,7 +330,7 @@ class AITagShadowAuthorizationGate:
 @dataclass(frozen=True)
 class AITagShadowRunArtifacts:
     attempt_receipt: AITagDispatchAttemptReceipt
-    provider_response_receipt: AITagObservedProviderResponseReceipt | None
+    provider_response_receipt: AITagObservedProviderResponseReceiptV2 | None
     response_validation: AITagResponseValidation | None
     outer_response_diagnostic: DeepSeekOuterResponseDiagnostic | None
     observation: AITagShadowExecutionObservationV2
@@ -715,7 +715,7 @@ def _observation(
     plan: AITagShadowDispatchPlan,
     claims: AITagShadowDispatchClaims,
     attempt: AITagDispatchAttemptReceipt,
-    response_receipt: AITagObservedProviderResponseReceipt | None,
+    response_receipt: AITagObservedProviderResponseReceiptV2 | None,
     validation: AITagResponseValidation | None,
     outer_diagnostic: DeepSeekOuterResponseDiagnostic | None = None,
     status: str,

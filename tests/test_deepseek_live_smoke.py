@@ -85,6 +85,7 @@ def _provider_body(
     invalid_inner: bool = False,
     abstain_tag_id: str | None = None,
     system_fingerprint: str | None = "fp-repository-synthetic-smoke",
+    usage_extensions: dict[str, object] | None = None,
 ) -> bytes:
     bundle = build_repository_synthetic_smoke_bundle()
     judgments: list[dict[str, object]] = []
@@ -130,6 +131,16 @@ def _provider_body(
         separators=(",", ":"),
         sort_keys=True,
     )
+    usage: dict[str, object] = {
+        "completion_tokens": 200,
+        "prompt_tokens": 1_000,
+        "total_tokens": 1_200,
+        "prompt_cache_hit_tokens": 250,
+        "prompt_cache_miss_tokens": 750,
+        "completion_tokens_details": {"reasoning_tokens": 0},
+    }
+    if usage_extensions is not None:
+        usage.update(usage_extensions)
     return json.dumps(
         {
             "id": "chatcmpl-repository-synthetic-smoke",
@@ -149,14 +160,7 @@ def _provider_body(
             "model": "deepseek-v4-pro",
             "object": "chat.completion",
             "system_fingerprint": system_fingerprint,
-            "usage": {
-                "completion_tokens": 200,
-                "prompt_tokens": 1_000,
-                "total_tokens": 1_200,
-                "prompt_cache_hit_tokens": 250,
-                "prompt_cache_miss_tokens": 750,
-                "completion_tokens_details": {"reasoning_tokens": 0},
-            },
+            "usage": usage,
         },
         ensure_ascii=False,
         separators=(",", ":"),
@@ -209,10 +213,22 @@ def test_repository_synthetic_bundle_is_closed_deterministic_and_redacted() -> N
     assert first.manifest.catalog_fingerprint.startswith("ai-tag-contract-catalog:sha256:")
     assert first.manifest.plan_id == first.plan.plan_id
     assert first.manifest.wire_body_sha256 == first.plan.wire_body_sha256
+    assert first.plan.plan_id == (
+        "ai-tag-shadow-plan:sha256:"
+        "20d55d4ac2310f267dd972a5dad9025041e78408a40be0e8d2aa7e7d96d936d9"
+    )
+    assert first.plan.plan_id != (
+        "ai-tag-shadow-plan:sha256:"
+        "0c62a34c9a100b155e3d768ed8cd391e325490cac972e6fd5c02863dac733dc7"
+    )
+    assert first.plan.wire_body_sha256 == (
+        "sha256:9165e9853d1a907546a6c6c786de849c1d8b7cc041202f172ba83d43d5f622d0"
+    )
     assert first.plan.max_attempts == 1
     assert first.plan.execution_mode == "shadow_only_no_hybrid_no_retrieval"
-    assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
+    assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v4"
     assert summary["network_attempted"] is False
+    assert summary["ignored_usage_extension_count"] is None
     assert summary["validated_tag_decisions"] == []
     rendered = json.dumps(summary, ensure_ascii=False)
     assert "repository synthetic smoke tick" not in rendered
@@ -518,7 +534,12 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
 ) -> None:
     bundle = build_repository_synthetic_smoke_bundle()
     credential = _Credential()
-    raw_body = _provider_body()
+    raw_body = _provider_body(
+        usage_extensions={
+            "PRIVATE_USAGE_EXTENSION": "PRIVATE_USAGE_VALUE",
+            "PRIVATE_USAGE_ARRAY": ["PRIVATE_ARRAY_VALUE"],
+        }
+    )
     transport = _Transport(DeepSeekHttpResponse(200, raw_body, None, 17))
     state_dir = tmp_path / "state"
     args = _live_args(bundle, state_dir)
@@ -534,7 +555,8 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
     first_output = capsys.readouterr().out
     first = json.loads(first_output)
     assert first["status"] == "valid_shape"
-    assert first["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
+    assert first["schema_version"] == "ai-tag-shadow-smoke-summary-v4"
+    assert first["ignored_usage_extension_count"] == 2
     assert first["judgment_count"] == 24
     assert first["decision_counts"] == {"not_supported": 22, "positive": 2}
     expected_tag_decisions = [
@@ -573,6 +595,10 @@ def test_valid_injected_smoke_is_redacted_and_replay_is_blocked(
         "The Unit writes a log message.",
         "direct_unit_semantic_evidence",
         "evidence_lines",
+        "PRIVATE_USAGE_EXTENSION",
+        "PRIVATE_USAGE_VALUE",
+        "PRIVATE_USAGE_ARRAY",
+        "PRIVATE_ARRAY_VALUE",
         raw_body.decode(),
         "wire_body_json",
     )
@@ -751,8 +777,9 @@ def test_attempt_failures_are_single_shot_and_do_not_echo_raw_bodies(
     assert summary["raw_response_retained"] is False
     assert transport.calls == 1
     assert "do-not-echo" not in output
+    assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v4"
+    assert summary["ignored_usage_extension_count"] is None
     if expected_status == "invalid_output":
-        assert summary["schema_version"] == "ai-tag-shadow-smoke-summary-v3"
         assert summary["outer_diagnostic_id"].startswith(
             "deepseek-outer-response-diagnostic:sha256:"
         )
@@ -765,7 +792,10 @@ def test_attempt_failures_are_single_shot_and_do_not_echo_raw_bodies(
 
 def test_inner_invalid_response_remains_non_formal_and_redacted(tmp_path: Path) -> None:
     bundle = build_repository_synthetic_smoke_bundle()
-    raw_body = _provider_body(invalid_inner=True)
+    raw_body = _provider_body(
+        invalid_inner=True,
+        usage_extensions={"PRIVATE_INNER_INVALID_EXTENSION": "PRIVATE_VALUE"},
+    )
     run = run_repository_synthetic_smoke(
         bundle=bundle,
         approved_plan_id=bundle.plan.plan_id,
@@ -784,10 +814,21 @@ def test_inner_invalid_response_remains_non_formal_and_redacted(tmp_path: Path) 
     assert summary["status"] == "invalid_output"
     assert summary["judgment_count"] == 0
     assert summary["validated_tag_decisions"] == []
+    assert summary["ignored_usage_extension_count"] == 1
     assert summary["qualification"] == (
         "local_unattested_shadow_smoke_not_formal_or_quality_evidence"
     )
     assert raw_body.decode() not in json.dumps(summary)
+
+    receipt = run.artifacts.provider_response_receipt
+    assert receipt is not None
+    forged_receipt = receipt.model_copy(update={"ignored_usage_extension_count": 16})
+    forged_run = replace(
+        run,
+        artifacts=replace(run.artifacts, provider_response_receipt=forged_receipt),
+    )
+    with pytest.raises(ValueError, match="projection inputs"):
+        live_smoke._build_run_summary(forged_run, bundle=bundle)
 
 
 def test_unsafe_existing_state_directory_fails_closed_without_send(

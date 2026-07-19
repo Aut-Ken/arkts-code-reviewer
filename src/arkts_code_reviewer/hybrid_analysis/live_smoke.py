@@ -26,6 +26,7 @@ from arkts_code_reviewer.hybrid_analysis.builders import (
 )
 from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
     DeepSeekCredentialProvider,
+    DeepSeekOuterResponseDiagnostic,
     DeepSeekShadowHttpTransport,
     EnvironmentDeepSeekCredentialProvider,
 )
@@ -44,7 +45,7 @@ from arkts_code_reviewer.hybrid_analysis.models import (
     seal_review_unit_analysis_card,
 )
 from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
-    AITagObservedProviderResponseReceipt,
+    AITagObservedProviderResponseReceiptV2,
     AITagShadowDispatchClaims,
     AITagShadowDispatchPlan,
     AITagShadowExecutionObservationV2,
@@ -63,7 +64,7 @@ from arkts_code_reviewer.hybrid_analysis.shadow_runtime import (
 AI_TAG_REPOSITORY_SMOKE_CASE_SCHEMA_VERSION = "ai-tag-repository-smoke-case-v1"
 AI_TAG_LOCAL_EGRESS_APPROVAL_SCHEMA_VERSION = "ai-tag-local-egress-approval-v1"
 AI_TAG_LOCAL_BUDGET_RESERVATION_SCHEMA_VERSION = "ai-tag-local-budget-reservation-v1"
-AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v3"
+AI_TAG_SHADOW_SMOKE_SUMMARY_SCHEMA_VERSION = "ai-tag-shadow-smoke-summary-v4"
 
 REPOSITORY_SYNTHETIC_SMOKE_CASE = "repository-synthetic-timer-log-v1"
 REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT = "YES_REPOSITORY_PROMPT_TAXONOMY_AND_SYNTHETIC_CODE"
@@ -742,6 +743,7 @@ def build_inspection_summary(bundle: RepositorySyntheticSmokeBundle) -> dict[str
         "max_response_bytes": plan.max_response_bytes,
         "max_attempts": plan.max_attempts,
         "required_acknowledgement": REPOSITORY_SYNTHETIC_ACKNOWLEDGEMENT,
+        "ignored_usage_extension_count": None,
         "validated_tag_decisions": [],
         "qualification": "inspect_only_connectivity_contract_smoke_not_tag_truth",
     }
@@ -751,7 +753,12 @@ def _project_validated_tag_decisions(
     run: RepositorySyntheticSmokeRun,
     *,
     bundle: RepositorySyntheticSmokeBundle,
-) -> list[dict[str, str]]:
+) -> tuple[
+    list[dict[str, str]],
+    AITagObservedProviderResponseReceiptV2 | None,
+    AITagResponseValidation | None,
+    AITagShadowExecutionObservationV2,
+]:
     try:
         bundle = _require_canonical_repository_bundle(bundle)
         artifacts = run.artifacts
@@ -765,33 +772,39 @@ def _project_validated_tag_decisions(
                 artifacts.response_validation.model_dump(mode="json")
             )
         )
+        provider_receipt = (
+            None
+            if artifacts.provider_response_receipt is None
+            else AITagObservedProviderResponseReceiptV2.model_validate(
+                artifacts.provider_response_receipt.model_dump(mode="json")
+            )
+        )
+        if validation is not None:
+            verify_ai_tag_response_validation(validation, bundle.envelope)
     except (AttributeError, SmokePreflightError, TypeError, ValueError):
         raise ValueError("invalid validated smoke Tag decision projection inputs") from None
-    validation_is_valid = validation is not None and validation.status == "valid_shape"
-    observation_is_valid = observation.status == "valid_shape"
-    if not validation_is_valid and not observation_is_valid:
-        return []
-    if not validation_is_valid or not observation_is_valid or validation is None:
-        raise ValueError("validated smoke Tag decision statuses differ")
-    if observation.response_validation_id != validation.validation_id:
-        raise ValueError("validated smoke Tag decision references differ")
     if run.manifest != bundle.manifest:
         raise ValueError("validated smoke Tag decision manifests differ")
-    if artifacts.provider_response_receipt is None:
-        raise ValueError("validated smoke Tag decision response graph is incomplete")
-    try:
-        verify_ai_tag_response_validation(validation, bundle.envelope)
-        provider_receipt = AITagObservedProviderResponseReceipt.model_validate(
-            artifacts.provider_response_receipt.model_dump(mode="json")
-        )
-    except (AttributeError, TypeError, ValueError):
-        raise ValueError("invalid validated smoke Tag decision response graph") from None
     if (
-        artifacts.outer_response_diagnostic is not None
-        or observation.plan_id != bundle.plan.plan_id
+        observation.plan_id != bundle.plan.plan_id
         or observation.claims_id != run.claims.claims_id
         or observation.attempt_receipt_id != artifacts.attempt_receipt.receipt_id
+    ):
+        raise ValueError("validated smoke Tag decision response graph differs")
+    if provider_receipt is None and validation is None:
+        if (
+            observation.provider_response_receipt_id is not None
+            or observation.response_validation_id is not None
+            or observation.status == "valid_shape"
+        ):
+            raise ValueError("validated smoke Tag decision response graph is incomplete")
+        return [], None, None, observation
+    if provider_receipt is None or validation is None:
+        raise ValueError("validated smoke Tag decision response graph is incomplete")
+    if (
+        artifacts.outer_response_diagnostic is not None
         or observation.provider_response_receipt_id != provider_receipt.receipt_id
+        or observation.response_validation_id != validation.validation_id
         or provider_receipt.plan_id != bundle.plan.plan_id
         or provider_receipt.attempt_receipt_id != artifacts.attempt_receipt.receipt_id
         or provider_receipt.response_body_sha256 != artifacts.attempt_receipt.response_body_sha256
@@ -803,14 +816,27 @@ def _project_validated_tag_decisions(
         or provider_receipt.finish_reason != validation.finish_reason
     ):
         raise ValueError("validated smoke Tag decision response graph differs")
+    validation_is_valid = validation is not None and validation.status == "valid_shape"
+    observation_is_valid = observation.status == "valid_shape"
+    if not validation_is_valid and not observation_is_valid:
+        if validation.status != "invalid_output" or observation.status != "invalid_output":
+            raise ValueError("validated smoke Tag decision statuses differ")
+        return [], provider_receipt, validation, observation
+    if not validation_is_valid or not observation_is_valid:
+        raise ValueError("validated smoke Tag decision statuses differ")
     expected_tag_ids = tuple(contract.tag_id for contract in bundle.request.tag_contract_views)
     actual_tag_ids = tuple(judgment.tag_id for judgment in validation.judgments)
     if actual_tag_ids != expected_tag_ids:
         raise ValueError("validated smoke Tag decisions differ from the closed request")
-    return [
-        {"tag_id": judgment.tag_id, "decision": judgment.decision}
-        for judgment in validation.judgments
-    ]
+    return (
+        [
+            {"tag_id": judgment.tag_id, "decision": judgment.decision}
+            for judgment in validation.judgments
+        ],
+        provider_receipt,
+        validation,
+        observation,
+    )
 
 
 def _build_run_summary(
@@ -822,9 +848,22 @@ def _build_run_summary(
 
     artifacts = run.artifacts
     attempt = artifacts.attempt_receipt
-    validation = artifacts.response_validation
-    outer_diagnostic = artifacts.outer_response_diagnostic
-    validated_tag_decisions = _project_validated_tag_decisions(run, bundle=bundle)
+    (
+        validated_tag_decisions,
+        provider_receipt,
+        validation,
+        observation,
+    ) = _project_validated_tag_decisions(run, bundle=bundle)
+    try:
+        outer_diagnostic = (
+            None
+            if artifacts.outer_response_diagnostic is None
+            else DeepSeekOuterResponseDiagnostic.model_validate(
+                artifacts.outer_response_diagnostic.model_dump(mode="json")
+            )
+        )
+    except (AttributeError, TypeError, ValueError):
+        raise ValueError("invalid smoke outer diagnostic") from None
     decision_counts: dict[str, int] = {}
     usage: Mapping[str, object] | None = None
     if validation is not None:
@@ -858,9 +897,7 @@ def _build_run_summary(
         "response_body_sha256": attempt.response_body_sha256,
         "response_body_size_bytes": attempt.response_body_size_bytes,
         "provider_response_receipt_id": (
-            None
-            if artifacts.provider_response_receipt is None
-            else artifacts.provider_response_receipt.receipt_id
+            None if provider_receipt is None else provider_receipt.receipt_id
         ),
         "response_validation_id": (None if validation is None else validation.validation_id),
         "outer_diagnostic_id": (
@@ -876,9 +913,12 @@ def _build_run_summary(
         "outer_diagnostic_field_path": (
             None if outer_diagnostic is None else list(outer_diagnostic.field_path)
         ),
-        "observation_id": artifacts.observation.observation_id,
-        "status": artifacts.observation.status,
-        "reason_code": artifacts.observation.reason_code,
+        "observation_id": observation.observation_id,
+        "status": observation.status,
+        "reason_code": observation.reason_code,
+        "ignored_usage_extension_count": (
+            None if provider_receipt is None else provider_receipt.ignored_usage_extension_count
+        ),
         "judgment_count": len(validated_tag_decisions),
         "decision_counts": decision_counts,
         "validated_tag_decisions": validated_tag_decisions,
@@ -895,6 +935,7 @@ def _safe_error_summary(*, code: str, attempted: bool | None) -> dict[str, objec
         "mode": "live_shadow_preflight" if attempted is False else "live_shadow_attempt",
         "network_attempted": attempted,
         "error_code": code,
+        "ignored_usage_extension_count": None,
         "validated_tag_decisions": [],
         "qualification": "local_smoke_error_not_formal_or_quality_evidence",
     }

@@ -6,6 +6,7 @@ from typing import cast
 
 import pytest
 
+from arkts_code_reviewer.hybrid_analysis._canonical import canonical_hash
 from arkts_code_reviewer.hybrid_analysis.deepseek_adapter import (
     DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION,
     DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION,
@@ -23,7 +24,7 @@ class _PlanStub:
         self,
         marker: str = "a",
         *,
-        provider_contract_snapshot: str = "deepseek-chat-completions-2026-07-18-r2",
+        provider_contract_snapshot: str = "deepseek-chat-completions-2026-07-19-r3",
     ) -> None:
         self.plan_id = "ai-tag-shadow-plan:sha256:" + marker * 64
         self.shadow_provider_policy = _ProviderPolicyStub(provider_contract_snapshot)
@@ -153,6 +154,7 @@ def test_overlong_json_integer_stays_inside_the_value_free_diagnostic_boundary()
         ("missing_id", "missing_field", ("$", "id")),
         ("wrong_model", "unexpected_literal", ("$", "model")),
         ("wrong_created_type", "type_mismatch", ("$", "created")),
+        ("wrong_usage_type", "type_mismatch", ("$", "usage")),
         ("short_id", "constraint_violation", ("$", "id")),
         ("usage_arithmetic", "contract_violation", ("$", "usage")),
         ("unknown_field", "unknown_field", ("$", "<unknown-field>")),
@@ -175,6 +177,8 @@ def test_schema_diagnostic_exposes_only_bounded_type_and_safe_field_path(
         payload["model"] = "PRIVATE_MODEL_VALUE"
     elif mutation == "wrong_created_type":
         payload["created"] = "PRIVATE_CREATED_VALUE"
+    elif mutation == "wrong_usage_type":
+        payload["usage"] = "PRIVATE_USAGE_VALUE"
     elif mutation == "short_id":
         payload["id"] = ""
     elif mutation == "usage_arithmetic":
@@ -199,6 +203,144 @@ def test_schema_diagnostic_exposes_only_bounded_type_and_safe_field_path(
     assert "total_tokens" not in safe_output
 
 
+@pytest.mark.parametrize("extension_count", [1, 16])
+def test_direct_usage_extensions_are_counted_then_discarded_without_retention(
+    extension_count: int,
+) -> None:
+    payload = _valid_outer_payload()
+    usage = cast(dict[str, object], payload["usage"])
+    for index in range(extension_count):
+        usage[f"PRIVATE_USAGE_EXTENSION_{index}"] = {
+            "PRIVATE_VALUE": f"PRIVATE_SECRET_{index}"
+        }
+
+    parsed = parse_deepseek_chat_completion(
+        _encoded(payload),
+        plan=_plan_stub(),
+        latency_ms=1,
+    )
+
+    assert parsed.ignored_usage_extension_count == extension_count
+    assert parsed.response.usage is not None
+    assert parsed.response.usage.total_tokens == 150
+    retained = "|".join(
+        (
+            repr(parsed),
+            repr(parsed.raw_completion),
+            json.dumps(parsed.response.model_dump(mode="json"), sort_keys=True),
+        )
+    )
+    assert "PRIVATE_USAGE_EXTENSION" not in retained
+    assert "PRIVATE_SECRET" not in retained
+
+
+def test_usage_extension_limit_fails_closed_without_retaining_names_or_values() -> None:
+    payload = _valid_outer_payload()
+    usage = cast(dict[str, object], payload["usage"])
+    for index in range(17):
+        usage[f"PRIVATE_USAGE_EXTENSION_{index}"] = f"PRIVATE_VALUE_{index}"
+
+    error = _capture(_encoded(payload))
+
+    assert error.diagnostic.stage == "schema"
+    assert error.diagnostic.error_type == "constraint_violation"
+    assert error.diagnostic.field_path == ("$", "usage")
+    assert "PRIVATE" not in error.diagnostic.model_dump_json()
+
+
+def test_usage_compatibility_does_not_relax_known_or_nested_usage_contracts() -> None:
+    known_invalid = _valid_outer_payload()
+    known_usage = cast(dict[str, object], known_invalid["usage"])
+    known_usage["PRIVATE_EXTENSION"] = "PRIVATE_VALUE"
+    known_usage["total_tokens"] = 151
+    known_error = _capture(_encoded(known_invalid))
+    assert known_error.diagnostic.error_type == "contract_violation"
+    assert known_error.diagnostic.field_path == ("$", "usage")
+
+    nested_invalid = _valid_outer_payload()
+    nested_usage = cast(dict[str, object], nested_invalid["usage"])
+    details = cast(dict[str, object], nested_usage["completion_tokens_details"])
+    details["PRIVATE_NESTED_EXTENSION"] = "PRIVATE_VALUE"
+    nested_error = _capture(_encoded(nested_invalid))
+    assert nested_error.diagnostic.error_type == "unknown_field"
+    assert nested_error.diagnostic.field_path == (
+        "$",
+        "usage",
+        "completion_tokens_details",
+        "<unknown-field>",
+    )
+
+    typed_invalid = _valid_outer_payload()
+    typed_usage = cast(dict[str, object], typed_invalid["usage"])
+    typed_usage["PRIVATE_EXTENSION"] = "PRIVATE_VALUE"
+    typed_usage["prompt_tokens"] = True
+    typed_error = _capture(_encoded(typed_invalid))
+    assert typed_error.diagnostic.error_type == "type_mismatch"
+    assert typed_error.diagnostic.field_path == ("$", "usage", "prompt_tokens")
+
+
+def test_usage_extension_does_not_hide_an_unknown_field_outside_usage() -> None:
+    payload = _valid_outer_payload()
+    usage = cast(dict[str, object], payload["usage"])
+    usage["PRIVATE_USAGE_EXTENSION"] = "PRIVATE_USAGE_VALUE"
+    payload["PRIVATE_TOP_LEVEL_EXTENSION"] = "PRIVATE_TOP_LEVEL_VALUE"
+
+    error = _capture(_encoded(payload))
+
+    assert error.diagnostic.error_type == "unknown_field"
+    assert error.diagnostic.field_path == ("$", "<unknown-field>")
+    assert "PRIVATE" not in error.diagnostic.model_dump_json()
+
+    message_payload = _valid_outer_payload()
+    message_usage = cast(dict[str, object], message_payload["usage"])
+    message_usage["PRIVATE_USAGE_EXTENSION"] = "PRIVATE_USAGE_VALUE"
+    choices = cast(list[dict[str, object]], message_payload["choices"])
+    message = cast(dict[str, object], choices[0]["message"])
+    message["PRIVATE_MESSAGE_EXTENSION"] = "PRIVATE_MESSAGE_VALUE"
+    message_error = _capture(_encoded(message_payload))
+    assert message_error.diagnostic.error_type == "unknown_field"
+    assert message_error.diagnostic.field_path == (
+        "$",
+        "choices",
+        "[0]",
+        "message",
+        "<unknown-field>",
+    )
+
+
+def test_duplicate_key_inside_ignored_usage_value_remains_a_global_json_error() -> None:
+    raw_body = _encoded(_valid_outer_payload()).replace(
+        b'"usage":{',
+        (
+            b'"usage":{"PRIVATE_EXTENSION":'
+            b'{"PRIVATE_DUPLICATE":1,"PRIVATE_DUPLICATE":2},'
+        ),
+        1,
+    )
+
+    error = _capture(raw_body)
+
+    assert error.diagnostic.stage == "json"
+    assert error.diagnostic.error_type == "duplicate_json_key"
+    assert error.diagnostic.field_path == ("$",)
+    assert "PRIVATE" not in error.diagnostic.model_dump_json()
+
+
+def test_non_finite_usage_extension_value_is_rejected_before_normalization() -> None:
+    raw_body = _encoded(_valid_outer_payload()).replace(
+        b'"usage":{',
+        b'"usage":{"PRIVATE_OVERFLOW":1e400,',
+        1,
+    )
+
+    error = _capture(raw_body)
+
+    assert error.diagnostic.stage == "json"
+    assert error.diagnostic.error_type == "non_finite_json_number"
+    assert error.diagnostic.field_path == ("$",)
+    assert "PRIVATE_OVERFLOW" not in error.diagnostic.model_dump_json()
+
+
 def test_non_bytes_input_is_rejected_before_provider_response_diagnostics() -> None:
     private_input = "PRIVATE_NON_BYTES_INPUT"
 
@@ -218,7 +360,7 @@ def test_outer_parser_rejects_a_historical_provider_snapshot_before_reading_body
     historical_plan = cast(
         AITagShadowDispatchPlan,
         _PlanStub(
-            provider_contract_snapshot="deepseek-chat-completions-2026-07-18",
+            provider_contract_snapshot="deepseek-chat-completions-2026-07-18-r2",
         ),
     )
 
@@ -310,6 +452,27 @@ def test_diagnostic_identity_binds_plan_body_and_parser_contract() -> None:
     tampered["response_body_size_bytes"] = first.response_body_size_bytes + 1
     with pytest.raises(ValueError, match="diagnostic"):
         load_deepseek_outer_response_diagnostic(json.dumps(tampered))
+
+
+def test_historical_diagnostic_remains_loadable_but_versions_cannot_cross() -> None:
+    current = _capture(b'{"PRIVATE_CURRENT":true}').diagnostic
+    historical_payload = current.model_dump(mode="json", exclude={"diagnostic_id"})
+    historical_payload["schema_version"] = "deepseek-outer-response-diagnostic-v1"
+    historical_payload["parser_contract_version"] = "deepseek-outer-response-parser-v1"
+    historical_payload["diagnostic_id"] = canonical_hash(
+        "deepseek-outer-response-diagnostic",
+        historical_payload,
+    )
+
+    historical = load_deepseek_outer_response_diagnostic(json.dumps(historical_payload))
+
+    assert historical.schema_version == "deepseek-outer-response-diagnostic-v1"
+    assert historical.parser_contract_version == "deepseek-outer-response-parser-v1"
+    crossed = historical.model_dump(mode="json", exclude={"diagnostic_id"})
+    crossed["parser_contract_version"] = "deepseek-outer-response-parser-v2"
+    crossed["diagnostic_id"] = canonical_hash("deepseek-outer-response-diagnostic", crossed)
+    with pytest.raises(ValueError, match="diagnostic"):
+        load_deepseek_outer_response_diagnostic(json.dumps(crossed))
 
 
 def test_diagnostic_loader_rejects_arbitrary_or_unbounded_field_paths() -> None:

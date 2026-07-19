@@ -33,6 +33,7 @@ AI_TAG_SHADOW_PROVIDER_POLICY_SCHEMA_VERSION = "ai-tag-shadow-provider-policy-v1
 AI_TAG_SHADOW_DISPATCH_CLAIMS_SCHEMA_VERSION = "ai-tag-shadow-dispatch-claims-v1"
 AI_TAG_DISPATCH_ATTEMPT_RECEIPT_SCHEMA_VERSION = "ai-tag-dispatch-attempt-receipt-v1"
 AI_TAG_OBSERVED_RESPONSE_RECEIPT_SCHEMA_VERSION = "ai-tag-observed-response-receipt-v1"
+AI_TAG_OBSERVED_RESPONSE_RECEIPT_V2_SCHEMA_VERSION = "ai-tag-observed-response-receipt-v2"
 AI_TAG_SHADOW_EXECUTION_OBSERVATION_SCHEMA_VERSION = "ai-tag-shadow-execution-observation-v1"
 AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION = "ai-tag-shadow-execution-observation-v2"
 
@@ -121,6 +122,7 @@ class _AITagShadowProviderPolicyPayload(FrozenModel):
     provider_contract_snapshot: Literal[
         "deepseek-chat-completions-2026-07-18",
         "deepseek-chat-completions-2026-07-18-r2",
+        "deepseek-chat-completions-2026-07-19-r3",
     ]
     endpoint_url: Literal["https://api.deepseek.com/chat/completions"]
     model: Literal["deepseek-v4-pro"]
@@ -286,7 +288,7 @@ def build_ai_tag_shadow_dispatch_plan(
             "upstream_render_policy_fingerprint": (envelope.model_policy.model_policy_fingerprint),
             "upstream_dispatch_mode_required": "disabled_no_budget_no_approval",
             "provider": "deepseek",
-            "provider_contract_snapshot": "deepseek-chat-completions-2026-07-18-r2",
+            "provider_contract_snapshot": "deepseek-chat-completions-2026-07-19-r3",
             "endpoint_url": DEEPSEEK_CHAT_COMPLETIONS_ENDPOINT,
             "model": envelope.model_policy.model,
             "thinking": envelope.model_policy.thinking,
@@ -519,8 +521,7 @@ def load_ai_tag_dispatch_attempt_receipt(raw: str | bytes) -> AITagDispatchAttem
     return load_json_model(raw, AITagDispatchAttemptReceipt, "AI Tag Dispatch Attempt Receipt")
 
 
-class _AITagObservedProviderResponseReceiptPayload(FrozenModel):
-    schema_version: Literal["ai-tag-observed-response-receipt-v1"]
+class _AITagObservedProviderResponseReceiptFields(FrozenModel):
     plan_id: Annotated[str, Field(pattern=_PLAN_ID)]
     attempt_receipt_id: Annotated[str, Field(pattern=_ATTEMPT_RECEIPT_ID)]
     http_status: Literal[200]
@@ -574,6 +575,12 @@ class _AITagObservedProviderResponseReceiptPayload(FrozenModel):
         return self
 
 
+class _AITagObservedProviderResponseReceiptPayload(
+    _AITagObservedProviderResponseReceiptFields
+):
+    schema_version: Literal["ai-tag-observed-response-receipt-v1"]
+
+
 class AITagObservedProviderResponseReceipt(_AITagObservedProviderResponseReceiptPayload):
     receipt_id: Annotated[str, Field(pattern=_RESPONSE_RECEIPT_ID)]
 
@@ -608,6 +615,78 @@ def load_ai_tag_observed_provider_response_receipt(
         raw,
         AITagObservedProviderResponseReceipt,
         "AI Tag Observed Provider Response Receipt",
+    )
+
+
+class _AITagObservedProviderResponseReceiptV2Payload(
+    _AITagObservedProviderResponseReceiptFields
+):
+    """Current receipt shape for the bounded usage-extension compatibility policy."""
+
+    schema_version: Literal["ai-tag-observed-response-receipt-v2"]
+    provider_contract_snapshot: Literal["deepseek-chat-completions-2026-07-19-r3"]
+    outer_parser_contract_version: Literal["deepseek-outer-response-parser-v2"]
+    usage_extension_policy: Literal["direct_unknown_usage_fields_discarded-v1"]
+    ignored_usage_extension_count: Annotated[int, Field(ge=0, le=16)]
+    usage_extension_disposition: Literal[
+        "none_observed",
+        "discarded_without_name_or_value_retention",
+    ]
+
+    @model_validator(mode="after")
+    def validate_usage_extension_disposition(self) -> Self:
+        expected = (
+            "none_observed"
+            if self.ignored_usage_extension_count == 0
+            else "discarded_without_name_or_value_retention"
+        )
+        if self.usage_extension_disposition != expected:
+            raise ValueError("usage extension count and disposition differ")
+        if self.ignored_usage_extension_count > 0 and self.usage is None:
+            raise ValueError("ignored usage extensions require parsed known usage")
+        if self.usage is not None and (
+            self.usage.prompt_tokens is None or self.usage.completion_tokens is None
+        ):
+            raise ValueError("observed response receipt V2 usage requires token totals")
+        return self
+
+
+class AITagObservedProviderResponseReceiptV2(
+    _AITagObservedProviderResponseReceiptV2Payload
+):
+    receipt_id: Annotated[str, Field(pattern=_RESPONSE_RECEIPT_ID)]
+
+    @model_validator(mode="after")
+    def validate_identity(self) -> Self:
+        expected = canonical_hash(
+            "ai-tag-observed-response",
+            identity_payload(self, "receipt_id"),
+        )
+        if self.receipt_id != expected:
+            raise ValueError("observed response receipt V2 ID does not match its contents")
+        return self
+
+
+def seal_ai_tag_observed_provider_response_receipt_v2(
+    payload: Mapping[str, object],
+) -> AITagObservedProviderResponseReceiptV2:
+    return seal_payload(
+        payload,
+        payload_type=_AITagObservedProviderResponseReceiptV2Payload,
+        sealed_type=AITagObservedProviderResponseReceiptV2,
+        identity_field="receipt_id",
+        identity_prefix="ai-tag-observed-response",
+        context="AI Tag Observed Provider Response Receipt V2",
+    )
+
+
+def load_ai_tag_observed_provider_response_receipt_v2(
+    raw: str | bytes,
+) -> AITagObservedProviderResponseReceiptV2:
+    return load_json_model(
+        raw,
+        AITagObservedProviderResponseReceiptV2,
+        "AI Tag Observed Provider Response Receipt V2",
     )
 
 
@@ -894,6 +973,7 @@ def verify_ai_tag_dispatch_attempt_receipt(
 __all__ = [
     "AI_TAG_DISPATCH_ATTEMPT_RECEIPT_SCHEMA_VERSION",
     "AI_TAG_OBSERVED_RESPONSE_RECEIPT_SCHEMA_VERSION",
+    "AI_TAG_OBSERVED_RESPONSE_RECEIPT_V2_SCHEMA_VERSION",
     "AI_TAG_SHADOW_DISPATCH_CLAIMS_SCHEMA_VERSION",
     "AI_TAG_SHADOW_DISPATCH_PLAN_SCHEMA_VERSION",
     "AI_TAG_SHADOW_PROVIDER_POLICY_SCHEMA_VERSION",
@@ -901,6 +981,7 @@ __all__ = [
     "AI_TAG_SHADOW_EXECUTION_OBSERVATION_V2_SCHEMA_VERSION",
     "AITagDispatchAttemptReceipt",
     "AITagObservedProviderResponseReceipt",
+    "AITagObservedProviderResponseReceiptV2",
     "AITagShadowDispatchClaims",
     "AITagShadowDispatchPlan",
     "AITagShadowProviderPolicy",
@@ -912,12 +993,14 @@ __all__ = [
     "build_ai_tag_shadow_dispatch_plan",
     "load_ai_tag_dispatch_attempt_receipt",
     "load_ai_tag_observed_provider_response_receipt",
+    "load_ai_tag_observed_provider_response_receipt_v2",
     "load_ai_tag_shadow_dispatch_claims",
     "load_ai_tag_shadow_dispatch_plan",
     "load_ai_tag_shadow_execution_observation",
     "load_ai_tag_shadow_execution_observation_v2",
     "seal_ai_tag_dispatch_attempt_receipt",
     "seal_ai_tag_observed_provider_response_receipt",
+    "seal_ai_tag_observed_provider_response_receipt_v2",
     "seal_ai_tag_shadow_dispatch_claims",
     "seal_ai_tag_shadow_dispatch_plan",
     "seal_ai_tag_shadow_provider_policy",

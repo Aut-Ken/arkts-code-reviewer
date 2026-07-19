@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import math
 import time
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Annotated, Literal, NoReturn, Protocol, Self, cast
@@ -20,11 +21,11 @@ from arkts_code_reviewer.hybrid_analysis.execution import (
     AITagRawUsage,
 )
 from arkts_code_reviewer.hybrid_analysis.provider_receipts import (
-    AI_TAG_OBSERVED_RESPONSE_RECEIPT_SCHEMA_VERSION,
+    AI_TAG_OBSERVED_RESPONSE_RECEIPT_V2_SCHEMA_VERSION,
     AITagDispatchAttemptReceipt,
-    AITagObservedProviderResponseReceipt,
+    AITagObservedProviderResponseReceiptV2,
     AITagShadowDispatchPlan,
-    seal_ai_tag_observed_provider_response_receipt,
+    seal_ai_tag_observed_provider_response_receipt_v2,
 )
 
 if TYPE_CHECKING:
@@ -395,11 +396,23 @@ class _DeepSeekChatCompletion(FrozenModel):
 class ParsedDeepSeekChatCompletion:
     response: _DeepSeekChatCompletion
     raw_completion: AITagRawCompletion
+    ignored_usage_extension_count: int
 
 
-DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION = "deepseek-outer-response-diagnostic-v1"
-DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION = "deepseek-outer-response-parser-v1"
-_CURRENT_DEEPSEEK_PROVIDER_CONTRACT_SNAPSHOT = "deepseek-chat-completions-2026-07-18-r2"
+DEEPSEEK_OUTER_RESPONSE_DIAGNOSTIC_SCHEMA_VERSION = "deepseek-outer-response-diagnostic-v2"
+DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION = "deepseek-outer-response-parser-v2"
+_CURRENT_DEEPSEEK_PROVIDER_CONTRACT_SNAPSHOT = "deepseek-chat-completions-2026-07-19-r3"
+_MAX_IGNORED_USAGE_EXTENSION_FIELDS = 16
+_DEEPSEEK_USAGE_KNOWN_FIELDS = frozenset(
+    (
+        "completion_tokens",
+        "prompt_tokens",
+        "total_tokens",
+        "prompt_cache_hit_tokens",
+        "prompt_cache_miss_tokens",
+        "completion_tokens_details",
+    )
+)
 
 DeepSeekOuterResponseStage = Literal["utf8", "json", "top_level", "schema"]
 DeepSeekOuterResponseErrorType = Literal[
@@ -481,8 +494,14 @@ _STAGE_ERROR_TYPES: dict[str, frozenset[str]] = {
 class DeepSeekOuterResponseDiagnostic(FrozenModel):
     """Bounded provider-contract diagnostic that never retains response values."""
 
-    schema_version: Literal["deepseek-outer-response-diagnostic-v1"]
-    parser_contract_version: Literal["deepseek-outer-response-parser-v1"]
+    schema_version: Literal[
+        "deepseek-outer-response-diagnostic-v1",
+        "deepseek-outer-response-diagnostic-v2",
+    ]
+    parser_contract_version: Literal[
+        "deepseek-outer-response-parser-v1",
+        "deepseek-outer-response-parser-v2",
+    ]
     plan_id: Annotated[str, Field(pattern=_SHADOW_PLAN_ID_PATTERN)]
     response_body_sha256: Annotated[str, Field(pattern=_SHA256_PATTERN)]
     response_body_size_bytes: Annotated[int, Field(ge=0, le=8_000_000)]
@@ -523,6 +542,12 @@ class DeepSeekOuterResponseDiagnostic(FrozenModel):
 
     @model_validator(mode="after")
     def validate_contract_and_identity(self) -> Self:
+        expected_parser_contract = {
+            "deepseek-outer-response-diagnostic-v1": "deepseek-outer-response-parser-v1",
+            "deepseek-outer-response-diagnostic-v2": "deepseek-outer-response-parser-v2",
+        }[self.schema_version]
+        if self.parser_contract_version != expected_parser_contract:
+            raise ValueError("DeepSeek diagnostic schema and parser contract versions differ")
         if self.error_type not in _STAGE_ERROR_TYPES[self.stage]:
             raise ValueError("DeepSeek outer response diagnostic stage and error type differ")
         if self.stage != "schema" and self.field_path != ("$",):
@@ -618,6 +643,13 @@ def _reject_provider_non_finite_number(_value: str) -> object:
     raise _DeepSeekNonFiniteJsonNumberError
 
 
+def _parse_provider_float(value: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise _DeepSeekNonFiniteJsonNumberError
+    return parsed
+
+
 def _load_deepseek_outer_object(
     raw_body: bytes,
     *,
@@ -643,6 +675,7 @@ def _load_deepseek_outer_object(
             text,
             object_pairs_hook=_reject_provider_duplicate_keys,
             parse_constant=_reject_provider_non_finite_number,
+            parse_float=_parse_provider_float,
         )
     except _DeepSeekDuplicateJsonKeyError:
         json_error = "duplicate_json_key"
@@ -741,6 +774,35 @@ def _schema_diagnostic_parts(
     )
 
 
+def _normalize_usage_extensions(
+    payload: dict[str, object],
+    *,
+    plan: AITagShadowDispatchPlan,
+    raw_body: bytes,
+) -> tuple[dict[str, object], int]:
+    """Drop only bounded direct ``usage`` extensions and retain no names or values."""
+
+    usage = payload.get("usage")
+    if not isinstance(usage, dict):
+        return payload, 0
+    unknown_count = sum(key not in _DEEPSEEK_USAGE_KNOWN_FIELDS for key in usage)
+    if unknown_count > _MAX_IGNORED_USAGE_EXTENSION_FIELDS:
+        _raise_outer_response_error(
+            plan=plan,
+            raw_body=raw_body,
+            stage="schema",
+            error_type="constraint_violation",
+            field_path=("$", "usage"),
+        )
+    if unknown_count == 0:
+        return payload, 0
+    normalized_payload = dict(payload)
+    normalized_payload["usage"] = {
+        key: value for key, value in usage.items() if key in _DEEPSEEK_USAGE_KNOWN_FIELDS
+    }
+    return normalized_payload, unknown_count
+
+
 def parse_deepseek_chat_completion(
     raw_body: bytes,
     *,
@@ -757,6 +819,11 @@ def parse_deepseek_chat_completion(
             "DeepSeek outer response parser requires the current provider contract snapshot"
         ) from None
     payload = _load_deepseek_outer_object(raw_body, plan=plan)
+    payload, ignored_usage_extension_count = _normalize_usage_extensions(
+        payload,
+        plan=plan,
+        raw_body=raw_body,
+    )
     diagnostic_parts: tuple[DeepSeekOuterResponseErrorType, tuple[str, ...]] | None = None
     try:
         response = _DeepSeekChatCompletion.model_validate(payload)
@@ -795,6 +862,7 @@ def parse_deepseek_chat_completion(
     return ParsedDeepSeekChatCompletion(
         response=response,
         raw_completion=raw_completion,
+        ignored_usage_extension_count=ignored_usage_extension_count,
     )
 
 
@@ -803,7 +871,7 @@ def observe_deepseek_chat_completion(
     plan: AITagShadowDispatchPlan,
     attempt_receipt: AITagDispatchAttemptReceipt,
     raw_body: bytes,
-) -> tuple[ParsedDeepSeekChatCompletion, AITagObservedProviderResponseReceipt]:
+) -> tuple[ParsedDeepSeekChatCompletion, AITagObservedProviderResponseReceiptV2]:
     parsed = parse_deepseek_chat_completion(
         raw_body,
         plan=plan,
@@ -830,9 +898,12 @@ def observe_deepseek_chat_completion(
         if attempt_receipt.transport_evidence == "httpx_tls_fixed_endpoint"
         else "synthetic_or_untrusted_transport_not_provider_observation"
     )
-    receipt = seal_ai_tag_observed_provider_response_receipt(
+    receipt = seal_ai_tag_observed_provider_response_receipt_v2(
         {
-            "schema_version": AI_TAG_OBSERVED_RESPONSE_RECEIPT_SCHEMA_VERSION,
+            "schema_version": AI_TAG_OBSERVED_RESPONSE_RECEIPT_V2_SCHEMA_VERSION,
+            "provider_contract_snapshot": _CURRENT_DEEPSEEK_PROVIDER_CONTRACT_SNAPSHOT,
+            "outer_parser_contract_version": DEEPSEEK_OUTER_RESPONSE_PARSER_CONTRACT_VERSION,
+            "usage_extension_policy": "direct_unknown_usage_fields_discarded-v1",
             "plan_id": plan.plan_id,
             "attempt_receipt_id": attempt_receipt.receipt_id,
             "http_status": 200,
@@ -849,6 +920,12 @@ def observe_deepseek_chat_completion(
             "finish_reason": choice.finish_reason,
             "content_sha256": ("sha256:" + hashlib.sha256(content_bytes).hexdigest()),
             "usage": parsed.raw_completion.usage,
+            "ignored_usage_extension_count": parsed.ignored_usage_extension_count,
+            "usage_extension_disposition": (
+                "none_observed"
+                if parsed.ignored_usage_extension_count == 0
+                else "discarded_without_name_or_value_retention"
+            ),
             "transport_evidence": attempt_receipt.transport_evidence,
             "qualification": qualification,
         }
@@ -857,7 +934,7 @@ def observe_deepseek_chat_completion(
 
 
 def verify_deepseek_observed_provider_response_receipt(
-    receipt: AITagObservedProviderResponseReceipt,
+    receipt: AITagObservedProviderResponseReceiptV2,
     *,
     plan: AITagShadowDispatchPlan,
     attempt_receipt: AITagDispatchAttemptReceipt,
@@ -868,7 +945,7 @@ def verify_deepseek_observed_provider_response_receipt(
         attempt_receipt=attempt_receipt,
         raw_body=raw_body,
     )
-    actual = AITagObservedProviderResponseReceipt.model_validate(receipt.model_dump(mode="json"))
+    actual = AITagObservedProviderResponseReceiptV2.model_validate(receipt.model_dump(mode="json"))
     if actual != expected:
         raise ValueError("observed response receipt differs from trusted raw-response rebuild")
 
