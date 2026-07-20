@@ -5,6 +5,7 @@ import hashlib
 import re
 import secrets
 import threading
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Literal, NoReturn, Protocol
 
@@ -414,6 +415,9 @@ class DeepSeekShadowRunner:
         claims: AITagShadowDispatchClaims,
         capability: AITagShadowDispatchCapability,
         envelope: VerifiedAITagDispatchEnvelope,
+        _verified_raw_response_sink: (
+            Callable[[AITagShadowRunArtifacts, bytes | None], None] | None
+        ) = None,
     ) -> AITagShadowRunArtifacts:
         plan = AITagShadowDispatchPlan.model_validate(plan.model_dump(mode="json"))
         claims = AITagShadowDispatchClaims.model_validate(claims.model_dump(mode="json"))
@@ -467,6 +471,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=None,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         except AITagShadowAuthorizationError:
             raise
@@ -504,6 +509,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=None,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         if not isinstance(response, DeepSeekHttpResponse):
             failure = DeepSeekHttpTransportError(
@@ -537,6 +543,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=None,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         if len(response.body) > plan.max_response_bytes:
             failure = DeepSeekHttpTransportError(
@@ -570,6 +577,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=None,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         attempt = _attempt_response_receipt(
             plan=plan,
@@ -600,6 +608,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=response.body,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         try:
             parsed, response_receipt = observe_deepseek_chat_completion(
@@ -631,6 +640,7 @@ class DeepSeekShadowRunner:
                 claims=claims,
                 trusted_plan_inputs=self._gate.trusted_plan_inputs,
                 raw_response_body=response.body,
+                verified_raw_response_sink=_verified_raw_response_sink,
             )
         verify_deepseek_observed_provider_response_receipt(
             response_receipt,
@@ -663,6 +673,7 @@ class DeepSeekShadowRunner:
             claims=claims,
             trusted_plan_inputs=self._gate.trusted_plan_inputs,
             raw_response_body=response.body,
+            verified_raw_response_sink=_verified_raw_response_sink,
         )
 
 
@@ -1018,6 +1029,9 @@ def _finalize_run_artifacts(
     claims: AITagShadowDispatchClaims,
     trusted_plan_inputs: AITagShadowTrustedPlanInputs,
     raw_response_body: bytes | None,
+    verified_raw_response_sink: (
+        Callable[[AITagShadowRunArtifacts, bytes | None], None] | None
+    ) = None,
 ) -> AITagShadowRunArtifacts:
     verify_deepseek_shadow_run_artifacts(
         artifacts,
@@ -1026,6 +1040,11 @@ def _finalize_run_artifacts(
         trusted_plan_inputs=trusted_plan_inputs,
         raw_response_body=raw_response_body,
     )
+    if verified_raw_response_sink is not None:
+        verified_raw_response_sink(
+            artifacts,
+            None if raw_response_body is None else bytes(raw_response_body),
+        )
     return artifacts
 
 

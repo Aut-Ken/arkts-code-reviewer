@@ -2,7 +2,7 @@
 title: 10 评测与反馈闭环模块
 status: canonical
 implementation: partial
-updated: 2026-07-19
+updated: 2026-07-20
 ---
 
 # 10 评测与反馈闭环模块
@@ -62,7 +62,8 @@ updated: 2026-07-19
   24 个 negative。零 attempt 由独立内容寻址的 local non-attempt receipt 绑定 reason/control stage；
   内容寻址 Result 从 Unit 明细重建 counts；persistent verifier 核对完整运行 artifact
   graph，可选 caller-owned raw response bytes 再触发单 Plan raw-byte full rebuild。该 Result 固定
-  not-qualified、shadow-only，不进入 Hybrid/Retrieval/Evidence/Finding，也不是 provider/runner signature。
+  not-qualified、shadow-only，不进入 Hybrid/Retrieval/Evidence/Finding；Execution Result 自身不是
+  provider/runner signature。
 - 固定 repository-synthetic multi-Unit smoke 入口：hash-locked 的 4-ReviewUnit 合成 Campaign 可经默认
   inspect-only CLI 查看 metadata。Campaign 的 base/head `file-analysis-v1` 来自随 wheel 打包且整包
   hash 校验的冻结 snapshot；构建、Card replay 和 verifier 均不读取 `ARKTS_PARSER_*`，也不启动 Parser
@@ -70,7 +71,23 @@ updated: 2026-07-19
   marker。自动化测试只用 injected transport；valid-shape Unit 的 24 项 `tag_id + decision` 会连同
   `source_role/unit_kind/unit_symbol` 写入带 self-hash 的 `0600` 安全 summary artifact，reason、证据行、代码、
   路径、Prompt/body、raw response、credential 和 state path 均不写入。该 summary 不是完整 evidence graph，
-  当前没有执行真实 multi-Unit DeepSeek live run，也不接受任意真实代码 Campaign。
+  也不接受任意真实代码 Campaign。2026-07-20 已对这份固定 synthetic Campaign 执行一次受控 live：
+  4 个 Plan 各 attempt 一次、无重试，4/4 均为完整 24-Tag `valid_shape`；这只是历史连通性/形状观察，
+  不是 formal evidence 或质量评测。
+- Attempted-Plan Formal Execution V2 合同：公开 authority 入口只接受 Plan/Claims、一次性 capability 和
+  Envelope；集成 runner 自建固定 HTTP/TLS transport，并通过私有 verified sink 捕获同次运行的完整
+  shadow artifacts 与原始 bytes 后做 full rebuild；确定性生成可选 Result V2、
+  Outcome V2、signed Subject、Hybrid V2 和 Ed25519 runner attestation。`analysis_run_id` 绑定
+  `Plan + Attempt`，formalization event 只是签名 nonce，不是 provider run/time proof；provider evidence
+  scope 会区分“完整 HTTP response observed over TLS”与“固定 transport attempt 但无完整 response”。
+  只有外部 pinned registry 与 complete-evidence verifier 返回的不可序列化 eligibility 才能被下游消费，
+  standalone self-hashed JSON 或 post-hoc caller-supplied artifacts/raw 不够。零 attempt
+  `skipped_budget/not_run` 仍只属于 Campaign audit。合成测试 monkeypatch 固定 transport 只证明合同，
+  不证明真实 TLS/provider identity；部署 signer/KMS 与进程隔离仍不存在。
+- Retrieval V3 受信 construction gate：closed schema 绑定 Formal V2 Hybrid/Outcome/Result、Subject 和
+  attestation identities；Builder 从 `AnalysisResult + ContextPlanResult + SourceSnapshot` 重建 v1 baseline
+  与 Cards，要求每个 Unit 的完整 formal evidence 通过同一个 pinned-registry verifier，只投影 verified
+  positive，返回不可序列化 wrapper。当前 `RetrievalService` 仍只接受 v1，V3 不产生 EvidencePack。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -82,15 +99,17 @@ updated: 2026-07-19
 
 - 真实通用 Tag blind campaign、production-prevalence Truth 和总体 Tag Precision/Recall。
 - 真实代码的 multi-Unit DeepSeek campaign、人工 Unit-exact Truth、重复运行稳定性和模型 Tag P/R；
-  当前固定合成样例的单次 valid-shape observation、多 Unit execution 合成合同与 inspect-only campaign
-  manifest 都不能替代这些证据；当前没有真实 multi-Unit live run，也没有任意真实 Campaign 的
-  multi-Unit live CLI。
-- provider/runner signature、外部授权 attestation、source Git provenance attestation、生产预算 ledger 与
-  部署合规证明；当前 Campaign Execution Result 明确只保存本地 process/runtime observation。
+  当前固定合成样例的单次/多 Unit valid-shape observation、Campaign execution 合同与 inspect-only
+  manifest 都不能替代这些证据；当前没有任意真实项目代码 Campaign 的 multi-Unit live CLI。
+- provider signature、部署 provision 的 runner private key/registry、KMS/HSM/rotation、真实 formal live
+  artifact、外部授权 attestation、source Git provenance attestation、生产预算 ledger 与部署合规证明。
+  当前实现的 Ed25519/pinned-registry 代码和合成 tamper tests 只证明密码学与 fail-closed 合同；Campaign
+  Execution Result 仍只保存本地 process/runtime observation，2026-07-20 历史 safe summary 也因缺少 raw
+  bytes、完整 evidence graph 和当时 attestation 而不能事后追认为 Formal V2。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
-- 统一运行证明 artifact、评测数据库、外部身份认证和跨模块最终质量门禁。
+- 跨全流水线的统一生产运行证明 artifact、评测数据库、外部身份认证和跨模块最终质量门禁。
 
 ## 3. 分层评测
 
@@ -103,6 +122,8 @@ updated: 2026-07-19
 | Feature Routing | UnitFactScope -> Tags/Dimensions/Questions | exact/routing Tag precision/recall、Unit/MR Dimension precision/recall、串扰率、问题绑定覆盖 |
 | AI Tag shadow campaign preparation | upstream graph + Unit selection -> manifest/inspection/per-Unit Plans | selection/identity/rebuild 完整性、跨 Unit splice 拒绝、安全投影；不执行 provider、不计算 P/R |
 | AI Tag shadow campaign execution | manifest + trusted upstream + per-Plan runtime bindings -> per-Unit executions/result | canonical sequential 单次无重试、attempted/skipped/not-run、non-attempt receipt 与 inner/outer/provider failure 状态矩阵、persistent graph rebuild、可选 raw-byte full rebuild；固定 synthetic CLI 只证明控制合同，不计算 P/R、不进入 Hybrid/Retrieval |
+| AI Tag Formal Execution V2 | attempted Plan evidence + raw response（若有）+ pinned runner registry -> opaque eligibility | Result/Outcome deterministic projection、Plan+Attempt run identity、状态化 provider scope、Ed25519 Subject attestation、full rebuild/tamper rejection；不覆盖零 attempt，不证明 provider signature/Git provenance/部署 key 或质量 |
+| Retrieval V3 construction gate | AnalysisResult/ContextPlan/Snapshots + per-Unit formal evidence -> verified non-serializable wrapper | v1 baseline/Card replay、formal evidence exact coverage、仅 verified positive 投影；当前不进入 RetrievalService/EvidencePack |
 | AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |

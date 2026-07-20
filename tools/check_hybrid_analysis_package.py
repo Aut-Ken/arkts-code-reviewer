@@ -17,6 +17,7 @@ PACKAGED_ASSETS = {
 PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/campaign_live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/deepseek_adapter.py",
+    "arkts_code_reviewer/hybrid_analysis/formal_execution.py",
     "arkts_code_reviewer/hybrid_analysis/live_smoke.py",
     "arkts_code_reviewer/hybrid_analysis/provider_receipts.py",
     "arkts_code_reviewer/hybrid_analysis/repository_campaign_parser.py",
@@ -69,6 +70,10 @@ def main() -> int:
                 for line in metadata.splitlines()
             ):
                 raise RuntimeError("wheel does not isolate httpx in the deepseek extra")
+            if not any(
+                line.startswith("Requires-Dist: cryptography") for line in metadata.splitlines()
+            ):
+                raise RuntimeError("wheel is missing the Formal V2 cryptography dependency")
             archive.extractall(unpacked)
 
         environment = os.environ.copy()
@@ -92,6 +97,7 @@ def main() -> int:
                     "DEFAULT_AI_TAG_CONTRACTS_PATH, DEFAULT_AI_TAG_PROMPT_PATH, "
                     "AITagDispatchEnvelopeBuilder, AITagShadowCampaignBuilder, "
                     "AITagShadowEvaluationBuilder, "
+                    "AITagFormalExecutionVerifierV2, DeepSeekFormalExecutionRunnerV2, "
                     "DryRunTagAnalysisClient, "
                     "FullTaxonomyRequestBuilder; "
                     "from arkts_code_reviewer.hybrid_analysis.provider_receipts "
@@ -128,6 +134,8 @@ def main() -> int:
                     "AI_TAG_WIRE_OUTPUT_CONTRACT_VERSION; "
                     "assert AITagDispatchEnvelopeBuilder.default(); "
                     "assert AITagShadowEvaluationBuilder.default(); "
+                    "assert AITagFormalExecutionVerifierV2; "
+                    "assert DeepSeekFormalExecutionRunnerV2; "
                     "assert AITagShadowCampaignBuilder.default(); "
                     "assert AI_TAG_SHADOW_CAMPAIGN_MANIFEST_SCHEMA_VERSION == "
                     "'ai-tag-shadow-campaign-manifest-v1'; "

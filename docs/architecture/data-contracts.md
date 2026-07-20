@@ -1052,6 +1052,78 @@ verifier 及固定 synthetic CLI 的控制合同。2026-07-20 已对该 package-
 multi-Unit live CLI，也没有人工 Truth、Tag P/R、重复运行稳定性、生产 prevalence、
 provider/runner signature 或生产 qualification 证据。
 
+### 11.8 当前 AI Tag Formal Execution V2 与受信消费边界
+
+`ai-tag-analysis-result-v2`、`ai-tag-execution-outcome-v2`、
+`ai-tag-trusted-execution-subject-v1`、`ai-tag-trusted-runner-attestation-v1` 和
+`hybrid-feature-analysis-result-v2` 已实现为一条仅覆盖 **attempted Plan** 的 formal shadow
+合同。公开的 authority 入口是 `DeepSeekFormalExecutionRunnerV2`：调用方只能提供 Plan、Claims、
+一次性 capability 和 Envelope，不能注入 transport、run artifacts 或 raw response。该 runner 内部固定
+构造仓库 HTTP/TLS transport，并由私有 verified sink 在同一次调用中接收已经完成运行图校验的 artifacts
+与原始响应 bytes；随后才执行完整 upstream/run-artifact/raw-response rebuild，并生成确定性
+Result/Outcome、签名 Subject、Hybrid V2 和完整 evidence bundle：
+
+```text
+deployment Gate trusted Plan inputs
++ Plan + Claims + one-shot capability + Envelope
+-> fixed HTTP/TLS ShadowRunner
+-> private verified artifacts/raw capture
+-> deterministic full rebuild inside integrated runner
+-> optional AITagAnalysisResultV2（仅 valid_result）
+-> AITagExecutionOutcomeV2
+-> AITagTrustedExecutionSubject
+-> Ed25519 AITagTrustedRunnerAttestation
+-> HybridFeatureAnalysisResultV2
+-> externally pinned registry + full evidence verifier
+-> opaque VerifiedAITagFormalExecutionEligibility
+```
+
+Result V2 和 Outcome V2 是 attempted-Plan evidence 的确定性投影；它们的 self-hash、strict loader 和
+字段引用只能证明内容 identity/结构闭合，不能单独证明受信执行。`analysis_run_id` 确定性绑定
+`plan_id + attempt_receipt_id`：同一 Plan 与同一 Attempt 被再次 formalize 时，Result、Outcome 和
+run ID 必须保持相同，不能把重复签名计为第二次 provider attempt。新的
+`formalization_event_id` 只存在于 Subject/attestation 的单次签名上下文，是 runner-signed nonce；
+它既不是 provider run identity，也不是 provider occurrence 或外部时间权威证明。
+
+provider evidence scope 按运行状态固定区分：valid Result V2 使用
+`observed_over_tls_not_provider_signed`；Outcome/Subject 在有完整 HTTP response 时使用
+`http_response_observed_over_tls_not_provider_signed` 并强制 raw-body full rebuild，timeout、transport
+error 等没有完整 response 时使用 `fixed_tls_transport_attempt_no_complete_verified_response`，不得伪造响应
+provenance。provider 本身没有签名。零 attempt 的 `skipped_budget/not_run` 仍只属于 11.7 Campaign
+运行审计合同，不能生成一个 attempted Outcome V2 来冒充运行。
+
+Subject 使用 runner-held Ed25519 key 签名；verifier 的 trust root 是部署侧显式 pin 的、不可序列化
+registry，并检查 trust domain、active/revoked key、允许的 runner release、registry/policy fingerprint、
+Subject 签名和全部确定性投影。只有完整
+`AITagFormalExecutionEvidenceV2` 经 `AITagFormalExecutionVerifierV2` 验证后返回的不可序列化
+`VerifiedAITagFormalExecutionEligibility` 才能授权下游消费 AI signal。独立 Result、Outcome、Subject、
+attestation、Hybrid JSON，调用方布尔值，或 post-hoc caller-supplied artifacts/raw bytes，都不能替代该
+eligibility；仓库不导出可将这些调用方输入提升为 authority 的 producer。完整 Evidence 是由集成 runner
+私有 token 构造、普通属性不可变且没有 raw-body 公共 accessor 的进程内对象；registry、signer、runner、
+verifier 和 eligibility 同样拒绝普通属性替换或删除，registry 每次验证还会重算 pinned content identity。
+
+该密码学合同仍有明确的未证明边界：
+
+- upstream closure 从调用方提供的 roots 开始，只重建到 Card/Plan，不证明 Parser、ReviewUnit、源码或
+  Git provenance；
+- egress approval 与 budget reservation 仍是进程内 verifier/ledger 引用，不是外部 authority 或生产
+  预算 attestation；
+- `runner_release_fingerprint` 只是 pinned registry 的 allowlist claim，不是代码 Git、二进制或 remote
+  attestation；
+- signer-holding Python 进程本身仍是信任根；当前没有独立 signer service、进程完整性、KMS/HSM 或
+  remote attestation，因而不能抵抗该受信进程自身通过反射、`object.__setattr__` 或 monkeypatch 绕过
+  语言级封装；这里的 private/immutable 是普通 API fail-closed，不是安全沙箱；
+- provider signature 不存在，所有 formal artifacts 仍固定
+  `formal_use_scope=hybrid_retrieval_shadow_only`、`evidence_qualification_status=not_qualified`、
+  `production_qualified=false`；
+- `cryptography`/Ed25519 合同和 monkeypatched 固定 transport 合成测试通过，只证明集成 raw hand-off、
+  rebuild 和签名合同，不证明真实 TLS 或 DeepSeek 身份；它也不等于部署 key provisioning、KMS/HSM、真实
+  runner signer、正式 provider provenance、真实 Tag/文档质量或生产 qualification 已完成。
+
+2026-07-20 固定 4-ReviewUnit synthetic Campaign 的历史 live 只保存了
+`safe_summary_not_full_evidence_graph`；缺少 raw response bytes、完整 evidence graph 和当时的 runner
+attestation。新 Formal V2 代码不能事后把该历史 summary 追认为 formal evidence。
+
 ## 12. 兼容 RetrievalQuery 与正式 Retrieval 输入
 
 当前 `AnalysisResult.retrieval_query` 是早期 CLI 的 compatibility-only 视图。它仍保留
@@ -1090,7 +1162,8 @@ Request/Outcome/Result 和 Hybrid 引用图后才做字段投影。只有 valid 
 若 Hybrid 图声称 `valid_result/invalid_output/unavailable` 等已经发生 provider attempt，Builder 还要求
 显式使用 `analysis-card-builder-v2-provider-egress` Card policy；默认
 `none_no_provider_dispatch` Card 不能与 attempted outcome 组合。该校验只排除结构矛盾，provider-egress
-policy 本身不是外发批准，也不能补足当前缺失的 trusted-runner receipt/attestation。
+policy 本身不是外发批准；V2 Builder 也不消费 Formal V2 Subject/attestation，因此不能建立受信消费
+authority。该缺口由下述 V3 gate 单独关闭。
 
 这是**结构合同完成边界**，不是 V2 Retrieval runtime。当前 `RetrievalService` 仍只接受
 `retrieval-request-v1`；还没有 V2 `ai_inferred/text_keyword` MatchScope、AI 权重、独立 candidate
@@ -1098,6 +1171,28 @@ pool、RRF shadow ranking 或 V2 `EvidencePack` 组装。现有 live Campaign su
 `AITagResponseValidation` 固定是 non-formal 产物，不能直接填充 Builder 要求的 Hybrid 输入图。
 v1 的 schema、loader、Query Planner、RetrievalService、Golden 和 `evidence-pack-v1` 执行行为
 保持不变。
+
+`retrieval-request-v3` 进一步关闭了 V2 只验证结构引用、没有受信消费凭证的边界。V3 是与 v1/v2
+无继承关系的独立 closed schema，除保留 v1 的正式字段与预算不变量外，还绑定
+`formal_hybrid_analysis_id`、`formal_execution_outcome_id`、可选 `formal_ai_result_id`、
+`trusted_execution_subject_id` 和 `trusted_runner_attestation_id`。strict loader 和 self-hash 仍只证明
+序列化请求的结构与内容 identity，不授予执行权限。
+
+`TrustedRetrievalRequestV3Builder` 必须由部署侧配置一个
+`AITagFormalExecutionVerifierV2`，并要求 formal evidence mapping 精确覆盖全部 primary Units。Builder
+会从 `AnalysisResult + ContextPlanResult + SourceSnapshot` 重新构造 v1 baseline 和 provider-egress
+Cards，逐 Unit full-verify 完整 Formal V2 evidence，再核对 Card/source/profile/routing/context identities。
+只有 verifier 返回的 valid Result V2 中 `positive` judgment 能投影到独立
+`ai_inferred_tags`；signed `unavailable/invalid_output` 不携带 AI signal，AI negative 不删除 static
+exact/routing Tag，AI signal 不进入 `exact_tags`、专项 RQ 或 formal Dimension coverage。V3 vector
+renderer 仍只消费代码摘录和 exact facts，不拼入 Tag、Dimension、attestation 或 intent prose。
+
+Builder 返回不可序列化的 `VerifiedRetrievalRequestV3`，同时持有结构化 V3 request、同次重建的完整
+v1 baseline 和逐 Unit opaque eligibility；wrapper 在构造及每次公开访问时重验全部 v1 正式字段、proof
+identity 与 AI 派生字段。因此仅反序列化 `retrieval-request-v3` JSON 不能绕过 formal verifier。当前
+`RetrievalService` 仍只接受 `retrieval-request-v1`，没有 V3 MatchScope、AI candidate pool/权重、RRF
+shadow ranking 或 V3 `EvidencePack` 执行。V3 目前只完成受信 request construction gate，没有改变
+任何 v1 运行结果，也没有证明生产知识或真实检索质量。
 
 ## 13. EvidencePack
 

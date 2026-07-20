@@ -35,6 +35,10 @@ from arkts_code_reviewer.retrieval.query_planner_v2 import (
     HybridRetrievalUnitGraph,
     build_retrieval_request_v2,
 )
+from arkts_code_reviewer.retrieval.query_planner_v3 import (
+    TrustedRetrievalRequestV3Builder,
+    VerifiedRetrievalRequestV3,
+)
 from arkts_code_reviewer.retrieval.request_v2 import (
     RETRIEVAL_REQUEST_V2_SCHEMA_VERSION,
     VECTOR_QUERY_POLICY_V1,
@@ -44,6 +48,13 @@ from arkts_code_reviewer.retrieval.request_v2 import (
     candidate_dimension_ids_for_ai_tags,
     load_retrieval_request_v2,
     render_vector_query_v2,
+)
+from arkts_code_reviewer.retrieval.request_v3 import (
+    RETRIEVAL_REQUEST_V3_SCHEMA_VERSION,
+    RetrievalRequestV3,
+    RetrievalUnitRequestV3,
+    load_retrieval_request_v3,
+    render_vector_query_v3,
 )
 from arkts_code_reviewer.retrieval.service import RetrievalService
 
@@ -61,15 +72,20 @@ __all__ = [
     "RetrievalDiagnostic",
     "RetrievalRequest",
     "RetrievalRequestV2",
+    "RetrievalRequestV3",
     "RetrievalService",
     "RetrievalUnitRequest",
     "RetrievalUnitRequestV2",
+    "RetrievalUnitRequestV3",
     "RETRIEVAL_REQUEST_V2_SCHEMA_VERSION",
+    "RETRIEVAL_REQUEST_V3_SCHEMA_VERSION",
     "TargetPlatform",
+    "TrustedRetrievalRequestV3Builder",
     "UnitEvidence",
     "UnitExactSignals",
     "UnitExactSignalsV2",
     "VECTOR_QUERY_POLICY_V1",
+    "VerifiedRetrievalRequestV3",
     "aggregate_api_catalog_version",
     "build_knowledge_index",
     "build_evaluation_knowledge_index",
@@ -83,7 +99,9 @@ __all__ = [
     "load_knowledge_index",
     "load_retrieval_request",
     "load_retrieval_request_v2",
+    "load_retrieval_request_v3",
     "load_retrieval_config",
     "render_vector_query_v2",
+    "render_vector_query_v3",
     "HybridRetrievalUnitGraph",
 ]
