@@ -642,6 +642,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "config/retrieval.yaml": (
             "arkts_code_reviewer/retrieval/defaults/retrieval.yaml"
         ),
+        "config/retrieval_shadow_v3.yaml": (
+            "arkts_code_reviewer/retrieval/defaults/retrieval_shadow_v3.yaml"
+        ),
         "config/tags.yaml": "arkts_code_reviewer/feature_routing/defaults/tags.yaml",
         "sidecars/knowledge-api-parser/package-lock.json": (
             "arkts_code_reviewer/knowledge/sidecars/api_parser/package-lock.json"

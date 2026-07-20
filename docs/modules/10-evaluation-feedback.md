@@ -87,7 +87,14 @@ updated: 2026-07-20
 - Retrieval V3 受信 construction gate：closed schema 绑定 Formal V2 Hybrid/Outcome/Result、Subject 和
   attestation identities；Builder 从 `AnalysisResult + ContextPlanResult + SourceSnapshot` 重建 v1 baseline
   与 Cards，要求每个 Unit 的完整 formal evidence 通过同一个 pinned-registry verifier，只投影 verified
-  positive，返回不可序列化 wrapper。当前 `RetrievalService` 仍只接受 v1，V3 不产生 EvidencePack。
+  positive，返回不可序列化 wrapper。标准 `RetrievalService` 仍只接受 v1。
+- Phase C Retrieval shadow 合同：独立 `retrieval-shadow-policy-v1` 绑定 v1 config 和五个固定 pool；
+  `RetrievalShadowServiceV3` 以 exact-type gate 只接受 `VerifiedRetrievalRequestV3`，保留同次标准 v1
+  control EvidencePack，并让 `static_vector` 与 `hybrid` 在同一 candidate/rank/weight 账本上执行加权
+  RRF。AI positive 只在 `ai_inferred` pool，keyword 只在 `text_keyword` pool，code vector 不拼 Tag；
+  candidate Dimensions 只作诊断。control 仍是标准 `evidence-pack-v2`；实验结果是独立
+  `retrieval-shadow-result-v1` audit artifact 和不可序列化 runtime wrapper，不冒充 EvidencePack，固定
+  shadow/not-qualified/non-user-visible/non-prompt/non-Finding。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -108,6 +115,9 @@ updated: 2026-07-20
   bytes、完整 evidence graph 和当时 attestation 而不能事后追认为 Formal V2。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
+- Phase C 只有合成/fixture 合同证据，没有独立文档 Truth、真实 static_vector vs hybrid Recall/Precision、
+  production prevalence 或生产 PublishedKnowledgeBuild；即使使用 publication-origin index，shadow
+  artifact 的资格也固定不变。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
 - 跨全流水线的统一生产运行证明 artifact、评测数据库、外部身份认证和跨模块最终质量门禁。
 
@@ -123,7 +133,8 @@ updated: 2026-07-20
 | AI Tag shadow campaign preparation | upstream graph + Unit selection -> manifest/inspection/per-Unit Plans | selection/identity/rebuild 完整性、跨 Unit splice 拒绝、安全投影；不执行 provider、不计算 P/R |
 | AI Tag shadow campaign execution | manifest + trusted upstream + per-Plan runtime bindings -> per-Unit executions/result | canonical sequential 单次无重试、attempted/skipped/not-run、non-attempt receipt 与 inner/outer/provider failure 状态矩阵、persistent graph rebuild、可选 raw-byte full rebuild；固定 synthetic CLI 只证明控制合同，不计算 P/R、不进入 Hybrid/Retrieval |
 | AI Tag Formal Execution V2 | attempted Plan evidence + raw response（若有）+ pinned runner registry -> opaque eligibility | Result/Outcome deterministic projection、Plan+Attempt run identity、状态化 provider scope、Ed25519 Subject attestation、full rebuild/tamper rejection；不覆盖零 attempt，不证明 provider signature/Git provenance/部署 key 或质量 |
-| Retrieval V3 construction gate | AnalysisResult/ContextPlan/Snapshots + per-Unit formal evidence -> verified non-serializable wrapper | v1 baseline/Card replay、formal evidence exact coverage、仅 verified positive 投影；当前不进入 RetrievalService/EvidencePack |
+| Retrieval V3 construction gate | AnalysisResult/ContextPlan/Snapshots + per-Unit formal evidence -> verified non-serializable wrapper | v1 baseline/Card replay、formal evidence exact coverage、仅 verified positive 投影；裸/serialized V3 没有执行 authority |
+| Phase C Retrieval shadow | exact `VerifiedRetrievalRequestV3` + pinned index/policy -> v1 control EvidencePack + verified shadow result | 五 pool、两 arm 同账本、scope/RRF/budget/identity、序列化降权和固定资格；只证明 shadow 合同，不证明真实文档质量 |
 | AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |
@@ -767,6 +778,27 @@ empty result rate
 forbidden hit rate
 ```
 
+现有 36-case Golden 与 `evidence-pack-v2` 仍只覆盖标准 v1 request 合同。Phase C 的确定性/负向合同应单独验证：
+
+```text
+裸 RetrievalRequestV3 / serialized V3 / V3 subclass 均不能执行
+五个 pool 必须完整、独立、稳定排序并保留各自 scope
+static_vector 与 hybrid 复用同一 pool ledger；前者不得出现 ai_inferred contribution
+AI not-supported/negative 不减少 static_vector 候选
+text_keyword/ai_inferred 永不获得 unit_exact provenance
+candidate Dimensions 不进入 formal coverage 或 budget
+V3 vector query 只包含 code + exact facts
+同次 v1 control EvidencePack 的内容和 identity 不被 shadow arm 改写
+serialized retrieval-shadow-result-v1 只能是 serialized_audit_only
+runtime wrapper 不可序列化，并在每次访问时重验完整 binding
+所有 index origin 都保持 not_qualified/non-user-visible/non-prompt/non-Finding
+```
+
+这些断言即使全部通过，也只证明 schema、作用域、排名账本、authority 和 fail-closed 合同。真实增量必须
+使用冻结 KnowledgeIndex 和独立 Clause Truth，分别报告 budget 前 candidate ranking 与 budget 后 selected
+Clauses，并比较同一结果中的 `static_vector` 与 `hybrid`。没有真实 Truth 时不得计算或宣称真实
+Precision/Recall；publication-origin index 也不能自动把 shadow artifact 变成 qualified Evidence。
+
 ## 8. Final Review Golden Set
 
 每条至少包含：
@@ -841,6 +873,8 @@ ChangeSet 标识
 source_bundle_id 和 corpus revisions
 Parser warnings
 Retrieval trace
+V3 request/control EvidencePack/shadow result/policy/index/attestation IDs
+逐 pool ranks、weighted RRF contributions 与 static_vector/hybrid selection
 RuleFindings
 LLM usage/latency
 最终 Findings
@@ -872,6 +906,9 @@ Near-duplicate 每个二元指标 Pair 独占 component；fatal false-clear/hard
 Near-duplicate Report passed 不得自动变成 policy approved 或 evidence qualified
 高严重级 Rules 不允许已知误报
 Retrieval Recall@5 达到基线
+Phase C static_vector/hybrid 必须同 index、同 policy、同 pool ledger；除 ai_inferred 外不得改变实验因素
+Phase C artifact 必须固定 not_qualified、非用户可见、不可进入 Prompt/Finding
+serialized V3 或 serialized shadow result 获得 runtime authority 的数量为 0
 引用合法率 100%
 JSON valid rate 达到基线
 ```

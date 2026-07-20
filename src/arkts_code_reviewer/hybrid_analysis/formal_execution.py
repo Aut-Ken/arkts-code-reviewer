@@ -2061,6 +2061,48 @@ class VerifiedAITagFormalExecutionEligibility(_ImmutableRuntimeObject):
         )
         self._seal_runtime_object()
 
+    def _verify_projection_binding(
+        self,
+    ) -> tuple[
+        AITagExecutionOutcomeV2,
+        AITagAnalysisResultV2 | None,
+        HybridFeatureAnalysisResultV2,
+        tuple[str, ...],
+    ]:
+        if self._construction_token is not _ELIGIBILITY_TOKEN:
+            raise ValueError("formal eligibility construction token changed")
+        outcome = AITagExecutionOutcomeV2.model_validate(self._outcome.model_dump(mode="json"))
+        result = (
+            None
+            if self._result is None
+            else AITagAnalysisResultV2.model_validate(self._result.model_dump(mode="json"))
+        )
+        hybrid = HybridFeatureAnalysisResultV2.model_validate(self._hybrid.model_dump(mode="json"))
+        result_id = None if result is None else result.result_id
+        if (
+            hybrid.unit_id != self._unit_id
+            or hybrid.card_id != self._card_id
+            or hybrid.trusted_execution_subject_id != self._subject_id
+            or hybrid.trusted_runner_attestation_id != self._attestation_id
+            or hybrid.ai_execution_outcome_id != outcome.outcome_id
+            or hybrid.ai_result_id != result_id
+            or outcome.result_id != result_id
+        ):
+            raise ValueError("formal eligibility projection identities changed")
+        positive_tags = (
+            ()
+            if result is None
+            else tuple(
+                judgment.tag_id for judgment in result.judgments if judgment.decision == "positive"
+            )
+        )
+        hybrid_positive_tags = tuple(
+            state.tag_id for state in hybrid.tag_states if state.ai_unit_decision == "positive"
+        )
+        if positive_tags != hybrid_positive_tags or self._positive_tags != positive_tags:
+            raise ValueError("formal eligibility AI-positive projection changed")
+        return outcome, result, hybrid, positive_tags
+
     def __repr__(self) -> str:
         return "VerifiedAITagFormalExecutionEligibility(<opaque-verified-proof>)"
 
@@ -2069,35 +2111,43 @@ class VerifiedAITagFormalExecutionEligibility(_ImmutableRuntimeObject):
 
     @property
     def unit_id(self) -> str:
-        return self._unit_id
+        _, _, hybrid, _ = self._verify_projection_binding()
+        return hybrid.unit_id
 
     @property
     def card_id(self) -> str:
-        return self._card_id
+        _, _, hybrid, _ = self._verify_projection_binding()
+        return hybrid.card_id
 
     @property
     def subject_id(self) -> str:
+        self._verify_projection_binding()
         return self._subject_id
 
     @property
     def attestation_id(self) -> str:
+        self._verify_projection_binding()
         return self._attestation_id
 
     @property
     def outcome(self) -> AITagExecutionOutcomeV2:
-        return self._outcome
+        outcome, _, _, _ = self._verify_projection_binding()
+        return outcome
 
     @property
     def result(self) -> AITagAnalysisResultV2 | None:
-        return self._result
+        _, result, _, _ = self._verify_projection_binding()
+        return result
 
     @property
     def hybrid(self) -> HybridFeatureAnalysisResultV2:
-        return self._hybrid
+        _, _, hybrid, _ = self._verify_projection_binding()
+        return hybrid
 
     @property
     def positive_tags(self) -> tuple[str, ...]:
-        return self._positive_tags
+        _, _, _, positive_tags = self._verify_projection_binding()
+        return positive_tags
 
 
 class AITagFormalExecutionVerifierV2(_ImmutableRuntimeObject):

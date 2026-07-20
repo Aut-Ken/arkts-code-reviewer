@@ -12,6 +12,7 @@ from arkts_code_reviewer.hybrid_analysis.builders import (
     AnalysisContextPolicy,
 )
 from arkts_code_reviewer.hybrid_analysis.formal_execution import (
+    AITagExecutionOutcomeV2,
     AITagFormalExecutionEvidenceV2,
     AITagFormalExecutionVerifierV2,
     VerifiedAITagFormalExecutionEligibility,
@@ -49,7 +50,14 @@ class _ImmutableRuntimeObject:
 class VerifiedRetrievalRequestV3(_ImmutableRuntimeObject):
     """Opaque runtime wrapper; serialized Request V3 alone is not execution authority."""
 
-    __slots__ = ("_baseline_request", "_eligibilities", "_request")
+    __slots__ = (
+        "_baseline_request",
+        "_eligibilities",
+        "_expected_baseline_request_id",
+        "_expected_request_id",
+        "_request",
+        "_trusted_exact_signals",
+    )
 
     def __init__(
         self,
@@ -68,24 +76,38 @@ class VerifiedRetrievalRequestV3(_ImmutableRuntimeObject):
             baseline_request.model_dump(mode="json")
         )
         self._eligibilities = tuple(eligibilities)
+        self._expected_request_id = request.request_id
+        self._expected_baseline_request_id = baseline_request.request_id
+        self._trusted_exact_signals = tuple(
+            UnitExactSignalsV2.model_validate(unit.exact_signals.model_dump(mode="json"))
+            for unit in self._request.units
+        )
         self._verify_baseline_binding()
         self._verify_proof_binding()
         self._seal_runtime_object()
 
     def _verify_baseline_binding(self) -> None:
-        request = self._request
-        baseline = self._baseline_request
+        request = RetrievalRequestV3.model_validate(self._request.model_dump(mode="json"))
+        baseline = RetrievalRequest.model_validate(self._baseline_request.model_dump(mode="json"))
         if (
-            request.context_plan_id != baseline.context_plan_id
+            request.request_id != self._expected_request_id
+            or baseline.request_id != self._expected_baseline_request_id
+            or request.context_plan_id != baseline.context_plan_id
             or request.feature_routing_id != baseline.feature_routing_id
             or request.feature_config_version != baseline.feature_config_version
             or request.index_version != baseline.index_version
             or request.target_platform != baseline.target_platform
             or request.total_knowledge_token_budget != baseline.total_knowledge_token_budget
             or len(request.units) != len(baseline.units)
+            or len(request.units) != len(self._trusted_exact_signals)
         ):
             raise ValueError("verified Retrieval V3 differs from its V1 request baseline")
-        for unit, baseline_unit in zip(request.units, baseline.units, strict=True):
+        for unit, baseline_unit, trusted_exact_signals in zip(
+            request.units,
+            baseline.units,
+            self._trusted_exact_signals,
+            strict=True,
+        ):
             if (
                 unit.unit_id != baseline_unit.unit_id
                 or unit.source_ref_id != baseline_unit.source_ref_id
@@ -106,6 +128,8 @@ class VerifiedRetrievalRequestV3(_ImmutableRuntimeObject):
                 or unit.knowledge_token_budget != baseline_unit.knowledge_token_budget
             ):
                 raise ValueError("verified Retrieval V3 Unit differs from V1 baseline")
+            if unit.exact_signals != trusted_exact_signals:
+                raise ValueError("verified Retrieval V3 Unit differs from trusted V3 exact facts")
 
     def _verify_proof_binding(self) -> None:
         if len(self._eligibilities) != len(self._request.units):
@@ -151,6 +175,22 @@ class VerifiedRetrievalRequestV3(_ImmutableRuntimeObject):
         self._verify_baseline_binding()
         self._verify_proof_binding()
         return self._request
+
+    @property
+    def baseline_request(self) -> RetrievalRequest:
+        """Return the immutable V1 control after rechecking every binding."""
+
+        self._verify_baseline_binding()
+        self._verify_proof_binding()
+        return self._baseline_request
+
+    @property
+    def formal_execution_outcomes(self) -> tuple[AITagExecutionOutcomeV2, ...]:
+        """Expose audit artifacts, not reusable execution authority."""
+
+        self._verify_baseline_binding()
+        self._verify_proof_binding()
+        return tuple(item.outcome for item in self._eligibilities)
 
     @property
     def formal_attestation_ids(self) -> tuple[str, ...]:

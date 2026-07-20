@@ -39,6 +39,8 @@ updated: 2026-07-20
 | `AITagShadowUnitEvaluation/AITagShadowEvaluationReport` | Hybrid Analysis Evaluation | Evaluation、Audit；禁止作为 Feature Routing/Hybrid/Retrieval 输入 |
 | `TagTruthSelection/ReviewPacket/ReviewReceipt/Consensus/Publication` | Evaluation Governance | Tag candidate evaluation、Audit |
 | `NearDuplicatePairSelection/Consensus/CalibrationReport/PolicyApprovalReceipt` | Evaluation Governance | Near-duplicate policy calibration、Tag Truth release review、Audit |
+| `RetrievalRequestV3/VerifiedRetrievalRequestV3` | Retrieval Query Planner V3 | Retrieval Shadow；只有不可序列化 wrapper 是运行 authority |
+| `RetrievalShadowResultV3/VerifiedRetrievalShadowResultV3` | Retrieval Shadow | Evaluation、Audit；禁止进入 Prompt、Finding 或用户可见 Evidence |
 | `EvidencePack` | Retrieval | Prompt、Finding Validator、Evaluation |
 | `RuleFinding` | Rules | Prompt、Output、Evaluation |
 | `ReviewRequest` | Prompt Builder | Final LLM |
@@ -1100,7 +1102,9 @@ Subject 签名和全部确定性投影。只有完整
 attestation、Hybrid JSON，调用方布尔值，或 post-hoc caller-supplied artifacts/raw bytes，都不能替代该
 eligibility；仓库不导出可将这些调用方输入提升为 authority 的 producer。完整 Evidence 是由集成 runner
 私有 token 构造、普通属性不可变且没有 raw-body 公共 accessor 的进程内对象；registry、signer、runner、
-verifier 和 eligibility 同样拒绝普通属性替换或删除，registry 每次验证还会重算 pinned content identity。
+verifier 和 eligibility 同样拒绝普通属性替换或删除。registry 每次验证会重算 pinned content identity；
+eligibility 每次访问会重验 Result/Outcome/Hybrid identity binding，并从 Result 与 Hybrid 双侧重建
+AI-positive Tag，不信任单独的缓存值。
 
 该密码学合同仍有明确的未证明边界：
 
@@ -1165,12 +1169,11 @@ Request/Outcome/Result 和 Hybrid 引用图后才做字段投影。只有 valid 
 policy 本身不是外发批准；V2 Builder 也不消费 Formal V2 Subject/attestation，因此不能建立受信消费
 authority。该缺口由下述 V3 gate 单独关闭。
 
-这是**结构合同完成边界**，不是 V2 Retrieval runtime。当前 `RetrievalService` 仍只接受
-`retrieval-request-v1`；还没有 V2 `ai_inferred/text_keyword` MatchScope、AI 权重、独立 candidate
-pool、RRF shadow ranking 或 V2 `EvidencePack` 组装。现有 live Campaign summary 和
+这是**结构合同完成边界**，不是 V2 Retrieval runtime。标准 `RetrievalService` 仍只接受
+`retrieval-request-v1`，Phase C 也没有新增 V2 Retriever。现有 live Campaign summary 和
 `AITagResponseValidation` 固定是 non-formal 产物，不能直接填充 Builder 要求的 Hybrid 输入图。
-v1 的 schema、loader、Query Planner、RetrievalService、Golden 和 `evidence-pack-v1` 执行行为
-保持不变。
+v1 request 的 schema、loader、Query Planner、RetrievalService、Golden 和标准
+`evidence-pack-v2` 执行行为保持不变。
 
 `retrieval-request-v3` 进一步关闭了 V2 只验证结构引用、没有受信消费凭证的边界。V3 是与 v1/v2
 无继承关系的独立 closed schema，除保留 v1 的正式字段与预算不变量外，还绑定
@@ -1188,22 +1191,98 @@ exact/routing Tag，AI signal 不进入 `exact_tags`、专项 RQ 或 formal Dime
 renderer 仍只消费代码摘录和 exact facts，不拼入 Tag、Dimension、attestation 或 intent prose。
 
 Builder 返回不可序列化的 `VerifiedRetrievalRequestV3`，同时持有结构化 V3 request、同次重建的完整
-v1 baseline 和逐 Unit opaque eligibility；wrapper 在构造及每次公开访问时重验全部 v1 正式字段、proof
-identity 与 AI 派生字段。因此仅反序列化 `retrieval-request-v3` JSON 不能绕过 formal verifier。当前
-`RetrievalService` 仍只接受 `retrieval-request-v1`，没有 V3 MatchScope、AI candidate pool/权重、RRF
-shadow ranking 或 V3 `EvidencePack` 执行。V3 目前只完成受信 request construction gate，没有改变
-任何 v1 运行结果，也没有证明生产知识或真实检索质量。
+v1 baseline、V3 exact-facts 快照和逐 Unit opaque eligibility；wrapper 在构造及每次公开访问时重验
+全部 v1 正式字段、包括 `import_uses` 在内的 V3 exact facts、proof identity 与 AI 派生字段。因此仅
+反序列化 `retrieval-request-v3` JSON 不能绕过 formal verifier。标准
+`RetrievalService` 仍只接受 `retrieval-request-v1`；独立的 `RetrievalShadowServiceV3` 则只接受
+**exact type** `VerifiedRetrievalRequestV3`，裸 V3、V3 子类或反序列化 V3 JSON 都不是 Phase C
+执行 authority。
+
+### 12.1 当前 Phase C Retrieval shadow 合同
+
+Phase C 已实现独立 `retrieval-shadow-policy-v1`。该 frozen、内容寻址 policy 必须绑定当前
+`retrieval-config-v1` fingerprint、相同 `rrf_k/result_limit`，并按固定顺序配置五个相互独立的 pool：
+
+```text
+formal_exact    -> unit_exact
+file_hint       -> file_hint
+text_keyword    -> text_keyword
+ai_inferred     -> ai_inferred
+semantic_vector -> semantic
+```
+
+每个 pool 独立限制候选数量、保存连续 pool rank、来源 scope 和 RRF weight。默认 policy 的权重依次为
+`1.0 / 0.5 / 0.25 / 0.25 / 1.0`，`rrf_k=60`、每 Unit `result_limit=8`；这些值是当前冻结的 shadow
+合同，不是由真实质量校准得到的生产参数。`text_keyword` 不再冒充 `unit_exact`，AI positive 只能进入
+`ai_inferred`；AI negative/not-supported 不删除 static 信号。向量 query 使用
+`code-exact-facts-v1`，只包含代码摘录和 exact facts，不拼入 static/AI Tag、Dimension、RQ 或
+attestation 文本。
+
+`RetrievalShadowServiceV3.compare(...)` 先从 verified wrapper 取出同次重建的 v1 baseline，并调用标准
+`RetrievalService` 生成原样的 v1 control `EvidencePack`。随后为同一 Unit 构造一次共享的五-pool
+候选账本，并以相同 policy 做两条加权 RRF：
+
+```text
+static_vector = formal_exact + file_hint + text_keyword + semantic_vector
+hybrid        = formal_exact + file_hint + text_keyword + ai_inferred + semantic_vector
+```
+
+两条 arm 都只用正式 `retrieval_dimension_ids` 计算 coverage 和 per-Unit budget；
+`candidate_dimension_ids` 固定为 `diagnostic_only`，不能绑定专项 RQ，也不能进入 formal
+requested/covered/uncovered Dimension。每条 Clause 保留逐 pool contribution 和完整 `matched_by`，因此
+AI-only 命中不能变成 `unit_exact`。applicability exclusion、authority、结果数量和真实知识 token 预算仍
+逐 Unit 执行。
+
+Phase C 的实验 arm 不生成新的 `evidence-pack-v3`，也不冒充现有 `evidence-pack-v2`；同次 v1
+control 仍由标准 `RetrievalService` 生成 `evidence-pack-v2`。实验部分输出两层不同信任语义的对象：
+
+1. `retrieval-shadow-result-v1`：closed、内容寻址、可序列化的审计产物，绑定 verified V3 request、v1
+   control request/EvidencePack、base config、shadow policy、index/build/source bundle、embedding、Formal
+   attestation 和逐 Unit 五 pool/两 arm。它固定：
+
+   ```text
+   execution_mode=shadow
+   formal_use_scope=hybrid_retrieval_shadow_only
+   authority_status=serialized_audit_only
+   evidence_qualification_status=not_qualified
+   production_qualified=false
+   user_visible=false
+   prompt_eligible=false
+   finding_evidence_eligible=false
+   downstream_use=audit_and_blind_evaluation_only
+   ```
+
+2. `VerifiedRetrievalShadowResultV3`：仅由 `RetrievalShadowServiceV3` 私有 construction token 构造的
+   不可序列化 runtime wrapper。它同时持有 verified V3 authority、shadow artifact 和 v1 control
+   EvidencePack，并在每次公开访问时重验 request/control、构造时快照的
+   KnowledgeIndex/base config/shadow policy 及逐 Unit Formal/Tag/Dimension/pool/arm binding。
+   反序列化 `retrieval-shadow-result-v1` 只能恢复 `serialized_audit_only` artifact，不能恢复 wrapper 或
+   `runtime_verified` authority。
+
+该 wrapper 与 Formal V2 eligibility 使用相同的进程内信任边界：它能拒绝普通属性改写、单根替换和
+serialized artifact 提权，并会把 structured pools 与保留的 index/request/config/policy 重建结果对照，
+同时逐字段核对所有 ranked Clause 的 KnowledgeIndex 内容；它不是抵抗同一受信 Python 进程任意反射并
+同时替换全部内存 trust roots 的安全沙箱。
+
+`KnowledgeIndex.origin=publication` 只改变 index/build provenance，并要求 Shadow Clause 为
+`Baselined`；它不会改写上述资格常量。也就是说，即使调用方注入合法 publication index，Phase C 结果
+仍是 shadow、not-qualified、非用户可见、不可进入 Prompt/Finding。当前仓库也仍没有真实生产
+`PublishedKnowledgeBuild`、独立文档 Truth 或真实 Retrieval Precision/Recall，因而该运行合同不构成
+生产质量证明。
 
 ## 13. EvidencePack
 
 ```jsonc
 {
-  "schema_version": "evidence-pack-v1",
+  "schema_version": "evidence-pack-v2",
   "evidence_pack_id": "evidence-pack:sha256:...",
   "request_id": "retrieval-request:sha256:...",
   "retrieval_version": "retrieval-v1",
   "retrieval_config_fingerprint": "retrieval-config:sha256:...",
   "index_version": "knowledge-index:sha256:...",
+  "index_origin": "publication",
+  "knowledge_build_id": "published-knowledge:sha256:...",
+  "production_eligible": true,
   "source_bundle_id": "source-bundle:sha256:...",
   "degraded": false,
   "embedding_version": "candidate-model@internal-v1",
@@ -1263,8 +1342,10 @@ shadow ranking 或 V3 `EvidencePack` 执行。V3 目前只完成受信 request c
 }
 ```
 
-`EvidencePack` 逐 Unit 划分 requested/covered/uncovered Dimensions，只包含 Baselined Clause，
-并保存 match scope、适用性、exact/vector rank、RRF、authority、token 和结构化 diagnostic。
+这里的 `EvidencePack` 专指标准 `evidence-pack-v2`，不是 Phase C shadow artifact。它逐 Unit 划分
+requested/covered/uncovered Dimensions。publication 与 golden fixture 只包含 Baselined Clause；显式
+evaluation fixture 可包含 Draft Clause，但固定 `production_eligible=false`。EvidencePack 同时保存
+match scope、适用性、exact/vector rank、RRF、authority、token 和结构化 diagnostic。
 `dimension_ids` 是多值。调试字段记录到评审审计数据，但不全部进入 Prompt。
 
 ## 14. RuleFinding

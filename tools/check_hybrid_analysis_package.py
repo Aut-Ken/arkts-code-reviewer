@@ -13,6 +13,7 @@ PACKAGED_ASSETS = {
     "arkts_code_reviewer/hybrid_analysis/defaults/ai_tag_contracts.yaml",
     "arkts_code_reviewer/hybrid_analysis/defaults/deepseek-tag-analysis-v1.md",
     "arkts_code_reviewer/hybrid_analysis/defaults/repository_synthetic_campaign_file_analysis.json",
+    "arkts_code_reviewer/retrieval/defaults/retrieval_shadow_v3.yaml",
 }
 PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/campaign_live_smoke.py",
@@ -25,6 +26,9 @@ PACKAGED_MODULES = {
     "arkts_code_reviewer/hybrid_analysis/shadow_campaign_execution.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_evaluation.py",
     "arkts_code_reviewer/hybrid_analysis/shadow_runtime.py",
+    "arkts_code_reviewer/retrieval/shadow_models_v3.py",
+    "arkts_code_reviewer/retrieval/shadow_policy_v3.py",
+    "arkts_code_reviewer/retrieval/shadow_service_v3.py",
 }
 
 
@@ -117,6 +121,11 @@ def main() -> int:
                     "import AI_TAG_SHADOW_CAMPAIGN_EXECUTION_RESULT_SCHEMA_VERSION, "
                     "AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION, "
                     "AITagShadowCampaignLiveHarness; "
+                    "from arkts_code_reviewer.retrieval import "
+                    "RETRIEVAL_SHADOW_POLICY_V3_SCHEMA_VERSION, "
+                    "RETRIEVAL_SHADOW_RESULT_SCHEMA_VERSION, "
+                    "RetrievalShadowServiceV3, VerifiedRetrievalShadowResultV3, "
+                    "load_default_retrieval_shadow_policy_v3; "
                     "assert 'httpx' not in sys.modules; "
                     "package = Path(arkts_code_reviewer.__file__).resolve(); "
                     "assert package.is_relative_to(Path.cwd() / 'unpacked'); "
@@ -175,6 +184,15 @@ def main() -> int:
                     "assert AI_TAG_SHADOW_CAMPAIGN_NON_ATTEMPT_RECEIPT_SCHEMA_VERSION == "
                     "'ai-tag-shadow-campaign-non-attempt-receipt-v1'; "
                     "assert AITagShadowCampaignLiveHarness; "
+                    "shadow_policy = load_default_retrieval_shadow_policy_v3(); "
+                    "assert RETRIEVAL_SHADOW_POLICY_V3_SCHEMA_VERSION == "
+                    "'retrieval-shadow-policy-v1'; "
+                    "assert RETRIEVAL_SHADOW_RESULT_SCHEMA_VERSION == "
+                    "'retrieval-shadow-result-v1'; "
+                    "assert shadow_policy.vector_query_policy == "
+                    "'code-exact-facts-v1'; "
+                    "assert RetrievalShadowServiceV3; "
+                    "assert VerifiedRetrievalShadowResultV3; "
                     "print(builder.catalog.catalog_fingerprint); "
                     "print(builder.prompt.prompt_hash)"
                 ),

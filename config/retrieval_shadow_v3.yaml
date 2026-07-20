@@ -1,0 +1,23 @@
+schema_version: retrieval-shadow-policy-v1
+base_retrieval_config_fingerprint: retrieval-config:sha256:fa31904b5e4eae439cd9dbfeb3a364d72e4eee5a24da839ebff2e3eb4ca30f18
+rrf_k: 60
+result_limit: 8
+candidate_dimension_policy: diagnostic_only
+vector_query_policy: code-exact-facts-v1
+budget_policy: per_unit_formal_dimensions_only
+pools:
+  - pool_id: formal_exact
+    candidate_limit: 50
+    rrf_weight: 1.0
+  - pool_id: file_hint
+    candidate_limit: 50
+    rrf_weight: 0.5
+  - pool_id: text_keyword
+    candidate_limit: 50
+    rrf_weight: 0.25
+  - pool_id: ai_inferred
+    candidate_limit: 50
+    rrf_weight: 0.25
+  - pool_id: semantic_vector
+    candidate_limit: 30
+    rrf_weight: 1.0

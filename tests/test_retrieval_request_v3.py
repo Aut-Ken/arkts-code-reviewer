@@ -197,7 +197,11 @@ def test_verified_v3_projects_only_signed_positive_without_formal_mutation(
 
     assert isinstance(request, RetrievalRequestV3)
     assert request.request_id.startswith("retrieval-request-v3:sha256:")
+    assert verified.baseline_request == baseline
     assert len(verified.formal_attestation_ids) == len(request.units)
+    assert tuple(item.outcome_id for item in verified.formal_execution_outcomes) == tuple(
+        item.formal_execution_outcome_id for item in request.units
+    )
     for v1, v3 in zip(baseline.units, request.units, strict=True):
         formal = evidence[v3.unit_id].bundle
         assert v3.ai_inferred_tags == ("has_network",)
@@ -350,6 +354,72 @@ def test_v3_builder_and_verifier_runtime_roots_are_exact_and_immutable(
             formal_execution_verifier=derived,
             analysis_context_policy=_EGRESS_POLICY,
         )
+
+
+def test_verified_v3_revalidates_internal_request_identity_on_every_access(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scenario, evidence, verifier = _formal_evidence(
+        monkeypatch,
+        positive_tag="has_network",
+    )
+    verified = _build(scenario, evidence, verifier)
+    forged = verified.request.model_copy(
+        update={"request_id": f"retrieval-request-v3:sha256:{'0' * 64}"}
+    )
+    object.__setattr__(verified, "_request", forged)
+
+    with pytest.raises(ValueError, match="request_id does not match content"):
+        _ = verified.request
+
+
+def test_verified_v3_rejects_resigned_import_use_rebinding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scenario, evidence, verifier = _formal_evidence(
+        monkeypatch,
+        positive_tag="has_network",
+    )
+    verified = _build(scenario, evidence, verifier)
+    original = verified.request
+    first = original.units[0]
+    forged_unit = first.model_copy(
+        update={
+            "exact_signals": first.exact_signals.model_copy(
+                update={"import_uses": ("forged.untrusted.Import",)}
+            )
+        }
+    )
+    forged = RetrievalRequestV3.create(
+        context_plan_id=original.context_plan_id,
+        feature_routing_id=original.feature_routing_id,
+        feature_config_version=original.feature_config_version,
+        index_version=original.index_version,
+        target_platform=original.target_platform,
+        total_knowledge_token_budget=original.total_knowledge_token_budget,
+        units=(forged_unit, *original.units[1:]),
+    )
+    object.__setattr__(verified, "_request", forged)
+    object.__setattr__(verified, "_expected_request_id", forged.request_id)
+
+    with pytest.raises(ValueError, match="differs from trusted V3 exact facts"):
+        _ = verified.request
+
+
+def test_verified_v3_rebuilds_positive_tags_from_formal_result(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scenario, evidence, verifier = _formal_evidence(
+        monkeypatch,
+        positive_tag="has_network",
+    )
+    verified = _build(scenario, evidence, verifier)
+    eligibility = verified._eligibilities[0]  # noqa: SLF001
+    assert eligibility.positive_tags == ("has_network",)
+    object.__setattr__(eligibility, "_positive_tags", ("has_storage",))
+
+    with pytest.raises(ValueError, match="AI-positive projection changed"):
+        _ = verified.request
 
 
 def test_v3_builder_requires_complete_matching_formal_evidence(
