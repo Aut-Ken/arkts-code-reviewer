@@ -94,7 +94,20 @@ updated: 2026-07-20
   RRF。AI positive 只在 `ai_inferred` pool，keyword 只在 `text_keyword` pool，code vector 不拼 Tag；
   candidate Dimensions 只作诊断。control 仍是标准 `evidence-pack-v2`；实验结果是独立
   `retrieval-shadow-result-v1` audit artifact 和不可序列化 runtime wrapper，不冒充 EvidencePack，固定
-  shadow/not-qualified/non-user-visible/non-prompt/non-Finding。
+  shadow/not-qualified/non-user-visible/non-prompt/non-Finding。wrapper 以独立 construction snapshots
+  绑定完整 shadow/control 内容，拒绝重新 self-hash 的 semantic score、diagnostics 或 control Clause
+  替换，且公开访问不会重复调用 embedding provider。
+- Phase D0 文档 Truth 与双臂评分合同：`retrieval-document-truth-v1` 逐 Unit 内容寻址调用方提供的唯一
+  `required/acceptable/irrelevant/forbidden` Clause 标签、critical Dimensions、目标平台、Feature Config
+  和固定 Index；同一 source locator 不得通过更换 `rule_id` 或其他元数据重复计数。
+  `retrieval-shadow-evaluation-v1` 从 Truth、V3 request、shadow result 与 Index 四个 caller roots
+  确定性重建预算前/预算后、`static_vector/hybrid` 的 K=1/3/5/8 指标、required MRR、Knowledge gap、
+  forbidden/applicability、token、degraded 和 paired delta，并按 development/calibration 分别聚合。
+  paired quality delta 只消费 eligible Unit；hard-safety observation 不因 degraded 被隐藏。未标注 observed
+  Clause 会 fail-closed；报告固定 `serialized_audit_only`、offline/not-qualified/non-user-visible/
+  non-prompt/non-Finding。当前只实现合同和合成测试，self-hash Truth 不是人工来源证明、consensus 或
+  blind seal，full verifier 也不恢复 Shadow runtime/policy authority。development/calibration 只是调用方
+  提供的 split 标签；v1 没有 rule-family/leakage-component 或 family seal，分开聚合不证明不存在近重复泄漏。
 - 提交 `a83eeb6` 的合成/负向验证：D1b-1 targeted `28 passed`、Stage 2A～2D2a 相关
   `294 passed`、全量 `1196 passed / 3 skipped`；这些是该提交上的运行快照，不是长期
   machine attestation。
@@ -115,9 +128,10 @@ updated: 2026-07-20
   bytes、完整 evidence graph 和当时 attestation 而不能事后追认为 Formal V2。
 - 真实 near-duplicate Pair Truth、经过校准批准的 policy 和 screening v2。
 - 面向真实应用的 Context/Retrieval relevance Truth 仍不足。
-- Phase C 只有合成/fixture 合同证据，没有独立文档 Truth、真实 static_vector vs hybrid Recall/Precision、
-  production prevalence 或生产 PublishedKnowledgeBuild；即使使用 publication-origin index，shadow
-  artifact 的资格也固定不变。
+- Phase C/D0 只有合成/fixture 合同证据；虽然独立文档 Truth schema 和评分器已经存在，仍没有真实
+  人工 Clause Truth、真实 static_vector vs hybrid Recall/Precision、production prevalence 或生产
+  PublishedKnowledgeBuild。即使使用 publication-origin index，shadow/evaluation artifact 的资格也固定
+  不变。
 - Rule precision 数据、Final Finding 人工标注和最终评审闭环。
 - 跨全流水线的统一生产运行证明 artifact、评测数据库、外部身份认证和跨模块最终质量门禁。
 
@@ -135,6 +149,7 @@ updated: 2026-07-20
 | AI Tag Formal Execution V2 | attempted Plan evidence + raw response（若有）+ pinned runner registry -> opaque eligibility | Result/Outcome deterministic projection、Plan+Attempt run identity、状态化 provider scope、Ed25519 Subject attestation、full rebuild/tamper rejection；不覆盖零 attempt，不证明 provider signature/Git provenance/部署 key 或质量 |
 | Retrieval V3 construction gate | AnalysisResult/ContextPlan/Snapshots + per-Unit formal evidence -> verified non-serializable wrapper | v1 baseline/Card replay、formal evidence exact coverage、仅 verified positive 投影；裸/serialized V3 没有执行 authority |
 | Phase C Retrieval shadow | exact `VerifiedRetrievalRequestV3` + pinned index/policy -> v1 control EvidencePack + verified shadow result | 五 pool、两 arm 同账本、scope/RRF/budget/identity、序列化降权和固定资格；只证明 shadow 合同，不证明真实文档质量 |
+| Phase D0 document evaluation | caller-supplied Clause Truth + V3 request + shadow result + fixed index -> serialized-audit-only offline report | pre/post-budget 双臂 Recall/coverage/Precision/MRR、Knowledge gap、critical Dimension、split aggregates、eligible-only quality delta 与 all-observed hard-safety delta；未标注候选拒绝，split 无独立 family seal，固定 not-qualified，不证明 Truth/Shadow runtime authority |
 | AI Tag shadow diagnostic | Cards + ResponseValidations -> Unit/report artifacts | valid_shape/invalid_output/unavailable_claim、positive/not_supported/abstain、exact×validated-content 分布、逐 Tag counts、reported usage/latency；无 Truth 时不计算 P/R |
 | Knowledge Build | docs -> Clauses | 解析覆盖、ID 稳定、来源完整 |
 | Retrieval | UnitQuery -> rule_ids | Recall@K、Precision@K、MRR |
@@ -791,6 +806,8 @@ V3 vector query 只包含 code + exact facts
 同次 v1 control EvidencePack 的内容和 identity 不被 shadow arm 改写
 serialized retrieval-shadow-result-v1 只能是 serialized_audit_only
 runtime wrapper 不可序列化，并在每次访问时重验完整 binding
+重新 self-hash 的 semantic score、diagnostics/degraded 或 control 内容替换仍被 construction snapshot 拒绝
+重复访问 runtime wrapper 不得增加 embedding provider 调用
 所有 index origin 都保持 not_qualified/non-user-visible/non-prompt/non-Finding
 ```
 

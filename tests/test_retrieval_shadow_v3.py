@@ -333,6 +333,32 @@ def test_code_first_vector_query_excludes_ai_dimensions_rq_attestation_and_inten
         assert all(value not in text for value in forbidden if value is not None)
 
 
+def test_runtime_binding_rechecks_do_not_repeat_embedding_calls(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    index = _index((_record("R-VECTOR", tags=("has_network",), embedding=(1.0, 0.0)),))
+    authority = _verified_request(
+        monkeypatch,
+        index,
+        positive_tag="has_network",
+    )
+    provider = _FakeEmbeddingProvider()
+    result = RetrievalShadowServiceV3(
+        index,
+        embedding_provider=provider,
+        allow_golden_fixture=True,
+    ).compare(authority)
+    calls_after_compare = provider.query_calls
+    assert calls_after_compare > 0
+
+    _ = result.authority_status
+    _ = result.artifact
+    _ = result.control_evidence_pack
+    _ = result.artifact
+
+    assert provider.query_calls == calls_after_compare
+
+
 def test_candidate_dimension_does_not_cover_or_reserve_a_formal_slot(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

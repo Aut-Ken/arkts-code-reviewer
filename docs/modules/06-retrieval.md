@@ -482,13 +482,47 @@ V3 authority、v1 control、构造时快照的 KnowledgeIndex/base config/shadow
 Formal/Tag/Dimension/pool/arm identities。加载 shadow JSON 不会恢复
 该 wrapper，也不能把结果发送给 Prompt、Finding Validator 或用户可见输出。
 每次重验还会重建 structured pools，并把 ranked Clause 全字段回绑构造时快照的 KnowledgeIndex。
+wrapper 另外保存与公开结果独立的完整 shadow/control construction snapshots，并要求每次访问精确一致；
+因此重新 self-hash 的 semantic score、候选、diagnostics/degraded 或 v1 control 内容替换也会被拒绝。
+该校验不会重新调用 embedding provider，避免重复模型调用、后续 provider 离线或有状态 provider 改写
+已经完成的运行结果。
 与 Formal V2 相同，这属于进程内普通 API fail-closed，不是能抵抗受信 Python 进程同时反射替换全部
 内存 roots 的安全沙箱。
 
 publication origin 的合法 KnowledgeIndex 仍只改变 index/build provenance 和 Clause 的 Baselined
-约束，不会改变上述固定资格字段。当前仓库没有生产 PublishedKnowledgeBuild，也没有独立文档 Truth 或
-真实 Phase C P/R；因此 fixture、evaluation index 或 publication index 上运行成功都不能写成生产
-qualified。
+约束，不会改变上述固定资格字段。当前仓库没有生产 PublishedKnowledgeBuild，也没有真实、独立复核并
+sealed 的文档 Truth 或真实 Phase C P/R；因此 fixture、evaluation index 或 publication index 上运行
+成功都不能写成生产 qualified。
+
+### 12.2 Phase D0 离线双臂评分
+
+`retrieval_validation.document_truth` 与 `retrieval_validation.shadow_evaluation` 已实现独立的
+`retrieval-document-truth-v1` 和 `retrieval-shadow-evaluation-v1`。评分器只读取内容寻址、由调用方
+提供的
+Truth、V3 request、shadow result 和 KnowledgeIndex，不重新运行 Retrieval、embedding 或 DeepSeek。
+它将 `ranked_clauses` 作为 post-fusion/pre-budget 排名，将 `selected_rule_ids` 作为 post-budget
+实际结果，分别比较 `static_vector` 与 `hybrid` 的 Recall/coverage/Precision/MRR、critical Dimension、
+forbidden、applicability、empty、token 和新增/挤出文档。
+
+所有实际出现的 Clause 必须先取得唯一 Truth 标签；未标注候选直接拒绝评分。Truth 还显式绑定 Feature
+Config，同一 Unit 不能通过更换 `rule_id` 或其他元数据重复计数同一 source locator，嵌套来源
+与适用性字段拒绝弱类型和未清理文本。该 schema 供人工标注
+使用，但当前调用方提供的 self-hash 标签本身不证明人工来源、双审共识或 Git seal。索引内 Clause 的
+source/heading/applicability/`rule_type` 必须与 Index 相同，只有 required Clause 可以位于 Index 外并单列为
+Knowledge gap 和 full-chain miss，不算 Retriever FN；零分母指标为 `null`，true-negative 空结果不会自动
+得到 perfect Precision。split 只是调用方提供的标签；v1 尚无独立 rule-family/leakage-component 字段或
+family seal，因此分别计算两个 split 不等于证明它们已按近重复家族隔离。
+
+报告保留跨全部 Unit 的 observational aggregates，同时对实际存在的 development/calibration 分别生成
+独立 split aggregate。degraded 或非 valid Formal execution 的观测继续保留，但 aggregate paired quality
+metric/MRR delta 和新增/挤出计数只消费 eligible Unit，零 eligible 时 quality delta 为 `null`；预算前与
+预算后的 forbidden/applicability hard-safety delta 则保留全部 Unit 的观测，不会因 degraded 被隐藏。
+
+该报告固定 `authority_status=serialized_audit_only`、offline、not-qualified、非用户可见、不可进入
+Prompt/Finding。loader/self-hash 只恢复内部一致的审计 artifact；full verifier 也只是相对调用方提供的
+Truth/request/result/index 四个 self-hash roots 确定性重建，不会重新执行 Retrieval，也不恢复 Shadow
+runtime authority 或 policy execution semantics。当前只有合成合同测试，没有真实 Clause Truth、
+acceptance holdout 或生产知识质量证明。
 
 ## 13. 当前接口和数据库边界
 

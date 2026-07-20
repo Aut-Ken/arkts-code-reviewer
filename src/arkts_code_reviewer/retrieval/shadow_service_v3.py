@@ -792,6 +792,8 @@ class VerifiedRetrievalShadowResultV3(_ImmutableRuntimeObject):
         "_authority",
         "_base_config",
         "_control_evidence_pack",
+        "_expected_artifact",
+        "_expected_control_evidence_pack",
         "_expected_result_id",
         "_index",
         "_policy",
@@ -820,11 +822,13 @@ class VerifiedRetrievalShadowResultV3(_ImmutableRuntimeObject):
             raise TypeError("verified Shadow Result requires exact RetrievalConfig")
         if type(shadow_policy) is not RetrievalShadowPolicyV3:
             raise TypeError("verified Shadow Result requires exact Shadow Policy")
-        self._artifact = RetrievalShadowResultV3.model_validate(artifact.model_dump(mode="json"))
+        artifact_payload = artifact.model_dump(mode="json")
+        control_payload = control_evidence_pack.model_dump(mode="json")
+        self._artifact = RetrievalShadowResultV3.model_validate(artifact_payload)
+        self._expected_artifact = RetrievalShadowResultV3.model_validate(artifact_payload)
         self._authority = authority
-        self._control_evidence_pack = EvidencePack.model_validate(
-            control_evidence_pack.model_dump(mode="json")
-        )
+        self._control_evidence_pack = EvidencePack.model_validate(control_payload)
+        self._expected_control_evidence_pack = EvidencePack.model_validate(control_payload)
         self._index = KnowledgeIndex.model_validate(index.model_dump(mode="json"))
         self._base_config = RetrievalConfig.model_validate(base_config.model_dump(mode="json"))
         self._policy = RetrievalShadowPolicyV3.model_validate(
@@ -841,12 +845,25 @@ class VerifiedRetrievalShadowResultV3(_ImmutableRuntimeObject):
         outcomes = self._authority.formal_execution_outcomes
         artifact = RetrievalShadowResultV3.model_validate(self._artifact.model_dump(mode="json"))
         control = EvidencePack.model_validate(self._control_evidence_pack.model_dump(mode="json"))
+        expected_artifact = RetrievalShadowResultV3.model_validate(
+            self._expected_artifact.model_dump(mode="json")
+        )
+        expected_control = EvidencePack.model_validate(
+            self._expected_control_evidence_pack.model_dump(mode="json")
+        )
         index = KnowledgeIndex.model_validate(self._index.model_dump(mode="json"))
         config = RetrievalConfig.model_validate(self._base_config.model_dump(mode="json"))
         policy = RetrievalShadowPolicyV3.model_validate(
             self._policy.model_dump(mode="json"),
             context={"base_retrieval_config": config},
         )
+        if (
+            control != expected_control
+            or artifact.v1_control_evidence_pack_id != expected_control.evidence_pack_id
+        ):
+            raise ValueError(
+                "verified V1 control EvidencePack differs from construction snapshot"
+            )
         if (
             artifact.result_id != self._expected_result_id
             or artifact.verified_request_id != request.request_id
@@ -1029,6 +1046,8 @@ class VerifiedRetrievalShadowResultV3(_ImmutableRuntimeObject):
                     )
                     if actual_clause_payload != expected_clause_payload:
                         raise ValueError("verified Shadow Clause differs from KnowledgeIndex")
+        if artifact != expected_artifact:
+            raise ValueError("verified Shadow Result differs from construction snapshot")
 
     def __repr__(self) -> str:
         return (

@@ -41,6 +41,8 @@ updated: 2026-07-20
 | `NearDuplicatePairSelection/Consensus/CalibrationReport/PolicyApprovalReceipt` | Evaluation Governance | Near-duplicate policy calibration、Tag Truth release review、Audit |
 | `RetrievalRequestV3/VerifiedRetrievalRequestV3` | Retrieval Query Planner V3 | Retrieval Shadow；只有不可序列化 wrapper 是运行 authority |
 | `RetrievalShadowResultV3/VerifiedRetrievalShadowResultV3` | Retrieval Shadow | Evaluation、Audit；禁止进入 Prompt、Finding 或用户可见 Evidence |
+| `RetrievalDocumentTruthV1` | Evaluation 标注合同 | Phase D0 scorer、Audit；调用方提供的 self-hash 标签不等于人工双审或 sealed Truth |
+| `RetrievalShadowEvaluationReportV1` | Retrieval Evaluation | Evaluation、Audit；固定 offline/not-qualified，禁止进入 Prompt、Finding |
 | `EvidencePack` | Retrieval | Prompt、Finding Validator、Evaluation |
 | `RuleFinding` | Rules | Prompt、Output、Evaluation |
 | `ReviewRequest` | Prompt Builder | Final LLM |
@@ -1254,21 +1256,83 @@ control 仍由标准 `RetrievalService` 生成 `evidence-pack-v2`。实验部分
 
 2. `VerifiedRetrievalShadowResultV3`：仅由 `RetrievalShadowServiceV3` 私有 construction token 构造的
    不可序列化 runtime wrapper。它同时持有 verified V3 authority、shadow artifact 和 v1 control
-   EvidencePack，并在每次公开访问时重验 request/control、构造时快照的
+   EvidencePack；还保留与公开返回对象相互独立的完整 shadow/control construction snapshots。每次公开
+   访问都要求当前 artifact/control 与对应 snapshot 精确一致，并重验 request/control、构造时快照的
    KnowledgeIndex/base config/shadow policy 及逐 Unit Formal/Tag/Dimension/pool/arm binding。
    反序列化 `retrieval-shadow-result-v1` 只能恢复 `serialized_audit_only` artifact，不能恢复 wrapper 或
    `runtime_verified` authority。
 
 该 wrapper 与 Formal V2 eligibility 使用相同的进程内信任边界：它能拒绝普通属性改写、单根替换和
 serialized artifact 提权，并会把 structured pools 与保留的 index/request/config/policy 重建结果对照，
-同时逐字段核对所有 ranked Clause 的 KnowledgeIndex 内容；它不是抵抗同一受信 Python 进程任意反射并
-同时替换全部内存 trust roots 的安全沙箱。
+同时逐字段核对所有 ranked Clause 的 KnowledgeIndex 内容。独立 construction snapshot 还绑定 semantic
+path score、候选完整性、diagnostics/degraded 和标准 v1 control EvidencePack 的完整内容；公开访问不会
+再次调用 embedding provider。它不是抵抗同一受信 Python 进程任意反射并同时替换全部内存 trust roots
+的安全沙箱。
 
 `KnowledgeIndex.origin=publication` 只改变 index/build provenance，并要求 Shadow Clause 为
 `Baselined`；它不会改写上述资格常量。也就是说，即使调用方注入合法 publication index，Phase C 结果
 仍是 shadow、not-qualified、非用户可见、不可进入 Prompt/Finding。当前仓库也仍没有真实生产
-`PublishedKnowledgeBuild`、独立文档 Truth 或真实 Retrieval Precision/Recall，因而该运行合同不构成
-生产质量证明。
+`PublishedKnowledgeBuild`、真实且独立复核并 sealed 的文档 Truth 或真实 Retrieval Precision/Recall，
+因而该运行合同不构成生产质量证明。
+
+### 12.2 当前 Phase D0 文档 Truth 与双臂评分合同
+
+Phase D0 已实现独立的 `retrieval-document-truth-v1` 和
+`retrieval-shadow-evaluation-v1`。Truth 逐 ReviewUnit 绑定 `source_ref_id/profile_id`、固定
+KnowledgeIndex/build/source bundle、Feature Config、目标平台、development/calibration split 和供人工标注
+的 critical Dimensions；每条 Clause 只能选择一个 `required/acceptable/irrelevant/forbidden` 标签，并保存
+`SourceRef`、heading、`rule_type` 与 applicability。索引内 Truth 的来源、heading、applicability 和
+`rule_type` 必须与冻结 Index 一致；只有 `required` 允许不在 Index，用于显式计算 Knowledge
+coverage gap。同一 Unit 不能用不同 `rule_id` 或元数据重复计数同一 source locator；嵌套
+来源与适用性字段也拒绝弱类型和未清理文本。该 schema 约束标签形状和内容 identity，不证明标签确由
+人工产生或已形成共识。split 值同样由调用方提供；v1 没有独立的
+rule-family/leakage-component 字段或 family seal，因此“分别聚合”不等于已经证明两个 split 无近重复泄漏。
+
+评分器同时消费 self-hash 有效的 Truth、`RetrievalRequestV3`、`RetrievalShadowResultV3` 和
+`KnowledgeIndex`，要求四个 root 的 Index、build、source bundle、Feature Config、target、Retrieval config、Unit
+budget/source/profile 及 Formal/Tag/Dimension identities 完整一致。任一预算前或预算后实际出现的
+Clause 都必须有唯一 Truth 标签；
+未标注候选会 fail-closed，不会被静默当作 `irrelevant`。评分器不重新执行 Retrieval、embedding 或
+DeepSeek，而是直接使用同一 shadow result 中：
+
+```text
+post_fusion_pre_budget = arm.ranked_clauses
+post_budget_selected   = arm.selected_rule_ids
+```
+
+两个空间分别按固定 `K=1/3/5/8` 报告 Retriever required Recall、Full-chain required coverage、
+Precision、Truth-critical Dimension coverage 和 required MRR，并单列 forbidden/applicability violation、
+empty、token utilization、Index 外 required gap、hybrid 新增/挤出文档和 paired metric/MRR delta。聚合
+使用 Clause micro counts，MRR 使用有对应 required 分母的 Unit mean；零分母为 `null`，true-negative
+空结果不会伪造 `Precision=1.0`。Index 外 required 只进入 Full-chain miss 与 Knowledge gap，不会误算成
+Retriever FN。
+
+报告同时保留全体 Unit 的 observational arm aggregates，并对实际存在的 `development`、`calibration`
+分别生成独立 split aggregates；不得用跨 split 总表替代 calibration 结论。dependency degraded 或 Formal
+execution 非 valid 的原始观测仍保留，但 aggregate paired quality metric/MRR delta 与新增/挤出计数只消费
+`comparison_eligible=true` 的 Unit；没有 eligible Unit 时 quality delta 为 `null`。forbidden/applicability
+属于 hard-safety observation，预算前和预算后 delta 均从全部 Unit 计算，不因 degraded/invalid 被隐藏。
+
+报告固定：
+
+```text
+evaluation_scope=relative_gain_on_fixed_index
+verification_root_scope=caller_supplied_self_hashed_truth_request_result_and_index
+authority_status=serialized_audit_only
+downstream_use=offline_relative_evaluation_only
+evidence_qualification_status=not_qualified
+production_qualified=false
+user_visible=false
+prompt_eligible=false
+finding_evidence_eligible=false
+```
+
+report loader/self-hash 只恢复内部可重建的 `serialized_audit_only` 审计 artifact；full verifier 会相对
+调用方提供的四个 self-hash roots 完整重建并精确比较，但不会重新执行 Retrieval，也不证明 Shadow
+Result 的 runtime authority 或 policy execution semantics。报告固定保留 acceptance holdout、Truth seal、
+生产知识质量、production prevalence、policy root 和 runtime authority 六类 qualification blockers。
+当前没有真实人工 Clause Truth、双审/consensus/Git seal、acceptance holdout 或生产知识，因此 D0 只证明
+评分合同和合成边界，不能输出真实业务 P/R 或 production qualification。
 
 ## 13. EvidencePack
 

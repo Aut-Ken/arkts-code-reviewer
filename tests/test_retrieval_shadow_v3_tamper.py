@@ -46,7 +46,7 @@ from arkts_code_reviewer.retrieval.config import (
     RetrievalConfig,
     load_default_retrieval_config,
 )
-from arkts_code_reviewer.retrieval.models import KnowledgeIndex
+from arkts_code_reviewer.retrieval.models import EvidencePack, KnowledgeIndex
 from arkts_code_reviewer.retrieval.query_planner_v3 import (
     TrustedRetrievalRequestV3Builder,
     VerifiedRetrievalRequestV3,
@@ -500,6 +500,89 @@ def test_runtime_wrapper_rejects_rehashed_clause_content_rebinding(
     object.__setattr__(runtime, "_expected_result_id", forged.result_id)
 
     with pytest.raises(ValueError, match="Clause differs from KnowledgeIndex"):
+        _ = runtime.artifact
+
+
+def test_runtime_wrapper_rejects_rehashed_control_clause_content_rebinding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _positive_runtime(monkeypatch)
+    control = runtime.control_evidence_pack
+    first_unit = control.units[0]
+    assert first_unit.clauses
+    forged_clause = first_unit.clauses[0].model_copy(
+        update={"text": "FORGED CONTROL KNOWLEDGE TEXT"},
+    )
+    forged_unit = first_unit.model_copy(
+        update={"clauses": (forged_clause, *first_unit.clauses[1:])},
+    )
+    forged_control = EvidencePack.create(
+        request_id=control.request_id,
+        retrieval_version=control.retrieval_version,
+        retrieval_config_fingerprint=control.retrieval_config_fingerprint,
+        index_version=control.index_version,
+        index_origin=control.index_origin,
+        knowledge_build_id=control.knowledge_build_id,
+        production_eligible=control.production_eligible,
+        source_bundle_id=control.source_bundle_id,
+        embedding_version=control.embedding_version,
+        units=(forged_unit, *control.units[1:]),
+        diagnostics=control.diagnostics,
+    )
+    assert forged_control.evidence_pack_id != control.evidence_pack_id
+
+    payload = runtime.artifact.model_dump(mode="json")
+    payload["v1_control_evidence_pack_id"] = forged_control.evidence_pack_id
+    forged_artifact = _load_rehashed(payload)
+    object.__setattr__(runtime, "_control_evidence_pack", forged_control)
+    object.__setattr__(runtime, "_artifact", forged_artifact)
+    object.__setattr__(runtime, "_expected_result_id", forged_artifact.result_id)
+
+    with pytest.raises(ValueError, match="control EvidencePack"):
+        _ = runtime.control_evidence_pack
+
+
+def test_runtime_wrapper_rejects_rehashed_semantic_path_score_rebinding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _positive_runtime(monkeypatch, embedded=True)
+    payload = runtime.artifact.model_dump(mode="json")
+    pools = {
+        cast("str", pool["pool"]): pool
+        for pool in cast("list[Payload]", _first_unit(payload)["pools"])
+    }
+    semantic_candidates = cast("list[Payload]", pools["semantic_vector"]["candidates"])
+    assert len(semantic_candidates) == 1
+    semantic_candidates[0]["path_score"] = 0.877
+    forged = _load_rehashed(payload)
+    object.__setattr__(runtime, "_artifact", forged)
+    object.__setattr__(runtime, "_expected_result_id", forged.result_id)
+
+    with pytest.raises(ValueError, match="construction snapshot"):
+        _ = runtime.artifact
+
+
+def test_runtime_wrapper_rejects_rehashed_quality_diagnostic_rebinding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _positive_runtime(monkeypatch)
+    payload = runtime.artifact.model_dump(mode="json")
+    diagnostic = {
+        "code": "parser_degraded",
+        "rule_id": None,
+        "detail": "Parser or ReviewUnit context quality limits shadow evidence confidence.",
+    }
+    unit = _first_unit(payload)
+    for arm_name in ("static_vector", "hybrid"):
+        arm = cast("Payload", unit[arm_name])
+        assert arm["diagnostics"] == []
+        arm["diagnostics"] = [diagnostic]
+    payload["degraded"] = True
+    forged = _load_rehashed(payload)
+    object.__setattr__(runtime, "_artifact", forged)
+    object.__setattr__(runtime, "_expected_result_id", forged.result_id)
+
+    with pytest.raises(ValueError, match="construction snapshot"):
         _ = runtime.artifact
 
 
