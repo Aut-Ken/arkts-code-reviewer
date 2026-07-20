@@ -31,6 +31,20 @@ from arkts_code_reviewer.retrieval.models import (
     load_retrieval_request,
 )
 from arkts_code_reviewer.retrieval.query_planner import build_retrieval_request
+from arkts_code_reviewer.retrieval.query_planner_v2 import (
+    HybridRetrievalUnitGraph,
+    build_retrieval_request_v2,
+)
+from arkts_code_reviewer.retrieval.request_v2 import (
+    RETRIEVAL_REQUEST_V2_SCHEMA_VERSION,
+    VECTOR_QUERY_POLICY_V1,
+    RetrievalRequestV2,
+    RetrievalUnitRequestV2,
+    UnitExactSignalsV2,
+    candidate_dimension_ids_for_ai_tags,
+    load_retrieval_request_v2,
+    render_vector_query_v2,
+)
 from arkts_code_reviewer.retrieval.service import RetrievalService
 
 __all__ = [
@@ -46,20 +60,30 @@ __all__ = [
     "RetrievalConfig",
     "RetrievalDiagnostic",
     "RetrievalRequest",
+    "RetrievalRequestV2",
     "RetrievalService",
     "RetrievalUnitRequest",
+    "RetrievalUnitRequestV2",
+    "RETRIEVAL_REQUEST_V2_SCHEMA_VERSION",
     "TargetPlatform",
     "UnitEvidence",
     "UnitExactSignals",
+    "UnitExactSignalsV2",
+    "VECTOR_QUERY_POLICY_V1",
     "aggregate_api_catalog_version",
     "build_knowledge_index",
     "build_evaluation_knowledge_index",
     "build_retrieval_request",
+    "build_retrieval_request_v2",
+    "candidate_dimension_ids_for_ai_tags",
     "canonical_pgvector_embedding",
     "estimate_knowledge_tokens",
     "load_evidence_pack",
     "load_default_retrieval_config",
     "load_knowledge_index",
     "load_retrieval_request",
+    "load_retrieval_request_v2",
     "load_retrieval_config",
+    "render_vector_query_v2",
+    "HybridRetrievalUnitGraph",
 ]
