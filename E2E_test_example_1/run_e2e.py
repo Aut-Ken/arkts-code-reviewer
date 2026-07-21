@@ -18,7 +18,7 @@ from dataclasses import asdict
 from difflib import SequenceMatcher
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from arkts_code_reviewer.code_analysis import (
     ChangeAtomInput,
@@ -31,16 +31,9 @@ from arkts_code_reviewer.code_analysis import (
     normalize_change_set,
 )
 from arkts_code_reviewer.code_analysis.text_utils import extract_lines
-from arkts_code_reviewer.retrieval import (
-    RetrievalService,
-    TargetPlatform,
-    build_retrieval_request,
-    load_evidence_pack,
-    load_knowledge_index,
-    load_retrieval_request,
-)
-from arkts_code_reviewer.retrieval.embeddings import FastEmbedProvider
-from arkts_code_reviewer.retrieval.postgres import PostgresIndexStore
+
+if TYPE_CHECKING:
+    from arkts_code_reviewer.retrieval.embeddings import FastEmbedProvider
 
 ROOT = Path(__file__).resolve().parent
 INPUTS = ROOT / "inputs"
@@ -1019,6 +1012,19 @@ def run(argv: list[str] | None = None) -> dict[str, object]:
         code_context_budget=args.code_context_budget,
     )
     context_plan.__post_init__()
+
+    # Keep the ChangeSet -> ContextPlan fixture importable by offline Tag pilots.
+    # Retrieval's PostgreSQL/FastEmbed dependencies are needed only after this boundary.
+    from arkts_code_reviewer.retrieval import (
+        RetrievalService,
+        TargetPlatform,
+        build_retrieval_request,
+        load_evidence_pack,
+        load_knowledge_index,
+        load_retrieval_request,
+    )
+    from arkts_code_reviewer.retrieval.embeddings import FastEmbedProvider
+    from arkts_code_reviewer.retrieval.postgres import PostgresIndexStore
 
     database_url, database_url_source = _database_url_from_environment()
     if not args.staging_alias.startswith("staging-"):

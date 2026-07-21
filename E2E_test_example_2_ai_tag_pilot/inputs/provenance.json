@@ -1,0 +1,12 @@
+{
+  "content_sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+  "line_count": 984,
+  "relative_path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+  "repository_root_hint": "/home/autken/Code/applications_app_samples",
+  "revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
+  "schema_version": "e2e-source-provenance-v1",
+  "source_id": "applications_app_samples",
+  "synthetic_head_line_count": 1051,
+  "synthetic_head_revision": "synthetic-e2e-example-1-v1",
+  "synthetic_head_sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60"
+}

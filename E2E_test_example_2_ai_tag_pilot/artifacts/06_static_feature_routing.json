@@ -1,0 +1,5992 @@
+{
+  "diagnostics": [],
+  "dimensions_config_version": "dimensions-v1",
+  "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+  "feature_routing_id": "feature-routing:sha256:7ec55c6c2dc336ceabe291ba59beece57dca5f57300915ec8c681302b597cd16",
+  "mr_dimensions": [
+    "DIM-01",
+    "DIM-02",
+    "DIM-03",
+    "DIM-04",
+    "DIM-05",
+    "DIM-06",
+    "DIM-07",
+    "DIM-08",
+    "DIM-09",
+    "DIM-10",
+    "DIM-12"
+  ],
+  "question_bindings": [
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-concurrency"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-concurrency"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-accessibility"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-accessibility"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    }
+  ],
+  "schema_version": "feature-routing-v1",
+  "tags_config_version": "tags-v1",
+  "units": [
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:5912618073e0804fdff5cd221481c16098f049790735c4316a7b179eca118a57",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:dfbc81bd4699314b5925b3dd82635b13e99eca6207fdda623a364ee21020624c",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:d904a5cb16ac8f7ecd9ee5bc6ba765efa8c2270d1aae8d2621bd02c72e899ddb",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [
+            "has_async"
+          ],
+          "matched_routing_tags": [],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "unit_exact"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-07",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_async"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:bf27a2ddaf9d2607f0aeb5ecb0fec468f597d496c3559467aa54925860228334",
+      "retrieval_dimensions": [
+        "DIM-07"
+      ],
+      "review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [
+            "has_async"
+          ],
+          "matched_routing_tags": [],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "unit_exact"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-07",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_async"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:0992c8a01cb1c439a15b92302e873714baa9df80626b887fc33b155f32433725",
+      "retrieval_dimensions": [
+        "DIM-07"
+      ],
+      "review_question_ids": [
+        "RQ-concurrency",
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:52dbcd6002d82b10dc9b676f21048cf9c831ce7d9a4b6e8a4d2f4d6169e4c528",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:564d525fe0e0070eaff247929340a13659b7cda57f87b353c34d81129035f852",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:15b5fd83c64e2ed020090d06d439e38cf756e8f50cec9a9e7f1b26cdcf2f48d7",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [
+            "has_timer"
+          ],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media"
+          ],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "mixed"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-06",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_timer"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:3a57159e6e3159b32c3bcc3c94c4e6bf0078dbc79fcd07d8acc852555f16dffa",
+      "retrieval_dimensions": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [
+            "has_timer"
+          ],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media"
+          ],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "mixed"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-06",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_timer"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:10eab1077a0c45bf1036db72d3bebbb2515184c55224e54b5a84d318dca7a2a4",
+      "retrieval_dimensions": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:cbb3b5b27d0e6795e352c1bd5f6b5199b19e7272c697bd506e3a321462244ba6",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [
+            "has_timer"
+          ],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media"
+          ],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "mixed"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-06",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_timer"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:5dea0bf6fcfd5171479ad3856cbf72900530e39ef8b16ed7e54961fb28d66b0d",
+      "retrieval_dimensions": [
+        "DIM-06"
+      ],
+      "review_question_ids": [
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media",
+            "has_timer"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_interactive_component"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "exact_tags": [],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:48afb38273fd6f188322a9d9416d3d9938fceba8feb6f73cb12ce198c8c49413",
+      "retrieval_dimensions": [],
+      "review_question_ids": [
+        "RQ-correctness"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [
+            "has_timer"
+          ],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media"
+          ],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "mixed"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [
+            "has_interactive_component"
+          ],
+          "matched_routing_tags": [],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "unit_exact"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-06",
+        "DIM-08",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:7664d6245c0b49d0e0e5379b5ca7f9612663082b9d3642b364d4bff287469e84",
+      "retrieval_dimensions": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a"
+    },
+    {
+      "always_check_dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-12"
+      ],
+      "diagnostics": [],
+      "dimension_routes": [
+        {
+          "always_check": true,
+          "dimension_id": "DIM-01",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "disabled",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-02",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-03",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-04",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-05",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-06",
+          "matched_exact_tags": [
+            "has_timer"
+          ],
+          "matched_routing_tags": [
+            "has_file_io",
+            "has_image",
+            "has_media"
+          ],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "mixed"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-07",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_async"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-08",
+          "matched_exact_tags": [
+            "has_interactive_component"
+          ],
+          "matched_routing_tags": [],
+          "retrieval_enabled": true,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": true,
+          "signal_scope": "unit_exact"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-09",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_layout"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-10",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [
+            "has_resource_ref",
+            "has_text_display"
+          ],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": true,
+          "signal_scope": "file_hint"
+        },
+        {
+          "always_check": false,
+          "dimension_id": "DIM-11",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": false,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        },
+        {
+          "always_check": true,
+          "dimension_id": "DIM-12",
+          "matched_exact_tags": [],
+          "matched_routing_tags": [],
+          "retrieval_enabled": false,
+          "retrieval_policy": "signal_required",
+          "review_enabled": true,
+          "routing_enabled": false,
+          "signal_scope": "none"
+        }
+      ],
+      "dimensions": [
+        "DIM-01",
+        "DIM-02",
+        "DIM-03",
+        "DIM-04",
+        "DIM-05",
+        "DIM-06",
+        "DIM-08",
+        "DIM-12"
+      ],
+      "exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "feature_config_version": "feature-config:sha256:bb241e9bdc54a9e6418e6be03a04593b8cf854838aec4d8644faa624eff7ae9c",
+      "profile_id": "feature-profile:sha256:4de05cdcaf6266ea083d2fa8a27bffa83eadf8996d3d1fb84c1d296b11ff4255",
+      "retrieval_dimensions": [
+        "DIM-06",
+        "DIM-08"
+      ],
+      "review_question_ids": [
+        "RQ-accessibility",
+        "RQ-correctness",
+        "RQ-resource"
+      ],
+      "routing_dimensions": [
+        "DIM-06",
+        "DIM-07",
+        "DIM-08",
+        "DIM-09",
+        "DIM-10"
+      ],
+      "routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "shadow_dimensions": [],
+      "shadow_exact_tags": [],
+      "shadow_review_question_ids": [],
+      "shadow_routing_tags": [],
+      "source_ref_id": "code-source:sha256:5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "tag_matches": [
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "syntax",
+              "value": "async_fn"
+            },
+            {
+              "kind": "syntax",
+              "value": "await_expr"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_async"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "fs.open"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_file_io"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Image"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_image"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onClick"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Button"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "attributes",
+              "value": "onChange"
+            },
+            {
+              "kind": "attributes",
+              "value": "onTouch"
+            },
+            {
+              "kind": "components",
+              "value": "Slider"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Column"
+            },
+            {
+              "kind": "components",
+              "value": "Flex"
+            },
+            {
+              "kind": "components",
+              "value": "Row"
+            },
+            {
+              "kind": "components",
+              "value": "Stack"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_layout"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "symbols",
+              "value": "aboutToAppear"
+            },
+            {
+              "kind": "symbols",
+              "value": "aboutToDisappear"
+            },
+            {
+              "kind": "symbols",
+              "value": "onPageHide"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "audio.getAudioManager"
+            },
+            {
+              "kind": "components",
+              "value": "XComponent"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_media"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "$r"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "decorators",
+              "value": "@State"
+            },
+            {
+              "kind": "decorators",
+              "value": "@StorageLink"
+            },
+            {
+              "kind": "decorators",
+              "value": "@Watch"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_state_management"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "components",
+              "value": "Text"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_text_display"
+        },
+        {
+          "scope": "file_hint",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        },
+        {
+          "scope": "unit_exact",
+          "signals": [
+            {
+              "kind": "apis",
+              "value": "clearTimeout"
+            },
+            {
+              "kind": "apis",
+              "value": "setTimeout"
+            }
+          ],
+          "status": "Active",
+          "tag_id": "has_timer"
+        }
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "campaign_id": "ai-tag-shadow-campaign:sha256:85e98a9fb77d6c7b24a038616bbfe6122c13edb9bf8c7d6c8a0d328076a11b45",
+  "deepseek_request_set_digest": "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6",
+  "excluded_stages": [
+    "successful Grok proxy judgment",
+    "Retrieval",
+    "Rules",
+    "Review Prompt",
+    "Final LLM",
+    "Finding",
+    "GitCode publication"
+  ],
+  "execution_status": "partial",
+  "grok_request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+  "output_files": [
+    "00_run_manifest.json",
+    "01_change_set.json",
+    "02_parser_base.json",
+    "03_parser_head.json",
+    "04_review_unit_build.json",
+    "05_unit_fact_scopes.json",
+    "06_static_feature_routing.json",
+    "07_context_plan.json",
+    "08_campaign_inspection.json",
+    "09_deepseek_results.json",
+    "10_grok_results.json",
+    "11_static_deepseek_comparison.json",
+    "12_live_provenance.json",
+    "13_assertions.json",
+    "14_summary.json"
+  ],
+  "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
+  "provider_observation_date": "2026-07-21",
+  "quality_boundary": "not_real_mr_not_human_truth_not_tag_precision_recall_not_production",
+  "runtime": {
+    "credential_accessed": false,
+    "network_attempted": false,
+    "provider_observations_are_fixed_inputs": true,
+    "python": "3.12.13"
+  },
+  "sample": {
+    "base_content_sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+    "classification": "pinned_real_application_base_with_synthetic_head_and_diff",
+    "head_content_sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+    "is_real_mr": false,
+    "repository": "applications_app_samples",
+    "source_path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+    "source_revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
+    "synthetic_head_revision": "synthetic-e2e-example-1-v1"
+  },
+  "schema_version": "video-player-tag-pilot-run-manifest-v1",
+  "scope": "ChangeSet through Static/DeepSeek Tag comparison",
+  "source_fixture": {
+    "files": [
+      {
+        "path": "inputs/base.ets",
+        "sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+        "size_bytes": 37347
+      },
+      {
+        "path": "inputs/head.ets",
+        "sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+        "size_bytes": 39393
+      },
+      {
+        "path": "inputs/diff.patch",
+        "sha256": "sha256:09d50828fab6de39bfcd9c7e406ba6d80500fb265cac1510ba92300a3dffedd0",
+        "size_bytes": 5998
+      },
+      {
+        "path": "inputs/expected_review_units.json",
+        "sha256": "sha256:eec745fb1d39aa8c194589c445567b3354b517af80c1ff93f50319f4e9599074",
+        "size_bytes": 5519
+      },
+      {
+        "path": "inputs/mutation_spec.json",
+        "sha256": "sha256:22ebaafd7b5d25a0f2720a46c852c3a46799bb7c790bd027f05341c02bb2fa30",
+        "size_bytes": 7286
+      },
+      {
+        "path": "inputs/provenance.json",
+        "sha256": "sha256:7df3790faa8ac6c8756a9d4f44a6834ac2a5c57678c0437df8d82e0d4ba29a82",
+        "size_bytes": 641
+      }
+    ],
+    "schema_version": "video-player-tag-source-fixture-v1",
+    "source_example": "E2E_test_example_1"
+  },
+  "tag_quality_status": "not_qualified"
+}

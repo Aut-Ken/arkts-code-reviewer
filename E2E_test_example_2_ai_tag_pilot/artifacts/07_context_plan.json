@@ -1,0 +1,724 @@
+{
+  "blocking_change_ids": [],
+  "budget_summary": {
+    "blocked_bundles": 0,
+    "dispatchable_bundles": 18,
+    "limit": 32768,
+    "max_bundle_tokens": 1713,
+    "total_omitted_tokens": 0,
+    "total_primary_tokens": 10698,
+    "total_supporting_tokens": 0
+  },
+  "bundles": [
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 191,
+        "supporting_tokens": 0,
+        "total_tokens": 191
+      },
+      "bundle_id": "review-context-bundle:sha256:03782fd238985c27565b9d96795fd699feb1ada5dbec687275a5ed7eeb496b04",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:9fefbe50e0f1da264468ce0f9c614d0e857fc764a36266c813da05a319075cd0",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 74,
+        "supporting_tokens": 0,
+        "total_tokens": 74
+      },
+      "bundle_id": "review-context-bundle:sha256:0d3114c86011586b258f39d05ac909f919f375dbc068803b0e163aabe4507251",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:ccc60fdef83c1facab762b6f1b2fa9b040185f5bdf079293201cb9031412165c",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-resource"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 1713,
+        "supporting_tokens": 0,
+        "total_tokens": 1713
+      },
+      "bundle_id": "review-context-bundle:sha256:1dc76883c8dfb06e44045e2ea25bc424e328a11d0d8d561c268b5d53f2663fee",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:2900bd46d751b58d8d53c670e8ba3b8351ed11a19c324b10c7a8e3fa8983bfc8",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-concurrency"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-concurrency"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:46b6423dba76e266ae0fb7c5624b9da1aff973304796d7476352f7e07def2bbf"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 21,
+        "supporting_tokens": 0,
+        "total_tokens": 21
+      },
+      "bundle_id": "review-context-bundle:sha256:1e92051d06b9a21a012a2b4e497a50ea1fddfc7e8bc9b1e0adb5354053c1c47a",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:441d2f32996107a81744d3d0e9730afc3a3c2d50570a508b32288ab11042b29b",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 17,
+        "supporting_tokens": 0,
+        "total_tokens": 17
+      },
+      "bundle_id": "review-context-bundle:sha256:29a687bacab2c0862eaf0604623bf56d1a61a07802776caaec7a4b307a2cb0a6",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:7ae29bae31ccdb798f7e0195b44948eac1432345e52c6c6463e22d95f9b6d6af",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 1677,
+        "supporting_tokens": 0,
+        "total_tokens": 1677
+      },
+      "bundle_id": "review-context-bundle:sha256:31bc2b946599cc2a427cc3196e46d9ae950b5fd10a56eb89e401c11d4ba15673",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:a4b24d2f3f263bdff0b6b82ab4230b6a943806117ef08ddb1f445055ceed14ee",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-accessibility"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-accessibility"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:1e27b9fc2909b6735f97848806ba49759dd463ab9cd06afc72872256bbe6377c"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 422,
+        "supporting_tokens": 0,
+        "total_tokens": 422
+      },
+      "bundle_id": "review-context-bundle:sha256:3f153ef6b8b4d7806eaac75d23c3fa35ca844f4b286a2f3c1aec0ba1195274f1",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:2369f8c87dcf9646cb5431468e2ebf651b1e82ce29c445521096620031377b1c",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 1677,
+        "supporting_tokens": 0,
+        "total_tokens": 1677
+      },
+      "bundle_id": "review-context-bundle:sha256:41ee5d017d18f593163041ced2c3a3f54b6f909386dd30adb86c6378c1b8436a",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:a4b24d2f3f263bdff0b6b82ab4230b6a943806117ef08ddb1f445055ceed14ee",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-resource"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-resource"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:1e27b9fc2909b6735f97848806ba49759dd463ab9cd06afc72872256bbe6377c"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 1677,
+        "supporting_tokens": 0,
+        "total_tokens": 1677
+      },
+      "bundle_id": "review-context-bundle:sha256:728865dd28bf48750eb294817bc375a3c9d0db81c6740df61764ea537063a3b4",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:a4b24d2f3f263bdff0b6b82ab4230b6a943806117ef08ddb1f445055ceed14ee",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-correctness"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:1e27b9fc2909b6735f97848806ba49759dd463ab9cd06afc72872256bbe6377c"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 80,
+        "supporting_tokens": 0,
+        "total_tokens": 80
+      },
+      "bundle_id": "review-context-bundle:sha256:774676ed55c91f4bd178b9247f7f64ee9c0ec983ad5364df9b8f0181a78832e2",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:a738cbfa2e63e723408228339c7a9bf997efe0862c6927b157e93ad9c4739687",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 262,
+        "supporting_tokens": 0,
+        "total_tokens": 262
+      },
+      "bundle_id": "review-context-bundle:sha256:7cc884d35ced974298eab80864e53242894d15299646aa5c003e3e4f9c51de32",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:7f960d7c058390685f05000d3eaacb5e5bfca0343207821ea643cda3ce3d6014",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 15,
+        "supporting_tokens": 0,
+        "total_tokens": 15
+      },
+      "bundle_id": "review-context-bundle:sha256:8f97682ddd25f229b96f622dc117a6cdca1163842c7b37f12cba3e3f1044293d",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:d9a656d676bef00841ca99b646e63f27775dbb3a4f4ff06349fc8acc1d117418",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 664,
+        "supporting_tokens": 0,
+        "total_tokens": 664
+      },
+      "bundle_id": "review-context-bundle:sha256:b5bea7dade9d50cfc12cbbad8033532d7b5c90bb2995556b529aeb379c5a002c",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:e1e6972e52c7e4d6c2255fa905575e8123750321bdc5efd983d2df3c94248647",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-correctness"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:2cf4eef1b9e07593a4bf78f3fcf87b3cdd558e0619224284a261414fa881ee64"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 262,
+        "supporting_tokens": 0,
+        "total_tokens": 262
+      },
+      "bundle_id": "review-context-bundle:sha256:c51107ee594cf30e8b45782944131fa170ebc9dea17790b50c35257befdf9fd8",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:7f960d7c058390685f05000d3eaacb5e5bfca0343207821ea643cda3ce3d6014",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-resource"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 74,
+        "supporting_tokens": 0,
+        "total_tokens": 74
+      },
+      "bundle_id": "review-context-bundle:sha256:d1b09bde8f33579a87b1bafcba75d41d8e97ae2a543ffa8ccd1a1a05ef7dc01a",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:ccc60fdef83c1facab762b6f1b2fa9b040185f5bdf079293201cb9031412165c",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 1713,
+        "supporting_tokens": 0,
+        "total_tokens": 1713
+      },
+      "bundle_id": "review-context-bundle:sha256:eb4fc5494bc05fedbd31735cd888b6d44b6d6b99f454a88743ffb89908f0cee9",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:2900bd46d751b58d8d53c670e8ba3b8351ed11a19c324b10c7a8e3fa8983bfc8",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+          "review_question_id": "RQ-correctness"
+        },
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [
+        "relation-edge:sha256:46b6423dba76e266ae0fb7c5624b9da1aff973304796d7476352f7e07def2bbf"
+      ],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 79,
+        "supporting_tokens": 0,
+        "total_tokens": 79
+      },
+      "bundle_id": "review-context-bundle:sha256:f015d3d80ee8132c0bb4144f3354c19163bf3e48b3907c9dd62a7051f1d3e3a9",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:f0ce1ffab5af332a13493cd405ac0c1046f75d32c683475a17ca593a06aa69b3",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-correctness"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    },
+    {
+      "budget": {
+        "limit": 32768,
+        "primary_tokens": 80,
+        "supporting_tokens": 0,
+        "total_tokens": 80
+      },
+      "bundle_id": "review-context-bundle:sha256:ff459ef220646642e2982e7d09caeb4300bb586054f43e0b650680369c9426b5",
+      "diagnostics": [],
+      "dispatch_allowed": true,
+      "group_id": "change-group:sha256:a738cbfa2e63e723408228339c7a9bf997efe0862c6927b157e93ad9c4739687",
+      "primary_question_bindings": [
+        {
+          "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+          "review_question_id": "RQ-resource"
+        }
+      ],
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "relation_edge_ids": [],
+      "supporting_segment_ids": []
+    }
+  ],
+  "candidates": [],
+  "change_groups": [
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:2369f8c87dcf9646cb5431468e2ebf651b1e82ce29c445521096620031377b1c",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:2900bd46d751b58d8d53c670e8ba3b8351ed11a19c324b10c7a8e3fa8983bfc8",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": [
+        "relation-edge:sha256:46b6423dba76e266ae0fb7c5624b9da1aff973304796d7476352f7e07def2bbf"
+      ]
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:441d2f32996107a81744d3d0e9730afc3a3c2d50570a508b32288ab11042b29b",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:7ae29bae31ccdb798f7e0195b44948eac1432345e52c6c6463e22d95f9b6d6af",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:7f960d7c058390685f05000d3eaacb5e5bfca0343207821ea643cda3ce3d6014",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:9fefbe50e0f1da264468ce0f9c614d0e857fc764a36266c813da05a319075cd0",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:a4b24d2f3f263bdff0b6b82ab4230b6a943806117ef08ddb1f445055ceed14ee",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": [
+        "relation-edge:sha256:1e27b9fc2909b6735f97848806ba49759dd463ab9cd06afc72872256bbe6377c"
+      ]
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:a738cbfa2e63e723408228339c7a9bf997efe0862c6927b157e93ad9c4739687",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:ccc60fdef83c1facab762b6f1b2fa9b040185f5bdf079293201cb9031412165c",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:d9a656d676bef00841ca99b646e63f27775dbb3a4f4ff06349fc8acc1d117418",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:e1e6972e52c7e4d6c2255fa905575e8123750321bdc5efd983d2df3c94248647",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": [
+        "relation-edge:sha256:2cf4eef1b9e07593a4bf78f3fcf87b3cdd558e0619224284a261414fa881ee64"
+      ]
+    },
+    {
+      "diagnostics": [],
+      "group_id": "change-group:sha256:f0ce1ffab5af332a13493cd405ac0c1046f75d32c683475a17ca593a06aa69b3",
+      "primary_unit_ids": [
+        "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+      ],
+      "strong_edge_ids": []
+    }
+  ],
+  "change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+  "context_plan_id": "context-plan:sha256:26b2050f278fc1f3ec5d5bb10fc0949f14e48f2d7b554015de2b2d24b508ce0d",
+  "diagnostics": [],
+  "omitted_candidate_ids": [],
+  "omitted_candidates": [],
+  "planner_version": "context-planner-v1",
+  "primary_question_bindings": [
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-concurrency"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-concurrency"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-accessibility"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "review_question_id": "RQ-resource"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-accessibility"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-correctness"
+    },
+    {
+      "primary_unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "review_question_id": "RQ-resource"
+    }
+  ],
+  "relation_edges": [
+    {
+      "edge_id": "relation-edge:sha256:1e27b9fc2909b6735f97848806ba49759dd463ab9cd06afc72872256bbe6377c",
+      "evidence_refs": [
+        "change-atom:sha256:6b8a39e09821fc4638ec2ac67b4d98b2e85f859410a76437500f7ffec0336405",
+        "change-atom:sha256:e879f1958efd761a99b41637da9379e3264eb818662a6fe40e2a1e4a52645682"
+      ],
+      "provenance_ref": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+      "quality": "exact",
+      "relation_type": "change_correspondence",
+      "source_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "strength": "strong",
+      "target_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "edge_id": "relation-edge:sha256:2cf4eef1b9e07593a4bf78f3fcf87b3cdd558e0619224284a261414fa881ee64",
+      "evidence_refs": [
+        "change-atom:sha256:6dd134ebecde2fd57413797cfecc1f44f5e53f0ecb3bc632d1b49b843e9caa52"
+      ],
+      "provenance_ref": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+      "quality": "exact",
+      "relation_type": "change_correspondence",
+      "source_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "strength": "strong",
+      "target_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    },
+    {
+      "edge_id": "relation-edge:sha256:46b6423dba76e266ae0fb7c5624b9da1aff973304796d7476352f7e07def2bbf",
+      "evidence_refs": [
+        "change-atom:sha256:99e71c858735fcc1f4dd8ecf7b3de62bdf519fe7e90650bfe61f289c444336da"
+      ],
+      "provenance_ref": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+      "quality": "exact",
+      "relation_type": "change_correspondence",
+      "source_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "strength": "strong",
+      "target_ref": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68"
+    }
+  ],
+  "schema_version": "context-plan-v1",
+  "supporting_segments": [],
+  "token_estimator_version": "arkts-code-token-v1"
+}

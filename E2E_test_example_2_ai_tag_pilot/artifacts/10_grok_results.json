@@ -1,0 +1,652 @@
+{
+  "observations": [
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 34,
+      "model_view_id": "ai-tag-model-view:sha256:40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:09676127397dfb369c1ab6bcaae1635aff14b68e3049075ac3ec624bf35baf2a",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.attempted.json",
+          "sha256": "sha256:af2f4d22408cb29be889b18403d37d62672c404d0b5b1e497f9186f1834dce76",
+          "size_bytes": 864
+        },
+        "result": {
+          "path": "40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.result.json",
+          "sha256": "sha256:412e10b1cf6d875f8996cdb21bb6513e2a57212af556d8d5262ef81959bcf5ab",
+          "size_bytes": 1090
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:d5cb3cd8598e465b0f1e5470c8980304c8ae92be8b8b1f15cdc5bb10a59daebe",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.isDisposed",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 31,
+      "model_view_id": "ai-tag-model-view:sha256:0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:75d88a93f705cf13f07f0f0d9dad8c57af7b1ff03b7e67e44116fbf9882a5374",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.attempted.json",
+          "sha256": "sha256:6e6d2ce98e7d78db72690888a92aebfad24c1979375fcdbcaa3ee0a888b7087c",
+          "size_bytes": 873
+        },
+        "result": {
+          "path": "0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.result.json",
+          "sha256": "sha256:cb8a914320c40b1c5833b4492791cf36554a5d0ab87df30de8528d8952699d76",
+          "size_bytes": 1108
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:a9a91289b1234b44fe8603d830d7df2800292bc22cbfc3109db20a1ce171bfe8",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.networkRetryDelayMs",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 30,
+      "model_view_id": "ai-tag-model-view:sha256:600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:ec9fb99bdae194ceec76663244670452206fdcf811f38160fdb2ede0ed3481cc",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.attempted.json",
+          "sha256": "sha256:463917f2546d2c54eb5c4378deb495f41351f28818d22e7757c02683ba6c1c27",
+          "size_bytes": 871
+        },
+        "result": {
+          "path": "600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.result.json",
+          "sha256": "sha256:6788dda9a683c526faff13ab5ffcfb4df30ea0185c748872a34c8bb857fa3170",
+          "size_bytes": 1104
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:3240a14c88c71ac226515a9d6d1a7826493e802b653c2eadca52c14c5536d432",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.networkRetryTimer",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 30,
+      "model_view_id": "ai-tag-model-view:sha256:3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:667961dcfac2281d0c5d356759907fa742990c5a4df17be54e0252acd1af3e38",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.attempted.json",
+          "sha256": "sha256:53738e430b3caeb114cdbc321f141c873e003704cdce237c26f4c1e02dc3c82d",
+          "size_bytes": 851
+        },
+        "result": {
+          "path": "3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.result.json",
+          "sha256": "sha256:a0bffed9896f82f3a3b1bc936d6ed41eb4f6cc0274fbdec15c41c269bf363a87",
+          "size_bytes": 1080
+        }
+      },
+      "source_role": "base",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:6d9b2b1dddd6b835ed91dc1e8eb8b1294ea1d329c3ad7b9e8aa9c08ca4ba2b71",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_symbol": "Index.aboutToAppear",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 30,
+      "model_view_id": "ai-tag-model-view:sha256:86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:f8ed2682035aa792967ab5112bb5a0d03b571b1e66ef6ee8ead091ee66cc98b2",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.attempted.json",
+          "sha256": "sha256:ca8feec24298972e12974215e64aa8817f25bfef17861dd1b35f50471ded7304",
+          "size_bytes": 851
+        },
+        "result": {
+          "path": "86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.result.json",
+          "sha256": "sha256:b6937174a961c44ed9771700d2f8c8c7c7066831a4586bf6a3b4aff3a7b60a36",
+          "size_bytes": 1080
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:e199b33253991ab69219ea7c46ee098f9c2a193336b1a1c23e1dab3829da6547",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.aboutToAppear",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 37,
+      "model_view_id": "ai-tag-model-view:sha256:af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:aedfc8a3361de48be44c9fbbbd1790c9c2ff26c3b54f1a6cc18fe07bf6f5d88c",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.attempted.json",
+          "sha256": "sha256:d265f1dbd6b5a353edda8dc912a0448d22ab61261b35b81c75cd009b60883dab",
+          "size_bytes": 855
+        },
+        "result": {
+          "path": "af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.result.json",
+          "sha256": "sha256:f6f8aa004cbed0de99dc23f78c89511ef6d7b1635ea53794953565a4d6d4505b",
+          "size_bytes": 1087
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:58252677b54b452ba8ac4c3e65f571fabaf18758ef14857bd7bac6ba5916111d",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.aboutToDisappear",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 33,
+      "model_view_id": "ai-tag-model-view:sha256:c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:b9e1bfe20fba313eb9c9af71bd5a2478f024fb07312a97fbd2db04653ee47883",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.attempted.json",
+          "sha256": "sha256:1cd797b28f5806a9b7cf1e7b6a72cc250f72b27c42d6869c1ba4a00e4c64c084",
+          "size_bytes": 857
+        },
+        "result": {
+          "path": "c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.result.json",
+          "sha256": "sha256:460f7ca9d3f39093517a960ea78f2392d68feac32ffe08ec448363599f5e0f3e",
+          "size_bytes": 1091
+        }
+      },
+      "source_role": "base",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:bd63119c29ffa885f79e102d46e8996cc1d207d1cd91237897b5d9ef0873c58b",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_symbol": "Index.addNetworkListener",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 36,
+      "model_view_id": "ai-tag-model-view:sha256:611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:f84a560df0827d7a9c0929c9d81ddf4d449316f745138fceb4771ace0f99f92f",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.attempted.json",
+          "sha256": "sha256:9bcce4e6140e194bb4e04531b5537a269b04b26421adfc8494f6fa2422589818",
+          "size_bytes": 857
+        },
+        "result": {
+          "path": "611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.result.json",
+          "sha256": "sha256:df0de510d2577d51f82dc9c3afe983eec65441401301f7d1edfcb937416db778",
+          "size_bytes": 1091
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:6e566fc96385d6ddde6c51d03df66adf647138ca224130e332d31cbebd96c77b",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.addNetworkListener",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 32,
+      "model_view_id": "ai-tag-model-view:sha256:809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:ea3a5d6e69c20baef3f9f9e16c8844204b58d4eb34c101ec57fd55c421d8e993",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.attempted.json",
+          "sha256": "sha256:63fc0980d8169b90caacaad2e66c0b006bf4d91b5952c11447ddb7f76da9873c",
+          "size_bytes": 861
+        },
+        "result": {
+          "path": "809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.result.json",
+          "sha256": "sha256:d37574c7606059b8f3f568daff3ed43527c565a12c2e1740e3c437bc5209c7c8",
+          "size_bytes": 1099
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:200fa7e53dbdfca38cd004697d9fc6d1647ff07efaca1bd69c756cfc89616526",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.clearNetworkRetryTimer",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 34,
+      "model_view_id": "ai-tag-model-view:sha256:cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:fda3c7951ad4d959b4edec1ab99378186011859acbe8b2fc33ff91cfca89be5f",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.attempted.json",
+          "sha256": "sha256:e71007443b349f36548c84e177dfe8405d54f14340e95b70061f6dd18c4a81f3",
+          "size_bytes": 857
+        },
+        "result": {
+          "path": "cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.result.json",
+          "sha256": "sha256:22aeb6be914267a0ad5803c4ff94b02d5a378cc58c27a26c68d5a6279368de60",
+          "size_bytes": 1091
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:33ad19fc1834931955fa9350a8443e8d33b5f5f3c33923f2131a9673af27ffc6",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.clearRuntimeTimers",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 35,
+      "model_view_id": "ai-tag-model-view:sha256:d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:399c25b0da97ddb7c493558cdd8bfefe6ae323d636dddc5de71d4c3804e71879",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.attempted.json",
+          "sha256": "sha256:d7395a61f1c2b7da182302cc20d2231dc0e0bd7f87bd9df2c6e137bb9355c14b",
+          "size_bytes": 860
+        },
+        "result": {
+          "path": "d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.result.json",
+          "sha256": "sha256:51c87c643dd048f258af0cd8b2e8192229ed31b8b24f991df8056c1070b29c3e",
+          "size_bytes": 1097
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:e1c7418618fa8bf6aed6812d3fe1734a21d50415c3d26e268b2b40008cfd284a",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.removePlayerListeners",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 31,
+      "model_view_id": "ai-tag-model-view:sha256:c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:5db78f52b118c6f2d7a829dd250f529caa3208eabe6068248a9a594623c5386b",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.attempted.json",
+          "sha256": "sha256:3fbdabf38477eebeb34e6d1291e40da9453764957b4a1c5f1fbdf969ee34c75c",
+          "size_bytes": 862
+        },
+        "result": {
+          "path": "c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.result.json",
+          "sha256": "sha256:7d5a0633c3e3a317666f9ff36da485114d9fb0c63d65d77aa2c575939ee9591f",
+          "size_bytes": 1101
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:1cd770f6c4dc78b2469a5d489576e68cc1b9919e9637afcf436906197c738801",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.scheduleNetworkRecovery",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 32,
+      "model_view_id": "ai-tag-model-view:sha256:0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:18f83fe10ff86000e316d86686051097f22dd7564a15d6952ad48fe31248fc8a",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.attempted.json",
+          "sha256": "sha256:647b9b853da32372347130b79194ca13567acde7e471cd82e139c00df2fe7bcd",
+          "size_bytes": 861
+        },
+        "result": {
+          "path": "0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.result.json",
+          "sha256": "sha256:374ce90cdab4faad8e7c8f69f0a5d834547eaacdb4a80b920530915d75133965",
+          "size_bytes": 1099
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:28c948cb8f6d0a7d7a6bc6145d944702671ec0ac0b9629b76e3cdc28d75cec93",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.updatePlaybackProgress",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 37,
+      "model_view_id": "ai-tag-model-view:sha256:28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:4aaeaa4a06f18aa4aca2436c676ce823de13de1b74f84f53ee4edebfcafa2a85",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.attempted.json",
+          "sha256": "sha256:94fbcdcb9e91c866fc38f168c1559b46c79d888434d6214f17ab7d06ec2b2b55",
+          "size_bytes": 879
+        },
+        "result": {
+          "path": "28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.result.json",
+          "sha256": "sha256:b7f51b7cf7702e4015fda7b31a5487e0dded2c8f3bfade2c827c31b69e564d59",
+          "size_bytes": 1133
+        }
+      },
+      "source_role": "base",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:7957e0d164baa7942394232e4799674aa5ce6b50d886c565d7f5982020aa6f64",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider",
+      "validated_judgment_available": false
+    },
+    {
+      "attempt_cap": 1,
+      "failure_cause": "unknown_stderr_plaintext_not_retained",
+      "latency_ms": 34,
+      "model_view_id": "ai-tag-model-view:sha256:041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742",
+      "positive_tags": null,
+      "positive_tags_note": "not_available_due_to_execution_failure",
+      "provider": "grok",
+      "qualification": "blind_proxy_judge_not_human_truth",
+      "reason_code": "grok_exit_1",
+      "request_id": "ai-tag-request:sha256:47d4f46f5a5f4e8268f1d63a13f5d0c96f213dcfc6bdebe4fabedcc84fd49bbf",
+      "retry_count": 0,
+      "schema_version": "grok-tag-live-execution-projection-v1",
+      "source_artifacts": {
+        "attempt_marker": {
+          "path": "041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.attempted.json",
+          "sha256": "sha256:9b31d02b84666df90c3f5e4d233b5454fc9745c237b9f1e82ae45cd1e9984855",
+          "size_bytes": 880
+        },
+        "result": {
+          "path": "041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.result.json",
+          "sha256": "sha256:7c42b652bf28562ced460a2db6a3da4b704467b05211cb48ce43189ed28be986",
+          "size_bytes": 1134
+        }
+      },
+      "source_role": "head",
+      "status": "provider_error",
+      "stderr_sha256": "sha256:be61297ad34035e941ae617417bf8636e8288c94a441607835e4504ab326bc13",
+      "stderr_size_bytes": 259,
+      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size_bytes": 0,
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider",
+      "validated_judgment_available": false
+    }
+  ],
+  "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
+  "request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+  "schema_version": "grok-tag-live-execution-set-v1",
+  "summary": {
+    "attempted_count": 15,
+    "elapsed_ms": 535,
+    "provider": "grok",
+    "qualification": "blind_proxy_judge_not_human_truth",
+    "request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+    "schema_version": "video-player-tag-pilot-provider-summary-v1",
+    "status_counts": {
+      "provider_error": 15
+    },
+    "unit_count": 15,
+    "units": [
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.isDisposed"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.networkRetryDelayMs"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.networkRetryTimer"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "unit_symbol": "Index.aboutToAppear"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.aboutToAppear"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.aboutToDisappear"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "unit_symbol": "Index.addNetworkListener"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.addNetworkListener"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.clearNetworkRetryTimer"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.clearRuntimeTimers"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.removePlayerListeners"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.scheduleNetworkRecovery"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.updatePlaybackProgress"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+      },
+      {
+        "positive_tags": [],
+        "reason_code": "grok_exit_1",
+        "status": "provider_error",
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+      }
+    ]
+  },
+  "validated_judgment_available": false
+}

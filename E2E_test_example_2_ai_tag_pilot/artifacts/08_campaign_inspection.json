@@ -1,0 +1,952 @@
+{
+  "contains_source_or_prompt_body": false,
+  "credential_accessed": false,
+  "deepseek_campaign": {
+    "campaign_id": "ai-tag-shadow-campaign:sha256:85e98a9fb77d6c7b24a038616bbfe6122c13edb9bf8c7d6c8a0d328076a11b45",
+    "execution_policy": {
+      "campaign_wall_clock_cap_ms": 1200000,
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "execution_order": "canonical_sequential",
+      "model": "deepseek-v4-pro",
+      "provider": "deepseek",
+      "response_format": "json_object",
+      "retry_count": 0,
+      "temperature": 0,
+      "thinking": "disabled"
+    },
+    "planned_attempt_cap_sum": 15,
+    "planned_output_token_cap_sum": 61440,
+    "request_set_digest": "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6",
+    "total_response_byte_cap_sum": 30000000,
+    "total_wire_body_size_bytes": 461106
+  },
+  "grok_blind_proxy_campaign": {
+    "execution_policy": {
+      "campaign_wall_clock_cap_ms": 1800000,
+      "endpoint": "managed_by_grok_build_cli_not_repository_pinned",
+      "execution_order": "canonical_sequential_new_process_per_unit",
+      "hard_output_token_cap_available": false,
+      "max_turns": 1,
+      "memory": false,
+      "model": "grok-4.5",
+      "plan_mode": false,
+      "provider": "xai_via_local_grok_build_cli",
+      "reasoning_effort": "high",
+      "retry_count": 0,
+      "subagents": false,
+      "system_delivery": "system_prompt_override",
+      "tools": false,
+      "user_delivery": "prompt_file",
+      "web_search": false,
+      "working_directory": "empty_temporary_directory"
+    },
+    "local_validation": "strict_24_tag_order_evidence_lines_and_degraded_view_checks",
+    "planned_attempt_cap_sum": 15,
+    "planned_output_token_cap_sum": null,
+    "request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+    "response_schema_sha256": "sha256:ed856fac079579b80eb43aba513c9854414b3347a606c04ff2b5ffe4b5f26395",
+    "result_use": "comparison_only_never_retrieval_input",
+    "role": "blind_proxy_judge_not_human_truth",
+    "total_request_input_size_bytes": 436197,
+    "total_response_byte_cap_sum": 30000000
+  },
+  "mode": "inspect_only",
+  "network_attempted": false,
+  "outbound_model_input_scope": {
+    "excluded": [
+      "static_exact_and_routing_tag_conclusions",
+      "deepseek_or_grok_conclusions",
+      "dimensions_and_review_questions",
+      "retrieval_candidates_and_knowledge_documents",
+      "api_keys_and_database_credentials"
+    ],
+    "included": [
+      "repository_ai_tag_system_prompt",
+      "all_24_active_tag_contract_definitions_and_boundaries",
+      "review_unit_id_path_symbol_role_and_source_identity",
+      "one_complete_numbered_review_unit_code_block_per_request",
+      "owner_summary",
+      "unit_exact_parser_facts",
+      "whole_file_file_hints",
+      "parser_context_and_ownership_quality"
+    ],
+    "note": "file_hints_are_whole_file_context_and_are_not_unit_positive_truth"
+  },
+  "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
+  "quality_boundary": "first_real_application_code_semantic_pilot_not_real_mr_not_human_truth_not_production_precision_recall",
+  "sample": {
+    "base_content_sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+    "classification": "pinned_real_application_base_with_synthetic_head_and_diff",
+    "head_content_sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+    "is_real_mr": false,
+    "repository": "applications_app_samples",
+    "source_path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+    "source_revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
+    "synthetic_head_revision": "synthetic-e2e-example-1-v1"
+  },
+  "schema_version": "video-player-tag-pilot-inspection-v1",
+  "static_baseline": {
+    "all_units_share_one_routing_signature": true,
+    "distinct_exact_tag_count": 3,
+    "distinct_routing_tag_count": 11,
+    "exact_scope": "unit_exact",
+    "exact_tag_assignment_count": 9,
+    "exact_tag_counts": {
+      "has_async": 2,
+      "has_interactive_component": 2,
+      "has_timer": 5
+    },
+    "feature_routing_id": "feature-routing:sha256:7ec55c6c2dc336ceabe291ba59beece57dca5f57300915ec8c681302b597cd16",
+    "routing_scope": "file_hint_not_unit_positive",
+    "routing_signature_count": 1,
+    "routing_tag_assignment_count": 165,
+    "routing_tag_counts": {
+      "has_async": 15,
+      "has_file_io": 15,
+      "has_image": 15,
+      "has_interactive_component": 15,
+      "has_layout": 15,
+      "has_lifecycle": 15,
+      "has_media": 15,
+      "has_resource_ref": 15,
+      "has_state_management": 15,
+      "has_text_display": 15,
+      "has_timer": 15
+    },
+    "unit_count": 15,
+    "units_with_exact_tags": 7,
+    "units_without_exact_tags": 8
+  },
+  "units": [
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        68
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:6631d9841814d521df118a098f3f987c3671ad68b347fe9faea574112e20d33c",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:7a9de549f50cd0c3470b6a3815b30d28e7697a84d6655913e6a6728cec894c75",
+        "wire_body_size_bytes": 29011
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f",
+        "request_id": "ai-tag-request:sha256:09676127397dfb369c1ab6bcaae1635aff14b68e3049075ac3ec624bf35baf2a",
+        "request_input_size_bytes": 27419,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:bfb0b58a0465f505e2023bc80e4314f286255b9b7323114f373f6225a1d8b114",
+        "user_prompt_size_bytes": 24253,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 68,
+      "line_start": 68,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.isDisposed"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        69
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:7e62c38efbc3f1f0298e60a2ceee3ed72e08ce752186d271da25fda29890c866",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:679193f0abe237b97809f6bc57bd173c95ff4b799a143606c0a590126626fdfe",
+        "wire_body_size_bytes": 29045
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5",
+        "request_id": "ai-tag-request:sha256:75d88a93f705cf13f07f0f0d9dad8c57af7b1ff03b7e67e44116fbf9882a5374",
+        "request_input_size_bytes": 27453,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:0002d907ab4b36e2e6e6a74b44c5b3c61b43e243f2ae487dc1b4c4da8bbc68a9",
+        "user_prompt_size_bytes": 24287,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 69,
+      "line_start": 69,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.networkRetryDelayMs"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        67
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:69d8a33545817805941acc765f5a96659d0c88016769c9b48a9b2472a47dc5bc",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:53a93233708b1476846566e872351de46072bfdc60358c7eb1bfacfd6d22f209",
+        "wire_body_size_bytes": 29024
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e",
+        "request_id": "ai-tag-request:sha256:ec9fb99bdae194ceec76663244670452206fdcf811f38160fdb2ede0ed3481cc",
+        "request_input_size_bytes": 27432,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:8c8f2a037cb8411a0c97500f9cd9bb5d1a5c617d658369ebe370d8b386c94498",
+        "user_prompt_size_bytes": 24266,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 67,
+      "line_start": 67,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.networkRetryTimer"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:2d9db67fb573c54ae8e159aef0d84fdf98366b5009cc3056ecf6b833e5d7c0ca",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:d5815b5076db2fa2a8887753e074fea2232249d6a965be734a6e2fdfa62c088a",
+        "wire_body_size_bytes": 32929
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552",
+        "request_id": "ai-tag-request:sha256:667961dcfac2281d0c5d356759907fa742990c5a4df17be54e0252acd1af3e38",
+        "request_input_size_bytes": 31186,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "user_prompt_sha256": "sha256:b81866ecd2b0cab28ec3c20bfc4a26f9d04360b555ac35d7c68ee287fd50c5ac",
+        "user_prompt_size_bytes": 28020,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 130,
+      "line_start": 71,
+      "source_role": "base",
+      "static_exact_tags": [
+        "has_async"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToAppear"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        76,
+        77,
+        95,
+        121
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:88d844f1721bb8edc65d0e160d03ad09904e112da9e2dd09733b877ee5139489",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:58f36f2b88f93430ec30659686844395a6a467f6fed4d5ec6e59a9094ee275b4",
+        "wire_body_size_bytes": 32678
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46",
+        "request_id": "ai-tag-request:sha256:f8ed2682035aa792967ab5112bb5a0d03b571b1e66ef6ee8ead091ee66cc98b2",
+        "request_input_size_bytes": 30931,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:cfc780cb3a219577880b0d89cf4dabcd10e647e00e22841943dab10a974a931a",
+        "user_prompt_size_bytes": 27765,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 121,
+      "line_start": 74,
+      "source_role": "head",
+      "static_exact_tags": [
+        "has_async"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToAppear"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        311,
+        312,
+        313,
+        339,
+        340,
+        341,
+        342,
+        343
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:c3997b0f105f637c57d604a549a29faa68565a8f14c32baaacf12cd9598f7f57",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:62e2344a27a1ebbae3a764de82fcdc4693490cddb55c215eafad65e5f2583cb8",
+        "wire_body_size_bytes": 31210
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2",
+        "request_id": "ai-tag-request:sha256:aedfc8a3361de48be44c9fbbbd1790c9c2ff26c3b54f1a6cc18fe07bf6f5d88c",
+        "request_input_size_bytes": 29507,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:b67ca16fd4c966e8801c7bba45389229685a190deb13f60082749bcb2945bca1",
+        "user_prompt_size_bytes": 26341,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 344,
+      "line_start": 309,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToDisappear"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        162,
+        163,
+        164,
+        165
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:8446985d5bd27d4beb6d84d123a13cfa92b7e5fdeb94cffa1d00f3a4a1305f7f",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:0b13b8e6ceb1e27d557ad2e4c634dbf6e1169aa5eaf237eaba8515b483470cd9",
+        "wire_body_size_bytes": 30299
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654",
+        "request_id": "ai-tag-request:sha256:b9e1bfe20fba313eb9c9af71bd5a2478f024fb07312a97fbd2db04653ee47883",
+        "request_input_size_bytes": 28652,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "user_prompt_sha256": "sha256:28d819b33ca0f870c2b9735b5b1b817d969c6868096037d38dcad3d00c2c64fa",
+        "user_prompt_size_bytes": 25486,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 167,
+      "line_start": 146,
+      "source_role": "base",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_kind": "method",
+      "unit_symbol": "Index.addNetworkListener"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        165,
+        169,
+        170,
+        172
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:add6d9e2b288ecdd92dc0dc913e12fd78b67f75b690dd0d3084da36796c9c934",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:03c271ac929790c33ae1df296b26c20b903dfd9c6da056386b368137c61b3e45",
+        "wire_body_size_bytes": 30590
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3",
+        "request_id": "ai-tag-request:sha256:f84a560df0827d7a9c0929c9d81ddf4d449316f745138fceb4771ace0f99f92f",
+        "request_input_size_bytes": 28920,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:598219f6a2d7ebdfd60d7d01b2b624bc7bcdf179c497532778d84edd7f4cacb5",
+        "user_prompt_size_bytes": 25754,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 172,
+      "line_start": 152,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.addNetworkListener"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        174,
+        175,
+        176,
+        177,
+        178,
+        179
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:8674f8cb37b438eb06eb1fdbb1f0a67cd8729fccb97f9c944727c7e99a38a0f3",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:45ea3a1ec33e3fe533d200713a92d94996f3fae2dbd50a5d4260c528360e4950",
+        "wire_body_size_bytes": 29374
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0",
+        "request_id": "ai-tag-request:sha256:ea3a5d6e69c20baef3f9f9e16c8844204b58d4eb34c101ec57fd55c421d8e993",
+        "request_input_size_bytes": 27761,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:fbf70794f50a0ba734c13dfa6821d34f219b170b90041a1c630cf0d1d544df73",
+        "user_prompt_size_bytes": 24595,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 179,
+      "line_start": 174,
+      "source_role": "head",
+      "static_exact_tags": [
+        "has_timer"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.clearNetworkRetryTimer"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:53a3b34fcb57581c2e5168e6ad87cffa4688fafb331f3823964acd3b7f1c6f6d",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:6b04027aa9b4b857cce2087f66d4318f1c99075b548d7986490940d7b1cc44a5",
+        "wire_body_size_bytes": 29405
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3",
+        "request_id": "ai-tag-request:sha256:fda3c7951ad4d959b4edec1ab99378186011859acbe8b2fc33ff91cfca89be5f",
+        "request_input_size_bytes": 27789,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:7b4e7fce1e0cfcb0f8fad7b8534df8c5eb588017e871a65922bad1a6e30d6188",
+        "user_prompt_size_bytes": 24623,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 300,
+      "line_start": 294,
+      "source_role": "head",
+      "static_exact_tags": [
+        "has_timer"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.clearRuntimeTimers"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        302,
+        303,
+        304,
+        305,
+        306,
+        307
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:ffc1647ebc832660234bda0ddaf0db4ad7cc3f62abdae0c19bb25bd6fe038a29",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:96cdf7e405c7fe7ef9503523c576790e56a5e8368d0a9bdb770d56b122af3153",
+        "wire_body_size_bytes": 29445
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618",
+        "request_id": "ai-tag-request:sha256:399c25b0da97ddb7c493558cdd8bfefe6ae323d636dddc5de71d4c3804e71879",
+        "request_input_size_bytes": 27826,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:470c0dde6da2dcddadefd4187e068affabdf24e92eb35f17c6952c56c9ade364",
+        "user_prompt_size_bytes": 24660,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 307,
+      "line_start": 302,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.removePlayerListeners"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:abdfdd13e72baa106d32241d6adcde583ae8d8c6409787c271593b643d3da7aa",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:d558e53cec1c7efb56fce892fb2aaf3b9bfefed3396f54a202d12d11c751a407",
+        "wire_body_size_bytes": 30485
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f",
+        "request_id": "ai-tag-request:sha256:5db78f52b118c6f2d7a829dd250f529caa3208eabe6068248a9a594623c5386b",
+        "request_input_size_bytes": 28826,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:a802f5401552e1495a009479a77edff96e90997c0865e18358491d508f95f9fb",
+        "user_prompt_size_bytes": 25660,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 202,
+      "line_start": 181,
+      "source_role": "head",
+      "static_exact_tags": [
+        "has_timer"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.scheduleNetworkRecovery"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:3b10e66305ee3fe74388beb7f3619e7e418b68110da2a01747097fbf5ecf42ed",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:5dabe6118d5f8a7f904a3270d617e4b09c389db2d89bd32e21978f403e5ec044",
+        "wire_body_size_bytes": 29918
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73",
+        "request_id": "ai-tag-request:sha256:18f83fe10ff86000e316d86686051097f22dd7564a15d6952ad48fe31248fc8a",
+        "request_input_size_bytes": 28281,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:7cacb27938cbbd6dd156972fdd9b373ff41f721adb93e5c763e41adfd729d8e1",
+        "user_prompt_size_bytes": 25115,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 136,
+      "line_start": 123,
+      "source_role": "head",
+      "static_exact_tags": [],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "method",
+      "unit_symbol": "Index.updatePlaybackProgress"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        953,
+        956
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:c9e4220143c57382636f4c820933253b1b2b2207fbd5d87154a6b0f8c87a99ba",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:9a9645fcfebc6459cbc6625cebdd1adcf759b81c2fb21750138710870645a764",
+        "wire_body_size_bytes": 33417
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d",
+        "request_id": "ai-tag-request:sha256:4aaeaa4a06f18aa4aca2436c676ce823de13de1b74f84f53ee4edebfcafa2a85",
+        "request_input_size_bytes": 31693,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+        "user_prompt_sha256": "sha256:8bc6f6f295273fb9ed9ed9f1ced38272813bbdba4316fc2bb0c15b22127bb464",
+        "user_prompt_size_bytes": 28527,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 959,
+      "line_start": 913,
+      "source_role": "base",
+      "static_exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
+      "unit_kind": "ui_block",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+    },
+    {
+      "card_truncated": false,
+      "changed_line_numbers": [
+        1010,
+        1011,
+        1012,
+        1014,
+        1015,
+        1016,
+        1017,
+        1020,
+        1021,
+        1022,
+        1023
+      ],
+      "deepseek": {
+        "max_attempts": 1,
+        "max_output_tokens": 4096,
+        "max_response_bytes": 2000000,
+        "plan_id": "ai-tag-shadow-plan:sha256:db4152894dd89905647cb1f480187704854abb023db65ca0dfdff1cffb0701fb",
+        "wall_clock_timeout_ms": 60000,
+        "wire_body_sha256": "sha256:184611a064c73720efe6927440278c79d49b1560c482c3f63e03a6e95ca9d6fe",
+        "wire_body_size_bytes": 34276
+      },
+      "grok": {
+        "max_attempts": 1,
+        "max_response_bytes": 2000000,
+        "model_view_id": "ai-tag-model-view:sha256:041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742",
+        "request_id": "ai-tag-request:sha256:47d4f46f5a5f4e8268f1d63a13f5d0c96f213dcfc6bdebe4fabedcc84fd49bbf",
+        "request_input_size_bytes": 32521,
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "system_prompt_size_bytes": 3166,
+        "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+        "user_prompt_sha256": "sha256:d96e02ae911556205272051812491fc40579fa14593dbb0e4320b51357aca08c",
+        "user_prompt_size_bytes": 29355,
+        "wall_clock_timeout_ms": 120000
+      },
+      "line_end": 1026,
+      "line_start": 971,
+      "source_role": "head",
+      "static_exact_tags": [
+        "has_interactive_component",
+        "has_timer"
+      ],
+      "static_routing_tags": [
+        "has_async",
+        "has_file_io",
+        "has_image",
+        "has_interactive_component",
+        "has_layout",
+        "has_lifecycle",
+        "has_media",
+        "has_resource_ref",
+        "has_state_management",
+        "has_text_display",
+        "has_timer"
+      ],
+      "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
+      "unit_kind": "ui_block",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+    }
+  ],
+  "upstream": {
+    "change_set_id": "change-set:sha256:92e6e64f2abcd12eb96ac7dff47df1b30d4211d08a8e27b44ad00a4a47220761",
+    "context_plan_id": "context-plan:sha256:26b2050f278fc1f3ec5d5bb10fc0949f14e48f2d7b554015de2b2d24b508ce0d",
+    "review_unit_count": 15
+  }
+}

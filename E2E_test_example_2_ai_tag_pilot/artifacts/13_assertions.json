@@ -1,0 +1,142 @@
+{
+  "assertions": [
+    {
+      "description": "新目录中的源码 fixture 与首次 E2E 字节一致",
+      "evidence": {
+        "files": [
+          {
+            "path": "inputs/base.ets",
+            "sha256": "sha256:6d9f373ca3ea6cf1b0386f4e92dd9fe785cc421263e3d7c6500d5a35fb808c1a",
+            "size_bytes": 37347
+          },
+          {
+            "path": "inputs/head.ets",
+            "sha256": "sha256:8609950ac243718cf843ec7314c1725529bebb452d8d9d7a0e17acce076a5c60",
+            "size_bytes": 39393
+          },
+          {
+            "path": "inputs/diff.patch",
+            "sha256": "sha256:09d50828fab6de39bfcd9c7e406ba6d80500fb265cac1510ba92300a3dffedd0",
+            "size_bytes": 5998
+          },
+          {
+            "path": "inputs/expected_review_units.json",
+            "sha256": "sha256:eec745fb1d39aa8c194589c445567b3354b517af80c1ff93f50319f4e9599074",
+            "size_bytes": 5519
+          },
+          {
+            "path": "inputs/mutation_spec.json",
+            "sha256": "sha256:22ebaafd7b5d25a0f2720a46c852c3a46799bb7c790bd027f05341c02bb2fa30",
+            "size_bytes": 7286
+          },
+          {
+            "path": "inputs/provenance.json",
+            "sha256": "sha256:7df3790faa8ac6c8756a9d4f44a6834ac2a5c57678c0437df8d82e0d4ba29a82",
+            "size_bytes": 641
+          }
+        ],
+        "schema_version": "video-player-tag-source-fixture-v1",
+        "source_example": "E2E_test_example_1"
+      },
+      "id": "A01",
+      "passed": true
+    },
+    {
+      "description": "离线重建得到批准的 Pilot 与 Campaign identity",
+      "evidence": {
+        "campaign_id": "ai-tag-shadow-campaign:sha256:85e98a9fb77d6c7b24a038616bbfe6122c13edb9bf8c7d6c8a0d328076a11b45",
+        "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067"
+      },
+      "id": "A02",
+      "passed": true
+    },
+    {
+      "description": "ChangeSet 到 ContextPlan 重建出 15 个 ReviewUnit",
+      "evidence": {
+        "review_unit_count": 15
+      },
+      "id": "A03",
+      "passed": true
+    },
+    {
+      "description": "base/head Parser 均为无 ERROR、missing、warning 的 L1",
+      "evidence": [
+        {
+          "error_nodes": 0,
+          "layer": "L1",
+          "missing_nodes": 0,
+          "warnings": []
+        },
+        {
+          "error_nodes": 0,
+          "layer": "L1",
+          "missing_nodes": 0,
+          "warnings": []
+        }
+      ],
+      "id": "A04",
+      "passed": true
+    },
+    {
+      "description": "静态 Unit exact 与 whole-file routing hints 分开保存",
+      "evidence": {
+        "file_hint_assignments": 165,
+        "unit_exact_assignments": 9
+      },
+      "id": "A05",
+      "passed": true
+    },
+    {
+      "description": "DeepSeek 15 个结果均通过 24 Tag 结构校验",
+      "evidence": {
+        "judgment_count": 360,
+        "valid_unit_count": 15
+      },
+      "id": "A06",
+      "passed": true
+    },
+    {
+      "description": "DeepSeek 每 Unit 仅尝试一次且没有重试",
+      "evidence": {
+        "attempted_count": 15,
+        "retry_count": 0
+      },
+      "id": "A07",
+      "passed": true
+    },
+    {
+      "description": "静态 9 个 exact 均被 DeepSeek 覆盖，另有 40 个候选 positive",
+      "evidence": {
+        "deepseek_candidate_positive": 49,
+        "deepseek_only_candidate": 40,
+        "overlap": 9,
+        "static_exact": 9
+      },
+      "id": "A08",
+      "passed": true
+    },
+    {
+      "description": "Grok 15 次执行均失败且不存在可解释为 Tag 判断的输出",
+      "evidence": {
+        "attempted_count": 15,
+        "valid_judgment_count": 0
+      },
+      "id": "A09",
+      "passed": true
+    },
+    {
+      "description": "样本与结果明确不是真实 MR、人工 Truth 或生产 P/R",
+      "evidence": {
+        "human_truth": false,
+        "is_real_mr": false,
+        "production_precision_recall": false
+      },
+      "id": "A10",
+      "passed": true
+    }
+  ],
+  "failed": 0,
+  "passed": 10,
+  "schema_version": "video-player-tag-pilot-assertions-v1",
+  "status": "pass"
+}

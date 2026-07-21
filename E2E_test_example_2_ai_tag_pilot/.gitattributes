@@ -1,0 +1,5 @@
+# Preserve byte-exact external source, including its original blank lines at EOF.
+inputs/*.ets whitespace=-blank-at-eof
+
+# diff.patch is a captured artifact; lines such as "+ " represent the real patch.
+inputs/diff.patch whitespace=-blank-at-eol

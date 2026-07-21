@@ -1,0 +1,141 @@
+{
+  "schema_version": "e2e-review-unit-expected-v1",
+  "source_path": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets",
+  "units": [
+    {
+      "changed_lines": [90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104],
+      "context_span": {"end_line": 130, "start_line": 71},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "base",
+      "source_span": {"end_line": 130, "start_line": 71},
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToAppear"
+    },
+    {
+      "changed_lines": [162, 163, 164, 165],
+      "context_span": {"end_line": 167, "start_line": 146},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "base",
+      "source_span": {"end_line": 167, "start_line": 146},
+      "unit_kind": "method",
+      "unit_symbol": "Index.addNetworkListener"
+    },
+    {
+      "changed_lines": [953, 956],
+      "context_span": {"end_line": 959, "start_line": 913},
+      "selection_reason": "large_build_ui_block",
+      "source_role": "base",
+      "source_span": {"end_line": 959, "start_line": 913},
+      "unit_kind": "ui_block",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+    },
+    {
+      "changed_lines": [67],
+      "context_span": {"end_line": 67, "start_line": 67},
+      "selection_reason": "changed_review_region",
+      "source_role": "head",
+      "source_span": {"end_line": 67, "start_line": 67},
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.networkRetryTimer"
+    },
+    {
+      "changed_lines": [68],
+      "context_span": {"end_line": 68, "start_line": 68},
+      "selection_reason": "changed_review_region",
+      "source_role": "head",
+      "source_span": {"end_line": 68, "start_line": 68},
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.isDisposed"
+    },
+    {
+      "changed_lines": [69],
+      "context_span": {"end_line": 69, "start_line": 69},
+      "selection_reason": "changed_review_region",
+      "source_role": "head",
+      "source_span": {"end_line": 69, "start_line": 69},
+      "unit_kind": "field_region",
+      "unit_symbol": "Index.networkRetryDelayMs"
+    },
+    {
+      "changed_lines": [76, 77, 95, 121],
+      "context_span": {"end_line": 121, "start_line": 74},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 121, "start_line": 74},
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToAppear"
+    },
+    {
+      "changed_lines": [123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135],
+      "context_span": {"end_line": 136, "start_line": 123},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 136, "start_line": 123},
+      "unit_kind": "method",
+      "unit_symbol": "Index.updatePlaybackProgress"
+    },
+    {
+      "changed_lines": [165, 169, 170, 172],
+      "context_span": {"end_line": 172, "start_line": 152},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 172, "start_line": 152},
+      "unit_kind": "method",
+      "unit_symbol": "Index.addNetworkListener"
+    },
+    {
+      "changed_lines": [174, 175, 176, 177, 178, 179],
+      "context_span": {"end_line": 179, "start_line": 174},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 179, "start_line": 174},
+      "unit_kind": "method",
+      "unit_symbol": "Index.clearNetworkRetryTimer"
+    },
+    {
+      "changed_lines": [181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201],
+      "context_span": {"end_line": 202, "start_line": 181},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 202, "start_line": 181},
+      "unit_kind": "method",
+      "unit_symbol": "Index.scheduleNetworkRecovery"
+    },
+    {
+      "changed_lines": [294, 295, 296, 297, 298, 299, 300],
+      "context_span": {"end_line": 300, "start_line": 294},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 300, "start_line": 294},
+      "unit_kind": "method",
+      "unit_symbol": "Index.clearRuntimeTimers"
+    },
+    {
+      "changed_lines": [302, 303, 304, 305, 306, 307],
+      "context_span": {"end_line": 307, "start_line": 302},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 307, "start_line": 302},
+      "unit_kind": "method",
+      "unit_symbol": "Index.removePlayerListeners"
+    },
+    {
+      "changed_lines": [311, 312, 313, 339, 340, 341, 342, 343],
+      "context_span": {"end_line": 344, "start_line": 309},
+      "selection_reason": "innermost_changed_declaration",
+      "source_role": "head",
+      "source_span": {"end_line": 344, "start_line": 309},
+      "unit_kind": "method",
+      "unit_symbol": "Index.aboutToDisappear"
+    },
+    {
+      "changed_lines": [1010, 1011, 1012, 1014, 1015, 1016, 1017, 1020, 1021, 1022, 1023],
+      "context_span": {"end_line": 1026, "start_line": 971},
+      "selection_reason": "large_build_ui_block",
+      "source_role": "head",
+      "source_span": {"end_line": 1026, "start_line": 971},
+      "unit_kind": "ui_block",
+      "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
+    }
+  ]
+}
