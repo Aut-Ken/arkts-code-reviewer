@@ -22,7 +22,7 @@
     "static_only_tag_counts": {}
   },
   "campaign_id": "ai-tag-shadow-campaign:sha256:85e98a9fb77d6c7b24a038616bbfe6122c13edb9bf8c7d6c8a0d328076a11b45",
-  "comparison_status": "incomplete_grok_execution_failed",
+  "comparison_status": "complete_proxy_comparison_without_human_truth",
   "deepseek": {
     "candidate_positive_assignment_count": 49,
     "distinct_candidate_tag_count": 10,
@@ -40,15 +40,56 @@
       "has_timer": 7
     }
   },
+  "deepseek_grok_agreement": {
+    "both_not_positive_assignment_count": 310,
+    "both_positive_assignment_count": 41,
+    "both_positive_tag_counts": {
+      "has_async": 5,
+      "has_interactive_component": 2,
+      "has_lifecycle": 3,
+      "has_logging": 9,
+      "has_media": 7,
+      "has_network": 3,
+      "has_subscription": 6,
+      "has_timer": 6
+    },
+    "cohen_kappa_binary_positive": 0.8868873062421448,
+    "deepseek_only_assignment_count": 8,
+    "deepseek_only_tag_counts": {
+      "has_file_io": 1,
+      "has_network": 1,
+      "has_state_management": 5,
+      "has_timer": 1
+    },
+    "exact_positive_set_unit_count": 9,
+    "grok_only_assignment_count": 1,
+    "grok_only_tag_counts": {
+      "has_network": 1
+    },
+    "positive_jaccard": 0.82,
+    "raw_binary_decision_agreement": 0.975
+  },
   "grok": {
     "attempted_count": 15,
-    "empty_positive_tags_interpretation": "unavailable_not_zero",
-    "provider_error_count": 15,
-    "valid_judgment_count": 0
+    "distinct_positive_tag_count": 8,
+    "empty_unit_count": 3,
+    "positive_assignment_count": 42,
+    "provider_error_count": 0,
+    "tag_counts": {
+      "has_async": 5,
+      "has_interactive_component": 2,
+      "has_lifecycle": 3,
+      "has_logging": 9,
+      "has_media": 7,
+      "has_network": 4,
+      "has_subscription": 6,
+      "has_timer": 6
+    },
+    "valid_judgment_count": 15
   },
   "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
   "quality_boundary": "candidate_comparison_not_human_truth_not_tag_precision_recall",
-  "schema_version": "video-player-static-deepseek-tag-comparison-v1",
+  "schema_version": "video-player-static-deepseek-grok-tag-comparison-v1",
   "static_exact": {
     "assignment_count": 9,
     "distinct_tag_count": 3,
@@ -62,10 +103,15 @@
   "unit_count": 15,
   "units": [
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [],
       "deepseek_only_candidate_tags": [],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 68,
       "line_start": 68,
       "overlap_tags": [],
@@ -91,10 +137,15 @@
       "unit_symbol": "Index.isDisposed"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [],
       "deepseek_only_candidate_tags": [],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 69,
       "line_start": 69,
       "overlap_tags": [],
@@ -120,10 +171,15 @@
       "unit_symbol": "Index.networkRetryDelayMs"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [],
       "deepseek_only_candidate_tags": [],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 67,
       "line_start": 67,
       "overlap_tags": [],
@@ -149,12 +205,23 @@
       "unit_symbol": "Index.networkRetryTimer"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
       "deepseek_only_candidate_tags": [
         "has_lifecycle",
         "has_logging",
         "has_media",
         "has_state_management",
         "has_subscription"
+      ],
+      "deepseek_only_vs_grok_tags": [
+        "has_state_management"
       ],
       "deepseek_positive_tags": [
         "has_async",
@@ -164,8 +231,16 @@
         "has_state_management",
         "has_subscription"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 130,
       "line_start": 71,
       "overlap_tags": [
@@ -195,6 +270,14 @@
       "unit_symbol": "Index.aboutToAppear"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
       "deepseek_only_candidate_tags": [
         "has_file_io",
         "has_lifecycle",
@@ -203,6 +286,12 @@
         "has_network",
         "has_state_management",
         "has_subscription",
+        "has_timer"
+      ],
+      "deepseek_only_vs_grok_tags": [
+        "has_file_io",
+        "has_network",
+        "has_state_management",
         "has_timer"
       ],
       "deepseek_positive_tags": [
@@ -216,8 +305,16 @@
         "has_subscription",
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 121,
       "line_start": 74,
       "overlap_tags": [
@@ -247,6 +344,14 @@
       "unit_symbol": "Index.aboutToAppear"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription",
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [
         "has_lifecycle",
         "has_logging",
@@ -254,6 +359,7 @@
         "has_subscription",
         "has_timer"
       ],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_lifecycle",
         "has_logging",
@@ -261,8 +367,19 @@
         "has_subscription",
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [
+        "has_network"
+      ],
+      "grok_positive_tags": [
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_network",
+        "has_subscription",
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 344,
       "line_start": 309,
       "overlap_tags": [],
@@ -288,12 +405,22 @@
       "unit_symbol": "Index.aboutToDisappear"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
       "deepseek_only_candidate_tags": [
         "has_async",
         "has_logging",
         "has_network",
         "has_state_management",
         "has_subscription"
+      ],
+      "deepseek_only_vs_grok_tags": [
+        "has_state_management"
       ],
       "deepseek_positive_tags": [
         "has_async",
@@ -302,8 +429,15 @@
         "has_state_management",
         "has_subscription"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 167,
       "line_start": 146,
       "overlap_tags": [],
@@ -329,20 +463,35 @@
       "unit_symbol": "Index.addNetworkListener"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
       "deepseek_only_candidate_tags": [
         "has_async",
         "has_logging",
         "has_network",
         "has_subscription"
       ],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_async",
         "has_logging",
         "has_network",
         "has_subscription"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 172,
       "line_start": 152,
       "overlap_tags": [],
@@ -368,12 +517,21 @@
       "unit_symbol": "Index.addNetworkListener"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 179,
       "line_start": 174,
       "overlap_tags": [
@@ -403,12 +561,21 @@
       "unit_symbol": "Index.clearNetworkRetryTimer"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 300,
       "line_start": 294,
       "overlap_tags": [
@@ -438,16 +605,27 @@
       "unit_symbol": "Index.clearRuntimeTimers"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_media",
+        "has_subscription"
+      ],
       "deepseek_only_candidate_tags": [
         "has_media",
         "has_subscription"
       ],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_media",
         "has_subscription"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_media",
+        "has_subscription"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 307,
       "line_start": 302,
       "overlap_tags": [],
@@ -473,19 +651,34 @@
       "unit_symbol": "Index.removePlayerListeners"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [
         "has_async",
         "has_logging",
         "has_network"
       ],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_async",
         "has_logging",
         "has_network",
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 202,
       "line_start": 181,
       "overlap_tags": [
@@ -515,16 +708,27 @@
       "unit_symbol": "Index.scheduleNetworkRecovery"
     },
     {
+      "deepseek_grok_exact_positive_set": true,
+      "deepseek_grok_overlap_tags": [
+        "has_logging",
+        "has_media"
+      ],
       "deepseek_only_candidate_tags": [
         "has_logging",
         "has_media"
       ],
+      "deepseek_only_vs_grok_tags": [],
       "deepseek_positive_tags": [
         "has_logging",
         "has_media"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_logging",
+        "has_media"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 136,
       "line_start": 123,
       "overlap_tags": [],
@@ -550,9 +754,19 @@
       "unit_symbol": "Index.updatePlaybackProgress"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [
         "has_logging",
         "has_media",
+        "has_state_management"
+      ],
+      "deepseek_only_vs_grok_tags": [
         "has_state_management"
       ],
       "deepseek_positive_tags": [
@@ -562,8 +776,15 @@
         "has_state_management",
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 959,
       "line_start": 913,
       "overlap_tags": [
@@ -595,9 +816,19 @@
       "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
     },
     {
+      "deepseek_grok_exact_positive_set": false,
+      "deepseek_grok_overlap_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
       "deepseek_only_candidate_tags": [
         "has_logging",
         "has_media",
+        "has_state_management"
+      ],
+      "deepseek_only_vs_grok_tags": [
         "has_state_management"
       ],
       "deepseek_positive_tags": [
@@ -607,8 +838,15 @@
         "has_state_management",
         "has_timer"
       ],
-      "grok_status": "provider_error",
-      "grok_validated_judgment_available": false,
+      "grok_only_vs_deepseek_tags": [],
+      "grok_positive_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
+      "grok_status": "valid_shape",
+      "grok_validated_judgment_available": true,
       "line_end": 1026,
       "line_start": 971,
       "overlap_tags": [

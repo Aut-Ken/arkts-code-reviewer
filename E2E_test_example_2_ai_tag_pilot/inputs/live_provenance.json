@@ -5,6 +5,7 @@
   "contains_raw_provider_response_body": false,
   "deepseek_request_set_digest": "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6",
   "grok_request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+  "grok_source_run": "grok-rerun-1",
   "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
   "projection_policy": {
     "deepseek_reason_role": "model_diagnostic_text_not_tag_truth",
@@ -14,18 +15,19 @@
       "wire_request_bodies",
       "raw_provider_response_bodies",
       "credential_scope_and_internal_provider_identifiers",
-      "stderr_plaintext_not_present_in_source_artifacts"
+      "provider_request_and_session_identifiers"
     ],
-    "grok_empty_positive_tags_interpretation": "unavailable_not_zero",
+    "grok_judgment_role": "blind_proxy_not_human_truth",
+    "grok_reason_role": "model_diagnostic_text_not_tag_truth",
     "included": [
       "validated_24_tag_judgments_and_model_reasons",
       "usage_latency_and_attempt_limits",
       "transport_and_source_artifact_hashes",
-      "grok_failure_status_and_stream_hashes"
+      "grok_validated_blind_proxy_judgments"
     ]
   },
   "quality_boundary": "real_provider_observation_not_human_truth_not_real_mr_not_production_precision_recall",
-  "schema_version": "video-player-tag-live-provenance-v1",
+  "schema_version": "video-player-tag-live-provenance-v2",
   "source_artifact_count": 64,
   "source_artifacts": [
     {
@@ -221,196 +223,196 @@
       "size_bytes": 7587
     },
     {
-      "path": "grok/0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.attempted.json",
+      "path": "grok-rerun-1/0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.attempted.json",
       "provider": "grok",
       "sha256": "sha256:647b9b853da32372347130b79194ca13567acde7e471cd82e139c00df2fe7bcd",
       "size_bytes": 861
     },
     {
-      "path": "grok/0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.result.json",
+      "path": "grok-rerun-1/0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.result.json",
       "provider": "grok",
-      "sha256": "sha256:374ce90cdab4faad8e7c8f69f0a5d834547eaacdb4a80b920530915d75133965",
-      "size_bytes": 1099
+      "sha256": "sha256:5c4cbf94a96215ccdbc87155d073a8ddc85055b910f12f829763990c4942e050",
+      "size_bytes": 6125
     },
     {
-      "path": "grok/041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.attempted.json",
+      "path": "grok-rerun-1/041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.attempted.json",
       "provider": "grok",
       "sha256": "sha256:9b31d02b84666df90c3f5e4d233b5454fc9745c237b9f1e82ae45cd1e9984855",
       "size_bytes": 880
     },
     {
-      "path": "grok/041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.result.json",
+      "path": "grok-rerun-1/041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.result.json",
       "provider": "grok",
-      "sha256": "sha256:7c42b652bf28562ced460a2db6a3da4b704467b05211cb48ce43189ed28be986",
-      "size_bytes": 1134
+      "sha256": "sha256:82527e4c5af9ee70316d352f0000d5d54d89e8648aa67c9fa5b6073ff108bfef",
+      "size_bytes": 6529
     },
     {
-      "path": "grok/0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.attempted.json",
+      "path": "grok-rerun-1/0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.attempted.json",
       "provider": "grok",
       "sha256": "sha256:6e6d2ce98e7d78db72690888a92aebfad24c1979375fcdbcaa3ee0a888b7087c",
       "size_bytes": 873
     },
     {
-      "path": "grok/0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.result.json",
+      "path": "grok-rerun-1/0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.result.json",
       "provider": "grok",
-      "sha256": "sha256:cb8a914320c40b1c5833b4492791cf36554a5d0ab87df30de8528d8952699d76",
-      "size_bytes": 1108
+      "sha256": "sha256:a7c31d599d7ee541c75a86c9cf239d73233672743c97678098b57b3649014e86",
+      "size_bytes": 5821
     },
     {
-      "path": "grok/28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.attempted.json",
+      "path": "grok-rerun-1/28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.attempted.json",
       "provider": "grok",
       "sha256": "sha256:94fbcdcb9e91c866fc38f168c1559b46c79d888434d6214f17ab7d06ec2b2b55",
       "size_bytes": 879
     },
     {
-      "path": "grok/28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.result.json",
+      "path": "grok-rerun-1/28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.result.json",
       "provider": "grok",
-      "sha256": "sha256:b7f51b7cf7702e4015fda7b31a5487e0dded2c8f3bfade2c827c31b69e564d59",
-      "size_bytes": 1133
+      "sha256": "sha256:9c414848fbb08ed569e3e5a5312efacb4a750ac5594cd5502535905979975bc9",
+      "size_bytes": 6482
     },
     {
-      "path": "grok/3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.attempted.json",
+      "path": "grok-rerun-1/3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.attempted.json",
       "provider": "grok",
       "sha256": "sha256:53738e430b3caeb114cdbc321f141c873e003704cdce237c26f4c1e02dc3c82d",
       "size_bytes": 851
     },
     {
-      "path": "grok/3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.result.json",
+      "path": "grok-rerun-1/3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.result.json",
       "provider": "grok",
-      "sha256": "sha256:a0bffed9896f82f3a3b1bc936d6ed41eb4f6cc0274fbdec15c41c269bf363a87",
-      "size_bytes": 1080
+      "sha256": "sha256:b5bbd1e95e768dcf20b7613c5741089915af49b275a4a7ef5c96ad6b4db9c311",
+      "size_bytes": 6809
     },
     {
-      "path": "grok/40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.attempted.json",
+      "path": "grok-rerun-1/40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.attempted.json",
       "provider": "grok",
       "sha256": "sha256:af2f4d22408cb29be889b18403d37d62672c404d0b5b1e497f9186f1834dce76",
       "size_bytes": 864
     },
     {
-      "path": "grok/40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.result.json",
+      "path": "grok-rerun-1/40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.result.json",
       "provider": "grok",
-      "sha256": "sha256:412e10b1cf6d875f8996cdb21bb6513e2a57212af556d8d5262ef81959bcf5ab",
-      "size_bytes": 1090
+      "sha256": "sha256:5a7eef93d1633b7306bf92e020f48aaab2f57dbc8e691e734b66f449c70427a4",
+      "size_bytes": 5803
     },
     {
-      "path": "grok/600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.attempted.json",
+      "path": "grok-rerun-1/600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.attempted.json",
       "provider": "grok",
       "sha256": "sha256:463917f2546d2c54eb5c4378deb495f41351f28818d22e7757c02683ba6c1c27",
       "size_bytes": 871
     },
     {
-      "path": "grok/600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.result.json",
+      "path": "grok-rerun-1/600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.result.json",
       "provider": "grok",
-      "sha256": "sha256:6788dda9a683c526faff13ab5ffcfb4df30ea0185c748872a34c8bb857fa3170",
-      "size_bytes": 1104
+      "sha256": "sha256:0e8d4cdcfca9b200065e437aed6c9985711b365d58eea771cbb7fd5f273ed4ba",
+      "size_bytes": 5817
     },
     {
-      "path": "grok/611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.attempted.json",
+      "path": "grok-rerun-1/611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.attempted.json",
       "provider": "grok",
       "sha256": "sha256:9bcce4e6140e194bb4e04531b5537a269b04b26421adfc8494f6fa2422589818",
       "size_bytes": 857
     },
     {
-      "path": "grok/611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.result.json",
+      "path": "grok-rerun-1/611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.result.json",
       "provider": "grok",
-      "sha256": "sha256:df0de510d2577d51f82dc9c3afe983eec65441401301f7d1edfcb937416db778",
-      "size_bytes": 1091
+      "sha256": "sha256:af37a3b4e0ab5e8f0f2c7a6ce23fb1f68b0302c00182aaa121ab331874ac7e48",
+      "size_bytes": 6531
     },
     {
-      "path": "grok/809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.attempted.json",
+      "path": "grok-rerun-1/809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.attempted.json",
       "provider": "grok",
       "sha256": "sha256:63fc0980d8169b90caacaad2e66c0b006bf4d91b5952c11447ddb7f76da9873c",
       "size_bytes": 861
     },
     {
-      "path": "grok/809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.result.json",
+      "path": "grok-rerun-1/809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.result.json",
       "provider": "grok",
-      "sha256": "sha256:d37574c7606059b8f3f568daff3ed43527c565a12c2e1740e3c437bc5209c7c8",
-      "size_bytes": 1099
+      "sha256": "sha256:acaaef20eb0699e0ddf1e44aeb7dae2a190a4c3b0de6ef7856ea7033b2657104",
+      "size_bytes": 5963
     },
     {
-      "path": "grok/86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.attempted.json",
+      "path": "grok-rerun-1/86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.attempted.json",
       "provider": "grok",
       "sha256": "sha256:ca8feec24298972e12974215e64aa8817f25bfef17861dd1b35f50471ded7304",
       "size_bytes": 851
     },
     {
-      "path": "grok/86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.result.json",
+      "path": "grok-rerun-1/86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.result.json",
       "provider": "grok",
-      "sha256": "sha256:b6937174a961c44ed9771700d2f8c8c7c7066831a4586bf6a3b4aff3a7b60a36",
-      "size_bytes": 1080
+      "sha256": "sha256:9cc7e74058d204e71712be23cd7e43f791b95a80d1a46521c9440d4a80f2606d",
+      "size_bytes": 6717
     },
     {
-      "path": "grok/af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.attempted.json",
+      "path": "grok-rerun-1/af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.attempted.json",
       "provider": "grok",
       "sha256": "sha256:d265f1dbd6b5a353edda8dc912a0448d22ab61261b35b81c75cd009b60883dab",
       "size_bytes": 855
     },
     {
-      "path": "grok/af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.result.json",
+      "path": "grok-rerun-1/af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.result.json",
       "provider": "grok",
-      "sha256": "sha256:f6f8aa004cbed0de99dc23f78c89511ef6d7b1635ea53794953565a4d6d4505b",
-      "size_bytes": 1087
+      "sha256": "sha256:e4b2034b9315ca80f1575edac2d34983faab3e5b0b4489f15a8c7e7a3c3df8c3",
+      "size_bytes": 6609
     },
     {
-      "path": "grok/c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.attempted.json",
+      "path": "grok-rerun-1/c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.attempted.json",
       "provider": "grok",
       "sha256": "sha256:1cd797b28f5806a9b7cf1e7b6a72cc250f72b27c42d6869c1ba4a00e4c64c084",
       "size_bytes": 857
     },
     {
-      "path": "grok/c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.result.json",
+      "path": "grok-rerun-1/c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.result.json",
       "provider": "grok",
-      "sha256": "sha256:460f7ca9d3f39093517a960ea78f2392d68feac32ffe08ec448363599f5e0f3e",
-      "size_bytes": 1091
+      "sha256": "sha256:0c8d527002cf2808979a9ccceda4d140be8dd1d40e04145b5076181533005fd8",
+      "size_bytes": 6545
     },
     {
-      "path": "grok/c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.attempted.json",
+      "path": "grok-rerun-1/c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.attempted.json",
       "provider": "grok",
       "sha256": "sha256:3fbdabf38477eebeb34e6d1291e40da9453764957b4a1c5f1fbdf969ee34c75c",
       "size_bytes": 862
     },
     {
-      "path": "grok/c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.result.json",
+      "path": "grok-rerun-1/c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.result.json",
       "provider": "grok",
-      "sha256": "sha256:7d5a0633c3e3a317666f9ff36da485114d9fb0c63d65d77aa2c575939ee9591f",
-      "size_bytes": 1101
+      "sha256": "sha256:f9d345765d13cfa427148a5279c1bfe1a0d91731158d16c8cea4099d593d70d7",
+      "size_bytes": 6449
     },
     {
-      "path": "grok/cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.attempted.json",
+      "path": "grok-rerun-1/cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.attempted.json",
       "provider": "grok",
       "sha256": "sha256:e71007443b349f36548c84e177dfe8405d54f14340e95b70061f6dd18c4a81f3",
       "size_bytes": 857
     },
     {
-      "path": "grok/cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.result.json",
+      "path": "grok-rerun-1/cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.result.json",
       "provider": "grok",
-      "sha256": "sha256:22aeb6be914267a0ad5803c4ff94b02d5a378cc58c27a26c68d5a6279368de60",
-      "size_bytes": 1091
+      "sha256": "sha256:dd331af7fcb280a32277d94843f6e30089708c1b4207ee85adeb28e7b0ee03d2",
+      "size_bytes": 5937
     },
     {
-      "path": "grok/d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.attempted.json",
+      "path": "grok-rerun-1/d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.attempted.json",
       "provider": "grok",
       "sha256": "sha256:d7395a61f1c2b7da182302cc20d2231dc0e0bd7f87bd9df2c6e137bb9355c14b",
       "size_bytes": 860
     },
     {
-      "path": "grok/d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.result.json",
+      "path": "grok-rerun-1/d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.result.json",
       "provider": "grok",
-      "sha256": "sha256:51c87c643dd048f258af0cd8b2e8192229ed31b8b24f991df8056c1070b29c3e",
-      "size_bytes": 1097
+      "sha256": "sha256:66fc214b2685a8b24491051fb2e5d4b20bb21fa555d11dbfc81ae1b4aecc0c3b",
+      "size_bytes": 6120
     },
     {
-      "path": "grok/inspection.json",
+      "path": "grok-rerun-1/inspection.json",
       "provider": "grok",
       "sha256": "sha256:a5f307a1b00d3439ab156b7ecb391d802bc3d8a405a599d2f66c26fe220a1b0f",
       "size_bytes": 39100
     },
     {
-      "path": "grok/summary.json",
+      "path": "grok-rerun-1/summary.json",
       "provider": "grok",
-      "sha256": "sha256:6f1be1abb2d3cd4ff185db11bec579785ff10e0f7a7ab8789e23515727d7f0e5",
-      "size_bytes": 6095
+      "sha256": "sha256:2211c27818dff146a532e0b4a448fb70c2aeb8399bf7a72c1204ee556a98fb6f",
+      "size_bytes": 7251
     }
   ]
 }

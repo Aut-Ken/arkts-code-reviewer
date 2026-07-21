@@ -2,17 +2,192 @@
   "observations": [
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 34,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 26214,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:bfb0b58a0465f505e2023bc80e4314f286255b9b7323114f373f6225a1d8b114"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:09676127397dfb369c1ab6bcaae1635aff14b68e3049075ac3ec624bf35baf2a",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.attempted.json",
@@ -21,33 +196,219 @@
         },
         "result": {
           "path": "40e50b3a94f4435771373757d577927633a88ae4b85107e71a36e7db9ca1127f.result.json",
-          "sha256": "sha256:412e10b1cf6d875f8996cdb21bb6513e2a57212af556d8d5262ef81959bcf5ab",
-          "size_bytes": 1090
+          "sha256": "sha256:5a7eef93d1633b7306bf92e020f48aaab2f57dbc8e691e734b66f449c70427a4",
+          "size_bytes": 5803
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:d5cb3cd8598e465b0f1e5470c8980304c8ae92be8b8b1f15cdc5bb10a59daebe",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:682bf86b6d48d190d8c202f5f17e314283dadf87a6a10ab3ea59014331fbbe8e",
+        "stdout_size_bytes": 10502
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.isDisposed",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24155,
+        "output_tokens": 2007,
+        "reasoning_tokens": 581,
+        "total_tokens": 26290
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 31,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 28367,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:0002d907ab4b36e2e6e6a74b44c5b3c61b43e243f2ae487dc1b4c4da8bbc68a9"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:75d88a93f705cf13f07f0f0d9dad8c57af7b1ff03b7e67e44116fbf9882a5374",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.attempted.json",
@@ -56,33 +417,219 @@
         },
         "result": {
           "path": "0a50274cfb864cd9c39857f939cf7bf4e5deb55c9af78033753e3ca1758738d5.result.json",
-          "sha256": "sha256:cb8a914320c40b1c5833b4492791cf36554a5d0ab87df30de8528d8952699d76",
-          "size_bytes": 1108
+          "sha256": "sha256:a7c31d599d7ee541c75a86c9cf239d73233672743c97678098b57b3649014e86",
+          "size_bytes": 5821
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:a9a91289b1234b44fe8603d830d7df2800292bc22cbfc3109db20a1ce171bfe8",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:c2c202c8da9ebae4550733a0ce38b732a297c4490e11c560463addcf38a8fcc0",
+        "stdout_size_bytes": 10619
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.networkRetryDelayMs",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24179,
+        "output_tokens": 2268,
+        "reasoning_tokens": 842,
+        "total_tokens": 26575
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 30,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 28410,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:8c8f2a037cb8411a0c97500f9cd9bb5d1a5c617d658369ebe370d8b386c94498"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:ec9fb99bdae194ceec76663244670452206fdcf811f38160fdb2ede0ed3481cc",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.attempted.json",
@@ -91,33 +638,256 @@
         },
         "result": {
           "path": "600bb9eb23d171666cf74c31aab3f3c2ef7cbdc19bb5e329b14895c8e9db9b8e.result.json",
-          "sha256": "sha256:6788dda9a683c526faff13ab5ffcfb4df30ea0185c748872a34c8bb857fa3170",
-          "size_bytes": 1104
+          "sha256": "sha256:0e8d4cdcfca9b200065e437aed6c9985711b365d58eea771cbb7fd5f273ed4ba",
+          "size_bytes": 5817
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:3240a14c88c71ac226515a9d6d1a7826493e802b653c2eadca52c14c5536d432",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:d2079e2a2e9588d4ff0ecb8cb1a0914d02efb2cc6d0b507b44ee143deb7ab1bd",
+        "stdout_size_bytes": 11064
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.networkRetryTimer",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24158,
+        "output_tokens": 2365,
+        "reasoning_tokens": 939,
+        "total_tokens": 26651
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 30,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            71,
+            79,
+            125,
+            126
+          ],
+          "reason": "Unit declares an async lifecycle method and awaits player init, audio manager setup, and auto-start before continuing.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            71
+          ],
+          "reason": "Owner-qualified aboutToAppear on the Index custom component/router page implements the ArkUI lifecycle hook.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            72,
+            81,
+            83,
+            90,
+            107,
+            123,
+            129
+          ],
+          "reason": "Unit emits multiple Log.info diagnostic records for lifecycle, interrupt, progress, duration, and size events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            74,
+            79,
+            80,
+            84,
+            85,
+            89,
+            103,
+            106,
+            118,
+            122
+          ],
+          "reason": "Unit initializes AV player, configures video type, handles playback events, pauses on interrupt, and updates AV session playback state and metadata.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            80,
+            89,
+            106,
+            122
+          ],
+          "reason": "Unit registers platform AVPlayer event listeners for interrupt, time, duration, and video size updates.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 56288,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:b81866ecd2b0cab28ec3c20bfc4a26f9d04360b555ac35d7c68ee287fd50c5ac"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:667961dcfac2281d0c5d356759907fa742990c5a4df17be54e0252acd1af3e38",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.attempted.json",
@@ -126,33 +896,257 @@
         },
         "result": {
           "path": "3d0c32cfc55ca97254efff0e3ec08859ee0c570a02e8a6cd40ed87b61008c552.result.json",
-          "sha256": "sha256:a0bffed9896f82f3a3b1bc936d6ed41eb4f6cc0274fbdec15c41c269bf363a87",
-          "size_bytes": 1080
+          "sha256": "sha256:b5bbd1e95e768dcf20b7613c5741089915af49b275a4a7ef5c96ad6b4db9c311",
+          "size_bytes": 6809
         }
       },
       "source_role": "base",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:6d9b2b1dddd6b835ed91dc1e8eb8b1294ea1d329c3ad7b9e8aa9c08ca4ba2b71",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:4e5bb08bd7049d0157d996a2146d4ae7d56e7b32c3d40d5b4929c00891847e62",
+        "stdout_size_bytes": 14609
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
       "unit_symbol": "Index.aboutToAppear",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 25337,
+        "output_tokens": 4213,
+        "reasoning_tokens": 2626,
+        "total_tokens": 29678
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 30,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            74,
+            84,
+            116,
+            117
+          ],
+          "reason": "Method is async and awaits player init, audio manager setup, and auto-start before continuing.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            74
+          ],
+          "reason": "Resolved Index component/page method implements aboutToAppear lifecycle initialization.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            75,
+            86,
+            88,
+            98,
+            114,
+            120
+          ],
+          "reason": "Unit emits multiple diagnostic Log.info records during appear and player event handling.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            79,
+            80,
+            81,
+            84,
+            85,
+            89,
+            90,
+            94,
+            97,
+            101,
+            109,
+            113
+          ],
+          "reason": "Initializes AV player for video, wires playback events, pauses on interrupt, and updates session metadata/progress.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            85,
+            94,
+            97,
+            113
+          ],
+          "reason": "Registers continuous platform AVPlayer listeners for interrupt, time, duration, and video size events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 54196,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_async",
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_subscription"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:cfc780cb3a219577880b0d89cf4dabcd10e647e00e22841943dab10a974a931a"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:f8ed2682035aa792967ab5112bb5a0d03b571b1e66ef6ee8ead091ee66cc98b2",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.attempted.json",
@@ -161,33 +1155,248 @@
         },
         "result": {
           "path": "86f8852426cdd83945375ec4525ca04dcea58c41179c9eaf88bdd46948350c46.result.json",
-          "sha256": "sha256:b6937174a961c44ed9771700d2f8c8c7c7066831a4586bf6a3b4aff3a7b60a36",
-          "size_bytes": 1080
+          "sha256": "sha256:9cc7e74058d204e71712be23cd7e43f791b95a80d1a46521c9440d4a80f2606d",
+          "size_bytes": 6717
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:e199b33253991ab69219ea7c46ee098f9c2a193336b1a1c23e1dab3829da6547",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:489eae92688931a694d3b4e04d0a1c598f097cfe7f3882143c769c91c2f26034",
+        "stdout_size_bytes": 13743
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.aboutToAppear",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 25200,
+        "output_tokens": 3905,
+        "reasoning_tokens": 2337,
+        "total_tokens": 29233
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 37,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            309
+          ],
+          "reason": "Owner-qualified aboutToDisappear lifecycle method on an ArkUI custom component/router page.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            310,
+            330,
+            337
+          ],
+          "reason": "Emits diagnostic records through the platform Log facility during cleanup.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            326,
+            327,
+            333
+          ],
+          "reason": "Stops casting, destroys the media session, and releases the AV player during teardown.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            336,
+            339
+          ],
+          "reason": "Unregisters and clears a platform network connection listener.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            315,
+            319,
+            320,
+            321,
+            322,
+            336
+          ],
+          "reason": "Removes controller/cast event listeners and unregisters a platform network subscription.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            312
+          ],
+          "reason": "Clears previously scheduled runtime timer tasks during component teardown.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 44997,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_lifecycle",
+        "has_logging",
+        "has_media",
+        "has_network",
+        "has_subscription",
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:b67ca16fd4c966e8801c7bba45389229685a190deb13f60082749bcb2945bca1"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:aedfc8a3361de48be44c9fbbbd1790c9c2ff26c3b54f1a6cc18fe07bf6f5d88c",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.attempted.json",
@@ -196,33 +1405,245 @@
         },
         "result": {
           "path": "af93169e41874dcb0bde826d0bf64cb801d27cea48a2ae95d67784521e0003e2.result.json",
-          "sha256": "sha256:f6f8aa004cbed0de99dc23f78c89511ef6d7b1635ea53794953565a4d6d4505b",
-          "size_bytes": 1087
+          "sha256": "sha256:e4b2034b9315ca80f1575edac2d34983faab3e5b0b4489f15a8c7e7a3c3df8c3",
+          "size_bytes": 6609
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:58252677b54b452ba8ac4c3e65f571fabaf18758ef14857bd7bac6ba5916111d",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:adf9c35bef379eacca7c68f8e7f874a00ce7ae49ef109ed718d23fc1af4246b8",
+        "stdout_size_bytes": 13674
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.aboutToDisappear",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24784,
+        "output_tokens": 3458,
+        "reasoning_tokens": 1932,
+        "total_tokens": 28370
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 33,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            152,
+            162
+          ],
+          "reason": "Unit consumes Promise results from getAllNets via then handlers and continues control flow in those callbacks.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            147,
+            150,
+            153,
+            157,
+            161,
+            163
+          ],
+          "reason": "Unit emits diagnostic records through Log.info and Log.error for network listener setup and events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            148,
+            149,
+            152,
+            156,
+            160,
+            162
+          ],
+          "reason": "Unit creates a platform net connection, queries all nets, and listens for network availability and loss events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            149,
+            156,
+            160
+          ],
+          "reason": "Unit registers platform net-connection error and event listeners via register and on for netAvailable and netLost.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 44495,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:28d819b33ca0f870c2b9735b5b1b817d969c6868096037d38dcad3d00c2c64fa"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:b9e1bfe20fba313eb9c9af71bd5a2478f024fb07312a97fbd2db04653ee47883",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.attempted.json",
@@ -231,33 +1652,245 @@
         },
         "result": {
           "path": "c0f296551b6e186511f574da6608775fa36792d510af5c156b3f5e15ea89b654.result.json",
-          "sha256": "sha256:460f7ca9d3f39093517a960ea78f2392d68feac32ffe08ec448363599f5e0f3e",
-          "size_bytes": 1091
+          "sha256": "sha256:0c8d527002cf2808979a9ccceda4d140be8dd1d40e04145b5076181533005fd8",
+          "size_bytes": 6545
         }
       },
       "source_role": "base",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:bd63119c29ffa885f79e102d46e8996cc1d207d1cd91237897b5d9ef0873c58b",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:931c6c6bfadfd13f773ce0cc7dee9e1dd01d97ef2e0abfad3fb741869c443ebf",
+        "stdout_size_bytes": 11749
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
       "unit_symbol": "Index.addNetworkListener",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24564,
+        "output_tokens": 3355,
+        "reasoning_tokens": 1820,
+        "total_tokens": 28047
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 36,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            158,
+            159,
+            160,
+            161
+          ],
+          "reason": "Unit consumes a Promise via getAllNets().then and continues control flow in the fulfillment callback.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            153,
+            156,
+            159,
+            163,
+            168
+          ],
+          "reason": "Unit emits platform diagnostic logs through Log.info and Log.error for network lifecycle and error paths.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            154,
+            155,
+            158,
+            162,
+            167
+          ],
+          "reason": "Unit creates a platform NetConnection, queries active nets, and listens for network available and lost events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            155,
+            162,
+            167
+          ],
+          "reason": "Unit registers platform NetConnection listeners via register and on for continuous network state events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 44109,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_subscription"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:598219f6a2d7ebdfd60d7d01b2b624bc7bcdf179c497532778d84edd7f4cacb5"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:f84a560df0827d7a9c0929c9d81ddf4d449316f745138fceb4771ace0f99f92f",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.attempted.json",
@@ -266,33 +1899,225 @@
         },
         "result": {
           "path": "611ad9fd14d9ca34910059a725385d171cd703d1ab2548456950701319ad79c3.result.json",
-          "sha256": "sha256:df0de510d2577d51f82dc9c3afe983eec65441401301f7d1edfcb937416db778",
-          "size_bytes": 1091
+          "sha256": "sha256:af37a3b4e0ab5e8f0f2c7a6ce23fb1f68b0302c00182aaa121ab331874ac7e48",
+          "size_bytes": 6531
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:6e566fc96385d6ddde6c51d03df66adf647138ca224130e332d31cbebd96c77b",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:7b0ef93ce0d45aa77b4f440237e4a55a48f0ff75c63410ee53a0e342f6732f0e",
+        "stdout_size_bytes": 13496
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.addNetworkListener",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24586,
+        "output_tokens": 3408,
+        "reasoning_tokens": 1877,
+        "total_tokens": 28122
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 32,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            175,
+            176,
+            177
+          ],
+          "reason": "Unit cancels a stored delayed callback by calling clearTimeout and clearing the timer field.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 29326,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:fbf70794f50a0ba734c13dfa6821d34f219b170b90041a1c630cf0d1d544df73"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:ea3a5d6e69c20baef3f9f9e16c8844204b58d4eb34c101ec57fd55c421d8e993",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.attempted.json",
@@ -301,33 +2126,224 @@
         },
         "result": {
           "path": "809da6856f0f2283d571a15a380f0c5e175accd9084ac259e2a9a8370e890ed0.result.json",
-          "sha256": "sha256:d37574c7606059b8f3f568daff3ed43527c565a12c2e1740e3c437bc5209c7c8",
-          "size_bytes": 1099
+          "sha256": "sha256:acaaef20eb0699e0ddf1e44aeb7dae2a190a4c3b0de6ef7856ea7033b2657104",
+          "size_bytes": 5963
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:200fa7e53dbdfca38cd004697d9fc6d1647ff07efaca1bd69c756cfc89616526",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:80d915a0cea5081e7493e6f7ee29b9024ebf0a2db5c7ee63eadd80fa07bc1f75",
+        "stdout_size_bytes": 10790
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.clearNetworkRetryTimer",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24255,
+        "output_tokens": 2352,
+        "reasoning_tokens": 905,
+        "total_tokens": 26735
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 34,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            296,
+            299
+          ],
+          "reason": "Cancels a stored timeout handle and invokes a helper that clears another runtime timer",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 36470,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:7b4e7fce1e0cfcb0f8fad7b8534df8c5eb588017e871a65922bad1a6e30d6188"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:fda3c7951ad4d959b4edec1ab99378186011859acbe8b2fc33ff91cfca89be5f",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.attempted.json",
@@ -336,33 +2352,232 @@
         },
         "result": {
           "path": "cb7125f59ad4de981bbac1c8ec3ee2060ccff5f98cc1f1f4f1a6e39864ae4cf3.result.json",
-          "sha256": "sha256:22aeb6be914267a0ad5803c4ff94b02d5a378cc58c27a26c68d5a6279368de60",
-          "size_bytes": 1091
+          "sha256": "sha256:dd331af7fcb280a32277d94843f6e30089708c1b4207ee85adeb28e7b0ee03d2",
+          "size_bytes": 5937
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:33ad19fc1834931955fa9350a8443e8d33b5f5f3c33923f2131a9673af27ffc6",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:b1bcff91583822cee86551a44cabc8b3719ca26217df2ef6b81b171d9e73871d",
+        "stdout_size_bytes": 10728
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.clearRuntimeTimers",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24259,
+        "output_tokens": 2842,
+        "reasoning_tokens": 1399,
+        "total_tokens": 27229
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 35,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            303,
+            304,
+            305,
+            306
+          ],
+          "reason": "Unit controls a media AV player by unregistering its media playback event listeners.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            303,
+            304,
+            305,
+            306
+          ],
+          "reason": "Unit cancels continuous platform media-player event subscriptions via off().",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 73046,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_media",
+        "has_subscription"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:470c0dde6da2dcddadefd4187e068affabdf24e92eb35f17c6952c56c9ade364"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:399c25b0da97ddb7c493558cdd8bfefe6ae323d636dddc5de71d4c3804e71879",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.attempted.json",
@@ -371,33 +2586,239 @@
         },
         "result": {
           "path": "d0b0a2a6857094d4b6034c46004380a57838f868c626c694d2a903b9ebe4c618.result.json",
-          "sha256": "sha256:51c87c643dd048f258af0cd8b2e8192229ed31b8b24f991df8056c1070b29c3e",
-          "size_bytes": 1097
+          "sha256": "sha256:66fc214b2685a8b24491051fb2e5d4b20bb21fa555d11dbfc81ae1b4aecc0c3b",
+          "size_bytes": 6120
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:e1c7418618fa8bf6aed6812d3fe1734a21d50415c3d26e268b2b40008cfd284a",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:055955df4dcf1c140d95178199a6a46198071eccb8c5ff2aef77248202d95446",
+        "stdout_size_bytes": 13712
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.removePlayerListeners",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24276,
+        "output_tokens": 4794,
+        "reasoning_tokens": 3327,
+        "total_tokens": 29198
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 31,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            190,
+            191,
+            196,
+            197
+          ],
+          "reason": "Unit consumes a Promise from getAllNets via then/catch and continues control flow on resolve or reject.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            198
+          ],
+          "reason": "Unit emits an error-level diagnostic through the Log facility on network recovery failure.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            190,
+            191,
+            192
+          ],
+          "reason": "Unit queries platform network connections via connection.getAllNets and updates connectivity state from the result.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            182,
+            186,
+            201
+          ],
+          "reason": "Unit clears any prior retry timer then schedules a delayed setTimeout callback using networkRetryDelayMs.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 34328,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_async",
+        "has_logging",
+        "has_network",
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:a802f5401552e1495a009479a77edff96e90997c0865e18358491d508f95f9fb"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:5db78f52b118c6f2d7a829dd250f529caa3208eabe6068248a9a594623c5386b",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.attempted.json",
@@ -406,33 +2827,232 @@
         },
         "result": {
           "path": "c67b9943dbf0db7ed4b0825656eda685092ecdb775246ab94e35241a2e4d288f.result.json",
-          "sha256": "sha256:7d5a0633c3e3a317666f9ff36da485114d9fb0c63d65d77aa2c575939ee9591f",
-          "size_bytes": 1101
+          "sha256": "sha256:f9d345765d13cfa427148a5279c1bfe1a0d91731158d16c8cea4099d593d70d7",
+          "size_bytes": 6449
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:1cd770f6c4dc78b2469a5d489576e68cc1b9919e9637afcf436906197c738801",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:06f46ef5526ee2c9c0fc3dba915b1dd79fa4fd4512f99c18af6688dcef871348",
+        "stdout_size_bytes": 11587
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.scheduleNetworkRecovery",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24548,
+        "output_tokens": 2713,
+        "reasoning_tokens": 1198,
+        "total_tokens": 27389
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 32,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            127
+          ],
+          "reason": "Unit emits a platform diagnostic log via Log.info with a timeUpdate message.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135
+          ],
+          "reason": "Unit builds AVPlaybackState with elapsed position and applies it through the AV session API.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 30349,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_logging",
+        "has_media"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:7cacb27938cbbd6dd156972fdd9b373ff41f721adb93e5c763e41adfd729d8e1"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:18f83fe10ff86000e316d86686051097f22dd7564a15d6952ad48fe31248fc8a",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.attempted.json",
@@ -441,33 +3061,240 @@
         },
         "result": {
           "path": "0268ba08d21d94b515265842c272c664430ffbab1b40e85f8c26df0be91b0f73.result.json",
-          "sha256": "sha256:374ce90cdab4faad8e7c8f69f0a5d834547eaacdb4a80b920530915d75133965",
-          "size_bytes": 1099
+          "sha256": "sha256:5c4cbf94a96215ccdbc87155d073a8ddc85055b910f12f829763990c4942e050",
+          "size_bytes": 6125
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:28c948cb8f6d0a7d7a6bc6145d944702671ec0ac0b9629b76e3cdc28d75cec93",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:f65ac7e8f700c5d9cd760d23a7c12fb16c5f61911e10f7e5616bcbb6a9ce1121",
+        "stdout_size_bytes": 11295
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.updatePlaybackProgress",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 24411,
+        "output_tokens": 2486,
+        "reasoning_tokens": 1014,
+        "total_tokens": 27025
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 37,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            913,
+            925,
+            949
+          ],
+          "reason": "Creates a Slider control and binds onChange and onTouch handlers for user-driven interaction.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            926,
+            937,
+            950
+          ],
+          "reason": "Emits diagnostic Log.info records for slider value changes, playback position params, and touch events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            929,
+            930,
+            936,
+            939
+          ],
+          "reason": "Seeks local avPlayer, updates AV session playback state, and sends cast seek control for media position.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            952,
+            956
+          ],
+          "reason": "Schedules a delayed setTimeout callback and clears the timer on further touch activity.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 41840,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:8bc6f6f295273fb9ed9ed9f1ced38272813bbdba4316fc2bb0c15b22127bb464"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:4aaeaa4a06f18aa4aca2436c676ce823de13de1b74f84f53ee4edebfcafa2a85",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.attempted.json",
@@ -476,33 +3303,241 @@
         },
         "result": {
           "path": "28cb6cae2fb28b13ee37f03b91c01d79a9d4bb2ef51ef0b3d0c82a37393c591d.result.json",
-          "sha256": "sha256:b7f51b7cf7702e4015fda7b31a5487e0dded2c8f3bfade2c827c31b69e564d59",
-          "size_bytes": 1133
+          "sha256": "sha256:9c414848fbb08ed569e3e5a5312efacb4a750ac5594cd5502535905979975bc9",
+          "size_bytes": 6482
         }
       },
       "source_role": "base",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:7957e0d164baa7942394232e4799674aa5ce6b50d886c565d7f5982020aa6f64",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:9874466edcd7cf6dee09ac77c1deb07e52f248d741acfa48e54b4f82819ffbac",
+        "stdout_size_bytes": 12979
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
       "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 25449,
+        "output_tokens": 3222,
+        "reasoning_tokens": 1706,
+        "total_tokens": 28799
+      },
+      "validated_judgment_available": true
     },
     {
       "attempt_cap": 1,
-      "failure_cause": "unknown_stderr_plaintext_not_retained",
-      "latency_ms": 34,
+      "attempt_count": 1,
+      "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+      "judgments": [
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_animation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_async"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_builder"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_file_io"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_image"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            971,
+            983,
+            1007
+          ],
+          "reason": "Creates a Slider control and binds onChange plus onTouch handlers for user-driven value and touch interaction.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_interactive_component"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_layout"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_lifecycle"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_list_render"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            984,
+            995,
+            1008
+          ],
+          "reason": "Emits diagnostic Log.info records for slider value changes, playback state params, and touch events.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_logging"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            987,
+            988,
+            994,
+            997
+          ],
+          "reason": "Seeks the local AV player, updates AV session playback position, and sends a cast seek control command.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_media"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_navigation"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_network"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_permission_request"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_resource_ref"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_responsive_api"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_state_management"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_storage"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_subscription"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_taskpool"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_text_display"
+        },
+        {
+          "decision": "positive",
+          "evidence_lines": [
+            1011,
+            1013,
+            1021
+          ],
+          "reason": "Schedules a delayed setTimeout callback and clears prior sliderTimer timeouts on touch up or continue.",
+          "reason_code": "direct_unit_semantic_evidence",
+          "tag_id": "has_timer"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_user_input"
+        },
+        {
+          "decision": "not_supported",
+          "evidence_lines": [],
+          "reason": null,
+          "reason_code": "no_support_in_complete_view",
+          "tag_id": "has_worker"
+        }
+      ],
+      "latency_ms": 40916,
+      "model": "grok-4.5",
       "model_view_id": "ai-tag-model-view:sha256:041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742",
-      "positive_tags": null,
-      "positive_tags_note": "not_available_due_to_execution_failure",
+      "positive_tags": [
+        "has_interactive_component",
+        "has_logging",
+        "has_media",
+        "has_timer"
+      ],
+      "prompt_identity": {
+        "system_prompt_sha256": "sha256:20c70d5d6bd90bbaf376205f88a33d87510bbaf2dfb61557de6ddf6e368a40e5",
+        "user_prompt_sha256": "sha256:d96e02ae911556205272051812491fc40579fa14593dbb0e4320b51357aca08c"
+      },
       "provider": "grok",
       "qualification": "blind_proxy_judge_not_human_truth",
-      "reason_code": "grok_exit_1",
+      "reason_code": "response_shape_valid",
       "request_id": "ai-tag-request:sha256:47d4f46f5a5f4e8268f1d63a13f5d0c96f213dcfc6bdebe4fabedcc84fd49bbf",
       "retry_count": 0,
-      "schema_version": "grok-tag-live-execution-projection-v1",
+      "schema_version": "grok-tag-live-observation-projection-v1",
       "source_artifacts": {
         "attempt_marker": {
           "path": "041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.attempted.json",
@@ -511,142 +3546,208 @@
         },
         "result": {
           "path": "041b80cb1b94c29091391816ace75b724be0cd823125cb232c73951e3118b742.result.json",
-          "sha256": "sha256:7c42b652bf28562ced460a2db6a3da4b704467b05211cb48ce43189ed28be986",
-          "size_bytes": 1134
+          "sha256": "sha256:82527e4c5af9ee70316d352f0000d5d54d89e8648aa67c9fa5b6073ff108bfef",
+          "size_bytes": 6529
         }
       },
       "source_role": "head",
-      "status": "provider_error",
-      "stderr_sha256": "sha256:be61297ad34035e941ae617417bf8636e8288c94a441607835e4504ab326bc13",
-      "stderr_size_bytes": 259,
-      "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "stdout_size_bytes": 0,
+      "status": "valid_shape",
+      "stop_reason": "EndTurn",
+      "transport_evidence": {
+        "provider_signed": false,
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size_bytes": 0,
+        "stdout_sha256": "sha256:349c3713ab32c485b777e08f369470db4f2e6825da363a347e64311d922711dd",
+        "stdout_size_bytes": 12835
+      },
       "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
       "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider",
-      "validated_judgment_available": false
+      "usage": {
+        "cache_read_input_tokens": 128,
+        "input_tokens": 25635,
+        "output_tokens": 3188,
+        "reasoning_tokens": 1658,
+        "total_tokens": 28951
+      },
+      "validated_judgment_available": true
     }
   ],
   "pilot_id": "sha256:28965ae3c4ec76e50aa44d26712bb7d1acbd673f4514f6d66497e98db504f067",
   "request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
-  "schema_version": "grok-tag-live-execution-set-v1",
+  "schema_version": "grok-tag-live-observation-set-v1",
+  "source_run": "grok-rerun-1",
   "summary": {
     "attempted_count": 15,
-    "elapsed_ms": 535,
+    "elapsed_ms": 613469,
     "provider": "grok",
     "qualification": "blind_proxy_judge_not_human_truth",
     "request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
     "schema_version": "video-player-tag-pilot-provider-summary-v1",
     "status_counts": {
-      "provider_error": 15
+      "valid_shape": 15
     },
     "unit_count": 15,
     "units": [
       {
         "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.isDisposed:L68-L68:O3059-3094:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.isDisposed"
       },
       {
         "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryDelayMs:L69-L69:O3098-3149:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.networkRetryDelayMs"
       },
       {
         "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@field_region:Index.networkRetryTimer:L67-L67:O3021-3055:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.networkRetryTimer"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_async",
+          "has_lifecycle",
+          "has_logging",
+          "has_media",
+          "has_subscription"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L71-L130:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
         "unit_symbol": "Index.aboutToAppear"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_async",
+          "has_lifecycle",
+          "has_logging",
+          "has_media",
+          "has_subscription"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToAppear:L74-L121:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.aboutToAppear"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_lifecycle",
+          "has_logging",
+          "has_media",
+          "has_network",
+          "has_subscription",
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.aboutToDisappear:L309-L344:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.aboutToDisappear"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_async",
+          "has_logging",
+          "has_network",
+          "has_subscription"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L146-L167:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
         "unit_symbol": "Index.addNetworkListener"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_async",
+          "has_logging",
+          "has_network",
+          "has_subscription"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.addNetworkListener:L152-L172:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.addNetworkListener"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearNetworkRetryTimer:L174-L179:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.clearNetworkRetryTimer"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.clearRuntimeTimers:L294-L300:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.clearRuntimeTimers"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_media",
+          "has_subscription"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.removePlayerListeners:L302-L307:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.removePlayerListeners"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_async",
+          "has_logging",
+          "has_network",
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.scheduleNetworkRecovery:L181-L202:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.scheduleNetworkRecovery"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_logging",
+          "has_media"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@method:Index.updatePlaybackProgress:L123-L136:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.updatePlaybackProgress"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_interactive_component",
+          "has_logging",
+          "has_media",
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L913-L959:Rbase:S040c6b57210863e01ca2d71363032cb3a5927b59b9da00b3fca43c8124c4125a",
         "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
       },
       {
-        "positive_tags": [],
-        "reason_code": "grok_exit_1",
-        "status": "provider_error",
+        "positive_tags": [
+          "has_interactive_component",
+          "has_logging",
+          "has_media",
+          "has_timer"
+        ],
+        "reason_code": "response_shape_valid",
+        "status": "valid_shape",
         "unit_id": "code/BasicFeature/Media/AVSession/VideoPlayer/entry/src/main/ets/pages/Index.ets@ui_block:Index.build.Column.Flex.Row.Flex.Flex.Slider:L971-L1026:Rhead:S5c344785976e70663124818a7c500ca38f2a9d1531b8ddec1bab024763bafa68",
         "unit_symbol": "Index.build.Column.Flex.Row.Flex.Flex.Slider"
       }
     ]
   },
-  "validated_judgment_available": false
+  "validated_judgment_available": true
 }

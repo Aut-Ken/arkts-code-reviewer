@@ -43,6 +43,7 @@ DEEPSEEK_REQUEST_SET_DIGEST = (
     "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6"
 )
 GROK_REQUEST_SET_DIGEST = "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35"
+GROK_SOURCE_RUN = "grok-rerun-1"
 SOURCE_NAMES = (
     "base.ets",
     "head.ets",
@@ -173,18 +174,20 @@ def _validate_observations(
     ):
         raise ValueError("DeepSeek observation fixture identity does not match")
     if (
-        grok.get("schema_version") != "grok-tag-live-execution-set-v1"
+        grok.get("schema_version") != "grok-tag-live-observation-set-v1"
         or grok.get("pilot_id") != PILOT_ID
         or grok.get("request_set_digest") != GROK_REQUEST_SET_DIGEST
-        or grok.get("validated_judgment_available") is not False
+        or grok.get("source_run") != GROK_SOURCE_RUN
+        or grok.get("validated_judgment_available") is not True
     ):
         raise ValueError("Grok observation fixture identity does not match")
     if (
-        provenance.get("schema_version") != "video-player-tag-live-provenance-v1"
+        provenance.get("schema_version") != "video-player-tag-live-provenance-v2"
         or provenance.get("pilot_id") != PILOT_ID
         or provenance.get("campaign_id") != CAMPAIGN_ID
         or provenance.get("deepseek_request_set_digest") != DEEPSEEK_REQUEST_SET_DIGEST
         or provenance.get("grok_request_set_digest") != GROK_REQUEST_SET_DIGEST
+        or provenance.get("grok_source_run") != GROK_SOURCE_RUN
         or provenance.get("contains_api_key") is not False
         or provenance.get("contains_prompt_or_source_body") is not False
         or provenance.get("contains_raw_provider_response_body") is not False
@@ -202,6 +205,10 @@ def _validate_observations(
     expected_tag_ids = [
         contract.tag_id for contract in expected_units[0].request.tag_contract_views
     ]
+    planned_grok_by_unit = {
+        row["unit_id"]: row["grok"]
+        for row in _list(pilot.inspection["units"], "Pilot inspection Units")
+    }
     for index, (unit, deepseek_row, grok_row) in enumerate(
         zip(expected_units, deepseek_rows, grok_rows, strict=True)
     ):
@@ -238,15 +245,53 @@ def _validate_observations(
             or deepseek_row.get("positive_tags") != positive_tags
         ):
             raise ValueError(f"DeepSeek observation {index + 1} failed replay binding")
+        grok_judgments = _list(grok_row.get("judgments"), "Grok judgments")
+        grok_judgment_tag_ids = [
+            _mapping(item, "Grok judgment").get("tag_id") for item in grok_judgments
+        ]
+        grok_positive_tags = [
+            item["tag_id"]
+            for item in grok_judgments
+            if _mapping(item, "Grok judgment").get("decision") == "positive"
+        ]
+        strict_grok_judgments = validate_grok_blind_output(
+            unit,
+            json.dumps(
+                {"judgments": grok_judgments},
+                allow_nan=False,
+                ensure_ascii=False,
+                separators=(",", ":"),
+                sort_keys=True,
+            ),
+        )
+        strict_grok_payloads = [
+            item.model_dump(mode="json") for item in strict_grok_judgments
+        ]
+        planned_grok = _mapping(
+            planned_grok_by_unit.get(unit.card.unit_id),
+            "planned Grok request",
+        )
+        prompt_identity = _mapping(
+            grok_row.get("prompt_identity"),
+            "Grok prompt identity",
+        )
         if (
             grok_row.get("unit_id") != unit.card.unit_id
             or grok_row.get("model_view_id") != unit.model_view.model_view_id
             or grok_row.get("request_id") != unit.request.request_id
-            or grok_row.get("status") != "provider_error"
-            or grok_row.get("validated_judgment_available") is not False
-            or grok_row.get("positive_tags") is not None
+            or grok_row.get("status") != "valid_shape"
+            or grok_row.get("model") != "grok-4.5"
+            or grok_row.get("validated_judgment_available") is not True
+            or grok_row.get("attempt_count") != 1
             or grok_row.get("attempt_cap") != 1
             or grok_row.get("retry_count") != 0
+            or grok_judgment_tag_ids != expected_tag_ids
+            or grok_judgments != strict_grok_payloads
+            or grok_row.get("positive_tags") != grok_positive_tags
+            or prompt_identity.get("system_prompt_sha256")
+            != planned_grok.get("system_prompt_sha256")
+            or prompt_identity.get("user_prompt_sha256")
+            != planned_grok.get("user_prompt_sha256")
         ):
             raise ValueError(f"Grok observation {index + 1} failed replay binding")
 
@@ -265,6 +310,7 @@ def _validate_observations(
         provenance_by_path[path] = record
 
     referenced_paths: set[str] = set()
+    provider_prefixes = {"deepseek": "deepseek", "grok": GROK_SOURCE_RUN}
     for provider, rows in (("deepseek", deepseek_rows), ("grok", grok_rows)):
         for row in rows:
             source_artifacts = _mapping(
@@ -278,7 +324,7 @@ def _validate_observations(
                 path = projection.get("path")
                 if not isinstance(path, str):
                     raise ValueError(f"{provider} source artifact path is invalid")
-                provenance_path = f"{provider}/{path}"
+                provenance_path = f"{provider_prefixes[provider]}/{path}"
                 provenance_record = provenance_by_path.get(provenance_path)
                 if provenance_record is None or (
                     provenance_record.get("provider") != provider
@@ -291,8 +337,8 @@ def _validate_observations(
     summary_and_inspection = {
         "deepseek/inspection.json": pilot.inspection,
         "deepseek/summary.json": deepseek["summary"],
-        "grok/inspection.json": pilot.inspection,
-        "grok/summary.json": grok["summary"],
+        f"{GROK_SOURCE_RUN}/inspection.json": pilot.inspection,
+        f"{GROK_SOURCE_RUN}/summary.json": grok["summary"],
     }
     for path, payload in summary_and_inspection.items():
         record = provenance_by_path.get(path)
@@ -314,9 +360,15 @@ def _build_comparison(
 ) -> dict[str, object]:
     static_counts: Counter[str] = Counter()
     deepseek_counts: Counter[str] = Counter()
+    grok_counts: Counter[str] = Counter()
     overlap_counts: Counter[str] = Counter()
     deepseek_only_counts: Counter[str] = Counter()
     static_only_counts: Counter[str] = Counter()
+    deepseek_grok_overlap_counts: Counter[str] = Counter()
+    deepseek_only_vs_grok_counts: Counter[str] = Counter()
+    grok_only_vs_deepseek_counts: Counter[str] = Counter()
+    both_not_positive = 0
+    exact_positive_set_units = 0
     units: list[dict[str, object]] = []
     for unit, deepseek, grok in zip(
         pilot.campaign.units,
@@ -330,16 +382,42 @@ def _build_comparison(
             deepseek.get("positive_tags"),
             "DeepSeek positive_tags",
         )
+        grok_positive = _strings(grok.get("positive_tags"), "Grok positive_tags")
         static_set = set(static_exact)
         deepseek_set = set(deepseek_positive)
+        grok_set = set(grok_positive)
         overlap = sorted(static_set & deepseek_set)
         deepseek_only = sorted(deepseek_set - static_set)
         static_only = sorted(static_set - deepseek_set)
+        deepseek_grok_overlap = sorted(deepseek_set & grok_set)
+        deepseek_only_vs_grok = sorted(deepseek_set - grok_set)
+        grok_only_vs_deepseek = sorted(grok_set - deepseek_set)
         static_counts.update(static_exact)
         deepseek_counts.update(deepseek_positive)
+        grok_counts.update(grok_positive)
         overlap_counts.update(overlap)
         deepseek_only_counts.update(deepseek_only)
         static_only_counts.update(static_only)
+        deepseek_grok_overlap_counts.update(deepseek_grok_overlap)
+        deepseek_only_vs_grok_counts.update(deepseek_only_vs_grok)
+        grok_only_vs_deepseek_counts.update(grok_only_vs_deepseek)
+        exact_positive_set_units += deepseek_set == grok_set
+        deepseek_decisions = {
+            item["tag_id"]: item["decision"]
+            for value in _list(deepseek["judgments"], "DeepSeek judgments")
+            for item in [_mapping(value, "DeepSeek judgment")]
+        }
+        grok_decisions = {
+            item["tag_id"]: item["decision"]
+            for value in _list(grok["judgments"], "Grok judgments")
+            for item in [_mapping(value, "Grok judgment")]
+        }
+        if set(deepseek_decisions) != set(grok_decisions):
+            raise ValueError("DeepSeek/Grok judgment taxonomies differ")
+        both_not_positive += sum(
+            deepseek_decisions[tag] != "positive" and grok_decisions[tag] != "positive"
+            for tag in deepseek_decisions
+        )
         units.append(
             {
                 "unit_id": unit.card.unit_id,
@@ -356,15 +434,35 @@ def _build_comparison(
                 "deepseek_only_candidate_tags": deepseek_only,
                 "static_only_tags": static_only,
                 "grok_status": grok["status"],
-                "grok_validated_judgment_available": False,
+                "grok_validated_judgment_available": True,
+                "grok_positive_tags": grok_positive,
+                "deepseek_grok_overlap_tags": deepseek_grok_overlap,
+                "deepseek_only_vs_grok_tags": deepseek_only_vs_grok,
+                "grok_only_vs_deepseek_tags": grok_only_vs_deepseek,
+                "deepseek_grok_exact_positive_set": deepseek_set == grok_set,
             }
         )
 
+    deepseek_positive_count = sum(deepseek_counts.values())
+    grok_positive_count = sum(grok_counts.values())
+    both_positive = sum(deepseek_grok_overlap_counts.values())
+    deepseek_only_vs_grok = sum(deepseek_only_vs_grok_counts.values())
+    grok_only_vs_deepseek = sum(grok_only_vs_deepseek_counts.values())
+    decision_total = len(units) * 24
+    raw_agreement = (both_positive + both_not_positive) / decision_total
+    deepseek_positive_rate = deepseek_positive_count / decision_total
+    grok_positive_rate = grok_positive_count / decision_total
+    expected_agreement = (
+        deepseek_positive_rate * grok_positive_rate
+        + (1 - deepseek_positive_rate) * (1 - grok_positive_rate)
+    )
+    cohen_kappa = (raw_agreement - expected_agreement) / (1 - expected_agreement)
+
     return {
-        "schema_version": "video-player-static-deepseek-tag-comparison-v1",
+        "schema_version": "video-player-static-deepseek-grok-tag-comparison-v1",
         "pilot_id": PILOT_ID,
         "campaign_id": CAMPAIGN_ID,
-        "comparison_status": "incomplete_grok_execution_failed",
+        "comparison_status": "complete_proxy_comparison_without_human_truth",
         "unit_count": len(units),
         "static_exact": {
             "assignment_count": sum(static_counts.values()),
@@ -373,7 +471,7 @@ def _build_comparison(
             "empty_unit_count": sum(not unit["static_exact_tags"] for unit in units),
         },
         "deepseek": {
-            "candidate_positive_assignment_count": sum(deepseek_counts.values()),
+            "candidate_positive_assignment_count": deepseek_positive_count,
             "distinct_candidate_tag_count": len(deepseek_counts),
             "tag_counts": dict(sorted(deepseek_counts.items())),
             "empty_unit_count": sum(not unit["deepseek_positive_tags"] for unit in units),
@@ -388,9 +486,26 @@ def _build_comparison(
         },
         "grok": {
             "attempted_count": 15,
-            "valid_judgment_count": 0,
-            "provider_error_count": 15,
-            "empty_positive_tags_interpretation": "unavailable_not_zero",
+            "valid_judgment_count": 15,
+            "provider_error_count": 0,
+            "positive_assignment_count": grok_positive_count,
+            "distinct_positive_tag_count": len(grok_counts),
+            "tag_counts": dict(sorted(grok_counts.items())),
+            "empty_unit_count": sum(not unit["grok_positive_tags"] for unit in units),
+        },
+        "deepseek_grok_agreement": {
+            "exact_positive_set_unit_count": exact_positive_set_units,
+            "both_positive_assignment_count": both_positive,
+            "deepseek_only_assignment_count": deepseek_only_vs_grok,
+            "grok_only_assignment_count": grok_only_vs_deepseek,
+            "both_not_positive_assignment_count": both_not_positive,
+            "positive_jaccard": both_positive
+            / (both_positive + deepseek_only_vs_grok + grok_only_vs_deepseek),
+            "raw_binary_decision_agreement": raw_agreement,
+            "cohen_kappa_binary_positive": cohen_kappa,
+            "both_positive_tag_counts": dict(sorted(deepseek_grok_overlap_counts.items())),
+            "deepseek_only_tag_counts": dict(sorted(deepseek_only_vs_grok_counts.items())),
+            "grok_only_tag_counts": dict(sorted(grok_only_vs_deepseek_counts.items())),
         },
         "units": units,
         "quality_boundary": ("candidate_comparison_not_human_truth_not_tag_precision_recall"),
@@ -427,6 +542,11 @@ def _build_assertions(
     static = _mapping(comparison["static_exact"], "static comparison")
     deepseek = _mapping(comparison["deepseek"], "DeepSeek comparison")
     agreement = _mapping(comparison["agreement"], "agreement comparison")
+    grok = _mapping(comparison["grok"], "Grok comparison")
+    proxy_agreement = _mapping(
+        comparison["deepseek_grok_agreement"],
+        "DeepSeek/Grok agreement",
+    )
     _assertion(
         assertions,
         "A01",
@@ -516,19 +636,38 @@ def _build_assertions(
     _assertion(
         assertions,
         "A09",
-        "Grok 15 次执行均失败且不存在可解释为 Tag 判断的输出",
+        "Grok 15 个盲判结果均通过相同的 24 Tag 结构校验",
         len(grok_rows) == 15
         and all(
-            row["status"] == "provider_error"
-            and row["validated_judgment_available"] is False
-            and row["positive_tags"] is None
+            row["status"] == "valid_shape"
+            and row["validated_judgment_available"] is True
+            and len(row["judgments"]) == 24
             for row in grok_rows
         ),
-        {"attempted_count": 15, "valid_judgment_count": 0},
+        {
+            "attempted_count": 15,
+            "valid_judgment_count": grok["valid_judgment_count"],
+            "judgment_count": 360,
+        },
     )
     _assertion(
         assertions,
         "A10",
+        "DeepSeek 与 Grok 的 positive 分歧被完整保留且没有在线裁决",
+        proxy_agreement["both_positive_assignment_count"] == 41
+        and proxy_agreement["deepseek_only_assignment_count"] == 8
+        and proxy_agreement["grok_only_assignment_count"] == 1
+        and proxy_agreement["exact_positive_set_unit_count"] == 9,
+        {
+            "both_positive": 41,
+            "deepseek_only": 8,
+            "grok_only": 1,
+            "exact_positive_set_units": 9,
+        },
+    )
+    _assertion(
+        assertions,
+        "A11",
         "样本与结果明确不是真实 MR、人工 Truth 或生产 P/R",
         pilot.inspection["sample"]["is_real_mr"] is False
         and "not_production_precision_recall" in pilot.inspection["quality_boundary"],
@@ -539,7 +678,7 @@ def _build_assertions(
         },
     )
     return {
-        "schema_version": "video-player-tag-pilot-assertions-v1",
+        "schema_version": "video-player-tag-pilot-assertions-v2",
         "status": "pass",
         "passed": len(assertions),
         "failed": 0,
@@ -560,28 +699,43 @@ def _report(
 ) -> str:
     static = _mapping(comparison["static_exact"], "static comparison")
     deepseek = _mapping(comparison["deepseek"], "DeepSeek comparison")
-    agreement = _mapping(comparison["agreement"], "agreement comparison")
+    grok = _mapping(comparison["grok"], "Grok comparison")
+    proxy_agreement = _mapping(
+        comparison["deepseek_grok_agreement"],
+        "DeepSeek/Grok agreement",
+    )
     units = _list(comparison["units"], "comparison Units")
     unit_rows = []
     for value in units:
         unit = _mapping(value, "comparison Unit")
+        model_difference = []
+        if unit["deepseek_only_vs_grok_tags"]:
+            model_difference.append(
+                f"DS-only: {_join_tags(unit['deepseek_only_vs_grok_tags'])}"
+            )
+        if unit["grok_only_vs_deepseek_tags"]:
+            model_difference.append(
+                f"Grok-only: {_join_tags(unit['grok_only_vs_deepseek_tags'])}"
+            )
         unit_rows.append(
-            "| {side} | `{symbol}` | {static} | {deepseek} | {only} | `{grok}` |".format(
+            "| {side} | `{symbol}` | {static} | {deepseek} | {grok} | {difference} |".format(
                 side=unit["source_role"],
                 symbol=unit["unit_symbol"],
                 static=_join_tags(unit["static_exact_tags"]),
                 deepseek=_join_tags(unit["deepseek_positive_tags"]),
-                only=_join_tags(unit["deepseek_only_candidate_tags"]),
-                grok=unit["grok_status"],
+                grok=_join_tags(unit["grok_positive_tags"]),
+                difference="；".join(model_difference) if model_difference else "一致",
             )
         )
 
     static_counts = _mapping(static["tag_counts"], "static Tag counts")
     deepseek_counts = _mapping(deepseek["tag_counts"], "DeepSeek Tag counts")
+    grok_counts = _mapping(grok["tag_counts"], "Grok Tag counts")
     tag_rows = []
-    for tag in sorted(set(static_counts) | set(deepseek_counts)):
+    for tag in sorted(set(static_counts) | set(deepseek_counts) | set(grok_counts)):
         tag_rows.append(
-            f"| `{tag}` | {static_counts.get(tag, 0)} | {deepseek_counts.get(tag, 0)} |"
+            f"| `{tag}` | {static_counts.get(tag, 0)} | {deepseek_counts.get(tag, 0)} | "
+            f"{grok_counts.get(tag, 0)} |"
         )
 
     artifact_rows = [
@@ -600,12 +754,15 @@ def _report(
             "",
             "- Pilot 执行状态：**PARTIAL**。",
             "- DeepSeek 结构执行：**PASS，15/15 valid_shape**。",
-            "- Grok 裁判执行：**CLI EXECUTION ERROR，0/15 有效判断**。",
+            "- Grok 盲判执行：**PASS，15/15 valid_shape**。",
             "- Tag 真实质量：**NOT QUALIFIED**。",
             "- 静态 `unit_exact`：9 次分配、3 种 Tag、8/15 Unit 为空。",
             "- DeepSeek：49 次候选 positive、10 种 Tag、3/15 Unit 为空。",
+            "- Grok：42 次代理 positive、8 种 Tag、3/15 Unit 为空。",
             "- 静态的 9 次 exact 全部被 DeepSeek 覆盖；DeepSeek 另给出 40 次候选 "
             "positive。这里的“候选”不等于“正确补漏”。",
+            "- DeepSeek 与 Grok 重合 41 次 positive；DeepSeek-only 8 次，Grok-only "
+            "1 次；9/15 Unit 的 positive 集合完全一致。模型一致不等于判断正确。",
             "- 本样本不是真实 MR，没有人工 Tag Truth，不能计算真实 Precision/Recall。",
             "- 本次没有执行知识检索、文档质量评估、Final LLM 或 Finding。",
             "",
@@ -636,40 +793,41 @@ def _report(
             "  → UnitFactScope (unit_exact / whole-file file_hints)",
             "  → Static Feature Routing",
             "  → 15 个完整 24-Tag DeepSeek 判断",
-            "  → 15 次 Grok blind proxy CLI 调用（均在产生判断前失败）",
-            "  → Static / DeepSeek 对照",
+            "  → 15 个完整 24-Tag Grok blind proxy 判断",
+            "  → Static / DeepSeek / Grok 对照",
             "```",
             "",
             "这条 Pilot 在 Tag 对照处停止。它没有进入 Retrieval，也没有生成评审意见。",
             "",
-            "## 4. 静态与 DeepSeek 总体对照",
+            "## 4. 静态、DeepSeek 与 Grok 总体对照",
             "",
-            "| 指标 | Static unit_exact | DeepSeek candidate |",
-            "|---|---:|---:|",
+            "| 指标 | Static unit_exact | DeepSeek candidate | Grok proxy |",
+            "|---|---:|---:|---:|",
             f"| Tag 分配数 | {static['assignment_count']} | "
-            f"{deepseek['candidate_positive_assignment_count']} |",
+            f"{deepseek['candidate_positive_assignment_count']} | "
+            f"{grok['positive_assignment_count']} |",
             f"| 不同 Tag 数 | {static['distinct_tag_count']} | "
-            f"{deepseek['distinct_candidate_tag_count']} |",
-            f"| 空 Unit 数 | {static['empty_unit_count']} | {deepseek['empty_unit_count']} |",
-            f"| 双方重合分配 | {agreement['overlap_assignment_count']} | "
-            f"{agreement['overlap_assignment_count']} |",
+            f"{deepseek['distinct_candidate_tag_count']} | "
+            f"{grok['distinct_positive_tag_count']} |",
+            f"| 空 Unit 数 | {static['empty_unit_count']} | {deepseek['empty_unit_count']} | "
+            f"{grok['empty_unit_count']} |",
             "",
             "`routing_tags` 在本样本中是同一个整文件提示签名：11 种 Tag × 15 Unit = "
             "165 次分配。它们不是 Unit positive，不能加入上表的静态 exact 数量。",
             "",
             "### Tag 分布",
             "",
-            "| Tag | Static exact | DeepSeek candidate positive |",
-            "|---|---:|---:|",
+            "| Tag | Static exact | DeepSeek candidate positive | Grok proxy positive |",
+            "|---|---:|---:|---:|",
             *tag_rows,
             "",
             "## 5. 逐 ReviewUnit 对照",
             "",
-            "| side | ReviewUnit | Static exact | DeepSeek positive | DS-only 候选 | Grok |",
+            "| side | ReviewUnit | Static exact | DeepSeek positive | Grok positive | 模型分歧 |",
             "|---|---|---|---|---|---|",
             *unit_rows,
             "",
-            "Grok 列的 `provider_error` 表示没有模型判断，不能解释成 Grok 认为该 Unit 没有 Tag。",
+            "Grok 是独立盲判代理：它没有读取 DeepSeek 的结论。分歧被原样保留，没有在线裁决。",
             "",
             "## 6. DeepSeek 运行证据",
             "",
@@ -688,7 +846,20 @@ def _report(
             "- 每个 Unit 只尝试一次，不重试。",
             "- `valid_shape` 只证明输出满足合同，不证明判断正确。",
             "",
-            "## 7. 已观察到的过度推断风险",
+            "## 7. DeepSeek / Grok 一致性",
+            "",
+            f"- 360 个二元 positive/not-positive 判断中有 "
+            f"`{proxy_agreement['both_positive_assignment_count']}` 个共同 positive、"
+            f"`{proxy_agreement['both_not_positive_assignment_count']}` 个共同 not-positive。",
+            f"- DeepSeek-only：`{proxy_agreement['deepseek_only_assignment_count']}`；"
+            f"Grok-only：`{proxy_agreement['grok_only_assignment_count']}`。",
+            f"- positive Jaccard：`{proxy_agreement['positive_jaccard']:.3f}`；"
+            f"raw binary agreement：`{proxy_agreement['raw_binary_decision_agreement']:.3f}`；"
+            f"Cohen kappa：`{proxy_agreement['cohen_kappa_binary_positive']:.3f}`。",
+            "- raw agreement 会被大量共同 negative 抬高；这些指标只描述两个模型的一致性，"
+            "不是 Precision、Recall 或准确率。",
+            "",
+            "## 8. 已观察到的过度推断与漏判风险",
             "",
             "这次真实运行没有人工 Truth，但模型理由已经暴露出需要重点复核的候选：",
             "",
@@ -700,31 +871,41 @@ def _report(
             "emitter/sensor 定义的订阅 Tag。",
             "5. `has_logging`：将自定义 `Log.info` 解释成当前配置定义的 `hilog.`。",
             "",
-            "这些只是合同对照下的风险观察，不是正式人工裁决；它们说明 DeepSeek 可以 "
-            "扩大召回候选，但不能直接把 AI positive 提升为 `unit_exact`。",
+            "6 个 Unit 的模型 positive 集合不一致。DeepSeek-only 主要是 "
+            "`has_state_management`（5 次），另有 `has_file_io`、`has_network`、"
+            "`has_timer` 各 1 次；Grok-only 是 `aboutToDisappear` 的 `has_network`。",
+            "这些只是合同对照下的风险观察，不是正式人工裁决。双方共同判断也可能共同偏离 "
+            "Tag 合同，因此不能把一致结果直接提升为 `unit_exact` 或 Tag Truth。",
             "",
-            "## 8. Grok 运行结果",
+            "## 9. Grok 运行结果",
             "",
             "- 按批准范围执行 15 次，每个 Unit 一次，无重试。",
-            "- 15 次均为 `grok_exit_1`，合计约 535 ms。",
-            "- stdout 均为空；stderr 只保留 259-byte 正文的 SHA-256，没有保留明文。",
-            "- 没有创建可验证的 Tag judgment，无法进行三方一致率或代理 P/R 对照。",
-            "- 当前证据只能证明 Grok CLI 子进程快速退出，不能证明请求已经到达服务端。",
-            "- 准确失败原因仍是 unknown；报告不把“可能的 Schema/CLI 问题”写成事实。",
+            f"- 有效 Unit：`{summary['grok_valid_judgment_count']}/15`；24-Tag 判断总数："
+            f"`{summary['grok_judgment_count']}`。",
+            f"- positive / not_supported / abstain：`{summary['grok_positive_count']}` / "
+            f"`{summary['grok_not_supported_count']}` / `{summary['grok_abstain_count']}`。",
+            f"- 输入 / 输出 / reasoning / cache-read tokens："
+            f"`{summary['grok_input_tokens']}` / `{summary['grok_output_tokens']}` / "
+            f"`{summary['grok_reasoning_tokens']}` / "
+            f"`{summary['grok_cache_read_input_tokens']}`。",
+            f"- 单 Unit 延迟范围：`{summary['grok_latency_min_ms']}`～"
+            f"`{summary['grok_latency_max_ms']}` ms；Campaign 合计约 "
+            f"`{summary['grok_campaign_elapsed_ms']}` ms。",
+            "- `valid_shape` 证明输出完整且通过本地语义校验，不证明 Grok 是正确裁判。",
             "",
-            "## 9. 机器产物",
+            "## 10. 机器产物",
             "",
             "| 阶段 | 文件 |",
             "|---|---|",
             *artifact_rows,
             "",
-            "## 10. 断言",
+            "## 11. 断言",
             "",
             f"离线重建与结果整理共通过 `{assertions['passed']}` 项断言；完整证据见 "
             "[13_assertions.json](artifacts/13_assertions.json)。断言 PASS 证明的是身份、"
             "结构和统计可重放，不代表 Tag 真实质量 PASS。",
             "",
-            "## 11. 如何离线重建",
+            "## 12. 如何离线重建",
             "",
             "```bash",
             "cd /home/autken/Code/arkts-code-reviewer",
@@ -735,13 +916,14 @@ def _report(
             "或 Grok。`prepare_observations.py` 仅用于从原始 `.codex` 证据重新生成脱敏 "
             "inputs，正常查看或重建报告不需要运行它。",
             "",
-            "## 12. 准确结论边界",
+            "## 13. 准确结论边界",
             "",
             "本 Pilot 已证明：静态 exact 在该样本上的输出很少；DeepSeek 能给出更多候选 "
-            "Tag；所有 DeepSeek 输出满足冻结结构；运行身份和用量可以复核。",
+            "Tag；DeepSeek 与 Grok 都完成 15×24 结构化判断；双方一致性、分歧、运行身份和"
+            "用量可以复核。",
             "",
-            "本 Pilot 没有证明：40 个新增候选都正确、真实 Tag Precision/Recall、Grok "
-            "裁判质量、知识检索提升、相关文档质量、最终模型答案质量或生产可用性。",
+            "本 Pilot 没有证明：AI 候选都正确、模型一致即真实、真实 Tag Precision/Recall、"
+            "Grok 裁判质量、知识检索提升、相关文档质量、最终模型答案质量或生产可用性。",
             "",
         ]
     )
@@ -794,13 +976,29 @@ def _build_payloads() -> tuple[dict[str, object], str]:
         cache_tokens += int(usage["cache_read_input_tokens"])
         latencies.append(int(row["latency_ms"]))
 
+    grok_decision_counts: Counter[str] = Counter()
+    grok_input_tokens = 0
+    grok_output_tokens = 0
+    grok_reasoning_tokens = 0
+    grok_cache_tokens = 0
+    grok_latencies: list[int] = []
+    for row in grok_rows:
+        for judgment in row["judgments"]:
+            grok_decision_counts[_mapping(judgment, "Grok judgment")["decision"]] += 1
+        usage = _mapping(row["usage"], "Grok usage")
+        grok_input_tokens += int(usage["input_tokens"])
+        grok_output_tokens += int(usage["output_tokens"])
+        grok_reasoning_tokens += int(usage["reasoning_tokens"])
+        grok_cache_tokens += int(usage["cache_read_input_tokens"])
+        grok_latencies.append(int(row["latency_ms"]))
+
     deepseek_summary = _mapping(deepseek_input["summary"], "DeepSeek summary")
     grok_summary = _mapping(grok_input["summary"], "Grok summary")
     summary = {
-        "schema_version": "video-player-tag-pilot-summary-v1",
+        "schema_version": "video-player-tag-pilot-summary-v2",
         "execution_status": "partial",
         "deepseek_shape_status": "pass",
-        "grok_status": "provider_error",
+        "grok_status": "pass",
         "tag_quality_status": "not_qualified",
         "production_eligible": False,
         "pilot_id": PILOT_ID,
@@ -841,9 +1039,35 @@ def _build_payloads() -> tuple[dict[str, object], str]:
         "deepseek_latency_max_ms": max(latencies),
         "deepseek_campaign_elapsed_ms": deepseek_summary["elapsed_ms"],
         "grok_attempted_count": grok_summary["attempted_count"],
-        "grok_valid_judgment_count": 0,
-        "grok_provider_error_count": 15,
+        "grok_valid_judgment_count": 15,
+        "grok_provider_error_count": 0,
+        "grok_judgment_count": sum(grok_decision_counts.values()),
+        "grok_positive_count": grok_decision_counts["positive"],
+        "grok_not_supported_count": grok_decision_counts["not_supported"],
+        "grok_abstain_count": grok_decision_counts["abstain"],
+        "grok_positive_assignment_count": comparison["grok"]["positive_assignment_count"],
+        "grok_distinct_positive_tag_count": comparison["grok"]["distinct_positive_tag_count"],
+        "grok_empty_unit_count": comparison["grok"]["empty_unit_count"],
+        "grok_input_tokens": grok_input_tokens,
+        "grok_output_tokens": grok_output_tokens,
+        "grok_reasoning_tokens": grok_reasoning_tokens,
+        "grok_cache_read_input_tokens": grok_cache_tokens,
+        "grok_model_latency_sum_ms": sum(grok_latencies),
+        "grok_latency_min_ms": min(grok_latencies),
+        "grok_latency_max_ms": max(grok_latencies),
         "grok_campaign_elapsed_ms": grok_summary["elapsed_ms"],
+        "deepseek_grok_both_positive_count": comparison["deepseek_grok_agreement"][
+            "both_positive_assignment_count"
+        ],
+        "deepseek_grok_deepseek_only_count": comparison["deepseek_grok_agreement"][
+            "deepseek_only_assignment_count"
+        ],
+        "deepseek_grok_grok_only_count": comparison["deepseek_grok_agreement"][
+            "grok_only_assignment_count"
+        ],
+        "deepseek_grok_exact_positive_set_unit_count": comparison[
+            "deepseek_grok_agreement"
+        ]["exact_positive_set_unit_count"],
         "human_truth_available": False,
         "real_tag_precision_recall_available": False,
         "retrieval_executed": False,
@@ -852,12 +1076,11 @@ def _build_payloads() -> tuple[dict[str, object], str]:
         "report": "REPORT.md",
     }
     manifest = {
-        "schema_version": "video-player-tag-pilot-run-manifest-v1",
+        "schema_version": "video-player-tag-pilot-run-manifest-v2",
         "execution_status": "partial",
         "tag_quality_status": "not_qualified",
-        "scope": "ChangeSet through Static/DeepSeek Tag comparison",
+        "scope": "ChangeSet through Static/DeepSeek/Grok Tag comparison",
         "excluded_stages": [
-            "successful Grok proxy judgment",
             "Retrieval",
             "Rules",
             "Review Prompt",
@@ -871,6 +1094,7 @@ def _build_payloads() -> tuple[dict[str, object], str]:
         "campaign_id": CAMPAIGN_ID,
         "deepseek_request_set_digest": DEEPSEEK_REQUEST_SET_DIGEST,
         "grok_request_set_digest": GROK_REQUEST_SET_DIGEST,
+        "grok_source_run": GROK_SOURCE_RUN,
         "provider_observation_date": "2026-07-21",
         "runtime": {
             "python": sys.version.split()[0],

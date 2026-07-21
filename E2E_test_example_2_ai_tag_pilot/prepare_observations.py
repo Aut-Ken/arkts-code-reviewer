@@ -28,6 +28,7 @@ from arkts_code_reviewer.hybrid_analysis import (  # noqa: E402
 )
 from E2E_test_example_1.video_player_tag_pilot import (  # noqa: E402
     build_video_player_tag_pilot,
+    validate_grok_blind_output,
 )
 
 ROOT = Path(__file__).resolve().parent
@@ -48,6 +49,7 @@ DEEPSEEK_REQUEST_SET_DIGEST = (
     "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6"
 )
 GROK_REQUEST_SET_DIGEST = "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35"
+GROK_LIVE_DIR_NAME = "grok-rerun-1"
 SOURCE_NAMES = (
     "base.ets",
     "head.ets",
@@ -132,7 +134,7 @@ def _validate_live_root(live_root: Path) -> tuple[Path, Path]:
     if live_root.name != PILOT_ID.removeprefix("sha256:"):
         raise ValueError("live root does not match the approved Pilot ID")
     deepseek_dir = live_root / "deepseek"
-    grok_dir = live_root / "grok"
+    grok_dir = live_root / GROK_LIVE_DIR_NAME
     for path in (deepseek_dir, grok_dir):
         if path.is_symlink() or not path.is_dir():
             raise ValueError(f"provider result directory is missing or unsafe: {path}")
@@ -286,12 +288,15 @@ def _prepare_grok(
     if (
         summary.get("request_set_digest") != GROK_REQUEST_SET_DIGEST
         or summary.get("attempted_count") != 15
-        or summary.get("status_counts") != {"provider_error": 15}
+        or summary.get("status_counts") != {"valid_shape": 15}
     ):
-        raise ValueError("Grok summary does not match the approved failed run")
+        raise ValueError("Grok summary does not match the approved successful rerun")
 
     markers = _result_files(grok_dir, "attempted")
     results = _result_files(grok_dir, "result")
+    planned_by_unit = {
+        row["unit_id"]: row["grok"] for row in _list(pilot.inspection["units"], "Pilot Units")
+    }
     marker_by_model_view: dict[str, tuple[dict[str, object], Path]] = {}
     for path in markers:
         marker = _load_json(path)
@@ -320,42 +325,88 @@ def _prepare_grok(
             raise ValueError(f"duplicate Grok Unit result: {unit_id}")
         unit = unit_by_id[unit_id]
         marker, marker_path = marker_by_model_view[model_view_id]
+        planned = _mapping(planned_by_unit.get(unit_id), "planned Grok request")
+        judgments_raw = _list(result.get("judgments"), "Grok judgments")
+        judgments = [dict(_mapping(item, "Grok judgment")) for item in judgments_raw]
+        strict_judgments = validate_grok_blind_output(
+            unit,
+            json.dumps(
+                {"judgments": judgments},
+                allow_nan=False,
+                ensure_ascii=False,
+                separators=(",", ":"),
+                sort_keys=True,
+            ),
+        )
+        strict_judgment_payloads = [item.model_dump(mode="json") for item in strict_judgments]
+        positive_tags = [
+            item.tag_id for item in strict_judgments if item.decision == "positive"
+        ]
+        usage = dict(_mapping(result.get("usage"), "Grok usage"))
+        expected_usage_keys = {
+            "input_tokens",
+            "cache_read_input_tokens",
+            "output_tokens",
+            "reasoning_tokens",
+            "total_tokens",
+        }
         if (
             result.get("request_set_digest") != GROK_REQUEST_SET_DIGEST
             or result.get("provider") != "grok"
-            or result.get("status") != "provider_error"
-            or result.get("reason_code") != "grok_exit_1"
-            or result.get("stdout_size_bytes") != 0
-            or result.get("stdout_sha256")
+            or result.get("status") != "valid_shape"
+            or result.get("reason_code") != "response_shape_valid"
+            or result.get("qualification") != "blind_proxy_judge_not_human_truth"
+            or result.get("stopReason") != "EndTurn"
+            or result.get("stderr_size_bytes") != 0
+            or result.get("stderr_sha256")
             != "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-            or result.get("stderr_size_bytes") != 259
+            or not isinstance(result.get("stdout_size_bytes"), int)
+            or result.get("stdout_size_bytes", 0) <= 0
             or marker.get("unit_id") != unit_id
             or marker.get("request_id") != unit.request.request_id
+            or marker.get("system_prompt_sha256") != planned.get("system_prompt_sha256")
+            or marker.get("user_prompt_sha256") != planned.get("user_prompt_sha256")
             or model_view_id != unit.model_view.model_view_id
+            or result.get("request_id") != unit.request.request_id
+            or judgments != strict_judgment_payloads
+            or result.get("positive_tags") != positive_tags
+            or set(usage) != expected_usage_keys
+            or any(not isinstance(value, int) or value < 0 for value in usage.values())
         ):
-            raise ValueError(f"Grok failure result failed Pilot binding: {path}")
+            raise ValueError(f"Grok successful result failed Pilot binding: {path}")
 
         projections_by_unit[unit_id] = {
-            "schema_version": "grok-tag-live-execution-projection-v1",
+            "schema_version": "grok-tag-live-observation-projection-v1",
             "unit_id": unit_id,
             "unit_symbol": result.get("unit_symbol"),
             "source_role": result.get("source_role"),
             "model_view_id": model_view_id,
             "request_id": result.get("request_id"),
+            "prompt_identity": {
+                "system_prompt_sha256": marker.get("system_prompt_sha256"),
+                "user_prompt_sha256": marker.get("user_prompt_sha256"),
+            },
             "provider": "grok",
-            "status": "provider_error",
-            "reason_code": "grok_exit_1",
+            "model": "grok-4.5",
+            "status": "valid_shape",
+            "reason_code": "response_shape_valid",
+            "stop_reason": result.get("stopReason"),
             "latency_ms": result.get("latency_ms"),
+            "attempt_count": 1,
             "attempt_cap": marker.get("attempt_cap"),
             "retry_count": marker.get("retry_count"),
-            "validated_judgment_available": False,
-            "positive_tags": None,
-            "positive_tags_note": "not_available_due_to_execution_failure",
-            "stdout_sha256": result.get("stdout_sha256"),
-            "stdout_size_bytes": result.get("stdout_size_bytes"),
-            "stderr_sha256": result.get("stderr_sha256"),
-            "stderr_size_bytes": result.get("stderr_size_bytes"),
-            "failure_cause": "unknown_stderr_plaintext_not_retained",
+            "validated_judgment_available": True,
+            "positive_tags": positive_tags,
+            "judgments": judgments,
+            "usage": usage,
+            "judgment_reason_role": "model_diagnostic_text_not_tag_truth",
+            "transport_evidence": {
+                "stdout_sha256": result.get("stdout_sha256"),
+                "stdout_size_bytes": result.get("stdout_size_bytes"),
+                "stderr_sha256": result.get("stderr_sha256"),
+                "stderr_size_bytes": result.get("stderr_size_bytes"),
+                "provider_signed": False,
+            },
             "qualification": "blind_proxy_judge_not_human_truth",
             "source_artifacts": {
                 "attempt_marker": _artifact_record(marker_path, relative_to=grok_dir),
@@ -371,21 +422,29 @@ def _prepare_grok(
 
 def _source_manifest(live_root: Path, pilot: object) -> dict[str, object]:
     records: list[dict[str, object]] = []
-    for provider in ("deepseek", "grok"):
-        provider_dir = live_root / provider
+    provider_dirs = {
+        "deepseek": live_root / "deepseek",
+        "grok": live_root / GROK_LIVE_DIR_NAME,
+    }
+    for provider, provider_dir in provider_dirs.items():
         for path in sorted(provider_dir.glob("*.json")):
+            raw = _read_bytes(path)
+            source_dir_name = "deepseek" if provider == "deepseek" else GROK_LIVE_DIR_NAME
             records.append(
                 {
                     "provider": provider,
-                    **_artifact_record(path, relative_to=live_root),
+                    "path": f"{source_dir_name}/{path.name}",
+                    "sha256": _sha256_bytes(raw),
+                    "size_bytes": len(raw),
                 }
             )
     return {
-        "schema_version": "video-player-tag-live-provenance-v1",
+        "schema_version": "video-player-tag-live-provenance-v2",
         "pilot_id": pilot.inspection["pilot_id"],
         "campaign_id": DEEPSEEK_CAMPAIGN_ID,
         "deepseek_request_set_digest": DEEPSEEK_REQUEST_SET_DIGEST,
         "grok_request_set_digest": GROK_REQUEST_SET_DIGEST,
+        "grok_source_run": GROK_LIVE_DIR_NAME,
         "source_artifact_count": len(records),
         "source_artifacts": records,
         "projection_policy": {
@@ -393,7 +452,7 @@ def _source_manifest(live_root: Path, pilot: object) -> dict[str, object]:
                 "validated_24_tag_judgments_and_model_reasons",
                 "usage_latency_and_attempt_limits",
                 "transport_and_source_artifact_hashes",
-                "grok_failure_status_and_stream_hashes",
+                "grok_validated_blind_proxy_judgments",
             ],
             "excluded": [
                 "api_keys_and_authorization_headers",
@@ -401,10 +460,11 @@ def _source_manifest(live_root: Path, pilot: object) -> dict[str, object]:
                 "wire_request_bodies",
                 "raw_provider_response_bodies",
                 "credential_scope_and_internal_provider_identifiers",
-                "stderr_plaintext_not_present_in_source_artifacts",
+                "provider_request_and_session_identifiers",
             ],
             "deepseek_reason_role": "model_diagnostic_text_not_tag_truth",
-            "grok_empty_positive_tags_interpretation": "unavailable_not_zero",
+            "grok_reason_role": "model_diagnostic_text_not_tag_truth",
+            "grok_judgment_role": "blind_proxy_not_human_truth",
         },
         "contains_api_key": False,
         "contains_prompt_or_source_body": False,
@@ -439,11 +499,12 @@ def prepare(live_root: Path) -> None:
         "observations": deepseek_rows,
     }
     grok_payload = {
-        "schema_version": "grok-tag-live-execution-set-v1",
+        "schema_version": "grok-tag-live-observation-set-v1",
         "pilot_id": PILOT_ID,
         "request_set_digest": GROK_REQUEST_SET_DIGEST,
+        "source_run": GROK_LIVE_DIR_NAME,
         "summary": grok_summary,
-        "validated_judgment_available": False,
+        "validated_judgment_available": True,
         "observations": grok_rows,
     }
     provenance = _source_manifest(live_root, pilot)

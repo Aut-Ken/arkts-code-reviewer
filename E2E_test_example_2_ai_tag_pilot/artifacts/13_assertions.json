@@ -116,12 +116,24 @@
       "passed": true
     },
     {
-      "description": "Grok 15 次执行均失败且不存在可解释为 Tag 判断的输出",
+      "description": "Grok 15 个盲判结果均通过相同的 24 Tag 结构校验",
       "evidence": {
         "attempted_count": 15,
-        "valid_judgment_count": 0
+        "judgment_count": 360,
+        "valid_judgment_count": 15
       },
       "id": "A09",
+      "passed": true
+    },
+    {
+      "description": "DeepSeek 与 Grok 的 positive 分歧被完整保留且没有在线裁决",
+      "evidence": {
+        "both_positive": 41,
+        "deepseek_only": 8,
+        "exact_positive_set_units": 9,
+        "grok_only": 1
+      },
+      "id": "A10",
       "passed": true
     },
     {
@@ -131,12 +143,12 @@
         "is_real_mr": false,
         "production_precision_recall": false
       },
-      "id": "A10",
+      "id": "A11",
       "passed": true
     }
   ],
   "failed": 0,
-  "passed": 10,
-  "schema_version": "video-player-tag-pilot-assertions-v1",
+  "passed": 11,
+  "schema_version": "video-player-tag-pilot-assertions-v2",
   "status": "pass"
 }

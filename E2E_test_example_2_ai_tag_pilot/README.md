@@ -14,12 +14,16 @@ GitCode 发布。
 - 静态 `unit_exact`：9 次 Tag 分配、3 种 Tag，8/15 Unit 为空。
 - DeepSeek：15/15 返回合法 24-Tag 结构，49 次候选 positive、10 种 Tag。
 - 静态的 9 次 exact 全部被 DeepSeek 覆盖；DeepSeek 另给出 40 次候选 positive。
-- Grok：15 次均在产生 Tag 判断前失败，0 份有效裁判结果。
+- Grok：修正 plain-text Prompt 文件后缀后，15/15 返回合法 24-Tag 结构，42 次
+  代理 positive、8 种 Tag。
+- DeepSeek/Grok：41 次共同 positive、DeepSeek-only 8 次、Grok-only 1 次；9/15
+  Unit 的 positive 集合完全一致。
 - 质量状态：`not_qualified`。没有人工 Truth，不能计算真实 Precision/Recall。
 
-“40 次候选 positive”不能写成“找回 40 个正确漏标”。报告中已经列出若干可能的
-间接推断和合同越界，例如把 helper 名称、自定义 `Log.info` 或 AVPlayer `.on/.off`
-直接解释成对应 Tag。
+“模型一致”不能写成“判断正确”。报告中已经列出若干可能的间接推断和合同越界，
+例如把 helper 名称、自定义 `Log.info` 或 AVPlayer `.on/.off` 直接解释成对应 Tag。
+第一次 Grok CLI 失败证据仍保存在本机原始 `.codex/.../grok/`；本目录投影并统计的是
+成功的固定 `grok-rerun-1`，没有覆盖或改写第一次运行。
 
 ## 目录
 
@@ -92,11 +96,13 @@ wire body 或原始 Provider 响应正文。
 - 上游 15 个 ReviewUnit 可以确定性重建；
 - 静态 exact 在该样本中确实很少；
 - DeepSeek 的完整 24-Tag 输出结构真实跑通，并给出更多候选；
+- Grok 的完整 24-Tag 盲判真实跑通，且与 DeepSeek 的一致和分歧均被保留；
 - 运行 identity、尝试次数、用量和结果可以在仓库内查看。
 
 本目录没有证明：
 
 - DeepSeek 的 49 个 positive 全部正确；
 - 新增 40 个候选就是 40 个真实漏标；
-- Grok 能作为可靠裁判；
+- Grok 与 DeepSeek 一致就代表 Tag Truth；
+- Grok 已经被证明是可靠裁判；
 - Tag、文档检索或最终评审答案达到生产质量。

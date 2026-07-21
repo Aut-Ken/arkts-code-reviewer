@@ -2,7 +2,6 @@
   "campaign_id": "ai-tag-shadow-campaign:sha256:85e98a9fb77d6c7b24a038616bbfe6122c13edb9bf8c7d6c8a0d328076a11b45",
   "deepseek_request_set_digest": "sha256:954f53f015305769028e2fdd39d696364f1dbbafc1da614484074975741da8e6",
   "excluded_stages": [
-    "successful Grok proxy judgment",
     "Retrieval",
     "Rules",
     "Review Prompt",
@@ -12,6 +11,7 @@
   ],
   "execution_status": "partial",
   "grok_request_set_digest": "sha256:5fa7f113f815bf46a82e32e4f50e577cddad92727c0ce818f0e2c4ee33f49b35",
+  "grok_source_run": "grok-rerun-1",
   "output_files": [
     "00_run_manifest.json",
     "01_change_set.json",
@@ -48,8 +48,8 @@
     "source_revision": "8255a2987f70317cc3a2a4d46044c6b55f092bb3",
     "synthetic_head_revision": "synthetic-e2e-example-1-v1"
   },
-  "schema_version": "video-player-tag-pilot-run-manifest-v1",
-  "scope": "ChangeSet through Static/DeepSeek Tag comparison",
+  "schema_version": "video-player-tag-pilot-run-manifest-v2",
+  "scope": "ChangeSet through Static/DeepSeek/Grok Tag comparison",
   "source_fixture": {
     "files": [
       {
