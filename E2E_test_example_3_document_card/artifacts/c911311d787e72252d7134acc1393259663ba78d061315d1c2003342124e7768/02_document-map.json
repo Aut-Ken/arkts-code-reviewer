@@ -1,0 +1,157 @@
+{
+  "adapter_version": "openharmony-docs-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:0e04b66b9a2a57263237f14bfc0a96cb2a47d5522c2b62c81fd358fe97991e6d",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 15,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:1ef03dc2b7cbdec3964d8dfe34eef3e4de0078e737cb2a2ea4f0e31c7f041cf1",
+      "heading_level": 1,
+      "heading_path": [
+        "TaskPool和Worker的对比 (TaskPool和Worker)"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:cf85b5b7503163332111c4fc79910a5dd391107bc65e11febcc67923a9573289",
+      "subtree_span": {
+        "end_line": 85,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+      "title": "TaskPool和Worker的对比 (TaskPool和Worker)"
+    },
+    {
+      "content_span": {
+        "end_line": 40,
+        "start_line": 16
+      },
+      "content_text_hash": "sha256:487311de9ab53f72ad5f817d7be5a6eba219f91a1703ccbc46575eb83a78cf09",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool和Worker的对比 (TaskPool和Worker)",
+        "实现特点对比"
+      ],
+      "heading_span": {
+        "end_line": 16,
+        "start_line": 16
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:cf85b5b7503163332111c4fc79910a5dd391107bc65e11febcc67923a9573289",
+      "section_id": "document-section:sha256:ae910434e655a89120dbeee4c0b9b35b9776a04bf8759230311a56e1a9a28f65",
+      "subtree_span": {
+        "end_line": 40,
+        "start_line": 16
+      },
+      "subtree_text_hash": "sha256:487311de9ab53f72ad5f817d7be5a6eba219f91a1703ccbc46575eb83a78cf09",
+      "title": "实现特点对比"
+    },
+    {
+      "content_span": {
+        "end_line": 46,
+        "start_line": 41
+      },
+      "content_text_hash": "sha256:c16351144fa4c9fd0fc17751669be50da9bd040069a4b168b64e0c012dc410ed",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool和Worker的对比 (TaskPool和Worker)",
+        "适用场景对比"
+      ],
+      "heading_span": {
+        "end_line": 41,
+        "start_line": 41
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:cf85b5b7503163332111c4fc79910a5dd391107bc65e11febcc67923a9573289",
+      "section_id": "document-section:sha256:8e8cfe38be3c91b20b666f1fa7e0a2c50d5eeb5fd81c7ac09411d245af906305",
+      "subtree_span": {
+        "end_line": 85,
+        "start_line": 41
+      },
+      "subtree_text_hash": "sha256:51bd97ecd88a45dec85d77db0d953ac8a3730fd067a057b166241a71b9e1eccb",
+      "title": "适用场景对比"
+    },
+    {
+      "content_span": {
+        "end_line": 64,
+        "start_line": 47
+      },
+      "content_text_hash": "sha256:91889ed564249b0202a8f4f9738006402b1d72ee3cd5fcec0a036f81ad381cdc",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool和Worker的对比 (TaskPool和Worker)",
+        "适用场景对比",
+        "建议使用Worker的场景"
+      ],
+      "heading_span": {
+        "end_line": 47,
+        "start_line": 47
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:8e8cfe38be3c91b20b666f1fa7e0a2c50d5eeb5fd81c7ac09411d245af906305",
+      "section_id": "document-section:sha256:b605cfb2ea785e648c0aa7415805666d36c16371fa1b914631a3617367a3b696",
+      "subtree_span": {
+        "end_line": 64,
+        "start_line": 47
+      },
+      "subtree_text_hash": "sha256:91889ed564249b0202a8f4f9738006402b1d72ee3cd5fcec0a036f81ad381cdc",
+      "title": "建议使用Worker的场景"
+    },
+    {
+      "content_span": {
+        "end_line": 85,
+        "start_line": 65
+      },
+      "content_text_hash": "sha256:c6395ca77d4425271e976fba5fab638120c5a9dfab90656c4f33d16b6bb30c85",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool和Worker的对比 (TaskPool和Worker)",
+        "适用场景对比",
+        "建议使用TaskPool的场景"
+      ],
+      "heading_span": {
+        "end_line": 65,
+        "start_line": 65
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:8e8cfe38be3c91b20b666f1fa7e0a2c50d5eeb5fd81c7ac09411d245af906305",
+      "section_id": "document-section:sha256:a96fd0b8fbd5e2ae14de3e2d0a1d50f4fd26c6f900dae421e0ded05f74e12153",
+      "subtree_span": {
+        "end_line": 85,
+        "start_line": 65
+      },
+      "subtree_text_hash": "sha256:c6395ca77d4425271e976fba5fab638120c5a9dfab90656c4f33d16b6bb30c85",
+      "title": "建议使用TaskPool的场景"
+    }
+  ],
+  "source_line_count": 85,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+    "relative_path": "zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "title": "TaskPool和Worker的对比 (TaskPool和Worker)"
+}

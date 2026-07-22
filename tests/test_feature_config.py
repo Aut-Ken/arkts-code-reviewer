@@ -636,6 +636,10 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         "config/knowledge_annotations.yaml": (
             "arkts_code_reviewer/knowledge/defaults/knowledge_annotations.yaml"
         ),
+        "config/knowledge_document_card_export.yaml": (
+            "arkts_code_reviewer/knowledge/document_first/defaults/"
+            "knowledge_document_card_export.yaml"
+        ),
         "config/knowledge_model_export.yaml": (
             "arkts_code_reviewer/knowledge/defaults/knowledge_model_export.yaml"
         ),
@@ -657,6 +661,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         ),
         "prompts/knowledge/grok-knowledge-auditor-v4.md": (
             "arkts_code_reviewer/knowledge/defaults/grok-knowledge-auditor-v4.md"
+        ),
+        "prompts/knowledge/deepseek-document-card-v1.md": (
+            "arkts_code_reviewer/knowledge/document_first/defaults/deepseek-document-card-v1.md"
         ),
         "prompts/hybrid-analysis/deepseek-tag-analysis-v1.md": (
             "arkts_code_reviewer/hybrid_analysis/defaults/"

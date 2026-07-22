@@ -1,0 +1,20 @@
+{
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md",
+  "document_map_id": "markdown-document-map:sha256:0e04b66b9a2a57263237f14bfc0a96cb2a47d5522c2b62c81fd358fe97991e6d",
+  "export_policy_fingerprint": "document-card-export-policy:sha256:12ac718d303c5d47a0df8b18961ca6efd8eefc6803e2aa2f7cf0481b4917fa58",
+  "normalized_body_hash": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+  "plan_id": "document-card-plan:sha256:c911311d787e72252d7134acc1393259663ba78d061315d1c2003342124e7768",
+  "prompt_hash": "sha256:9e2004b86b305d3adda556feca0f6b89a40f2ad72f8ec11f9ea811b10e4aedeb",
+  "prompt_version": "deepseek-document-card-v1",
+  "qualification": "pinned_source_identity_not_publication_approval",
+  "request_id": "document-card-request:sha256:376b2f33e823414a601edd842ace717e9def42a689405e918b29c3a7f8b0732b",
+  "schema_version": "document-card-source-manifest-v1",
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+    "relative_path": "zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  }
+}

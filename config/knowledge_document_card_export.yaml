@@ -1,0 +1,27 @@
+schema_version: document-card-export-policy-v1
+version: document-card-export-policy-v1-taskpool-smoke
+enabled: true
+provider: deepseek
+endpoint_url: https://api.deepseek.com/chat/completions
+allowed_models: [deepseek-v4-pro]
+allowed_prompt_versions: [deepseek-document-card-v1]
+source_allowlist:
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_paths:
+      - zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md
+max_document_characters: 20000
+max_request_body_bytes: 100000
+max_sections: 32
+max_output_tokens: 4096
+wall_clock_timeout_ms: 120000
+max_response_bytes: 2000000
+max_attempts: 1
+retry_policy: none_single_attempt_v1
+thinking: disabled
+temperature: 0
+response_format: json_object
+tls_verify: true
+follow_redirects: false
+trust_env: false
+qualification: development_single_document_navigation_smoke_not_production_approval
