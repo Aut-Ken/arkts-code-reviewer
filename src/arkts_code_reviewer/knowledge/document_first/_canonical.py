@@ -1,0 +1,91 @@
+from __future__ import annotations
+
+import hashlib
+import json
+
+from pydantic import BaseModel, ConfigDict, ValidationError
+
+
+class FrozenModel(BaseModel):
+    model_config = ConfigDict(
+        extra="forbid",
+        frozen=True,
+        strict=True,
+        allow_inf_nan=False,
+    )
+
+
+class _DuplicateKeyError(ValueError):
+    pass
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise _DuplicateKeyError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def _reject_non_finite_constant(value: str) -> object:
+    raise ValueError(f"non-finite JSON number is not allowed: {value}")
+
+
+def canonical_json(payload: object) -> str:
+    return json.dumps(
+        payload,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+        allow_nan=False,
+    )
+
+
+def canonical_hash(prefix: str, payload: object) -> str:
+    encoded = canonical_json(payload).encode("utf-8")
+    return f"{prefix}:sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
+def sha256_text(value: str) -> str:
+    return f"sha256:{hashlib.sha256(value.encode('utf-8')).hexdigest()}"
+
+
+def load_json_model[ModelT: BaseModel](
+    raw: str | bytes,
+    model_type: type[ModelT],
+    context: str,
+) -> ModelT:
+    if isinstance(raw, bytes):
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ValueError(f"{context} must use UTF-8") from exc
+    elif isinstance(raw, str):
+        text = raw
+    else:
+        raise TypeError(f"{context} input must be str or bytes")
+
+    try:
+        payload = json.loads(
+            text,
+            object_pairs_hook=_reject_duplicate_keys,
+            parse_constant=_reject_non_finite_constant,
+        )
+    except (json.JSONDecodeError, _DuplicateKeyError, ValueError) as exc:
+        raise ValueError(f"invalid {context} JSON: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"invalid {context} JSON: top-level value must be an object")
+    try:
+        return model_type.model_validate(payload)
+    except ValidationError as exc:
+        raise ValueError(f"invalid {context}: {exc}") from exc
+
+
+__all__ = [
+    "FrozenModel",
+    "canonical_hash",
+    "canonical_json",
+    "load_json_model",
+    "sha256_text",
+]
