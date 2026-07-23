@@ -21,7 +21,9 @@ updated: 2026-07-23
         ↓
 确定性解析：把原文变成可寻址、可校验的 Source Atom
         ↓
-DeepSeek：只决定每个 Atom 应归到哪些检索分类，不改写原文
+确定性 Fragment：在大 Atom 内建立 UTF-8 精确地址，不改写原文
+        ↓
+DeepSeek：组合 Fragment 为多标签 Facet，并描述上下文和关系
         ↓
 确定性编译器：生成“多分类索引 + 单份原文单元库”的二级 Markdown
         ↓
@@ -38,8 +40,9 @@ Grok：独立审核分类、标题、上下文和关键事实覆盖
 
 > DeepSeek 负责整理，程序负责搬运，Grok 负责检查，一级文档负责最终真值。
 
-二级文档不是 AI 重写的“新规范”，而是一级文档的可重建检索视图。同一 Atom 可以被多个分类
-引用，但规范正文在 canonical 二级文档中只保存一次，避免重复内容把检索分数虚高。
+二级文档不是 AI 重写的“新规范”，而是一级文档的可重建检索视图。同一 Fragment 可以进入多个
+Facet，同一 Facet 可以组合多个 Atom 的 Fragment；规范正文仍只保存一次，避免重复内容把检索
+分数虚高。
 
 ---
 
@@ -60,6 +63,15 @@ Grok：独立审核分类、标题、上下文和关键事实覆盖
 - 7 篇固定 Markdown 的真实 DeepSeek Campaign，7/7 为 `valid_card`；
 - `SourceAtomSet`：在静态章节边界内建立段落、列表、表格、代码块等可重建原文单元，并让 Atom
   与 Region 无遗漏、无重叠地覆盖全部物理行；
+- `SourceFragmentSet`：在每个 Atom 内建立 UTF-8 byte 半开区间的精确 Fragment 分区，普通 prose
+  使用固定句末、换行和有界 fallback，表格、代码块等保持 whole-Atom；每个 Atom 的全部字节必须
+  无 gap、无 overlap 地覆盖，Fragment 不保存或改写正文；
+- `SemanticFacetSet` 与 `SemanticRelationGraph`：接受调用方提供的 Draft，允许同一 Fragment
+  多 Facet、每个 Facet 多闭合分类、跨 Atom Fragment 组合、显式 Context Signature 和同文档 typed
+  relation；所有产物固定非 Evidence、未语义审核；
+- Facet 与 Projection v1 的 legacy adapter：可在语义可表达时把现有 Atom Mapping 展开为
+  Fragment Facet，也可将 Facet 按 parent Atom/category 有损折叠给现有 L2 renderer；旧 renderer
+  和 PostgreSQL schema 不变，不可表达、可能提升 unknown 或会合并不同 Facet 时 fail-closed；
 - `DocumentProjectionMapping`、`ProjectionManifest` 和 `DocumentProjectionRecord`：接受封闭的
   Atom 多对多分类 Mapping，由确定性编译器生成“多分类链接 + 单份原文单元库”的 L2 Markdown；
 - 机械 verifier：从 L1、Map、AtomSet 和 Mapping 完整重建 L2，拒绝未知 Atom、漏覆盖、正文
@@ -74,13 +86,15 @@ Grok：独立审核分类、标题、上下文和关键事实覆盖
 
 本提案中的以下能力目前仍不存在：
 
-- DeepSeek 一级到二级文档映射 Prompt 和数据合同；
+- DeepSeek Fragment-to-Facet Prompt、Request/Plan、响应 reducer 和受控 runner；
 - Grok 二级文档审核 packet、receipt 和 correction loop；
+- 跨文档 Topic/Context 聚合与关系图；
 - 通过审核的实验 `L2ProjectionBuild`；
 - 二级文档 Catalog、全文索引或真实检索 runtime；
 - ReviewUnit 到二级文档的真实 Recall@K、Precision@K 或最终答案质量结果。
 
-当前 Mapping 只能由调用方提供并经过本地严格封装。数据库中的状态固定为
+当前 Atom Mapping 和 Semantic Facet/Relation Draft 都只能由调用方提供并经过本地严格封装；
+尚无 DeepSeek 生成结果。数据库仍只保存 Projection v1，状态固定为
 `mechanically_verified`，资格固定为
 `mechanically_verified_projection_not_semantically_reviewed`；它不表示 DeepSeek 已分类、Grok
 已审核或检索质量已经合格。
@@ -101,6 +115,8 @@ Grok：独立审核分类、标题、上下文和关键事实覆盖
 | Markdown 标题树和行号映射 | 已实现 | 作为 Atom 的外层结构边界 |
 | DeepSeek Document Card | 已实现并跑过 7 文档 Campaign | 保留为辅助导航，不承担完整覆盖 |
 | Source Atom | 已实现并通过合成合同测试 | 确定性建立原文地址 |
+| Source Fragment | 已实现 UTF-8 精确分区与严格重建 | 作为 Atom 内部地址，不独立成为 Evidence |
+| Semantic Facet/Context/同文档 Relation | 调用方 Draft reducer、identity、覆盖门禁与 fail-closed legacy adapter 已实现 | DeepSeek 生成、Grok 审核后用于 Shadow 导航 |
 | L1 到 L2 分类映射 | closed Mapping 与本地封装已实现；DeepSeek 生成未实现 | DeepSeek 输出 closed JSON Mapping |
 | L2 Markdown | 确定性编译和机械 verifier 已实现 | 程序确定性编译，不让模型自由改写 |
 | L2 Shadow 数据库 | 独立 migration、不可变 Store 和真实 PostgreSQL round-trip 已实现 | 后续只接收明确状态的审核产物 |
@@ -416,7 +432,8 @@ L1 SourceSpan → ClauseCandidate → Annotation → 双审 Consensus
 |---|---|---|
 | 一级文档 | 提供最终来源真值 | 被模型在线修改 |
 | Source Atom Builder | 确定性识别原文结构、行号和哈希 | 判断业务语义、创建规范 |
-| DeepSeek | 为 Atom 选择一个或多个检索分类，生成非证据型别名 | 改写或删除原文、批准发布、生成 Finding |
+| Source Fragment Builder | 为 Atom 内原文建立 UTF-8 精确地址和完整覆盖 | 判断组件、原则、场景或关系 |
+| DeepSeek | 组合已有 Fragment 为多标签 Facet，生成非证据型上下文和别名 | 决定物理切片、改写或删除原文、批准发布、生成 Finding |
 | L2 Compiler | 生成多分类链接，并按 Atom ID 逐字复制一份原文单元库 | 自己补充来源事实、为分类重复堆叠正文 |
 | Mechanical Verifier | 检查覆盖、哈希、引用、顺序和确定性重建 | 判断分类语义是否合理 |
 | Grok | 独立检查分类、标题、上下文和关键内容覆盖 | 直接编辑 Mapping、直接修改二级正文、替代真实检索评测 |
@@ -524,6 +541,48 @@ eligible_atom_mapping_coverage = 100%
 两项达到 100% 只证明“都处理到了”，不证明“分类有用”。报告还必须给出
 `unclassified_atom_rate`、每类 Atom 数、跨分类 Atom 比例和后续真实检索结果。
 
+### 8.5 当前已实现的 Atom 内部 Fragment sidecar
+
+Atom 继续作为原文所有权和 L1 回切边界；Fragment 只解决“大 Atom 内怎样精确指向不同句子或
+局部范围”，不取代 Atom。当前 `source-fragment-set-v1` 使用
+`utf8_byte_within_atom_half_open`：
+
+```text
+paragraph / list_item / blockquote / note
+  -> 强句末符与换行边界
+  -> 超过 800 codepoints 时使用确定性有界 fallback
+
+table / code_block / raw_block
+  -> whole-Atom Fragment
+```
+
+每个 Fragment 保存 `atom_id`、Atom/Fragment ordinal、Atom 内 UTF-8 byte span、Atom byte length
+和 `text_hash`，不保存正文。每个 Atom 至少一个 Fragment，所有 span 必须从 0 连续覆盖到 Atom
+末尾；UTF-8 非字符边界、gap、overlap、空 Fragment、跨 Atom 和重排全部拒绝。Builder/Verifier
+始终从可信 L1 与 AtomSet 完整重建，因此 self-hash 不能掩盖切片漂移。
+
+### 8.6 当前已实现的 Semantic Facet sidecar
+
+`semantic-facet-set-v1` 允许模型未来表达：
+
+```text
+一个 Fragment -> 多个 Facet
+一个 Facet -> 多个 primary Fragment
+一个 Facet -> 多个闭合 CategoryKind
+一个 Facet -> required context Fragment
+```
+
+Context Signature 固定包含 subject、component、role、scenario、operation、condition 和 version
+字段，用于区分“TaskPool 工作线程”“Worker 独立线程”和“UI 主线程”等同主题不同语境。Facet
+生成 identity 后，独立 `semantic-relation-graph-v1` 才能引用 Facet ID，避免
+`Facet -> Relation -> Facet` 的 identity 环。当前关系只允许同文档的补充、例外、前置、示例、
+替代、对比、表面冲突和同主题不同上下文。
+
+所有 Fragment 必须作为 primary 进入至少一个 Facet，或明确进入
+`unclassified_fragment_ids`；只被引用为 required context 不算完成分类。机械门禁只能证明地址、
+覆盖和 identity 正确，不能证明主题、上下文或关系的语义正确。当前没有真实 DeepSeek/Grok Facet
+结果。
+
 ---
 
 ## 9. DeepSeek 多对多分类映射
@@ -534,25 +593,28 @@ eligible_atom_mapping_coverage = 100%
 
 - 一份由完整一级 Markdown 确定性生成的 `L1ProjectionModelView`；
 - Document Map；
-- Source Atom 的 ID、类型、标题路径和行号；
+- Source Atom 的 ID、类型、标题路径和行号，以及每个 Atom 内的固定 Fragment ID/byte span；
 - 冻结的分类合同；
 - 输出 JSON Schema；
-- 明确的“禁止改写、禁止遗漏、一个 Atom 可绑定多个分类、无法判断进入
-  `unclassified_atom_ids`”指令。
+- 明确的“禁止改写、禁止遗漏、只能组合已有 Fragment、一个 Fragment 可进入多个 Facet、无法判断
+  进入 `unclassified_fragment_ids`”指令。
 
 DeepSeek 不读取现有检索结果，不读取 Grok 审核结果的历史答案，也不创建新的来源事实。
 
 `L1ProjectionModelView` 不是摘要。它把完整 `NormalizedDocument.body` 按原顺序呈现，并在每个
-Atom 前后加确定性边界标记，例如：
+Atom 与 Fragment 前后加确定性边界标记，例如：
 
 ```text
 <SOURCE_ATOM id="source-atom:sha256:..." kind="list_item" lines="55-55">
-任务函数（LongTask除外）的CPU执行时长不能超过3分钟……
+  <SOURCE_FRAGMENT id="source-fragment:sha256:...">
+  任务函数（LongTask除外）的CPU执行时长不能超过3分钟……
+  </SOURCE_FRAGMENT>
 </SOURCE_ATOM>
 ```
 
-这样 DeepSeek 确实完整阅读了 L1，又能直接返回 Atom ID；不必同时再发送一份重复的 Atom 正文。
-边界标记只存在于模型输入视图，不会写回 L1。
+这样 DeepSeek 确实完整阅读了 L1，又只能返回已有 Fragment ID；不必同时再发送一份重复正文。
+边界标记只存在于模型输入视图，不会写回 L1。DeepSeek 负责把 Fragment 组合成 Facet，不负责
+决定 UTF-8 物理切片或生成新的规范文本。
 
 ### 9.2 第一版固定分类
 
@@ -579,12 +641,13 @@ diagnostic_and_observability
 模型可以生成更通俗的 `display_title`，但不能创建未知 `category_kind`。这样可以避免不同文档
 分别生成“限制”“注意”“警告”“不要这样做”等无法统一检索的分类名称。
 
-`unclassified` 不属于语义分类，而是独立的兜底集合 `unclassified_atom_ids`。一个 Atom 只要进入
-任意正常 binding，就不能同时进入这个兜底集合；否则 `unclassified_atom_rate` 会失真。
+`unclassified` 不属于语义分类，而是独立的兜底集合 `unclassified_fragment_ids`。一个 Fragment
+只要作为 primary 进入任意 Facet，就不能同时进入这个兜底集合；仅作为 required context 不能
+冒充已完成分类，否则覆盖率会失真。
 
 ### 9.3 多对多，而不是单选
 
-同一 Atom 可以同时进入多个分类。例如：
+同一 Fragment 可以同时进入多个 Facet，一个 Facet 也可以拥有多个分类。例如：
 
 ```text
 “TaskPool 工作线程不支持使用 AppStorage”
@@ -596,41 +659,47 @@ diagnostic_and_observability
 → subject: AppStorage
 ```
 
-这里重复的是“分类边”，不是原文正文。第一版允许一个 Atom 绑定多个不同分类，只拒绝完全相同的
-重复 binding。后续索引和排名必须以 `atom_id` 去重，不能因为一个事实被分到三个类别就把它算成
-三份独立证据。
+这里重复的是“语义入口”，不是原文正文。第一版允许一个 Fragment 进入多个 Facet，也允许一个
+Facet 拥有多个闭合分类，只拒绝完全相同的 canonical Facet。后续索引先以 `fragment_id` 去重，
+回到完整上下文和 Evidence 时再按 `document_id + atom_id` 去重，不能把多标签算成多份独立证据。
 
 ### 9.4 映射建议合同
 
 ```jsonc
 {
-  "schema_version": "document-projection-mapping-v1",
-  "mapping_id": "document-projection-mapping:sha256:...",
-  "atom_set_id": "source-atom-set:sha256:...",
+  "schema_version": "semantic-facet-set-draft-v1",
   "document_id": "...",
-  "model": "deepseek-v4-pro",
-  "prompt_version": "deepseek-document-projection-mapping-v1",
-  "bindings": [
+  "facets": [
     {
-      "binding_id": "projection-binding:sha256:...",
-      "category_kind": "numeric_limit",
       "display_title": "TaskPool CPU 执行时间限制",
-      "subject_terms": ["TaskPool", "LongTask", "cpuDuration", "ioDuration"],
+      "category_kinds": ["constraint", "numeric_limit"],
       "retrieval_aliases": ["三分钟限制", "TaskPool超时"],
-      "atom_ids": ["source-atom:sha256:..."],
-      "required_context_atom_ids": []
+      "context": {
+        "primary_fragment_ids": ["source-fragment:sha256:..."],
+        "required_context_fragment_ids": ["source-fragment:sha256:..."],
+        "subject_terms": ["TaskPool", "LongTask"],
+        "component_terms": ["TaskPool"],
+        "role_terms": ["工作线程池"],
+        "scenario_terms": ["普通任务执行"],
+        "operation_terms": ["执行任务"],
+        "condition_terms": ["LongTask除外"],
+        "version_terms": []
+      }
     }
   ],
-  "unclassified_atom_ids": []
+  "unclassified_fragment_ids": []
 }
 ```
 
-`display_title`、`subject_terms` 和 `retrieval_aliases` 都是 AI 生成的导航元数据，不是规范证据。
+`display_title`、Context terms 和 `retrieval_aliases` 都是 AI 生成的导航元数据，不是规范证据；
+真正正文只能通过 Fragment -> Atom -> L1 回切。
 
 ### 9.5 不允许增量补丁作为最终真值
 
-Grok 发现问题后，DeepSeek 必须输出一份完整的新 Mapping，而不是只返回“增加这一条、删除那一条”
-的自由文本补丁。每次 Mapping 都有新的 identity，并从完整输入重新校验。
+Grok 发现问题后，DeepSeek 必须输出一份完整的新 Facet Draft，而不是只返回“增加这一条、删除那
+一条”的自由文本补丁。每次 Facet Set 都有新的 identity，并从完整输入重新校验。Facet identity
+生成后，关系判断使用第二份完整 Relation Graph Draft 引用 sealed Facet ID，不能依赖模型自造的
+临时名称。
 
 ---
 
@@ -1355,38 +1424,45 @@ artifacts/document-projection/<projection-digest>/
 
 本节描述可独立验证的交付边界，不表示这些步骤已经开始实施。
 
-### L2-01：Source Atom 与机械编译基础
+### L2-01：Source Atom/Fragment/Facet 与机械编译基础
 
 ```text
 NormalizedDocument + MarkdownDocumentMap
 → SourceAtomSet
+→ SourceFragmentSet
+→ caller-provided Facet/Relation fixture
+→ explicit lossy Projection v1 adapter
 → caller-provided Mapping fixture
 → L2 Markdown + Manifest
 → strict verifier
 ```
 
-只使用人工 fixture，不调用模型。先证明 100% coverage 和零改写。
+当前已实现。只使用调用方 fixture，不调用模型；证明 Atom/Fragment 100% coverage、零改写、Facet
+primary/unclassified 完整覆盖、Context/Relation 引用合法，以及新 sidecar 可以降级给旧 Projection
+v1。它没有证明语义分类正确。
 
-### L2-02：DeepSeek Mapping 合同
+### L2-02：DeepSeek Facet/Relation 合同
 
 ```text
-L1 + AtomSet + frozen Prompt/policy
+L1 + AtomSet + FragmentSet + frozen Prompt/policy
 → Request / Plan / inspection
 → fake response reducer
-→ typed Mapping
+→ typed Facet Set
+→ second-pass typed Relation Graph
 ```
 
-默认不联网。
+Facet/Context/Relation 的本地数据合同已经实现；Prompt、Request/Plan、响应 adapter 和 runner 尚未
+实现。默认不联网。
 
 ### L2-03：受控单文档 live
 
-对一个固定 Markdown 执行一次精确批准的 DeepSeek Mapping smoke，生成真实 L2，但仍未有 Grok
+对一个固定 Markdown 执行一次精确批准的 DeepSeek Facet/Relation smoke，生成真实 L2，但仍未有 Grok
 审核或质量资格。
 
 ### L2-04：Grok 审核合同
 
 ```text
-L1 + AtomSet + Mapping + L2 + mechanical result
+L1 + AtomSet + FragmentSet + FacetSet + RelationGraph + L2 + mechanical result
 → Grok Packet
 → Receipt
 → correction decision

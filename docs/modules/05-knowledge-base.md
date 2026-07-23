@@ -18,7 +18,8 @@ Source Registry
 -> Normalized Documents / Metadata
 -> Static MarkdownDocumentMap
 -> controlled Document Card / Document Catalog (navigation only)
--> SourceAtomSet / deterministic L2 Document Projection (shadow only)
+-> SourceAtomSet / SourceFragmentSet / Semantic Facet sidecar (shadow only)
+-> deterministic L2 Document Projection (shadow only)
 -> Clause Parsing and Curation
 -> Stable Knowledge
 -> Retrieval Annotation and Embedding
@@ -49,6 +50,15 @@ Source Registry
 - 已实现 L1/L2 Projection 的确定性基础合同：`SourceAtomSet` 将 L1 Markdown 建成可重建的原文
   Atom；封闭 Mapping 允许一个 Atom 绑定多个检索分类；编译器生成“多分类链接 + 单份原文单元
   库”的 L2 Markdown；机械 verifier 拒绝未知引用、Atom 漏覆盖、正文突变和 identity 漂移。
+- 已实现不改变 Projection v1 identity 的 Atom 内部语义 sidecar：`SourceFragmentSet` 使用 Atom
+  内 UTF-8 byte 半开区间无损覆盖每个 Atom，普通 prose 以固定句末、换行和有界 fallback 生成
+  可寻址 Fragment，表格与代码块保持完整；`SemanticFacetSet` 允许一个 Fragment 同时进入多个
+  闭合分类，也允许一个 Facet 组合跨 Atom Fragment，并显式保存 subject/component/role/scenario/
+  operation/condition/version 与 required context。`SemanticRelationGraph` 在 Facet identity 之后
+  独立保存同文档的补充、例外、前置、示例、替代、对比、表面冲突和“同主题不同上下文”关系。
+  全链固定非 Evidence、未语义审核，并提供显式有损、不可表达时 fail-closed 的 Projection v1
+  legacy adapter；它不会修改旧 renderer 或数据库 schema，也不会把部分未分类 Fragment 静默
+  提升为整个 Atom 已分类。
 - 已建立独立 PostgreSQL `document_projection` schema、checksum migration runner 和不可变 Store。
   写入采用 `building -> mechanically_verified` 单向封存，封存前检查行数与分类覆盖，封存后禁止
   追加子行；完整 Record 与 Atom/Binding/多对多关系同时保存并互相校验。最终状态固定为
@@ -106,6 +116,10 @@ Source Registry
 - L2 Projection 当前只接受调用方提供的 Mapping Draft；尚未实现 DeepSeek Mapping Prompt/runner、
   Grok 审核 receipt/correction loop、通过审核的 L2 Build 或文档检索 runtime。机械校验通过不能
   证明分类正确，也不能把 Projection 提升为 Knowledge Evidence。
+- Fragment/Facet sidecar 当前也只完成确定性切片、调用方 Draft reducer、Context/Relation identity、
+  完整覆盖门禁和合成测试。尚未实现 DeepSeek Facet Prompt/Request/Plan、真实模型生成、Grok
+  Facet 审核、跨文档 Topic 聚合或 Facet-level 检索；数据库仍只保存已冻结 Projection v1，不会
+  在新合同定型前提前扩表。
 - 仓库和本地 review-data 中尚无可供生产索引使用的真实 `PublishedKnowledgeBuild`；因此没有
   真实 Baselined Clause 数据集或 current production index。
 - Retrieval 已实现数据库迁移、36-case Golden、本地 embedding 和索引发布运行时，但它不能
@@ -113,7 +127,8 @@ Source Registry
 
 因此本模块状态仍是 `partial`：来源、标准化、Document-First 导航合同、受控多文档执行合同、
 L1/L2 的静态 Atom/Mapping/编译/机械校验与隔离数据库基础、候选提取、确定性标注、双审
-consensus 和 publication 代码合同已经实现；单文档和 7 文档 live 只证明固定输入上的 Card
+consensus 和 publication 代码合同已经实现；Atom 内 Fragment/Facet/Context/同文档 Relation
+sidecar 也已实现机械合同；单文档和 7 文档 live 只证明固定输入上的 Card
 结构执行链，L2 尚未执行真实双模型生成审核，真实多文档检索质量、人工策展与首个发布数据集仍
 未完成。
 

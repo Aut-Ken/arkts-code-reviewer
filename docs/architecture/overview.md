@@ -1,7 +1,7 @@
 ---
 title: ArkTS Code Reviewer 整体架构
 status: canonical
-updated: 2026-07-16
+updated: 2026-07-23
 ---
 
 # ArkTS Code Reviewer 整体架构
@@ -34,8 +34,8 @@ ArkTS AI Code Reviewer
 
 ## 2. 当前真实状态
 
-截至 2026-07-16，代码已覆盖到 Retrieval Evidence Pack、Parser 质检旁路和 Tag Truth
-评测治理；外部知识、
+截至 2026-07-23，代码已覆盖到 Retrieval Evidence Pack、Parser 质检旁路、Tag Truth
+评测治理，以及 Document-First Fragment/Facet 机械 Shadow 合同；外部知识、
 语料和工具已经分类落盘，但“资料已经 clone”不等于真实 Baselined 知识已经发布。
 
 | 模块 | 状态 | 当前事实 |
@@ -44,7 +44,7 @@ ArkTS AI Code Reviewer
 | Parser | `partial` | Parser v1 继续冻结；显式 `file-analysis-v1` 已提供 occurrence owner/span、quality/provenance 和独立 Golden |
 | ReviewUnit | `complete` | RU-0～RU-5 已完成：精确 ChangeSet、parse-once、完整 Primary、typed relation、多 bundle 和真实源码预算 |
 | Feature Routing | `complete` | 默认 `tags-v1/dimensions-v1 + feature-routing-v1` 已冻结 24 Tags、12 Dimensions、12 Review Questions；FR-02B `tag-config-v4 -> feature-routing-v3` owner-aware candidate 仅影子运行，未激活 |
-| 知识库构建 | `partial` | Registry、首批 Adapter/Clause、annotation、双审/人工 curation/publication 合同已实现；真实 round-2 为 20/21，无正式 consensus 或 `PublishedKnowledgeBuild` |
+| 知识库构建 | `partial` | Registry、Clause、双审/人工 curation/publication 合同已实现；Document-First Map/Card/Atom/Projection 与无损 Fragment、Semantic Facet/Context/Relation 机械合同已实现；尚无 DeepSeek Facet 生成、Grok 审核、Facet 检索、正式 consensus 或 `PublishedKnowledgeBuild` |
 | Retrieval | `partial` | core/runtime 已实现：正式 request/evidence、精确+向量/RRF、适用性和预算、36-case Golden、本地 Jina code embedding、PostgreSQL/pgvector fixture runtime；无生产知识索引 |
 | Rules | `designed` | 无代码 |
 | Prompt / Final LLM | `designed` | 无生产评审代码；GLM 只用于 Parser 质检 |
