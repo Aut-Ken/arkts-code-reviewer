@@ -511,6 +511,54 @@ def test_reported_completion_tokens_cannot_exceed_reserved_budget(tmp_path: Path
     assert artifacts.card is None
 
 
+def test_injected_transport_cannot_bypass_response_byte_budget(tmp_path: Path) -> None:
+    bundle = _bundle()
+    response = DeepSeekHttpResponse(
+        status_code=200,
+        body=b"x" * (bundle.plan.max_response_bytes + 1),
+        retry_after_ms=None,
+        latency_ms=1,
+    )
+
+    artifacts = _run(
+        bundle,
+        state_dir=tmp_path / "state",
+        transport=_FakeTransport(response),
+    )
+
+    assert artifacts.receipt.status == "transport_error"
+    assert artifacts.receipt.failure_code == "transport_failed"
+    assert artifacts.receipt.response_body_size_bytes is None
+    assert artifacts.raw_response_body is None
+
+
+def test_provider_response_echoing_api_key_is_not_retained(tmp_path: Path) -> None:
+    bundle = _bundle()
+    response = DeepSeekHttpResponse(
+        status_code=200,
+        body=b'{"echo":"test-only-key"}',
+        retry_after_ms=None,
+        latency_ms=1,
+    )
+    output_root = tmp_path / "out"
+
+    artifacts = _run(
+        bundle,
+        state_dir=tmp_path / "state",
+        transport=_FakeTransport(response),
+    )
+    materialize_document_card_run(bundle, artifacts, output_root=output_root)
+
+    assert artifacts.receipt.status == "transport_error"
+    assert artifacts.receipt.failure_code == "transport_failed"
+    assert artifacts.raw_response_body is None
+    assert all(
+        b"test-only-key" not in path.read_bytes()
+        for path in output_root.rglob("*")
+        if path.is_file()
+    )
+
+
 def test_absolute_wall_clock_deadline_returns_typed_transport_receipt(tmp_path: Path) -> None:
     bundle = _bundle(policy=_policy(wall_clock_timeout_ms=1_000))
     transport = _SlowTransport()

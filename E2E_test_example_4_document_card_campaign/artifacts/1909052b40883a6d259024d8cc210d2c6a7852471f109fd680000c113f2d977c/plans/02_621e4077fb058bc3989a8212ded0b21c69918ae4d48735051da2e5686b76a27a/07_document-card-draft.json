@@ -1,0 +1,152 @@
+{
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/sendable-constraints.md",
+  "important_apis": [
+    "@Sendable",
+    "collections.Array",
+    "collections.Map",
+    "collections.Set",
+    "SendableLruCache",
+    "lang.ISendable",
+    "makeObserved"
+  ],
+  "primary_topics": [
+    "Sendable使用规则",
+    "继承规则",
+    "接口实现规则",
+    "成员变量规则",
+    "泛型规则",
+    "上下文访问规则",
+    "@Sendable装饰器规则",
+    "初始化规则",
+    "类型转换规则",
+    "函数规则",
+    "TS/JS交互规则",
+    "NAPI规则",
+    "UI交互规则",
+    "HAR包使用规则"
+  ],
+  "schema_version": "document-card-draft-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:9eba0a3f3039e6fa77fb8a254d90f5aae8433a25c48d8889945c8707de07a684",
+      "summary": "概述Sendable对象的使用规则与约束，涵盖继承、接口实现、成员变量、泛型、上下文访问、装饰器、初始化、类型转换、函数、交互及HAR包使用等方面。"
+    },
+    {
+      "section_id": "document-section:sha256:2449fcb9dbb90ffbc400ca058510c09c1f3060fb2376aeb9cd905678d048a1e8",
+      "summary": "说明Sendable类与非Sendable类之间的继承规则，强调Sendable类只能继承自Sendable类，非Sendable类只能继承自非Sendable类。"
+    },
+    {
+      "section_id": "document-section:sha256:d4e8df7e4c4e4a12168a0d7dce58511a3ca799f6a11094648259e000571a6093",
+      "summary": "规定Sendable类必须继承自Sendable类，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:2fd6a926f576adcd7f365dd92ffe637950717fde5b430e55d420ae13711a733e",
+      "summary": "规定非Sendable类必须继承自非Sendable类，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:3e4189ec8d0f44c0a1cabd213a9953ccc4c11812943fa44d73bfb92c9f3ca9bb",
+      "summary": "说明接口实现规则，禁止非Sendable类实现Sendable接口，以避免误用。"
+    },
+    {
+      "section_id": "document-section:sha256:9edf32576df048b9b51a89986a32143cd173d8ffb7e4ad40f7aa874f0ebf15a7",
+      "summary": "规定非Sendable类禁止实现Sendable接口，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:bd29e280c7b81a3e332737395358ebf34850faba472b8f70f98169a0c1f4e9ed",
+      "summary": "说明Sendable类或接口的成员变量必须遵循的规则，包括数据类型、断言、计算属性名和类型别名的限制。"
+    },
+    {
+      "section_id": "document-section:sha256:138c8f27356c4cf0287fa90f83ddd52c0107a9cd8ed7cac0319275ce3124f8fd",
+      "summary": "规定Sendable类或接口的成员变量必须是Sendable支持的数据类型，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:96e290b5148cabd22b0c9f88862de40679f27d55833cacd0a865bb252a1f5b40",
+      "summary": "规定Sendable对象的成员属性不支持使用!断言，必须赋初值，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:9ed24c16f22593b9c37dd64781fd43601235bd12ff3385a2e9ff8da030548482",
+      "summary": "规定Sendable类不支持使用计算属性名，因为计算属性无法静态确定对象布局，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:fe57da38500ca0a8649f3a85ddd8e27eed72ff5a5161054e31d23f3c0dc5a2ad",
+      "summary": "规定Sendable类的成员变量不能使用类型别名，给出正例和反例，违反规则会导致运行报错。"
+    },
+    {
+      "section_id": "document-section:sha256:9f4530c7f35e941fdc9064ff6c759ea8866e9193345f4a47a9665c1bea159537",
+      "summary": "说明泛型规则，要求泛型类中的Sendable相关类型的模板类型必须是Sendable类型。"
+    },
+    {
+      "section_id": "document-section:sha256:27c8db62d922eb9506424011827a1a97ede641e784b1489b4ae48ce3e54c381c",
+      "summary": "规定泛型类中的Sendable类、SendableLruCache、collections.Array、collections.Map和collections.Set的模板类型必须是Sendable类型，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:b4351cf954c30ccb3d3fad087acb84ee13c089fabdf195c7a7a18af7914e3a29",
+      "summary": "说明上下文访问规则，限制Sendable类内部使用当前模块内上下文环境中定义的变量。"
+    },
+    {
+      "section_id": "document-section:sha256:89c550a7a39ff5c6d78c63d2f1ebada1f7789cfb0d578a0b63e371a0dd312d22",
+      "summary": "规定Sendable类的内部不允许使用当前模块内上下文环境中定义的变量，从API version 12开始支持使用top level的Sendable class对象，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:81aececf3afe3da74e6a55c28aeaad08064750adc066f8902c341ec1b3a9c65b",
+      "summary": "说明@Sendable装饰器的使用规则，包括仅支持修饰类和函数、禁止使用其他装饰器以及支持叠加自定义装饰器的配置。"
+    },
+    {
+      "section_id": "document-section:sha256:533289f30dda46393c7732f7a09814e0370900ba1b32e8bf3a3423dded85fc79",
+      "summary": "规定@Sendable装饰器仅支持修饰类和函数，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:3a8c1cbe2d72d33efbfee45a45051f3ab8f17a73ca5009c578e6b101823b819e",
+      "summary": "规定Sendable类和Sendable函数禁止使用除@Sendable外的装饰器，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:b5b97d6d4fbf54df03ae59a9e75ef4922e39cde6ed74f5310918de235fa4853c",
+      "summary": "说明从API version 22开始支持在Sendable class上叠加自定义装饰器，需在build-profile.json5中配置disableSendableCheckRules字段。"
+    },
+    {
+      "section_id": "document-section:sha256:ebdb4df6b3bd7e42096e1ac0f317821565caec3c0917196ac93c8ed2d2a93506",
+      "summary": "说明初始化规则，禁止使用对象字面量或数组字面量初始化Sendable对象。"
+    },
+    {
+      "section_id": "document-section:sha256:40133d538ff8df98b2a3c34719fa9398d794f6e5bd6f9df959a0bced508f863e",
+      "summary": "规定禁止使用对象字面量或数组字面量初始化Sendable对象，必须通过new表达式创建，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:470e8be63c69ad5c2f4043dcdb97601005666c3f8909924b440892278e997c47",
+      "summary": "说明类型转换规则，禁止非Sendable类型强制转换为Sendable，但允许Sendable类型转换为非Sendable类型。"
+    },
+    {
+      "section_id": "document-section:sha256:d988fa81538a14a7d6319e5b201deb2bea4f1c591e9b220aebb9e3d6f0605a2b",
+      "summary": "规定禁止非Sendable类型强制转换为Sendable，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:f1fd45ea8ed475cec81fb843f2ba9a14ba9ee33cbfe7af93c7dc032844856b78",
+      "summary": "说明函数规则，箭头函数不可标记为Sendable，因此不支持共享。"
+    },
+    {
+      "section_id": "document-section:sha256:b7bc0ac127998ad0e013ddbb5e13d218eaf7680b4306e838608444bd39622a26",
+      "summary": "规定箭头函数不可标记为Sendable，给出正例和反例，违反规则会导致编译报错。"
+    },
+    {
+      "section_id": "document-section:sha256:3d9d417df6fb88af298f846e19ec987b2480cf0df5d921551e1a10add75549ea",
+      "summary": "说明Sendable对象与TS/JS交互的规则，包括ArkTS通用规则和NAPI规则，禁止操作对象布局。"
+    },
+    {
+      "section_id": "document-section:sha256:fb5c4eee927a19a108912956653529eae6c59c5185226d0394e82a82df3a66f2",
+      "summary": "列出ArkTS通用规则，禁止在TS/JS接口中操作Sendable对象的布局，如增删属性或改变属性类型。"
+    },
+    {
+      "section_id": "document-section:sha256:b05b8d1c6169ea371ae97ff5f236847ad5ad947746e2b9cfe32dc6ef0e912688",
+      "summary": "列出NAPI规则，禁止使用napi_delete_property等接口删除或新增属性，禁止修改属性类型，不支持Symbol相关接口。"
+    },
+    {
+      "section_id": "document-section:sha256:26665f96f4716ec0a91a8a0c4dc19c9b028ab5a5da7026131cab6d1ca229501e",
+      "summary": "说明Sendable数据需与makeObserved配合使用，以观察数据变化。"
+    },
+    {
+      "section_id": "document-section:sha256:dd3135519d57d94cdfdab04b79437ca5f8eed5d13c01a5798c064034fd99234a",
+      "summary": "说明Sendable在HAR包中的使用规则，字节码HAR可直接使用，TS HAR需在module.json5中配置metadata。"
+    }
+  ],
+  "summary": "本文档详细说明了ArkTS中Sendable对象的使用规则与约束，包括继承、接口实现、成员变量、泛型、上下文访问、装饰器、初始化、类型转换、函数、与TS/JS及NAPI交互、UI交互以及HAR包使用等方面的限制，帮助开发者正确使用Sendable对象以避免编译或运行时错误。"
+}

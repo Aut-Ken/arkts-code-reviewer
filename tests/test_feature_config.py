@@ -640,6 +640,14 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
             "arkts_code_reviewer/knowledge/document_first/defaults/"
             "knowledge_document_card_export.yaml"
         ),
+        "config/knowledge_document_card_pilot_export_v1.yaml": (
+            "arkts_code_reviewer/knowledge/document_first/defaults/"
+            "knowledge_document_card_pilot_export_v1.yaml"
+        ),
+        "config/knowledge_document_card_pilot_selection_v1.yaml": (
+            "arkts_code_reviewer/knowledge/document_first/defaults/"
+            "knowledge_document_card_pilot_selection_v1.yaml"
+        ),
         "config/knowledge_model_export.yaml": (
             "arkts_code_reviewer/knowledge/defaults/knowledge_model_export.yaml"
         ),
@@ -664,6 +672,9 @@ def test_default_configs_are_mapped_into_the_wheel() -> None:
         ),
         "prompts/knowledge/deepseek-document-card-v1.md": (
             "arkts_code_reviewer/knowledge/document_first/defaults/deepseek-document-card-v1.md"
+        ),
+        "migrations/document_projection/0001_initial.sql": (
+            "arkts_code_reviewer/knowledge/document_first/migrations/0001_initial.sql"
         ),
         "prompts/hybrid-analysis/deepseek-tag-analysis-v1.md": (
             "arkts_code_reviewer/hybrid_analysis/defaults/"

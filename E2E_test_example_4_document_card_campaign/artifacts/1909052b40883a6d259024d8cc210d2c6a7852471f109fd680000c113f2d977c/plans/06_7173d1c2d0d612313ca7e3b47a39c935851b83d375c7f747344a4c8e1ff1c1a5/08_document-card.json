@@ -1,0 +1,105 @@
+{
+  "card_id": "document-card:sha256:054e5d42abf65031f5d870008ad57bd7dd1adb5e0ca947ed998c040cab7807fb",
+  "document_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+  "document_map_id": "markdown-document-map:sha256:ae88eaf8e78862ad583dcb1106532978868aa46aa462bc65166bf5940c4ac910",
+  "evidence_eligible": false,
+  "important_apis": [
+    "!!语法",
+    "$$运算符",
+    "@ComponentV2",
+    "@Computed",
+    "@Consume",
+    "@Consumer",
+    "@Event",
+    "@Link",
+    "@Local",
+    "@Monitor",
+    "@ObjectLink",
+    "@Observed",
+    "@ObservedV2",
+    "@Once",
+    "@Param",
+    "@Prop",
+    "@Provide",
+    "@Provider",
+    "@ReusableV2",
+    "@State",
+    "@Trace",
+    "@Watch",
+    "AppStorage",
+    "AppStorageV2",
+    "DialogV2",
+    "Environment",
+    "LocalStorage",
+    "PersistenceV2",
+    "PersistentStorage",
+    "ProgressButtonV2",
+    "SegmentButtonV2",
+    "WithTheme",
+    "openCustomDialog"
+  ],
+  "normalized_body_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+  "primary_topics": [
+    "属性级更新",
+    "应用状态",
+    "深度观察",
+    "状态管理V1",
+    "状态管理V2",
+    "状态管理概述",
+    "组件状态",
+    "装饰器"
+  ],
+  "schema_version": "document-card-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:5e8f2a5d89c42a3b2feb3065062467f3efbf73f000132844a42dae7e2d46d8d6",
+      "summary": "概述状态管理在ArkUI中的作用，说明状态变量与UI渲染的关系，并指出阅读本文档前需要了解的基础知识。"
+    },
+    {
+      "section_id": "document-section:sha256:299a68c8871b5ea5a8fa8c12a94e78e24eb02e620c7f682b4298be630cd40cee",
+      "summary": "介绍状态管理分为V1和V2两个版本，建议新应用使用V2，已使用V1的应用如满足需求则不必立即切换。"
+    },
+    {
+      "section_id": "document-section:sha256:931024d7ffc85eb3737eb9c2bac5be34f83ed174cb78a1282e3f2b3ec407c73e",
+      "summary": "说明状态管理V1的整体框架，包括组件级和应用级装饰器的分类，以及相关功能。"
+    },
+    {
+      "section_id": "document-section:sha256:c82383e119ec34fe6954f7c894a7fd5eec982055d61a3a4615852b9d2956bfa8",
+      "summary": "列举V1中管理组件内状态和应用级状态的装饰器，如@State、@Prop、@Link、@Provide/@Consume、@Observed/@ObjectLink，以及AppStorage、LocalStorage等，并说明其作用。"
+    },
+    {
+      "section_id": "document-section:sha256:c3bad4df65445b308c610254bd95d1d8f694d987e5de2cf3630bc907d41ab5a2",
+      "summary": "介绍V1中的其他功能，包括@Watch监听状态变化和$$运算符实现双向绑定。"
+    },
+    {
+      "section_id": "document-section:sha256:a0a5e6024a4b9ba2098591b26c444bbfbe32ff68b09da67d3517fa54d5f240b8",
+      "summary": "提供状态管理V1的相关实例链接，供开发者参考。"
+    },
+    {
+      "section_id": "document-section:sha256:896d408f55cacedb46ab99b2602a35f1237841d0179ab624c06e27d49a28061e",
+      "summary": "介绍状态管理V2的增强特性，包括V1的现状与V2的优点、V2的装饰器总览以及V1与V2的能力对比。"
+    },
+    {
+      "section_id": "document-section:sha256:cdc6348f3aeca804a4a28896f5584605996ab443cb0c923848aa9f1fab0913b3",
+      "summary": "分析状态管理V1的局限性，如无法深度观察、冗余更新等，并说明V2如何通过数据本身可观察、深度观测、属性级更新等优点解决这些问题。"
+    },
+    {
+      "section_id": "document-section:sha256:dda6c51a9ab712c15811028fc680d2307fc80a5c91cbfbc87ae997760516536f",
+      "summary": "列出V2的全新装饰器，如@ObservedV2、@Trace、@ComponentV2、@Local、@Param、@Event、@Monitor、@Provider/@Consumer、@Computed和!!语法，并简要说明其用途。"
+    },
+    {
+      "section_id": "document-section:sha256:e88a10e2fc4eac1918a59c88c00e5fdc96522e109a87f6dde71a0bd371dd342e",
+      "summary": "以表格形式对比V1和V2在装饰器、生命周期、双向绑定、自定义弹窗、主题等方面的能力差异，并提及迁移指导和混用场景。"
+    }
+  ],
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+    "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "summary": "介绍ArkUI状态管理的基本概念、V1与V2两个版本的区别、各自的装饰器总览及能力对比，帮助开发者理解如何选择和使用状态管理机制来构建动态交互界面。",
+  "use_scope": "navigation_only_not_evidence"
+}

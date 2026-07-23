@@ -752,6 +752,10 @@ def run_document_card_live_once(
     try:
         with _absolute_wall_clock_deadline(plan.wall_clock_timeout_ms):
             response = fixed_transport.send(plan, api_key=api_key)
+            if len(response.body) > plan.max_response_bytes:
+                raise ValueError("provider response exceeds byte budget")
+            if api_key.encode("utf-8") in response.body:
+                raise ValueError("provider response contains credential material")
     except (OSError, RuntimeError, ValueError):
         latency_ms = max(0, (time.monotonic_ns() - attempt_started) // 1_000_000)
         payload = _base_receipt_payload(

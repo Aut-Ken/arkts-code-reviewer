@@ -1,0 +1,25 @@
+schema_version: document-card-campaign-selection-v1
+version: document-card-pilot-selection-v1
+documents:
+  - source_id: arkui-specs
+    revision: 98bbe6578e0fb8e314a2c1b19342fc2b79ee4604
+    relative_path: 05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md
+  - source_id: arkui-specs
+    revision: 98bbe6578e0fb8e314a2c1b19342fc2b79ee4604
+    relative_path: 05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_path: zh-cn/application-dev/arkts-utils/sendable-constraints.md
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_path: zh-cn/application-dev/arkts-utils/taskpool-introduction.md
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_path: zh-cn/application-dev/reference/common/js-apis-timer.md
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md
+  - source_id: openharmony-docs
+    revision: c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47
+    relative_path: zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md
+qualification: pilot_selection_not_export_or_execution_authorization

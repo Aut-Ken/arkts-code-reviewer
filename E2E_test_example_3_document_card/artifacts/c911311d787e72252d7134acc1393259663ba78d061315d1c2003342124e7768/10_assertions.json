@@ -1,0 +1,78 @@
+{
+  "content_quality_status": "NOT_QUALIFIED",
+  "contract_assertions": [
+    {
+      "evidence": "sha256:b53fcb5372f2b02bc7894a1daa7dbfd07d5c89400d2412bb9d33fe8917b14cc1",
+      "name": "A01_pinned_source_identity",
+      "status": "PASS"
+    },
+    {
+      "evidence": "sections=5,normalization_diagnostics=0,structure_diagnostics=0",
+      "name": "A02_document_map_rebuilt",
+      "status": "PASS"
+    },
+    {
+      "evidence": "document-card-plan:sha256:c911311d787e72252d7134acc1393259663ba78d061315d1c2003342124e7768",
+      "name": "A03_exact_request_plan_and_body",
+      "status": "PASS"
+    },
+    {
+      "evidence": "status=valid_card,http=200,finish=stop,attempts=1,retries=0",
+      "name": "A04_provider_completed_once",
+      "status": "PASS"
+    },
+    {
+      "evidence": "document-card-live-receipt:sha256:eb3a34f0dad217cc9b2d43e3660144acd56a0c291986fbb50b85cc0d907c6bc6",
+      "name": "A05_raw_draft_card_receipt_chain",
+      "status": "PASS"
+    },
+    {
+      "evidence": "sections=5/5",
+      "name": "A06_complete_section_coverage",
+      "status": "PASS"
+    },
+    {
+      "evidence": "use_scope=navigation_only_not_evidence,evidence_eligible=false",
+      "name": "A07_navigation_only_not_evidence",
+      "status": "PASS"
+    },
+    {
+      "evidence": "00-09 contain no key environment name, Bearer key, or Authorization header",
+      "name": "A08_no_persisted_credentials",
+      "status": "PASS"
+    },
+    {
+      "evidence": "important_apis is empty while source probes exist; quality is not qualified",
+      "name": "A09_api_gap_preserved_with_quality_boundary",
+      "status": "PASS"
+    },
+    {
+      "evidence": "catalog_id=document-catalog:sha256:c3aaff27622a50fd271bf49b00bd5ce5613c11c939ca6ac13cba7dac32b9e5b5,documents=1,evidence=false,production=false",
+      "name": "A10_catalog_remains_navigation_only",
+      "status": "PASS"
+    }
+  ],
+  "contract_status": "PASS",
+  "plan_id": "document-card-plan:sha256:c911311d787e72252d7134acc1393259663ba78d061315d1c2003342124e7768",
+  "quality_observations": [
+    {
+      "code": "important_api_navigation_recall_observed_low",
+      "evidence": {
+        "explicit_api_navigation_probes": [
+          "@Concurrent",
+          "ArrayBuffer",
+          "SharedArrayBuffer",
+          "Sendable",
+          "Promise",
+          "async/await",
+          "onmessage"
+        ],
+        "returned_important_apis": []
+      },
+      "qualification": "probe_observation_not_exhaustive_api_truth",
+      "severity": "warning"
+    }
+  ],
+  "receipt_id": "document-card-live-receipt:sha256:eb3a34f0dad217cc9b2d43e3660144acd56a0c291986fbb50b85cc0d907c6bc6",
+  "schema_version": "document-card-e2e-assertions-v1"
+}

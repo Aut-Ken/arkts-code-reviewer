@@ -1,0 +1,22 @@
+{
+  "campaign_id": "document-card-campaign:sha256:1909052b40883a6d259024d8cc210d2c6a7852471f109fd680000c113f2d977c",
+  "document_id": "arkui-specs:05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+  "document_map_id": "markdown-document-map:sha256:35c52d6db59e5d22ed668e2d97c0c676ee77f94d35d32cf4652a6192da5d7cc7",
+  "export_policy_fingerprint": "document-card-export-policy:sha256:114bd63b3a4677e6296b0ade8fbb538562f85660f69a394d0522f347b00344f4",
+  "normalized_body_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+  "plan_id": "document-card-plan:sha256:6c552d739bdce56570a11de375fd366a4cbc3b3b4aa836c2ac45e70359ce8742",
+  "plan_set_digest": "document-card-campaign-plan-set:sha256:8b4b80e8eeff96b4010591d91c283e44b0bcc0c1cb5944f19e854fa79b63fe7a",
+  "prompt_hash": "sha256:9e2004b86b305d3adda556feca0f6b89a40f2ad72f8ec11f9ea811b10e4aedeb",
+  "prompt_version": "deepseek-document-card-v1",
+  "qualification": "pinned_source_identity_not_execution_or_publication_approval",
+  "request_id": "document-card-request:sha256:3d296f11bf587a0dd22a332892d96e2932046f9ab7e318bae3783c8007fa1128",
+  "schema_version": "document-card-source-manifest-v1",
+  "source_ref": {
+    "anchor": "document",
+    "authority": "feature_spec",
+    "content_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+    "relative_path": "05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+    "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+    "source_id": "arkui-specs"
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "adapter_version": "openharmony-docs-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "openharmony-docs:zh-cn/application-dev/reference/common/js-apis-timer.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:461351ebab50cf3ba47091fc8e01b4b75c09916393523ea22e1efd9053accd91",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:455a5963de3560024bf5a011ec3ed0f04b082efd7851a359f9960ef2f2b81e89",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 16,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:c168fc947b30ccf83e8e1efaac652783365a7bf483641cff6ec7654d9212ed75",
+      "heading_level": 1,
+      "heading_path": [
+        "Timer (定时器)"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "subtree_span": {
+        "end_line": 199,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:455a5963de3560024bf5a011ec3ed0f04b082efd7851a359f9960ef2f2b81e89",
+      "title": "Timer (定时器)"
+    },
+    {
+      "content_span": {
+        "end_line": 86,
+        "start_line": 17
+      },
+      "content_text_hash": "sha256:0edbbb75441a73bd0ac4d794c8dfabac5a0b2b786ee72e636b3de70dbcf9e531",
+      "heading_level": 2,
+      "heading_path": [
+        "Timer (定时器)",
+        "setTimeout"
+      ],
+      "heading_span": {
+        "end_line": 17,
+        "start_line": 17
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "section_id": "document-section:sha256:1aca0da9704d17dc85a55319ec0fad6564c9cd8b89676222f7beea9ec6792dcc",
+      "subtree_span": {
+        "end_line": 86,
+        "start_line": 17
+      },
+      "subtree_text_hash": "sha256:0edbbb75441a73bd0ac4d794c8dfabac5a0b2b786ee72e636b3de70dbcf9e531",
+      "title": "setTimeout"
+    },
+    {
+      "content_span": {
+        "end_line": 114,
+        "start_line": 87
+      },
+      "content_text_hash": "sha256:f8a212a4876e4f87b55b1bf22ace30476159c68d8305a9993f7277e0eba9e26c",
+      "heading_level": 2,
+      "heading_path": [
+        "Timer (定时器)",
+        "clearTimeout"
+      ],
+      "heading_span": {
+        "end_line": 87,
+        "start_line": 87
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "section_id": "document-section:sha256:73220602d4a3fd0f46a80da9c3737d045dc601a9259e43bacf52b2c7697a568a",
+      "subtree_span": {
+        "end_line": 114,
+        "start_line": 87
+      },
+      "subtree_text_hash": "sha256:f8a212a4876e4f87b55b1bf22ace30476159c68d8305a9993f7277e0eba9e26c",
+      "title": "clearTimeout"
+    },
+    {
+      "content_span": {
+        "end_line": 149,
+        "start_line": 115
+      },
+      "content_text_hash": "sha256:9ad5961e74e9396d01e37c64f25879e680b51a5e18fc87fb9dd1ae26c2350d93",
+      "heading_level": 2,
+      "heading_path": [
+        "Timer (定时器)",
+        "setInterval"
+      ],
+      "heading_span": {
+        "end_line": 115,
+        "start_line": 115
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "section_id": "document-section:sha256:780cdae96459a6ef5afff9cc84ac4b131cc82acb6d4cb6bb79582f0584135342",
+      "subtree_span": {
+        "end_line": 149,
+        "start_line": 115
+      },
+      "subtree_text_hash": "sha256:9ad5961e74e9396d01e37c64f25879e680b51a5e18fc87fb9dd1ae26c2350d93",
+      "title": "setInterval"
+    },
+    {
+      "content_span": {
+        "end_line": 176,
+        "start_line": 150
+      },
+      "content_text_hash": "sha256:6792ae8e3f904a188544e866b29d0f896f6f289bf6648c19102dca693161aeea",
+      "heading_level": 2,
+      "heading_path": [
+        "Timer (定时器)",
+        "clearInterval"
+      ],
+      "heading_span": {
+        "end_line": 150,
+        "start_line": 150
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "section_id": "document-section:sha256:cc0b49b0c6317c2c9964b08e3e2a49af2a75a2594ec05a3dcdd216829fd210a9",
+      "subtree_span": {
+        "end_line": 176,
+        "start_line": 150
+      },
+      "subtree_text_hash": "sha256:6792ae8e3f904a188544e866b29d0f896f6f289bf6648c19102dca693161aeea",
+      "title": "clearInterval"
+    },
+    {
+      "content_span": {
+        "end_line": 177,
+        "start_line": 177
+      },
+      "content_text_hash": "sha256:4c1fc49bbb60eebc6344272ef05a4eed380212d49c15ad1d9ce3e6f52e605f61",
+      "heading_level": 2,
+      "heading_path": [
+        "Timer (定时器)",
+        "其他说明"
+      ],
+      "heading_span": {
+        "end_line": 177,
+        "start_line": 177
+      },
+      "kind": "heading",
+      "ordinal": 5,
+      "parent_section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "subtree_span": {
+        "end_line": 199,
+        "start_line": 177
+      },
+      "subtree_text_hash": "sha256:1f525e0bbfdb61ddc96ddf58440c96108414ed71940954ad502a4da25fe55679",
+      "title": "其他说明"
+    },
+    {
+      "content_span": {
+        "end_line": 192,
+        "start_line": 178
+      },
+      "content_text_hash": "sha256:f133017bdfca70ea5d53b8e8c1a6743cd2a164b93d0f3d36370a70c0774dafea",
+      "heading_level": 3,
+      "heading_path": [
+        "Timer (定时器)",
+        "其他说明",
+        "超时延迟"
+      ],
+      "heading_span": {
+        "end_line": 178,
+        "start_line": 178
+      },
+      "kind": "heading",
+      "ordinal": 6,
+      "parent_section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "section_id": "document-section:sha256:33ec0556f6ef37e5067ec0dc2274b4094a3f7fea08192fbf0469604c3a67fa92",
+      "subtree_span": {
+        "end_line": 192,
+        "start_line": 178
+      },
+      "subtree_text_hash": "sha256:f133017bdfca70ea5d53b8e8c1a6743cd2a164b93d0f3d36370a70c0774dafea",
+      "title": "超时延迟"
+    },
+    {
+      "content_span": {
+        "end_line": 195,
+        "start_line": 193
+      },
+      "content_text_hash": "sha256:fe9e6fea5929baad2492cfb1c04bc9d7b8e8ed04d0632a83e3cc121efe7e8503",
+      "heading_level": 3,
+      "heading_path": [
+        "Timer (定时器)",
+        "其他说明",
+        "最大延迟值"
+      ],
+      "heading_span": {
+        "end_line": 193,
+        "start_line": 193
+      },
+      "kind": "heading",
+      "ordinal": 7,
+      "parent_section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "section_id": "document-section:sha256:8f370128f9e60262de2d1f6f633414c177ca5fec589b48b01087aac3d46a1ca7",
+      "subtree_span": {
+        "end_line": 195,
+        "start_line": 193
+      },
+      "subtree_text_hash": "sha256:fe9e6fea5929baad2492cfb1c04bc9d7b8e8ed04d0632a83e3cc121efe7e8503",
+      "title": "最大延迟值"
+    },
+    {
+      "content_span": {
+        "end_line": 197,
+        "start_line": 196
+      },
+      "content_text_hash": "sha256:2e9a305daeed6fa2aa7cbb02e78762ab33604aac381f1b67fd5dbc05516576f5",
+      "heading_level": 3,
+      "heading_path": [
+        "Timer (定时器)",
+        "其他说明",
+        "定时器冻结"
+      ],
+      "heading_span": {
+        "end_line": 196,
+        "start_line": 196
+      },
+      "kind": "heading",
+      "ordinal": 8,
+      "parent_section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "section_id": "document-section:sha256:52585a99f58b4e5340c32741f3edfe80aefe114a7f08afa6845aef3ec09c9547",
+      "subtree_span": {
+        "end_line": 197,
+        "start_line": 196
+      },
+      "subtree_text_hash": "sha256:2e9a305daeed6fa2aa7cbb02e78762ab33604aac381f1b67fd5dbc05516576f5",
+      "title": "定时器冻结"
+    },
+    {
+      "content_span": {
+        "end_line": 199,
+        "start_line": 198
+      },
+      "content_text_hash": "sha256:8be381cfc60ca17a92ad7d4f2b4e678879e54aa676824c201d17a0641fba7c14",
+      "heading_level": 3,
+      "heading_path": [
+        "Timer (定时器)",
+        "其他说明",
+        "定时器ID"
+      ],
+      "heading_span": {
+        "end_line": 198,
+        "start_line": 198
+      },
+      "kind": "heading",
+      "ordinal": 9,
+      "parent_section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "section_id": "document-section:sha256:a3212e14ac54eea62279f13666454d927bf23d17c3712ba6c9ba5f71140c3df7",
+      "subtree_span": {
+        "end_line": 199,
+        "start_line": 198
+      },
+      "subtree_text_hash": "sha256:8be381cfc60ca17a92ad7d4f2b4e678879e54aa676824c201d17a0641fba7c14",
+      "title": "定时器ID"
+    }
+  ],
+  "source_line_count": 199,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:455a5963de3560024bf5a011ec3ed0f04b082efd7851a359f9960ef2f2b81e89",
+    "relative_path": "zh-cn/application-dev/reference/common/js-apis-timer.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "title": "Timer (定时器)"
+}

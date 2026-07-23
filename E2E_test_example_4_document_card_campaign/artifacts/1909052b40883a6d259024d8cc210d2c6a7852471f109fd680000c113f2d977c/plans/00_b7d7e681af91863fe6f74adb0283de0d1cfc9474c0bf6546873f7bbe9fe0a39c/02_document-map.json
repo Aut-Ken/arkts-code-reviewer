@@ -1,0 +1,848 @@
+{
+  "adapter_version": "arkui-spec-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:49075b4ddcc6ecffaa7bf7a9bc220643718d9c99f97a69f2866c199fbf89b9a5",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 4,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:ac140b673626e43a66c478e549385fd725d31caaf4ea34bb62eb667b67024b34",
+      "heading_level": 1,
+      "heading_path": [
+        "特性规格"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "subtree_span": {
+        "end_line": 339,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+      "title": "特性规格"
+    },
+    {
+      "content_span": {
+        "end_line": 17,
+        "start_line": 5
+      },
+      "content_text_hash": "sha256:862e6fb92bb22c794824637fe7ab1021010c40b281f4ad4e3993507f8a997e87",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "概述"
+      ],
+      "heading_span": {
+        "end_line": 5,
+        "start_line": 5
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:ec8d0ed7cfec8fb3555eba8d276b60d4b5af322d3cc483746c7d668d52647afd",
+      "subtree_span": {
+        "end_line": 17,
+        "start_line": 5
+      },
+      "subtree_text_hash": "sha256:862e6fb92bb22c794824637fe7ab1021010c40b281f4ad4e3993507f8a997e87",
+      "title": "概述"
+    },
+    {
+      "content_span": {
+        "end_line": 21,
+        "start_line": 18
+      },
+      "content_text_hash": "sha256:3f67dce3cac3ad3c922bfbeb12afa42013e770b71022d9b0c676ef842aaa8b7e",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "本次变更范围（Delta）"
+      ],
+      "heading_span": {
+        "end_line": 18,
+        "start_line": 18
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:f99389d4e5d8abfc77015c152bed6df77126801312a7ea5f93d84da0e497132c",
+      "subtree_span": {
+        "end_line": 21,
+        "start_line": 18
+      },
+      "subtree_text_hash": "sha256:3f67dce3cac3ad3c922bfbeb12afa42013e770b71022d9b0c676ef842aaa8b7e",
+      "title": "本次变更范围（Delta）"
+    },
+    {
+      "content_span": {
+        "end_line": 31,
+        "start_line": 22
+      },
+      "content_text_hash": "sha256:b5c74ad3969b2231d85449af0010a370573725d5f655b6168f93ca7cb61c4e38",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "输入文档"
+      ],
+      "heading_span": {
+        "end_line": 22,
+        "start_line": 22
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:d39981fb12e0298977cbebafb20fdee02762adbad9326dec9d4e26c6e410881e",
+      "subtree_span": {
+        "end_line": 31,
+        "start_line": 22
+      },
+      "subtree_text_hash": "sha256:b5c74ad3969b2231d85449af0010a370573725d5f655b6168f93ca7cb61c4e38",
+      "title": "输入文档"
+    },
+    {
+      "content_span": {
+        "end_line": 33,
+        "start_line": 32
+      },
+      "content_text_hash": "sha256:b5916fb47d0aa3323937311d6f46b7bc17b85e08c4c1f8ce4bbd9136718382d2",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "用户故事"
+      ],
+      "heading_span": {
+        "end_line": 32,
+        "start_line": 32
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "subtree_span": {
+        "end_line": 107,
+        "start_line": 32
+      },
+      "subtree_text_hash": "sha256:c5fead950fcaec502bf9eb465c98b16956606dcf14e8d16f8b7892dc6a48ae72",
+      "title": "用户故事"
+    },
+    {
+      "content_span": {
+        "end_line": 45,
+        "start_line": 34
+      },
+      "content_text_hash": "sha256:e36791f7bf08cad67572ec33aab800ba2b5ae6a4120c3c132f9b2ad733859673",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-1: 监听标签页切换事件"
+      ],
+      "heading_span": {
+        "end_line": 34,
+        "start_line": 34
+      },
+      "kind": "heading",
+      "ordinal": 5,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:422a50c32fb308af33e089183e3b6403a63be0843d85a7f305e03adfa8b4f828",
+      "subtree_span": {
+        "end_line": 45,
+        "start_line": 34
+      },
+      "subtree_text_hash": "sha256:e36791f7bf08cad67572ec33aab800ba2b5ae6a4120c3c132f9b2ad733859673",
+      "title": "US-1: 监听标签页切换事件"
+    },
+    {
+      "content_span": {
+        "end_line": 57,
+        "start_line": 46
+      },
+      "content_text_hash": "sha256:26c01b8bd39ac0981789a0a433080f39e2fe813b0abca85afaa60b366f0d568a",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-2: 监听标签选中/取消选中事件"
+      ],
+      "heading_span": {
+        "end_line": 46,
+        "start_line": 46
+      },
+      "kind": "heading",
+      "ordinal": 6,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:f9e4c20c6311ac94becef8e28f13c9046719e95e888d56696fa1205a534af628",
+      "subtree_span": {
+        "end_line": 57,
+        "start_line": 46
+      },
+      "subtree_text_hash": "sha256:26c01b8bd39ac0981789a0a433080f39e2fe813b0abca85afaa60b366f0d568a",
+      "title": "US-2: 监听标签选中/取消选中事件"
+    },
+    {
+      "content_span": {
+        "end_line": 68,
+        "start_line": 58
+      },
+      "content_text_hash": "sha256:106a25e555daa2bf19c305d7086e51dfcb9c4ee6b53ae13d5ab2a3772581249c",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-3: 监听标签栏点击事件"
+      ],
+      "heading_span": {
+        "end_line": 58,
+        "start_line": 58
+      },
+      "kind": "heading",
+      "ordinal": 7,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:1b1a6d342f17f082e1863b838da50580e9c06e9593f310ca1febe9ecb94f76d6",
+      "subtree_span": {
+        "end_line": 68,
+        "start_line": 58
+      },
+      "subtree_text_hash": "sha256:106a25e555daa2bf19c305d7086e51dfcb9c4ee6b53ae13d5ab2a3772581249c",
+      "title": "US-3: 监听标签栏点击事件"
+    },
+    {
+      "content_span": {
+        "end_line": 80,
+        "start_line": 69
+      },
+      "content_text_hash": "sha256:5ee56c5451e35c929d800ff88a05a03de92330b809b00a30955fbb718a915f19",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-4: 监听切换动画事件"
+      ],
+      "heading_span": {
+        "end_line": 69,
+        "start_line": 69
+      },
+      "kind": "heading",
+      "ordinal": 8,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:2e5f9a10415229c4e5ae7eeff8293bffae41e5be355b1d8c6071c83f510e60fc",
+      "subtree_span": {
+        "end_line": 80,
+        "start_line": 69
+      },
+      "subtree_text_hash": "sha256:5ee56c5451e35c929d800ff88a05a03de92330b809b00a30955fbb718a915f19",
+      "title": "US-4: 监听切换动画事件"
+    },
+    {
+      "content_span": {
+        "end_line": 91,
+        "start_line": 81
+      },
+      "content_text_hash": "sha256:d6e7bc937a3a10d121d8b2ba196333719738c038e2e0ca0fea7f815ae366a0f3",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-5: 监听手势滑动事件"
+      ],
+      "heading_span": {
+        "end_line": 81,
+        "start_line": 81
+      },
+      "kind": "heading",
+      "ordinal": 9,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:e74e0e070517513b0117db97f64803e9928b6fe12f688aa911a8046b82c45650",
+      "subtree_span": {
+        "end_line": 91,
+        "start_line": 81
+      },
+      "subtree_text_hash": "sha256:d6e7bc937a3a10d121d8b2ba196333719738c038e2e0ca0fea7f815ae366a0f3",
+      "title": "US-5: 监听手势滑动事件"
+    },
+    {
+      "content_span": {
+        "end_line": 107,
+        "start_line": 92
+      },
+      "content_text_hash": "sha256:6c92701220c2e89691028a4495f31163ed12ccdd87277a22358857c354818ded",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-6: 监听内容切换拦截和滑动事件"
+      ],
+      "heading_span": {
+        "end_line": 92,
+        "start_line": 92
+      },
+      "kind": "heading",
+      "ordinal": 10,
+      "parent_section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "section_id": "document-section:sha256:b6ea7bfa01fdeffbc5e1464c75d7410250900aa4b2d582bff9b49b3d5aea4b4a",
+      "subtree_span": {
+        "end_line": 107,
+        "start_line": 92
+      },
+      "subtree_text_hash": "sha256:6c92701220c2e89691028a4495f31163ed12ccdd87277a22358857c354818ded",
+      "title": "US-6: 监听内容切换拦截和滑动事件"
+    },
+    {
+      "content_span": {
+        "end_line": 130,
+        "start_line": 108
+      },
+      "content_text_hash": "sha256:aa8b79d07e96448f91b837da44f0dca7c46676afbba791860add4717a8905a3a",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "验收追溯"
+      ],
+      "heading_span": {
+        "end_line": 108,
+        "start_line": 108
+      },
+      "kind": "heading",
+      "ordinal": 11,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:c7295435a84a09ae27d75ac256e6afd3b3ce4c87d373bef3064327cdb30d5e1a",
+      "subtree_span": {
+        "end_line": 130,
+        "start_line": 108
+      },
+      "subtree_text_hash": "sha256:aa8b79d07e96448f91b837da44f0dca7c46676afbba791860add4717a8905a3a",
+      "title": "验收追溯"
+    },
+    {
+      "content_span": {
+        "end_line": 158,
+        "start_line": 131
+      },
+      "content_text_hash": "sha256:e08a803a570c044f9f0bae09b167b507cfd1cafee3573f3a912cbd55201dcf8a",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "规则定义"
+      ],
+      "heading_span": {
+        "end_line": 131,
+        "start_line": 131
+      },
+      "kind": "heading",
+      "ordinal": 12,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:564b56609859d85c73e91d0ed40694a9f7a081d7912d86c8a464ff7b2c08b74c",
+      "subtree_span": {
+        "end_line": 158,
+        "start_line": 131
+      },
+      "subtree_text_hash": "sha256:e08a803a570c044f9f0bae09b167b507cfd1cafee3573f3a912cbd55201dcf8a",
+      "title": "规则定义"
+    },
+    {
+      "content_span": {
+        "end_line": 183,
+        "start_line": 159
+      },
+      "content_text_hash": "sha256:bec76f777b941ad722ccaa01507459354d8999bf87a12aae4378abfcf724dcb2",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "验证映射"
+      ],
+      "heading_span": {
+        "end_line": 159,
+        "start_line": 159
+      },
+      "kind": "heading",
+      "ordinal": 13,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:53e082595bab81ccdfa98ce1f5c6bcde7e94d409ba2c3a3ef27dd947ea5c306f",
+      "subtree_span": {
+        "end_line": 183,
+        "start_line": 159
+      },
+      "subtree_text_hash": "sha256:bec76f777b941ad722ccaa01507459354d8999bf87a12aae4378abfcf724dcb2",
+      "title": "验证映射"
+    },
+    {
+      "content_span": {
+        "end_line": 185,
+        "start_line": 184
+      },
+      "content_text_hash": "sha256:3af7e259a8ace839be08169c379dfea3efb6fb0a4408f81f68c4572bc5c4d332",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析"
+      ],
+      "heading_span": {
+        "end_line": 184,
+        "start_line": 184
+      },
+      "kind": "heading",
+      "ordinal": 14,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:f0b3d9d672838f6e13bb5a67983f85a36a4d35d9380cf8ba4951fdb65120bab9",
+      "subtree_span": {
+        "end_line": 249,
+        "start_line": 184
+      },
+      "subtree_text_hash": "sha256:99631c3e8dab7212d38c07a57b24529baadeb03b99d0303a399572a2a9102190",
+      "title": "API 变更分析"
+    },
+    {
+      "content_span": {
+        "end_line": 189,
+        "start_line": 186
+      },
+      "content_text_hash": "sha256:3bb3d15890c71c1e7ff3d129e34de781c74a4364c497242c0acb555685e0f50b",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析",
+        "新增 API"
+      ],
+      "heading_span": {
+        "end_line": 186,
+        "start_line": 186
+      },
+      "kind": "heading",
+      "ordinal": 15,
+      "parent_section_id": "document-section:sha256:f0b3d9d672838f6e13bb5a67983f85a36a4d35d9380cf8ba4951fdb65120bab9",
+      "section_id": "document-section:sha256:a0b4e5cd9e2cef2ebbc517a2ecca5b7314bd2e8b5e00017cec6d0dbe029a8ed8",
+      "subtree_span": {
+        "end_line": 243,
+        "start_line": 186
+      },
+      "subtree_text_hash": "sha256:ba6d77446ae842f42ee42903f44fe36629541b50488a62d2c56352bdecd3203b",
+      "title": "新增 API"
+    },
+    {
+      "content_span": {
+        "end_line": 217,
+        "start_line": 190
+      },
+      "content_text_hash": "sha256:797bb2ba442f9b281d41400d2fb040b3c6e9e969c21ae4b03821d94f7979a131",
+      "heading_level": 4,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析",
+        "新增 API",
+        "TabsAttribute 事件属性"
+      ],
+      "heading_span": {
+        "end_line": 190,
+        "start_line": 190
+      },
+      "kind": "heading",
+      "ordinal": 16,
+      "parent_section_id": "document-section:sha256:a0b4e5cd9e2cef2ebbc517a2ecca5b7314bd2e8b5e00017cec6d0dbe029a8ed8",
+      "section_id": "document-section:sha256:d1b2fe04c9cba0d88480514de7a4fdc7c5e05b8de978416e1ee4fe8acdd4d006",
+      "subtree_span": {
+        "end_line": 217,
+        "start_line": 190
+      },
+      "subtree_text_hash": "sha256:797bb2ba442f9b281d41400d2fb040b3c6e9e969c21ae4b03821d94f7979a131",
+      "title": "TabsAttribute 事件属性"
+    },
+    {
+      "content_span": {
+        "end_line": 231,
+        "start_line": 218
+      },
+      "content_text_hash": "sha256:8881930583d0e11a0e3d5cb8d47437b96949da5081d240ae87d5bf624064c22b",
+      "heading_level": 4,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析",
+        "新增 API",
+        "回调类型定义"
+      ],
+      "heading_span": {
+        "end_line": 218,
+        "start_line": 218
+      },
+      "kind": "heading",
+      "ordinal": 17,
+      "parent_section_id": "document-section:sha256:a0b4e5cd9e2cef2ebbc517a2ecca5b7314bd2e8b5e00017cec6d0dbe029a8ed8",
+      "section_id": "document-section:sha256:63be85842ac676bdc8fcf10c5ec7442c18f2bc9450b755e6f0320aba750d88e0",
+      "subtree_span": {
+        "end_line": 231,
+        "start_line": 218
+      },
+      "subtree_text_hash": "sha256:8881930583d0e11a0e3d5cb8d47437b96949da5081d240ae87d5bf624064c22b",
+      "title": "回调类型定义"
+    },
+    {
+      "content_span": {
+        "end_line": 243,
+        "start_line": 232
+      },
+      "content_text_hash": "sha256:90fbe4b089200b7b43827428835ccb2fea5f74cd8518d0b11451c38f852f60b8",
+      "heading_level": 4,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析",
+        "新增 API",
+        "TabsAnimationEvent"
+      ],
+      "heading_span": {
+        "end_line": 232,
+        "start_line": 232
+      },
+      "kind": "heading",
+      "ordinal": 18,
+      "parent_section_id": "document-section:sha256:a0b4e5cd9e2cef2ebbc517a2ecca5b7314bd2e8b5e00017cec6d0dbe029a8ed8",
+      "section_id": "document-section:sha256:1160b875c504ff6d2b88977819861758160bba1a765419ee50dae740e8abacb2",
+      "subtree_span": {
+        "end_line": 243,
+        "start_line": 232
+      },
+      "subtree_text_hash": "sha256:90fbe4b089200b7b43827428835ccb2fea5f74cd8518d0b11451c38f852f60b8",
+      "title": "TabsAnimationEvent"
+    },
+    {
+      "content_span": {
+        "end_line": 249,
+        "start_line": 244
+      },
+      "content_text_hash": "sha256:f6392354d62d3b9366010f0c2537530b11c1ba6ac41ab7189b7eb271f174f7e5",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "API 变更分析",
+        "变更/废弃 API"
+      ],
+      "heading_span": {
+        "end_line": 244,
+        "start_line": 244
+      },
+      "kind": "heading",
+      "ordinal": 19,
+      "parent_section_id": "document-section:sha256:f0b3d9d672838f6e13bb5a67983f85a36a4d35d9380cf8ba4951fdb65120bab9",
+      "section_id": "document-section:sha256:c2e7063d1624a9f9f15a1cfe376f61bcfbd08ea8d4ecad52af6ac96c6ce6b1e8",
+      "subtree_span": {
+        "end_line": 249,
+        "start_line": 244
+      },
+      "subtree_text_hash": "sha256:f6392354d62d3b9366010f0c2537530b11c1ba6ac41ab7189b7eb271f174f7e5",
+      "title": "变更/废弃 API"
+    },
+    {
+      "content_span": {
+        "end_line": 251,
+        "start_line": 250
+      },
+      "content_text_hash": "sha256:aeadb039755341d5b4ab685008e43e5be92b5f765211fb5ec743173298dc96ad",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "接口规格"
+      ],
+      "heading_span": {
+        "end_line": 250,
+        "start_line": 250
+      },
+      "kind": "heading",
+      "ordinal": 20,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:38f6bda0d8a405827606f4bd68b9deae32f678f0496982c5fd90fd6900968c39",
+      "subtree_span": {
+        "end_line": 259,
+        "start_line": 250
+      },
+      "subtree_text_hash": "sha256:68f48ab5ca1614cbde539f1af0ca6daa386c4d8203712ab50eb1da1dfa259ca7",
+      "title": "接口规格"
+    },
+    {
+      "content_span": {
+        "end_line": 259,
+        "start_line": 252
+      },
+      "content_text_hash": "sha256:d0f072acb5c7b6fa408b0070467073e53d54c3572bf5db967550d1a94b9f4b10",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "接口规格",
+        "接口定义"
+      ],
+      "heading_span": {
+        "end_line": 252,
+        "start_line": 252
+      },
+      "kind": "heading",
+      "ordinal": 21,
+      "parent_section_id": "document-section:sha256:38f6bda0d8a405827606f4bd68b9deae32f678f0496982c5fd90fd6900968c39",
+      "section_id": "document-section:sha256:e234783e7100de03a4af79bd74b9439286c5c9de7e37388adeb7e3b6251a421f",
+      "subtree_span": {
+        "end_line": 259,
+        "start_line": 252
+      },
+      "subtree_text_hash": "sha256:d0f072acb5c7b6fa408b0070467073e53d54c3572bf5db967550d1a94b9f4b10",
+      "title": "接口定义"
+    },
+    {
+      "content_span": {
+        "end_line": 271,
+        "start_line": 260
+      },
+      "content_text_hash": "sha256:59df53348d485c5a9c2dce66cb05c45bffcb9b0eafbb76885270ad7a59c3bc14",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "兼容性声明"
+      ],
+      "heading_span": {
+        "end_line": 260,
+        "start_line": 260
+      },
+      "kind": "heading",
+      "ordinal": 22,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:e593da455373d804b5c0d54f7996b5e2ef64162b58b7cd6f0818889034135b25",
+      "subtree_span": {
+        "end_line": 271,
+        "start_line": 260
+      },
+      "subtree_text_hash": "sha256:59df53348d485c5a9c2dce66cb05c45bffcb9b0eafbb76885270ad7a59c3bc14",
+      "title": "兼容性声明"
+    },
+    {
+      "content_span": {
+        "end_line": 282,
+        "start_line": 272
+      },
+      "content_text_hash": "sha256:68b89c31d38df823fa6cba94a408f1be66bc7991558b11bf20047bff1aa3b0ad",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "架构约束"
+      ],
+      "heading_span": {
+        "end_line": 272,
+        "start_line": 272
+      },
+      "kind": "heading",
+      "ordinal": 23,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:41721361c67b4139c32062369df7f0b7524df21c39fd66f5c8f4211a81fad5dd",
+      "subtree_span": {
+        "end_line": 282,
+        "start_line": 272
+      },
+      "subtree_text_hash": "sha256:68b89c31d38df823fa6cba94a408f1be66bc7991558b11bf20047bff1aa3b0ad",
+      "title": "架构约束"
+    },
+    {
+      "content_span": {
+        "end_line": 291,
+        "start_line": 283
+      },
+      "content_text_hash": "sha256:d10a42dd05c43906b210d6cec9a54bc732aefabb16be3a54a3e2fab16d300da0",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "非性能需求"
+      ],
+      "heading_span": {
+        "end_line": 283,
+        "start_line": 283
+      },
+      "kind": "heading",
+      "ordinal": 24,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:1830c6aa483f5d54eccfb4fe01470c6c613a3a554aacce80970eaf20083be424",
+      "subtree_span": {
+        "end_line": 291,
+        "start_line": 283
+      },
+      "subtree_text_hash": "sha256:d10a42dd05c43906b210d6cec9a54bc732aefabb16be3a54a3e2fab16d300da0",
+      "title": "非性能需求"
+    },
+    {
+      "content_span": {
+        "end_line": 301,
+        "start_line": 292
+      },
+      "content_text_hash": "sha256:73f8434069d3976a619b336fcd503b8b5dab002480ae6c50f69156ae66126296",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "多设备适配声明"
+      ],
+      "heading_span": {
+        "end_line": 292,
+        "start_line": 292
+      },
+      "kind": "heading",
+      "ordinal": 25,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:cd9dbac20b77edece463a7e014f49d694221cf2eda253ae412c65e5dfae223b1",
+      "subtree_span": {
+        "end_line": 301,
+        "start_line": 292
+      },
+      "subtree_text_hash": "sha256:73f8434069d3976a619b336fcd503b8b5dab002480ae6c50f69156ae66126296",
+      "title": "多设备适配声明"
+    },
+    {
+      "content_span": {
+        "end_line": 310,
+        "start_line": 302
+      },
+      "content_text_hash": "sha256:0a1b5cbb9d6850ea7f5189c95b96efa35da483f804ac819c005fb16ee8e89447",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "全局特性影响"
+      ],
+      "heading_span": {
+        "end_line": 302,
+        "start_line": 302
+      },
+      "kind": "heading",
+      "ordinal": 26,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:3b3eaea8e848a3e987ddd3aceb3d6f9bf97c0159fd040d57d59743d44590a615",
+      "subtree_span": {
+        "end_line": 310,
+        "start_line": 302
+      },
+      "subtree_text_hash": "sha256:0a1b5cbb9d6850ea7f5189c95b96efa35da483f804ac819c005fb16ee8e89447",
+      "title": "全局特性影响"
+    },
+    {
+      "content_span": {
+        "end_line": 324,
+        "start_line": 311
+      },
+      "content_text_hash": "sha256:670472cbd4fd9790fcc03968fb628fda7f4efe46a56b567e3151d4ceeefd73ee",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "Spec 自审清单"
+      ],
+      "heading_span": {
+        "end_line": 311,
+        "start_line": 311
+      },
+      "kind": "heading",
+      "ordinal": 27,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:d6ba0ac76ee7c06edf0132dcbd4b33cde6b3f272fa4494e74e2f1f9a79cf8cca",
+      "subtree_span": {
+        "end_line": 324,
+        "start_line": 311
+      },
+      "subtree_text_hash": "sha256:670472cbd4fd9790fcc03968fb628fda7f4efe46a56b567e3151d4ceeefd73ee",
+      "title": "Spec 自审清单"
+    },
+    {
+      "content_span": {
+        "end_line": 326,
+        "start_line": 325
+      },
+      "content_text_hash": "sha256:9bf43a603ebdb767c7c278ea5cd35b51d128e97b61e81cd8ca858f277791330b",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "context-references"
+      ],
+      "heading_span": {
+        "end_line": 325,
+        "start_line": 325
+      },
+      "kind": "heading",
+      "ordinal": 28,
+      "parent_section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "section_id": "document-section:sha256:28ec7cc3e255bd6b74e1fc08fc6e3583cac9e06e0f3d79752b66f3b31b29b241",
+      "subtree_span": {
+        "end_line": 339,
+        "start_line": 325
+      },
+      "subtree_text_hash": "sha256:062c37ab4b2f909227e8b9509be34ca6c53cf02f1570866fa6cd41bc6e8bd895",
+      "title": "context-references"
+    },
+    {
+      "content_span": {
+        "end_line": 334,
+        "start_line": 327
+      },
+      "content_text_hash": "sha256:ce4e3563532921c23c6c95336383222cbe18b453a6673518c32f4845ecfa4d07",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "context-references",
+        "源码文件"
+      ],
+      "heading_span": {
+        "end_line": 327,
+        "start_line": 327
+      },
+      "kind": "heading",
+      "ordinal": 29,
+      "parent_section_id": "document-section:sha256:28ec7cc3e255bd6b74e1fc08fc6e3583cac9e06e0f3d79752b66f3b31b29b241",
+      "section_id": "document-section:sha256:235346e120b0c32ae0c768195eb7074f6abc957ad31c5d433a3834e7149b1780",
+      "subtree_span": {
+        "end_line": 334,
+        "start_line": 327
+      },
+      "subtree_text_hash": "sha256:ce4e3563532921c23c6c95336383222cbe18b453a6673518c32f4845ecfa4d07",
+      "title": "源码文件"
+    },
+    {
+      "content_span": {
+        "end_line": 339,
+        "start_line": 335
+      },
+      "content_text_hash": "sha256:adcb2a500d3a67edfd7eb690df23f715c46e3e498548631da0a0d4431070e2c8",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "context-references",
+        "测试文件"
+      ],
+      "heading_span": {
+        "end_line": 335,
+        "start_line": 335
+      },
+      "kind": "heading",
+      "ordinal": 30,
+      "parent_section_id": "document-section:sha256:28ec7cc3e255bd6b74e1fc08fc6e3583cac9e06e0f3d79752b66f3b31b29b241",
+      "section_id": "document-section:sha256:bad8139a434a87d699e29e125445d896899bd4355e260254181ff84fa25cfeec",
+      "subtree_span": {
+        "end_line": 339,
+        "start_line": 335
+      },
+      "subtree_text_hash": "sha256:adcb2a500d3a67edfd7eb690df23f715c46e3e498548631da0a0d4431070e2c8",
+      "title": "测试文件"
+    }
+  ],
+  "source_line_count": 339,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "feature_spec",
+    "content_hash": "sha256:a6b3f1bc2e4ac247a01d0dc6594d8e985242ab36eecc5332307d196452e0ad75",
+    "relative_path": "05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+    "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+    "source_id": "arkui-specs"
+  },
+  "title": "特性规格"
+}

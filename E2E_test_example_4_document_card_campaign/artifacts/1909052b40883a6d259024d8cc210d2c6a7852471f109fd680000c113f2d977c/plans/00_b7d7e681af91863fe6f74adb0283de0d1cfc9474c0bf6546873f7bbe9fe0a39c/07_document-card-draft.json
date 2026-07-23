@@ -1,0 +1,169 @@
+{
+  "document_id": "arkui-specs:05-ui-components/03-scroll-container-components/09-tabs-tab-content/Feat-05-tabs-events-spec.md",
+  "important_apis": [
+    "TabsAttribute",
+    "onChange",
+    "onSelected",
+    "onUnselected",
+    "onTabBarClick",
+    "onAnimationStart",
+    "onAnimationEnd",
+    "onGestureSwipe",
+    "onContentWillChange",
+    "onContentDidScroll",
+    "OnTabsChangeCallback",
+    "OnTabsSelectedCallback",
+    "OnTabsUnselectedCallback",
+    "OnTabsTabBarClickCallback",
+    "OnTabsAnimationStartCallback",
+    "OnTabsAnimationEndCallback",
+    "OnTabsGestureSwipeCallback",
+    "OnTabsContentWillChangeCallback",
+    "OnTabsContentDidScrollCallback",
+    "TabsAnimationEvent"
+  ],
+  "primary_topics": [
+    "Tabs 事件回调",
+    "TabContent 事件回调",
+    "onChange",
+    "onSelected",
+    "onUnselected",
+    "onTabBarClick",
+    "onAnimationStart",
+    "onAnimationEnd",
+    "onGestureSwipe",
+    "onContentWillChange",
+    "onContentDidScroll",
+    "TabsAnimationEvent",
+    "回调签名类型",
+    "API 版本兼容性"
+  ],
+  "schema_version": "document-card-draft-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:80b642e6f1a1654cf11a1ff0ba611668de9c629f005a1d2610486b72a5d4d47b",
+      "summary": "特性规格文档的根章节，概述 Tabs/TabContent 事件回调的完整行为规格。"
+    },
+    {
+      "section_id": "document-section:sha256:ec8d0ed7cfec8fb3555eba8d276b60d4b5af322d3cc483746c7d668d52647afd",
+      "summary": "概述部分，列出特性名称、编号、优先级、目标版本等元数据。"
+    },
+    {
+      "section_id": "document-section:sha256:f99389d4e5d8abfc77015c152bed6df77126801312a7ea5f93d84da0e497132c",
+      "summary": "本次变更范围说明，指出无新增变更，为已有实现补录，覆盖全量事件回调。"
+    },
+    {
+      "section_id": "document-section:sha256:d39981fb12e0298977cbebafb20fdee02762adbad9326dec9d4e26c6e410881e",
+      "summary": "输入文档列表，包括设计文档和 SDK 知识库。"
+    },
+    {
+      "section_id": "document-section:sha256:ec1a3c6e8b6ce2853288094875d378e11dacf50ab1b4356f3f985f8dfff609af",
+      "summary": "用户故事章节，包含六个用户故事，分别描述监听标签页切换、选中/取消选中、标签栏点击、切换动画、手势滑动、内容切换拦截和滑动事件的需求。"
+    },
+    {
+      "section_id": "document-section:sha256:422a50c32fb308af33e089183e3b6403a63be0843d85a7f305e03adfa8b4f828",
+      "summary": "US-1: 监听标签页切换事件，通过 onChange 回调获取新索引。"
+    },
+    {
+      "section_id": "document-section:sha256:f9e4c20c6311ac94becef8e28f13c9046719e95e888d56696fa1205a534af628",
+      "summary": "US-2: 监听标签选中/取消选中事件，通过 onSelected 和 onUnselected 回调获取索引。"
+    },
+    {
+      "section_id": "document-section:sha256:1b1a6d342f17f082e1863b838da50580e9c06e9593f310ca1febe9ecb94f76d6",
+      "summary": "US-3: 监听标签栏点击事件，通过 onTabBarClick 回调获取被点击项索引。"
+    },
+    {
+      "section_id": "document-section:sha256:2e5f9a10415229c4e5ae7eeff8293bffae41e5be355b1d8c6071c83f510e60fc",
+      "summary": "US-4: 监听切换动画事件，通过 onAnimationStart/onAnimationEnd 回调获取动画事件数据。"
+    },
+    {
+      "section_id": "document-section:sha256:e74e0e070517513b0117db97f64803e9928b6fe12f688aa911a8046b82c45650",
+      "summary": "US-5: 监听手势滑动事件，通过 onGestureSwipe 回调获取滑动偏移和速度。"
+    },
+    {
+      "section_id": "document-section:sha256:b6ea7bfa01fdeffbc5e1464c75d7410250900aa4b2d582bff9b49b3d5aea4b4a",
+      "summary": "US-6: 监听内容切换拦截和滑动事件，通过 onContentWillChange 拦截切换，通过 onContentDidScroll 获取滑动偏移。"
+    },
+    {
+      "section_id": "document-section:sha256:c7295435a84a09ae27d75ac256e6afd3b3ce4c87d373bef3064327cdb30d5e1a",
+      "summary": "验收追溯表，将验收标准与用户故事、规则和验证手段关联。"
+    },
+    {
+      "section_id": "document-section:sha256:564b56609859d85c73e91d0ed40694a9f7a081d7912d86c8a464ff7b2c08b74c",
+      "summary": "规则定义表，详细列出每个事件回调的触发条件、预期行为、边界约束和关联的验收标准。"
+    },
+    {
+      "section_id": "document-section:sha256:53e082595bab81ccdfa98ce1f5c6bcde7e94d409ba2c3a3ef27dd947ea5c306f",
+      "summary": "验证映射表，将验收标准与具体的验证类型和测试/代码位置关联。"
+    },
+    {
+      "section_id": "document-section:sha256:f0b3d9d672838f6e13bb5a67983f85a36a4d35d9380cf8ba4951fdb65120bab9",
+      "summary": "API 变更分析章节，包含新增 API、回调类型定义和 TabsAnimationEvent 接口。"
+    },
+    {
+      "section_id": "document-section:sha256:a0b4e5cd9e2cef2ebbc517a2ecca5b7314bd2e8b5e00017cec6d0dbe029a8ed8",
+      "summary": "新增 API 子章节，列出 TabsAttribute 事件属性和回调类型定义。"
+    },
+    {
+      "section_id": "document-section:sha256:d1b2fe04c9cba0d88480514de7a4fdc7c5e05b8de978416e1ee4fe8acdd4d006",
+      "summary": "TabsAttribute 事件属性定义，包括 onChange、onSelected 等方法的签名和说明。"
+    },
+    {
+      "section_id": "document-section:sha256:63be85842ac676bdc8fcf10c5ec7442c18f2bc9450b755e6f0320aba750d88e0",
+      "summary": "回调类型定义表，列出所有回调类型的签名和 since 版本。"
+    },
+    {
+      "section_id": "document-section:sha256:1160b875c504ff6d2b88977819861758160bba1a765419ee50dae740e8abacb2",
+      "summary": "TabsAnimationEvent 接口定义，包含 currentOffset、targetOffset 和 velocity 字段。"
+    },
+    {
+      "section_id": "document-section:sha256:c2e7063d1624a9f9f15a1cfe376f61bcfbd08ea8d4ecad52af6ac96c6ce6b1e8",
+      "summary": "变更/废弃 API 章节，说明无变更或废弃的 API。"
+    },
+    {
+      "section_id": "document-section:sha256:38f6bda0d8a405827606f4bd68b9deae32f678f0496982c5fd90fd6900968c39",
+      "summary": "接口规格章节，说明本特性为已有实现补录，无新增接口规格。"
+    },
+    {
+      "section_id": "document-section:sha256:e234783e7100de03a4af79bd74b9439286c5c9de7e37388adeb7e3b6251a421f",
+      "summary": "接口定义子章节，重申无新增接口规格。"
+    },
+    {
+      "section_id": "document-section:sha256:e593da455373d804b5c0d54f7996b5e2ef64162b58b7cd6f0818889034135b25",
+      "summary": "兼容性声明，列出不同 API 版本支持的事件回调差异。"
+    },
+    {
+      "section_id": "document-section:sha256:41721361c67b4139c32062369df7f0b7524df21c39fd66f5c8f4211a81fad5dd",
+      "summary": "架构约束，说明事件回调依赖 Swiper 事件系统、拦截机制和 API 版本门控。"
+    },
+    {
+      "section_id": "document-section:sha256:1830c6aa483f5d54eccfb4fe01470c6c613a3a554aacce80970eaf20083be424",
+      "summary": "非性能需求，要求事件回调不阻塞动画，并可通过 DumpInfo 查看事件列表。"
+    },
+    {
+      "section_id": "document-section:sha256:cd9dbac20b77edece463a7e014f49d694221cf2eda253ae412c65e5dfae223b1",
+      "summary": "多设备适配声明，说明在手机、平板、折叠屏上行为无差异。"
+    },
+    {
+      "section_id": "document-section:sha256:3b3eaea8e848a3e987ddd3aceb3d6f9bf97c0159fd040d57d59743d44590a615",
+      "summary": "全局特性影响，说明 Tabs 事件回调依赖 Swiper 事件机制和焦点框架。"
+    },
+    {
+      "section_id": "document-section:sha256:d6ba0ac76ee7c06edf0132dcbd4b33cde6b3f272fa4494e74e2f1f9a79cf8cca",
+      "summary": "Spec 自审清单，确认文档满足各项规范要求。"
+    },
+    {
+      "section_id": "document-section:sha256:28ec7cc3e255bd6b74e1fc08fc6e3583cac9e06e0f3d79752b66f3b31b29b241",
+      "summary": "context-references 章节，列出相关的源码文件和测试文件。"
+    },
+    {
+      "section_id": "document-section:sha256:235346e120b0c32ae0c768195eb7074f6abc957ad31c5d433a3834e7149b1780",
+      "summary": "源码文件列表，包括 Tabs 主 Pattern、Model 层和 Swiper Pattern。"
+    },
+    {
+      "section_id": "document-section:sha256:bad8139a434a87d699e29e125445d896899bd4355e260254181ff84fa25cfeec",
+      "summary": "测试文件列表，包括 Tabs 事件测试文件。"
+    }
+  ],
+  "summary": "本文档定义了 Tabs/TabContent 组件的事件回调行为规格，包括 onChange、onSelected、onUnselected、onTabBarClick、onAnimationStart、onAnimationEnd、onGestureSwipe、onContentWillChange、onContentDidScroll 等回调的触发条件、参数、版本兼容性和异常处理规则。"
+}

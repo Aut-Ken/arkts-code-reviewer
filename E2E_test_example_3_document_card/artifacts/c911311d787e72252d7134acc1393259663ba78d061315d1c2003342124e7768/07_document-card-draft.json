@@ -1,0 +1,36 @@
+{
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/taskpool-vs-worker.md",
+  "important_apis": [],
+  "primary_topics": [
+    "TaskPool",
+    "Worker",
+    "多线程",
+    "并发",
+    "任务调度",
+    "生命周期管理"
+  ],
+  "schema_version": "document-card-draft-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:cf85b5b7503163332111c4fc79910a5dd391107bc65e11febcc67923a9573289",
+      "summary": "概述TaskPool和Worker的作用，并说明本文将从实现特点和适用场景两方面进行对比。"
+    },
+    {
+      "section_id": "document-section:sha256:ae910434e655a89120dbeee4c0b9b35b9776a04bf8759230311a56e1a9a28f65",
+      "summary": "以表格形式对比TaskPool和Worker在内存模型、参数传递、方法调用、生命周期、任务管理功能等方面的实现差异。"
+    },
+    {
+      "section_id": "document-section:sha256:8e8cfe38be3c91b20b666f1fa7e0a2c50d5eeb5fd81c7ac09411d245af906305",
+      "summary": "总体说明TaskPool和Worker的适用倾向，指出TaskPool适合独立任务且自动管理，Worker适合需长时间运行或手动管理线程的场景。"
+    },
+    {
+      "section_id": "document-section:sha256:b605cfb2ea785e648c0aa7415805666d36c16371fa1b914631a3617367a3b696",
+      "summary": "列举建议使用Worker的具体场景，包括运行时间超过3分钟的任务和有强关联的同步任务。"
+    },
+    {
+      "section_id": "document-section:sha256:a96fd0b8fbd5e2ae14de3e2d0a1d50f4fd26c6f900dae421e0ded05f74e12153",
+      "summary": "列举建议使用TaskPool的具体场景，包括需设置优先级、频繁取消、大量或调度点分散的任务。"
+    }
+  ],
+  "summary": "本文对比了ArkTS中TaskPool和Worker两种多线程方案的实现特点与适用场景，帮助开发者根据任务特性选择合适的并发模型。"
+}

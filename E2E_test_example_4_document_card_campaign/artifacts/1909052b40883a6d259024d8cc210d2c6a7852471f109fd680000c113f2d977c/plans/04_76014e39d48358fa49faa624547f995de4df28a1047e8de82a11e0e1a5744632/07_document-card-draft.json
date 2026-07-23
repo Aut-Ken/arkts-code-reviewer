@@ -1,0 +1,64 @@
+{
+  "document_id": "openharmony-docs:zh-cn/application-dev/reference/common/js-apis-timer.md",
+  "important_apis": [
+    "setTimeout",
+    "clearTimeout",
+    "setInterval",
+    "clearInterval"
+  ],
+  "primary_topics": [
+    "定时器",
+    "setTimeout",
+    "clearTimeout",
+    "setInterval",
+    "clearInterval",
+    "超时延迟",
+    "最大延迟值",
+    "定时器冻结",
+    "定时器ID"
+  ],
+  "schema_version": "document-card-draft-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:0f9a76d1b59a0994f074fdd745b9b8e2aeff99611dfb53a59940ac0f97d7d7c1",
+      "summary": "概述定时器模块，提供基础定时能力，支持按指定时间执行函数，并说明接口版本及UI后台冻结行为。"
+    },
+    {
+      "section_id": "document-section:sha256:1aca0da9704d17dc85a55319ec0fad6564c9cd8b89676222f7beea9ec6792dcc",
+      "summary": "介绍setTimeout接口，设置一次性定时器，到期后执行函数，支持参数传递，返回定时器ID。"
+    },
+    {
+      "section_id": "document-section:sha256:73220602d4a3fd0f46a80da9c3737d045dc601a9259e43bacf52b2c7697a568a",
+      "summary": "介绍clearTimeout接口，用于取消通过setTimeout设置的定时器。"
+    },
+    {
+      "section_id": "document-section:sha256:780cdae96459a6ef5afff9cc84ac4b131cc82acb6d4cb6bb79582f0584135342",
+      "summary": "介绍setInterval接口，设置重复定时器，按固定间隔执行函数，支持参数传递，返回定时器ID。"
+    },
+    {
+      "section_id": "document-section:sha256:cc0b49b0c6317c2c9964b08e3e2a49af2a75a2594ec05a3dcdd216829fd210a9",
+      "summary": "介绍clearInterval接口，用于取消通过setInterval设置的重复定时器。"
+    },
+    {
+      "section_id": "document-section:sha256:3564d724b84736dbd7443d43d3d5c74be2758915ab88a5bc98e51b1f00fcd94e",
+      "summary": "汇总定时器的其他说明，包括超时延迟、最大延迟值、定时器冻结和定时器ID共享等注意事项。"
+    },
+    {
+      "section_id": "document-section:sha256:33ec0556f6ef37e5067ec0dc2274b4094a3f7fea08192fbf0469604c3a67fa92",
+      "summary": "说明超时延迟现象，即使延迟为0，任务也会在下一个事件循环执行，并给出示例。"
+    },
+    {
+      "section_id": "document-section:sha256:8f370128f9e60262de2d1f6f633414c177ca5fec589b48b01087aac3d46a1ca7",
+      "summary": "说明最大延迟值限制，内部使用32位有符号整数存储延时，超过2147483647毫秒会溢出并立即执行。"
+    },
+    {
+      "section_id": "document-section:sha256:52585a99f58b4e5340c32741f3edfe80aefe114a7f08afa6845aef3ec09c9547",
+      "summary": "说明定时器冻结机制，应用切后台后定时器到期不触发，回前台后按序触发。"
+    },
+    {
+      "section_id": "document-section:sha256:a3212e14ac54eea62279f13666454d927bf23d17c3712ba6c9ba5f71140c3df7",
+      "summary": "说明setTimeout和setInterval共享ID池，可互相清除，但建议使用对应清除方法以提高可读性。"
+    }
+  ],
+  "summary": "本文档介绍ArkTS定时器模块，提供setTimeout、clearTimeout、setInterval、clearInterval等基础定时器能力，支持按指定时间执行函数，并说明超时延迟、最大延迟值、定时器冻结及ID共享等注意事项。"
+}

@@ -20,6 +20,9 @@ DOCUMENT_CARD_SCHEMA_VERSION: Literal["document-card-v1"] = "document-card-v1"
 DOCUMENT_STRUCTURE_BUILDER_VERSION: Literal["markdown-document-structure-v1"] = (
     "markdown-document-structure-v1"
 )
+DOCUMENT_STRUCTURE_FRONT_MATTER_BUILDER_VERSION: Literal[
+    "markdown-document-structure-v2-front-matter"
+] = "markdown-document-structure-v2-front-matter"
 DOCUMENT_CARD_USE_SCOPE: Literal["navigation_only_not_evidence"] = "navigation_only_not_evidence"
 
 _HASH = r"[0-9a-f]{64}"
@@ -182,7 +185,10 @@ class _MarkdownDocumentMapFields(FrozenModel):
     normalized_body_hash: Annotated[str, Field(pattern=_SHA256_RE.pattern)]
     source_line_count: Annotated[int, Field(ge=1)]
     sections: tuple[MarkdownSection, ...]
-    builder_version: Literal["markdown-document-structure-v1"] = DOCUMENT_STRUCTURE_BUILDER_VERSION
+    builder_version: Literal[
+        "markdown-document-structure-v1",
+        "markdown-document-structure-v2-front-matter",
+    ] = DOCUMENT_STRUCTURE_BUILDER_VERSION
     diagnostics: tuple[str, ...] = ()
 
     @field_validator("sections", "normalization_diagnostics", "diagnostics", mode="before")
@@ -367,6 +373,7 @@ __all__ = [
     "DOCUMENT_CARD_SCHEMA_VERSION",
     "DOCUMENT_CARD_USE_SCOPE",
     "DOCUMENT_STRUCTURE_BUILDER_VERSION",
+    "DOCUMENT_STRUCTURE_FRONT_MATTER_BUILDER_VERSION",
     "MARKDOWN_DOCUMENT_MAP_SCHEMA_VERSION",
     "DocumentCard",
     "DocumentCardDraft",

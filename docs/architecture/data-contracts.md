@@ -1,7 +1,7 @@
 ---
 title: 跨模块数据契约
 status: canonical
-updated: 2026-07-20
+updated: 2026-07-23
 ---
 
 # 跨模块数据契约
@@ -31,6 +31,12 @@ updated: 2026-07-20
 |---|---|---|
 | `SourceRecord/SourceBundle` | Source Registry | Knowledge Build、Evaluation、Audit |
 | `NormalizedDocument/SourceRef` | Source Adapter | Clause Parser、Metadata Extractor |
+| `MarkdownDocumentMap` | Document-First Structure Builder | Document Card Builder、Document Catalog、Audit |
+| `SourceAtomSet` | Document Projection Structure Builder | L1/L2 Mapping、Projection Compiler、Audit |
+| `DocumentCardRequest/DocumentCardDispatchPlan` | Document Card Builder | 受控 DeepSeek runner、Audit；Plan 不是执行授权 |
+| `DocumentCard/DocumentCatalogBuild` | Document-First Navigation | 文档导航、Audit；固定非 Evidence、非生产资格 |
+| `DocumentCardCampaignInspection` | Document Card Campaign Inspector | 外发审批、Audit；inspect-only，不代表已经执行 |
+| `DocumentProjectionMapping/Manifest/Record` | Document Projection Builder | 独立 L2 Shadow Store、Audit；固定非 Evidence、未语义审核 |
 | `KnowledgeClause/ApiSymbolCatalog` | Knowledge Build | Retrieval、Rules、Parser canonicalization |
 | `ChangeSet` | Input | Parser、ReviewUnit、Output |
 | `CodeFacts/FileAnalysis` | Parser | ReviewUnit、Feature Routing、Rules |
@@ -51,8 +57,9 @@ updated: 2026-07-20
 
 ### 3.1 当前 SourceRecord
 
-`/home/autken/Code/arkts-knowledge/registry/sources.yaml` 已登记 19 个本地仓库。当前 YAML
-记录是已落盘事实，主项目尚未实现 loader：
+`/home/autken/Code/arkts-knowledge/registry/sources.yaml` 已登记 19 个本地仓库。主项目已实现
+严格 `SourceRegistry` loader、来源路径环境变量覆盖、Git checkout 验证和稳定
+`SourceBundle`：
 
 ```yaml
 - id: openharmony-docs
@@ -76,7 +83,11 @@ updated: 2026-07-20
     raw_prompt_use_allowed: true
 ```
 
-目标 `SourceRegistryLoader` 将其校验为 Pydantic `SourceRecord`，并计算：
+`load_source_registry()` 读取显式绝对路径，或在未显式传入时读取
+`ARKTS_SOURCE_REGISTRY`，再回退到默认 Registry。`resolve_source_path()` 按
+`SourceRecord.env_override` 对应环境变量优先、`SourceRecord.local_path` 次之解析本地路径；
+覆盖值必须是绝对路径。`build_source_bundle(..., verify=True)` 还会校验 Git toplevel、remote、
+branch 和 `HEAD` 与 Registry 的固定 revision 一致，并计算：
 
 ```jsonc
 {
@@ -141,6 +152,178 @@ Source Adapter 的统一文档输出：
   "source_ref": {}
 }
 ```
+
+### 3.4 Document-First 文档导航合同
+
+当前 Document-First 切片与 Clause publication 并行存在。它先为固定 Markdown 建立可重放的文档
+结构与导航摘要，但不把摘要提升为规范证据：
+
+```text
+NormalizedDocument
+-> MarkdownDocumentMap
+-> DocumentCardRequest
+-> DocumentCardDispatchPlan
+-> raw provider response
+-> DocumentCardDraft
+-> DocumentCard
+-> DocumentCatalogBuild
+```
+
+#### 3.4.1 MarkdownDocumentMap
+
+`markdown-document-map-v1` 通常由静态 `markdown-document-structure-v1` builder 生成；带 YAML
+front matter 的输入使用兼容 schema 的 `markdown-document-structure-v2-front-matter`。它保存：
+
+```text
+document_id / SourceRef / normalized_body_hash
+title / language / release / api_level / language_mode
+按正文顺序排列的 section_id / ordinal / kind / heading_path
+heading/content/subtree 的 1-based SourceSpan
+每节 direct content 与 subtree 的 SHA-256
+map_id = 完整规范化内容的 content-addressed identity
+```
+
+Map 不调用模型；严格 verifier 会从同一 `NormalizedDocument` 重建并逐字段比较。
+
+#### 3.4.2 DocumentCardRequest 与 DispatchPlan
+
+`document-card-request-v1` 将完整 Markdown、Map、固定 `deepseek-document-card-v1` Prompt、模型和
+export-policy fingerprint 绑定到 `request_id`。`document-card-dispatch-plan-v1` 再冻结最终
+DeepSeek wire JSON、body hash/bytes、端点、单次 attempt、无重试、TLS、超时、响应体和最大输出
+预算。Request 的 qualification 是 `navigation_generation_request_not_authorization`，Plan 的
+qualification 是 `plan_not_authorization`；二者都不是外发批准。
+
+真实发送还必须同时满足 Registry `raw_prompt_use_allowed=true`、独立精确
+source/revision/path allowlist，以及调用方对精确 Plan ID、wire body SHA-256、最大输出 token 和
+固定 acknowledgement 的批准。离线 inspect 不创建 credential provider，不读取 `.env`/API Key，
+也不访问网络。transport 返回后，runner 会再次执行响应字节上限检查；若响应正文原样包含当前
+API Key，则按安全的 transport failure 处理且不保留该正文。
+
+#### 3.4.3 DocumentCard 与 DocumentCatalogBuild
+
+Provider JSON 先严格解析为 `document-card-draft-v1`，再核对 document ID、所有 section ID 的
+完整且唯一覆盖、来源、Map 和正文 hash，最后封装为 content-addressed `document-card-v1`。
+Card 的摘要、主题、API 提示和逐节摘要都是导航字段，固定：
+
+```jsonc
+{
+  "use_scope": "navigation_only_not_evidence",
+  "evidence_eligible": false
+}
+```
+
+`document-catalog-build-v1` 只接受能从可信 `NormalizedDocument + MarkdownDocumentMap +
+DocumentCard` 完整复核的输入，按稳定来源身份排序并拒绝重复或错绑。Catalog 固定
+`evidence_eligible=false`、`production_qualified=false` 和
+`qualification=navigation_catalog_contract_not_quality_qualified`。当前只实现 Catalog 构建与
+验证合同，没有实现多文档 Catalog Router、Catalog 到 Clause Retrieval 的运行连接，也没有改变
+`KnowledgeIndex`、`RetrievalRequest` 或 `EvidencePack` 合同。
+
+#### 3.4.4 当前真实运行与 Campaign 边界
+
+`taskpool-vs-worker.md` 已在精确 Plan
+`document-card-plan:sha256:c911311d787e72252d7134acc1393259663ba78d061315d1c2003342124e7768`
+下执行一次真实 DeepSeek smoke。结果为 1 attempt、0 retry、`valid_card`，5/5 section summaries
+通过完整重建，并生成 Card
+`document-card:sha256:5a321b5fbacf1db8bd4ce941fb631ad8be8e4174182cc913941ba3008c1a16b5`
+和一条目的 Catalog
+`document-catalog:sha256:c3aaff27622a50fd271bf49b00bd5ce5613c11c939ca6ac13cba7dac32b9e5b5`。
+`valid_card` 只证明结构和 provenance 合同。该 Card 的 `important_apis=[]`，而原文存在多个明确
+API/类/装饰器样式词，因此内容质量仍为 `NOT QUALIFIED`。
+
+另外 7 篇固定 Markdown 已生成 `document-card-campaign-inspection-v1`：
+
+```text
+campaign_id:
+  document-card-campaign:sha256:1909052b40883a6d259024d8cc210d2c6a7852471f109fd680000c113f2d977c
+plan_set_digest:
+  document-card-campaign-plan-set:sha256:8b4b80e8eeff96b4010591d91c283e44b0bcc0c1cb5944f19e854fa79b63fe7a
+caps:
+  7 attempts / 163932 request bytes / 28672 output tokens /
+  14000000 response bytes / 840000 ms aggregate timeout
+state:
+  credential_accessed=false
+  network_attempted=false
+  execution_authorized=false
+```
+
+`document-card-campaign-live-receipt-v1` 及其受控 runner 已实现。runner 要求调用方逐项精确批准
+上述 Campaign、Plan-set、文档数和全部聚合预算，并提供固定确认语；在 credential 读取和第一次
+请求前，它会重建 Campaign、逐字节复核 selection、inspection 和每个 Plan 的 `00`～`05`，确认
+全部 Plan 均无 consumed marker 或 `06`～`09` 碰撞。随后按 canonical 顺序复用单文档 runner，
+每个 Plan 只尝试一次、无重试；普通 transport、Provider 或 Card 失败保留 typed receipt 并继续，
+完整性、replay 或总时限准入失败则停止。
+
+每篇完成后按 `06 raw response -> 07 draft -> 08 card -> 09 receipt` 写入实际存在的产物，最后写
+内容寻址的 Campaign receipt。receipt 绑定逐篇状态、receipt/card ID、延迟、token、响应字节和
+Campaign elapsed，并固定 `evidence_eligible=false`、`production_qualified=false`。写入只保证单文件
+原子和 receipt-last，不宣称多文件事务；中断后 marker 仍表示唯一尝试已经消费，不能重试。
+
+2026-07-22 已对上述精确 Campaign 执行一次受控真实请求。7 个 Plan 各 attempt 一次、无重试，
+全部为 `valid_card`；累计输入 45,992 tokens、输出 11,677 tokens、原始响应正文 42,194 bytes，
+Provider latency 合计 134,503 ms，Campaign elapsed 为 134,834 ms。根回执为：
+
+```text
+document-card-campaign-live-receipt:sha256:49e7609094eac9639c64ba29e9598e66fc3c143a8cf61c21636c66bcd5b88411
+```
+
+7 组 raw response 均可重建为相同 Draft、Card 和单篇 receipt，根 receipt 也可由 7 组结果重封为
+相同 identity。115 个静态 section 均有且只有一条对应摘要。该结果证明真实多文档执行、结构和
+provenance 链成立；它没有人工 Truth 或路由 Recall/Precision。人工只读观察发现长文档会遗漏
+数值限制、禁止项、例外条件和关键符号，因此内容质量仍未 qualified。当前也没有由 7 张 Card
+构建并验证的多文档 Document Catalog 或任何 Catalog Router 结果。
+
+#### 3.4.5 L1/L2 Document Projection 基础合同
+
+当前已实现不依赖模型调用的第一段投影链：
+
+```text
+NormalizedDocument + MarkdownDocumentMap
+-> SourceAtomSet
+-> caller-provided DocumentProjectionMappingDraft
+-> sealed DocumentProjectionMapping
+-> deterministic L2 Markdown + ProjectionManifest
+-> DocumentProjectionVerification
+-> immutable DocumentProjectionRecord
+-> isolated PostgreSQL document_projection schema
+```
+
+`SourceAtomSet` 在现有 section 外层内继续按 Markdown block 建立 Atom。普通文档继续使用
+`markdown-document-structure-v1`；检测到 YAML front matter 时 Map 明确使用
+`markdown-document-structure-v2-front-matter`，避免在不改变版本 identity 的情况下修正旧解析
+行为。段落、顶层列表项及其嵌套内容、表格、代码块、引用块、Note 和无法识别的非空 block 都能
+形成 Atom；YAML front matter、标题、空行、HTML 注释和分隔线进入 Region。Atom 与 Region 必须
+无遗漏、无重叠地覆盖 L1 的全部物理行，Atom 只保存行号和正文哈希，可信正文必须从同一个
+`NormalizedDocument` 切片重建。
+
+Mapping 允许同一个 Atom 出现在多个分类 binding 中，但所有 eligible Atom 必须恰好属于
+“至少一个 binding”或 `unclassified_atom_ids`，两者不能交叉。L2 Markdown 只在分类目录中建立
+链接，canonical 原文单元库按 L1 顺序保存每个 Atom 正文一次；AI 生成的标题、主题和别名会经过
+Markdown 转义，不能修改 L1 正文。
+
+`DocumentProjectionRecord` 当前只达到机械资格：
+
+```text
+state = mechanically_verified
+qualification = mechanically_verified_projection_not_semantically_reviewed
+use_scope = retrieval_projection_only_not_evidence
+evidence_eligible = false
+production_qualified = false
+```
+
+PostgreSQL 使用独立 `document_projection` schema，保存不可变 projection version、Atom、Binding
+及 Binding-to-Atom 多对多关系；migration history 使用 checksum、prefix 和 advisory lock 校验。
+写入必须先处于 `building`，Atom/Binding 数量、分类/未分类互斥和每个 Binding 的非空引用全部满足
+后，数据库才允许单向封存为 `mechanically_verified`；封存后禁止追加、修改或删除子行。Store 只对
+同一个 projection identity 使用有超时的 advisory lock，不会让不同文档的读取和写入共用全局
+排他锁。
+
+Store 封存后会立即从完整 JSON 与规范化表两条路径重建并逐字段比较，内容不同的同 ID 重放、正文
+漂移、分类漂移和 ordinal 漂移全部 fail-closed。严格 Record loader 同样执行完整 rebuild，不能把
+调用方可自行重算的 self-hash 当成机械验证资格。当前真实 PostgreSQL round-trip 只证明
+migration、写入、封存、读取、幂等和 sealed-after-insert 拒绝合同可执行；尚无 DeepSeek Mapping
+Prompt、Grok Receipt、真实 L2 文档资产、Document Catalog/检索 runtime 或 Recall/Precision
+证据。
 
 ## 4. 兼容 FileInput 入口
 

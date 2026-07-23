@@ -1,0 +1,110 @@
+{
+  "card_id": "document-card:sha256:935797e46902c84c72fb33a624fea46d7ee56909e806c7bb46ee960aab72f5f8",
+  "document_id": "arkui-specs:05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+  "document_map_id": "markdown-document-map:sha256:35c52d6db59e5d22ed668e2d97c0c676ee77f94d35d32cf4652a6192da5d7cc7",
+  "evidence_eligible": false,
+  "important_apis": [
+    "AltErrorState",
+    "AltImageState",
+    "GetImageSourceInfo",
+    "ImageDfxConfig",
+    "ImageLayoutProperty",
+    "ImageLoadingContext",
+    "ImagePattern",
+    "ImageSourceInfo"
+  ],
+  "normalized_body_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+  "primary_topics": [
+    "Alt 状态",
+    "Image 组件",
+    "ImageDfxConfig",
+    "ImageSourceInfo",
+    "位掩码",
+    "兼容性",
+    "内存优化",
+    "内部数据结构",
+    "引用计数",
+    "按需分配"
+  ],
+  "schema_version": "document-card-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "summary": "特性规格概述，说明本规格定义 Image 组件基础内存优化的行为规则、验收标准和验证映射。"
+    },
+    {
+      "section_id": "document-section:sha256:39022783202e9586888024ba498951d4fd39aa0fdc532dd05ad876331b4d6fb1",
+      "summary": "概述部分，列出特性名称、编号、优先级、目标版本等元数据，并说明优化范围限定在 NG Image 组件的内部数据结构。"
+    },
+    {
+      "section_id": "document-section:sha256:b6e5f5aaa2bc91158dc9a9d9be0d4195f08bc393fab2f4e3dcbdaad634888ca8",
+      "summary": "用户故事部分，包含两个用户故事：减少单个 Image 节点的基础内存和保持功能完全兼容。"
+    },
+    {
+      "section_id": "document-section:sha256:506f0473061a10cbf8114c28b6c85bbca5a4a17ac91b6d8787e5a405ca9011eb",
+      "summary": "用户故事 US-1，描述开发者希望 Image 组件占用更少内存，以便在大量使用 Image 的场景下降低整体内存占用。"
+    },
+    {
+      "section_id": "document-section:sha256:49d6ee2d3b28e2ec934e43367d9d40f89b5d1bde922e05036d1b1dbf208399ab",
+      "summary": "用户故事 US-2，描述现有使用者希望升级后所有现有功能行为不变，无需修改现有代码。"
+    },
+    {
+      "section_id": "document-section:sha256:abbd2a60b1c3baca15c795e41eccf7c1e08aefd20a42a4093ca1929d9509ad15",
+      "summary": "验收标准部分，包含 P0 和 P1 验收标准，定义内存减少量、功能兼容性、单元测试通过等要求。"
+    },
+    {
+      "section_id": "document-section:sha256:6d44ff95861baab043226bdeaa2f0eb9a4ac4f689a31b629cc031c64b04c37fb",
+      "summary": "P0 验收标准，包括单节点基础内存减少 ≥5KB、功能无回归、单元测试全部通过、alt 回退行为一致。"
+    },
+    {
+      "section_id": "document-section:sha256:f899f875100e3165044d956bb5391c8f11f06941f6a4ca697175df24f0bf1cc3",
+      "summary": "P1 验收标准，包括 sizeof(ImageSourceInfo) 减少 30%+、ImageDfxConfig 实例共享、ImageLoadingContext 释放资源、无 alt 时不分配内存。"
+    },
+    {
+      "section_id": "document-section:sha256:4243dfb76d7213387b272e135f94dcc659f2c22f947c343ca787070b222c2bc7",
+      "summary": "规则定义部分，统一规则表，定义 ImageSourceInfo 共享、ImageDfxConfig 共享、alt 状态合并、回调按需分配、bool 位掩码等优化规则。"
+    },
+    {
+      "section_id": "document-section:sha256:ef7f1b46c1203952334eb983ca6c1599c4f1f238f9a140f29ff5e02d369d4aa8",
+      "summary": "接口规格部分，说明本特性无新增接口规格，接口行为定义详见规则定义和用户故事。"
+    },
+    {
+      "section_id": "document-section:sha256:0c602a5979542c71464ad6fed8e70aaf61d729ffebf4b843244134cfa132790d",
+      "summary": "接口定义子部分，重申无新增接口规格。"
+    },
+    {
+      "section_id": "document-section:sha256:c32c6b7aab83f1237cede2047e490e221107140adfbfa30f8ae7bd02b02df78a",
+      "summary": "兼容性部分，说明 ArkTS API、C API、默认行为无变化，内部类不涉及 IPC，单元测试可能需要调整 mock 数据构造方式。"
+    },
+    {
+      "section_id": "document-section:sha256:c195f5951e6c9eee28cf3f1406210fd0ea42f59e98b8fc0ebd6fb2d041152459",
+      "summary": "验证映射部分，列出每个验收标准的验证方法、命令或工具，包括内存实测、单元测试、sizeof 检查等。"
+    },
+    {
+      "section_id": "document-section:sha256:11a6c9ade88923d04af3a97b60da941a85b35787f8a3b8a2e910638e1a5c80d2",
+      "summary": "SpecTest 适用性部分，说明本次优化为内部数据结构重构，不改变用户可见行为，无法通过 SpecTest Host Preview 断言，替代验证为 sizeof 对比、单元测试和真实设备内存 profiling。"
+    },
+    {
+      "section_id": "document-section:sha256:473c174a259372dc4613be4ef060f801044629440057456d3ac2334bdc767ce2",
+      "summary": "不涉及项部分，列出图片解码/加载底层流程、动画图/SVG 代码路径、Legacy Image 组件、渲染/绘制路径优化、公共 API 变更等不涉及的内容。"
+    },
+    {
+      "section_id": "document-section:sha256:99ac461975906a15d7953259c1a7a8cd0d83776a6d561b2eff79d3d518a87867",
+      "summary": "多设备适配声明部分，说明手机、平板、折叠屏等设备类型均无行为差异。"
+    },
+    {
+      "section_id": "document-section:sha256:087ddc51726743fb2e6983b47a875f216c7a292dd1b7d929176d2930ba6e0409",
+      "summary": "context-references 部分，列出相关的代码仓库查询和关键文档。"
+    }
+  ],
+  "source_ref": {
+    "anchor": "document",
+    "authority": "feature_spec",
+    "content_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+    "relative_path": "05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+    "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+    "source_id": "arkui-specs"
+  },
+  "summary": "本规格定义 Image 组件基础内存优化的行为规则、验收标准和验证映射，优化范围限定在 NG Image 组件的内部数据结构，不影响公共 API 和用户可见行为，旨在减少单节点内存占用并保持功能完全兼容。",
+  "use_scope": "navigation_only_not_evidence"
+}

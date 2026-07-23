@@ -1,0 +1,22 @@
+{
+  "campaign_id": "document-card-campaign:sha256:1909052b40883a6d259024d8cc210d2c6a7852471f109fd680000c113f2d977c",
+  "document_id": "openharmony-docs:zh-cn/application-dev/reference/common/js-apis-timer.md",
+  "document_map_id": "markdown-document-map:sha256:461351ebab50cf3ba47091fc8e01b4b75c09916393523ea22e1efd9053accd91",
+  "export_policy_fingerprint": "document-card-export-policy:sha256:114bd63b3a4677e6296b0ade8fbb538562f85660f69a394d0522f347b00344f4",
+  "normalized_body_hash": "sha256:455a5963de3560024bf5a011ec3ed0f04b082efd7851a359f9960ef2f2b81e89",
+  "plan_id": "document-card-plan:sha256:76014e39d48358fa49faa624547f995de4df28a1047e8de82a11e0e1a5744632",
+  "plan_set_digest": "document-card-campaign-plan-set:sha256:8b4b80e8eeff96b4010591d91c283e44b0bcc0c1cb5944f19e854fa79b63fe7a",
+  "prompt_hash": "sha256:9e2004b86b305d3adda556feca0f6b89a40f2ad72f8ec11f9ea811b10e4aedeb",
+  "prompt_version": "deepseek-document-card-v1",
+  "qualification": "pinned_source_identity_not_execution_or_publication_approval",
+  "request_id": "document-card-request:sha256:e0abc2d32676e3934c42cc2199a3ba4151c85ff9e7eef395114380cd23ed3a0c",
+  "schema_version": "document-card-source-manifest-v1",
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:455a5963de3560024bf5a011ec3ed0f04b082efd7851a359f9960ef2f2b81e89",
+    "relative_path": "zh-cn/application-dev/reference/common/js-apis-timer.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  }
+}

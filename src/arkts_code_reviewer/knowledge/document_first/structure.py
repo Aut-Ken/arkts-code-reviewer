@@ -11,6 +11,7 @@ from arkts_code_reviewer.knowledge.document_first._canonical import (
 from arkts_code_reviewer.knowledge.document_first.models import (
     DOCUMENT_CARD_USE_SCOPE,
     DOCUMENT_STRUCTURE_BUILDER_VERSION,
+    DOCUMENT_STRUCTURE_FRONT_MATTER_BUILDER_VERSION,
     DocumentCard,
     DocumentCardDraft,
     MarkdownDocumentMap,
@@ -41,8 +42,29 @@ def _slice_lines(lines: tuple[str, ...], span: SourceSpan) -> str:
     return "".join(lines[span.start_line - 1 : span.end_line])
 
 
+def detect_markdown_front_matter_span(body: str) -> SourceSpan | None:
+    lines = _source_lines(body)
+    if not lines or lines[0].strip() != "---":
+        return None
+    for line_number, line in enumerate(lines[1:], start=2):
+        if line.strip() in {"---", "..."}:
+            return SourceSpan(start_line=1, end_line=line_number)
+    return None
+
+
+def _mask_span(body: str, span: SourceSpan | None) -> str:
+    if span is None:
+        return body
+    lines = list(_source_lines(body))
+    for line_number in range(span.start_line, span.end_line + 1):
+        original = lines[line_number - 1]
+        lines[line_number - 1] = "\n" if original.endswith("\n") else ""
+    return "".join(lines)
+
+
 def _parse_headings(body: str) -> tuple[_ParsedHeading, ...]:
-    tokens = MarkdownIt("commonmark").enable("table").parse(body)
+    parse_body = _mask_span(body, detect_markdown_front_matter_span(body))
+    tokens = MarkdownIt("commonmark").enable("table").parse(parse_body)
     headings: list[_ParsedHeading] = []
     blockquote_depth = 0
     for index, token in enumerate(tokens):
@@ -101,6 +123,7 @@ def build_markdown_document_map(document: NormalizedDocument) -> MarkdownDocumen
     lines = _source_lines(document.body)
     line_count = len(lines)
     normalized_body_hash = sha256_text(document.body)
+    front_matter_span = detect_markdown_front_matter_span(document.body)
     headings = _parse_headings(document.body)
     diagnostics: set[str] = set()
     sections: list[MarkdownSection] = []
@@ -228,7 +251,11 @@ def build_markdown_document_map(document: NormalizedDocument) -> MarkdownDocumen
         normalized_body_hash=normalized_body_hash,
         source_line_count=line_count,
         sections=tuple(sections),
-        builder_version=DOCUMENT_STRUCTURE_BUILDER_VERSION,
+        builder_version=(
+            DOCUMENT_STRUCTURE_FRONT_MATTER_BUILDER_VERSION
+            if front_matter_span is not None
+            else DOCUMENT_STRUCTURE_BUILDER_VERSION
+        ),
         diagnostics=tuple(sorted(diagnostics)),
     ).model_dump(mode="json")
     payload["map_id"] = canonical_hash("markdown-document-map", payload)

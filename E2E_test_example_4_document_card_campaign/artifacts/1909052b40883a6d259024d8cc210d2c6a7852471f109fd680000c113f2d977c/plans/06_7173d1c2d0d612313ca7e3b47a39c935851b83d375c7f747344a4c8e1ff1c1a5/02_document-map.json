@@ -1,0 +1,291 @@
+{
+  "adapter_version": "openharmony-docs-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:ae88eaf8e78862ad583dcb1106532978868aa46aa462bc65166bf5940c4ac910",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 32,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:a087f4434a66a91e6cdb87b8de198a474156ef02627de72269c32cd9f3ca2b6b",
+      "heading_level": 1,
+      "heading_path": [
+        "状态管理概述"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:5e8f2a5d89c42a3b2feb3065062467f3efbf73f000132844a42dae7e2d46d8d6",
+      "subtree_span": {
+        "end_line": 184,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+      "title": "状态管理概述"
+    },
+    {
+      "content_span": {
+        "end_line": 39,
+        "start_line": 33
+      },
+      "content_text_hash": "sha256:031975b8818436f678fb157a9a27d5505f22006ae8e0bafd5899ab00c9ef6568",
+      "heading_level": 2,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理版本介绍"
+      ],
+      "heading_span": {
+        "end_line": 33,
+        "start_line": 33
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:5e8f2a5d89c42a3b2feb3065062467f3efbf73f000132844a42dae7e2d46d8d6",
+      "section_id": "document-section:sha256:299a68c8871b5ea5a8fa8c12a94e78e24eb02e620c7f682b4298be630cd40cee",
+      "subtree_span": {
+        "end_line": 39,
+        "start_line": 33
+      },
+      "subtree_text_hash": "sha256:031975b8818436f678fb157a9a27d5505f22006ae8e0bafd5899ab00c9ef6568",
+      "title": "状态管理版本介绍"
+    },
+    {
+      "content_span": {
+        "end_line": 43,
+        "start_line": 40
+      },
+      "content_text_hash": "sha256:dcdecaa2492e6a25687edd8a885facbac484d2c14d0c70628ed0e7c69449607a",
+      "heading_level": 2,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V1）"
+      ],
+      "heading_span": {
+        "end_line": 40,
+        "start_line": 40
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:5e8f2a5d89c42a3b2feb3065062467f3efbf73f000132844a42dae7e2d46d8d6",
+      "section_id": "document-section:sha256:931024d7ffc85eb3737eb9c2bac5be34f83ed174cb78a1282e3f2b3ec407c73e",
+      "subtree_span": {
+        "end_line": 103,
+        "start_line": 40
+      },
+      "subtree_text_hash": "sha256:9e720bc5faa7eefbe29f177280170b46e81f1fea2c59c4d32b52add27be607f8",
+      "title": "状态管理（V1）"
+    },
+    {
+      "content_span": {
+        "end_line": 88,
+        "start_line": 44
+      },
+      "content_text_hash": "sha256:144532be8db24bf29911234c5a668d75aaeb9d0c469cee4920f3f7ad33e878eb",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V1）",
+        "装饰器总览"
+      ],
+      "heading_span": {
+        "end_line": 44,
+        "start_line": 44
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:931024d7ffc85eb3737eb9c2bac5be34f83ed174cb78a1282e3f2b3ec407c73e",
+      "section_id": "document-section:sha256:c82383e119ec34fe6954f7c894a7fd5eec982055d61a3a4615852b9d2956bfa8",
+      "subtree_span": {
+        "end_line": 88,
+        "start_line": 44
+      },
+      "subtree_text_hash": "sha256:144532be8db24bf29911234c5a668d75aaeb9d0c469cee4920f3f7ad33e878eb",
+      "title": "装饰器总览"
+    },
+    {
+      "content_span": {
+        "end_line": 95,
+        "start_line": 89
+      },
+      "content_text_hash": "sha256:5056c339f576bd7c54991652aa552816318538373a46102bae7642ec3a88fec3",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V1）",
+        "其他状态管理V1功能"
+      ],
+      "heading_span": {
+        "end_line": 89,
+        "start_line": 89
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:931024d7ffc85eb3737eb9c2bac5be34f83ed174cb78a1282e3f2b3ec407c73e",
+      "section_id": "document-section:sha256:c3bad4df65445b308c610254bd95d1d8f694d987e5de2cf3630bc907d41ab5a2",
+      "subtree_span": {
+        "end_line": 95,
+        "start_line": 89
+      },
+      "subtree_text_hash": "sha256:5056c339f576bd7c54991652aa552816318538373a46102bae7642ec3a88fec3",
+      "title": "其他状态管理V1功能"
+    },
+    {
+      "content_span": {
+        "end_line": 103,
+        "start_line": 96
+      },
+      "content_text_hash": "sha256:71a39bcd7db529e850bda3e4120ca109eadde8b799b41f9629d5ffde33e0b71b",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V1）",
+        "相关实例"
+      ],
+      "heading_span": {
+        "end_line": 96,
+        "start_line": 96
+      },
+      "kind": "heading",
+      "ordinal": 5,
+      "parent_section_id": "document-section:sha256:931024d7ffc85eb3737eb9c2bac5be34f83ed174cb78a1282e3f2b3ec407c73e",
+      "section_id": "document-section:sha256:a0a5e6024a4b9ba2098591b26c444bbfbe32ff68b09da67d3517fa54d5f240b8",
+      "subtree_span": {
+        "end_line": 103,
+        "start_line": 96
+      },
+      "subtree_text_hash": "sha256:71a39bcd7db529e850bda3e4120ca109eadde8b799b41f9629d5ffde33e0b71b",
+      "title": "相关实例"
+    },
+    {
+      "content_span": {
+        "end_line": 107,
+        "start_line": 104
+      },
+      "content_text_hash": "sha256:3bbf275d23d9c4518b6d1fee4c6e791b541cc3e0ecac4e9fb130de8f22e10046",
+      "heading_level": 2,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V2）"
+      ],
+      "heading_span": {
+        "end_line": 104,
+        "start_line": 104
+      },
+      "kind": "heading",
+      "ordinal": 6,
+      "parent_section_id": "document-section:sha256:5e8f2a5d89c42a3b2feb3065062467f3efbf73f000132844a42dae7e2d46d8d6",
+      "section_id": "document-section:sha256:896d408f55cacedb46ab99b2602a35f1237841d0179ab624c06e27d49a28061e",
+      "subtree_span": {
+        "end_line": 184,
+        "start_line": 104
+      },
+      "subtree_text_hash": "sha256:8ea455333750b4498ef5e773e904a4af4ae8712e083ff7fefd668134671292db",
+      "title": "状态管理（V2）"
+    },
+    {
+      "content_span": {
+        "end_line": 130,
+        "start_line": 108
+      },
+      "content_text_hash": "sha256:11459b2d531febabb342930333d5341d3cd47f50693f409b5ebb874c641e3626",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V2）",
+        "状态管理V1现状以及V2优点"
+      ],
+      "heading_span": {
+        "end_line": 108,
+        "start_line": 108
+      },
+      "kind": "heading",
+      "ordinal": 7,
+      "parent_section_id": "document-section:sha256:896d408f55cacedb46ab99b2602a35f1237841d0179ab624c06e27d49a28061e",
+      "section_id": "document-section:sha256:cdc6348f3aeca804a4a28896f5584605996ab443cb0c923848aa9f1fab0913b3",
+      "subtree_span": {
+        "end_line": 130,
+        "start_line": 108
+      },
+      "subtree_text_hash": "sha256:11459b2d531febabb342930333d5341d3cd47f50693f409b5ebb874c641e3626",
+      "title": "状态管理V1现状以及V2优点"
+    },
+    {
+      "content_span": {
+        "end_line": 156,
+        "start_line": 131
+      },
+      "content_text_hash": "sha256:2620c23a9d1c2103b6d6cb3fc68779d5eedf1fea1ba9edba6787b6a8f7b42aad",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V2）",
+        "装饰器总览"
+      ],
+      "heading_span": {
+        "end_line": 131,
+        "start_line": 131
+      },
+      "kind": "heading",
+      "ordinal": 8,
+      "parent_section_id": "document-section:sha256:896d408f55cacedb46ab99b2602a35f1237841d0179ab624c06e27d49a28061e",
+      "section_id": "document-section:sha256:dda6c51a9ab712c15811028fc680d2307fc80a5c91cbfbc87ae997760516536f",
+      "subtree_span": {
+        "end_line": 156,
+        "start_line": 131
+      },
+      "subtree_text_hash": "sha256:2620c23a9d1c2103b6d6cb3fc68779d5eedf1fea1ba9edba6787b6a8f7b42aad",
+      "title": "装饰器总览"
+    },
+    {
+      "content_span": {
+        "end_line": 184,
+        "start_line": 157
+      },
+      "content_text_hash": "sha256:f1c3b9a757fb99f00c082f5d296a7a032cd324c3b8b7dd22033c692f73c578cb",
+      "heading_level": 3,
+      "heading_path": [
+        "状态管理概述",
+        "状态管理（V2）",
+        "状态管理V1与V2能力对比"
+      ],
+      "heading_span": {
+        "end_line": 157,
+        "start_line": 157
+      },
+      "kind": "heading",
+      "ordinal": 9,
+      "parent_section_id": "document-section:sha256:896d408f55cacedb46ab99b2602a35f1237841d0179ab624c06e27d49a28061e",
+      "section_id": "document-section:sha256:e88a10e2fc4eac1918a59c88c00e5fdc96522e109a87f6dde71a0bd371dd342e",
+      "subtree_span": {
+        "end_line": 184,
+        "start_line": 157
+      },
+      "subtree_text_hash": "sha256:f1c3b9a757fb99f00c082f5d296a7a032cd324c3b8b7dd22033c692f73c578cb",
+      "title": "状态管理V1与V2能力对比"
+    }
+  ],
+  "source_line_count": 184,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+    "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "title": "状态管理概述"
+}

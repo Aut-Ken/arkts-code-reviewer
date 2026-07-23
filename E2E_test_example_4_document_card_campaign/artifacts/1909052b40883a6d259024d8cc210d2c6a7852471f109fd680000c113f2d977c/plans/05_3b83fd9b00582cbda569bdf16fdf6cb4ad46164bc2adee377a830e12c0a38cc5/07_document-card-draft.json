@@ -1,0 +1,44 @@
+{
+  "document_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+  "important_apis": [
+    "aboutToAppear",
+    "onDidBuild",
+    "aboutToDisappear",
+    "@Component",
+    "@ComponentV2"
+  ],
+  "primary_topics": [
+    "自定义组件生命周期",
+    "aboutToAppear",
+    "onDidBuild",
+    "aboutToDisappear",
+    "组件创建与渲染",
+    "组件重新渲染",
+    "组件删除",
+    "组件嵌套生命周期"
+  ],
+  "schema_version": "document-card-draft-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "summary": "概述自定义组件生命周期，列出aboutToAppear、onDidBuild、aboutToDisappear三个接口，并给出生命周期流程图。"
+    },
+    {
+      "section_id": "document-section:sha256:43a2ab106dce462b8299948d2d7906d308b055b33b12a02c97e84ef2c4215d75",
+      "summary": "说明自定义组件的创建和首次渲染流程，包括实例创建、成员变量初始化、aboutToAppear和onDidBuild的执行顺序。"
+    },
+    {
+      "section_id": "document-section:sha256:3a143df8b192c1121840c694698acef6986ca6c8680060bda140fe650d24fc52",
+      "summary": "解释当状态变量变化时，框架如何触发重新渲染，并实现最小化更新。"
+    },
+    {
+      "section_id": "document-section:sha256:888ae8a3de11bd6f2d3241e40f6d80ae9d4a788870b3d04684f3f884f663f684",
+      "summary": "描述组件被移除时的删除流程，包括aboutToDisappear的调用、节点销毁和状态同步取消，并提醒避免在aboutToDisappear中使用异步操作。"
+    },
+    {
+      "section_id": "document-section:sha256:08edecce612b8cbc13e5f2796f21bf0fff462bcca1935ccb37523c8dcf44d291",
+      "summary": "通过Parent和Child嵌套组件的示例代码，展示不同场景下生命周期函数的调用时序，包括冷启动、动态增删子组件和退出应用等。"
+    }
+  ],
+  "summary": "介绍ArkUI自定义组件（@Component和@ComponentV2）的生命周期，包括aboutToAppear、onDidBuild、aboutToDisappear三个接口的调用时机、用途和注意事项，并通过嵌套示例说明创建、渲染、重新渲染和删除的完整流程。"
+}

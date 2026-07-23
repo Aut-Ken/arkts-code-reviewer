@@ -1,0 +1,155 @@
+{
+  "adapter_version": "openharmony-docs-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:cabc56ee91e299187cdd3a32ebabdd8447d96b5eb56db721985c19cac4e35556",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 30,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:1dd9c86abff747fe0783f89d37ab2092b6c0489cb8d15e65abe327970a0efe1c",
+      "heading_level": 1,
+      "heading_path": [
+        "自定义组件生命周期"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "subtree_span": {
+        "end_line": 181,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+      "title": "自定义组件生命周期"
+    },
+    {
+      "content_span": {
+        "end_line": 42,
+        "start_line": 31
+      },
+      "content_text_hash": "sha256:19fb2b9882139879bc1d897d37cb09239d7fab07aa4c44d96af3705684441910",
+      "heading_level": 2,
+      "heading_path": [
+        "自定义组件生命周期",
+        "自定义组件的创建和渲染流程"
+      ],
+      "heading_span": {
+        "end_line": 31,
+        "start_line": 31
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "section_id": "document-section:sha256:43a2ab106dce462b8299948d2d7906d308b055b33b12a02c97e84ef2c4215d75",
+      "subtree_span": {
+        "end_line": 42,
+        "start_line": 31
+      },
+      "subtree_text_hash": "sha256:19fb2b9882139879bc1d897d37cb09239d7fab07aa4c44d96af3705684441910",
+      "title": "自定义组件的创建和渲染流程"
+    },
+    {
+      "content_span": {
+        "end_line": 50,
+        "start_line": 43
+      },
+      "content_text_hash": "sha256:f5bdce0d7c99bef0448e0b5115050df3b61e5c052cd9c8f084df6e8dda3517c2",
+      "heading_level": 2,
+      "heading_path": [
+        "自定义组件生命周期",
+        "自定义组件重新渲染"
+      ],
+      "heading_span": {
+        "end_line": 43,
+        "start_line": 43
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "section_id": "document-section:sha256:3a143df8b192c1121840c694698acef6986ca6c8680060bda140fe650d24fc52",
+      "subtree_span": {
+        "end_line": 50,
+        "start_line": 43
+      },
+      "subtree_text_hash": "sha256:f5bdce0d7c99bef0448e0b5115050df3b61e5c052cd9c8f084df6e8dda3517c2",
+      "title": "自定义组件重新渲染"
+    },
+    {
+      "content_span": {
+        "end_line": 60,
+        "start_line": 51
+      },
+      "content_text_hash": "sha256:e31e79683414583a9e04a17180a63d5460e97a2381db83d2014fb83834710a39",
+      "heading_level": 2,
+      "heading_path": [
+        "自定义组件生命周期",
+        "自定义组件的删除"
+      ],
+      "heading_span": {
+        "end_line": 51,
+        "start_line": 51
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "section_id": "document-section:sha256:888ae8a3de11bd6f2d3241e40f6d80ae9d4a788870b3d04684f3f884f663f684",
+      "subtree_span": {
+        "end_line": 60,
+        "start_line": 51
+      },
+      "subtree_text_hash": "sha256:e31e79683414583a9e04a17180a63d5460e97a2381db83d2014fb83834710a39",
+      "title": "自定义组件的删除"
+    },
+    {
+      "content_span": {
+        "end_line": 181,
+        "start_line": 61
+      },
+      "content_text_hash": "sha256:74b4a41867d506f9cb7487ee94624d902518ca298113868a88095c279a05064b",
+      "heading_level": 2,
+      "heading_path": [
+        "自定义组件生命周期",
+        "自定义组件嵌套使用与示例"
+      ],
+      "heading_span": {
+        "end_line": 61,
+        "start_line": 61
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:7933ccb14d8024cdf23af34612effbeeb3c3a2b76c807485f9dd80878f62d7c0",
+      "section_id": "document-section:sha256:08edecce612b8cbc13e5f2796f21bf0fff462bcca1935ccb37523c8dcf44d291",
+      "subtree_span": {
+        "end_line": 181,
+        "start_line": 61
+      },
+      "subtree_text_hash": "sha256:74b4a41867d506f9cb7487ee94624d902518ca298113868a88095c279a05064b",
+      "title": "自定义组件嵌套使用与示例"
+    }
+  ],
+  "source_line_count": 181,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:7a8a39eb3f9ff1e51acdf35aa46cb98948419e9137a4ec0686c6a5510c61d3a7",
+    "relative_path": "zh-cn/application-dev/ui/state-management/arkts-page-custom-components-lifecycle.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "title": "自定义组件生命周期"
+}

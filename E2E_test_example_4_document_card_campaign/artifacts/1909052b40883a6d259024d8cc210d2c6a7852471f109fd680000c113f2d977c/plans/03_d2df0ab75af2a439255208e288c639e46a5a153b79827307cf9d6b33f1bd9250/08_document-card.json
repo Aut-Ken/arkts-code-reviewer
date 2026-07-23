@@ -1,0 +1,83 @@
+{
+  "card_id": "document-card:sha256:5062f8859284dd29b877d6fa42fd32b0c9e044890abfa0dccf97bdf96968e626",
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/taskpool-introduction.md",
+  "document_map_id": "markdown-document-map:sha256:12ef729377c666a16f643c7fccc4ac2bafd4d5aa02f04fac8e99accd9a0c4625",
+  "evidence_eligible": false,
+  "important_apis": [
+    "@Concurrent",
+    "@Sendable",
+    "taskpool.Priority",
+    "taskpool.Task",
+    "taskpool.TaskGroup",
+    "taskpool.execute"
+  ],
+  "normalized_body_hash": "sha256:0f3e7316e14a18c0467e2e344073b764e2f6ceb33b134e2f7bfd19f8936080d8",
+  "primary_topics": [
+    "@Concurrent装饰器",
+    "TaskPool",
+    "多线程",
+    "并发",
+    "扩缩容机制"
+  ],
+  "schema_version": "document-card-v1",
+  "section_summaries": [
+    {
+      "section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "summary": "概述TaskPool的作用、基本接口和文档结构。"
+    },
+    {
+      "section_id": "document-section:sha256:ccf8a8f03e192815d336aa23abee9efe5ac34fbe90de03889fb99d1fb8c507fc",
+      "summary": "说明TaskPool的运作机制，包括任务提交、线程调度和动态扩缩容。"
+    },
+    {
+      "section_id": "document-section:sha256:0e84402bbe9751f0735dd9714502f07b417fc177ead44353451f9c285a263efc",
+      "summary": "列举使用TaskPool的关键注意事项，如@Concurrent装饰器、任务时长限制、序列化支持等。"
+    },
+    {
+      "section_id": "document-section:sha256:e4ae0b15c04c8e5cfe887f230cba75c7be6c78f6c3d6c232c27cae8c7e95ef48",
+      "summary": "介绍@Concurrent装饰器的参数、使用场景、函数类型限制和变量访问规则。"
+    },
+    {
+      "section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "summary": "提供多个装饰器使用示例，包括一般使用、返回Promise、使用自定义类或函数、异步函数中使用Promise。"
+    },
+    {
+      "section_id": "document-section:sha256:e5fae54fcc51eb53774815786dcfde900b916f08a78cedb6dddb4773f29e00b9",
+      "summary": "演示并发函数的基本用法，计算两数之和并返回结果。"
+    },
+    {
+      "section_id": "document-section:sha256:f7cbeb836f67b04aaf406ab5fa951634530dda692eae5204af3ece421d22bee6",
+      "summary": "展示并发函数返回Promise时的正确与错误用法，强调避免返回pending状态。"
+    },
+    {
+      "section_id": "document-section:sha256:466a845a7dda41ed88dff928316e367515ddeccdfce30546e7370c277d97b356",
+      "summary": "说明在并发函数中使用自定义类或函数时需从单独文件导入，避免闭包问题。"
+    },
+    {
+      "section_id": "document-section:sha256:403cda1a27ef2ebd5380903122aa018d6779c9f3f0d3d8a25651546d508215e9",
+      "summary": "建议在并发异步函数中使用await处理Promise，以便TaskPool捕获异常。"
+    },
+    {
+      "section_id": "document-section:sha256:f938acdd3f99d829b486acfeb6ace6852f158c9e60d16c32694888931b808901",
+      "summary": "介绍TaskPool的扩缩容机制，包括触发条件和线程管理策略。"
+    },
+    {
+      "section_id": "document-section:sha256:e255717b07304477cb23b2b85764fa56f203fca84c04fa10e0a93ac52e2673d5",
+      "summary": "说明扩容检测逻辑：根据空闲线程数和任务数决定是否创建新线程。"
+    },
+    {
+      "section_id": "document-section:sha256:f7f44a9678fc16746ae5467b895626f66a487b4fd4a0abad2af0dde0c0aed48b",
+      "summary": "说明缩容机制：定时检测并释放满足条件的空闲线程。"
+    }
+  ],
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:0f3e7316e14a18c0467e2e344073b764e2f6ceb33b134e2f7bfd19f8936080d8",
+    "relative_path": "zh-cn/application-dev/arkts-utils/taskpool-introduction.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "summary": "介绍TaskPool多线程环境的基本概念、运作机制、使用注意事项、@Concurrent装饰器的用法以及扩缩容机制，帮助开发者理解如何在ArkTS中高效使用TaskPool执行并发任务。",
+  "use_scope": "navigation_only_not_evidence"
+}

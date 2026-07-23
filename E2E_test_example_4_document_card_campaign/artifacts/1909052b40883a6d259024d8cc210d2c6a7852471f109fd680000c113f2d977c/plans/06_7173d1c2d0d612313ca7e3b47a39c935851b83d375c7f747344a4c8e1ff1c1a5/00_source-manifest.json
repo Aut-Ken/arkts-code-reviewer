@@ -1,0 +1,22 @@
+{
+  "campaign_id": "document-card-campaign:sha256:1909052b40883a6d259024d8cc210d2c6a7852471f109fd680000c113f2d977c",
+  "document_id": "openharmony-docs:zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+  "document_map_id": "markdown-document-map:sha256:ae88eaf8e78862ad583dcb1106532978868aa46aa462bc65166bf5940c4ac910",
+  "export_policy_fingerprint": "document-card-export-policy:sha256:114bd63b3a4677e6296b0ade8fbb538562f85660f69a394d0522f347b00344f4",
+  "normalized_body_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+  "plan_id": "document-card-plan:sha256:7173d1c2d0d612313ca7e3b47a39c935851b83d375c7f747344a4c8e1ff1c1a5",
+  "plan_set_digest": "document-card-campaign-plan-set:sha256:8b4b80e8eeff96b4010591d91c283e44b0bcc0c1cb5944f19e854fa79b63fe7a",
+  "prompt_hash": "sha256:9e2004b86b305d3adda556feca0f6b89a40f2ad72f8ec11f9ea811b10e4aedeb",
+  "prompt_version": "deepseek-document-card-v1",
+  "qualification": "pinned_source_identity_not_execution_or_publication_approval",
+  "request_id": "document-card-request:sha256:2e12d20acb20b90419abead245ac001527e12f1d200684fdcf92e6d3028b10fd",
+  "schema_version": "document-card-source-manifest-v1",
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:5174918ae8959bd174846a848e58cde385c45f9ac90f128e49378bbcd07244fb",
+    "relative_path": "zh-cn/application-dev/ui/state-management/arkts-state-management-overview.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  }
+}

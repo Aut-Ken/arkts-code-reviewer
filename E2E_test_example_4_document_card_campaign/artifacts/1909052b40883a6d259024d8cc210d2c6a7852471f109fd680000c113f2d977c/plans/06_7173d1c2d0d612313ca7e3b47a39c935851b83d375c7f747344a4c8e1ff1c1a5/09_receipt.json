@@ -1,0 +1,35 @@
+{
+  "attempt_count": 1,
+  "card_id": "document-card:sha256:054e5d42abf65031f5d870008ad57bd7dd1adb5e0ca947ed998c040cab7807fb",
+  "document_map_id": "markdown-document-map:sha256:ae88eaf8e78862ad583dcb1106532978868aa46aa462bc65166bf5940c4ac910",
+  "draft_sha256": "sha256:b00bbfcd12f4628a3374cee9036888c34e28df0271434a98a349784910c4f8c6",
+  "failure_code": null,
+  "finish_reason": "stop",
+  "http_status": 200,
+  "latency_ms": 15983,
+  "network_attempted": true,
+  "plan_id": "document-card-plan:sha256:7173d1c2d0d612313ca7e3b47a39c935851b83d375c7f747344a4c8e1ff1c1a5",
+  "provider_model": "deepseek-v4-pro",
+  "provider_response_id": "7d0022a7-9582-487c-9587-70b0f626089a",
+  "qualification": "single_document_navigation_smoke_not_quality_evidence",
+  "receipt_id": "document-card-live-receipt:sha256:a35cea8f879a1b3be0b0c3dcbbe8f148cf3f9892643b736169c706622ab44fb5",
+  "request_id": "document-card-request:sha256:2e12d20acb20b90419abead245ac001527e12f1d200684fdcf92e6d3028b10fd",
+  "response_body_sha256": "sha256:6d5dfe2719ae66361f8726191c5b2276608460eadeb271e577a65fce242379bf",
+  "response_body_size_bytes": 4791,
+  "retry_count": 0,
+  "schema_version": "document-card-live-receipt-v1",
+  "status": "valid_card",
+  "system_fingerprint": "fp_9954b31ca7_prod0820_fp8_kvcache_20260402",
+  "usage": {
+    "completion_tokens": 1263,
+    "completion_tokens_details": null,
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 5824,
+    "prompt_tokens": 6080,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 7343
+  },
+  "wire_body_sha256": "sha256:6cc6295367b2c56aa38337efc490c10177aa822b28c82fb3c699b18dbf14a1c3"
+}

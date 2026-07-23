@@ -1,0 +1,343 @@
+{
+  "adapter_version": "openharmony-docs-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "openharmony-docs:zh-cn/application-dev/arkts-utils/taskpool-introduction.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:12ef729377c666a16f643c7fccc4ac2bafd4d5aa02f04fac8e99accd9a0c4625",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:0f3e7316e14a18c0467e2e344073b764e2f6ceb33b134e2f7bfd19f8936080d8",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 10,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:5714ff01832bb175f5a5a5b59b61cfa408c9681f23c107deef66ad29fdf577d8",
+      "heading_level": 1,
+      "heading_path": [
+        "TaskPool简介"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "subtree_span": {
+        "end_line": 505,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:0f3e7316e14a18c0467e2e344073b764e2f6ceb33b134e2f7bfd19f8936080d8",
+      "title": "TaskPool简介"
+    },
+    {
+      "content_span": {
+        "end_line": 18,
+        "start_line": 11
+      },
+      "content_text_hash": "sha256:7ce629e976051fe47edffd498fb71cafd6956b741434869551021c88ec68bda5",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool简介",
+        "TaskPool运作机制"
+      ],
+      "heading_span": {
+        "end_line": 11,
+        "start_line": 11
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "section_id": "document-section:sha256:ccf8a8f03e192815d336aa23abee9efe5ac34fbe90de03889fb99d1fb8c507fc",
+      "subtree_span": {
+        "end_line": 18,
+        "start_line": 11
+      },
+      "subtree_text_hash": "sha256:7ce629e976051fe47edffd498fb71cafd6956b741434869551021c88ec68bda5",
+      "title": "TaskPool运作机制"
+    },
+    {
+      "content_span": {
+        "end_line": 101,
+        "start_line": 19
+      },
+      "content_text_hash": "sha256:15da137905adc337ab72d1f08498b261f863387cf94354818f89b6d7c7155a2f",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool简介",
+        "TaskPool注意事项"
+      ],
+      "heading_span": {
+        "end_line": 19,
+        "start_line": 19
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "section_id": "document-section:sha256:0e84402bbe9751f0735dd9714502f07b417fc177ead44353451f9c285a263efc",
+      "subtree_span": {
+        "end_line": 101,
+        "start_line": 19
+      },
+      "subtree_text_hash": "sha256:15da137905adc337ab72d1f08498b261f863387cf94354818f89b6d7c7155a2f",
+      "title": "TaskPool注意事项"
+    },
+    {
+      "content_span": {
+        "end_line": 129,
+        "start_line": 102
+      },
+      "content_text_hash": "sha256:dd016b3448cf79eea9b0bfa9b3fec95783704a14d432ee6f4d49f0a3134bcc12",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool简介",
+        "\\@Concurrent装饰器"
+      ],
+      "heading_span": {
+        "end_line": 102,
+        "start_line": 102
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "section_id": "document-section:sha256:e4ae0b15c04c8e5cfe887f230cba75c7be6c78f6c3d6c232c27cae8c7e95ef48",
+      "subtree_span": {
+        "end_line": 129,
+        "start_line": 102
+      },
+      "subtree_text_hash": "sha256:dd016b3448cf79eea9b0bfa9b3fec95783704a14d432ee6f4d49f0a3134bcc12",
+      "title": "\\@Concurrent装饰器"
+    },
+    {
+      "content_span": {
+        "end_line": 131,
+        "start_line": 130
+      },
+      "content_text_hash": "sha256:e09d0fdc995dedbdcf5ad85298772cc4530d78473c08e4f543dd69035e43e81a",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool简介",
+        "装饰器使用示例"
+      ],
+      "heading_span": {
+        "end_line": 130,
+        "start_line": 130
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "subtree_span": {
+        "end_line": 486,
+        "start_line": 130
+      },
+      "subtree_text_hash": "sha256:3780fe3debc7c3f138cbeb787ec09014adab8b2bf80e99313d51f8f454397050",
+      "title": "装饰器使用示例"
+    },
+    {
+      "content_span": {
+        "end_line": 183,
+        "start_line": 132
+      },
+      "content_text_hash": "sha256:79bfcf468bff3e9bd8ce9a55be1304cce50a5ca576cd1ec38f23ac09cc5f233b",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "装饰器使用示例",
+        "并发函数一般使用"
+      ],
+      "heading_span": {
+        "end_line": 132,
+        "start_line": 132
+      },
+      "kind": "heading",
+      "ordinal": 5,
+      "parent_section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "section_id": "document-section:sha256:e5fae54fcc51eb53774815786dcfde900b916f08a78cedb6dddb4773f29e00b9",
+      "subtree_span": {
+        "end_line": 183,
+        "start_line": 132
+      },
+      "subtree_text_hash": "sha256:79bfcf468bff3e9bd8ce9a55be1304cce50a5ca576cd1ec38f23ac09cc5f233b",
+      "title": "并发函数一般使用"
+    },
+    {
+      "content_span": {
+        "end_line": 301,
+        "start_line": 184
+      },
+      "content_text_hash": "sha256:74b648cc9516c9e419468f681fd02059d3ee30a9032cf869f60da103bf620b5e",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "装饰器使用示例",
+        "并发函数返回Promise"
+      ],
+      "heading_span": {
+        "end_line": 184,
+        "start_line": 184
+      },
+      "kind": "heading",
+      "ordinal": 6,
+      "parent_section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "section_id": "document-section:sha256:f7cbeb836f67b04aaf406ab5fa951634530dda692eae5204af3ece421d22bee6",
+      "subtree_span": {
+        "end_line": 301,
+        "start_line": 184
+      },
+      "subtree_text_hash": "sha256:74b648cc9516c9e419468f681fd02059d3ee30a9032cf869f60da103bf620b5e",
+      "title": "并发函数返回Promise"
+    },
+    {
+      "content_span": {
+        "end_line": 407,
+        "start_line": 302
+      },
+      "content_text_hash": "sha256:b83b60b5f236eff30e38d79b9d96b1893fc4baf03d9778e7e985e7eae4b53158",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "装饰器使用示例",
+        "并发函数中使用自定义类或函数"
+      ],
+      "heading_span": {
+        "end_line": 302,
+        "start_line": 302
+      },
+      "kind": "heading",
+      "ordinal": 7,
+      "parent_section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "section_id": "document-section:sha256:466a845a7dda41ed88dff928316e367515ddeccdfce30546e7370c277d97b356",
+      "subtree_span": {
+        "end_line": 407,
+        "start_line": 302
+      },
+      "subtree_text_hash": "sha256:b83b60b5f236eff30e38d79b9d96b1893fc4baf03d9778e7e985e7eae4b53158",
+      "title": "并发函数中使用自定义类或函数"
+    },
+    {
+      "content_span": {
+        "end_line": 486,
+        "start_line": 408
+      },
+      "content_text_hash": "sha256:fd7bf77f376776f77bc5cceb3f2804b079916ff50f9b422fdad88d4ac55a75ec",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "装饰器使用示例",
+        "并发异步函数中使用Promise"
+      ],
+      "heading_span": {
+        "end_line": 408,
+        "start_line": 408
+      },
+      "kind": "heading",
+      "ordinal": 8,
+      "parent_section_id": "document-section:sha256:c668f58da3a858c683a10af55e4b0742cb592b97e200171bfb0d9b5adf3bf732",
+      "section_id": "document-section:sha256:403cda1a27ef2ebd5380903122aa018d6779c9f3f0d3d8a25651546d508215e9",
+      "subtree_span": {
+        "end_line": 486,
+        "start_line": 408
+      },
+      "subtree_text_hash": "sha256:fd7bf77f376776f77bc5cceb3f2804b079916ff50f9b422fdad88d4ac55a75ec",
+      "title": "并发异步函数中使用Promise"
+    },
+    {
+      "content_span": {
+        "end_line": 488,
+        "start_line": 487
+      },
+      "content_text_hash": "sha256:e13caee30ebdd80e8eab14e9e7e8b11e9b396051edae0e91a56935cf5a3d9cdf",
+      "heading_level": 2,
+      "heading_path": [
+        "TaskPool简介",
+        "TaskPool扩缩容机制"
+      ],
+      "heading_span": {
+        "end_line": 487,
+        "start_line": 487
+      },
+      "kind": "heading",
+      "ordinal": 9,
+      "parent_section_id": "document-section:sha256:2a8bcb5ea1365b94a24a15712bfd84b04b829215d85ba5e2733e796e11ee4d0e",
+      "section_id": "document-section:sha256:f938acdd3f99d829b486acfeb6ace6852f158c9e60d16c32694888931b808901",
+      "subtree_span": {
+        "end_line": 505,
+        "start_line": 487
+      },
+      "subtree_text_hash": "sha256:5d62ae9ca6b34f36813e5de85abdde74e7341104b1606ce1988f87f8b93b0600",
+      "title": "TaskPool扩缩容机制"
+    },
+    {
+      "content_span": {
+        "end_line": 492,
+        "start_line": 489
+      },
+      "content_text_hash": "sha256:8fb560a9d646b8053cb2a577ce0311bdc4fece2f2f73f207892c251e79469260",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "TaskPool扩缩容机制",
+        "扩容机制"
+      ],
+      "heading_span": {
+        "end_line": 489,
+        "start_line": 489
+      },
+      "kind": "heading",
+      "ordinal": 10,
+      "parent_section_id": "document-section:sha256:f938acdd3f99d829b486acfeb6ace6852f158c9e60d16c32694888931b808901",
+      "section_id": "document-section:sha256:e255717b07304477cb23b2b85764fa56f203fca84c04fa10e0a93ac52e2673d5",
+      "subtree_span": {
+        "end_line": 492,
+        "start_line": 489
+      },
+      "subtree_text_hash": "sha256:8fb560a9d646b8053cb2a577ce0311bdc4fece2f2f73f207892c251e79469260",
+      "title": "扩容机制"
+    },
+    {
+      "content_span": {
+        "end_line": 505,
+        "start_line": 493
+      },
+      "content_text_hash": "sha256:0bd1b1ae92c3dec1caf3f39703512bbc3aa801a04fd607979c1c04f556d31013",
+      "heading_level": 3,
+      "heading_path": [
+        "TaskPool简介",
+        "TaskPool扩缩容机制",
+        "缩容机制"
+      ],
+      "heading_span": {
+        "end_line": 493,
+        "start_line": 493
+      },
+      "kind": "heading",
+      "ordinal": 11,
+      "parent_section_id": "document-section:sha256:f938acdd3f99d829b486acfeb6ace6852f158c9e60d16c32694888931b808901",
+      "section_id": "document-section:sha256:f7f44a9678fc16746ae5467b895626f66a487b4fd4a0abad2af0dde0c0aed48b",
+      "subtree_span": {
+        "end_line": 505,
+        "start_line": 493
+      },
+      "subtree_text_hash": "sha256:0bd1b1ae92c3dec1caf3f39703512bbc3aa801a04fd607979c1c04f556d31013",
+      "title": "缩容机制"
+    }
+  ],
+  "source_line_count": 505,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "official_documentation",
+    "content_hash": "sha256:0f3e7316e14a18c0467e2e344073b764e2f6ceb33b134e2f7bfd19f8936080d8",
+    "relative_path": "zh-cn/application-dev/arkts-utils/taskpool-introduction.md",
+    "revision": "c8f5fb6c2fe03cf66b8a41c196ad7fc5e7891c47",
+    "source_id": "openharmony-docs"
+  },
+  "title": "TaskPool简介"
+}

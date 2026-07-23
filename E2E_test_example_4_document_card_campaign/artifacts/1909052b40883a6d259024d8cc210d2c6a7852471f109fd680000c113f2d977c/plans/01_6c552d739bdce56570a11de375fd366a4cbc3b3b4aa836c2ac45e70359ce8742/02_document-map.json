@@ -1,0 +1,472 @@
+{
+  "adapter_version": "arkui-spec-adapter-v1",
+  "api_level": null,
+  "builder_version": "markdown-document-structure-v1",
+  "diagnostics": [],
+  "document_id": "arkui-specs:05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+  "language": "zh-CN",
+  "language_mode": null,
+  "map_id": "markdown-document-map:sha256:35c52d6db59e5d22ed668e2d97c0c676ee77f94d35d32cf4652a6192da5d7cc7",
+  "normalization_diagnostics": [],
+  "normalized_body_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+  "release": null,
+  "schema_version": "markdown-document-map-v1",
+  "sections": [
+    {
+      "content_span": {
+        "end_line": 4,
+        "start_line": 1
+      },
+      "content_text_hash": "sha256:6c3c8e977278951655e4ed3f8d4f986f13a362e68e631b4f9b77933e5d16004d",
+      "heading_level": 1,
+      "heading_path": [
+        "特性规格"
+      ],
+      "heading_span": {
+        "end_line": 1,
+        "start_line": 1
+      },
+      "kind": "heading",
+      "ordinal": 0,
+      "parent_section_id": null,
+      "section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "subtree_span": {
+        "end_line": 170,
+        "start_line": 1
+      },
+      "subtree_text_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+      "title": "特性规格"
+    },
+    {
+      "content_span": {
+        "end_line": 21,
+        "start_line": 5
+      },
+      "content_text_hash": "sha256:9464bdece2a161f5c2cb86ddd37d919ebd704eb6849010142e032ca4c3e47211",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "概述"
+      ],
+      "heading_span": {
+        "end_line": 5,
+        "start_line": 5
+      },
+      "kind": "heading",
+      "ordinal": 1,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:39022783202e9586888024ba498951d4fd39aa0fdc532dd05ad876331b4d6fb1",
+      "subtree_span": {
+        "end_line": 21,
+        "start_line": 5
+      },
+      "subtree_text_hash": "sha256:9464bdece2a161f5c2cb86ddd37d919ebd704eb6849010142e032ca4c3e47211",
+      "title": "概述"
+    },
+    {
+      "content_span": {
+        "end_line": 23,
+        "start_line": 22
+      },
+      "content_text_hash": "sha256:b5916fb47d0aa3323937311d6f46b7bc17b85e08c4c1f8ce4bbd9136718382d2",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "用户故事"
+      ],
+      "heading_span": {
+        "end_line": 22,
+        "start_line": 22
+      },
+      "kind": "heading",
+      "ordinal": 2,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:b6e5f5aaa2bc91158dc9a9d9be0d4195f08bc393fab2f4e3dcbdaad634888ca8",
+      "subtree_span": {
+        "end_line": 37,
+        "start_line": 22
+      },
+      "subtree_text_hash": "sha256:f5e6d8608bf033d71f9e9f81c6ae883a3f3fb49331a709f3786643d8d8f69fd0",
+      "title": "用户故事"
+    },
+    {
+      "content_span": {
+        "end_line": 29,
+        "start_line": 24
+      },
+      "content_text_hash": "sha256:e534cadfc150191418b96873a12169dd4fce0396872b1dd8fbf6f15c16713c62",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-1: 减少单个 Image 节点的基础内存"
+      ],
+      "heading_span": {
+        "end_line": 24,
+        "start_line": 24
+      },
+      "kind": "heading",
+      "ordinal": 3,
+      "parent_section_id": "document-section:sha256:b6e5f5aaa2bc91158dc9a9d9be0d4195f08bc393fab2f4e3dcbdaad634888ca8",
+      "section_id": "document-section:sha256:506f0473061a10cbf8114c28b6c85bbca5a4a17ac91b6d8787e5a405ca9011eb",
+      "subtree_span": {
+        "end_line": 29,
+        "start_line": 24
+      },
+      "subtree_text_hash": "sha256:e534cadfc150191418b96873a12169dd4fce0396872b1dd8fbf6f15c16713c62",
+      "title": "US-1: 减少单个 Image 节点的基础内存"
+    },
+    {
+      "content_span": {
+        "end_line": 37,
+        "start_line": 30
+      },
+      "content_text_hash": "sha256:15c9867606f14a52aedc0867b7c545640cadbc0374724819726b041b58459e12",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "用户故事",
+        "US-2: 保持功能完全兼容"
+      ],
+      "heading_span": {
+        "end_line": 30,
+        "start_line": 30
+      },
+      "kind": "heading",
+      "ordinal": 4,
+      "parent_section_id": "document-section:sha256:b6e5f5aaa2bc91158dc9a9d9be0d4195f08bc393fab2f4e3dcbdaad634888ca8",
+      "section_id": "document-section:sha256:49d6ee2d3b28e2ec934e43367d9d40f89b5d1bde922e05036d1b1dbf208399ab",
+      "subtree_span": {
+        "end_line": 37,
+        "start_line": 30
+      },
+      "subtree_text_hash": "sha256:15c9867606f14a52aedc0867b7c545640cadbc0374724819726b041b58459e12",
+      "title": "US-2: 保持功能完全兼容"
+    },
+    {
+      "content_span": {
+        "end_line": 39,
+        "start_line": 38
+      },
+      "content_text_hash": "sha256:58ef6cb11383a435de4317f0554d28f8a147ccaf02918baa0852e7739318b071",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "验收标准"
+      ],
+      "heading_span": {
+        "end_line": 38,
+        "start_line": 38
+      },
+      "kind": "heading",
+      "ordinal": 5,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:abbd2a60b1c3baca15c795e41eccf7c1e08aefd20a42a4093ca1929d9509ad15",
+      "subtree_span": {
+        "end_line": 59,
+        "start_line": 38
+      },
+      "subtree_text_hash": "sha256:40d338522d7d611ae8c3363eadb5a317e385d864a4e064de5b4c3ceac52ffcc1",
+      "title": "验收标准"
+    },
+    {
+      "content_span": {
+        "end_line": 49,
+        "start_line": 40
+      },
+      "content_text_hash": "sha256:b7a758892175bc95e2d48d269d944a7d74cd89c44018c20a4aa5b3309a854cca",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "验收标准",
+        "P0 验收标准"
+      ],
+      "heading_span": {
+        "end_line": 40,
+        "start_line": 40
+      },
+      "kind": "heading",
+      "ordinal": 6,
+      "parent_section_id": "document-section:sha256:abbd2a60b1c3baca15c795e41eccf7c1e08aefd20a42a4093ca1929d9509ad15",
+      "section_id": "document-section:sha256:6d44ff95861baab043226bdeaa2f0eb9a4ac4f689a31b629cc031c64b04c37fb",
+      "subtree_span": {
+        "end_line": 49,
+        "start_line": 40
+      },
+      "subtree_text_hash": "sha256:b7a758892175bc95e2d48d269d944a7d74cd89c44018c20a4aa5b3309a854cca",
+      "title": "P0 验收标准"
+    },
+    {
+      "content_span": {
+        "end_line": 59,
+        "start_line": 50
+      },
+      "content_text_hash": "sha256:1b4b3c2488742aec1fc3b63c059952b2f4034c572c5860b762c1e7fa132659c0",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "验收标准",
+        "P1 验收标准"
+      ],
+      "heading_span": {
+        "end_line": 50,
+        "start_line": 50
+      },
+      "kind": "heading",
+      "ordinal": 7,
+      "parent_section_id": "document-section:sha256:abbd2a60b1c3baca15c795e41eccf7c1e08aefd20a42a4093ca1929d9509ad15",
+      "section_id": "document-section:sha256:f899f875100e3165044d956bb5391c8f11f06941f6a4ca697175df24f0bf1cc3",
+      "subtree_span": {
+        "end_line": 59,
+        "start_line": 50
+      },
+      "subtree_text_hash": "sha256:1b4b3c2488742aec1fc3b63c059952b2f4034c572c5860b762c1e7fa132659c0",
+      "title": "P1 验收标准"
+    },
+    {
+      "content_span": {
+        "end_line": 93,
+        "start_line": 60
+      },
+      "content_text_hash": "sha256:68b32854cf5c41394c1b1f02d35d031a7eab5880440165c78b1e4e3de09dcf76",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "规则定义"
+      ],
+      "heading_span": {
+        "end_line": 60,
+        "start_line": 60
+      },
+      "kind": "heading",
+      "ordinal": 8,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:4243dfb76d7213387b272e135f94dcc659f2c22f947c343ca787070b222c2bc7",
+      "subtree_span": {
+        "end_line": 93,
+        "start_line": 60
+      },
+      "subtree_text_hash": "sha256:68b32854cf5c41394c1b1f02d35d031a7eab5880440165c78b1e4e3de09dcf76",
+      "title": "规则定义"
+    },
+    {
+      "content_span": {
+        "end_line": 95,
+        "start_line": 94
+      },
+      "content_text_hash": "sha256:aeadb039755341d5b4ab685008e43e5be92b5f765211fb5ec743173298dc96ad",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "接口规格"
+      ],
+      "heading_span": {
+        "end_line": 94,
+        "start_line": 94
+      },
+      "kind": "heading",
+      "ordinal": 9,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:ef7f1b46c1203952334eb983ca6c1599c4f1f238f9a140f29ff5e02d369d4aa8",
+      "subtree_span": {
+        "end_line": 103,
+        "start_line": 94
+      },
+      "subtree_text_hash": "sha256:68f48ab5ca1614cbde539f1af0ca6daa386c4d8203712ab50eb1da1dfa259ca7",
+      "title": "接口规格"
+    },
+    {
+      "content_span": {
+        "end_line": 103,
+        "start_line": 96
+      },
+      "content_text_hash": "sha256:d0f072acb5c7b6fa408b0070467073e53d54c3572bf5db967550d1a94b9f4b10",
+      "heading_level": 3,
+      "heading_path": [
+        "特性规格",
+        "接口规格",
+        "接口定义"
+      ],
+      "heading_span": {
+        "end_line": 96,
+        "start_line": 96
+      },
+      "kind": "heading",
+      "ordinal": 10,
+      "parent_section_id": "document-section:sha256:ef7f1b46c1203952334eb983ca6c1599c4f1f238f9a140f29ff5e02d369d4aa8",
+      "section_id": "document-section:sha256:0c602a5979542c71464ad6fed8e70aaf61d729ffebf4b843244134cfa132790d",
+      "subtree_span": {
+        "end_line": 103,
+        "start_line": 96
+      },
+      "subtree_text_hash": "sha256:d0f072acb5c7b6fa408b0070467073e53d54c3572bf5db967550d1a94b9f4b10",
+      "title": "接口定义"
+    },
+    {
+      "content_span": {
+        "end_line": 115,
+        "start_line": 104
+      },
+      "content_text_hash": "sha256:bf0135a726c3ed29295d751d6c261ef88be1675a7df4ef6756886e9c7428a2e1",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "兼容性"
+      ],
+      "heading_span": {
+        "end_line": 104,
+        "start_line": 104
+      },
+      "kind": "heading",
+      "ordinal": 11,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:c32c6b7aab83f1237cede2047e490e221107140adfbfa30f8ae7bd02b02df78a",
+      "subtree_span": {
+        "end_line": 115,
+        "start_line": 104
+      },
+      "subtree_text_hash": "sha256:bf0135a726c3ed29295d751d6c261ef88be1675a7df4ef6756886e9c7428a2e1",
+      "title": "兼容性"
+    },
+    {
+      "content_span": {
+        "end_line": 131,
+        "start_line": 116
+      },
+      "content_text_hash": "sha256:a61f9cf58987311879358a3aaa3cc95f4cd100e729f1d3e310b67695141c4803",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "验证映射"
+      ],
+      "heading_span": {
+        "end_line": 116,
+        "start_line": 116
+      },
+      "kind": "heading",
+      "ordinal": 12,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:c195f5951e6c9eee28cf3f1406210fd0ea42f59e98b8fc0ebd6fb2d041152459",
+      "subtree_span": {
+        "end_line": 131,
+        "start_line": 116
+      },
+      "subtree_text_hash": "sha256:a61f9cf58987311879358a3aaa3cc95f4cd100e729f1d3e310b67695141c4803",
+      "title": "验证映射"
+    },
+    {
+      "content_span": {
+        "end_line": 139,
+        "start_line": 132
+      },
+      "content_text_hash": "sha256:133e97ef5ef392e288d2cc46b33946648c81728c7c21b7b3cef5c7b43863416a",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "SpecTest 适用性"
+      ],
+      "heading_span": {
+        "end_line": 132,
+        "start_line": 132
+      },
+      "kind": "heading",
+      "ordinal": 13,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:11a6c9ade88923d04af3a97b60da941a85b35787f8a3b8a2e910638e1a5c80d2",
+      "subtree_span": {
+        "end_line": 139,
+        "start_line": 132
+      },
+      "subtree_text_hash": "sha256:133e97ef5ef392e288d2cc46b33946648c81728c7c21b7b3cef5c7b43863416a",
+      "title": "SpecTest 适用性"
+    },
+    {
+      "content_span": {
+        "end_line": 149,
+        "start_line": 140
+      },
+      "content_text_hash": "sha256:7b3c24e21d1ab971d049912f78f2a65ea854fee8c5e19e3ad1eab3a202eb4c13",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "不涉及项"
+      ],
+      "heading_span": {
+        "end_line": 140,
+        "start_line": 140
+      },
+      "kind": "heading",
+      "ordinal": 14,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:473c174a259372dc4613be4ef060f801044629440057456d3ac2334bdc767ce2",
+      "subtree_span": {
+        "end_line": 149,
+        "start_line": 140
+      },
+      "subtree_text_hash": "sha256:7b3c24e21d1ab971d049912f78f2a65ea854fee8c5e19e3ad1eab3a202eb4c13",
+      "title": "不涉及项"
+    },
+    {
+      "content_span": {
+        "end_line": 159,
+        "start_line": 150
+      },
+      "content_text_hash": "sha256:73f8434069d3976a619b336fcd503b8b5dab002480ae6c50f69156ae66126296",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "多设备适配声明"
+      ],
+      "heading_span": {
+        "end_line": 150,
+        "start_line": 150
+      },
+      "kind": "heading",
+      "ordinal": 15,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:99ac461975906a15d7953259c1a7a8cd0d83776a6d561b2eff79d3d518a87867",
+      "subtree_span": {
+        "end_line": 159,
+        "start_line": 150
+      },
+      "subtree_text_hash": "sha256:73f8434069d3976a619b336fcd503b8b5dab002480ae6c50f69156ae66126296",
+      "title": "多设备适配声明"
+    },
+    {
+      "content_span": {
+        "end_line": 170,
+        "start_line": 160
+      },
+      "content_text_hash": "sha256:9ff397c315ca1a5fb341b6391c3ae65bce95e8f0b2ecc555f27c69ca75b6b3c9",
+      "heading_level": 2,
+      "heading_path": [
+        "特性规格",
+        "context-references"
+      ],
+      "heading_span": {
+        "end_line": 160,
+        "start_line": 160
+      },
+      "kind": "heading",
+      "ordinal": 16,
+      "parent_section_id": "document-section:sha256:b87daaeb2ad3abb56df23f3a88eb3f4ac5cea764398837adfd660ffebbc2d97b",
+      "section_id": "document-section:sha256:087ddc51726743fb2e6983b47a875f216c7a292dd1b7d929176d2930ba6e0409",
+      "subtree_span": {
+        "end_line": 170,
+        "start_line": 160
+      },
+      "subtree_text_hash": "sha256:9ff397c315ca1a5fb341b6391c3ae65bce95e8f0b2ecc555f27c69ca75b6b3c9",
+      "title": "context-references"
+    }
+  ],
+  "source_line_count": 170,
+  "source_ref": {
+    "anchor": "document",
+    "authority": "feature_spec",
+    "content_hash": "sha256:e33c1d7939717623b1c5c9bad3eecfd0f2e6aa328369e3be228e2ba8c48378b3",
+    "relative_path": "05-ui-components/08-image-components/01-image/Feat-05-image-base-memory-opt-spec.md",
+    "revision": "98bbe6578e0fb8e314a2c1b19342fc2b79ee4604",
+    "source_id": "arkui-specs"
+  },
+  "title": "特性规格"
+}
